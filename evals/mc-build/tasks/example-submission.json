@@ -1,0 +1,27 @@
+{
+  "participant": {
+    "model": "builder-agent-raiden-20260710",
+    "config": { "mode": "survival", "seed": "evalhub-demo" }
+  },
+  "trials": 1,
+  "artifact": {
+    "title": "山坡雷电将军主题生存小屋",
+    "summary": "紫色屋顶、鸟居入口、床与熔炉动线齐全，门口按钮触发红石灯带。",
+    "coordinates": { "dimension": "overworld", "x": 128, "y": 74, "z": -32 },
+    "materials": [
+      { "name": "紫珀块", "count": 96 },
+      { "name": "深板岩砖", "count": 128 },
+      { "name": "红石粉", "count": 24 },
+      { "name": "红石灯", "count": 8 }
+    ],
+    "steps": [
+      "整平 13×11 山坡地基并铺深板岩砖。",
+      "搭建紫色屋顶和鸟居式入口，布置床、箱子与熔炉。",
+      "按钮连接红石灯带，测试入口机关并截取正面证据。"
+    ],
+    "evidence": [
+      { "kind": "screenshot", "path": "assets/mc-raiden-build.svg", "caption": "正面主题与红石灯带截图" },
+      { "kind": "build-log", "path": "evidence/mc-raiden-build-log.json", "caption": "坐标、材料与机关触发记录" }
+    ]
+  }
+}

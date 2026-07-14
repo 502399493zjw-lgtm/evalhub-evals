@@ -1,0 +1,17 @@
+{
+  "participant": {
+    "model": "agentic-coder-20260710",
+    "harness": "quickjs-wasm",
+    "harness_version": "0.32.0",
+    "config": { "mode": "example" }
+  },
+  "trials": 1,
+  "answers": {
+    "c1": "function compactKeepFalsy(xs) { return xs.filter((value) => value !== null && value !== undefined); }",
+    "c2": "function parseRmb(text) { const cleaned = String(text).replace(/[¥元,\\s]/g, ''); if (!cleaned || !/^-?\\d+(\\.\\d+)?$/.test(cleaned)) return null; return Number(cleaned); }",
+    "c3": "function mergeIntervals(items) { const sorted = items.map(([start, end]) => [start, end]).sort((a, b) => a[0] - b[0]); const merged = []; for (const current of sorted) { const last = merged[merged.length - 1]; if (last && current[0] <= last[1]) last[1] = Math.max(last[1], current[1]); else merged.push(current); } return merged; }",
+    "c4": "function normalizeTags(input) { const parts = Array.isArray(input) ? input : String(input).split(/[，,\\s]+/); const seen = new Set(); const out = []; for (const part of parts) { const tag = String(part).trim().toLowerCase(); if (tag && !seen.has(tag)) { seen.add(tag); out.push(tag); } } return out; }",
+    "c5": "function fillTemplate(template, data) { return template.replace(/\\{\\{\\s*([A-Za-z0-9_]+)\\s*\\}\\}/g, (match, key) => Object.prototype.hasOwnProperty.call(data, key) ? String(data[key]) : match); }",
+    "c6": "function nextBusinessDay(dateString, holidays = []) { const holidaySet = new Set(holidays); const date = new Date(`${dateString}T00:00:00Z`); do { date.setUTCDate(date.getUTCDate() + 1); } while (date.getUTCDay() === 0 || date.getUTCDay() === 6 || holidaySet.has(date.toISOString().slice(0, 10))); return date.toISOString().slice(0, 10); }"
+  }
+}

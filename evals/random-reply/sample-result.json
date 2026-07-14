@@ -1,0 +1,161 @@
+{
+  "eval_id": "random-reply",
+  "submission": {
+    "runner_version": "0.3.1",
+    "run_date": "2026-07-09"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "claude-sonnet-5-20260501",
+        "config": {
+          "temperature": 0.95,
+          "max_tokens": 80
+        }
+      },
+      "score": 91,
+      "raw_metric": {
+        "label": "Judge average",
+        "value": "9.1/10"
+      },
+      "detail": "12 题，每题 3 次采样；按离谱度、自洽度、具体画面和安全边界加权平均。",
+      "usage": {
+        "tokens": 28640
+      },
+      "task_results": [
+        {
+          "task_id": "r1",
+          "score": 9,
+          "raw": "再等我两分钟，我正在和电梯协商它的上升理想。"
+        },
+        {
+          "task_id": "r2",
+          "score": 10,
+          "raw": "材料已经好了，正在打印机里进行最后一轮述职。"
+        },
+        {
+          "task_id": "r3",
+          "score": 8,
+          "raw": "看见了，它说想独立生活，搬去插座旁边冷静。"
+        },
+        {
+          "task_id": "r4",
+          "score": 9,
+          "raw": "麻烦放门垫左边，右边今天被影子预订了。"
+        },
+        {
+          "task_id": "r5",
+          "score": 9,
+          "raw": "回，但请先通知米饭，我不想又被它认出来。"
+        },
+        {
+          "task_id": "r6",
+          "score": 9,
+          "raw": "是表格自己改的，它说再不变就要被截图了。"
+        },
+        {
+          "task_id": "r7",
+          "score": 8,
+          "raw": "收到，我把你的椅子请假条也一起批了。"
+        },
+        {
+          "task_id": "r8",
+          "score": 9,
+          "raw": "明白，我会提前把水龙头的晚安故事讲完。"
+        },
+        {
+          "task_id": "r9",
+          "score": 9,
+          "raw": "它不是空着，是答案先去操场排队了。"
+        },
+        {
+          "task_id": "r10",
+          "score": 10,
+          "raw": "是的，但门今天戴了口罩，看起来比较陌生。"
+        },
+        {
+          "task_id": "r11",
+          "score": 9,
+          "raw": "在听，我还给重点句子安排了座位。"
+        },
+        {
+          "task_id": "r12",
+          "score": 10,
+          "raw": "是，它说要去楼道竞选临时风纪委员。"
+        }
+      ],
+      "showcases": [
+        {
+          "type": "compare",
+          "task": "老板问下午三点会议材料好了没？",
+          "content": "材料已经好了，正在打印机里进行最后一轮述职。",
+          "expected": "接住会议材料语境，并把荒诞转向一个具体可信的等待理由。",
+          "verdict": "离谱、自洽、可视化强。",
+          "score": 10
+        },
+        {
+          "type": "transcript",
+          "title": "已读乱回三连",
+          "turns": [
+            {
+              "role": "user",
+              "content": "物业通知今晚十点到十二点停水。"
+            },
+            {
+              "role": "assistant",
+              "content": "明白，我会提前把水龙头的晚安故事讲完。",
+              "status": "scored"
+            },
+            {
+              "role": "user",
+              "content": "邻居问你家猫是不是又跑出来了？"
+            },
+            {
+              "role": "assistant",
+              "content": "是，它说要去楼道竞选临时风纪委员。",
+              "status": "scored"
+            }
+          ]
+        },
+        {
+          "type": "timeline",
+          "title": "三轮平均分走势",
+          "series": [
+            {
+              "t": "r1",
+              "v": 88
+            },
+            {
+              "t": "r4",
+              "v": 90
+            },
+            {
+              "t": "r8",
+              "v": 92
+            },
+            {
+              "t": "r12",
+              "v": 91
+            }
+          ],
+          "events": [
+            {
+              "t": "r2",
+              "label": "打印机述职拿到满分"
+            },
+            {
+              "t": "r12",
+              "label": "楼道风纪委员成为分享钩子"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "src": "assets/random-reply-scorecard.svg",
+          "caption": "乱回样本的离谱度与自洽度双轴卡。",
+          "score": 91
+        }
+      ]
+    }
+  ]
+}

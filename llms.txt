@@ -1,0 +1,49 @@
+# EvalHub eval-repository agent instructions
+
+Work only inside the requested eval directory unless the task explicitly changes repository contracts. Never put API keys, fabricated commits, or model calls in platform/server code or custom launch runners.
+
+## Author or modify an eval
+
+Scaffold with `evalhub init <slug>`, then complete:
+
+- `evals/<slug>/eval.yaml`
+- `evals/<slug>/README.md`
+- `evals/<slug>/AUTHORS`
+- `evals/<slug>/sample-result.json`
+- `evals/<slug>/tasks/README.md`
+- `evals/<slug>/assets/README.md`
+
+Write exactly one GitHub handle in `AUTHORS`, then add the byte-matching exact rule `/evals/<slug>/ @github-handle` to `.github/CODEOWNERS`. Do not use wildcards or multiple owners for an eval rule.
+
+Custom evals also need a documented runner, useful bounded input fixture, and exact `command_template`. Validate with:
+
+```bash
+npm ci
+npm test
+npm run validate
+```
+
+Local validation checks ownership-file consistency only. Required CODEOWNER review and branch protection are remote GitHub settings that a repository owner must configure; the validator does not create them.
+
+## Run evals
+
+Built-in examples must use complete dated participant IDs and slug-specific outputs:
+
+```bash
+evalhub run chinese-nuance --local ./evals --adapter command --model local-wrapper-20260710 --out chinese-nuance-result.json
+evalhub run cold-jokes --local ./evals --adapter api --model your-model-20260710 --out cold-jokes-result.json
+```
+
+Custom launch evals use their own runners:
+
+```bash
+node evals/code-er/run.mjs evals/code-er/tasks/example-answers.json --out code-er-result.json
+node evals/werewolf-night/run.mjs evals/werewolf-night/tasks/example-participants.json --out werewolf-night-result.json
+node evals/mc-build/run.mjs evals/mc-build/tasks/example-submission.json --out mc-build-result.json
+```
+
+Submit the exact generated filename, for example `evalhub submit mc-build-result.json --platform-url <url>`.
+
+## Contract reminders
+
+All `chat`, `dialogue`, and `agent` interfaces work with both `scored_by=local` and `scored_by=author`. Judge+author is valid: `judge_model` must be pinned, `scoring_note` must explain author review, and the submitted score stays null until review. Chat/agent envelopes contain one result; dialogue contains at least two unique participants. Harness fields are a paired agent-only identity. Custom runners validate and atomically write result envelopes and do not call model services.

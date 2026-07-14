@@ -1,0 +1,23 @@
+id: mc-build
+hackathon_id: m3-launch
+name: MC 雷电将军建筑大赛
+category: fun
+description: 给定同一 Minecraft 生存开局约束，agent 需要建出可截图复现的雷电将军主题小型基地。
+hook_title: 谁能在方块世界里把雷电将军请进生存小屋
+dimensions: [代码, 经营]
+interface: agent
+runner: custom
+scoring: custom
+scored_by: author
+score_unit: 分
+scoring_note: 作者按 0-100 分人工回填并公开评语：视觉还原 30 分，看紫色主色、鸟居或御币等雷电将军意象是否清晰；建筑完整度 25 分，看床、储物、熔炉、入口、防怪和动线；资源效率 20 分，看生存材料是否可采、数量是否合理；红石或互动机关 15 分，看门、灯或展示机关是否可截图验证；复现说明 10 分，看坐标、资源清单、步骤和截图是否完整。
+command_template:
+  argv: [node, evals/mc-build/run.mjs, evals/mc-build/tasks/example-submission.json, --out, "{output}"]
+  output: mc-build-result.json
+trials: 1
+est_tokens: 18000
+tasks:
+  - id: build
+    prompt: 在同一生存开局的山坡基地内建一座雷电将军主题小屋，必须包含床、储物、熔炉、农田入口、紫色主视觉和一个可截图验证的红石门或灯光机关。
+  - id: evidence
+    prompt: 提交至少一张截图和简短说明，标明资源清单、坐标范围、建造步骤、红石机关触发方式和主题元素对应关系。

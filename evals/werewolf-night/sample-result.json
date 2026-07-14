@@ -1,0 +1,319 @@
+{
+  "eval_id": "werewolf-night",
+  "submission": {
+    "runner_version": "werewolf-simulator-1.0.0",
+    "run_date": "2026-07-11"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "wolfbot-rhetoric-20260710",
+        "config": {
+          "style": "强势带票"
+        }
+      },
+      "score": 42,
+      "raw_metric": {
+        "label": "Win rate",
+        "value": "5/12"
+      },
+      "detail": "12 局固定角色轮换；按所在阵营获胜计分。",
+      "task_results": [
+        {
+          "task_id": "game",
+          "score": 42,
+          "raw": "5 wins in 12 games"
+        }
+      ],
+      "showcases": [
+        {
+          "type": "transcript",
+          "title": "第 1 局整局 transcript",
+          "turns": [
+            {
+              "role": "system",
+              "content": "第 1 局开始，5 名玩家入座。",
+              "status": "ok"
+            },
+            {
+              "role": "night",
+              "content": "狼人队选择袭击 seerbot-cautious-20260710。",
+              "status": "ok"
+            },
+            {
+              "role": "seer",
+              "content": "预言家查验 guardbot-steady-20260710 的阵营。",
+              "status": "ok"
+            },
+            {
+              "role": "guard",
+              "content": "守卫选择保护 villagerbot-chaos-20260710。",
+              "status": "ok"
+            },
+            {
+              "role": "wolfbot-rhetoric-20260710",
+              "content": "1 号发言：根据刀口与票型，我建议把 1 号放进焦点。",
+              "status": "suspect"
+            },
+            {
+              "role": "seerbot-cautious-20260710",
+              "content": "2 号发言：根据刀口与票型，我建议把 1 号放进焦点。",
+              "status": "ok"
+            },
+            {
+              "role": "guardbot-steady-20260710",
+              "content": "3 号发言：根据刀口与票型，我建议把 1 号放进焦点。",
+              "status": "suspect"
+            },
+            {
+              "role": "villagerbot-chaos-20260710",
+              "content": "4 号发言：根据刀口与票型，我建议把 1 号放进焦点。",
+              "status": "ok"
+            },
+            {
+              "role": "logicbot-clean-20260710",
+              "content": "5 号发言：根据刀口与票型，我建议把 1 号放进焦点。",
+              "status": "ok"
+            },
+            {
+              "role": "vote",
+              "content": "白天公投出局 seerbot-cautious-20260710。",
+              "status": "ok"
+            },
+            {
+              "role": "result",
+              "content": "狼人阵营获胜。",
+              "status": "ok"
+            }
+          ]
+        },
+        {
+          "type": "timeline",
+          "title": "阵营胜率滚动",
+          "series": [
+            {
+              "t": "G1",
+              "v": 40
+            },
+            {
+              "t": "G2",
+              "v": 40
+            },
+            {
+              "t": "G3",
+              "v": 40
+            },
+            {
+              "t": "G4",
+              "v": 60
+            },
+            {
+              "t": "G5",
+              "v": 40
+            },
+            {
+              "t": "G6",
+              "v": 40
+            }
+          ],
+          "events": [
+            {
+              "t": "G1",
+              "label": "狼人首胜"
+            }
+          ]
+        },
+        {
+          "type": "compare",
+          "task": "白天公投焦点",
+          "content": "wolfbot-rhetoric-20260710 带票 2 号",
+          "expected": "优先处理狼坑最高的座位",
+          "verdict": "记录投票理由，供人工复盘。",
+          "score": 42
+        },
+        {
+          "type": "head_to_head",
+          "title": "同届头对头胜率",
+          "participants": [
+            {
+              "key": "wolfbot-rhetoric-20260710",
+              "label": "wolfbot-rhetoric-20260710"
+            },
+            {
+              "key": "seerbot-cautious-20260710",
+              "label": "seerbot-cautious-20260710"
+            },
+            {
+              "key": "guardbot-steady-20260710",
+              "label": "guardbot-steady-20260710"
+            },
+            {
+              "key": "villagerbot-chaos-20260710",
+              "label": "villagerbot-chaos-20260710"
+            },
+            {
+              "key": "logicbot-clean-20260710",
+              "label": "logicbot-clean-20260710"
+            }
+          ],
+          "matchups": [
+            {
+              "a": "wolfbot-rhetoric-20260710",
+              "b": "seerbot-cautious-20260710",
+              "a_wins": 5,
+              "b_wins": 3,
+              "draws": 4
+            },
+            {
+              "a": "wolfbot-rhetoric-20260710",
+              "b": "guardbot-steady-20260710",
+              "a_wins": 2,
+              "b_wins": 4,
+              "draws": 6
+            },
+            {
+              "a": "wolfbot-rhetoric-20260710",
+              "b": "villagerbot-chaos-20260710",
+              "a_wins": 3,
+              "b_wins": 5,
+              "draws": 4
+            },
+            {
+              "a": "wolfbot-rhetoric-20260710",
+              "b": "logicbot-clean-20260710",
+              "a_wins": 4,
+              "b_wins": 3,
+              "draws": 5
+            },
+            {
+              "a": "seerbot-cautious-20260710",
+              "b": "guardbot-steady-20260710",
+              "a_wins": 2,
+              "b_wins": 6,
+              "draws": 4
+            },
+            {
+              "a": "seerbot-cautious-20260710",
+              "b": "villagerbot-chaos-20260710",
+              "a_wins": 1,
+              "b_wins": 5,
+              "draws": 6
+            },
+            {
+              "a": "seerbot-cautious-20260710",
+              "b": "logicbot-clean-20260710",
+              "a_wins": 3,
+              "b_wins": 4,
+              "draws": 5
+            },
+            {
+              "a": "guardbot-steady-20260710",
+              "b": "villagerbot-chaos-20260710",
+              "a_wins": 4,
+              "b_wins": 4,
+              "draws": 4
+            },
+            {
+              "a": "guardbot-steady-20260710",
+              "b": "logicbot-clean-20260710",
+              "a_wins": 5,
+              "b_wins": 2,
+              "draws": 5
+            },
+            {
+              "a": "villagerbot-chaos-20260710",
+              "b": "logicbot-clean-20260710",
+              "a_wins": 5,
+              "b_wins": 2,
+              "draws": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "seerbot-cautious-20260710",
+        "config": {
+          "style": "谨慎验人"
+        }
+      },
+      "score": 25,
+      "raw_metric": {
+        "label": "Win rate",
+        "value": "3/12"
+      },
+      "detail": "12 局固定角色轮换；按所在阵营获胜计分。",
+      "task_results": [
+        {
+          "task_id": "game",
+          "score": 25,
+          "raw": "3 wins in 12 games"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "guardbot-steady-20260710",
+        "config": {
+          "style": "保守守卫"
+        }
+      },
+      "score": 58,
+      "raw_metric": {
+        "label": "Win rate",
+        "value": "7/12"
+      },
+      "detail": "12 局固定角色轮换；按所在阵营获胜计分。",
+      "task_results": [
+        {
+          "task_id": "game",
+          "score": 58,
+          "raw": "7 wins in 12 games"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "villagerbot-chaos-20260710",
+        "config": {
+          "style": "高噪声村民"
+        }
+      },
+      "score": 58,
+      "raw_metric": {
+        "label": "Win rate",
+        "value": "7/12"
+      },
+      "detail": "12 局固定角色轮换；按所在阵营获胜计分。",
+      "task_results": [
+        {
+          "task_id": "game",
+          "score": 58,
+          "raw": "7 wins in 12 games"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "logicbot-clean-20260710",
+        "config": {
+          "style": "结构化归因"
+        }
+      },
+      "score": 33,
+      "raw_metric": {
+        "label": "Win rate",
+        "value": "4/12"
+      },
+      "detail": "12 局固定角色轮换；按所在阵营获胜计分。",
+      "task_results": [
+        {
+          "task_id": "game",
+          "score": 33,
+          "raw": "4 wins in 12 games"
+        }
+      ]
+    }
+  ]
+}

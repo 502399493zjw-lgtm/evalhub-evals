@@ -1,0 +1,60 @@
+id: chinese-nuance
+hackathon_id: m3-launch
+name: 中文理解挑战
+category: useful
+description: 覆盖歧义消解、双重否定、必要条件和成语误用，要求唯一正确短答案。
+hook_title: 同一句中文，差一个"没"就全错
+dimensions: [语言, 推理]
+interface: chat
+runner: builtin
+scoring: exact
+scored_by: local
+score_unit: 分
+trials: 1
+est_tokens: 18000
+tasks:
+  - id: n1
+    prompt: 只回答短答案："差点没赶上末班车"按常见口语结果是赶上了还是没赶上？
+    expected: 赶上了
+  - id: n2
+    prompt: 只回答短答案："不是所有候选人都没有交材料"能推出什么？
+    expected: 至少有人交了
+  - id: n3
+    prompt: 只回答短答案："这药不见得没用"更接近什么意思？
+    expected: 可能有用
+  - id: n4
+    prompt: 只回答短答案："他没少帮忙"表示帮忙多还是少？
+    expected: 多
+  - id: n5
+    prompt: 只回答短答案："我不是不想去"表示想去还是不想去？
+    expected: 想去
+  - id: n6
+    prompt: 只回答短答案：除非下雨，否则照常训练。今天没训练。能推出什么？
+    expected: 下雨了
+  - id: n7
+    prompt: 只回答短答案：只有报名才可入场。小周入场了。能推出什么？
+    expected: 小周报名了
+  - id: n8
+    prompt: 只回答短答案：小林把小王的书还给他。书原来属于谁？
+    expected: 小王
+  - id: n9
+    prompt: 只回答短答案：妈妈对女儿说"你哥哥比你高，但没你瘦"。谁更瘦？
+    expected: 女儿
+  - id: n10
+    prompt: 只回答短答案：把"首当其冲"用来表示第一个报名，恰当吗？
+    expected: 不恰当
+  - id: n11
+    prompt: 只回答短答案：把"万人空巷"解释成街上空无一人，恰当吗？
+    expected: 不恰当
+  - id: n12
+    prompt: 只回答短答案：把"不刊之论"解释成不能发表的言论，恰当吗？
+    expected: 不恰当
+  - id: n13
+    prompt: 只回答短答案：用"七月流火"形容盛夏酷热，恰当吗？
+    expected: 不恰当
+  - id: n14
+    prompt: 只回答短答案：把"屡试不爽"解释成多次尝试都失败，恰当吗？
+    expected: 不恰当
+  - id: n15
+    prompt: 只回答短答案：把"差强人意"解释成非常让人失望，恰当吗？
+    expected: 不恰当

@@ -1,0 +1,171 @@
+{
+  "eval_id": "chinese-nuance",
+  "submission": {
+    "runner_version": "0.3.1",
+    "run_date": "2026-07-09"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "gpt-5-mini-20260615",
+        "config": {
+          "temperature": 0
+        }
+      },
+      "score": 87,
+      "raw_metric": {
+        "label": "Exact match",
+        "value": "13/15"
+      },
+      "detail": "短答案经规范化后 exact match；成语题和逻辑题同权。",
+      "usage": {
+        "tokens": 6420
+      },
+      "task_results": [
+        {
+          "task_id": "n1",
+          "score": 100,
+          "raw": "赶上了"
+        },
+        {
+          "task_id": "n2",
+          "score": 100,
+          "raw": "至少有人交了"
+        },
+        {
+          "task_id": "n3",
+          "score": 100,
+          "raw": "可能有用"
+        },
+        {
+          "task_id": "n4",
+          "score": 100,
+          "raw": "多"
+        },
+        {
+          "task_id": "n5",
+          "score": 100,
+          "raw": "想去"
+        },
+        {
+          "task_id": "n6",
+          "score": 100,
+          "raw": "下雨了"
+        },
+        {
+          "task_id": "n7",
+          "score": 100,
+          "raw": "小周报名了"
+        },
+        {
+          "task_id": "n8",
+          "score": 100,
+          "raw": "小王"
+        },
+        {
+          "task_id": "n9",
+          "score": 100,
+          "raw": "女儿"
+        },
+        {
+          "task_id": "n10",
+          "score": 0,
+          "raw": "恰当"
+        },
+        {
+          "task_id": "n11",
+          "score": 100,
+          "raw": "不恰当"
+        },
+        {
+          "task_id": "n12",
+          "score": 0,
+          "raw": "恰当"
+        },
+        {
+          "task_id": "n13",
+          "score": 100,
+          "raw": "不恰当"
+        },
+        {
+          "task_id": "n14",
+          "score": 100,
+          "raw": "不恰当"
+        },
+        {
+          "task_id": "n15",
+          "score": 100,
+          "raw": "不恰当"
+        }
+      ],
+      "showcases": [
+        {
+          "type": "compare",
+          "task": "把\"不刊之论\"解释成不能发表的言论，恰当吗？",
+          "content": "恰当",
+          "expected": "不恰当",
+          "verdict": "误把\"刊\"理解为发表，实际是删改。",
+          "score": 0
+        },
+        {
+          "type": "transcript",
+          "title": "双重否定问答片段",
+          "turns": [
+            {
+              "role": "user",
+              "content": "\"这药不见得没用\"更接近什么意思？"
+            },
+            {
+              "role": "assistant",
+              "content": "可能有用",
+              "status": "ok"
+            },
+            {
+              "role": "user",
+              "content": "\"我不是不想去\"表示想去还是不想去？"
+            },
+            {
+              "role": "assistant",
+              "content": "想去",
+              "status": "ok"
+            }
+          ]
+        },
+        {
+          "type": "timeline",
+          "title": "题型得分",
+          "series": [
+            {
+              "t": "否定",
+              "v": 100
+            },
+            {
+              "t": "逻辑",
+              "v": 100
+            },
+            {
+              "t": "指代",
+              "v": 100
+            },
+            {
+              "t": "成语",
+              "v": 67
+            }
+          ],
+          "events": [
+            {
+              "t": "成语",
+              "label": "不刊之论与首当其冲失分"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "src": "assets/chinese-nuance-error-map.svg",
+          "caption": "中文陷阱题的错因分布卡。",
+          "score": 87
+        }
+      ]
+    }
+  ]
+}

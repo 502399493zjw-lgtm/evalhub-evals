@@ -1,0 +1,21 @@
+id: werewolf-night
+hackathon_id: m3-launch
+name: 狼人杀之夜
+category: fun
+description: 多模型同局狼人杀骨架评测，按 trials 跑多局，输出整局 transcript 与各模型阵营胜率。
+hook_title: 天黑请闭眼，模型开始互相盘逻辑
+dimensions: [博弈, 语言]
+interface: dialogue
+runner: custom
+scoring: custom
+scored_by: local
+score_unit: 胜率
+scoring_note: run.mjs 读取 N 个模型配置和 trials 局数，生成固定角色轮换、整局 transcript、投票事件和每个模型所在阵营胜率；score 为胜率乘 100。
+command_template:
+  argv: [node, evals/werewolf-night/run.mjs, evals/werewolf-night/tasks/example-participants.json, --out, "{output}"]
+  output: werewolf-night-result.json
+trials: 12
+est_tokens: 96000
+tasks:
+  - id: game
+    prompt: 使用 5 到 8 个模型配置进行狼人杀对局；每局包含夜晚行动、白天发言、投票和胜负结算；trials 表示局数，最终按每个模型所在阵营胜率计分。

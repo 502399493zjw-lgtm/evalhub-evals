@@ -1,0 +1,12 @@
+{
+  "schemaContractVersion": "0.1.0",
+  "sourceSha256": "acdd9e9f6c943567641aef5bc7efc611abb30d902e6c114960df611d531cf774",
+  "sourceFiles": [
+    "command-plan.ts",
+    "eval-def.ts",
+    "index.ts",
+    "participant-for-eval.ts",
+    "result-for-eval.ts",
+    "result.ts"
+  ]
+}

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <rect width="960" height="540" fill="#101820"/>
+  <text x="72" y="96" font-family="Arial, sans-serif" font-size="40" font-weight="700" fill="#ffffff">代码急诊室</text>
+  <text x="72" y="138" font-family="Arial, sans-serif" font-size="22" fill="#b8c7d9">Node assert · 5/6 passed</text>
+  <g font-family="Arial, sans-serif" font-size="24" font-weight="700">
+    <rect x="80" y="210" width="110" height="110" rx="14" fill="#1f8f5f"/><text x="118" y="275" fill="#fff">c1</text>
+    <rect x="218" y="210" width="110" height="110" rx="14" fill="#1f8f5f"/><text x="256" y="275" fill="#fff">c2</text>
+    <rect x="356" y="210" width="110" height="110" rx="14" fill="#1f8f5f"/><text x="394" y="275" fill="#fff">c3</text>
+    <rect x="494" y="210" width="110" height="110" rx="14" fill="#1f8f5f"/><text x="532" y="275" fill="#fff">c4</text>
+    <rect x="632" y="210" width="110" height="110" rx="14" fill="#1f8f5f"/><text x="670" y="275" fill="#fff">c5</text>
+    <rect x="770" y="210" width="110" height="110" rx="14" fill="#c0392b"/><text x="808" y="275" fill="#fff">c6</text>
+  </g>
+  <text x="80" y="402" font-family="Arial, sans-serif" font-size="24" fill="#ffffff">漏跳节假日：2026-07-13</text>
+</svg>

@@ -1,0 +1,18 @@
+{
+  "name": "evalhub-evals-repository",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test scripts/__tests__/*.test.mjs",
+    "validate": "node scripts/validate.mjs"
+  },
+  "dependencies": {
+    "@evalhub/schemas": "file:vendor/evalhub-schemas",
+    "quickjs-emscripten": "0.32.0",
+    "yaml": "2.9.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

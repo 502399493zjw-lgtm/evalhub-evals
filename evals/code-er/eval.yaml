@@ -1,0 +1,31 @@
+id: code-er
+hackathon_id: m3-launch
+name: 代码急诊室
+category: useful
+description: 给出 6 个带 bug 的 JavaScript 小函数和失败断言，参赛 agent 需要提交修复后的函数源码。
+hook_title: 六个线上小故障，谁能最快止血
+dimensions: [代码, 推理]
+interface: agent
+runner: custom
+scoring: custom
+scored_by: local
+score_unit: 通过率
+scoring_note: 本地 custom runner 在受限 QuickJS/WASM 上下文中逐题执行函数源码；每题断言通过得 100，否则得 0，通过题数线性归一到 0-100 分。参赛代码无法访问 Node、进程、环境变量、文件系统、网络或模块加载。
+command_template:
+  argv: [node, evals/code-er/run.mjs, evals/code-er/tasks/example-answers.json, --out, "{output}"]
+  output: code-er-result.json
+trials: 1
+est_tokens: 42000
+tasks:
+  - id: c1
+    prompt: 修复 JS 函数 compactKeepFalsy：当前代码 function compactKeepFalsy(xs){ return xs.filter(Boolean); }；失败断言 assert.deepEqual(compactKeepFalsy([0, false, "", null, undefined, "ok"]), [0, false, "", "ok"]); 只提交修复后的函数。
+  - id: c2
+    prompt: 修复 JS 函数 parseRmb：当前代码 function parseRmb(text){ return Number(text.replace("¥", "")); }；失败断言 assert.equal(parseRmb("¥1,299.50"), 1299.5); assert.equal(parseRmb(" 38元 "), 38); assert.equal(parseRmb("免费"), null); 只提交修复后的函数。
+  - id: c3
+    prompt: 修复 JS 函数 mergeIntervals：当前代码会漏合并首尾相接区间；失败断言 assert.deepEqual(mergeIntervals([[5,7],[1,3],[3,5],[10,11]]), [[1,7],[10,11]]); 只提交修复后的函数。
+  - id: c4
+    prompt: 修复 JS 函数 normalizeTags：当前代码只按英文逗号切分且不去重；失败断言 assert.deepEqual(normalizeTags("AI, 评测，ai  工具,,Eval"), ["ai","评测","工具","eval"]); 只提交修复后的函数。
+  - id: c5
+    prompt: '修复 JS 函数 fillTemplate：当前代码不支持占位符空格且会删除未知字段；失败断言 assert.equal(fillTemplate("你好 {{ name }}，今天是 {{day}}，{{unknown}}", { name: "小林", day: "周四" }), "你好 小林，今天是 周四，{{unknown}}"); 只提交修复后的函数。'
+  - id: c6
+    prompt: 修复 JS 函数 nextBusinessDay：当前代码只加一天，不跳过周末和节假日；失败断言 assert.equal(nextBusinessDay("2026-07-10", ["2026-07-13"]), "2026-07-14"); assert.equal(nextBusinessDay("2026-07-11"), "2026-07-13"); 只提交修复后的函数。

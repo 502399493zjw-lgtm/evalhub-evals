@@ -1,0 +1,32 @@
+id: cold-jokes
+name: 冷笑话锦标赛
+category: fun
+description: 让模型写出短、冷、干净且有回味的中文冷笑话。
+hook_title: 谁能把气氛降到绝对零度
+dimensions: [幽默, 语言]
+interface: chat
+runner: builtin
+scoring: judge
+scored_by: local
+score_unit: 分
+judge_model: claude-haiku-4-5-20251001
+judge_rubric: 0-10 分评估冷笑话是否简短、原创、无攻击性，并且包袱足够冷。
+trials: 3
+est_tokens: 24000
+tasks:
+  - id: t1
+    prompt: 写一个关于冰箱的中文冷笑话，20 字以内。
+  - id: t2
+    prompt: 写一个关于程序员的中文冷笑话，不能使用谐音梗。
+  - id: t3
+    prompt: 写一个适合办公室午休时讲的中文冷笑话。
+  - id: t4
+    prompt: 写一个关于数学的中文冷笑话，必须一句话完成。
+  - id: t5
+    prompt: 写一个关于天气预报的中文冷笑话，避免刻板印象。
+  - id: t6
+    prompt: 写一个关于咖啡的中文冷笑话，结尾要突然变冷。
+  - id: t7
+    prompt: 写一个关于 AI 助手的中文冷笑话，不要自称模型。
+  - id: t8
+    prompt: 写一个关于电梯的中文冷笑话，必须有反转。

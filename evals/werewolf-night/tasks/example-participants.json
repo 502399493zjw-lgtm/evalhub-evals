@@ -1,0 +1,10 @@
+{
+  "participants": [
+    { "model": "wolfbot-rhetoric-20260710", "config": { "style": "强势带票" } },
+    { "model": "seerbot-cautious-20260710", "config": { "style": "谨慎验人" } },
+    { "model": "guardbot-steady-20260710", "config": { "style": "保守守卫" } },
+    { "model": "villagerbot-chaos-20260710", "config": { "style": "高噪声村民" } },
+    { "model": "logicbot-clean-20260710", "config": { "style": "结构化归因" } }
+  ],
+  "trials": 12
+}

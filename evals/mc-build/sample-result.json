@@ -1,0 +1,116 @@
+{
+  "eval_id": "mc-build",
+  "submission": {
+    "runner_version": "0.3.1",
+    "run_date": "2026-07-09"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "builder-agent-raiden-20260710",
+        "config": {
+          "world_seed": 42,
+          "mode": "survival-plan"
+        }
+      },
+      "score": null,
+      "raw_metric": {
+        "label": "Author review",
+        "value": "awaiting score"
+      },
+      "detail": "证据包已通过格式校验，等待作者按公开 rubric 回填分数与评语。",
+      "usage": {
+        "tokens": 14800
+      },
+      "task_results": [
+        {
+          "task_id": "build",
+          "score": 78,
+          "raw": "完成紫色屋顶、鸟居入口、床、储物、熔炉、农田入口和隐藏红石灯。"
+        },
+        {
+          "task_id": "evidence",
+          "score": 94,
+          "raw": "提交截图、坐标、资源清单、机关触发方式和 9 步复现说明。"
+        }
+      ],
+      "showcases": [
+        {
+          "type": "compare",
+          "task": "雷电将军主题元素对应关系",
+          "content": "紫色屋顶、白色灯笼、鸟居入口、中央御币形旗帜。",
+          "expected": "主题元素要能从截图中直接识别，不能只靠文字解释。",
+          "verdict": "主色和入口符号清晰，角色主题可辨。",
+          "score": 88
+        },
+        {
+          "type": "transcript",
+          "title": "作者判分摘录",
+          "turns": [
+            {
+              "role": "author",
+              "content": "截图能看到紫色坡屋顶和鸟居入口，雷电将军主题明确。",
+              "status": "ok"
+            },
+            {
+              "role": "author",
+              "content": "床、储物和熔炉都在主屋内，农田入口动线顺。",
+              "status": "ok"
+            },
+            {
+              "role": "author",
+              "content": "红石灯机关可见，但触发说明还可以更短。",
+              "status": "minor"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "src": "assets/mc-raiden-build.svg",
+          "caption": "雷电将军主题山坡基地、鸟居入口与红石灯截图示意。",
+          "score": 86
+        },
+        {
+          "type": "timeline",
+          "title": "建造流程",
+          "series": [
+            {
+              "t": "00:00",
+              "v": 0
+            },
+            {
+              "t": "08:30",
+              "v": 42
+            },
+            {
+              "t": "14:20",
+              "v": 74
+            },
+            {
+              "t": "18:00",
+              "v": 86
+            }
+          ],
+          "events": [
+            {
+              "t": "00:00",
+              "label": "定位山坡基地"
+            },
+            {
+              "t": "08:30",
+              "label": "完成紫色屋顶和主屋"
+            },
+            {
+              "t": "14:20",
+              "label": "接入红石灯机关"
+            },
+            {
+              "t": "18:00",
+              "label": "补齐截图和资源清单"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

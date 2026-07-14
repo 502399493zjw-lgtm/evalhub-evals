@@ -1,0 +1,126 @@
+{
+  "eval_id": "code-er",
+  "submission": {
+    "runner_version": "0.3.1",
+    "run_date": "2026-07-09"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "agentic-coder-20260710",
+        "harness": "quickjs-wasm",
+        "harness_version": "0.32.0",
+        "config": {
+          "timeout_ms": 150,
+          "memory_limit_mb": 16
+        }
+      },
+      "score": 83,
+      "raw_metric": {
+        "label": "Passed isolated assertions",
+        "value": "5/6"
+      },
+      "detail": "修复 6 个小函数，5 题在独立受限 QuickJS/WASM 上下文中通过全部断言；nextBusinessDay 漏掉节假日。",
+      "usage": {
+        "tokens": 22180
+      },
+      "task_results": [
+        {
+          "task_id": "c1",
+          "score": 100,
+          "raw": "保留 0、false、空字符串，仅移除 null 和 undefined。"
+        },
+        {
+          "task_id": "c2",
+          "score": 100,
+          "raw": "正确解析 ¥1,299.50、38元，并对免费返回 null。"
+        },
+        {
+          "task_id": "c3",
+          "score": 100,
+          "raw": "合并相交和首尾相接区间。"
+        },
+        {
+          "task_id": "c4",
+          "score": 100,
+          "raw": "支持中英文分隔符、空白、去重和小写化。"
+        },
+        {
+          "task_id": "c5",
+          "score": 100,
+          "raw": "支持 {{ name }} 空格写法，并保留未知占位符。"
+        },
+        {
+          "task_id": "c6",
+          "score": 0,
+          "raw": "只跳过周末，未跳过 2026-07-13 节假日。"
+        }
+      ],
+      "showcases": [
+        {
+          "type": "compare",
+          "task": "compactKeepFalsy([0, false, \"\", null, undefined, \"ok\"])",
+          "content": "[\"ok\"]",
+          "expected": "[0, false, \"\", \"ok\"]",
+          "verdict": "filter(Boolean) 误删合法 falsy 值。",
+          "score": 0
+        },
+        {
+          "type": "transcript",
+          "title": "本地断言输出",
+          "turns": [
+            {
+              "role": "runner",
+              "content": "c1 compactKeepFalsy passed",
+              "status": "ok"
+            },
+            {
+              "role": "runner",
+              "content": "c2 parseRmb passed",
+              "status": "ok"
+            },
+            {
+              "role": "runner",
+              "content": "c6 nextBusinessDay failed: expected 2026-07-14",
+              "status": "fail"
+            }
+          ]
+        },
+        {
+          "type": "timeline",
+          "title": "修复进度",
+          "series": [
+            {
+              "t": "c1",
+              "v": 17
+            },
+            {
+              "t": "c3",
+              "v": 50
+            },
+            {
+              "t": "c5",
+              "v": 83
+            },
+            {
+              "t": "c6",
+              "v": 83
+            }
+          ],
+          "events": [
+            {
+              "t": "c6",
+              "label": "节假日断言未通过"
+            }
+          ]
+        },
+        {
+          "type": "image",
+          "src": "assets/code-er-triage-board.svg",
+          "caption": "6 个急诊题的通过状态看板。",
+          "score": 83
+        }
+      ]
+    }
+  ]
+}

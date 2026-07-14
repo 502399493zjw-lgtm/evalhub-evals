@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540">
+  <rect width="960" height="540" fill="#f4f7fb"/>
+  <text x="72" y="98" font-family="Arial, sans-serif" font-size="40" font-weight="700" fill="#1f2a44">中文理解挑战</text>
+  <text x="72" y="142" font-family="Arial, sans-serif" font-size="22" fill="#536079">短答案 exact match · 13/15</text>
+  <rect x="84" y="210" width="220" height="190" rx="12" fill="#ffffff" stroke="#2f80ed" stroke-width="3"/>
+  <rect x="370" y="210" width="220" height="190" rx="12" fill="#ffffff" stroke="#27ae60" stroke-width="3"/>
+  <rect x="656" y="210" width="220" height="190" rx="12" fill="#ffffff" stroke="#eb5757" stroke-width="3"/>
+  <text x="132" y="274" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#1f2a44">否定</text>
+  <text x="430" y="274" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#1f2a44">逻辑</text>
+  <text x="716" y="274" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#1f2a44">成语</text>
+  <text x="132" y="344" font-family="Arial, sans-serif" font-size="44" fill="#2f80ed">5/5</text>
+  <text x="430" y="344" font-family="Arial, sans-serif" font-size="44" fill="#27ae60">4/4</text>
+  <text x="716" y="344" font-family="Arial, sans-serif" font-size="44" fill="#eb5757">4/6</text>
+</svg>
