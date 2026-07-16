@@ -1,0 +1,21 @@
+id: ceo-bench
+name: CEO-Bench（NovaMind 创业模拟）
+category: useful
+display_category: agent
+description: 基于 Princeton CEO-Bench 的长周期 agent 经营评测：模型作为 bash agent 经营 NovaMind SaaS 创业公司，通过 novamind-operation CLI 做定价、研发、投放与容量决策，每周推进并阅读仪表盘，现金耗尽即破产终止；考察长程规划与经营结果。
+hook_title: 一百万美元开局，谁能不破产
+dimensions: [经营, 推理]
+interface: agent
+runner: custom
+scoring: custom
+scored_by: author
+score_unit: 分
+scoring_note: 平台与 CI 均不判分。提交侧 score 恒为 null，由作者（@502399493zjw-lgtm）复核提交的运行证据（config.json / checkpoint.json / logs/tool_results_*.jsonl）后回填 0-100 分。判分口径：以存活天数与终局经营结果（现金、个人订阅用户规模与轨迹质量）综合评定；破产终止的运行按存活天数与破产前经营质量给分。task_results[].score 记录的是观测到的存活天数（原始观测，不是最终评分）。
+command_template:
+  argv: [node, evals/ceo-bench/pack-to-result.mjs, ceobench-run-dir, --out, "{output}"]
+  output: ceo-bench-result.json
+trials: 1
+est_tokens: 50000000
+tasks:
+  - id: novamind-default-seed42
+    prompt: 以 bash agent 身份经营 NovaMind SaaS 创业模拟：初始现金 $1,000,000，随机种子 42，default 场景。通过 novamind-operation CLI 管理三档订阅定价（A/B/C）、模型档位、用量配额、算力容量、每日运维/研发支出与广告投放；用 next-week 按周推进并阅读每周仪表盘（现金、个人订阅用户、企业席位、未决 issue 等）。现金耗尽即破产、运行终止。目标是在长周期内保持公司存活并最大化经营成果。归档运行的本地配置为 3,647 天（与官方发布的 500 天协议不同，结果不可并入论文协议组）。
