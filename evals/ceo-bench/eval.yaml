@@ -9,8 +9,12 @@ interface: agent
 runner: custom
 scoring: custom
 scored_by: author
-score_unit: 分
-scoring_note: 平台与 CI 均不判分。提交侧 score 恒为 null，由作者（@502399493zjw-lgtm）复核提交的运行证据（config.json / checkpoint.json / logs/tool_results_*.jsonl）后回填 0-100 分。判分口径：以存活天数与终局经营结果（现金、个人订阅用户规模与轨迹质量）综合评定；破产终止的运行按存活天数与破产前经营质量给分。task_results[].score 记录的是观测到的存活天数（原始观测，不是最终评分）。
+score_unit: 元
+tiebreak:
+  metric: tiebreak_value
+  order: desc
+  label: 存活天数
+scoring_note: 计分口径（2026-07-18 拍板）：CEO-bench 分数 = 经营结束时的最终资金（元）；破产（现金耗尽终止）计 0 分，破产成绩之间按存活天数排名（tiebreak，存活久者名次靠前），存活天数写入 raw_metric.tiebreak_value；多次试跑取平均存活天数。判分证据以归档运行的 world.nmdb ledger 现金轨迹与 checkpoint.json/logs 为准，由作者（@502399493zjw-lgtm）复核。作者判分选项保持开启：自带分数的提交走默认模式（scored，待作者认可），score=null 的提交请作者判分。task_results[].score 记录的是观测到的存活天数（原始观测，不是最终评分）。
 command_template:
   argv: [node, evals/ceo-bench/pack-to-result.mjs, ceobench-run-dir, --out, "{output}"]
   output: ceo-bench-result.json
