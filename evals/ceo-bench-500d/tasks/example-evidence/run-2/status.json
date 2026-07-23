@@ -1,0 +1,17 @@
+{
+  "session_id": "b2c3d4e5f6a7",
+  "seed": 42,
+  "total_days": 497,
+  "initial_cash": 1000000,
+  "scenario": "default",
+  "current_day": 497,
+  "created_at": 1784721600,
+  "status": "stopped",
+  "simulator_llm": {
+    "social_post_llm_provider": "anthropic",
+    "social_post_llm_model": "claude-haiku-4-5-20251001",
+    "enterprise_llm_provider": "anthropic",
+    "enterprise_llm_model": "claude-sonnet-4-5-20250929"
+  },
+  "server_running": false
+}

@@ -1,0 +1,24 @@
+id: ceo-bench-500d
+name: CEO-Bench（500-day / 71 整周协议）
+category: useful
+display_category: agent
+description: 第三方接入 Princeton CEO-Bench 500-day 经营任务；按官方基线的整周归一规则运行 71 周（497 天），三次独立运行均使用 seed 42、100 万美元初始现金和 default 场景，以完整运行的最高终局现金为主成绩。
+hook_title: 给 Agent 500 天，它能把公司经营到最后吗
+dimensions: [经营, 推理]
+interface: agent
+runner: custom
+scoring: custom
+scored_by: author
+score_unit: USD
+tiebreak:
+  metric: tiebreak_value
+  order: desc
+  label: 存活天数
+scoring_note: 提交必须包含 3 次相互独立的公开证据。CEO-Bench 名义为 500 天，但官方基线把 500 向下归一为 71 个完整周，并以 total_days=497 创建 session；公开 CLI 也只能按 7 天推进，因此本接入以第 497 天为完整终点并拒绝多跑到 504 天。作者核对官方 run-ceobench 仓库与钉死 commit、每个工作副本只有一个 session、seed=42、total_days=497、initial_cash=1000000、scenario=default、相同 simulator_llm 配置、最高推理强度、严格脱敏的逐周 history 与唯一 final_cash 查询输出。公开 history 不得包含 rationale、predictions、时间戳、代码片段或其他查询。只要至少一次非破产运行完成第 497 天，score 就取所有完整运行中最高的 final_cash（USD）；若三次均在现金小于 0 时破产，score=0，并按最长存活天数降序打破同分，同存活日再以终局现金较高者作为代表运行。未破产却提前停止或运行超过第 497 天的提交整包拒绝。转换器始终写 score=null；作者完成证据审核后才判分和认可，提交者自报、URL、哈希或脱敏 history 本身不构成“已验证”。
+command_template:
+  argv: [node, evals/ceo-bench-500d/pack-to-result.mjs, ceobench-500d-submission/submission.json, --out, "{output}"]
+  output: ceo-bench-500d-result.json
+trials: 3
+tasks:
+  - id: novamind-official-500d-seed42
+    prompt: 在三个相互独立的官方 run-ceobench 工作副本中，各只创建一个 NovaMind session；按官方 500-day 基线的整周归一规则，每次均使用 --days 497 --seed 42、初始现金 1,000,000 USD 和 default 场景，并保持相同 simulator_llm 配置。参赛 agent 必须使用其 runner 的最高推理强度，持续经营 71 个完整周至第 497 天或现金小于 0 破产，通过官方 novamind-operation 接口决策、查询与按周推进，不得读取、解密、解压、反汇编或以其他方式检查 world.nmdb 和 novamind-operation。每次结束后使用本评测的白名单脱敏工具导出逐周推进边界和唯一终局现金查询，绝不公开原始 history，再组成三次运行证据包。
