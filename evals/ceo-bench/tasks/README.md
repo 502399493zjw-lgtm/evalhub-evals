@@ -1,13 +1,21 @@
-# tasks
+# 任务与合成夹具
 
-本评测只有一个任务 `novamind-default-seed42`（完整任务描述见 `../eval.yaml`）：以 bash agent 身份经营 NovaMind SaaS 创业模拟（seed 42、default 场景、初始现金 $1,000,000），存活并最大化经营成果。
+`example-evidence/` 是一份完整、可直接复制的合成提交目录，用来测试 `pack-to-result.mjs`。其中的模型名、金额、URL 和运行轨迹全部是合成数据：
 
-## 运行目录约定
+- `example-evidence/submission.json`：参赛模型、provider、harness 与三个公开 artifact 的声明。
+- `example-evidence/run-{1,2,3}/`：与 manifest 同级的三次合成证据。
+- 每次证据均含 remote、commit、唯一 session 列表、status、final cash 查询与经过白名单脱敏的 history JSONL。
 
-`eval.yaml` 的 `command_template` 期望工作目录下存在 `ceobench-run-dir`——一个 CEO-Bench harness 产出的运行目录（或指向它的软链），至少包含：
+可以从仓库根目录运行：
 
-- `config.json`：运行配置（model/provider/reasoning_effort/seed/scenario/total_days/run_id/label）
-- `checkpoint.json`：最终检查点（day、轮次与 token 计数）
-- `logs/tool_results_<id>.jsonl`：工具结果日志（转换器从中重建每周仪表盘观测）
+```bash
+node evals/ceo-bench/pack-to-result.mjs \
+  evals/ceo-bench/tasks/example-evidence/submission.json \
+  --out /tmp/ceo-bench-example-result.json
+```
 
-转换器 `../pack-to-result.mjs` 不调用模型、不产生分数，只把上述证据重建为 result JSON。
+这些数据不是任何真实模型的实测成绩，也没有通过评测作者验证。真实提交必须另建提交目录，不要修改或冒充这些夹具。
+
+`princeton-official-results-2026-07-23.json` 是 Princeton 官网公开结果的结构化来源快照。官网结果表是分数权威来源，轨迹清单只用于补充来源信息；两者不一致时不得用轨迹清单覆盖官网分数。`princeton-trajectory-manifest-v12-summary.json` 按 run ID 保留清单披露的配置终点、实际终点和破产状态，仅供内部追溯。当前清单与官网在 Gemini 3.5 Flash 的运行批次上存在冲突，且不包含 Grok 4.5，文件中已明确标注。
+
+这些快照用于作者录入和审计，不表示 EvalHub 已经独立复跑这些结果，也不要求公开页面逐条显示运行天数。

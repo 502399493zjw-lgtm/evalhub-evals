@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "benchmark": "ceo-bench",
+  "source_kind": "upstream_official_publication",
+  "retrieved_on": "2026-07-23",
+  "score_authority": {
+    "url": "https://ceobench.com/",
+    "sha256": "18122edfd8b7cd0ff8b133ba06fe66c76c655e7a230f53c2fc44b187536ad610",
+    "rule": "Use the Princeton homepage results table for published scores; do not replace them with values derived from the trajectory manifest."
+  },
+  "trajectory_support": {
+    "url": "https://ceobench.com/trajectory-viewer/data/runs/manifest.json?v=12",
+    "sha256": "3e2821f74330be907b85c35d8f6ac22ce1cbb32d0a3038ef05cee241a4f399f4",
+    "local_summary": "princeton-trajectory-manifest-v12-summary.json",
+    "rule": "The manifest only supports provenance, run IDs, and disclosed run boundaries. It is not the score authority and does not currently include Grok 4.5."
+  },
+  "verification_scope": "The eval author may verify that these values match the pinned Princeton publication. This does not claim an independent EvalHub rerun or reproducibility verification.",
+  "public_display_policy": "Display model, score, and completion or bankruptcy status. Per-run day counts may remain in internal provenance rather than the public row.",
+  "known_limitations": [
+    "The homepage displays completed models with a 500-day maximum, while the supporting manifest contains configured horizons of 497, 500, and 504 days.",
+    "For some 504-day models, the homepage published score differs from the manifest final cash because the homepage publishes a standardized 500-day value. The homepage remains the score authority.",
+    "The Gemini 3.5 Flash homepage cohort reports zero bankruptcies, but the supporting manifest cohort includes one bankruptcy at current_day 438; those cohorts must not be treated as identical.",
+    "Grok 4.5 appears on the homepage but is absent from the supporting manifest."
+  ],
+  "results": [
+    {
+      "model_display": "Claude Fable 5",
+      "score_usd": 12630078,
+      "bankrupt_runs": 1,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "claude-fable-5",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "GPT-5.6 Sol",
+      "score_usd": 11313982,
+      "bankrupt_runs": 2,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "gpt-5.6-sol",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "Claude Opus 4.8",
+      "score_usd": 2399209,
+      "bankrupt_runs": 1,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "claude-opus-4-8",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "Qwen 3.7 Max",
+      "score_usd": 365346,
+      "bankrupt_runs": 0,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "qwen-3.7-max",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "Gemini 3.5 Flash",
+      "score_usd": 75126,
+      "bankrupt_runs": 0,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "gemini-3.5-flash",
+      "manifest_alignment": "cohort_conflict"
+    },
+    {
+      "model_display": "Claude Opus 4.7",
+      "score_usd": 70620,
+      "bankrupt_runs": 1,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "claude-opus-4-7",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "Claude Sonnet 5",
+      "score_usd": 64459,
+      "bankrupt_runs": 1,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "claude-sonnet-5",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "Claude Haiku 4.5",
+      "score_usd": 59625,
+      "bankrupt_runs": 2,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "claude-haiku-4.5",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "GLM 5.2",
+      "score_usd": 54327,
+      "bankrupt_runs": 2,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "glm-5.2",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "Kimi K2.6",
+      "score_usd": 43598,
+      "bankrupt_runs": 0,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "kimi-k2.6",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "Claude Sonnet 4.6",
+      "score_usd": 38166,
+      "bankrupt_runs": 1,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "claude-sonnet-4.6",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "GPT-5.5",
+      "score_usd": 33260,
+      "bankrupt_runs": 2,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "gpt-5.5",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "Grok 4.5",
+      "score_usd": 15909,
+      "bankrupt_runs": 2,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": null,
+      "manifest_alignment": "missing"
+    },
+    {
+      "model_display": "GLM 5.1",
+      "score_usd": 0,
+      "bankrupt_runs": 3,
+      "run_count": 3,
+      "homepage_max_survival_days": 319,
+      "scoring_status": "all_runs_bankrupt",
+      "manifest_model": "glm-5.1",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "DeepSeek V4 Pro",
+      "score_usd": 0,
+      "bankrupt_runs": 3,
+      "run_count": 3,
+      "homepage_max_survival_days": 160,
+      "scoring_status": "all_runs_bankrupt",
+      "manifest_model": "deepseek-v4-pro",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "Gemini 3 Flash",
+      "score_usd": 0,
+      "bankrupt_runs": 3,
+      "run_count": 3,
+      "homepage_max_survival_days": 150,
+      "scoring_status": "all_runs_bankrupt",
+      "manifest_model": "gemini-3-flash",
+      "manifest_alignment": "model_level_support_only"
+    },
+    {
+      "model_display": "Grok 4.20",
+      "score_usd": 0,
+      "bankrupt_runs": 3,
+      "run_count": 3,
+      "homepage_max_survival_days": 59,
+      "scoring_status": "all_runs_bankrupt",
+      "manifest_model": "grok-4.20",
+      "manifest_alignment": "model_level_support_only"
+    }
+  ],
+  "references": [
+    {
+      "label": "Rule-based baseline",
+      "score_usd": 15756408,
+      "participant": false
+    },
+    {
+      "label": "Estimated final cash upper bound",
+      "score_usd": 2200000000,
+      "participant": false
+    }
+  ]
+}

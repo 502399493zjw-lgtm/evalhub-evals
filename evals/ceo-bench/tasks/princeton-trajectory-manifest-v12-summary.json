@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "source_url": "https://ceobench.com/trajectory-viewer/data/runs/manifest.json?v=12",
+  "source_sha256": "3e2821f74330be907b85c35d8f6ac22ce1cbb32d0a3038ef05cee241a4f399f4",
+  "retrieved_on": "2026-07-23",
+  "field_note": "total_days is the configured horizon; current_day is the disclosed run endpoint. This summary supports provenance only and must not be used as the published score authority.",
+  "models": [
+    {"model":"claude-fable-5","runs":[{"run_id":"2c0aeba9","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"3def3647","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"4f03ddc9","total_days":504,"current_day":385,"bankrupt":true}]},
+    {"model":"gpt-5.6-sol","runs":[{"run_id":"63f6b1fb","total_days":500,"current_day":190,"bankrupt":true},{"run_id":"d1834c32","total_days":500,"current_day":500,"bankrupt":false},{"run_id":"786948e9","total_days":500,"current_day":192,"bankrupt":true}]},
+    {"model":"claude-opus-4-8","runs":[{"run_id":"e2cbe2de","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"aad782be","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"3f8f3efd","total_days":504,"current_day":134,"bankrupt":true}]},
+    {"model":"qwen-3.7-max","runs":[{"run_id":"7717b7d9","total_days":497,"current_day":497,"bankrupt":false},{"run_id":"20d908a4","total_days":497,"current_day":497,"bankrupt":false},{"run_id":"b2a565d0","total_days":497,"current_day":497,"bankrupt":false}]},
+    {"model":"gemini-3.5-flash","runs":[{"run_id":"dda3ca49","total_days":497,"current_day":497,"bankrupt":false},{"run_id":"943710ab","total_days":497,"current_day":497,"bankrupt":false},{"run_id":"994d00ad","total_days":497,"current_day":438,"bankrupt":true}]},
+    {"model":"claude-opus-4-7","runs":[{"run_id":"c2b8b65e","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"a96f6989","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"babb5a25","total_days":504,"current_day":243,"bankrupt":true}]},
+    {"model":"claude-sonnet-5","runs":[{"run_id":"051a15c4","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"a1d3f2f6","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"24586283","total_days":504,"current_day":412,"bankrupt":true}]},
+    {"model":"claude-haiku-4.5","runs":[{"run_id":"613d71c8","total_days":497,"current_day":497,"bankrupt":false},{"run_id":"84df360d","total_days":497,"current_day":148,"bankrupt":true},{"run_id":"e0d5dcb6","total_days":497,"current_day":211,"bankrupt":true}]},
+    {"model":"glm-5.2","runs":[{"run_id":"e2823227","total_days":497,"current_day":497,"bankrupt":false},{"run_id":"809a7547","total_days":497,"current_day":242,"bankrupt":true},{"run_id":"27bb1cbc","total_days":497,"current_day":388,"bankrupt":true}]},
+    {"model":"kimi-k2.6","runs":[{"run_id":"313833b0","total_days":497,"current_day":497,"bankrupt":false},{"run_id":"83b4fecf","total_days":497,"current_day":497,"bankrupt":false},{"run_id":"7e753caf","total_days":497,"current_day":497,"bankrupt":false}]},
+    {"model":"claude-sonnet-4.6","runs":[{"run_id":"6384895d","total_days":497,"current_day":497,"bankrupt":false},{"run_id":"9c8dd0d5","total_days":497,"current_day":497,"bankrupt":false},{"run_id":"9f383152","total_days":497,"current_day":258,"bankrupt":true}]},
+    {"model":"gpt-5.5","runs":[{"run_id":"8f92185d","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"16d10bb6","total_days":500,"current_day":266,"bankrupt":true},{"run_id":"9fa64d2e","total_days":504,"current_day":436,"bankrupt":true}]},
+    {"model":"glm-5.1","runs":[{"run_id":"c1c2dbe4","total_days":497,"current_day":319,"bankrupt":true},{"run_id":"f5d25ac4","total_days":497,"current_day":147,"bankrupt":true},{"run_id":"c8a526c1","total_days":497,"current_day":1,"bankrupt":true}]},
+    {"model":"deepseek-v4-pro","runs":[{"run_id":"e8ebec03","total_days":497,"current_day":104,"bankrupt":true},{"run_id":"e3e087c5","total_days":497,"current_day":145,"bankrupt":true},{"run_id":"6d80cf7a","total_days":497,"current_day":160,"bankrupt":true}]},
+    {"model":"gemini-3-flash","runs":[{"run_id":"60b6594b","total_days":497,"current_day":150,"bankrupt":true},{"run_id":"0b562a01","total_days":497,"current_day":136,"bankrupt":true},{"run_id":"7ca27419","total_days":497,"current_day":125,"bankrupt":true}]},
+    {"model":"grok-4.20","runs":[{"run_id":"63f17af6","total_days":497,"current_day":35,"bankrupt":true},{"run_id":"1a24cf53","total_days":497,"current_day":14,"bankrupt":true},{"run_id":"52a07bac","total_days":497,"current_day":59,"bankrupt":true}]}
+  ]
+}
