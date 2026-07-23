@@ -1,6 +1,6 @@
 # EvalHub Evals
 
-This standalone repository is the source of truth for the six launch evaluations. Every `evals/<slug>/` directory contains a complete, reviewable contract:
+This standalone repository is the source of truth for EvalHub evaluations. Every `evals/<slug>/` directory contains a complete, reviewable contract:
 
 - non-empty `eval.yaml`, `README.md`, `AUTHORS`, and `sample-result.json`;
 - `tasks/README.md` plus any eval-specific example inputs;

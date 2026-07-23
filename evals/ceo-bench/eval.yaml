@@ -1,25 +1,24 @@
 id: ceo-bench
-name: CEO-Bench（NovaMind 创业模拟）
+name: CEO-Bench（NovaMind 创业经营）
 category: useful
 display_category: agent
-description: 基于 Princeton CEO-Bench 的长周期 agent 经营评测：模型作为 bash agent 经营 NovaMind SaaS 创业公司，通过 novamind-operation CLI 做定价、研发、投放与容量决策，每周推进并阅读仪表盘，现金耗尽即破产终止；考察长程规划与经营结果。
-hook_title: 一百万美元开局，谁能不破产
+description: 第三方接入 Princeton CEO-Bench：Agent 以 100 万美元开局经营一家 AI 创业公司，连续处理定价、研发、增长、算力与企业客户决策，以终局现金衡量长期经营能力。
+hook_title: 给 Agent 500 天，它能把公司经营到最后吗
 dimensions: [经营, 推理]
 interface: agent
 runner: custom
 scoring: custom
 scored_by: author
-score_unit: 元
+score_unit: USD
 tiebreak:
   metric: tiebreak_value
   order: desc
   label: 存活天数
-scoring_note: 计分口径（2026-07-18 拍板）：CEO-bench 分数 = 经营结束时的最终资金（元）；破产（现金耗尽终止）计 0 分，破产成绩之间按存活天数排名（tiebreak，存活久者名次靠前），存活天数写入 raw_metric.tiebreak_value；多次试跑取平均存活天数。判分证据以归档运行的 world.nmdb ledger 现金轨迹与 checkpoint.json/logs 为准，由作者（@502399493zjw-lgtm）复核。作者判分选项保持开启：自带分数的提交走默认模式（scored，待作者认可），score=null 的提交请作者判分。task_results[].score 记录的是观测到的存活天数（原始观测，不是最终评分）。
+scoring_note: Princeton 官方公开成绩以 ceobench.com 的结果表为权威来源，由本评测作者核对来源快照后录入；这表示“上游作者公开发布”，不等于 EvalHub 独立复跑。新的 EvalHub 证据提交必须包含 3 次相互独立的运行，并遵循本接入固定的整周复现配置：官方 run-ceobench 钉死 commit、每个工作副本只有一个 session、seed=42、total_days=497、initial_cash=1000000、scenario=default、相同 simulator_llm 配置、最高推理强度、严格脱敏的逐周 history 与唯一 final_cash 查询输出。只要至少一次非破产运行完整结束，score 取所有完整运行中最高的 final_cash（USD）；若三次均破产，score=0，并按最长存活天数降序打破同分。转换器始终写 score=null；只有评测作者核对来源和证据后才能判分、认可。提交者自报、URL、哈希或脱敏 history 本身不构成“已验证”。
 command_template:
-  argv: [node, evals/ceo-bench/pack-to-result.mjs, ceobench-run-dir, --out, "{output}"]
+  argv: [node, evals/ceo-bench/pack-to-result.mjs, ceobench-submission/submission.json, --out, "{output}"]
   output: ceo-bench-result.json
-trials: 1
-est_tokens: 50000000
+trials: 3
 tasks:
   - id: novamind-default-seed42
-    prompt: 以 bash agent 身份经营 NovaMind SaaS 创业模拟：初始现金 $1,000,000，随机种子 42，default 场景。通过 novamind-operation CLI 管理三档订阅定价（A/B/C）、模型档位、用量配额、算力容量、每日运维/研发支出与广告投放；用 next-week 按周推进并阅读每周仪表盘（现金、个人订阅用户、企业席位、未决 issue 等）。现金耗尽即破产、运行终止。目标是在长周期内保持公司存活并最大化经营成果。归档运行的本地配置为 3,647 天（与官方发布的 500 天协议不同，结果不可并入论文协议组）。
+    prompt: 在三个相互独立的官方 run-ceobench 工作副本中，各只创建一个 NovaMind session；使用 seed 42、初始现金 1,000,000 USD 和 default 场景，并保持相同 simulator_llm 配置。参赛 Agent 必须使用其 runner 的最高推理强度，持续经营至完整终点或现金小于 0 破产，通过官方 novamind-operation 接口决策、查询与按周推进，不得读取、解密、解压、反汇编或以其他方式检查 world.nmdb 和 novamind-operation。每次结束后使用本评测的白名单脱敏工具导出逐周推进边界和唯一终局现金查询，绝不公开原始 history，再组成三次运行证据包。EvalHub 固定复现配置的精确终点与采集方法见本目录 README。

@@ -15,13 +15,23 @@ import { fileURLToPath } from "node:url";
 
 const testDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(testDirectory, "../..");
-const evalDirectory = path.join(repositoryRoot, "evals", "ceo-bench-500d");
+const evalDirectory = path.join(repositoryRoot, "evals", "ceo-bench");
 const packer = path.join(evalDirectory, "pack-to-result.mjs");
 const sanitizer = path.join(evalDirectory, "sanitize-history.mjs");
 const exampleSubmission = path.join(evalDirectory, "tasks", "example-evidence");
+const officialResultsSnapshot = path.join(
+  evalDirectory,
+  "tasks",
+  "princeton-official-results-2026-07-23.json",
+);
+const trajectoryManifestSummary = path.join(
+  evalDirectory,
+  "tasks",
+  "princeton-trajectory-manifest-v12-summary.json",
+);
 
 async function makeFixture(t) {
-  const root = await mkdtemp(path.join(os.tmpdir(), "ceo-bench-500d-"));
+  const root = await mkdtemp(path.join(os.tmpdir(), "ceo-bench-"));
   t.after(() => rm(root, { recursive: true, force: true }));
   const tasks = path.join(root, "tasks");
   await cp(exampleSubmission, tasks, { recursive: true });
@@ -104,23 +114,77 @@ test("packs exactly three valid trials and selects the best completed run", asyn
   assert.equal(run.status, 0, run.stderr);
   const result = await readJson(fixture.output);
   const entry = result.results[0];
-  assert.equal(result.eval_id, "ceo-bench-500d");
+  assert.equal(result.eval_id, "ceo-bench");
   assert.equal(result.eval_commit, "abcdef1");
   assert.equal(result.submission.run_date, "2026-07-23");
   assert.equal(entry.score, null);
   assert.equal(entry.participant.config.selected_trial, "b2c3d4e5f6a7");
   assert.equal(entry.raw_metric.tiebreak_value, 497);
-  assert.equal(entry.participant.config.nominal_days, 500);
-  assert.equal(entry.participant.config.effective_days, 497);
-  assert.equal(entry.participant.config.total_days, 497);
-  assert.equal(entry.participant.config.weeks, 71);
+  assert.equal(
+    entry.participant.config.protocol_profile,
+    "evalhub-fixed-weekly-v1",
+  );
+  assert.ok(!Object.hasOwn(entry.participant.config, "nominal_days"));
+  assert.ok(!Object.hasOwn(entry.participant.config, "effective_days"));
+  assert.ok(!Object.hasOwn(entry.participant.config, "total_days"));
+  assert.ok(!Object.hasOwn(entry.participant.config, "weeks"));
   assert.match(entry.raw_metric.value, /\$1,500,000\.00/);
+  assert.doesNotMatch(entry.raw_metric.value, /497 天|71 个整周/);
   assert.match(entry.detail, /作者回填最高完整终局现金/);
+  assert.doesNotMatch(entry.detail, /497 天|71 个整周/);
   assert.match(entry.participant.config.evidence_fingerprint, /^[a-f0-9]{64}$/u);
   assert.equal(entry.showcases[1].turns.length, 4);
 });
 
-test("sanitizes official history with a deterministic field whitelist", async (t) => {
+test("pins Princeton published scores separately from EvalHub rerun claims", async () => {
+  const snapshot = await readJson(officialResultsSnapshot);
+  const trajectorySummary = await readJson(trajectoryManifestSummary);
+  const scores = new Map(
+    snapshot.results.map((result) => [result.model_display, result.score_usd]),
+  );
+
+  assert.equal(snapshot.source_kind, "upstream_official_publication");
+  assert.equal(snapshot.results.length, 17);
+  assert.equal(scores.size, 17);
+  assert.equal(scores.get("Claude Fable 5"), 12630078);
+  assert.equal(scores.get("GPT-5.6 Sol"), 11313982);
+  assert.equal(scores.get("Grok 4.20"), 0);
+  assert.match(snapshot.score_authority.sha256, /^[a-f0-9]{64}$/u);
+  assert.match(snapshot.trajectory_support.sha256, /^[a-f0-9]{64}$/u);
+  assert.match(snapshot.verification_scope, /does not claim an independent EvalHub rerun/u);
+  assert.match(snapshot.public_display_policy, /day counts may remain in internal provenance/u);
+  assert.ok(snapshot.references.every((reference) => reference.participant === false));
+  const gemini = snapshot.results.find(
+    (result) => result.model_display === "Gemini 3.5 Flash",
+  );
+  const grok = snapshot.results.find(
+    (result) => result.model_display === "Grok 4.5",
+  );
+  assert.equal(gemini.manifest_alignment, "cohort_conflict");
+  assert.equal(grok.manifest_model, null);
+  assert.equal(grok.manifest_alignment, "missing");
+  assert.equal(trajectorySummary.models.length, 16);
+  assert.equal(
+    trajectorySummary.models.reduce(
+      (total, model) => total + model.runs.length,
+      0,
+    ),
+    48,
+  );
+  assert.ok(
+    trajectorySummary.models.every((model) =>
+      model.runs.every(
+        (run) =>
+          typeof run.run_id === "string" &&
+          Number.isInteger(run.total_days) &&
+          Number.isInteger(run.current_day) &&
+          typeof run.bankrupt === "boolean",
+      ),
+    ),
+  );
+});
+
+test("sanitizes upstream history with a deterministic field whitelist", async (t) => {
   const fixture = await makeFixture(t);
   const raw = path.join(fixture.root, "raw-history.jsonl");
   const firstOutput = path.join(fixture.root, "public-history-1.jsonl");
@@ -246,7 +310,7 @@ test("rejects a non-bankrupt run that stops before the 497-day full-week boundar
   const run = runPacker(fixture.manifest, fixture.output);
 
   assert.notEqual(run.status, 0);
-  assert.match(run.stderr, /按官方整周规则必须完成 497 天/);
+  assert.match(run.stderr, /EvalHub 固定整周复现配置必须完成 497 天/);
   await assert.rejects(readFile(fixture.output), /ENOENT/);
 });
 
@@ -325,7 +389,7 @@ test("rejects a provider mismatch or non-maximum reasoning declaration", async (
   assert.notEqual(mismatch.status, 0);
   assert.match(mismatch.stderr, /provider 命名空间必须与 participant\.config\.provider 一致/);
 
-  manifest.participant.config.provider = "anthropic";
+  manifest.participant.config.provider = "example";
   manifest.participant.config.reasoning_effort = "low";
   await writeJson(fixture.manifest, manifest);
   const lowReasoning = runPacker(fixture.manifest, fixture.output);
@@ -345,7 +409,7 @@ test("rejects credential-bearing artifact URLs and missing final-cash history", 
   assert.match(unsafeUrl.stderr, /不能包含 query 参数/);
 
   manifest.runs[0].artifact_url =
-    "https://example.com/ceo-bench-500d/synthetic-run-1-evidence.zip";
+    "https://example.com/ceo-bench/synthetic-run-1-evidence.zip";
   await writeJson(fixture.manifest, manifest);
   await writeFile(
     path.join(fixture.tasks, "run-1", "history.jsonl"),

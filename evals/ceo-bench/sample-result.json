@@ -2,556 +2,96 @@
   "eval_id": "ceo-bench",
   "submission": {
     "runner_version": "ceo-bench/pack-to-result@1.0.0",
-    "run_date": "2026-07-06"
+    "run_date": "2026-07-23"
   },
   "results": [
     {
       "participant": {
-        "model": "minimax-m3-2026-07-06",
+        "model": "example/synthetic-agent-20260723",
+        "harness": "example-harness",
+        "harness_version": "1.0.0",
         "config": {
-          "upstream_model_id": "MiniMax-M3",
-          "provider": "openai",
-          "reasoning_effort": null,
-          "agent_type": "bash_agent",
+          "provider": "example",
+          "reasoning_effort": "max",
+          "protocol_profile": "evalhub-fixed-weekly-v1",
+          "source_repository": "https://github.com/zlab-princeton/run-ceobench",
+          "source_commit": "f5d500688d95256906fd02cc5aa7524f2fe08d5b",
           "seed": 42,
+          "initial_cash_usd": 1000000,
           "scenario": "default",
-          "total_days": 3647,
-          "run_id": "ea06fe84",
-          "label": "full_m3_thinking"
+          "trials": 3,
+          "simulator_llm": {
+            "social_post_llm_provider": "anthropic",
+            "social_post_llm_model": "claude-haiku-4-5-20251001",
+            "enterprise_llm_provider": "anthropic",
+            "enterprise_llm_model": "claude-sonnet-4-5-20250929"
+          },
+          "selected_trial": "b2c3d4e5f6a7",
+          "evidence_fingerprint": "e65b955123931c3894c18e052cccd68df9270e30b8f04e5ea8fa0fdf2b4d0154"
         }
       },
       "score": null,
       "raw_metric": {
-        "label": "存活天数",
-        "value": "265 天 · 终局现金 -$26 · 个人订阅用户 232"
+        "label": "3 次运行 · 作者待复核",
+        "value": "代表运行 b2c3d4e5f6a7：完整结束，终局现金 $1,500,000.00；2 次完成 / 1 次破产",
+        "tiebreak_value": 497
       },
-      "detail": "由 CEO-Bench 本地运行 run_ea06fe84（2026-07-06，seed 42，default 场景，配置 3647 天）的保留观测重建归档，非平台实时跑分。上游 API 模型名为 MiniMax-M3（不带日期），模型 ID 日期后缀 2026-07-06 是本地运行日期，不是官方模型快照日期。单次运行，不代表统计稳定结论。每周仪表盘观测 39 条，终止于第 265 天。token 用量（checkpoint）：输入 49,347,938、输出 636,940、推理 22,899；usage.tokens 为输入+输出合计。score 为 null：scored_by=author，等待作者按公示口径回填。",
-      "usage": {
-        "tokens": 49984878
-      },
-      "task_results": [
-        {
-          "task_id": "novamind-default-seed42",
-          "score": 265,
-          "raw": "观测存活天数 265 天（原始观测，非作者最终评分）；终局现金 -$26，个人订阅用户 232；来源 tool_results_ea06fe84.jsonl 第 1738 行。"
-        }
-      ],
+      "detail": "第三方 CEO-Bench 证据包，钉死官方运行仓库 commit f5d500688d95256906fd02cc5aa7524f2fe08d5b。已本地校验 3 个独立 session：seed 42、初始现金 1,000,000 USD、default 场景、相同 simulator_llm 配置、完整的 EvalHub 固定整周复现配置、严格白名单脱敏的逐周 history 和唯一 final_cash 查询输出。存在完整运行，按公开规则建议作者回填最高完整终局现金 $1,500,000.00。提交侧 score 保持 null，只有评测集作者核对公开 artifact 与本地 SHA-256 后才能判分和认可。此集成不是 Princeton 官方榜单、官方认证或作者背书。",
       "showcases": [
         {
           "type": "timeline",
-          "title": "每周现金轨迹（重建自 run_ea06fe84 保留仪表盘观测，非逐字日志）",
+          "title": "三次独立运行结果",
           "series": [
             {
-              "t": "第 0 天",
-              "v": 1000000
+              "t": "Trial 1",
+              "v": 1250000
             },
             {
-              "t": "第 7 天",
-              "v": 709190
+              "t": "Trial 2",
+              "v": 1500000
             },
             {
-              "t": "第 14 天",
-              "v": 282166
-            },
-            {
-              "t": "第 21 天",
-              "v": 211218
-            },
-            {
-              "t": "第 28 天",
-              "v": 126971
-            },
-            {
-              "t": "第 35 天",
-              "v": 111517
-            },
-            {
-              "t": "第 42 天",
-              "v": 94542
-            },
-            {
-              "t": "第 49 天",
-              "v": 52617
-            },
-            {
-              "t": "第 56 天",
-              "v": 46647
-            },
-            {
-              "t": "第 63 天",
-              "v": 40940
-            },
-            {
-              "t": "第 70 天",
-              "v": 37314
-            },
-            {
-              "t": "第 77 天",
-              "v": 34554
-            },
-            {
-              "t": "第 84 天",
-              "v": 31563
-            },
-            {
-              "t": "第 91 天",
-              "v": 29343
-            },
-            {
-              "t": "第 98 天",
-              "v": 27815
-            },
-            {
-              "t": "第 105 天",
-              "v": 26981
-            },
-            {
-              "t": "第 112 天",
-              "v": 25437
-            },
-            {
-              "t": "第 119 天",
-              "v": 24312
-            },
-            {
-              "t": "第 126 天",
-              "v": 23481
-            },
-            {
-              "t": "第 133 天",
-              "v": 22275
-            },
-            {
-              "t": "第 140 天",
-              "v": 22036
-            },
-            {
-              "t": "第 147 天",
-              "v": 21078
-            },
-            {
-              "t": "第 154 天",
-              "v": 19181
-            },
-            {
-              "t": "第 161 天",
-              "v": 17107
-            },
-            {
-              "t": "第 168 天",
-              "v": 15816
-            },
-            {
-              "t": "第 175 天",
-              "v": 13365
-            },
-            {
-              "t": "第 182 天",
-              "v": 10391
-            },
-            {
-              "t": "第 189 天",
-              "v": 8329
-            },
-            {
-              "t": "第 196 天",
-              "v": 8154
-            },
-            {
-              "t": "第 203 天",
-              "v": 7404
-            },
-            {
-              "t": "第 210 天",
-              "v": 6579
-            },
-            {
-              "t": "第 217 天",
-              "v": 5329
-            },
-            {
-              "t": "第 224 天",
-              "v": 4510
-            },
-            {
-              "t": "第 231 天",
-              "v": 3789
-            },
-            {
-              "t": "第 238 天",
-              "v": 2613
-            },
-            {
-              "t": "第 245 天",
-              "v": 1564
-            },
-            {
-              "t": "第 252 天",
-              "v": 604
-            },
-            {
-              "t": "第 259 天",
-              "v": 290
-            },
-            {
-              "t": "第 265 天",
-              "v": -26
+              "t": "Trial 3",
+              "v": -2500
             }
           ],
           "events": [
             {
-              "t": "第 0 天",
-              "label": "起始现金 $1,000,000"
+              "t": "Trial 1",
+              "label": "a1b2c3d4e5f6 · 完整结束 · $1,250,000.00"
             },
             {
-              "t": "第 42 天",
-              "label": "现金跌破 $100,000（$94,542）"
+              "t": "Trial 2",
+              "label": "b2c3d4e5f6a7 · 完整结束 · $1,500,000.00"
             },
             {
-              "t": "第 265 天",
-              "label": "破产终止（现金 -$26，个人订阅用户 232）"
-            }
-          ]
-        },
-        {
-          "type": "timeline",
-          "title": "每周个人订阅用户轨迹（重建自 run_ea06fe84 保留仪表盘观测）",
-          "series": [
-            {
-              "t": "第 0 天",
-              "v": 0
-            },
-            {
-              "t": "第 7 天",
-              "v": 0
-            },
-            {
-              "t": "第 14 天",
-              "v": 66
-            },
-            {
-              "t": "第 21 天",
-              "v": 194
-            },
-            {
-              "t": "第 28 天",
-              "v": 203
-            },
-            {
-              "t": "第 35 天",
-              "v": 218
-            },
-            {
-              "t": "第 42 天",
-              "v": 253
-            },
-            {
-              "t": "第 49 天",
-              "v": 319
-            },
-            {
-              "t": "第 56 天",
-              "v": 361
-            },
-            {
-              "t": "第 63 天",
-              "v": 408
-            },
-            {
-              "t": "第 70 天",
-              "v": 438
-            },
-            {
-              "t": "第 77 天",
-              "v": 441
-            },
-            {
-              "t": "第 84 天",
-              "v": 465
-            },
-            {
-              "t": "第 91 天",
-              "v": 478
-            },
-            {
-              "t": "第 98 天",
-              "v": 479
-            },
-            {
-              "t": "第 105 天",
-              "v": 472
-            },
-            {
-              "t": "第 112 天",
-              "v": 466
-            },
-            {
-              "t": "第 119 天",
-              "v": 460
-            },
-            {
-              "t": "第 126 天",
-              "v": 454
-            },
-            {
-              "t": "第 133 天",
-              "v": 441
-            },
-            {
-              "t": "第 140 天",
-              "v": 399
-            },
-            {
-              "t": "第 147 天",
-              "v": 381
-            },
-            {
-              "t": "第 154 天",
-              "v": 371
-            },
-            {
-              "t": "第 161 天",
-              "v": 359
-            },
-            {
-              "t": "第 168 天",
-              "v": 353
-            },
-            {
-              "t": "第 175 天",
-              "v": 349
-            },
-            {
-              "t": "第 182 天",
-              "v": 347
-            },
-            {
-              "t": "第 189 天",
-              "v": 343
-            },
-            {
-              "t": "第 196 天",
-              "v": 329
-            },
-            {
-              "t": "第 203 天",
-              "v": 304
-            },
-            {
-              "t": "第 210 天",
-              "v": 294
-            },
-            {
-              "t": "第 217 天",
-              "v": 290
-            },
-            {
-              "t": "第 224 天",
-              "v": 278
-            },
-            {
-              "t": "第 231 天",
-              "v": 271
-            },
-            {
-              "t": "第 238 天",
-              "v": 268
-            },
-            {
-              "t": "第 245 天",
-              "v": 264
-            },
-            {
-              "t": "第 252 天",
-              "v": 257
-            },
-            {
-              "t": "第 259 天",
-              "v": 240
-            },
-            {
-              "t": "第 265 天",
-              "v": 232
-            }
-          ],
-          "events": [
-            {
-              "t": "第 14 天",
-              "label": "首次出现非零订阅用户（66）"
-            },
-            {
-              "t": "第 98 天",
-              "label": "保留观测中的订阅用户峰值（479）"
-            },
-            {
-              "t": "第 265 天",
-              "label": "破产终止（现金 -$26，个人订阅用户 232）"
+              "t": "Trial 3",
+              "label": "c3d4e5f6a7b8 · 破产结束 · -$2,500.00"
             }
           ]
         },
         {
           "type": "transcript",
-          "title": "每周仪表盘重建时间线（样例摘录 · 非原始日志逐字引用）",
+          "title": "公开证据索引（合规输出，不读取 world.nmdb 或 novamind-operation）",
           "turns": [
             {
               "role": "system",
-              "content": "以下时间线由运行日志保留的每周仪表盘观测重建，非原始工具日志的逐字摘录。"
+              "content": "源仓库 https://github.com/zlab-princeton/run-ceobench@f5d500688d95256906fd02cc5aa7524f2fe08d5b；三次证据总指纹 sha256:e65b955123931c3894c18e052cccd68df9270e30b8f04e5ea8fa0fdf2b4d0154"
             },
             {
-              "role": "dashboard",
-              "content": "第 0 天 现金 $1,000,000 个人订阅用户 0"
+              "role": "trial-1",
+              "content": "https://example.com/ceo-bench/synthetic-run-1-evidence.zip · session a1b2c3d4e5f6 · evidence sha256:f685578855026b179cd774da2623f2dc0f9cde796cdbca10f2c92f233f940593 · history 72 行",
+              "status": "completed"
             },
             {
-              "role": "dashboard",
-              "content": "第 7 天 现金 $709,190 个人订阅用户 0"
+              "role": "trial-2",
+              "content": "https://example.com/ceo-bench/synthetic-run-2-evidence.zip · session b2c3d4e5f6a7 · evidence sha256:98edbee6359d00f8c494395afe7ce841f9b93b18aaef8f804c6befde4d3cc99e · history 72 行",
+              "status": "completed"
             },
             {
-              "role": "dashboard",
-              "content": "第 14 天 现金 $282,166 个人订阅用户 66"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 21 天 现金 $211,218 个人订阅用户 194"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 28 天 现金 $126,971 个人订阅用户 203"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 35 天 现金 $111,517 个人订阅用户 218"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 42 天 现金 $94,542 个人订阅用户 253"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 49 天 现金 $52,617 个人订阅用户 319"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 56 天 现金 $46,647 个人订阅用户 361"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 63 天 现金 $40,940 个人订阅用户 408"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 70 天 现金 $37,314 个人订阅用户 438"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 77 天 现金 $34,554 个人订阅用户 441"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 84 天 现金 $31,563 个人订阅用户 465"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 91 天 现金 $29,343 个人订阅用户 478"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 98 天 现金 $27,815 个人订阅用户 479"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 105 天 现金 $26,981 个人订阅用户 472"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 112 天 现金 $25,437 个人订阅用户 466"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 119 天 现金 $24,312 个人订阅用户 460"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 126 天 现金 $23,481 个人订阅用户 454"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 133 天 现金 $22,275 个人订阅用户 441"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 140 天 现金 $22,036 个人订阅用户 399"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 147 天 现金 $21,078 个人订阅用户 381"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 154 天 现金 $19,181 个人订阅用户 371"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 161 天 现金 $17,107 个人订阅用户 359"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 168 天 现金 $15,816 个人订阅用户 353"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 175 天 现金 $13,365 个人订阅用户 349"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 182 天 现金 $10,391 个人订阅用户 347"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 189 天 现金 $8,329 个人订阅用户 343"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 196 天 现金 $8,154 个人订阅用户 329"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 203 天 现金 $7,404 个人订阅用户 304"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 210 天 现金 $6,579 个人订阅用户 294"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 217 天 现金 $5,329 个人订阅用户 290"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 224 天 现金 $4,510 个人订阅用户 278"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 231 天 现金 $3,789 个人订阅用户 271"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 238 天 现金 $2,613 个人订阅用户 268"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 245 天 现金 $1,564 个人订阅用户 264"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 252 天 现金 $604 个人订阅用户 257"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 259 天 现金 $290 个人订阅用户 240"
-            },
-            {
-              "role": "dashboard",
-              "content": "第 265 天 现金 -$26 个人订阅用户 232"
+              "role": "trial-3",
+              "content": "https://example.com/ceo-bench/synthetic-run-3-evidence.zip · session c3d4e5f6a7b8 · evidence sha256:205dd9d547b813a144aeb76bfef021b1a4ac247601a0c999150331e3bd92b8c7 · history 57 行",
+              "status": "bankrupt"
             }
           ]
         }

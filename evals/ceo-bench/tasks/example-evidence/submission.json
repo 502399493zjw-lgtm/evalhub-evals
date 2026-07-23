@@ -1,0 +1,25 @@
+{
+  "participant": {
+    "model": "example/synthetic-agent-20260723",
+    "harness": "example-harness",
+    "harness_version": "1.0.0",
+    "config": {
+      "provider": "example",
+      "reasoning_effort": "max"
+    }
+  },
+  "runs": [
+    {
+      "evidence_dir": "run-1",
+      "artifact_url": "https://example.com/ceo-bench/synthetic-run-1-evidence.zip"
+    },
+    {
+      "evidence_dir": "run-2",
+      "artifact_url": "https://example.com/ceo-bench/synthetic-run-2-evidence.zip"
+    },
+    {
+      "evidence_dir": "run-3",
+      "artifact_url": "https://example.com/ceo-bench/synthetic-run-3-evidence.zip"
+    }
+  ]
+}
