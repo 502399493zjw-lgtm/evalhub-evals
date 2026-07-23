@@ -116,6 +116,10 @@ test("packs exactly three valid trials and selects the best completed run", asyn
   const entry = result.results[0];
   assert.equal(result.eval_id, "ceo-bench");
   assert.equal(result.eval_commit, "abcdef1");
+  assert.equal(
+    result.submission.runner_version,
+    "ceo-bench/pack-to-result@2.0.0",
+  );
   assert.equal(result.submission.run_date, "2026-07-23");
   assert.equal(entry.score, null);
   assert.equal(entry.participant.config.selected_trial, "b2c3d4e5f6a7");

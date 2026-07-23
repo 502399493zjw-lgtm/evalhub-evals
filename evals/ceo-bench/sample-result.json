@@ -1,7 +1,7 @@
 {
   "eval_id": "ceo-bench",
   "submission": {
-    "runner_version": "ceo-bench/pack-to-result@1.0.0",
+    "runner_version": "ceo-bench/pack-to-result@2.0.0",
     "run_date": "2026-07-23"
   },
   "results": [

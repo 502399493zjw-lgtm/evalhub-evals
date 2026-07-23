@@ -19,7 +19,7 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "ceo-bench";
-const RUNNER_VERSION = "ceo-bench/pack-to-result@1.0.0";
+const RUNNER_VERSION = "ceo-bench/pack-to-result@2.0.0";
 const OFFICIAL_REPOSITORY = "https://github.com/zlab-princeton/run-ceobench";
 const PINNED_SOURCE_COMMIT = "f5d500688d95256906fd02cc5aa7524f2fe08d5b";
 const REQUIRED_RUNS = 3;
