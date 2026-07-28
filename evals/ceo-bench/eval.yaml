@@ -16,7 +16,7 @@ tiebreak:
   label: 存活天数
 scoring_note: Princeton 官方公开成绩以 ceobench.com 的结果表为权威来源，由本评测作者核对来源快照后录入；这表示“上游作者公开发布”，不等于 EvalHub 独立复跑。新的 EvalHub 证据提交必须包含 3 次相互独立的运行，并遵循本接入固定的整周复现配置：官方 run-ceobench 钉死 commit、每个工作副本只有一个 session、seed=42、total_days=497、initial_cash=1000000、scenario=default、相同 simulator_llm 配置、最高推理强度、严格脱敏的逐周 history 与唯一 final_cash 查询输出。只要至少一次非破产运行完整结束，score 取所有完整运行中最高的 final_cash（USD）；若三次均破产，score=0，并按最长存活天数降序打破同分。转换器始终写 score=null；只有评测作者核对来源和证据后才能判分、认可。提交者自报、URL、哈希或脱敏 history 本身不构成“已验证”。
 command_template:
-  argv: [node, evals/ceo-bench/pack-to-result.mjs, ceobench-submission/submission.json, --out, "{output}"]
+  argv: [node, evals/ceo-bench/pack-to-result.mjs, evals/ceo-bench/tasks/example-evidence/submission.json, --out, "{output}"]
   output: ceo-bench-result.json
 trials: 3
 tasks:

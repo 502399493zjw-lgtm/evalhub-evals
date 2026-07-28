@@ -10,6 +10,11 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { parseDocument } from "yaml";
 
+import {
+  validateEvalContent,
+  validateNoGitlinks,
+} from "./content-security.mjs";
+
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const defaultRoot = path.resolve(scriptDir, "..");
 
@@ -23,9 +28,7 @@ const REQUIRED_DIRECTORIES = ["tasks", "assets"];
 const AUTHORS_PLACEHOLDER = "@TODO-github-handle";
 const AUTHORS_HANDLE_PATTERN =
   /^@[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$/u;
-const EXACT_EVAL_CODEOWNERS_PATTERN = /^\/evals\/([^/]+)\/$/u;
-const ROOT_EVAL_CODEOWNERS_PATTERN = /^\/?evals(?:\/|$|[?*\[])/u;
-const CODEOWNERS_WILDCARD_PATTERN = /[?*\[\]]/u;
+const MAINTAINER_HANDLE = "@502399493zjw-lgtm";
 
 function codeownersSegmentMatches(pattern, value) {
   let source = "^";
@@ -318,21 +321,6 @@ async function loadCodeowners(repositoryRoot) {
       );
     }
 
-    const exactMatch =
-      pattern === undefined || CODEOWNERS_WILDCARD_PATTERN.test(pattern)
-        ? null
-        : EXACT_EVAL_CODEOWNERS_PATTERN.exec(pattern);
-    const targetsEvalTree =
-      pattern !== undefined && ROOT_EVAL_CODEOWNERS_PATTERN.test(pattern);
-    if (targetsEvalTree && exactMatch === null) {
-      errors.push(
-        fileError(
-          filePath,
-          `line ${lineNumber}: eval ownership pattern must be an exact /evals/<slug>/ path without wildcards`,
-        ),
-      );
-    }
-
     entries.push({
       lineNumber,
       pattern,
@@ -403,7 +391,6 @@ async function readAuthorHandle(evalDir, authorsAvailable, errors) {
 function validateCodeownerForEval(
   codeowners,
   dirName,
-  authorHandle,
   evalFilePaths,
   errors,
 ) {
@@ -411,54 +398,14 @@ function validateCodeownerForEval(
     return;
   }
 
-  const expectedPattern = `/evals/${dirName}/`;
-  const matches = codeowners.entries.filter(
-    (entry) => entry.pattern === expectedPattern,
-  );
-  if (matches.length === 0) {
-    errors.push(
-      fileError(
-        codeowners.filePath,
-        `${expectedPattern}: exact rule is missing`,
-      ),
-    );
-    return;
-  }
-  if (matches.length > 1) {
-    errors.push(
-      fileError(
-        codeowners.filePath,
-        `${expectedPattern}: duplicate exact rules at lines ${matches
-          .map((entry) => entry.lineNumber)
-          .join(", ")}`,
-      ),
-    );
-    return;
-  }
-
-  const [match] = matches;
-  if (!match.tokenCountValid || authorHandle === null) {
-    return;
-  }
-  if (match.owner !== authorHandle) {
-    errors.push(
-      fileError(
-        codeowners.filePath,
-        `${expectedPattern}: owner ${match.owner} does not match AUTHORS ${authorHandle}`,
-      ),
-    );
-    return;
-  }
-
   const effectiveMatch = effectiveCodeownerForEval(codeowners.entries, dirName);
-  if (effectiveMatch !== null && effectiveMatch.owner !== authorHandle) {
+  if (effectiveMatch === null || effectiveMatch.owner !== MAINTAINER_HANDLE) {
     errors.push(
       fileError(
         codeowners.filePath,
-        `${expectedPattern}: effective owner ${effectiveMatch.owner} from line ${effectiveMatch.lineNumber} does not match AUTHORS ${authorHandle}`,
+        `/evals/${dirName}/: effective CODEOWNER must be ${MAINTAINER_HANDLE}`,
       ),
     );
-    return;
   }
 
   for (const repositoryPath of evalFilePaths) {
@@ -467,13 +414,13 @@ function validateCodeownerForEval(
       repositoryPath,
     );
     if (
-      effectiveFileMatch !== null &&
-      effectiveFileMatch.owner !== authorHandle
+      effectiveFileMatch === null ||
+      effectiveFileMatch.owner !== MAINTAINER_HANDLE
     ) {
       errors.push(
         fileError(
           codeowners.filePath,
-          `${repositoryPath.join("/")}: effective owner ${effectiveFileMatch.owner} from line ${effectiveFileMatch.lineNumber} does not match AUTHORS ${authorHandle}`,
+          `${repositoryPath.join("/")}: effective CODEOWNER must be ${MAINTAINER_HANDLE}`,
         ),
       );
     }
@@ -539,6 +486,10 @@ export async function validateRepository(repositoryRoot = defaultRoot) {
   const evalDirectories = await listEvalDirectories(evalsDir);
   const codeowners = await loadCodeowners(root);
   errors.push(...codeowners.errors);
+  const gitlinkProblems = await validateNoGitlinks(root);
+  errors.push(
+    ...gitlinkProblems.map(({ filePath, message }) => fileError(filePath, message)),
+  );
 
   for (const dirName of evalDirectories) {
     const evalDir = path.join(evalsDir, dirName);
@@ -575,7 +526,7 @@ export async function validateRepository(repositoryRoot = defaultRoot) {
       );
     }
 
-    const authorHandle = await readAuthorHandle(
+    await readAuthorHandle(
       evalDir,
       requiredStatus.get("AUTHORS") === true,
       errors,
@@ -583,7 +534,6 @@ export async function validateRepository(repositoryRoot = defaultRoot) {
     validateCodeownerForEval(
       codeowners,
       dirName,
-      authorHandle,
       evalFilePaths,
       errors,
     );
@@ -606,6 +556,17 @@ export async function validateRepository(repositoryRoot = defaultRoot) {
       errors.push(fileError(yamlPath, error.message));
       continue;
     }
+
+    const contentProblems = await validateEvalContent({
+      evalDir,
+      slug: dirName,
+      parsedEval,
+    });
+    errors.push(
+      ...contentProblems.map(({ filePath, message }) =>
+        fileError(filePath, message),
+      ),
+    );
 
     if (parsedEval.id !== dirName) {
       errors.push(

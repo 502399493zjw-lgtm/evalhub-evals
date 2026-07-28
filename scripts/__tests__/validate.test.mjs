@@ -66,7 +66,7 @@ async function makeFixture(t) {
   await Promise.all([
     writeFile(
       path.join(root, ".github", "CODEOWNERS"),
-      "/evals/sample-eval/ @sample-author\n",
+      "* @502399493zjw-lgtm\n",
     ),
     writeFile(path.join(evalDir, "eval.yaml"), validEvalYaml),
     writeFile(path.join(evalDir, "README.md"), "# Sample eval\n"),
@@ -160,40 +160,36 @@ test("reports a non-file CODEOWNERS root once without missing-rule cascades", as
   assert.doesNotMatch(error.message, /exact rule is missing/);
 });
 
-test("requires one exact CODEOWNERS rule for every eval directory", async (t) => {
+test("requires the maintainer to be the effective CODEOWNER", async (t) => {
   const { root } = await makeFixture(t);
   await writeFile(path.join(root, ".github", "CODEOWNERS"), "# no eval rules\n\n");
 
   await expectInvalid(
     root,
-    /CODEOWNERS\n\/evals\/sample-eval\/: exact rule is missing/,
+    /CODEOWNERS\n\/evals\/sample-eval\/: effective CODEOWNER must be @502399493zjw-lgtm/,
   );
 });
 
-test("reports duplicate exact CODEOWNERS rules with their line numbers", async (t) => {
+test("rejects a different effective CODEOWNER", async (t) => {
   const { root } = await makeFixture(t);
   await writeFile(
     path.join(root, ".github", "CODEOWNERS"),
-    "/evals/sample-eval/ @sample-author\n/evals/sample-eval/ @sample-author\n",
+    "* @different-owner\n",
   );
 
   await expectInvalid(
     root,
-    /\/evals\/sample-eval\/: duplicate exact rules at lines 1, 2/,
+    /\/evals\/sample-eval\/: effective CODEOWNER must be @502399493zjw-lgtm/,
   );
 });
 
-test("requires the CODEOWNERS handle to byte-match AUTHORS", async (t) => {
+test("AUTHORS does not need repository write access through CODEOWNERS", async (t) => {
   const { root } = await makeFixture(t);
-  await writeFile(
-    path.join(root, ".github", "CODEOWNERS"),
-    "/evals/sample-eval/ @different-owner\n",
-  );
 
-  await expectInvalid(
-    root,
-    /\/evals\/sample-eval\/: owner @different-owner does not match AUTHORS @sample-author/,
-  );
+  assert.deepEqual(await validateRepository(root), {
+    evalCount: 1,
+    evalIds: ["sample-eval"],
+  });
 });
 
 test("rejects multiple owners on one exact CODEOWNERS rule", async (t) => {
@@ -209,27 +205,11 @@ test("rejects multiple owners on one exact CODEOWNERS rule", async (t) => {
   );
 });
 
-for (const [name, rule] of [
-  ["wildcard", "/evals/*/ @sample-author\n"],
-  ["non-anchored", "evals/sample-eval/ @sample-author\n"],
-  ["missing trailing slash", "/evals/sample-eval @sample-author\n"],
-]) {
-  test(`rejects a ${name} CODEOWNERS pattern`, async (t) => {
-    const { root } = await makeFixture(t);
-    await writeFile(path.join(root, ".github", "CODEOWNERS"), rule);
-
-    await expectInvalid(
-      root,
-      /CODEOWNERS\nline 1: eval ownership pattern must be an exact \/evals\/<slug>\/ path without wildcards/,
-    );
-  });
-}
-
-test("allows comments and blank lines around one synchronized owner", async (t) => {
+test("allows comments and blank lines around the maintainer rule", async (t) => {
   const { root, evalDir } = await makeFixture(t);
   await writeFile(
     path.join(root, ".github", "CODEOWNERS"),
-    "# Exact eval owners\n\n/evals/sample-eval/ @sample-author\n",
+    "# Repository maintainer\n\n* @502399493zjw-lgtm\n",
   );
   await writeFile(
     path.join(evalDir, "AUTHORS"),
@@ -242,11 +222,11 @@ test("allows comments and blank lines around one synchronized owner", async (t) 
   });
 });
 
-test("allows unrelated CODEOWNERS patterns outside the root eval tree", async (t) => {
+test("allows unrelated CODEOWNERS patterns before the maintainer catch-all", async (t) => {
   const { root } = await makeFixture(t);
   await writeFile(
     path.join(root, ".github", "CODEOWNERS"),
-    "/docs/evals/ @docs-owner\n/evals/sample-eval/ @sample-author\n",
+    "/docs/ @docs-owner\n* @502399493zjw-lgtm\n",
   );
 
   assert.deepEqual(await validateRepository(root), {
@@ -255,81 +235,18 @@ test("allows unrelated CODEOWNERS patterns outside the root eval tree", async (t
   });
 });
 
-test("rejects a later global CODEOWNERS rule that overrides an exact eval owner", async (t) => {
+test("rejects a later rule that overrides the maintainer for eval files", async (t) => {
   const { root } = await makeFixture(t);
   await writeFile(
     path.join(root, ".github", "CODEOWNERS"),
-    "/evals/sample-eval/ @sample-author\n* @different-owner\n",
+    "* @502399493zjw-lgtm\n*.yaml @different-owner\n",
   );
 
   await expectInvalid(
     root,
-    /\/evals\/sample-eval\/: effective owner @different-owner from line 2 does not match AUTHORS @sample-author/,
+    /evals\/sample-eval\/eval\.yaml: effective CODEOWNER must be @502399493zjw-lgtm/,
   );
 });
-
-test("allows a global CODEOWNERS rule before the exact eval owner", async (t) => {
-  const { root } = await makeFixture(t);
-  await writeFile(
-    path.join(root, ".github", "CODEOWNERS"),
-    "* @different-owner\n/evals/sample-eval/ @sample-author\n",
-  );
-
-  assert.deepEqual(await validateRepository(root), {
-    evalCount: 1,
-    evalIds: ["sample-eval"],
-  });
-});
-
-for (const { label, pattern, nestedPath } of [
-  {
-    label: "YAML",
-    pattern: "*.yaml",
-    nestedPath: ["tasks", "nested", "case.yaml"],
-  },
-  {
-    label: "Markdown",
-    pattern: "*.md",
-    nestedPath: ["tasks", "nested", "guide.md"],
-  },
-]) {
-  test(`rejects a later global ${label} rule that overrides real eval files`, async (t) => {
-    const { root, evalDir } = await makeFixture(t);
-    const nestedFile = path.join(evalDir, ...nestedPath);
-    await mkdir(path.dirname(nestedFile), { recursive: true });
-    await writeFile(nestedFile, `# Nested ${label} fixture\n`);
-    await writeFile(
-      path.join(root, ".github", "CODEOWNERS"),
-      `/evals/sample-eval/ @sample-author\n${pattern} @different-owner\n`,
-    );
-
-    const error = await getValidationError(root);
-    const repositoryPath = ["evals", validEval.id, ...nestedPath].join("/");
-
-    assert.match(
-      error.message,
-      new RegExp(
-        `${repositoryPath.replaceAll(".", "\\.")}: effective owner @different-owner from line 2 does not match AUTHORS @sample-author`,
-      ),
-    );
-  });
-
-  test(`allows a global ${label} rule before the exact eval owner`, async (t) => {
-    const { root, evalDir } = await makeFixture(t);
-    const nestedFile = path.join(evalDir, ...nestedPath);
-    await mkdir(path.dirname(nestedFile), { recursive: true });
-    await writeFile(nestedFile, `# Nested ${label} fixture\n`);
-    await writeFile(
-      path.join(root, ".github", "CODEOWNERS"),
-      `${pattern} @different-owner\n/evals/sample-eval/ @sample-author\n`,
-    );
-
-    assert.deepEqual(await validateRepository(root), {
-      evalCount: 1,
-      evalIds: ["sample-eval"],
-    });
-  });
-}
 
 for (const [name, authors, message] of [
   ["comments-only", "# no owner yet\n\n", /found 0/],
@@ -374,7 +291,7 @@ test("checks ownership even when eval.yaml is malformed", async (t) => {
   await expectInvalid(
     root,
     /AUTHORS\nAUTHORS: meaningful line must be one GitHub handle/,
-    /CODEOWNERS\n\/evals\/sample-eval\/: exact rule is missing/,
+    /CODEOWNERS\n\/evals\/sample-eval\/: effective CODEOWNER must be @502399493zjw-lgtm/,
     /eval\.yaml/,
   );
 });
@@ -395,7 +312,7 @@ test("validates a fully synchronized new eval directory", async (t) => {
     ),
     writeFile(
       path.join(root, ".github", "CODEOWNERS"),
-      "/evals/sample-eval/ @sample-author\n/evals/second-eval/ @second-owner\n",
+      "* @502399493zjw-lgtm\n",
     ),
   ]);
 

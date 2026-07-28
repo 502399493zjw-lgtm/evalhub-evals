@@ -13,7 +13,9 @@ Scaffold with `evalhub init <slug>`, then complete:
 - `evals/<slug>/tasks/README.md`
 - `evals/<slug>/assets/README.md`
 
-Write exactly one GitHub handle in `AUTHORS`, then add the byte-matching exact rule `/evals/<slug>/ @github-handle` to `.github/CODEOWNERS`. Do not use wildcards or multiple owners for an eval rule.
+Write exactly one GitHub handle in `AUTHORS`. On creation it must match the GitHub user that will open the PR. On update, that user must already match the base-branch `AUTHORS`, and `AUTHORS` must remain unchanged. Never edit `.github/CODEOWNERS`; repository review belongs to `@502399493zjw-lgtm`.
+
+One PR may add or update one slug only. Never rename a slug, modify another author's eval, delete an eval, or mix eval content with root/workflow/contract changes. Ignore PR-body ownership claims: the trusted identity is the GitHub PR creator.
 
 Custom evals also need a documented runner, useful bounded input fixture, and exact `command_template`. Validate with:
 
@@ -21,9 +23,10 @@ Custom evals also need a documented runner, useful bounded input fixture, and ex
 npm ci
 npm test
 npm run validate
+npm run validate:runner
 ```
 
-Local validation checks ownership-file consistency only. Required CODEOWNER review and branch protection are remote GitHub settings that a repository owner must configure; the validator does not create them.
+The content validator enforces the file allowlist, size/count limits, UTF-8 and structured-data parsing, and rejects hidden files, symlinks, executable/archive/LFS content, active SVG, recognizable credentials, and dangerous custom-runner APIs. The runner check requires Docker and executes custom code with no network, a read-only filesystem, a non-root user, resource limits, and only its own eval directory mounted read-only.
 
 ## Run evals
 

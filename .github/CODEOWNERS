@@ -1,7 +1,2 @@
-/evals/ceo-bench/ @502399493zjw-lgtm
-/evals/chinese-nuance/ @evalhub
-/evals/code-er/ @evalhub
-/evals/cold-jokes/ @evalhub
-/evals/mc-build/ @evalhub
-/evals/random-reply/ @evalhub
-/evals/werewolf-night/ @evalhub
+# All repository changes require review by the EvalHub maintainer.
+* @502399493zjw-lgtm

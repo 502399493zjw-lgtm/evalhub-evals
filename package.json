@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "node --test scripts/__tests__/*.test.mjs",
-    "validate": "node scripts/validate.mjs"
+    "validate": "node scripts/validate.mjs",
+    "validate:runner": "node scripts/runner-sandbox.mjs"
   },
   "dependencies": {
     "@evalhub/schemas": "file:vendor/evalhub-schemas",
