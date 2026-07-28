@@ -13,7 +13,10 @@ Install the pinned dependencies, run the contract tests, and validate all evals:
 npm ci
 npm test
 npm run validate
+npm run validate:runner
 ```
+
+The last command executes custom runners in a locked Docker container. Contributions are accepted only through GitHub PRs: one PR may create or update one slug, the PR creator must match that eval's `AUTHORS`, and repository review remains with `@502399493zjw-lgtm`. See `CONTRIBUTING.md` for the complete ownership, file-safety, and sandbox rules.
 
 The three custom launch evals have slug-specific outputs:
 

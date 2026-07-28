@@ -298,9 +298,6 @@ async function main() {
   }
   const input = validateInput(parsed);
 
-  if (process.env.NODE_ENV === "test" && process.env.EVALHUB_TEST_QUICKJS_INIT_FAILURE === "1") {
-    fail("simulated QuickJS initialization failure");
-  }
   const QuickJS = await getQuickJS();
   const taskResults = taskSpecs.map((spec) => scoreSnippet(QuickJS, input.answers[spec.id], spec));
   const passed = taskResults.filter((task) => task.score === 100).length;
