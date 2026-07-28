@@ -101,3 +101,5 @@ npx @evalhub/cli@0.1.0 submit ceo-bench-result.json
 ## 示例声明
 
 `tasks/example-evidence/` 是一份可直接复制的完整合成提交目录，`sample-result.json` 是它生成的结果；二者只用于测试转换与校验，绝不代表任何模型的真实 CEO-Bench 成绩。
+
+<!-- Temporary policy acceptance fixture: this branch must never merge. -->
