@@ -15,6 +15,12 @@ const MAX_OUTPUT_BYTES = 2 * 1024 * 1024;
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const defaultRoot = path.resolve(scriptDir, "..");
 
+function hostSandboxUser() {
+  const uid = typeof process.getuid === "function" ? process.getuid() : 1000;
+  const gid = typeof process.getgid === "function" ? process.getgid() : 1000;
+  return `${uid > 0 ? uid : 1000}:${gid > 0 ? gid : 1000}`;
+}
+
 function parseYaml(source, filePath) {
   const document = parseDocument(source, {
     maxAliasCount: 20,
@@ -74,6 +80,7 @@ export function buildDockerArgs({
   argv,
   outputDir,
   containerName = `evalhub-${slug}-test`,
+  containerUser = hostSandboxUser(),
 }) {
   const containerArgv = argv.map((token) =>
     token === "{output}" ? "/output/result.json" : token,
@@ -105,7 +112,7 @@ export function buildDockerArgs({
     "--stop-timeout",
     "1",
     "--user",
-    "1000:1000",
+    containerUser,
     "--env",
     "HOME=/nonexistent",
     "--env",

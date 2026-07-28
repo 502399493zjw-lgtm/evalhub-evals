@@ -17,6 +17,7 @@ test("builds a locked-down, argument-array Docker invocation", () => {
     ],
     outputDir: "/temporary/output",
     containerName: "evalhub-sample-test",
+    containerUser: "1000:1000",
   });
 
   assert.equal(args[0], "run");
