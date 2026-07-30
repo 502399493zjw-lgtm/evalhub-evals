@@ -10,6 +10,7 @@ runner: custom
 scoring: custom
 scored_by: local
 score_unit: 胜率
+leaderboard: rating
 scoring_note: run.mjs 读取 N 个模型配置和 trials 局数，生成固定角色轮换、整局 transcript、投票事件和每个模型所在阵营胜率；score 为胜率乘 100。
 command_template:
   argv: [node, evals/werewolf-night/run.mjs, evals/werewolf-night/tasks/example-participants.json, --out, "{output}"]
