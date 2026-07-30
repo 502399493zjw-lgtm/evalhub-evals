@@ -225,7 +225,33 @@ export async function evaluatePullRequestPolicy({
   ]);
 
   if (baseEvalYaml !== null && headEvalYaml === null) {
-    reject("eval_delete_forbidden", `deleting eval ${slug} is forbidden`);
+    if (!sameLogin(actor, MAINTAINER_LOGIN)) {
+      reject(
+        "eval_delete_forbidden",
+        `only @${MAINTAINER_LOGIN} may delete eval ${slug}`,
+      );
+    }
+    const baseId = parseEvalId(baseEvalYaml, `base:${evalYamlPath}`);
+    if (baseId !== slug) {
+      reject(
+        "base_eval_id_mismatch",
+        `base eval id ${JSON.stringify(baseId)} does not equal slug ${JSON.stringify(slug)}`,
+      );
+    }
+    const baseAuthors = await requiredText(
+      readText,
+      baseRepository,
+      baseSha,
+      authorsPath,
+      `base:${authorsPath}`,
+    );
+    const owner = parseAuthors(baseAuthors, `base:${authorsPath}`);
+    return {
+      ...audit,
+      mode: "maintainer-eval-delete",
+      owner,
+      slug,
+    };
   }
   if (headEvalYaml === null) {
     reject("required_file_missing", `${evalYamlPath} is missing from the PR head`);

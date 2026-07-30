@@ -175,7 +175,7 @@ test("allows only the maintainer to open a repository maintenance PR", async () 
   );
 });
 
-test("rejects deleting an eval", async () => {
+test("rejects a contributor deleting an eval", async () => {
   await expectPolicyError(
     {
       changedFiles: [file("evals/sample-eval/eval.yaml", "removed")],
@@ -186,6 +186,20 @@ test("rejects deleting an eval", async () => {
     },
     "eval_delete_forbidden",
   );
+});
+
+test("allows the maintainer to delete an eval", async () => {
+  const result = await evaluate({
+    actor: MAINTAINER_LOGIN,
+    changedFiles: [file("evals/sample-eval/eval.yaml", "removed")],
+    base: {
+      "evals/sample-eval/AUTHORS": "@sample-author\n",
+      "evals/sample-eval/eval.yaml": "id: sample-eval\n",
+    },
+  });
+  assert.equal(result.mode, "maintainer-eval-delete");
+  assert.equal(result.slug, "sample-eval");
+  assert.equal(result.owner, "sample-author");
 });
 
 test("rejects renaming a slug", async () => {
