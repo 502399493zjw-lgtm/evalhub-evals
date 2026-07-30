@@ -1,10 +1,15 @@
 import { z } from "zod";
 const CONTROL_CHARACTERS = /[\u0000-\u001f\u007f-\u009f]/u;
+const PARTICIPANT_MODEL_MAX_LENGTH = 255;
 const HEAD_TO_HEAD_MAX_PARTICIPANTS = 8;
 const HEAD_TO_HEAD_MAX_MATCHUPS = 28;
 const HEAD_TO_HEAD_TITLE_MAX_LENGTH = 200;
 const HEAD_TO_HEAD_PARTICIPANT_KEY_MAX_LENGTH = 255;
 const HEAD_TO_HEAD_PARTICIPANT_LABEL_MAX_LENGTH = 200;
+const TEAM_GAMES_MAX_PARTICIPANTS = 8;
+const TEAM_GAMES_MAX_GAMES = 100;
+const TEAM_GAMES_KEY_MAX_LENGTH = 1_024;
+const TEAM_GAMES_SIDE_KEY_MAX_LENGTH = 100;
 // The launch dialogue protocol accepts at most 100 trials, so a single pair
 // cannot have more recorded outcomes than this without contradicting the run.
 export const HEAD_TO_HEAD_MAX_GAMES_PER_MATCHUP = 100;
@@ -15,6 +20,13 @@ export const HEAD_TO_HEAD_MAX_GAMES_PER_MATCHUP = 100;
 export const RESULT_FILE_MAX_RESULTS = 256;
 export const RESULT_ENTRY_MAX_TASK_RESULTS = 1_024;
 export const RESULT_ENTRY_MAX_SHOWCASES = 256;
+// Showcase task anchoring (compare/transcript.task_id → eval task id)：让战报
+// 可挂到具体题目，详情页按题聚合展示。上限对齐 participant key 的 255。
+export const SHOWCASE_TASK_ID_MAX_LENGTH = 255;
+const ShowcaseTaskIdSchema = z
+    .string()
+    .min(1, "showcase task_id must not be empty")
+    .max(SHOWCASE_TASK_ID_MAX_LENGTH, `showcase task_id must be at most ${SHOWCASE_TASK_ID_MAX_LENGTH} characters`);
 const HeadToHeadOutcomeCountSchema = z
     .number()
     .int()
@@ -36,10 +48,42 @@ function participantIdentityPartSchema(field) {
                 message: `participant.${field} must not contain control characters`,
             });
         }
+        if (value.length > PARTICIPANT_MODEL_MAX_LENGTH) {
+            ctx.addIssue({
+                code: "custom",
+                message: `participant.${field} must be at most ${PARTICIPANT_MODEL_MAX_LENGTH} characters`,
+            });
+        }
     });
 }
 export const ParticipantHarnessSchema = participantIdentityPartSchema("harness");
 export const ParticipantHarnessVersionSchema = participantIdentityPartSchema("harness_version");
+export const ParticipantModelSchema = z.string().min(4).superRefine((value, ctx) => {
+    if (value.trim().length === 0) {
+        ctx.addIssue({
+            code: "custom",
+            message: "participant.model must not be empty or whitespace",
+        });
+    }
+    if (value !== value.trim()) {
+        ctx.addIssue({
+            code: "custom",
+            message: "participant.model must be already trimmed",
+        });
+    }
+    if (value.length > PARTICIPANT_MODEL_MAX_LENGTH) {
+        ctx.addIssue({
+            code: "custom",
+            message: `participant.model must be at most ${PARTICIPANT_MODEL_MAX_LENGTH} characters`,
+        });
+    }
+    if (CONTROL_CHARACTERS.test(value)) {
+        ctx.addIssue({
+            code: "custom",
+            message: "participant.model must not contain control characters",
+        });
+    }
+});
 export const ParticipantAdapterSchema = z.enum(["api", "command"]);
 export const ParticipantConfigSchema = z
     .record(z.unknown())
@@ -203,10 +247,111 @@ function refineHeadToHeadShowcase(showcase, ctx) {
     }
 }
 export const HeadToHeadShowcaseSchema = HeadToHeadShowcaseObjectSchema.superRefine(refineHeadToHeadShowcase);
+const TeamGameSideSchema = z.object({
+    key: z
+        .string()
+        .min(1, "team_games side key must not be empty")
+        .max(TEAM_GAMES_SIDE_KEY_MAX_LENGTH, `team_games side key must be at most ${TEAM_GAMES_SIDE_KEY_MAX_LENGTH} characters`),
+    participants: z
+        .array(z
+        .string()
+        .min(1, "team_games participant key must not be empty")
+        .max(TEAM_GAMES_KEY_MAX_LENGTH, `team_games participant key must be at most ${TEAM_GAMES_KEY_MAX_LENGTH} characters`))
+        .min(1)
+        .max(TEAM_GAMES_MAX_PARTICIPANTS),
+});
+const TeamGamesShowcaseObjectSchema = z.object({
+    type: z.literal("team_games"),
+    title: z.string().min(1).max(HEAD_TO_HEAD_TITLE_MAX_LENGTH),
+    participants: z
+        .array(z.object({
+        key: z.string().min(1).max(TEAM_GAMES_KEY_MAX_LENGTH),
+        label: z.string().min(1).max(HEAD_TO_HEAD_PARTICIPANT_LABEL_MAX_LENGTH),
+    }))
+        .min(2)
+        .max(TEAM_GAMES_MAX_PARTICIPANTS),
+    games: z
+        .array(z.object({
+        game_no: z.number().int().positive().safe(),
+        sides: z.tuple([TeamGameSideSchema, TeamGameSideSchema]),
+        winner: z.string().min(1).max(TEAM_GAMES_SIDE_KEY_MAX_LENGTH),
+    }))
+        .min(1)
+        .max(TEAM_GAMES_MAX_GAMES),
+});
+function refineTeamGamesShowcase(showcase, ctx) {
+    const declared = new Set();
+    for (const [index, participant] of showcase.participants.entries()) {
+        if (declared.has(participant.key)) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["participants", index, "key"],
+                message: "team_games participant keys must be unique",
+            });
+        }
+        declared.add(participant.key);
+    }
+    const gameNumbers = new Set();
+    for (const [gameIndex, game] of showcase.games.entries()) {
+        if (gameNumbers.has(game.game_no)) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["games", gameIndex, "game_no"],
+                message: "team_games game_no values must be unique",
+            });
+        }
+        gameNumbers.add(game.game_no);
+        const [sideA, sideB] = game.sides;
+        if (sideA.key === sideB.key) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["games", gameIndex, "sides", 1, "key"],
+                message: "team_games side keys must be distinct within a game",
+            });
+        }
+        if (game.winner !== sideA.key && game.winner !== sideB.key) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["games", gameIndex, "winner"],
+                message: "team_games winner must reference one of the two side keys",
+            });
+        }
+        const assigned = new Set();
+        for (const [sideIndex, side] of game.sides.entries()) {
+            for (const [participantIndex, key] of side.participants.entries()) {
+                if (!declared.has(key)) {
+                    ctx.addIssue({
+                        code: "custom",
+                        path: ["games", gameIndex, "sides", sideIndex, "participants", participantIndex],
+                        message: "team_games game participant must be declared by the showcase",
+                    });
+                }
+                if (assigned.has(key)) {
+                    ctx.addIssue({
+                        code: "custom",
+                        path: ["games", gameIndex, "sides", sideIndex, "participants", participantIndex],
+                        message: "team_games participant may occur on only one side per game",
+                    });
+                }
+                assigned.add(key);
+            }
+        }
+        if (assigned.size !== declared.size) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["games", gameIndex, "sides"],
+                message: "team_games game sides must exactly cover declared participants",
+            });
+        }
+    }
+}
+export const TeamGamesShowcaseSchema = TeamGamesShowcaseObjectSchema.superRefine(refineTeamGamesShowcase);
 const ShowcaseDiscriminatedUnionSchema = z.discriminatedUnion("type", [
     z.object({
         type: z.literal("compare"),
         task: z.string(),
+        // 可选挂题：等于 eval 任务 id 时，详情页把该战报聚合进对应示例题的模型 tab
+        task_id: ShowcaseTaskIdSchema.optional(),
         content: z.string(),
         expected: z.string().optional(),
         verdict: z.string().optional(),
@@ -215,6 +360,8 @@ const ShowcaseDiscriminatedUnionSchema = z.discriminatedUnion("type", [
     z.object({
         type: z.literal("transcript"),
         title: z.string(),
+        // 可选挂题：同 compare.task_id
+        task_id: ShowcaseTaskIdSchema.optional(),
         turns: z
             .array(z.object({ role: z.string(), content: z.string(), status: z.string().optional() }))
             .min(1),
@@ -232,16 +379,20 @@ const ShowcaseDiscriminatedUnionSchema = z.discriminatedUnion("type", [
         score: z.number().optional(),
     }),
     HeadToHeadShowcaseObjectSchema,
+    TeamGamesShowcaseObjectSchema,
 ]);
 export const ShowcaseSchema = ShowcaseDiscriminatedUnionSchema.superRefine((showcase, ctx) => {
     if (showcase.type === "head_to_head") {
         refineHeadToHeadShowcase(showcase, ctx);
     }
+    if (showcase.type === "team_games") {
+        refineTeamGamesShowcase(showcase, ctx);
+    }
 });
 export const ResultEntrySchema = z.object({
     participant: z
         .object({
-        model: z.string().min(4),
+        model: ParticipantModelSchema,
         harness: ParticipantHarnessSchema.optional(),
         harness_version: ParticipantHarnessVersionSchema.optional(),
         config: ParticipantConfigSchema.optional(),
@@ -264,8 +415,17 @@ export const ResultEntrySchema = z.object({
             });
         }
     }),
-    score: z.number().min(0).max(100).nullable(),
-    raw_metric: z.object({ label: z.string(), value: z.string() }).optional(),
+    // score 量纲由评测集自定（2026-07-20 owner 计分模型）：默认「分」制 0-100 在
+    // result-for-eval 的 eval 感知校验里收紧；自定义量纲（如 CEO-bench 元）只要求 ≥0 有限值。
+    score: z.number().finite().min(0).nullable(),
+    // tiebreak_value（可选数值键）：供评测集级同分 tiebreak（eval.yaml tiebreak 声明）排序用
+    raw_metric: z
+        .object({
+        label: z.string(),
+        value: z.string(),
+        tiebreak_value: z.number().finite().optional(),
+    })
+        .optional(),
     detail: z.string().optional(),
     usage: z.object({ tokens: z.number().int() }).partial().optional(),
     task_results: z
@@ -277,13 +437,94 @@ export const ResultEntrySchema = z.object({
         .max(RESULT_ENTRY_MAX_SHOWCASES, `result showcases cannot exceed ${RESULT_ENTRY_MAX_SHOWCASES}`)
         .optional(),
 });
+const IsoCalendarDateSchema = z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .refine((value) => {
+    const [yearText, monthText, dayText] = value.split("-");
+    const year = Number(yearText);
+    const month = Number(monthText);
+    const day = Number(dayText);
+    if (year < 1 || month < 1 || month > 12 || day < 1) {
+        return false;
+    }
+    const leapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+    const daysInMonth = [
+        31,
+        leapYear ? 29 : 28,
+        31,
+        30,
+        31,
+        30,
+        31,
+        31,
+        30,
+        31,
+        30,
+        31,
+    ];
+    return day <= (daysInMonth[month - 1] ?? 0);
+}, "must be a real YYYY-MM-DD calendar date");
+export const RunSubmissionSchema = z.object({
+    kind: z.literal("run").optional(),
+    runner_version: z.string(),
+    run_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+});
+const UpstreamPublicationImporterVersionSchema = z
+    .string()
+    .min(1)
+    .max(255)
+    .refine((value) => value === value.trim(), {
+    message: "must be already trimmed",
+})
+    .refine((value) => !CONTROL_CHARACTERS.test(value), {
+    message: "must not contain control characters",
+});
+const UpstreamPublicationTitleSchema = z
+    .string()
+    .min(1)
+    .max(500)
+    .refine((value) => value === value.trim(), {
+    message: "must be already trimmed",
+})
+    .refine((value) => !CONTROL_CHARACTERS.test(value), {
+    message: "must not contain control characters",
+});
+export const UpstreamAuthorPublicationSubmissionSchema = z
+    .object({
+    kind: z.literal("upstream_author_publication"),
+    importer_version: UpstreamPublicationImporterVersionSchema,
+    retrieved_on: IsoCalendarDateSchema,
+    source: z
+        .object({
+        title: UpstreamPublicationTitleSchema.optional(),
+        url: z
+            .string()
+            .max(2_048)
+            .url()
+            .refine((value) => {
+            try {
+                return new URL(value).protocol === "https:";
+            }
+            catch {
+                return false;
+            }
+        }, { message: "source.url must use https" }),
+        snapshot_sha256: z
+            .string()
+            .regex(/^[0-9a-f]{64}$/, "source.snapshot_sha256 must be 64 lowercase hexadecimal characters"),
+    })
+        .strict(),
+})
+    .strict();
+export const ResultSubmissionSchema = z.union([
+    UpstreamAuthorPublicationSubmissionSchema,
+    RunSubmissionSchema,
+]);
 export const ResultFileSchema = z.object({
     eval_id: z.string(),
     eval_commit: z.string().optional(),
-    submission: z.object({
-        runner_version: z.string(),
-        run_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-    }),
+    submission: ResultSubmissionSchema,
     results: z
         .array(ResultEntrySchema)
         .min(1)
