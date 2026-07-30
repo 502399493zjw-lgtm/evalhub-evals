@@ -4,15 +4,16 @@ import { rename, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  DatedModelIdSchema,
+  ModelIdSchema,
   EvalDefSchema,
   ResultFileSchema,
+  participantKey,
   validateResultForEval,
 } from "@evalhub/schemas";
 import { parse as parseYaml } from "yaml";
 import { buildWolfSeatSchedule } from "./role-schedule.mjs";
 
-const RUNNER_VERSION = "werewolf-simulator-1.0.0";
+const RUNNER_VERSION = "werewolf-simulator-2.0.0";
 const MAX_INPUT_BYTES = 64 * 1024;
 const MIN_PARTICIPANTS = 5;
 const MAX_PARTICIPANTS = 8;
@@ -64,10 +65,13 @@ function assertExactKeys(value, allowed, label) {
   }
 }
 
-function validateInput(parsed) {
+function validateInput(parsed, expectedTrials) {
   assertExactKeys(parsed, ["participants", "trials"], "input");
   if (!Number.isInteger(parsed.trials) || parsed.trials < 1 || parsed.trials > MAX_TRIALS) {
     fail(`trials must be an integer from 1 through ${MAX_TRIALS}`);
+  }
+  if (parsed.trials !== expectedTrials) {
+    fail(`trials must match eval.trials=${expectedTrials}`);
   }
   if (
     !Array.isArray(parsed.participants) ||
@@ -79,13 +83,21 @@ function validateInput(parsed) {
 
   const identities = new Set();
   for (const [index, participant] of parsed.participants.entries()) {
-    assertExactKeys(participant, ["model", "config"], `participants[${index}]`);
-    const modelValidation = DatedModelIdSchema.safeParse(participant.model);
+    assertExactKeys(
+      participant,
+      ["model", "harness", "harness_version", "config"],
+      `participants[${index}]`,
+    );
+    const modelValidation = ModelIdSchema.safeParse(participant.model);
     if (!modelValidation.success) {
       fail(`participants[${index}].model: ${modelValidation.error.issues[0]?.message}`);
     }
-    if (identities.has(participant.model)) fail("participant model identities must be unique");
-    identities.add(participant.model);
+    if ((participant.harness === undefined) !== (participant.harness_version === undefined)) {
+      fail(`participants[${index}] harness and harness_version must be provided together`);
+    }
+    const identity = participantKey(participant);
+    if (identities.has(identity)) fail("participant identities must be unique");
+    identities.add(identity);
     if (
       participant.config !== undefined &&
       (!participant.config || typeof participant.config !== "object" || Array.isArray(participant.config))
@@ -140,39 +152,34 @@ function runGame(participants, gameNo, wolfSeatIndexes) {
   return { gameNo, seats, winningTeam, turns };
 }
 
-function buildHeadToHead(participants, games) {
-  const matchups = [];
-
-  for (let aIndex = 0; aIndex < participants.length; aIndex += 1) {
-    for (let bIndex = aIndex + 1; bIndex < participants.length; bIndex += 1) {
-      const a = participants[aIndex].model;
-      const b = participants[bIndex].model;
-      let aWins = 0;
-      let bWins = 0;
-      let draws = 0;
-
-      for (const game of games) {
-        const aSeat = game.seats[aIndex];
-        const bSeat = game.seats[bIndex];
-        const aTeam = aSeat.role === "werewolf" ? "werewolf" : "village";
-        const bTeam = bSeat.role === "werewolf" ? "werewolf" : "village";
-        const aWon = aTeam === game.winningTeam;
-        const bWon = bTeam === game.winningTeam;
-
-        if (aWon === bWon) draws += 1;
-        else if (aWon) aWins += 1;
-        else bWins += 1;
-      }
-
-      matchups.push({ a, b, a_wins: aWins, b_wins: bWins, draws });
-    }
-  }
-
+function buildTeamGames(participants, games) {
   return {
-    type: "head_to_head",
-    title: "同届头对头胜率",
-    participants: participants.map(({ model }) => ({ key: model, label: model })),
-    matchups,
+    type: "team_games",
+    title: "逐局阵营与胜负事实",
+    participants: participants.map((participant) => ({
+      key: participantKey(participant),
+      label: participant.harness
+        ? `${participant.model} / ${participant.harness}`
+        : participant.model,
+    })),
+    games: games.map((game) => ({
+      game_no: game.gameNo + 1,
+      sides: [
+        {
+          key: "werewolf",
+          participants: game.seats
+            .filter((seat) => seat.role === "werewolf")
+            .map((seat) => participantKey(seat)),
+        },
+        {
+          key: "village",
+          participants: game.seats
+            .filter((seat) => seat.role !== "werewolf")
+            .map((seat) => participantKey(seat)),
+        },
+      ],
+      winner: game.winningTeam,
+    })),
   };
 }
 
@@ -204,7 +211,8 @@ async function main() {
   } catch (error) {
     fail(`invalid JSON input: ${error.message}`);
   }
-  const input = validateInput(parsed);
+  const evalDefinition = await loadEvalDefinition();
+  const input = validateInput(parsed, evalDefinition.trials);
   const wolfSeatSchedule = buildWolfSeatSchedule(
     input.participants.length,
     input.trials,
@@ -212,22 +220,27 @@ async function main() {
   const games = wolfSeatSchedule.map((wolfSeatIndexes, index) =>
     runGame(input.participants, index, wolfSeatIndexes),
   );
-  const wins = new Map(input.participants.map((participant) => [participant.model, 0]));
+  const wins = new Map(input.participants.map((participant) => [participantKey(participant), 0]));
   for (const game of games) {
     for (const seat of game.seats) {
       const team = seat.role === "werewolf" ? "werewolf" : "village";
-      if (team === game.winningTeam) wins.set(seat.model, (wins.get(seat.model) ?? 0) + 1);
+      const identity = participantKey(seat);
+      if (team === game.winningTeam) wins.set(identity, (wins.get(identity) ?? 0) + 1);
     }
   }
 
   const firstGame = games[0];
-  const headToHead = buildHeadToHead(input.participants, games);
+  const teamGames = buildTeamGames(input.participants, games);
   const results = input.participants.map((participant, index) => {
-    const won = wins.get(participant.model) ?? 0;
+    const won = wins.get(participantKey(participant)) ?? 0;
     const score = Math.round((won / input.trials) * 100);
     return {
       participant: {
         model: participant.model,
+        ...(participant.harness ? { harness: participant.harness } : {}),
+        ...(participant.harness_version
+          ? { harness_version: participant.harness_version }
+          : {}),
         ...(participant.config ? { config: participant.config } : {}),
       },
       score,
@@ -260,9 +273,7 @@ async function main() {
                 verdict: "记录投票理由，供人工复盘。",
                 score,
               },
-              {
-                ...headToHead,
-              },
+              teamGames,
             ],
           }
         : {}),
@@ -280,7 +291,7 @@ async function main() {
   };
   const resultValidation = ResultFileSchema.safeParse(resultFile);
   if (!resultValidation.success) fail(`invalid result envelope: ${resultValidation.error.message}`);
-  const contextual = validateResultForEval(await loadEvalDefinition(), resultValidation.data);
+  const contextual = validateResultForEval(evalDefinition, resultValidation.data);
   if (!contextual.success) fail(`invalid result for eval: ${contextual.error.message}`);
   await atomicWrite(outputPath, `${JSON.stringify(contextual.data, null, 2)}\n`);
 }

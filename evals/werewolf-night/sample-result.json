@@ -1,13 +1,15 @@
 {
   "eval_id": "werewolf-night",
   "submission": {
-    "runner_version": "werewolf-simulator-1.0.0",
-    "run_date": "2026-07-11"
+    "runner_version": "werewolf-simulator-2.0.0",
+    "run_date": "2026-07-29"
   },
   "results": [
     {
       "participant": {
-        "model": "wolfbot-rhetoric-20260710",
+        "model": "openai/gpt-5",
+        "harness": "wolfbot-rhetoric",
+        "harness_version": "1",
         "config": {
           "style": "强势带票"
         }
@@ -37,47 +39,47 @@
             },
             {
               "role": "night",
-              "content": "狼人队选择袭击 seerbot-cautious-20260710。",
+              "content": "狼人队选择袭击 anthropic/claude-opus-5。",
               "status": "ok"
             },
             {
               "role": "seer",
-              "content": "预言家查验 guardbot-steady-20260710 的阵营。",
+              "content": "预言家查验 google/gemini-2.5-pro 的阵营。",
               "status": "ok"
             },
             {
               "role": "guard",
-              "content": "守卫选择保护 villagerbot-chaos-20260710。",
+              "content": "守卫选择保护 deepseek/deepseek-v3。",
               "status": "ok"
             },
             {
-              "role": "wolfbot-rhetoric-20260710",
+              "role": "openai/gpt-5",
               "content": "1 号发言：根据刀口与票型，我建议把 1 号放进焦点。",
               "status": "suspect"
             },
             {
-              "role": "seerbot-cautious-20260710",
+              "role": "anthropic/claude-opus-5",
               "content": "2 号发言：根据刀口与票型，我建议把 1 号放进焦点。",
               "status": "ok"
             },
             {
-              "role": "guardbot-steady-20260710",
+              "role": "google/gemini-2.5-pro",
               "content": "3 号发言：根据刀口与票型，我建议把 1 号放进焦点。",
               "status": "suspect"
             },
             {
-              "role": "villagerbot-chaos-20260710",
+              "role": "deepseek/deepseek-v3",
               "content": "4 号发言：根据刀口与票型，我建议把 1 号放进焦点。",
               "status": "ok"
             },
             {
-              "role": "logicbot-clean-20260710",
+              "role": "qwen/qwen3-max",
               "content": "5 号发言：根据刀口与票型，我建议把 1 号放进焦点。",
               "status": "ok"
             },
             {
               "role": "vote",
-              "content": "白天公投出局 seerbot-cautious-20260710。",
+              "content": "白天公投出局 anthropic/claude-opus-5。",
               "status": "ok"
             },
             {
@@ -126,106 +128,288 @@
         {
           "type": "compare",
           "task": "白天公投焦点",
-          "content": "wolfbot-rhetoric-20260710 带票 2 号",
+          "content": "openai/gpt-5 带票 2 号",
           "expected": "优先处理狼坑最高的座位",
           "verdict": "记录投票理由，供人工复盘。",
           "score": 42
         },
         {
-          "type": "head_to_head",
-          "title": "同届头对头胜率",
+          "type": "team_games",
+          "title": "逐局阵营与胜负事实",
           "participants": [
             {
-              "key": "wolfbot-rhetoric-20260710",
-              "label": "wolfbot-rhetoric-20260710"
+              "key": "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+              "label": "openai/gpt-5 / wolfbot-rhetoric"
             },
             {
-              "key": "seerbot-cautious-20260710",
-              "label": "seerbot-cautious-20260710"
+              "key": "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]",
+              "label": "anthropic/claude-opus-5 / seerbot-cautious"
             },
             {
-              "key": "guardbot-steady-20260710",
-              "label": "guardbot-steady-20260710"
+              "key": "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]",
+              "label": "google/gemini-2.5-pro / guardbot-steady"
             },
             {
-              "key": "villagerbot-chaos-20260710",
-              "label": "villagerbot-chaos-20260710"
+              "key": "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]",
+              "label": "deepseek/deepseek-v3 / villagerbot-chaos"
             },
             {
-              "key": "logicbot-clean-20260710",
-              "label": "logicbot-clean-20260710"
+              "key": "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]",
+              "label": "qwen/qwen3-max / logicbot-clean"
             }
           ],
-          "matchups": [
+          "games": [
             {
-              "a": "wolfbot-rhetoric-20260710",
-              "b": "seerbot-cautious-20260710",
-              "a_wins": 5,
-              "b_wins": 3,
-              "draws": 4
+              "game_no": 1,
+              "sides": [
+                {
+                  "key": "werewolf",
+                  "participants": [
+                    "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+                    "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]"
+                  ]
+                },
+                {
+                  "key": "village",
+                  "participants": [
+                    "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]",
+                    "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]",
+                    "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]"
+                  ]
+                }
+              ],
+              "winner": "werewolf"
             },
             {
-              "a": "wolfbot-rhetoric-20260710",
-              "b": "guardbot-steady-20260710",
-              "a_wins": 2,
-              "b_wins": 4,
-              "draws": 6
+              "game_no": 2,
+              "sides": [
+                {
+                  "key": "werewolf",
+                  "participants": [
+                    "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]",
+                    "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]"
+                  ]
+                },
+                {
+                  "key": "village",
+                  "participants": [
+                    "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+                    "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]",
+                    "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]"
+                  ]
+                }
+              ],
+              "winner": "werewolf"
             },
             {
-              "a": "wolfbot-rhetoric-20260710",
-              "b": "villagerbot-chaos-20260710",
-              "a_wins": 3,
-              "b_wins": 5,
-              "draws": 4
+              "game_no": 3,
+              "sides": [
+                {
+                  "key": "werewolf",
+                  "participants": [
+                    "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]",
+                    "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]"
+                  ]
+                },
+                {
+                  "key": "village",
+                  "participants": [
+                    "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+                    "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]",
+                    "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]"
+                  ]
+                }
+              ],
+              "winner": "werewolf"
             },
             {
-              "a": "wolfbot-rhetoric-20260710",
-              "b": "logicbot-clean-20260710",
-              "a_wins": 4,
-              "b_wins": 3,
-              "draws": 5
+              "game_no": 4,
+              "sides": [
+                {
+                  "key": "werewolf",
+                  "participants": [
+                    "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+                    "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]"
+                  ]
+                },
+                {
+                  "key": "village",
+                  "participants": [
+                    "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]",
+                    "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]",
+                    "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]"
+                  ]
+                }
+              ],
+              "winner": "village"
             },
             {
-              "a": "seerbot-cautious-20260710",
-              "b": "guardbot-steady-20260710",
-              "a_wins": 2,
-              "b_wins": 6,
-              "draws": 4
+              "game_no": 5,
+              "sides": [
+                {
+                  "key": "werewolf",
+                  "participants": [
+                    "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]",
+                    "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]"
+                  ]
+                },
+                {
+                  "key": "village",
+                  "participants": [
+                    "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+                    "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]",
+                    "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]"
+                  ]
+                }
+              ],
+              "winner": "werewolf"
             },
             {
-              "a": "seerbot-cautious-20260710",
-              "b": "villagerbot-chaos-20260710",
-              "a_wins": 1,
-              "b_wins": 5,
-              "draws": 6
+              "game_no": 6,
+              "sides": [
+                {
+                  "key": "werewolf",
+                  "participants": [
+                    "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]",
+                    "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]"
+                  ]
+                },
+                {
+                  "key": "village",
+                  "participants": [
+                    "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+                    "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]",
+                    "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]"
+                  ]
+                }
+              ],
+              "winner": "werewolf"
             },
             {
-              "a": "seerbot-cautious-20260710",
-              "b": "logicbot-clean-20260710",
-              "a_wins": 3,
-              "b_wins": 4,
-              "draws": 5
+              "game_no": 7,
+              "sides": [
+                {
+                  "key": "werewolf",
+                  "participants": [
+                    "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+                    "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]"
+                  ]
+                },
+                {
+                  "key": "village",
+                  "participants": [
+                    "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]",
+                    "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]",
+                    "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]"
+                  ]
+                }
+              ],
+              "winner": "werewolf"
             },
             {
-              "a": "guardbot-steady-20260710",
-              "b": "villagerbot-chaos-20260710",
-              "a_wins": 4,
-              "b_wins": 4,
-              "draws": 4
+              "game_no": 8,
+              "sides": [
+                {
+                  "key": "werewolf",
+                  "participants": [
+                    "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]",
+                    "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]"
+                  ]
+                },
+                {
+                  "key": "village",
+                  "participants": [
+                    "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+                    "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]",
+                    "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]"
+                  ]
+                }
+              ],
+              "winner": "werewolf"
             },
             {
-              "a": "guardbot-steady-20260710",
-              "b": "logicbot-clean-20260710",
-              "a_wins": 5,
-              "b_wins": 2,
-              "draws": 5
+              "game_no": 9,
+              "sides": [
+                {
+                  "key": "werewolf",
+                  "participants": [
+                    "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+                    "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]"
+                  ]
+                },
+                {
+                  "key": "village",
+                  "participants": [
+                    "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]",
+                    "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]",
+                    "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]"
+                  ]
+                }
+              ],
+              "winner": "werewolf"
             },
             {
-              "a": "villagerbot-chaos-20260710",
-              "b": "logicbot-clean-20260710",
-              "a_wins": 5,
-              "b_wins": 2,
-              "draws": 5
+              "game_no": 10,
+              "sides": [
+                {
+                  "key": "werewolf",
+                  "participants": [
+                    "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]",
+                    "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]"
+                  ]
+                },
+                {
+                  "key": "village",
+                  "participants": [
+                    "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+                    "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]",
+                    "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]"
+                  ]
+                }
+              ],
+              "winner": "village"
+            },
+            {
+              "game_no": 11,
+              "sides": [
+                {
+                  "key": "werewolf",
+                  "participants": [
+                    "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+                    "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]"
+                  ]
+                },
+                {
+                  "key": "village",
+                  "participants": [
+                    "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]",
+                    "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]",
+                    "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]"
+                  ]
+                }
+              ],
+              "winner": "werewolf"
+            },
+            {
+              "game_no": 12,
+              "sides": [
+                {
+                  "key": "werewolf",
+                  "participants": [
+                    "[\"run\",\"anthropic/claude-opus-5\",\"seerbot-cautious\",\"1\"]",
+                    "[\"run\",\"deepseek/deepseek-v3\",\"villagerbot-chaos\",\"1\"]"
+                  ]
+                },
+                {
+                  "key": "village",
+                  "participants": [
+                    "[\"run\",\"openai/gpt-5\",\"wolfbot-rhetoric\",\"1\"]",
+                    "[\"run\",\"google/gemini-2.5-pro\",\"guardbot-steady\",\"1\"]",
+                    "[\"run\",\"qwen/qwen3-max\",\"logicbot-clean\",\"1\"]"
+                  ]
+                }
+              ],
+              "winner": "werewolf"
             }
           ]
         }
@@ -233,7 +417,9 @@
     },
     {
       "participant": {
-        "model": "seerbot-cautious-20260710",
+        "model": "anthropic/claude-opus-5",
+        "harness": "seerbot-cautious",
+        "harness_version": "1",
         "config": {
           "style": "谨慎验人"
         }
@@ -254,7 +440,9 @@
     },
     {
       "participant": {
-        "model": "guardbot-steady-20260710",
+        "model": "google/gemini-2.5-pro",
+        "harness": "guardbot-steady",
+        "harness_version": "1",
         "config": {
           "style": "保守守卫"
         }
@@ -275,7 +463,9 @@
     },
     {
       "participant": {
-        "model": "villagerbot-chaos-20260710",
+        "model": "deepseek/deepseek-v3",
+        "harness": "villagerbot-chaos",
+        "harness_version": "1",
         "config": {
           "style": "高噪声村民"
         }
@@ -296,7 +486,9 @@
     },
     {
       "participant": {
-        "model": "logicbot-clean-20260710",
+        "model": "qwen/qwen3-max",
+        "harness": "logicbot-clean",
+        "harness_version": "1",
         "config": {
           "style": "结构化归因"
         }
