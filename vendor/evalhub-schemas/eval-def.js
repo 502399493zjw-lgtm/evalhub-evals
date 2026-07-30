@@ -120,11 +120,31 @@ export const CommandTemplateSchema = z
     }
 })
     .transform(({ argv, output }) => ({ argv, output }));
+/**
+ * 评测集级同分 tiebreak 声明（可选）：同分（score 相等）时按 result raw_metric JSON 里
+ * `metric` 指定的数值键排序，方向由 `order` 决定，`label` 供展示（如「存活天数」）。
+ * 缺省时排名行为与历史完全一致（score desc 单键 + 稳定身份 tiebreak）。
+ */
+export const EvalTiebreakSchema = z.object({
+    metric: z
+        .string()
+        .refine((value) => value.trim().length > 0, {
+        message: "tiebreak.metric 不能为空",
+    }),
+    order: z.enum(["desc", "asc"]),
+    label: z
+        .string()
+        .refine((value) => value.trim().length > 0, {
+        message: "tiebreak.label 不能为空",
+    }),
+});
 const evalDefShape = {
     id: EvalIdSchema,
     hackathon_id: EvalIdSchema.optional(),
     name: z.string().min(1),
     category: z.enum(["fun", "useful"]),
+    // 展示类目（可选，作者显式声明）；缺省时平台按 interface/category 启发式推导
+    display_category: z.enum(["agent", "reason", "vision", "fun"]).optional(),
     description: z.string().min(1),
     hook_title: z.string().optional(),
     dimensions: z
@@ -136,6 +156,10 @@ const evalDefShape = {
     scoring: z.enum(["exact", "judge", "custom"]),
     scored_by: z.enum(["local", "author"]),
     score_unit: z.string().default("分"),
+    // rating 榜从所有已验证 team_games 历史事实重算；缺省保持旧的最新 session 排榜。
+    leaderboard: z.enum(["latest_session", "rating"]).default("latest_session"),
+    // 同分 tiebreak 声明（可选，向后兼容：缺省时排名行为不变）
+    tiebreak: EvalTiebreakSchema.optional(),
     judge_model: z.string().optional(),
     judge_rubric: z.string().optional(),
     scoring_note: z.string().optional(),
@@ -151,6 +175,13 @@ const evalDefShape = {
 };
 function refineEvalDef(value, ctx, requireCustomCommandTemplate) {
     const v = value;
+    if (v.leaderboard === "rating" && v.interface !== "dialogue") {
+        ctx.addIssue({
+            code: "custom",
+            path: ["leaderboard"],
+            message: "leaderboard=rating 仅支持 interface=dialogue",
+        });
+    }
     if (v.scoring === "judge" && !v.judge_model) {
         ctx.addIssue({ code: "custom", message: "scoring=judge 必须钉死 judge_model" });
     }

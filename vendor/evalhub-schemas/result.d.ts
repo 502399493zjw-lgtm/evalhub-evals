@@ -3,8 +3,10 @@ export declare const HEAD_TO_HEAD_MAX_GAMES_PER_MATCHUP = 100;
 export declare const RESULT_FILE_MAX_RESULTS = 256;
 export declare const RESULT_ENTRY_MAX_TASK_RESULTS = 1024;
 export declare const RESULT_ENTRY_MAX_SHOWCASES = 256;
+export declare const SHOWCASE_TASK_ID_MAX_LENGTH = 255;
 export declare const ParticipantHarnessSchema: z.ZodEffects<z.ZodString, string, string>;
 export declare const ParticipantHarnessVersionSchema: z.ZodEffects<z.ZodString, string, string>;
+export declare const ParticipantModelSchema: z.ZodEffects<z.ZodString, string, string>;
 export declare const ParticipantAdapterSchema: z.ZodEnum<["api", "command"]>;
 export declare const ParticipantConfigSchema: z.ZodEffects<z.ZodRecord<z.ZodString, z.ZodUnknown>, Record<string, unknown>, Record<string, unknown>>;
 declare const HeadToHeadShowcaseObjectSchema: z.ZodObject<{
@@ -14,11 +16,11 @@ declare const HeadToHeadShowcaseObjectSchema: z.ZodObject<{
         key: z.ZodString;
         label: z.ZodString;
     }, "strip", z.ZodTypeAny, {
-        key: string;
         label: string;
+        key: string;
     }, {
-        key: string;
         label: string;
+        key: string;
     }>, "many">;
     matchups: z.ZodArray<z.ZodObject<{
         a: z.ZodString;
@@ -43,8 +45,8 @@ declare const HeadToHeadShowcaseObjectSchema: z.ZodObject<{
     type: "head_to_head";
     title: string;
     participants: {
-        key: string;
         label: string;
+        key: string;
     }[];
     matchups: {
         a: string;
@@ -57,8 +59,8 @@ declare const HeadToHeadShowcaseObjectSchema: z.ZodObject<{
     type: "head_to_head";
     title: string;
     participants: {
-        key: string;
         label: string;
+        key: string;
     }[];
     matchups: {
         a: string;
@@ -76,11 +78,11 @@ export declare const HeadToHeadShowcaseSchema: z.ZodEffects<z.ZodObject<{
         key: z.ZodString;
         label: z.ZodString;
     }, "strip", z.ZodTypeAny, {
-        key: string;
         label: string;
+        key: string;
     }, {
-        key: string;
         label: string;
+        key: string;
     }>, "many">;
     matchups: z.ZodArray<z.ZodObject<{
         a: z.ZodString;
@@ -105,8 +107,8 @@ export declare const HeadToHeadShowcaseSchema: z.ZodEffects<z.ZodObject<{
     type: "head_to_head";
     title: string;
     participants: {
-        key: string;
         label: string;
+        key: string;
     }[];
     matchups: {
         a: string;
@@ -119,8 +121,8 @@ export declare const HeadToHeadShowcaseSchema: z.ZodEffects<z.ZodObject<{
     type: "head_to_head";
     title: string;
     participants: {
-        key: string;
         label: string;
+        key: string;
     }[];
     matchups: {
         a: string;
@@ -133,8 +135,8 @@ export declare const HeadToHeadShowcaseSchema: z.ZodEffects<z.ZodObject<{
     type: "head_to_head";
     title: string;
     participants: {
-        key: string;
         label: string;
+        key: string;
     }[];
     matchups: {
         a: string;
@@ -147,8 +149,8 @@ export declare const HeadToHeadShowcaseSchema: z.ZodEffects<z.ZodObject<{
     type: "head_to_head";
     title: string;
     participants: {
-        key: string;
         label: string;
+        key: string;
     }[];
     matchups: {
         a: string;
@@ -158,9 +160,139 @@ export declare const HeadToHeadShowcaseSchema: z.ZodEffects<z.ZodObject<{
         draws: number;
     }[];
 }>;
+export declare const TeamGamesShowcaseSchema: z.ZodEffects<z.ZodObject<{
+    type: z.ZodLiteral<"team_games">;
+    title: z.ZodString;
+    participants: z.ZodArray<z.ZodObject<{
+        key: z.ZodString;
+        label: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        label: string;
+        key: string;
+    }, {
+        label: string;
+        key: string;
+    }>, "many">;
+    games: z.ZodArray<z.ZodObject<{
+        game_no: z.ZodNumber;
+        sides: z.ZodTuple<[z.ZodObject<{
+            key: z.ZodString;
+            participants: z.ZodArray<z.ZodString, "many">;
+        }, "strip", z.ZodTypeAny, {
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }>, z.ZodObject<{
+            key: z.ZodString;
+            participants: z.ZodArray<z.ZodString, "many">;
+        }, "strip", z.ZodTypeAny, {
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }>], null>;
+        winner: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        game_no: number;
+        sides: [{
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }];
+        winner: string;
+    }, {
+        game_no: number;
+        sides: [{
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }];
+        winner: string;
+    }>, "many">;
+}, "strip", z.ZodTypeAny, {
+    type: "team_games";
+    title: string;
+    participants: {
+        label: string;
+        key: string;
+    }[];
+    games: {
+        game_no: number;
+        sides: [{
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }];
+        winner: string;
+    }[];
+}, {
+    type: "team_games";
+    title: string;
+    participants: {
+        label: string;
+        key: string;
+    }[];
+    games: {
+        game_no: number;
+        sides: [{
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }];
+        winner: string;
+    }[];
+}>, {
+    type: "team_games";
+    title: string;
+    participants: {
+        label: string;
+        key: string;
+    }[];
+    games: {
+        game_no: number;
+        sides: [{
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }];
+        winner: string;
+    }[];
+}, {
+    type: "team_games";
+    title: string;
+    participants: {
+        label: string;
+        key: string;
+    }[];
+    games: {
+        game_no: number;
+        sides: [{
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }];
+        winner: string;
+    }[];
+}>;
 export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type", [z.ZodObject<{
     type: z.ZodLiteral<"compare">;
     task: z.ZodString;
+    task_id: z.ZodOptional<z.ZodString>;
     content: z.ZodString;
     expected: z.ZodOptional<z.ZodString>;
     verdict: z.ZodOptional<z.ZodString>;
@@ -170,6 +302,7 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
     task: string;
     content: string;
     expected?: string | undefined;
+    task_id?: string | undefined;
     verdict?: string | undefined;
     score?: number | undefined;
 }, {
@@ -177,11 +310,13 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
     task: string;
     content: string;
     expected?: string | undefined;
+    task_id?: string | undefined;
     verdict?: string | undefined;
     score?: number | undefined;
 }>, z.ZodObject<{
     type: z.ZodLiteral<"transcript">;
     title: z.ZodString;
+    task_id: z.ZodOptional<z.ZodString>;
     turns: z.ZodArray<z.ZodObject<{
         role: z.ZodString;
         content: z.ZodString;
@@ -203,6 +338,7 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
         role: string;
         status?: string | undefined;
     }[];
+    task_id?: string | undefined;
 }, {
     type: "transcript";
     title: string;
@@ -211,6 +347,7 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
         role: string;
         status?: string | undefined;
     }[];
+    task_id?: string | undefined;
 }>, z.ZodObject<{
     type: z.ZodLiteral<"timeline">;
     title: z.ZodString;
@@ -278,11 +415,11 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
         key: z.ZodString;
         label: z.ZodString;
     }, "strip", z.ZodTypeAny, {
-        key: string;
         label: string;
+        key: string;
     }, {
-        key: string;
         label: string;
+        key: string;
     }>, "many">;
     matchups: z.ZodArray<z.ZodObject<{
         a: z.ZodString;
@@ -307,8 +444,8 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
     type: "head_to_head";
     title: string;
     participants: {
-        key: string;
         label: string;
+        key: string;
     }[];
     matchups: {
         a: string;
@@ -321,8 +458,8 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
     type: "head_to_head";
     title: string;
     participants: {
-        key: string;
         label: string;
+        key: string;
     }[];
     matchups: {
         a: string;
@@ -331,12 +468,104 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
         b_wins: number;
         draws: number;
     }[];
+}>, z.ZodObject<{
+    type: z.ZodLiteral<"team_games">;
+    title: z.ZodString;
+    participants: z.ZodArray<z.ZodObject<{
+        key: z.ZodString;
+        label: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        label: string;
+        key: string;
+    }, {
+        label: string;
+        key: string;
+    }>, "many">;
+    games: z.ZodArray<z.ZodObject<{
+        game_no: z.ZodNumber;
+        sides: z.ZodTuple<[z.ZodObject<{
+            key: z.ZodString;
+            participants: z.ZodArray<z.ZodString, "many">;
+        }, "strip", z.ZodTypeAny, {
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }>, z.ZodObject<{
+            key: z.ZodString;
+            participants: z.ZodArray<z.ZodString, "many">;
+        }, "strip", z.ZodTypeAny, {
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }>], null>;
+        winner: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        game_no: number;
+        sides: [{
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }];
+        winner: string;
+    }, {
+        game_no: number;
+        sides: [{
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }];
+        winner: string;
+    }>, "many">;
+}, "strip", z.ZodTypeAny, {
+    type: "team_games";
+    title: string;
+    participants: {
+        label: string;
+        key: string;
+    }[];
+    games: {
+        game_no: number;
+        sides: [{
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }];
+        winner: string;
+    }[];
+}, {
+    type: "team_games";
+    title: string;
+    participants: {
+        label: string;
+        key: string;
+    }[];
+    games: {
+        game_no: number;
+        sides: [{
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }];
+        winner: string;
+    }[];
 }>]>, {
     type: "head_to_head";
     title: string;
     participants: {
-        key: string;
         label: string;
+        key: string;
     }[];
     matchups: {
         a: string;
@@ -346,10 +575,29 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
         draws: number;
     }[];
 } | {
+    type: "team_games";
+    title: string;
+    participants: {
+        label: string;
+        key: string;
+    }[];
+    games: {
+        game_no: number;
+        sides: [{
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }];
+        winner: string;
+    }[];
+} | {
     type: "compare";
     task: string;
     content: string;
     expected?: string | undefined;
+    task_id?: string | undefined;
     verdict?: string | undefined;
     score?: number | undefined;
 } | {
@@ -360,6 +608,7 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
         role: string;
         status?: string | undefined;
     }[];
+    task_id?: string | undefined;
 } | {
     type: "timeline";
     title: string;
@@ -380,8 +629,8 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
     type: "head_to_head";
     title: string;
     participants: {
-        key: string;
         label: string;
+        key: string;
     }[];
     matchups: {
         a: string;
@@ -391,10 +640,29 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
         draws: number;
     }[];
 } | {
+    type: "team_games";
+    title: string;
+    participants: {
+        label: string;
+        key: string;
+    }[];
+    games: {
+        game_no: number;
+        sides: [{
+            key: string;
+            participants: string[];
+        }, {
+            key: string;
+            participants: string[];
+        }];
+        winner: string;
+    }[];
+} | {
     type: "compare";
     task: string;
     content: string;
     expected?: string | undefined;
+    task_id?: string | undefined;
     verdict?: string | undefined;
     score?: number | undefined;
 } | {
@@ -405,6 +673,7 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
         role: string;
         status?: string | undefined;
     }[];
+    task_id?: string | undefined;
 } | {
     type: "timeline";
     title: string;
@@ -424,7 +693,7 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
 }>;
 export declare const ResultEntrySchema: z.ZodObject<{
     participant: z.ZodEffects<z.ZodObject<{
-        model: z.ZodString;
+        model: z.ZodEffects<z.ZodString, string, string>;
         harness: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         harness_version: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         config: z.ZodOptional<z.ZodEffects<z.ZodRecord<z.ZodString, z.ZodUnknown>, Record<string, unknown>, Record<string, unknown>>>;
@@ -453,12 +722,15 @@ export declare const ResultEntrySchema: z.ZodObject<{
     raw_metric: z.ZodOptional<z.ZodObject<{
         label: z.ZodString;
         value: z.ZodString;
+        tiebreak_value: z.ZodOptional<z.ZodNumber>;
     }, "strip", z.ZodTypeAny, {
         value: string;
         label: string;
+        tiebreak_value?: number | undefined;
     }, {
         value: string;
         label: string;
+        tiebreak_value?: number | undefined;
     }>>;
     detail: z.ZodOptional<z.ZodString>;
     usage: z.ZodOptional<z.ZodObject<{
@@ -473,17 +745,18 @@ export declare const ResultEntrySchema: z.ZodObject<{
         score: z.ZodNumber;
         raw: z.ZodOptional<z.ZodString>;
     }, "strip", z.ZodTypeAny, {
-        score: number;
         task_id: string;
+        score: number;
         raw?: string | undefined;
     }, {
-        score: number;
         task_id: string;
+        score: number;
         raw?: string | undefined;
     }>, "many">>;
     showcases: z.ZodOptional<z.ZodArray<z.ZodEffects<z.ZodDiscriminatedUnion<"type", [z.ZodObject<{
         type: z.ZodLiteral<"compare">;
         task: z.ZodString;
+        task_id: z.ZodOptional<z.ZodString>;
         content: z.ZodString;
         expected: z.ZodOptional<z.ZodString>;
         verdict: z.ZodOptional<z.ZodString>;
@@ -493,6 +766,7 @@ export declare const ResultEntrySchema: z.ZodObject<{
         task: string;
         content: string;
         expected?: string | undefined;
+        task_id?: string | undefined;
         verdict?: string | undefined;
         score?: number | undefined;
     }, {
@@ -500,11 +774,13 @@ export declare const ResultEntrySchema: z.ZodObject<{
         task: string;
         content: string;
         expected?: string | undefined;
+        task_id?: string | undefined;
         verdict?: string | undefined;
         score?: number | undefined;
     }>, z.ZodObject<{
         type: z.ZodLiteral<"transcript">;
         title: z.ZodString;
+        task_id: z.ZodOptional<z.ZodString>;
         turns: z.ZodArray<z.ZodObject<{
             role: z.ZodString;
             content: z.ZodString;
@@ -526,6 +802,7 @@ export declare const ResultEntrySchema: z.ZodObject<{
             role: string;
             status?: string | undefined;
         }[];
+        task_id?: string | undefined;
     }, {
         type: "transcript";
         title: string;
@@ -534,6 +811,7 @@ export declare const ResultEntrySchema: z.ZodObject<{
             role: string;
             status?: string | undefined;
         }[];
+        task_id?: string | undefined;
     }>, z.ZodObject<{
         type: z.ZodLiteral<"timeline">;
         title: z.ZodString;
@@ -601,11 +879,11 @@ export declare const ResultEntrySchema: z.ZodObject<{
             key: z.ZodString;
             label: z.ZodString;
         }, "strip", z.ZodTypeAny, {
-            key: string;
             label: string;
+            key: string;
         }, {
-            key: string;
             label: string;
+            key: string;
         }>, "many">;
         matchups: z.ZodArray<z.ZodObject<{
             a: z.ZodString;
@@ -630,8 +908,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
         type: "head_to_head";
         title: string;
         participants: {
-            key: string;
             label: string;
+            key: string;
         }[];
         matchups: {
             a: string;
@@ -644,8 +922,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
         type: "head_to_head";
         title: string;
         participants: {
-            key: string;
             label: string;
+            key: string;
         }[];
         matchups: {
             a: string;
@@ -654,12 +932,104 @@ export declare const ResultEntrySchema: z.ZodObject<{
             b_wins: number;
             draws: number;
         }[];
+    }>, z.ZodObject<{
+        type: z.ZodLiteral<"team_games">;
+        title: z.ZodString;
+        participants: z.ZodArray<z.ZodObject<{
+            key: z.ZodString;
+            label: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            label: string;
+            key: string;
+        }, {
+            label: string;
+            key: string;
+        }>, "many">;
+        games: z.ZodArray<z.ZodObject<{
+            game_no: z.ZodNumber;
+            sides: z.ZodTuple<[z.ZodObject<{
+                key: z.ZodString;
+                participants: z.ZodArray<z.ZodString, "many">;
+            }, "strip", z.ZodTypeAny, {
+                key: string;
+                participants: string[];
+            }, {
+                key: string;
+                participants: string[];
+            }>, z.ZodObject<{
+                key: z.ZodString;
+                participants: z.ZodArray<z.ZodString, "many">;
+            }, "strip", z.ZodTypeAny, {
+                key: string;
+                participants: string[];
+            }, {
+                key: string;
+                participants: string[];
+            }>], null>;
+            winner: z.ZodString;
+        }, "strip", z.ZodTypeAny, {
+            game_no: number;
+            sides: [{
+                key: string;
+                participants: string[];
+            }, {
+                key: string;
+                participants: string[];
+            }];
+            winner: string;
+        }, {
+            game_no: number;
+            sides: [{
+                key: string;
+                participants: string[];
+            }, {
+                key: string;
+                participants: string[];
+            }];
+            winner: string;
+        }>, "many">;
+    }, "strip", z.ZodTypeAny, {
+        type: "team_games";
+        title: string;
+        participants: {
+            label: string;
+            key: string;
+        }[];
+        games: {
+            game_no: number;
+            sides: [{
+                key: string;
+                participants: string[];
+            }, {
+                key: string;
+                participants: string[];
+            }];
+            winner: string;
+        }[];
+    }, {
+        type: "team_games";
+        title: string;
+        participants: {
+            label: string;
+            key: string;
+        }[];
+        games: {
+            game_no: number;
+            sides: [{
+                key: string;
+                participants: string[];
+            }, {
+                key: string;
+                participants: string[];
+            }];
+            winner: string;
+        }[];
     }>]>, {
         type: "head_to_head";
         title: string;
         participants: {
-            key: string;
             label: string;
+            key: string;
         }[];
         matchups: {
             a: string;
@@ -669,10 +1039,29 @@ export declare const ResultEntrySchema: z.ZodObject<{
             draws: number;
         }[];
     } | {
+        type: "team_games";
+        title: string;
+        participants: {
+            label: string;
+            key: string;
+        }[];
+        games: {
+            game_no: number;
+            sides: [{
+                key: string;
+                participants: string[];
+            }, {
+                key: string;
+                participants: string[];
+            }];
+            winner: string;
+        }[];
+    } | {
         type: "compare";
         task: string;
         content: string;
         expected?: string | undefined;
+        task_id?: string | undefined;
         verdict?: string | undefined;
         score?: number | undefined;
     } | {
@@ -683,6 +1072,7 @@ export declare const ResultEntrySchema: z.ZodObject<{
             role: string;
             status?: string | undefined;
         }[];
+        task_id?: string | undefined;
     } | {
         type: "timeline";
         title: string;
@@ -703,8 +1093,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
         type: "head_to_head";
         title: string;
         participants: {
-            key: string;
             label: string;
+            key: string;
         }[];
         matchups: {
             a: string;
@@ -714,10 +1104,29 @@ export declare const ResultEntrySchema: z.ZodObject<{
             draws: number;
         }[];
     } | {
+        type: "team_games";
+        title: string;
+        participants: {
+            label: string;
+            key: string;
+        }[];
+        games: {
+            game_no: number;
+            sides: [{
+                key: string;
+                participants: string[];
+            }, {
+                key: string;
+                participants: string[];
+            }];
+            winner: string;
+        }[];
+    } | {
         type: "compare";
         task: string;
         content: string;
         expected?: string | undefined;
+        task_id?: string | undefined;
         verdict?: string | undefined;
         score?: number | undefined;
     } | {
@@ -728,6 +1137,7 @@ export declare const ResultEntrySchema: z.ZodObject<{
             role: string;
             status?: string | undefined;
         }[];
+        task_id?: string | undefined;
     } | {
         type: "timeline";
         title: string;
@@ -756,22 +1166,23 @@ export declare const ResultEntrySchema: z.ZodObject<{
     raw_metric?: {
         value: string;
         label: string;
+        tiebreak_value?: number | undefined;
     } | undefined;
     detail?: string | undefined;
     usage?: {
         tokens?: number | undefined;
     } | undefined;
     task_results?: {
-        score: number;
         task_id: string;
+        score: number;
         raw?: string | undefined;
     }[] | undefined;
     showcases?: ({
         type: "head_to_head";
         title: string;
         participants: {
-            key: string;
             label: string;
+            key: string;
         }[];
         matchups: {
             a: string;
@@ -781,10 +1192,29 @@ export declare const ResultEntrySchema: z.ZodObject<{
             draws: number;
         }[];
     } | {
+        type: "team_games";
+        title: string;
+        participants: {
+            label: string;
+            key: string;
+        }[];
+        games: {
+            game_no: number;
+            sides: [{
+                key: string;
+                participants: string[];
+            }, {
+                key: string;
+                participants: string[];
+            }];
+            winner: string;
+        }[];
+    } | {
         type: "compare";
         task: string;
         content: string;
         expected?: string | undefined;
+        task_id?: string | undefined;
         verdict?: string | undefined;
         score?: number | undefined;
     } | {
@@ -795,6 +1225,7 @@ export declare const ResultEntrySchema: z.ZodObject<{
             role: string;
             status?: string | undefined;
         }[];
+        task_id?: string | undefined;
     } | {
         type: "timeline";
         title: string;
@@ -823,22 +1254,23 @@ export declare const ResultEntrySchema: z.ZodObject<{
     raw_metric?: {
         value: string;
         label: string;
+        tiebreak_value?: number | undefined;
     } | undefined;
     detail?: string | undefined;
     usage?: {
         tokens?: number | undefined;
     } | undefined;
     task_results?: {
-        score: number;
         task_id: string;
+        score: number;
         raw?: string | undefined;
     }[] | undefined;
     showcases?: ({
         type: "head_to_head";
         title: string;
         participants: {
-            key: string;
             label: string;
+            key: string;
         }[];
         matchups: {
             a: string;
@@ -848,10 +1280,29 @@ export declare const ResultEntrySchema: z.ZodObject<{
             draws: number;
         }[];
     } | {
+        type: "team_games";
+        title: string;
+        participants: {
+            label: string;
+            key: string;
+        }[];
+        games: {
+            game_no: number;
+            sides: [{
+                key: string;
+                participants: string[];
+            }, {
+                key: string;
+                participants: string[];
+            }];
+            winner: string;
+        }[];
+    } | {
         type: "compare";
         task: string;
         content: string;
         expected?: string | undefined;
+        task_id?: string | undefined;
         verdict?: string | undefined;
         score?: number | undefined;
     } | {
@@ -862,6 +1313,7 @@ export declare const ResultEntrySchema: z.ZodObject<{
             role: string;
             status?: string | undefined;
         }[];
+        task_id?: string | undefined;
     } | {
         type: "timeline";
         title: string;
@@ -880,22 +1332,157 @@ export declare const ResultEntrySchema: z.ZodObject<{
         caption?: string | undefined;
     })[] | undefined;
 }>;
+export declare const RunSubmissionSchema: z.ZodObject<{
+    kind: z.ZodOptional<z.ZodLiteral<"run">>;
+    runner_version: z.ZodString;
+    run_date: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    runner_version: string;
+    run_date: string;
+    kind?: "run" | undefined;
+}, {
+    runner_version: string;
+    run_date: string;
+    kind?: "run" | undefined;
+}>;
+export declare const UpstreamAuthorPublicationSubmissionSchema: z.ZodObject<{
+    kind: z.ZodLiteral<"upstream_author_publication">;
+    importer_version: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
+    retrieved_on: z.ZodEffects<z.ZodString, string, string>;
+    source: z.ZodObject<{
+        title: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
+        url: z.ZodEffects<z.ZodString, string, string>;
+        snapshot_sha256: z.ZodString;
+    }, "strict", z.ZodTypeAny, {
+        url: string;
+        snapshot_sha256: string;
+        title?: string | undefined;
+    }, {
+        url: string;
+        snapshot_sha256: string;
+        title?: string | undefined;
+    }>;
+}, "strict", z.ZodTypeAny, {
+    kind: "upstream_author_publication";
+    importer_version: string;
+    retrieved_on: string;
+    source: {
+        url: string;
+        snapshot_sha256: string;
+        title?: string | undefined;
+    };
+}, {
+    kind: "upstream_author_publication";
+    importer_version: string;
+    retrieved_on: string;
+    source: {
+        url: string;
+        snapshot_sha256: string;
+        title?: string | undefined;
+    };
+}>;
+export declare const ResultSubmissionSchema: z.ZodUnion<[z.ZodObject<{
+    kind: z.ZodLiteral<"upstream_author_publication">;
+    importer_version: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
+    retrieved_on: z.ZodEffects<z.ZodString, string, string>;
+    source: z.ZodObject<{
+        title: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
+        url: z.ZodEffects<z.ZodString, string, string>;
+        snapshot_sha256: z.ZodString;
+    }, "strict", z.ZodTypeAny, {
+        url: string;
+        snapshot_sha256: string;
+        title?: string | undefined;
+    }, {
+        url: string;
+        snapshot_sha256: string;
+        title?: string | undefined;
+    }>;
+}, "strict", z.ZodTypeAny, {
+    kind: "upstream_author_publication";
+    importer_version: string;
+    retrieved_on: string;
+    source: {
+        url: string;
+        snapshot_sha256: string;
+        title?: string | undefined;
+    };
+}, {
+    kind: "upstream_author_publication";
+    importer_version: string;
+    retrieved_on: string;
+    source: {
+        url: string;
+        snapshot_sha256: string;
+        title?: string | undefined;
+    };
+}>, z.ZodObject<{
+    kind: z.ZodOptional<z.ZodLiteral<"run">>;
+    runner_version: z.ZodString;
+    run_date: z.ZodString;
+}, "strip", z.ZodTypeAny, {
+    runner_version: string;
+    run_date: string;
+    kind?: "run" | undefined;
+}, {
+    runner_version: string;
+    run_date: string;
+    kind?: "run" | undefined;
+}>]>;
 export declare const ResultFileSchema: z.ZodObject<{
     eval_id: z.ZodString;
     eval_commit: z.ZodOptional<z.ZodString>;
-    submission: z.ZodObject<{
+    submission: z.ZodUnion<[z.ZodObject<{
+        kind: z.ZodLiteral<"upstream_author_publication">;
+        importer_version: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
+        retrieved_on: z.ZodEffects<z.ZodString, string, string>;
+        source: z.ZodObject<{
+            title: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
+            url: z.ZodEffects<z.ZodString, string, string>;
+            snapshot_sha256: z.ZodString;
+        }, "strict", z.ZodTypeAny, {
+            url: string;
+            snapshot_sha256: string;
+            title?: string | undefined;
+        }, {
+            url: string;
+            snapshot_sha256: string;
+            title?: string | undefined;
+        }>;
+    }, "strict", z.ZodTypeAny, {
+        kind: "upstream_author_publication";
+        importer_version: string;
+        retrieved_on: string;
+        source: {
+            url: string;
+            snapshot_sha256: string;
+            title?: string | undefined;
+        };
+    }, {
+        kind: "upstream_author_publication";
+        importer_version: string;
+        retrieved_on: string;
+        source: {
+            url: string;
+            snapshot_sha256: string;
+            title?: string | undefined;
+        };
+    }>, z.ZodObject<{
+        kind: z.ZodOptional<z.ZodLiteral<"run">>;
         runner_version: z.ZodString;
         run_date: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         runner_version: string;
         run_date: string;
+        kind?: "run" | undefined;
     }, {
         runner_version: string;
         run_date: string;
-    }>;
+        kind?: "run" | undefined;
+    }>]>;
     results: z.ZodArray<z.ZodObject<{
         participant: z.ZodEffects<z.ZodObject<{
-            model: z.ZodString;
+            model: z.ZodEffects<z.ZodString, string, string>;
             harness: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
             harness_version: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
             config: z.ZodOptional<z.ZodEffects<z.ZodRecord<z.ZodString, z.ZodUnknown>, Record<string, unknown>, Record<string, unknown>>>;
@@ -924,12 +1511,15 @@ export declare const ResultFileSchema: z.ZodObject<{
         raw_metric: z.ZodOptional<z.ZodObject<{
             label: z.ZodString;
             value: z.ZodString;
+            tiebreak_value: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             value: string;
             label: string;
+            tiebreak_value?: number | undefined;
         }, {
             value: string;
             label: string;
+            tiebreak_value?: number | undefined;
         }>>;
         detail: z.ZodOptional<z.ZodString>;
         usage: z.ZodOptional<z.ZodObject<{
@@ -944,17 +1534,18 @@ export declare const ResultFileSchema: z.ZodObject<{
             score: z.ZodNumber;
             raw: z.ZodOptional<z.ZodString>;
         }, "strip", z.ZodTypeAny, {
-            score: number;
             task_id: string;
+            score: number;
             raw?: string | undefined;
         }, {
-            score: number;
             task_id: string;
+            score: number;
             raw?: string | undefined;
         }>, "many">>;
         showcases: z.ZodOptional<z.ZodArray<z.ZodEffects<z.ZodDiscriminatedUnion<"type", [z.ZodObject<{
             type: z.ZodLiteral<"compare">;
             task: z.ZodString;
+            task_id: z.ZodOptional<z.ZodString>;
             content: z.ZodString;
             expected: z.ZodOptional<z.ZodString>;
             verdict: z.ZodOptional<z.ZodString>;
@@ -964,6 +1555,7 @@ export declare const ResultFileSchema: z.ZodObject<{
             task: string;
             content: string;
             expected?: string | undefined;
+            task_id?: string | undefined;
             verdict?: string | undefined;
             score?: number | undefined;
         }, {
@@ -971,11 +1563,13 @@ export declare const ResultFileSchema: z.ZodObject<{
             task: string;
             content: string;
             expected?: string | undefined;
+            task_id?: string | undefined;
             verdict?: string | undefined;
             score?: number | undefined;
         }>, z.ZodObject<{
             type: z.ZodLiteral<"transcript">;
             title: z.ZodString;
+            task_id: z.ZodOptional<z.ZodString>;
             turns: z.ZodArray<z.ZodObject<{
                 role: z.ZodString;
                 content: z.ZodString;
@@ -997,6 +1591,7 @@ export declare const ResultFileSchema: z.ZodObject<{
                 role: string;
                 status?: string | undefined;
             }[];
+            task_id?: string | undefined;
         }, {
             type: "transcript";
             title: string;
@@ -1005,6 +1600,7 @@ export declare const ResultFileSchema: z.ZodObject<{
                 role: string;
                 status?: string | undefined;
             }[];
+            task_id?: string | undefined;
         }>, z.ZodObject<{
             type: z.ZodLiteral<"timeline">;
             title: z.ZodString;
@@ -1072,11 +1668,11 @@ export declare const ResultFileSchema: z.ZodObject<{
                 key: z.ZodString;
                 label: z.ZodString;
             }, "strip", z.ZodTypeAny, {
-                key: string;
                 label: string;
+                key: string;
             }, {
-                key: string;
                 label: string;
+                key: string;
             }>, "many">;
             matchups: z.ZodArray<z.ZodObject<{
                 a: z.ZodString;
@@ -1101,8 +1697,8 @@ export declare const ResultFileSchema: z.ZodObject<{
             type: "head_to_head";
             title: string;
             participants: {
-                key: string;
                 label: string;
+                key: string;
             }[];
             matchups: {
                 a: string;
@@ -1115,8 +1711,8 @@ export declare const ResultFileSchema: z.ZodObject<{
             type: "head_to_head";
             title: string;
             participants: {
-                key: string;
                 label: string;
+                key: string;
             }[];
             matchups: {
                 a: string;
@@ -1125,12 +1721,104 @@ export declare const ResultFileSchema: z.ZodObject<{
                 b_wins: number;
                 draws: number;
             }[];
+        }>, z.ZodObject<{
+            type: z.ZodLiteral<"team_games">;
+            title: z.ZodString;
+            participants: z.ZodArray<z.ZodObject<{
+                key: z.ZodString;
+                label: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                label: string;
+                key: string;
+            }, {
+                label: string;
+                key: string;
+            }>, "many">;
+            games: z.ZodArray<z.ZodObject<{
+                game_no: z.ZodNumber;
+                sides: z.ZodTuple<[z.ZodObject<{
+                    key: z.ZodString;
+                    participants: z.ZodArray<z.ZodString, "many">;
+                }, "strip", z.ZodTypeAny, {
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }>, z.ZodObject<{
+                    key: z.ZodString;
+                    participants: z.ZodArray<z.ZodString, "many">;
+                }, "strip", z.ZodTypeAny, {
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }>], null>;
+                winner: z.ZodString;
+            }, "strip", z.ZodTypeAny, {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }, {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            type: "team_games";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            games: {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }[];
+        }, {
+            type: "team_games";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            games: {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }[];
         }>]>, {
             type: "head_to_head";
             title: string;
             participants: {
-                key: string;
                 label: string;
+                key: string;
             }[];
             matchups: {
                 a: string;
@@ -1140,10 +1828,29 @@ export declare const ResultFileSchema: z.ZodObject<{
                 draws: number;
             }[];
         } | {
+            type: "team_games";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            games: {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }[];
+        } | {
             type: "compare";
             task: string;
             content: string;
             expected?: string | undefined;
+            task_id?: string | undefined;
             verdict?: string | undefined;
             score?: number | undefined;
         } | {
@@ -1154,6 +1861,7 @@ export declare const ResultFileSchema: z.ZodObject<{
                 role: string;
                 status?: string | undefined;
             }[];
+            task_id?: string | undefined;
         } | {
             type: "timeline";
             title: string;
@@ -1174,8 +1882,8 @@ export declare const ResultFileSchema: z.ZodObject<{
             type: "head_to_head";
             title: string;
             participants: {
-                key: string;
                 label: string;
+                key: string;
             }[];
             matchups: {
                 a: string;
@@ -1185,10 +1893,29 @@ export declare const ResultFileSchema: z.ZodObject<{
                 draws: number;
             }[];
         } | {
+            type: "team_games";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            games: {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }[];
+        } | {
             type: "compare";
             task: string;
             content: string;
             expected?: string | undefined;
+            task_id?: string | undefined;
             verdict?: string | undefined;
             score?: number | undefined;
         } | {
@@ -1199,6 +1926,7 @@ export declare const ResultFileSchema: z.ZodObject<{
                 role: string;
                 status?: string | undefined;
             }[];
+            task_id?: string | undefined;
         } | {
             type: "timeline";
             title: string;
@@ -1227,22 +1955,23 @@ export declare const ResultFileSchema: z.ZodObject<{
         raw_metric?: {
             value: string;
             label: string;
+            tiebreak_value?: number | undefined;
         } | undefined;
         detail?: string | undefined;
         usage?: {
             tokens?: number | undefined;
         } | undefined;
         task_results?: {
-            score: number;
             task_id: string;
+            score: number;
             raw?: string | undefined;
         }[] | undefined;
         showcases?: ({
             type: "head_to_head";
             title: string;
             participants: {
-                key: string;
                 label: string;
+                key: string;
             }[];
             matchups: {
                 a: string;
@@ -1252,10 +1981,29 @@ export declare const ResultFileSchema: z.ZodObject<{
                 draws: number;
             }[];
         } | {
+            type: "team_games";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            games: {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }[];
+        } | {
             type: "compare";
             task: string;
             content: string;
             expected?: string | undefined;
+            task_id?: string | undefined;
             verdict?: string | undefined;
             score?: number | undefined;
         } | {
@@ -1266,6 +2014,7 @@ export declare const ResultFileSchema: z.ZodObject<{
                 role: string;
                 status?: string | undefined;
             }[];
+            task_id?: string | undefined;
         } | {
             type: "timeline";
             title: string;
@@ -1294,22 +2043,23 @@ export declare const ResultFileSchema: z.ZodObject<{
         raw_metric?: {
             value: string;
             label: string;
+            tiebreak_value?: number | undefined;
         } | undefined;
         detail?: string | undefined;
         usage?: {
             tokens?: number | undefined;
         } | undefined;
         task_results?: {
-            score: number;
             task_id: string;
+            score: number;
             raw?: string | undefined;
         }[] | undefined;
         showcases?: ({
             type: "head_to_head";
             title: string;
             participants: {
-                key: string;
                 label: string;
+                key: string;
             }[];
             matchups: {
                 a: string;
@@ -1319,10 +2069,29 @@ export declare const ResultFileSchema: z.ZodObject<{
                 draws: number;
             }[];
         } | {
+            type: "team_games";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            games: {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }[];
+        } | {
             type: "compare";
             task: string;
             content: string;
             expected?: string | undefined;
+            task_id?: string | undefined;
             verdict?: string | undefined;
             score?: number | undefined;
         } | {
@@ -1333,6 +2102,7 @@ export declare const ResultFileSchema: z.ZodObject<{
                 role: string;
                 status?: string | undefined;
             }[];
+            task_id?: string | undefined;
         } | {
             type: "timeline";
             title: string;
@@ -1356,6 +2126,16 @@ export declare const ResultFileSchema: z.ZodObject<{
     submission: {
         runner_version: string;
         run_date: string;
+        kind?: "run" | undefined;
+    } | {
+        kind: "upstream_author_publication";
+        importer_version: string;
+        retrieved_on: string;
+        source: {
+            url: string;
+            snapshot_sha256: string;
+            title?: string | undefined;
+        };
     };
     results: {
         participant: {
@@ -1368,22 +2148,23 @@ export declare const ResultFileSchema: z.ZodObject<{
         raw_metric?: {
             value: string;
             label: string;
+            tiebreak_value?: number | undefined;
         } | undefined;
         detail?: string | undefined;
         usage?: {
             tokens?: number | undefined;
         } | undefined;
         task_results?: {
-            score: number;
             task_id: string;
+            score: number;
             raw?: string | undefined;
         }[] | undefined;
         showcases?: ({
             type: "head_to_head";
             title: string;
             participants: {
-                key: string;
                 label: string;
+                key: string;
             }[];
             matchups: {
                 a: string;
@@ -1393,10 +2174,29 @@ export declare const ResultFileSchema: z.ZodObject<{
                 draws: number;
             }[];
         } | {
+            type: "team_games";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            games: {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }[];
+        } | {
             type: "compare";
             task: string;
             content: string;
             expected?: string | undefined;
+            task_id?: string | undefined;
             verdict?: string | undefined;
             score?: number | undefined;
         } | {
@@ -1407,6 +2207,7 @@ export declare const ResultFileSchema: z.ZodObject<{
                 role: string;
                 status?: string | undefined;
             }[];
+            task_id?: string | undefined;
         } | {
             type: "timeline";
             title: string;
@@ -1431,6 +2232,16 @@ export declare const ResultFileSchema: z.ZodObject<{
     submission: {
         runner_version: string;
         run_date: string;
+        kind?: "run" | undefined;
+    } | {
+        kind: "upstream_author_publication";
+        importer_version: string;
+        retrieved_on: string;
+        source: {
+            url: string;
+            snapshot_sha256: string;
+            title?: string | undefined;
+        };
     };
     results: {
         participant: {
@@ -1443,22 +2254,23 @@ export declare const ResultFileSchema: z.ZodObject<{
         raw_metric?: {
             value: string;
             label: string;
+            tiebreak_value?: number | undefined;
         } | undefined;
         detail?: string | undefined;
         usage?: {
             tokens?: number | undefined;
         } | undefined;
         task_results?: {
-            score: number;
             task_id: string;
+            score: number;
             raw?: string | undefined;
         }[] | undefined;
         showcases?: ({
             type: "head_to_head";
             title: string;
             participants: {
-                key: string;
                 label: string;
+                key: string;
             }[];
             matchups: {
                 a: string;
@@ -1468,10 +2280,29 @@ export declare const ResultFileSchema: z.ZodObject<{
                 draws: number;
             }[];
         } | {
+            type: "team_games";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            games: {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }[];
+        } | {
             type: "compare";
             task: string;
             content: string;
             expected?: string | undefined;
+            task_id?: string | undefined;
             verdict?: string | undefined;
             score?: number | undefined;
         } | {
@@ -1482,6 +2313,7 @@ export declare const ResultFileSchema: z.ZodObject<{
                 role: string;
                 status?: string | undefined;
             }[];
+            task_id?: string | undefined;
         } | {
             type: "timeline";
             title: string;
@@ -1506,6 +2338,10 @@ export type Showcase = z.infer<typeof ShowcaseSchema>;
 export type HeadToHeadParticipant = HeadToHeadShowcaseValue["participants"][number];
 export type HeadToHeadMatchup = HeadToHeadShowcaseValue["matchups"][number];
 export type HeadToHeadShowcase = z.infer<typeof HeadToHeadShowcaseSchema>;
+export type TeamGamesShowcase = z.infer<typeof TeamGamesShowcaseSchema>;
 export type ResultEntry = z.infer<typeof ResultEntrySchema>;
+export type RunSubmission = z.infer<typeof RunSubmissionSchema>;
+export type UpstreamAuthorPublicationSubmission = z.infer<typeof UpstreamAuthorPublicationSubmissionSchema>;
+export type ResultSubmission = z.infer<typeof ResultSubmissionSchema>;
 export type ResultFile = z.infer<typeof ResultFileSchema>;
 export {};
