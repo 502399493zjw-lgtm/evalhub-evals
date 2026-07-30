@@ -37,6 +37,7 @@ export function validateResultForEval(context, resultFile) {
     }
     const dialogueParticipants = new Set();
     const envelopeParticipants = new Set(resultFile.results.map((result) => runParticipantKey(result.participant)));
+    const legacyEnvelopeParticipants = new Set(resultFile.results.map((result) => result.participant.model));
     for (const [index, result] of resultFile.results.entries()) {
         const participantPath = ["results", index, "participant"];
         const participantValidation = validateParticipantForEval(context, result.participant, origin);
@@ -90,7 +91,10 @@ export function validateResultForEval(context, resultFile) {
                 teamGamesShowcaseCount += 1;
             }
             for (const [participantIndex, participant] of showcase.participants.entries()) {
-                if (!envelopeParticipants.has(participant.key)) {
+                const legacyHeadToHeadParticipant = showcase.type === "head_to_head" &&
+                    legacyEnvelopeParticipants.has(participant.key);
+                if (!envelopeParticipants.has(participant.key) &&
+                    !legacyHeadToHeadParticipant) {
                     issues.push(customIssue([...showcasePath, "participants", participantIndex, "key"], `${showcase.type} participant must occur in the same dialogue envelope`));
                 }
             }
