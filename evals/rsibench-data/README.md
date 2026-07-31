@@ -44,7 +44,7 @@
 
 - 有日期版本的研究者模型 ID、harness、harness 版本、provider 和实际 reasoning effort；
 - 钉死的来源、目标模型、rollout 模型与每项预算；
-- 六个唯一 run ID、来源 profile 的锁定参数和 `official_score`；
+- 六个唯一 run ID、来源 profile 的锁定参数和整数 `successful_trials`；
 - 每次运行一个稳定的公开 HTTPS 证据落地页，以及 `official_eval.json`、Harbor `result.json` 和完整性审计报告的 SHA-256。
 
 证据落地页应让作者核对原始文件与指纹，但不得公开密钥、临时签名 URL、`.env`、个人信息、目标 benchmark 的受保护任务/标签、未脱敏推理、Tinker 或 E2B 凭据。URL 不能包含 query、fragment、用户名或密码。若许可证或数据协议不允许公开某个原始文件，应发布允许分发的白名单摘要，并向作者提供可审计的合法来源；不能靠删除关键字段制造“通过验证”的假象。
@@ -59,17 +59,17 @@ npx @evalhub/cli@0.1.0 validate /absolute/path/to/rsibench-data-result.json
 npx @evalhub/cli@0.1.0 submit /absolute/path/to/rsibench-data-result.json
 ```
 
-转换器不联网、不启动子进程、不下载依赖，也不接触 Tinker、E2B、Harbor 或模型服务。它严格检查 JSON 字段、固定协议、六项覆盖、参数范围、唯一 ID、HTTPS 证据 URL 和 SHA-256 格式，并以原子方式写出 `score: null` 的 EvalHub 结果。
+转换器不联网、不启动子进程、不下载依赖，也不接触 Tinker、E2B、Harbor 或模型服务。它严格检查 JSON 字段、固定协议、六项覆盖、整数成功次数、唯一 ID、公开 HTTPS 证据 URL 和 SHA-256 格式，并以原子方式写出 `score: null` 的 EvalHub 结果。
 
 ## 计分、容错与复核
 
-每个 profile 的分项分数为上游官方 `harbor_score × 100`：
+每个 profile 的分项分数由整数成功次数和固定试验总数确定：`successful_trials ÷ (n_tasks × n_attempts) × 100`。该比值应与上游官方 `harbor_score × 100` 完全对应：
 
 - 三个 SWE profile 沿用 resolved rate；
 - Terminal-Bench 2.0 沿用 task success rate；
 - GPQA Diamond 与 AIME 沿用 accuracy，AIME 是上游 avg@4。
 
-转换器将分项与派生宏平均规范到小数点后最多 6 位。上游把 task error 和 timeout 反映在 Harbor 分数中，因此它们仍按失败计入，不做额外豁免、插值或“最佳重试”替换。浮点表示外不设置模糊匹配：作者应以 Harbor 聚合结果中的数值为准。
+转换器将分项与派生宏平均规范到小数点后最多 6 位。上游把 task error 和 timeout 反映在 Harbor 分数中，因此它们仍按失败计入，不做额外豁免、插值或“最佳重试”替换。输入不接受任意浮点分数：三项 SWE 与 GPQA 的分母为 100，Terminal-Bench 为 89，AIME 为 120；runner 从整数计数唯一派生分数，避免不可能的分数刻度或浮点容差争议。作者仍须把计数与 Harbor 聚合结果逐项交叉核对。
 
 论文和作者仓库没有定义跨六个 profile 的单一总分。为了适配 EvalHub 单榜，本接入使用六项百分制分数的等权算术平均作为展示分数；这是明确标注的 **EvalHub 派生指标**，不是 RSIBench-Data 官方复合指标，也不是相对 base model 的提升值。缺少任一 profile 或任一运行不合规时整份提交不判分，不计算部分总分。
 
@@ -78,7 +78,7 @@ custom runner 只输出待核验的六个 `task_results`、派生平均和证据
 1. artifact 与三个 SHA-256 一致且公开材料可合法审计；
 2. 来源 remote/commit、六个独立预算状态、目标与 rollout 模型符合固定协议；
 3. `final_selection.json` 在官方评测前产生，且选择的是已完成候选；
-4. `official_eval.json` 与 Harbor `result.json` 的 profile、参数、run ID、所选 checkpoint 和 score 互相一致；
+4. `official_eval.json` 与 Harbor `result.json` 的 profile、参数、run ID、所选 checkpoint、成功次数和 score 互相一致；
 5. tamper audit、数据来源和训练集没有违反评测数据边界；
 6. 研究者身份、harness、版本和 reasoning effort 有独立运行记录支持。
 

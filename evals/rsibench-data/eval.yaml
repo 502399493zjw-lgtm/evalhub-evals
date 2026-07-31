@@ -10,7 +10,7 @@ runner: custom
 scoring: custom
 scored_by: author
 score_unit: 分
-scoring_note: 每个参赛研究者系统必须按论文主协议完成六个相互独立的预算运行：固定 RSIBench-Data 来源 commit、Qwen/Qwen3.5-35B-A3B-Base 目标模型、Claude Opus 4.8 外部 rollout 模型、每项名义 16 小时墙钟和 500 USD Tinker 预算，并使用各 profile 锁定的 Harbor/E2B 数据集、agent、并发数、步数和尝试数。六个 task_result 分别是所选检查点官方 harbor_score 乘 100；SWE 三项为 resolved rate，Terminal-Bench 2.0 为 task success rate，GPQA Diamond 与 AIME 为 accuracy，AIME 已在上游按每题 4 次解码聚合。上游没有定义跨六项总分；为适配 EvalHub，作者核验后才将六项百分制分数的等权算术平均回填为 score，此宏平均是 EvalHub 派生指标而非上游官方指标。转换器仅校验结构、固定协议、范围和证据指纹并始终写 score=null；作者还须核对公开 artifact、原始 Harbor 结果、预算状态、先选检查点后官方评测、数据隔离、完整性审计、研究者身份与 harness 配置。缺任一 profile、证据不可信或协议不符则整份提交不判分；上游记入分数的任务失败和超时保持为失败，不另行豁免或重试加分。
+scoring_note: 每个参赛研究者系统必须按论文主协议完成六个相互独立的预算运行：固定 RSIBench-Data 来源 commit、Qwen/Qwen3.5-35B-A3B-Base 目标模型、Claude Opus 4.8 外部 rollout 模型、每项名义 16 小时墙钟和 500 USD Tinker 预算，并使用各 profile 锁定的 Harbor/E2B 数据集、agent、并发数、步数和尝试数。六个 task_result 由整数 successful_trials 除以固定 n_tasks × n_attempts 后乘 100 唯一派生，并须与所选检查点官方 harbor_score 一致；SWE 三项为 resolved rate，Terminal-Bench 2.0 为 task success rate，GPQA Diamond 与 AIME 为 accuracy，AIME 的固定分母是 30 题 × 每题 4 次解码。上游没有定义跨六项总分；为适配 EvalHub，作者核验后才将六项百分制分数的等权算术平均回填为 score，此宏平均是 EvalHub 派生指标而非上游官方指标。转换器仅校验结构、固定协议、整数计数范围和证据指纹并始终写 score=null；作者还须核对公开 artifact、原始 Harbor 结果、预算状态、先选检查点后官方评测、数据隔离、完整性审计、研究者身份与 harness 配置。缺任一 profile、证据不可信或协议不符则整份提交不判分；上游记入分数的任务失败和超时保持为失败，不另行豁免或重试加分。
 command_template:
   argv: [node, evals/rsibench-data/pack-to-result.mjs, evals/rsibench-data/tasks/example-submission.json, --out, "{output}"]
   output: rsibench-data-result.json

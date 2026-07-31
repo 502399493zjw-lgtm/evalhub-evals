@@ -16,8 +16,8 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "rsibench-data";
-const RUNNER_VERSION = "rsibench-data/pack-to-result@1.0.0";
-const SCHEMA_VERSION = "1.0";
+const RUNNER_VERSION = "rsibench-data/pack-to-result@1.1.0";
+const SCHEMA_VERSION = "1.1";
 const SOURCE_REPOSITORY = "https://github.com/evolvent-ai/RSIBench-Data";
 const SOURCE_COMMIT = "39948a17925272367b64dd53427a4dba3f572f4e";
 const TARGET_MODEL = "Qwen/Qwen3.5-35B-A3B-Base";
@@ -250,6 +250,17 @@ function validateProtocol(value) {
   );
 }
 
+function isIpLiteral(hostname) {
+  if (hostname.startsWith("[") && hostname.endsWith("]")) return true;
+  const octets = hostname.split(".");
+  return (
+    octets.length === 4 &&
+    octets.every(
+      (octet) => /^(?:0|[1-9]\d{0,2})$/u.test(octet) && Number(octet) <= 255,
+    )
+  );
+}
+
 function validateHttpsArtifactUrl(value, label) {
   const text = nonEmptyString(value, label, 2048);
   let url;
@@ -263,10 +274,14 @@ function validateHttpsArtifactUrl(value, label) {
   assert(url.port === "", `${label} 不能使用自定义端口`);
   assert(url.search === "", `${label} 不能包含 query 参数或临时签名`);
   assert(url.hash === "", `${label} 不能包含 fragment`);
+  const hostname = url.hostname.toLowerCase();
+  assert(!hostname.endsWith("."), `${label} 主机名不能以点结尾`);
   assert(
-    url.hostname.includes(".") &&
-      url.hostname !== "localhost" &&
-      !url.hostname.endsWith(".local"),
+    hostname.includes(".") &&
+      hostname !== "localhost" &&
+      !hostname.endsWith(".localhost") &&
+      !hostname.endsWith(".local") &&
+      !isIpLiteral(hostname),
     `${label} 必须指向公开主机`,
   );
   return url.toString();
@@ -285,7 +300,7 @@ function validateRun(value, index) {
     [
       "task_id",
       "run_id",
-      "official_score",
+      "successful_trials",
       "artifact_url",
       "official_eval_sha256",
       "harbor_result_sha256",
@@ -299,13 +314,12 @@ function validateRun(value, index) {
   assert(profile !== undefined, `${label}.task_id 不是固定的六个 profile 之一`);
   const runId = nonEmptyString(value.run_id, `${label}.run_id`, 128);
   assert(RUN_ID_PATTERN.test(runId), `${label}.run_id 只能包含字母、数字和 ._-`);
+  const totalTrials = profile.nTasks * profile.nAttempts;
   assert(
-    typeof value.official_score === "number" &&
-      Number.isFinite(value.official_score) &&
-      !Object.is(value.official_score, -0) &&
-      value.official_score >= 0 &&
-      value.official_score <= 1,
-    `${label}.official_score 必须是 0 至 1 的有限数值`,
+    Number.isSafeInteger(value.successful_trials) &&
+      value.successful_trials >= 0 &&
+      value.successful_trials <= totalTrials,
+    `${label}.successful_trials 必须是 0 至 ${totalTrials} 的安全整数`,
   );
   return {
     artifactUrl: validateHttpsArtifactUrl(value.artifact_url, `${label}.artifact_url`),
@@ -321,9 +335,9 @@ function validateRun(value, index) {
       value.official_eval_sha256,
       `${label}.official_eval_sha256`,
     ),
-    officialScore: value.official_score,
     profile,
     runId,
+    successfulTrials: value.successful_trials,
     taskId,
   };
 }
@@ -415,7 +429,9 @@ function validateRuns(value) {
 
 function buildResult(manifest, evalCommit) {
   const taskResults = manifest.runs.map((run) => {
-    const percentScore = roundSix(run.officialScore * 100);
+    const totalTrials = run.profile.nTasks * run.profile.nAttempts;
+    const upstreamHarborScore = run.successfulTrials / totalTrials;
+    const percentScore = roundSix(upstreamHarborScore * 100);
     return {
       task_id: run.taskId,
       score: percentScore,
@@ -436,9 +452,11 @@ function buildResult(manifest, evalCommit) {
           n_concurrent: N_CONCURRENT,
           n_tasks: run.profile.nTasks,
           step_limit: STEP_LIMIT,
+          total_trials: totalTrials,
         },
         run_id: run.runId,
-        upstream_harbor_score: run.officialScore,
+        successful_trials: run.successfulTrials,
+        upstream_harbor_score: upstreamHarborScore,
       }),
     };
   });
@@ -454,6 +472,7 @@ function buildResult(manifest, evalCommit) {
         integrity_audit_sha256: run.integrityAuditSha256,
         official_eval_sha256: run.officialEvalSha256,
         run_id: run.runId,
+        successful_trials: run.successfulTrials,
         task_id: run.taskId,
       })),
     }),
@@ -493,7 +512,7 @@ function buildResult(manifest, evalCommit) {
         },
         detail:
           `第三方 RSIBench-Data 六项证据声明，固定来源 commit ${SOURCE_COMMIT}。` +
-          `转换器已核对六个唯一 profile、独立 run ID、固定主协议、0–1 官方分数、` +
+          `转换器已核对六个唯一 profile、独立 run ID、固定主协议、整数成功次数、` +
           `公开 HTTPS 证据地址和 18 个唯一 SHA-256；声明的 EvalHub 派生宏平均为 ` +
           `${displayNumber(proposedMacroAverage)} 分。score 保持 null，只有评测作者核对原始 Harbor ` +
           `结果、预算、检查点选择顺序、完整性审计、数据隔离与研究者身份后才能回填并认可。` +
@@ -506,7 +525,10 @@ function buildResult(manifest, evalCommit) {
             series: taskResults.map((task) => ({ t: task.task_id, v: task.score })),
             events: manifest.runs.map((run, index) => ({
               t: run.taskId,
-              label: `${run.profile.name} · ${displayNumber(taskResults[index].score)} · ${run.profile.metric}`,
+              label:
+                `${run.profile.name} · ${displayNumber(taskResults[index].score)} · ` +
+                `${run.successfulTrials}/${run.profile.nTasks * run.profile.nAttempts} · ` +
+                `${run.profile.metric}`,
             })),
           },
           {
@@ -522,7 +544,9 @@ function buildResult(manifest, evalCommit) {
               ...manifest.runs.map((run) => ({
                 role: run.taskId,
                 content:
-                  `${run.artifactUrl} · run ${run.runId} · official_eval sha256:` +
+                  `${run.artifactUrl} · run ${run.runId} · successes ` +
+                  `${run.successfulTrials}/${run.profile.nTasks * run.profile.nAttempts} · ` +
+                  `official_eval sha256:` +
                   `${run.officialEvalSha256} · harbor_result sha256:${run.harborResultSha256} · ` +
                   `integrity_audit sha256:${run.integrityAuditSha256}`,
                 status: "author-review-required",
