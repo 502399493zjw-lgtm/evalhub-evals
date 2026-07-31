@@ -275,6 +275,7 @@ function validateHttpsArtifactUrl(value, label) {
   assert(url.search === "", `${label} 不能包含 query 参数或临时签名`);
   assert(url.hash === "", `${label} 不能包含 fragment`);
   const hostname = url.hostname.toLowerCase();
+  assert(!hostname.endsWith("."), `${label} 主机名不能以点结尾`);
   assert(
     hostname.includes(".") &&
       hostname !== "localhost" &&
