@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "run_date": "2026-07-29",
   "participant": {
     "model": "example/synthetic-researcher-20260729",
@@ -22,7 +22,7 @@
     {
       "task_id": "swe-bench-verified",
       "run_id": "synthetic-swe-verified-001",
-      "official_score": 0.4,
+      "successful_trials": 40,
       "artifact_url": "https://example.com/rsibench-data/synthetic/swe-bench-verified",
       "official_eval_sha256": "4ab270f8542d8030e75701f5892fd4e10a8a53a619712d0f5372900346750c5f",
       "harbor_result_sha256": "b7b626f804cc17e2c752c0cc459abeb426abff99c9beaa0bb086a01933a796fb",
@@ -31,7 +31,7 @@
     {
       "task_id": "swe-bench-multilingual",
       "run_id": "synthetic-swe-multilingual-001",
-      "official_score": 0.2,
+      "successful_trials": 20,
       "artifact_url": "https://example.com/rsibench-data/synthetic/swe-bench-multilingual",
       "official_eval_sha256": "42608331f5a66e48f594c9b01fbf6ef988f4fd221d2caf7e257fb9ef69b0ed91",
       "harbor_result_sha256": "e3300e0e8b5b1371c9c795e2f5b0c9d8f7422c3ebdabe6fe60145ecb55cd1428",
@@ -40,7 +40,7 @@
     {
       "task_id": "swe-bench-pro",
       "run_id": "synthetic-swe-pro-001",
-      "official_score": 0.1,
+      "successful_trials": 10,
       "artifact_url": "https://example.com/rsibench-data/synthetic/swe-bench-pro",
       "official_eval_sha256": "9ef48ee9354dc9b37ad01f702e6c10eb03d6a479b622df9e95d202b323cbe566",
       "harbor_result_sha256": "e46d94e83a7d0971fde594c033d7444ea8460798952544f2e5dd4be175e4559d",
@@ -49,7 +49,7 @@
     {
       "task_id": "terminal-bench-2",
       "run_id": "synthetic-terminal-bench-001",
-      "official_score": 0.15,
+      "successful_trials": 13,
       "artifact_url": "https://example.com/rsibench-data/synthetic/terminal-bench-2",
       "official_eval_sha256": "4e9b9313b3f00f0e26509f0e7189cf9fd2a079857d52fd9b957c234b6c3b8077",
       "harbor_result_sha256": "71afbef50f837d418cd8437e9667f7f9e99d1d09d18ebce20be0c25702572580",
@@ -58,7 +58,7 @@
     {
       "task_id": "gpqa-diamond",
       "run_id": "synthetic-gpqa-diamond-001",
-      "official_score": 0.65,
+      "successful_trials": 65,
       "artifact_url": "https://example.com/rsibench-data/synthetic/gpqa-diamond",
       "official_eval_sha256": "d6fd05d7c83fed19d488e37088a276903a86c611225d622d32bb4c8fe469a849",
       "harbor_result_sha256": "d176227f8eebc4c665cd111ef78daa575e5f47608a38dbe535ef972ea2f0317b",
@@ -67,7 +67,7 @@
     {
       "task_id": "aime",
       "run_id": "synthetic-aime-001",
-      "official_score": 0.5,
+      "successful_trials": 60,
       "artifact_url": "https://example.com/rsibench-data/synthetic/aime",
       "official_eval_sha256": "5bfba881f66fcf6f8bfd4ed829607ccd175ee1f1696bbdf8aeb5750e6b995d07",
       "harbor_result_sha256": "68d6d0b4d254386cb09fbc499d645b7cc57d5831acf047be76381eb9b2677ed5",
