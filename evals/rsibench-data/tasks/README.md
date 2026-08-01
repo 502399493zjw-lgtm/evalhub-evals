@@ -12,4 +12,11 @@ node evals/rsibench-data/pack-to-result.mjs \
   --out /tmp/rsibench-data-example-result.json
 ```
 
-转换器要求六项恰好各出现一次，并按固定 task 顺序输出 `task_results`；多项、缺项、重复项、错误协议、超出固定试验总数的成功次数、非整数计数、本机或 IP 地址、临时签名 URL 或非法 SHA-256 都会被拒绝。
+转换器要求六项恰好各出现一次，并按固定 task 顺序输出 `task_results` 和数值宏平均；多项、缺项、重复项、错误协议、超出固定试验总数的成功次数、非整数计数、本机或 IP 地址、临时签名 URL 或非法 SHA-256 都会被拒绝。转换失败时不会留下 `null` 或部分分数结果。
+
+[`rsibench-official-results-2026-07-31.json`](rsibench-official-results-2026-07-31.json) 是官网 Official 矩阵的事实快照，包含四位研究者、六个 benchmark、固定分母、来源页面 SHA-256 与 EvalHub 派生宏平均。它不是 custom runner 的输入，也不表示 EvalHub 独立复跑。`../official-result-to-envelope.mjs` 只接受快照中四个固定 `participant_id`，并在生成 `upstream_author_publication` 结果前重新验证：
+
+1. 快照恰好含四位研究者与六个唯一 benchmark；
+2. 每个官网两位小数分数与固定分母下的整数成功计数一致；
+3. 六项精确百分比的等权平均与快照中的派生总分一致；
+4. 输出通过共享结果 schema 和本目录 `eval.yaml` 的上下文校验，且 `score` 必须为数值。
