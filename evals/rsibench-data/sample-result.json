@@ -2,7 +2,7 @@
   "eval_id": "rsibench-data",
   "submission": {
     "kind": "run",
-    "runner_version": "rsibench-data/pack-to-result@1.1.0",
+    "runner_version": "rsibench-data/pack-to-result@1.2.0",
     "run_date": "2026-07-29"
   },
   "results": [
@@ -25,12 +25,12 @@
           "evidence_fingerprint": "c9cfe3804ea4099238ce5b602c2bc14b6729acd4210623ea2d61b8785e5cecc0"
         }
       },
-      "score": null,
+      "score": 33.26779,
       "raw_metric": {
-        "label": "六项等权宏平均 · 作者待复核",
-        "value": "33.26779 分（声明值）"
+        "label": "六项等权宏平均",
+        "value": "33.26779 分"
       },
-      "detail": "第三方 RSIBench-Data 六项证据声明，固定来源 commit 39948a17925272367b64dd53427a4dba3f572f4e。转换器已核对六个唯一 profile、独立 run ID、固定主协议、整数成功次数、公开 HTTPS 证据地址和 18 个唯一 SHA-256；声明的 EvalHub 派生宏平均为 33.26779 分。score 保持 null，只有评测作者核对原始 Harbor 结果、预算、检查点选择顺序、完整性审计、数据隔离与研究者身份后才能回填并认可。该宏平均不是上游官方指标，本接入也不是 Evolvent AI 的认证或背书。",
+      "detail": "第三方 RSIBench-Data 六项证据声明，固定来源 commit 39948a17925272367b64dd53427a4dba3f572f4e。转换器已核对六个唯一 profile、独立 run ID、固定主协议、整数成功次数、公开 HTTPS 证据地址和 18 个唯一 SHA-256，并由整数计数确定性计算 EvalHub 派生宏平均 33.26779 分。转换器不会输出 null；非评测作者提交的数值成绩仍须由评测作者核对原始 Harbor 结果、预算、检查点选择顺序、完整性审计、数据隔离与研究者身份后认可。该宏平均不是上游官方指标，本接入也不是 Evolvent AI 的认证或背书。",
       "task_results": [
         {
           "task_id": "swe-bench-verified",
@@ -66,22 +66,58 @@
       "showcases": [
         {
           "type": "timeline",
-          "title": "六个上游原生分项（百分制声明值，待作者复核）",
+          "title": "六个上游原生分项（百分制）",
           "series": [
-            { "t": "swe-bench-verified", "v": 40 },
-            { "t": "swe-bench-multilingual", "v": 20 },
-            { "t": "swe-bench-pro", "v": 10 },
-            { "t": "terminal-bench-2", "v": 14.606742 },
-            { "t": "gpqa-diamond", "v": 65 },
-            { "t": "aime", "v": 50 }
+            {
+              "t": "swe-bench-verified",
+              "v": 40
+            },
+            {
+              "t": "swe-bench-multilingual",
+              "v": 20
+            },
+            {
+              "t": "swe-bench-pro",
+              "v": 10
+            },
+            {
+              "t": "terminal-bench-2",
+              "v": 14.606742
+            },
+            {
+              "t": "gpqa-diamond",
+              "v": 65
+            },
+            {
+              "t": "aime",
+              "v": 50
+            }
           ],
           "events": [
-            { "t": "swe-bench-verified", "label": "SWE-bench Verified · 40 · 40/100 · resolved rate" },
-            { "t": "swe-bench-multilingual", "label": "SWE-bench Multilingual · 20 · 20/100 · resolved rate" },
-            { "t": "swe-bench-pro", "label": "SWE-bench Pro · 10 · 10/100 · resolved rate" },
-            { "t": "terminal-bench-2", "label": "Terminal-Bench 2.0 · 14.606742 · 13/89 · task success rate" },
-            { "t": "gpqa-diamond", "label": "GPQA Diamond · 65 · 65/100 · accuracy" },
-            { "t": "aime", "label": "AIME 2026 · 50 · 60/120 · avg@4 accuracy" }
+            {
+              "t": "swe-bench-verified",
+              "label": "SWE-bench Verified · 40 · 40/100 · resolved rate"
+            },
+            {
+              "t": "swe-bench-multilingual",
+              "label": "SWE-bench Multilingual · 20 · 20/100 · resolved rate"
+            },
+            {
+              "t": "swe-bench-pro",
+              "label": "SWE-bench Pro · 10 · 10/100 · resolved rate"
+            },
+            {
+              "t": "terminal-bench-2",
+              "label": "Terminal-Bench 2.0 · 14.606742 · 13/89 · task success rate"
+            },
+            {
+              "t": "gpqa-diamond",
+              "label": "GPQA Diamond · 65 · 65/100 · accuracy"
+            },
+            {
+              "t": "aime",
+              "label": "AIME 2026 · 50 · 60/120 · avg@4 accuracy"
+            }
           ]
         },
         {

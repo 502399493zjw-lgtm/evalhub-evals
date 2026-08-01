@@ -8,4 +8,4 @@
 - <https://rsibench.co/data/>
 - <https://arxiv.org/abs/2607.25886>
 
-`tasks/example-submission.json` 仅含本接入自行构造的合成元数据。
+`tasks/example-submission.json` 仅含本接入自行构造的合成元数据。`tasks/rsibench-official-results-2026-07-31.json` 只保存官网公开矩阵的事实数值、来源指纹和派生规则，不包含官网 HTML、图片、论文表格或任何运行 artifact。
