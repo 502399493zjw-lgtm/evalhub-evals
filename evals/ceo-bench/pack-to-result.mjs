@@ -686,12 +686,12 @@ function buildResult(manifest, runs, evalCommit) {
           tiebreak_value: representative.currentDay,
         },
         detail:
-          `第三方 CEO-Bench 证据包，钉死官方运行仓库 commit ${PINNED_SOURCE_COMMIT}。` +
+          `CEO-Bench 证据包，钉死官方运行仓库 commit ${PINNED_SOURCE_COMMIT}。` +
           `已本地校验 3 个独立 session：seed 42、初始现金 1,000,000 USD、default 场景、` +
           `相同 simulator_llm 配置、完整的 EvalHub 固定整周复现配置、` +
           `严格白名单脱敏的逐周 history 和唯一 final_cash 查询输出。` +
           `${scoreExplanation}提交侧 score 保持 null，只有评测集作者核对公开 artifact 与本地 SHA-256 后才能判分和认可。` +
-          `此集成不是 Princeton 官方榜单、官方认证或作者背书。`,
+          `该 EvalHub 结果不代表 Princeton 官方榜单、官方认证或作者背书。`,
         showcases: [
           {
             type: "timeline",
