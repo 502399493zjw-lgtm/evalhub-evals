@@ -51,6 +51,8 @@
 
 [`tasks/rsibench-official-results-2026-07-31.json`](tasks/rsibench-official-results-2026-07-31.json) 是可机读快照；`official-result-to-envelope.mjs` 会重新验证四位研究者、六项分母、官网显示值与整数计数及宏平均，然后生成 `upstream_author_publication` 结果。该类型的结果必须含非空 `score`，不能用它冒充一次独立 EvalHub 复跑。
 
+四份生成后的信封签入 [`published-results/`](published-results/)：仓库同步时会把它们作为当前评测版本的受信官方基线导入。每份信封同时提供用于总体榜单的数值宏平均，以及带官网显示值、成功次数、固定分母和精确分项分数的 `supplementary_views` 表。上游发表结果不伪装成本地逐题运行，因此不写 `task_results`；这样总体排名保持单一口径，详情页仍能审计和比较所有非整体信息。`score_policy: required` 禁止提交 `null` 分数；`baseline_policy: required` 还要求每个发布版本至少成功导入一条非空官方基线，否则该版本不能被投稿任务误判为发布完成。
+
 ## 输入声明与公开证据
 
 完成来源仓库的六次官方运行后，参赛者创建一个与 [`tasks/example-submission.json`](tasks/example-submission.json) 同结构的 JSON。声明包含：
@@ -74,13 +76,13 @@ npx @evalhub/cli@0.1.0 submit /absolute/path/to/rsibench-data-result.json
 
 转换器不联网、不启动子进程、不下载依赖，也不接触 Tinker、E2B、Harbor 或模型服务。它严格检查 JSON 字段、固定协议、六项覆盖、整数成功次数、唯一 ID、公开 HTTPS 证据 URL 和 SHA-256 格式，并以原子方式写出六项等权宏平均的数值 `score`。缺项、非法计数或非法证据会直接使转换失败，不会生成 `null` 或部分分数。
 
-生成四份上游官网成绩结果：
+重新生成仓库中四份上游官网成绩结果：
 
 ```bash
-node evals/rsibench-data/official-result-to-envelope.mjs --participant claude-code-opus-4.8 --out /tmp/rsibench-opus.json
-node evals/rsibench-data/official-result-to-envelope.mjs --participant claude-code-sonnet-5 --out /tmp/rsibench-sonnet.json
-node evals/rsibench-data/official-result-to-envelope.mjs --participant codex-gpt-5.6-sol --out /tmp/rsibench-sol.json
-node evals/rsibench-data/official-result-to-envelope.mjs --participant codex-gpt-5.6-terra --out /tmp/rsibench-terra.json
+node evals/rsibench-data/official-result-to-envelope.mjs --participant claude-code-opus-4.8 --out evals/rsibench-data/published-results/claude-code-opus-4.8.json
+node evals/rsibench-data/official-result-to-envelope.mjs --participant claude-code-sonnet-5 --out evals/rsibench-data/published-results/claude-code-sonnet-5.json
+node evals/rsibench-data/official-result-to-envelope.mjs --participant codex-gpt-5.6-sol --out evals/rsibench-data/published-results/codex-gpt-5.6-sol.json
+node evals/rsibench-data/official-result-to-envelope.mjs --participant codex-gpt-5.6-terra --out evals/rsibench-data/published-results/codex-gpt-5.6-terra.json
 ```
 
 ## 计分、容错与复核
