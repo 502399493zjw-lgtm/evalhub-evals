@@ -226,6 +226,13 @@ function refineEvalDef(value, ctx, requireCustomCommandTemplate) {
             message: "leaderboard=rating 仅支持 interface=dialogue",
         });
     }
+    if (v.leaderboard === "rating" && v.baseline_policy === "required") {
+        ctx.addIssue({
+            code: "custom",
+            path: ["baseline_policy"],
+            message: "baseline_policy=required 暂不支持 leaderboard=rating；rating 榜必须由 team_games 对局生成",
+        });
+    }
     if (v.scoring === "judge" && !v.judge_model) {
         ctx.addIssue({ code: "custom", message: "scoring=judge 必须钉死 judge_model" });
     }
@@ -256,6 +263,15 @@ function refineEvalDef(value, ctx, requireCustomCommandTemplate) {
             code: "custom",
             path: ["command_template"],
             message: "runner=builtin 不能提供 command_template",
+        });
+    }
+    if (v.runner === "builtin" &&
+        v.scoring === "custom" &&
+        resolveScorePolicy(v) === "required") {
+        ctx.addIssue({
+            code: "custom",
+            path: ["score_policy"],
+            message: "runner=builtin 不支持 scoring=custom + score_policy=required；请使用 runner=custom 提供计分器，或改为 score_policy=author_fill",
         });
     }
 }

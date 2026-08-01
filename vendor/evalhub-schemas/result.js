@@ -646,12 +646,17 @@ export const UpstreamAuthorPublicationSubmissionSchema = z
             .url()
             .refine((value) => {
             try {
-                return new URL(value).protocol === "https:";
+                const parsed = new URL(value);
+                return (parsed.protocol === "https:" &&
+                    parsed.username === "" &&
+                    parsed.password === "");
             }
             catch {
                 return false;
             }
-        }, { message: "source.url must use https" }),
+        }, {
+            message: "source.url must use https without embedded credentials",
+        }),
         snapshot_sha256: z
             .string()
             .regex(/^[0-9a-f]{64}$/, "source.snapshot_sha256 must be 64 lowercase hexadecimal characters"),

@@ -1,6 +1,2 @@
 # All repository changes require review by the EvalHub maintainer.
 * @502399493zjw-lgtm
-
-# Each eval directory has one exact owner rule synchronized with AUTHORS.
-/evals/ceo-bench/ @502399493zjw-lgtm
-/evals/rsibench-data/ @502399493zjw-lgtm

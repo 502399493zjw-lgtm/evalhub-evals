@@ -4,7 +4,7 @@ Keep evals reproducible, cheap to review, and explicit about both the interactio
 
 ## Author an eval through a PR
 
-Create a branch and scaffold the directory:
+Fork this repository with the GitHub account that will own the eval, create a branch from the latest upstream `main`, and scaffold the directory:
 
 ```bash
 git checkout -b add-my-eval
@@ -21,7 +21,9 @@ Complete `eval.yaml`, `README.md`, `AUTHORS`, `sample-result.json`, `tasks/READM
 
 Declare `score_policy: required` when every submission must already contain a numeric score. Use `score_policy: author_fill` only when the author genuinely needs to score submitted artifacts later (and only with `scored_by: author`). If an official or trusted baseline is available, declare `baseline_policy: required` and add reviewed `upstream_author_publication` envelopes under `published-results/*.json`; the platform binds them to the merged eval commit and imports them without a user-visible secret. Preserve useful subgroup/component/trend metrics in `supplementary_views` (`metric_table` or `line_chart`) while keeping one documented main `score` for ranking.
 
-`AUTHORS` currently supports exactly one GitHub handle, such as `@github-handle`. Every PR that adds `evals/<slug>/` must also add the byte-matching exact rule `/evals/<slug>/ @github-handle` to `.github/CODEOWNERS`; wildcard, non-anchored, duplicate, or multi-owner rules are rejected by local validation.
+`AUTHORS` supports exactly one GitHub handle. For a new eval, it must be the GitHub user that opens the PR. For an existing eval, the PR creator must match the handle already present on the base branch and the PR must not change `AUTHORS`. The slug is a permanent identifier; change `eval.yaml.name` when only the display name needs to change.
+
+One PR may add or update exactly one `evals/<slug>/` directory and may not mix in repository-level changes. A third party cannot update someone else's eval, even with an approval or a claim in the PR body. Do not edit `.github/CODEOWNERS`: repository review remains with `@502399493zjw-lgtm`, while eval ownership is enforced independently from `AUTHORS` and the trusted PR actor.
 
 Run the standalone gates before opening a PR:
 
@@ -29,9 +31,14 @@ Run the standalone gates before opening a PR:
 npm ci
 npm test
 npm run validate
+npm run validate:runner
 ```
 
-The validator checks that repository ownership files agree. Requiring a CODEOWNER review before merge still depends on repository-owner GitHub branch-protection or ruleset configuration; local validation does not create or change that remote setting.
+The content gate allows only bounded, reviewable text/code/data and static SVG files. It rejects hidden files, symlinks, submodules, executable modes, archives, Git LFS pointers, invalid structured data, active SVG content, recognizable credentials, and unsafe custom-runner capabilities. A single eval is limited to 150 files and 25 MiB total; text/code/data files are limited to 2 MiB each and SVG files to 8 MiB each.
+
+`npm run validate:runner` requires Docker. Every custom runner executes without network access, as a non-root user, with a read-only filesystem, no Linux capabilities, bounded CPU/memory/processes, read-only access to only its own eval directory and dependencies, and a separate writable output directory.
+
+GitHub runs three required checks: `pr-policy`, `content-validate`, and `runner-sandbox`. Community PRs require maintainer approval. The maintainer's own official or repository-maintenance PR still runs the full PR chain and is merged only through the explicitly allowed administrator bypass; direct pushes to `main` are not part of the workflow.
 
 ## Run and submit a built-in eval
 

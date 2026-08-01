@@ -80,6 +80,7 @@ type EvalDefRefinementValue = {
     command_template?: CommandTemplate | null | undefined;
     interface: "chat" | "dialogue" | "agent";
     leaderboard: "latest_session" | "rating";
+    baseline_policy: "optional" | "required";
 };
 export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     command_template: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodObject<{
@@ -175,6 +176,8 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     id: string;
     leaderboard: "latest_session" | "rating";
+    baseline_policy: "required" | "optional";
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -182,8 +185,6 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
-    baseline_policy: "required" | "optional";
     score_unit: string;
     trials: number;
     tasks: {
@@ -215,6 +216,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     est_tokens?: number | undefined;
 }, {
     id: string;
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -222,13 +224,13 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
     tasks: {
         prompt: string;
         expected?: string | undefined;
         id?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
+    baseline_policy?: "required" | "optional" | undefined;
     score_policy?: "required" | "author_fill" | undefined;
     command_template?: z.objectInputType<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
@@ -242,7 +244,6 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         paper?: string | undefined;
         repository?: string | undefined;
     } | undefined;
-    baseline_policy?: "required" | "optional" | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
         metric: string;
@@ -257,6 +258,8 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
 }>, {
     id: string;
     leaderboard: "latest_session" | "rating";
+    baseline_policy: "required" | "optional";
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -264,8 +267,6 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
-    baseline_policy: "required" | "optional";
     score_unit: string;
     trials: number;
     tasks: {
@@ -297,6 +298,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     est_tokens?: number | undefined;
 }, {
     id: string;
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -304,13 +306,13 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
     tasks: {
         prompt: string;
         expected?: string | undefined;
         id?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
+    baseline_policy?: "required" | "optional" | undefined;
     score_policy?: "required" | "author_fill" | undefined;
     command_template?: z.objectInputType<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
@@ -324,7 +326,6 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         paper?: string | undefined;
         repository?: string | undefined;
     } | undefined;
-    baseline_policy?: "required" | "optional" | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
         metric: string;
@@ -340,6 +341,8 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     score_policy: "required" | "author_fill";
     id: string;
     leaderboard: "latest_session" | "rating";
+    baseline_policy: "required" | "optional";
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -347,8 +350,6 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
-    baseline_policy: "required" | "optional";
     score_unit: string;
     trials: number;
     tasks: {
@@ -379,6 +380,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     est_tokens?: number | undefined;
 }, {
     id: string;
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -386,13 +388,13 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
     tasks: {
         prompt: string;
         expected?: string | undefined;
         id?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
+    baseline_policy?: "required" | "optional" | undefined;
     score_policy?: "required" | "author_fill" | undefined;
     command_template?: z.objectInputType<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
@@ -406,7 +408,6 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         paper?: string | undefined;
         repository?: string | undefined;
     } | undefined;
-    baseline_policy?: "required" | "optional" | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
         metric: string;
@@ -514,6 +515,8 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
 }, "strip", z.ZodTypeAny, {
     id: string;
     leaderboard: "latest_session" | "rating";
+    baseline_policy: "required" | "optional";
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -521,8 +524,6 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
-    baseline_policy: "required" | "optional";
     score_unit: string;
     trials: number;
     tasks: {
@@ -554,6 +555,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     est_tokens?: number | undefined;
 }, {
     id: string;
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -561,13 +563,13 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
     tasks: {
         prompt: string;
         expected?: string | undefined;
         id?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
+    baseline_policy?: "required" | "optional" | undefined;
     score_policy?: "required" | "author_fill" | undefined;
     command_template?: z.objectInputType<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
@@ -581,7 +583,6 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         paper?: string | undefined;
         repository?: string | undefined;
     } | undefined;
-    baseline_policy?: "required" | "optional" | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
         metric: string;
@@ -596,6 +597,8 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
 }>, {
     id: string;
     leaderboard: "latest_session" | "rating";
+    baseline_policy: "required" | "optional";
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -603,8 +606,6 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
-    baseline_policy: "required" | "optional";
     score_unit: string;
     trials: number;
     tasks: {
@@ -636,6 +637,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     est_tokens?: number | undefined;
 }, {
     id: string;
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -643,13 +645,13 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
     tasks: {
         prompt: string;
         expected?: string | undefined;
         id?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
+    baseline_policy?: "required" | "optional" | undefined;
     score_policy?: "required" | "author_fill" | undefined;
     command_template?: z.objectInputType<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
@@ -663,7 +665,6 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         paper?: string | undefined;
         repository?: string | undefined;
     } | undefined;
-    baseline_policy?: "required" | "optional" | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
         metric: string;
@@ -679,6 +680,8 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     score_policy: "required" | "author_fill";
     id: string;
     leaderboard: "latest_session" | "rating";
+    baseline_policy: "required" | "optional";
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -686,8 +689,6 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
-    baseline_policy: "required" | "optional";
     score_unit: string;
     trials: number;
     tasks: {
@@ -718,6 +719,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     est_tokens?: number | undefined;
 }, {
     id: string;
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -725,13 +727,13 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
     tasks: {
         prompt: string;
         expected?: string | undefined;
         id?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
+    baseline_policy?: "required" | "optional" | undefined;
     score_policy?: "required" | "author_fill" | undefined;
     command_template?: z.objectInputType<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
@@ -745,7 +747,6 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         paper?: string | undefined;
         repository?: string | undefined;
     } | undefined;
-    baseline_policy?: "required" | "optional" | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
         metric: string;

@@ -5,10 +5,15 @@ import {
   ResultFileSchema,
   validateResultForEval,
 } from "@evalhub/schemas";
-import { lstat, readdir, readFile } from "node:fs/promises";
+import { lstat, readdir, readFile, realpath } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { parseDocument } from "yaml";
+
+import {
+  validateEvalContent,
+  validateNoGitlinks,
+} from "./content-security.mjs";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const defaultRoot = path.resolve(scriptDir, "..");
@@ -23,9 +28,10 @@ const REQUIRED_DIRECTORIES = ["tasks", "assets"];
 const AUTHORS_PLACEHOLDER = "@TODO-github-handle";
 const AUTHORS_HANDLE_PATTERN =
   /^@[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$/u;
-const EXACT_EVAL_CODEOWNERS_PATTERN = /^\/evals\/([^/]+)\/$/u;
-const ROOT_EVAL_CODEOWNERS_PATTERN = /^\/?evals(?:\/|$|[?*\[])/u;
-const CODEOWNERS_WILDCARD_PATTERN = /[?*\[\]]/u;
+const MAINTAINER_HANDLE = "@502399493zjw-lgtm";
+const PUBLISHED_RESULT_FILE_MAX_BYTES = 1_048_576;
+const PUBLISHED_RESULTS_TOTAL_MAX_BYTES = 8_388_608;
+const PUBLISHED_RESULTS_MAX_FILES = 32;
 
 function codeownersSegmentMatches(pattern, value) {
   let source = "^";
@@ -318,21 +324,6 @@ async function loadCodeowners(repositoryRoot) {
       );
     }
 
-    const exactMatch =
-      pattern === undefined || CODEOWNERS_WILDCARD_PATTERN.test(pattern)
-        ? null
-        : EXACT_EVAL_CODEOWNERS_PATTERN.exec(pattern);
-    const targetsEvalTree =
-      pattern !== undefined && ROOT_EVAL_CODEOWNERS_PATTERN.test(pattern);
-    if (targetsEvalTree && exactMatch === null) {
-      errors.push(
-        fileError(
-          filePath,
-          `line ${lineNumber}: eval ownership pattern must be an exact /evals/<slug>/ path without wildcards`,
-        ),
-      );
-    }
-
     entries.push({
       lineNumber,
       pattern,
@@ -403,7 +394,6 @@ async function readAuthorHandle(evalDir, authorsAvailable, errors) {
 function validateCodeownerForEval(
   codeowners,
   dirName,
-  authorHandle,
   evalFilePaths,
   errors,
 ) {
@@ -411,54 +401,14 @@ function validateCodeownerForEval(
     return;
   }
 
-  const expectedPattern = `/evals/${dirName}/`;
-  const matches = codeowners.entries.filter(
-    (entry) => entry.pattern === expectedPattern,
-  );
-  if (matches.length === 0) {
-    errors.push(
-      fileError(
-        codeowners.filePath,
-        `${expectedPattern}: exact rule is missing`,
-      ),
-    );
-    return;
-  }
-  if (matches.length > 1) {
-    errors.push(
-      fileError(
-        codeowners.filePath,
-        `${expectedPattern}: duplicate exact rules at lines ${matches
-          .map((entry) => entry.lineNumber)
-          .join(", ")}`,
-      ),
-    );
-    return;
-  }
-
-  const [match] = matches;
-  if (!match.tokenCountValid || authorHandle === null) {
-    return;
-  }
-  if (match.owner !== authorHandle) {
-    errors.push(
-      fileError(
-        codeowners.filePath,
-        `${expectedPattern}: owner ${match.owner} does not match AUTHORS ${authorHandle}`,
-      ),
-    );
-    return;
-  }
-
   const effectiveMatch = effectiveCodeownerForEval(codeowners.entries, dirName);
-  if (effectiveMatch !== null && effectiveMatch.owner !== authorHandle) {
+  if (effectiveMatch === null || effectiveMatch.owner !== MAINTAINER_HANDLE) {
     errors.push(
       fileError(
         codeowners.filePath,
-        `${expectedPattern}: effective owner ${effectiveMatch.owner} from line ${effectiveMatch.lineNumber} does not match AUTHORS ${authorHandle}`,
+        `/evals/${dirName}/: effective CODEOWNER must be ${MAINTAINER_HANDLE}`,
       ),
     );
-    return;
   }
 
   for (const repositoryPath of evalFilePaths) {
@@ -467,13 +417,13 @@ function validateCodeownerForEval(
       repositoryPath,
     );
     if (
-      effectiveFileMatch !== null &&
-      effectiveFileMatch.owner !== authorHandle
+      effectiveFileMatch === null ||
+      effectiveFileMatch.owner !== MAINTAINER_HANDLE
     ) {
       errors.push(
         fileError(
           codeowners.filePath,
-          `${repositoryPath.join("/")}: effective owner ${effectiveFileMatch.owner} from line ${effectiveFileMatch.lineNumber} does not match AUTHORS ${authorHandle}`,
+          `${repositoryPath.join("/")}: effective CODEOWNER must be ${MAINTAINER_HANDLE}`,
         ),
       );
     }
@@ -532,9 +482,9 @@ async function parseYamlFile(filePath) {
 
 async function validatePublishedResults(evalDir, parsedEval, errors) {
   const directory = path.join(evalDir, "published-results");
-  let entries;
+  let directoryMetadata;
   try {
-    entries = await readdir(directory, { withFileTypes: true });
+    directoryMetadata = await lstat(directory);
   } catch (error) {
     if (error && typeof error === "object" && error.code === "ENOENT") {
       if (parsedEval.baseline_policy === "required") {
@@ -547,13 +497,70 @@ async function validatePublishedResults(evalDir, parsedEval, errors) {
       }
       return;
     }
+    errors.push(
+      fileError(directory, `unable to inspect directory: ${error.message}`),
+    );
+    return;
+  }
+  if (directoryMetadata.isSymbolicLink() || !directoryMetadata.isDirectory()) {
+    errors.push(
+      fileError(
+        directory,
+        "published-results must be a regular directory and cannot be a symbolic link",
+      ),
+    );
+    return;
+  }
+
+  let resolvedDirectory;
+  try {
+    const [resolvedEvalDir, publishedResultsDir] = await Promise.all([
+      realpath(evalDir),
+      realpath(directory),
+    ]);
+    if (publishedResultsDir !== path.join(resolvedEvalDir, "published-results")) {
+      errors.push(
+        fileError(
+          directory,
+          "published-results directory escapes its eval directory",
+        ),
+      );
+      return;
+    }
+    resolvedDirectory = publishedResultsDir;
+  } catch (error) {
+    errors.push(
+      fileError(
+        directory,
+        `unable to safely resolve directory: ${error.message}`,
+      ),
+    );
+    return;
+  }
+
+  let entries;
+  try {
+    entries = await readdir(directory, { withFileTypes: true });
+  } catch (error) {
     errors.push(fileError(directory, `unable to read directory: ${error.message}`));
     return;
   }
 
+  if (entries.length > PUBLISHED_RESULTS_MAX_FILES) {
+    errors.push(
+      fileError(
+        directory,
+        `published-results accepts at most ${PUBLISHED_RESULTS_MAX_FILES} JSON files`,
+      ),
+    );
+  }
+
   const files = [];
-  for (const entry of entries) {
-    if (!entry.isFile() || !/^[A-Za-z0-9][A-Za-z0-9._-]*\.json$/u.test(entry.name)) {
+  let totalSize = 0;
+  for (const entry of entries.sort((left, right) =>
+    left.name.localeCompare(right.name),
+  )) {
+    if (!/^[A-Za-z0-9][A-Za-z0-9._-]*\.json$/u.test(entry.name)) {
       errors.push(
         fileError(
           path.join(directory, entry.name),
@@ -562,10 +569,61 @@ async function validatePublishedResults(evalDir, parsedEval, errors) {
       );
       continue;
     }
+
+    const filePath = path.join(directory, entry.name);
+    let metadata;
+    try {
+      metadata = await lstat(filePath);
+    } catch (error) {
+      errors.push(
+        fileError(filePath, `unable to inspect published result: ${error.message}`),
+      );
+      continue;
+    }
+    if (metadata.isSymbolicLink() || !metadata.isFile()) {
+      errors.push(
+        fileError(
+          filePath,
+          "published-results only accepts regular files and does not allow symbolic links",
+        ),
+      );
+      continue;
+    }
+    if (metadata.size > PUBLISHED_RESULT_FILE_MAX_BYTES) {
+      errors.push(
+        fileError(
+          filePath,
+          `published result exceeds ${PUBLISHED_RESULT_FILE_MAX_BYTES} bytes`,
+        ),
+      );
+      continue;
+    }
+    totalSize += metadata.size;
+    if (totalSize > PUBLISHED_RESULTS_TOTAL_MAX_BYTES) {
+      errors.push(
+        fileError(
+          directory,
+          `published-results exceeds ${PUBLISHED_RESULTS_TOTAL_MAX_BYTES} bytes in total`,
+        ),
+      );
+      continue;
+    }
+
+    try {
+      const resolvedFile = await realpath(filePath);
+      if (path.dirname(resolvedFile) !== resolvedDirectory) {
+        errors.push(
+          fileError(filePath, "published result escapes its directory"),
+        );
+        continue;
+      }
+    } catch (error) {
+      errors.push(
+        fileError(filePath, `unable to safely resolve published result: ${error.message}`),
+      );
+      continue;
+    }
     files.push(entry.name);
-  }
-  if (files.length > 32) {
-    errors.push(fileError(directory, "published-results accepts at most 32 JSON files"));
   }
   if (parsedEval.baseline_policy === "required" && files.length === 0) {
     errors.push(
@@ -620,6 +678,10 @@ export async function validateRepository(repositoryRoot = defaultRoot) {
   const evalDirectories = await listEvalDirectories(evalsDir);
   const codeowners = await loadCodeowners(root);
   errors.push(...codeowners.errors);
+  const gitlinkProblems = await validateNoGitlinks(root);
+  errors.push(
+    ...gitlinkProblems.map(({ filePath, message }) => fileError(filePath, message)),
+  );
 
   for (const dirName of evalDirectories) {
     const evalDir = path.join(evalsDir, dirName);
@@ -656,7 +718,7 @@ export async function validateRepository(repositoryRoot = defaultRoot) {
       );
     }
 
-    const authorHandle = await readAuthorHandle(
+    await readAuthorHandle(
       evalDir,
       requiredStatus.get("AUTHORS") === true,
       errors,
@@ -664,7 +726,6 @@ export async function validateRepository(repositoryRoot = defaultRoot) {
     validateCodeownerForEval(
       codeowners,
       dirName,
-      authorHandle,
       evalFilePaths,
       errors,
     );
@@ -687,6 +748,17 @@ export async function validateRepository(repositoryRoot = defaultRoot) {
       errors.push(fileError(yamlPath, error.message));
       continue;
     }
+
+    const contentProblems = await validateEvalContent({
+      evalDir,
+      slug: dirName,
+      parsedEval,
+    });
+    errors.push(
+      ...contentProblems.map(({ filePath, message }) =>
+        fileError(filePath, message),
+      ),
+    );
 
     if (parsedEval.id !== dirName) {
       errors.push(
