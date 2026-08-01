@@ -1,9 +1,9 @@
-export { CommandOutputOverrideSchema, CommandTemplateSchema, EvalIdSchema, EvalDefSchema, EvalTiebreakSchema, StoredEvalDefSchema, } from "./eval-def.js";
-export type { CommandTemplate, EvalDef, EvalTiebreak, StoredEvalDef, } from "./eval-def.js";
+export { CommandOutputOverrideSchema, CommandTemplateSchema, EvalIdSchema, EvalDefSchema, EvalReferencesSchema, EvalTiebreakSchema, resolveScorePolicy, StoredEvalDefSchema, } from "./eval-def.js";
+export type { CommandTemplate, EvalDef, EvalReferences, EvalTiebreak, StoredEvalDef, } from "./eval-def.js";
 export { buildAgentBrief } from "./agent-brief.js";
 export type { AgentBriefOptions } from "./agent-brief.js";
-export { HEAD_TO_HEAD_MAX_GAMES_PER_MATCHUP, ParticipantAdapterSchema, ParticipantConfigSchema, ParticipantModelSchema, RESULT_ENTRY_MAX_SHOWCASES, RESULT_ENTRY_MAX_TASK_RESULTS, RESULT_FILE_MAX_RESULTS, SHOWCASE_TASK_ID_MAX_LENGTH, HeadToHeadShowcaseSchema, TeamGamesShowcaseSchema, ResultEntrySchema, ResultFileSchema, ResultSubmissionSchema, RunSubmissionSchema, ShowcaseSchema, UpstreamAuthorPublicationSubmissionSchema, } from "./result.js";
-export type { HeadToHeadMatchup, HeadToHeadParticipant, HeadToHeadShowcase, TeamGamesShowcase, ResultEntry, ResultFile, ResultSubmission, RunSubmission, Showcase, UpstreamAuthorPublicationSubmission, } from "./result.js";
+export { HEAD_TO_HEAD_MAX_GAMES_PER_MATCHUP, ParticipantAdapterSchema, ParticipantConfigSchema, ParticipantModelSchema, RESULT_ENTRY_MAX_SHOWCASES, RESULT_ENTRY_MAX_SUPPLEMENTARY_VIEWS, RESULT_ENTRY_MAX_TASK_RESULTS, RESULT_FILE_MAX_RESULTS, SHOWCASE_TASK_ID_MAX_LENGTH, HeadToHeadShowcaseSchema, TeamGamesShowcaseSchema, ResultEntrySchema, ResultFileSchema, ResultSubmissionSchema, RunSubmissionSchema, ShowcaseSchema, SupplementaryViewSchema, UpstreamAuthorPublicationSubmissionSchema, } from "./result.js";
+export type { HeadToHeadMatchup, HeadToHeadParticipant, HeadToHeadShowcase, LineChartView, MetricTableView, TeamGamesShowcase, ResultEntry, ResultFile, ResultSubmission, RunSubmission, Showcase, SupplementaryView, UpstreamAuthorPublicationSubmission, } from "./result.js";
 export { DatedModelIdSchema, ModelIdSchema, validateParticipantForEval, } from "./participant-for-eval.js";
 export type { ResultValidationContext, ResultValidationOrigin, } from "./participant-for-eval.js";
 export { validateResultForEval } from "./result-for-eval.js";

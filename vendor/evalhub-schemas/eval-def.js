@@ -4,6 +4,7 @@ const CONTROL_CHARACTERS = /[\u0000-\u001f\u007f-\u009f]/u;
 const MAX_COMMAND_ARGV_TOKENS = 64;
 const MAX_COMMAND_ARGV_TOKEN_LENGTH = 4096;
 const MAX_COMMAND_OUTPUT_LENGTH = 1024;
+const MAX_EVAL_REFERENCE_URL_LENGTH = 2048;
 export const EvalIdSchema = z.string().regex(/^[a-z0-9][a-z0-9-]{1,63}$/);
 const CommandArgvTokenSchema = z
     .string()
@@ -138,6 +139,43 @@ export const EvalTiebreakSchema = z.object({
         message: "tiebreak.label 不能为空",
     }),
 });
+function isSafeHttpsReferenceUrl(value) {
+    if (value !== value.trim() || CONTROL_CHARACTERS.test(value)) {
+        return false;
+    }
+    try {
+        const url = new URL(value);
+        return (url.protocol === "https:" &&
+            url.hostname.length > 0 &&
+            url.username.length === 0 &&
+            url.password.length === 0);
+    }
+    catch {
+        return false;
+    }
+}
+const EvalReferenceUrlSchema = z
+    .string()
+    .max(MAX_EVAL_REFERENCE_URL_LENGTH, `references URL 最长 ${MAX_EVAL_REFERENCE_URL_LENGTH} 字符`)
+    .refine(isSafeHttpsReferenceUrl, {
+    message: "references URL 必须是无凭证的 HTTPS 链接",
+});
+/**
+ * 评测集的第一方外部资料。EvalHub 自身的源码目录链接由平台根据 repoPath 生成，
+ * 不在这里重复声明；repository 指被接入项目的上游作者仓库。
+ */
+export const EvalReferencesSchema = z
+    .object({
+    homepage: EvalReferenceUrlSchema.optional(),
+    paper: EvalReferenceUrlSchema.optional(),
+    repository: EvalReferenceUrlSchema.optional(),
+})
+    .strict()
+    .refine((value) => value.homepage !== undefined ||
+    value.paper !== undefined ||
+    value.repository !== undefined, {
+    message: "references 至少提供 homepage、paper、repository 中的一项",
+});
 const evalDefShape = {
     id: EvalIdSchema,
     hackathon_id: EvalIdSchema.optional(),
@@ -147,6 +185,7 @@ const evalDefShape = {
     display_category: z.enum(["agent", "reason", "vision", "fun"]).optional(),
     description: z.string().min(1),
     hook_title: z.string().optional(),
+    references: EvalReferencesSchema.optional(),
     dimensions: z
         .array(z.enum(["幽默", "语言", "推理", "代码", "博弈", "经营"]))
         .min(1)
@@ -155,6 +194,11 @@ const evalDefShape = {
     runner: z.enum(["builtin", "custom"]),
     scoring: z.enum(["exact", "judge", "custom"]),
     scored_by: z.enum(["local", "author"]),
+    // 是否允许先交原始产物、后由作者补分。省略时保持历史兼容：author => author_fill，
+    // local => required；新评测应显式声明，避免把「作者认可」误当成「允许空分」。
+    score_policy: z.enum(["required", "author_fill"]).optional(),
+    // required 表示该评测版本必须随仓库提交至少一条可公开、可复核的官方/基线成绩。
+    baseline_policy: z.enum(["optional", "required"]).default("optional"),
     score_unit: z.string().default("分"),
     // rating 榜从所有已验证 team_games 历史事实重算；缺省保持旧的最新 session 排榜。
     leaderboard: z.enum(["latest_session", "rating"]).default("latest_session"),
@@ -191,6 +235,13 @@ function refineEvalDef(value, ctx, requireCustomCommandTemplate) {
             message: "scored_by=author 必须提供 scoring_note 判分公示文",
         });
     }
+    if (v.score_policy === "author_fill" && v.scored_by !== "author") {
+        ctx.addIssue({
+            code: "custom",
+            path: ["score_policy"],
+            message: "score_policy=author_fill 仅支持 scored_by=author",
+        });
+    }
     if (requireCustomCommandTemplate &&
         v.runner === "custom" &&
         !v.command_template) {
@@ -213,10 +264,21 @@ export const EvalDefSchema = z
     ...evalDefShape,
     command_template: CommandTemplateSchema.optional(),
 })
-    .superRefine((value, ctx) => refineEvalDef(value, ctx, true));
+    .superRefine((value, ctx) => refineEvalDef(value, ctx, true))
+    .transform((value) => ({
+    ...value,
+    score_policy: resolveScorePolicy(value),
+}));
 export const StoredEvalDefSchema = z
     .object({
     ...evalDefShape,
     command_template: CommandTemplateSchema.nullish(),
 })
-    .superRefine((value, ctx) => refineEvalDef(value, ctx, false));
+    .superRefine((value, ctx) => refineEvalDef(value, ctx, false))
+    .transform((value) => ({
+    ...value,
+    score_policy: resolveScorePolicy(value),
+}));
+export function resolveScorePolicy(value) {
+    return value.score_policy ?? (value.scored_by === "author" ? "author_fill" : "required");
+}
