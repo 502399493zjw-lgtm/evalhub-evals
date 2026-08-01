@@ -1,0 +1,85 @@
+{
+  "eval_id": "rsibench-data",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "rsibench-data/official-result-to-envelope@1.1.0",
+    "retrieved_on": "2026-07-31",
+    "source": {
+      "title": "RSIBench — Research Data & Results",
+      "url": "https://rsibench.co/data/",
+      "snapshot_sha256": "c1ada61368496e1edf694dbf10a6e3a972f4bffc6e857f45351f05578f8df4fa"
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "Claude Code · Sonnet-5"
+      },
+      "score": 27.964107,
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "title": "RSIBench 官方六项成绩",
+          "columns": [
+            "分项",
+            "官网显示",
+            "成功/试次",
+            "精确分项分数"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "SWE-bench Verified",
+                "35%",
+                "35/100",
+                35
+              ]
+            },
+            {
+              "cells": [
+                "SWE-bench Multilingual",
+                "22%",
+                "22/100",
+                22
+              ]
+            },
+            {
+              "cells": [
+                "SWE-bench Pro",
+                "4%",
+                "4/100",
+                4
+              ]
+            },
+            {
+              "cells": [
+                "Terminal-Bench 2.0",
+                "5.62%",
+                "5/89",
+                5.617978
+              ]
+            },
+            {
+              "cells": [
+                "GPQA Diamond",
+                "52%",
+                "52/100",
+                52
+              ]
+            },
+            {
+              "cells": [
+                "AIME 2026",
+                "49.17%",
+                "59/120",
+                49.166667
+              ]
+            }
+          ],
+          "note": "辅助展示，不参与单独排名；总体分是六项精确百分制分数的等权宏平均。"
+        }
+      ],
+      "detail": "上游官网六项官方成绩的 EvalHub 等权宏平均：SWE-bench Verified 35%（35/100）、SWE-bench Multilingual 22%（22/100）、SWE-bench Pro 4%（4/100）、Terminal-Bench 2.0 5.62%（5/89）、GPQA Diamond 52%（52/100）、AIME 2026 49.17%（59/120）。括号内整数成功数由官网两位小数和固定分母唯一反推；宏平均是 EvalHub 派生指标，不是上游官方复合指标，也不表示 EvalHub 独立复跑。"
+    }
+  ]
+}

@@ -15,7 +15,7 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "rsibench-data";
-const IMPORTER_VERSION = "rsibench-data/official-result-to-envelope@1.0.0";
+const IMPORTER_VERSION = "rsibench-data/official-result-to-envelope@1.1.0";
 const SNAPSHOT_URL = new URL(
   "./tasks/rsibench-official-results-2026-07-31.json",
   import.meta.url,
@@ -141,10 +141,23 @@ function readSnapshot() {
 }
 
 function buildEnvelope(snapshot, benchmarkById, result, evalCommit) {
-  const scoreDetails = result.official_scores.map((score) => {
+  const components = result.official_scores.map((score) => {
     const benchmark = benchmarkById.get(score.task_id);
-    return `${benchmark.name} ${score.published_percent}%（${score.inferred_successful_trials}/${benchmark.total_trials}）`;
+    return {
+      taskId: score.task_id,
+      name: benchmark.name,
+      publishedPercent: score.published_percent,
+      successfulTrials: score.inferred_successful_trials,
+      totalTrials: benchmark.total_trials,
+      exactPercent: roundSix(
+        (score.inferred_successful_trials / benchmark.total_trials) * 100,
+      ),
+    };
   });
+  const scoreDetails = components.map(
+    (component) =>
+      `${component.name} ${component.publishedPercent}%（${component.successfulTrials}/${component.totalTrials}）`,
+  );
   return {
     eval_id: EVAL_ID,
     ...(evalCommit === null ? {} : { eval_commit: evalCommit }),
@@ -162,6 +175,22 @@ function buildEnvelope(snapshot, benchmarkById, result, evalCommit) {
       {
         participant: { model: result.model_display },
         score: result.derived_evalhub_score,
+        supplementary_views: [
+          {
+            type: "metric_table",
+            title: "RSIBench 官方六项成绩",
+            columns: ["分项", "官网显示", "成功/试次", "精确分项分数"],
+            rows: components.map((component) => ({
+              cells: [
+                component.name,
+                `${component.publishedPercent}%`,
+                `${component.successfulTrials}/${component.totalTrials}`,
+                component.exactPercent,
+              ],
+            })),
+            note: "辅助展示，不参与单独排名；总体分是六项精确百分制分数的等权宏平均。",
+          },
+        ],
         detail:
           `上游官网六项官方成绩的 EvalHub 等权宏平均：${scoreDetails.join("、")}。` +
           "括号内整数成功数由官网两位小数和固定分母唯一反推；宏平均是 EvalHub 派生指标，不是上游官方复合指标，也不表示 EvalHub 独立复跑。",
