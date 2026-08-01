@@ -1,14 +1,14 @@
 # RSIBench-Data（数据中心型自改进）
 
-这是 Evolvent AI **RSIBench-Data: Benchmarking Data-Centric Research for Recursive Self-Improvement** 的第三方 EvalHub 接入。它评测一个完整“研究者系统”能否在固定外部栈和预算内，把目标模型的失败证据转化为更有效的训练数据：研究者诊断能力缺口，生成并验证 message-format 监督数据，经共享 Tinker LoRA SFT 训练候选检查点，读取受控的 Harbor/E2B 反馈迭代，最后在看到官方结果前选择一个检查点。
+Evolvent AI 提出的 **RSIBench-Data: Benchmarking Data-Centric Research for Recursive Self-Improvement** 评测一个完整“研究者系统”能否在固定外部栈和预算内，把目标模型的失败证据转化为更有效的训练数据：研究者诊断能力缺口，生成并验证 message-format 监督数据，经共享 Tinker LoRA SFT 训练候选检查点，读取受控的 Harbor/E2B 反馈迭代，最后在看到官方结果前选择一个检查点。
 
 - 项目官网：<https://rsibench.co/data/>
 - 论文：<https://arxiv.org/abs/2607.25886>
 - 作者仓库：<https://github.com/evolvent-ai/RSIBench-Data>
-- 本接入钉死的来源 commit：`39948a17925272367b64dd53427a4dba3f572f4e`
+- 当前评测采用的来源 commit：`39948a17925272367b64dd53427a4dba3f572f4e`
 - 原作者：Fanqing Meng、Lingxiao Du、Qiguang Chen、Ziqi Zhao、Haocheng Lu、Mengkang Hu、Michael Qizhe Shieh
 
-本接入不是 Evolvent AI、论文作者或 RSIBench 官方榜单的认证、背书或替代实现。它不会在 EvalHub 的受限 runner 内训练模型或执行云端评测；custom runner 只把六项运行声明与证据指纹转换成待作者复核的结果文件。
+EvalHub 页面与转换器不代表 Evolvent AI、论文作者或 RSIBench 官方榜单的认证、背书或替代实现。EvalHub 不会在受限 runner 内训练模型或执行云端评测；custom runner 只把六项运行声明与证据指纹转换成带数值分数的结果文件。非作者提交的成绩仍由评测作者复核，官网已发表成绩则按来源快照导入。
 
 ## 评测对象与固定边界
 
@@ -38,6 +38,19 @@
 
 六项都固定 `n_concurrent=32`、`step_limit=200`。AIME 的 `harbor_score` 已包含每题四次解码的上游聚合，转换时不会再次平均。
 
+## 上游官网已发表成绩
+
+官网 <https://rsibench.co/data/> 的完整 Official 矩阵在 2026-07-31 显示以下四位研究者。快照只记录事实数据、来源页面 SHA-256 和派生规则，不复制官网 HTML、图表或运行 artifact。Terminal-Bench 的分母为 89，AIME 的分母为 120；括号内整数成功数是与官网两位小数唯一相容的计数。
+
+| 研究者 | SWE Verified | SWE Multilingual | SWE Pro | Terminal-Bench 2.0 | GPQA | AIME | EvalHub 派生宏平均 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Claude Code · Opus-4.8 | 46 | 5 | 2 | 10.11 (9/89) | 56 | 40.83 (49/120) | 26.657615 |
+| Claude Code · Sonnet-5 | 35 | 22 | 4 | 5.62 (5/89) | 52 | 49.17 (59/120) | 27.964107 |
+| Codex · gpt-5.6-sol | 33 | 15 | 9 | 20.22 (18/89) | 65 | 53.33 (64/120) | 32.593009 |
+| Codex · gpt-5.6-terra | 42 | 6 | 1 | 12.36 (11/89) | 64 | 33.33 (40/120) | 26.448814 |
+
+[`tasks/rsibench-official-results-2026-07-31.json`](tasks/rsibench-official-results-2026-07-31.json) 是可机读快照；`official-result-to-envelope.mjs` 会重新验证四位研究者、六项分母、官网显示值与整数计数及宏平均，然后生成 `upstream_author_publication` 结果。该类型的结果必须含非空 `score`，不能用它冒充一次独立 EvalHub 复跑。
+
 ## 输入声明与公开证据
 
 完成来源仓库的六次官方运行后，参赛者创建一个与 [`tasks/example-submission.json`](tasks/example-submission.json) 同结构的 JSON。声明包含：
@@ -59,7 +72,16 @@ npx @evalhub/cli@0.1.0 validate /absolute/path/to/rsibench-data-result.json
 npx @evalhub/cli@0.1.0 submit /absolute/path/to/rsibench-data-result.json
 ```
 
-转换器不联网、不启动子进程、不下载依赖，也不接触 Tinker、E2B、Harbor 或模型服务。它严格检查 JSON 字段、固定协议、六项覆盖、整数成功次数、唯一 ID、公开 HTTPS 证据 URL 和 SHA-256 格式，并以原子方式写出 `score: null` 的 EvalHub 结果。
+转换器不联网、不启动子进程、不下载依赖，也不接触 Tinker、E2B、Harbor 或模型服务。它严格检查 JSON 字段、固定协议、六项覆盖、整数成功次数、唯一 ID、公开 HTTPS 证据 URL 和 SHA-256 格式，并以原子方式写出六项等权宏平均的数值 `score`。缺项、非法计数或非法证据会直接使转换失败，不会生成 `null` 或部分分数。
+
+生成四份上游官网成绩结果：
+
+```bash
+node evals/rsibench-data/official-result-to-envelope.mjs --participant claude-code-opus-4.8 --out /tmp/rsibench-opus.json
+node evals/rsibench-data/official-result-to-envelope.mjs --participant claude-code-sonnet-5 --out /tmp/rsibench-sonnet.json
+node evals/rsibench-data/official-result-to-envelope.mjs --participant codex-gpt-5.6-sol --out /tmp/rsibench-sol.json
+node evals/rsibench-data/official-result-to-envelope.mjs --participant codex-gpt-5.6-terra --out /tmp/rsibench-terra.json
+```
 
 ## 计分、容错与复核
 
@@ -71,9 +93,9 @@ npx @evalhub/cli@0.1.0 submit /absolute/path/to/rsibench-data-result.json
 
 转换器将分项与派生宏平均规范到小数点后最多 6 位。上游把 task error 和 timeout 反映在 Harbor 分数中，因此它们仍按失败计入，不做额外豁免、插值或“最佳重试”替换。输入不接受任意浮点分数：三项 SWE 与 GPQA 的分母为 100，Terminal-Bench 为 89，AIME 为 120；runner 从整数计数唯一派生分数，避免不可能的分数刻度或浮点容差争议。作者仍须把计数与 Harbor 聚合结果逐项交叉核对。
 
-论文和作者仓库没有定义跨六个 profile 的单一总分。为了适配 EvalHub 单榜，本接入使用六项百分制分数的等权算术平均作为展示分数；这是明确标注的 **EvalHub 派生指标**，不是 RSIBench-Data 官方复合指标，也不是相对 base model 的提升值。缺少任一 profile 或任一运行不合规时整份提交不判分，不计算部分总分。
+论文和作者仓库没有定义跨六个 profile 的单一总分。为了适配 EvalHub 单榜，当前评测定义使用六项百分制分数的等权算术平均作为展示分数；这是明确标注的 **EvalHub 派生指标**，不是 RSIBench-Data 官方复合指标，也不是相对 base model 的提升值。缺少任一 profile 或任一运行不合规时整份提交不判分，不计算部分总分。
 
-custom runner 只输出待核验的六个 `task_results`、派生平均和证据索引，始终保持 `score: null`。评测作者至少要核对：
+custom runner 输出六个 `task_results`、数值派生平均和证据索引。平台上的认可状态与分数是否存在是两件事：非作者提交可先带数值分数但保持待认可；评测作者本人提交且分数非空时，平台可按作者身份认可。评测作者至少要核对：
 
 1. artifact 与三个 SHA-256 一致且公开材料可合法审计；
 2. 来源 remote/commit、六个独立预算状态、目标与 rollout 模型符合固定协议；
@@ -82,11 +104,11 @@ custom runner 只输出待核验的六个 `task_results`、派生平均和证据
 5. tamper audit、数据来源和训练集没有违反评测数据边界；
 6. 研究者身份、harness、版本和 reasoning effort 有独立运行记录支持。
 
-全部通过后，作者才把转换器显示的等权宏平均回填为 `score` 并认可。提交者自报、URL 或哈希本身不等于已验证。
+全部通过后，作者才认可该数值成绩。提交者自报、URL 或哈希本身不等于已验证。官网四位研究者的结果走独立的上游发表来源导入路径，其可信范围只是“与钉死的官方页面一致”，不是对运行 artifact 的二次独立审计。
 
 ## 许可证、分发与引用
 
-本目录没有复制上游代码、数据集、benchmark 任务、论文图表或运行 artifact；示例 JSON 完全是合成数据。来源仓库根目录在本接入时没有 `LICENSE`、`COPYING` 或 `NOTICE` 文件，GitHub 也没有识别出仓库许可证，但 README 徽章链接到 CC BY-NC 4.0。论文的 arXiv 页面单独标注为 CC BY 4.0。论文许可不会自动替代代码、子模块、上游 benchmark 与数据集各自的许可，因此本接入只链接并钉死来源，不重新分发不明或受限内容。实际运行者须分别遵守 RSIBench-Data、Tinker、Harbor、E2B、seed repositories 和六个目标 benchmark 的当前条款。
+本目录没有复制上游代码、数据集、benchmark 任务、论文图表或运行 artifact；示例 JSON 完全是合成数据。来源仓库根目录在当前评测定义采用该版本时没有 `LICENSE`、`COPYING` 或 `NOTICE` 文件，GitHub 也没有识别出仓库许可证，但 README 徽章链接到 CC BY-NC 4.0。论文的 arXiv 页面单独标注为 CC BY 4.0。论文许可不会自动替代代码、子模块、上游 benchmark 与数据集各自的许可，因此本目录只链接并钉死来源，不重新分发不明或受限内容。实际运行者须分别遵守 RSIBench-Data、Tinker、Harbor、E2B、seed repositories 和六个目标 benchmark 的当前条款。
 
 引用论文：
 

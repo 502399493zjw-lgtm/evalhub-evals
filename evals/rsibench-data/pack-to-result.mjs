@@ -16,7 +16,7 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "rsibench-data";
-const RUNNER_VERSION = "rsibench-data/pack-to-result@1.1.0";
+const RUNNER_VERSION = "rsibench-data/pack-to-result@1.2.0";
 const SCHEMA_VERSION = "1.1";
 const SOURCE_REPOSITORY = "https://github.com/evolvent-ai/RSIBench-Data";
 const SOURCE_COMMIT = "39948a17925272367b64dd53427a4dba3f572f4e";
@@ -505,23 +505,23 @@ function buildResult(manifest, evalCommit) {
             evidence_fingerprint: evidenceFingerprint,
           },
         },
-        score: null,
+        score: proposedMacroAverage,
         raw_metric: {
-          label: "六项等权宏平均 · 作者待复核",
-          value: `${displayNumber(proposedMacroAverage)} 分（声明值）`,
+          label: "六项等权宏平均",
+          value: `${displayNumber(proposedMacroAverage)} 分`,
         },
         detail:
-          `第三方 RSIBench-Data 六项证据声明，固定来源 commit ${SOURCE_COMMIT}。` +
+          `RSIBench-Data 六项证据声明，固定来源 commit ${SOURCE_COMMIT}。` +
           `转换器已核对六个唯一 profile、独立 run ID、固定主协议、整数成功次数、` +
-          `公开 HTTPS 证据地址和 18 个唯一 SHA-256；声明的 EvalHub 派生宏平均为 ` +
-          `${displayNumber(proposedMacroAverage)} 分。score 保持 null，只有评测作者核对原始 Harbor ` +
-          `结果、预算、检查点选择顺序、完整性审计、数据隔离与研究者身份后才能回填并认可。` +
-          `该宏平均不是上游官方指标，本接入也不是 Evolvent AI 的认证或背书。`,
+          `公开 HTTPS 证据地址和 18 个唯一 SHA-256，并由整数计数确定性计算 EvalHub 派生宏平均 ` +
+          `${displayNumber(proposedMacroAverage)} 分。转换器不会输出 null；非评测作者提交的数值成绩仍须由` +
+          `评测作者核对原始 Harbor 结果、预算、检查点选择顺序、完整性审计、数据隔离与研究者身份后认可。` +
+          `该宏平均不是上游官方指标，该 EvalHub 结果也不代表 Evolvent AI 的认证或背书。`,
         task_results: taskResults,
         showcases: [
           {
             type: "timeline",
-            title: "六个上游原生分项（百分制声明值，待作者复核）",
+            title: "六个上游原生分项（百分制）",
             series: taskResults.map((task) => ({ t: task.task_id, v: task.score })),
             events: manifest.runs.map((run, index) => ({
               t: run.taskId,

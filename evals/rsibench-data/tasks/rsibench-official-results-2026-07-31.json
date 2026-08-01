@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "benchmark": "rsibench-data",
+  "source_kind": "upstream_official_publication",
+  "retrieved_on": "2026-07-31",
+  "score_authority": {
+    "title": "RSIBench — Research Data & Results",
+    "url": "https://rsibench.co/data/",
+    "snapshot_sha256": "c1ada61368496e1edf694dbf10a6e3a972f4bffc6e857f45351f05578f8df4fa",
+    "rule": "Use the Official column in the website's complete researcher-agent by benchmark matrix. Time and Tinker cost are not scoring inputs."
+  },
+  "protocol_source": {
+    "repository": "https://github.com/evolvent-ai/RSIBench-Data",
+    "commit": "39948a17925272367b64dd53427a4dba3f572f4e"
+  },
+  "verification_scope": "The eval author may verify that these values match the pinned upstream publication. This does not claim an independent EvalHub rerun or endorsement by Evolvent AI.",
+  "evalhub_derivation": {
+    "rule": "Infer the unique integer successful_trials count consistent with each two-decimal published percentage and the protocol's fixed denominator; convert that count to an exact percentage; then take the unweighted arithmetic mean across all six benchmarks.",
+    "rounding": "Round the final macro average to at most six decimal places.",
+    "upstream_metric_notice": "RSIBench-Data does not publish a cross-benchmark composite score. The macro average is an EvalHub-derived display metric."
+  },
+  "benchmarks": [
+    {
+      "task_id": "swe-bench-verified",
+      "name": "SWE-bench Verified",
+      "total_trials": 100
+    },
+    {
+      "task_id": "swe-bench-multilingual",
+      "name": "SWE-bench Multilingual",
+      "total_trials": 100
+    },
+    {
+      "task_id": "swe-bench-pro",
+      "name": "SWE-bench Pro",
+      "total_trials": 100
+    },
+    {
+      "task_id": "terminal-bench-2",
+      "name": "Terminal-Bench 2.0",
+      "total_trials": 89
+    },
+    {
+      "task_id": "gpqa-diamond",
+      "name": "GPQA Diamond",
+      "total_trials": 100
+    },
+    {
+      "task_id": "aime",
+      "name": "AIME 2026",
+      "total_trials": 120
+    }
+  ],
+  "results": [
+    {
+      "participant_id": "claude-code-opus-4.8",
+      "model_display": "Claude Code · Opus-4.8",
+      "official_scores": [
+        {
+          "task_id": "swe-bench-verified",
+          "published_percent": 46,
+          "inferred_successful_trials": 46
+        },
+        {
+          "task_id": "swe-bench-multilingual",
+          "published_percent": 5,
+          "inferred_successful_trials": 5
+        },
+        {
+          "task_id": "swe-bench-pro",
+          "published_percent": 2,
+          "inferred_successful_trials": 2
+        },
+        {
+          "task_id": "terminal-bench-2",
+          "published_percent": 10.11,
+          "inferred_successful_trials": 9
+        },
+        {
+          "task_id": "gpqa-diamond",
+          "published_percent": 56,
+          "inferred_successful_trials": 56
+        },
+        {
+          "task_id": "aime",
+          "published_percent": 40.83,
+          "inferred_successful_trials": 49
+        }
+      ],
+      "derived_evalhub_score": 26.657615
+    },
+    {
+      "participant_id": "claude-code-sonnet-5",
+      "model_display": "Claude Code · Sonnet-5",
+      "official_scores": [
+        {
+          "task_id": "swe-bench-verified",
+          "published_percent": 35,
+          "inferred_successful_trials": 35
+        },
+        {
+          "task_id": "swe-bench-multilingual",
+          "published_percent": 22,
+          "inferred_successful_trials": 22
+        },
+        {
+          "task_id": "swe-bench-pro",
+          "published_percent": 4,
+          "inferred_successful_trials": 4
+        },
+        {
+          "task_id": "terminal-bench-2",
+          "published_percent": 5.62,
+          "inferred_successful_trials": 5
+        },
+        {
+          "task_id": "gpqa-diamond",
+          "published_percent": 52,
+          "inferred_successful_trials": 52
+        },
+        {
+          "task_id": "aime",
+          "published_percent": 49.17,
+          "inferred_successful_trials": 59
+        }
+      ],
+      "derived_evalhub_score": 27.964107
+    },
+    {
+      "participant_id": "codex-gpt-5.6-sol",
+      "model_display": "Codex · gpt-5.6-sol",
+      "official_scores": [
+        {
+          "task_id": "swe-bench-verified",
+          "published_percent": 33,
+          "inferred_successful_trials": 33
+        },
+        {
+          "task_id": "swe-bench-multilingual",
+          "published_percent": 15,
+          "inferred_successful_trials": 15
+        },
+        {
+          "task_id": "swe-bench-pro",
+          "published_percent": 9,
+          "inferred_successful_trials": 9
+        },
+        {
+          "task_id": "terminal-bench-2",
+          "published_percent": 20.22,
+          "inferred_successful_trials": 18
+        },
+        {
+          "task_id": "gpqa-diamond",
+          "published_percent": 65,
+          "inferred_successful_trials": 65
+        },
+        {
+          "task_id": "aime",
+          "published_percent": 53.33,
+          "inferred_successful_trials": 64
+        }
+      ],
+      "derived_evalhub_score": 32.593009
+    },
+    {
+      "participant_id": "codex-gpt-5.6-terra",
+      "model_display": "Codex · gpt-5.6-terra",
+      "official_scores": [
+        {
+          "task_id": "swe-bench-verified",
+          "published_percent": 42,
+          "inferred_successful_trials": 42
+        },
+        {
+          "task_id": "swe-bench-multilingual",
+          "published_percent": 6,
+          "inferred_successful_trials": 6
+        },
+        {
+          "task_id": "swe-bench-pro",
+          "published_percent": 1,
+          "inferred_successful_trials": 1
+        },
+        {
+          "task_id": "terminal-bench-2",
+          "published_percent": 12.36,
+          "inferred_successful_trials": 11
+        },
+        {
+          "task_id": "gpqa-diamond",
+          "published_percent": 64,
+          "inferred_successful_trials": 64
+        },
+        {
+          "task_id": "aime",
+          "published_percent": 33.33,
+          "inferred_successful_trials": 40
+        }
+      ],
+      "derived_evalhub_score": 26.448814
+    }
+  ]
+}
