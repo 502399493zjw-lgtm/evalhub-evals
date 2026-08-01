@@ -30,11 +30,11 @@ The content validator enforces the file allowlist, size/count limits, UTF-8 and 
 
 ## Run evals
 
-Built-in examples must use complete dated participant IDs and slug-specific outputs:
+Built-in examples must use concrete participant IDs and slug-specific outputs; dates are optional:
 
 ```bash
-evalhub run chinese-nuance --local ./evals --adapter command --model local-wrapper-20260710 --out chinese-nuance-result.json
-evalhub run cold-jokes --local ./evals --adapter api --model your-model-20260710 --out cold-jokes-result.json
+evalhub run chinese-nuance --local ./evals --adapter command --model local-wrapper --out chinese-nuance-result.json
+evalhub run cold-jokes --local ./evals --adapter api --model kimi-k3 --out cold-jokes-result.json
 ```
 
 Custom launch evals use their own runners:
@@ -49,4 +49,4 @@ Submit the exact generated filename, for example `evalhub submit mc-build-result
 
 ## Contract reminders
 
-All `chat`, `dialogue`, and `agent` interfaces work with both `scored_by=local` and `scored_by=author`. Judge+author is valid: `judge_model` must be pinned, `scoring_note` must explain author review, and the submitted score stays null until review. Chat/agent envelopes contain one result; dialogue contains at least two unique participants. Harness fields are a paired agent-only identity. Custom runners validate and atomically write result envelopes and do not call model services.
+All `chat`, `dialogue`, and `agent` interfaces work with both `scored_by=local` and `scored_by=author`. `scored_by` controls recognition; `score_policy=required|author_fill` independently controls whether null scores are accepted. Judge+author is valid: `judge_model` must be pinned and `scoring_note` must explain author review. `baseline_policy=required` additionally requires at least one numeric official/trusted envelope in `published-results/*.json`. Chat/agent envelopes contain one result; dialogue contains at least two unique participants. Harness fields are a paired agent-only identity. Custom runners validate and atomically write result envelopes and do not call model services.

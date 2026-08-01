@@ -44,7 +44,45 @@ export declare const EvalTiebreakSchema: z.ZodObject<{
     label: string;
 }>;
 export type EvalTiebreak = z.infer<typeof EvalTiebreakSchema>;
-export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
+/**
+ * 评测集的第一方外部资料。EvalHub 自身的源码目录链接由平台根据 repoPath 生成，
+ * 不在这里重复声明；repository 指被接入项目的上游作者仓库。
+ */
+export declare const EvalReferencesSchema: z.ZodEffects<z.ZodObject<{
+    homepage: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+    paper: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+    repository: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+}, "strict", z.ZodTypeAny, {
+    homepage?: string | undefined;
+    paper?: string | undefined;
+    repository?: string | undefined;
+}, {
+    homepage?: string | undefined;
+    paper?: string | undefined;
+    repository?: string | undefined;
+}>, {
+    homepage?: string | undefined;
+    paper?: string | undefined;
+    repository?: string | undefined;
+}, {
+    homepage?: string | undefined;
+    paper?: string | undefined;
+    repository?: string | undefined;
+}>;
+export type EvalReferences = z.infer<typeof EvalReferencesSchema>;
+type EvalDefRefinementValue = {
+    scoring: "exact" | "judge" | "custom";
+    scored_by: "local" | "author";
+    score_policy?: "required" | "author_fill" | undefined;
+    runner: "builtin" | "custom";
+    judge_model?: string | undefined;
+    scoring_note?: string | undefined;
+    command_template?: CommandTemplate | null | undefined;
+    interface: "chat" | "dialogue" | "agent";
+    leaderboard: "latest_session" | "rating";
+    baseline_policy: "optional" | "required";
+};
+export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     command_template: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodObject<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
@@ -74,11 +112,34 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
     display_category: z.ZodOptional<z.ZodEnum<["agent", "reason", "vision", "fun"]>>;
     description: z.ZodString;
     hook_title: z.ZodOptional<z.ZodString>;
+    references: z.ZodOptional<z.ZodEffects<z.ZodObject<{
+        homepage: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+        paper: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+        repository: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+    }, "strict", z.ZodTypeAny, {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    }, {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    }>, {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    }, {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    }>>;
     dimensions: z.ZodArray<z.ZodEnum<["幽默", "语言", "推理", "代码", "博弈", "经营"]>, "many">;
     interface: z.ZodEnum<["chat", "dialogue", "agent"]>;
     runner: z.ZodEnum<["builtin", "custom"]>;
     scoring: z.ZodEnum<["exact", "judge", "custom"]>;
     scored_by: z.ZodEnum<["local", "author"]>;
+    score_policy: z.ZodOptional<z.ZodEnum<["required", "author_fill"]>>;
+    baseline_policy: z.ZodDefault<z.ZodEnum<["optional", "required"]>>;
     score_unit: z.ZodDefault<z.ZodString>;
     leaderboard: z.ZodDefault<z.ZodEnum<["latest_session", "rating"]>>;
     tiebreak: z.ZodOptional<z.ZodObject<{
@@ -115,6 +176,8 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     id: string;
     leaderboard: "latest_session" | "rating";
+    baseline_policy: "required" | "optional";
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -122,7 +185,6 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
     score_unit: string;
     trials: number;
     tasks: {
@@ -130,6 +192,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
         expected?: string | undefined;
         id?: string | undefined;
     }[];
+    score_policy?: "required" | "author_fill" | undefined;
     command_template?: {
         argv: string[];
         output: string;
@@ -137,6 +200,11 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
+    references?: {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    } | undefined;
     tiebreak?: {
         metric: string;
         order: "desc" | "asc";
@@ -148,6 +216,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
     est_tokens?: number | undefined;
 }, {
     id: string;
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -155,13 +224,14 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
     tasks: {
         prompt: string;
         expected?: string | undefined;
         id?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
+    baseline_policy?: "required" | "optional" | undefined;
+    score_policy?: "required" | "author_fill" | undefined;
     command_template?: z.objectInputType<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
@@ -169,6 +239,11 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
+    references?: {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    } | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
         metric: string;
@@ -183,6 +258,8 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
 }>, {
     id: string;
     leaderboard: "latest_session" | "rating";
+    baseline_policy: "required" | "optional";
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -190,7 +267,89 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
+    score_unit: string;
+    trials: number;
+    tasks: {
+        prompt: string;
+        expected?: string | undefined;
+        id?: string | undefined;
+    }[];
+    score_policy?: "required" | "author_fill" | undefined;
+    command_template?: {
+        argv: string[];
+        output: string;
+    } | undefined;
+    hackathon_id?: string | undefined;
+    display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
+    hook_title?: string | undefined;
+    references?: {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    } | undefined;
+    tiebreak?: {
+        metric: string;
+        order: "desc" | "asc";
+        label: string;
+    } | undefined;
+    judge_model?: string | undefined;
+    judge_rubric?: string | undefined;
+    scoring_note?: string | undefined;
+    est_tokens?: number | undefined;
+}, {
+    id: string;
     scored_by: "local" | "author";
+    name: string;
+    category: "fun" | "useful";
+    description: string;
+    dimensions: ("幽默" | "语言" | "推理" | "代码" | "博弈" | "经营")[];
+    interface: "agent" | "chat" | "dialogue";
+    runner: "custom" | "builtin";
+    scoring: "exact" | "custom" | "judge";
+    tasks: {
+        prompt: string;
+        expected?: string | undefined;
+        id?: string | undefined;
+    }[];
+    leaderboard?: "latest_session" | "rating" | undefined;
+    baseline_policy?: "required" | "optional" | undefined;
+    score_policy?: "required" | "author_fill" | undefined;
+    command_template?: z.objectInputType<{
+        argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
+        output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
+    }, z.ZodTypeAny, "passthrough"> | undefined;
+    hackathon_id?: string | undefined;
+    display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
+    hook_title?: string | undefined;
+    references?: {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    } | undefined;
+    score_unit?: string | undefined;
+    tiebreak?: {
+        metric: string;
+        order: "desc" | "asc";
+        label: string;
+    } | undefined;
+    judge_model?: string | undefined;
+    judge_rubric?: string | undefined;
+    scoring_note?: string | undefined;
+    trials?: number | undefined;
+    est_tokens?: number | undefined;
+}>, {
+    score_policy: "required" | "author_fill";
+    id: string;
+    leaderboard: "latest_session" | "rating";
+    baseline_policy: "required" | "optional";
+    scored_by: "local" | "author";
+    name: string;
+    category: "fun" | "useful";
+    description: string;
+    dimensions: ("幽默" | "语言" | "推理" | "代码" | "博弈" | "经营")[];
+    interface: "agent" | "chat" | "dialogue";
+    runner: "custom" | "builtin";
+    scoring: "exact" | "custom" | "judge";
     score_unit: string;
     trials: number;
     tasks: {
@@ -205,6 +364,11 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
+    references?: {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    } | undefined;
     tiebreak?: {
         metric: string;
         order: "desc" | "asc";
@@ -216,6 +380,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
     est_tokens?: number | undefined;
 }, {
     id: string;
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -223,13 +388,14 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
     tasks: {
         prompt: string;
         expected?: string | undefined;
         id?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
+    baseline_policy?: "required" | "optional" | undefined;
+    score_policy?: "required" | "author_fill" | undefined;
     command_template?: z.objectInputType<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
@@ -237,6 +403,11 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
+    references?: {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    } | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
         metric: string;
@@ -250,7 +421,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodObject<{
     est_tokens?: number | undefined;
 }>;
 export type EvalDef = z.infer<typeof EvalDefSchema>;
-export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
+export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     command_template: z.ZodOptional<z.ZodNullable<z.ZodEffects<z.ZodEffects<z.ZodObject<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
@@ -280,11 +451,34 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
     display_category: z.ZodOptional<z.ZodEnum<["agent", "reason", "vision", "fun"]>>;
     description: z.ZodString;
     hook_title: z.ZodOptional<z.ZodString>;
+    references: z.ZodOptional<z.ZodEffects<z.ZodObject<{
+        homepage: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+        paper: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+        repository: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+    }, "strict", z.ZodTypeAny, {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    }, {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    }>, {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    }, {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    }>>;
     dimensions: z.ZodArray<z.ZodEnum<["幽默", "语言", "推理", "代码", "博弈", "经营"]>, "many">;
     interface: z.ZodEnum<["chat", "dialogue", "agent"]>;
     runner: z.ZodEnum<["builtin", "custom"]>;
     scoring: z.ZodEnum<["exact", "judge", "custom"]>;
     scored_by: z.ZodEnum<["local", "author"]>;
+    score_policy: z.ZodOptional<z.ZodEnum<["required", "author_fill"]>>;
+    baseline_policy: z.ZodDefault<z.ZodEnum<["optional", "required"]>>;
     score_unit: z.ZodDefault<z.ZodString>;
     leaderboard: z.ZodDefault<z.ZodEnum<["latest_session", "rating"]>>;
     tiebreak: z.ZodOptional<z.ZodObject<{
@@ -321,6 +515,8 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     id: string;
     leaderboard: "latest_session" | "rating";
+    baseline_policy: "required" | "optional";
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -328,7 +524,6 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
     score_unit: string;
     trials: number;
     tasks: {
@@ -336,6 +531,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
         expected?: string | undefined;
         id?: string | undefined;
     }[];
+    score_policy?: "required" | "author_fill" | undefined;
     command_template?: {
         argv: string[];
         output: string;
@@ -343,6 +539,11 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
+    references?: {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    } | undefined;
     tiebreak?: {
         metric: string;
         order: "desc" | "asc";
@@ -354,6 +555,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
     est_tokens?: number | undefined;
 }, {
     id: string;
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -361,13 +563,14 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
     tasks: {
         prompt: string;
         expected?: string | undefined;
         id?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
+    baseline_policy?: "required" | "optional" | undefined;
+    score_policy?: "required" | "author_fill" | undefined;
     command_template?: z.objectInputType<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
@@ -375,6 +578,11 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
+    references?: {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    } | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
         metric: string;
@@ -389,6 +597,8 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
 }>, {
     id: string;
     leaderboard: "latest_session" | "rating";
+    baseline_policy: "required" | "optional";
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -396,7 +606,89 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
+    score_unit: string;
+    trials: number;
+    tasks: {
+        prompt: string;
+        expected?: string | undefined;
+        id?: string | undefined;
+    }[];
+    score_policy?: "required" | "author_fill" | undefined;
+    command_template?: {
+        argv: string[];
+        output: string;
+    } | null | undefined;
+    hackathon_id?: string | undefined;
+    display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
+    hook_title?: string | undefined;
+    references?: {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    } | undefined;
+    tiebreak?: {
+        metric: string;
+        order: "desc" | "asc";
+        label: string;
+    } | undefined;
+    judge_model?: string | undefined;
+    judge_rubric?: string | undefined;
+    scoring_note?: string | undefined;
+    est_tokens?: number | undefined;
+}, {
+    id: string;
     scored_by: "local" | "author";
+    name: string;
+    category: "fun" | "useful";
+    description: string;
+    dimensions: ("幽默" | "语言" | "推理" | "代码" | "博弈" | "经营")[];
+    interface: "agent" | "chat" | "dialogue";
+    runner: "custom" | "builtin";
+    scoring: "exact" | "custom" | "judge";
+    tasks: {
+        prompt: string;
+        expected?: string | undefined;
+        id?: string | undefined;
+    }[];
+    leaderboard?: "latest_session" | "rating" | undefined;
+    baseline_policy?: "required" | "optional" | undefined;
+    score_policy?: "required" | "author_fill" | undefined;
+    command_template?: z.objectInputType<{
+        argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
+        output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
+    }, z.ZodTypeAny, "passthrough"> | null | undefined;
+    hackathon_id?: string | undefined;
+    display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
+    hook_title?: string | undefined;
+    references?: {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    } | undefined;
+    score_unit?: string | undefined;
+    tiebreak?: {
+        metric: string;
+        order: "desc" | "asc";
+        label: string;
+    } | undefined;
+    judge_model?: string | undefined;
+    judge_rubric?: string | undefined;
+    scoring_note?: string | undefined;
+    trials?: number | undefined;
+    est_tokens?: number | undefined;
+}>, {
+    score_policy: "required" | "author_fill";
+    id: string;
+    leaderboard: "latest_session" | "rating";
+    baseline_policy: "required" | "optional";
+    scored_by: "local" | "author";
+    name: string;
+    category: "fun" | "useful";
+    description: string;
+    dimensions: ("幽默" | "语言" | "推理" | "代码" | "博弈" | "经营")[];
+    interface: "agent" | "chat" | "dialogue";
+    runner: "custom" | "builtin";
+    scoring: "exact" | "custom" | "judge";
     score_unit: string;
     trials: number;
     tasks: {
@@ -411,6 +703,11 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
+    references?: {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    } | undefined;
     tiebreak?: {
         metric: string;
         order: "desc" | "asc";
@@ -422,6 +719,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
     est_tokens?: number | undefined;
 }, {
     id: string;
+    scored_by: "local" | "author";
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -429,13 +727,14 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
     interface: "agent" | "chat" | "dialogue";
     runner: "custom" | "builtin";
     scoring: "exact" | "custom" | "judge";
-    scored_by: "local" | "author";
     tasks: {
         prompt: string;
         expected?: string | undefined;
         id?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
+    baseline_policy?: "required" | "optional" | undefined;
+    score_policy?: "required" | "author_fill" | undefined;
     command_template?: z.objectInputType<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
@@ -443,6 +742,11 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
+    references?: {
+        homepage?: string | undefined;
+        paper?: string | undefined;
+        repository?: string | undefined;
+    } | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
         metric: string;
@@ -456,3 +760,5 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodObject<{
     est_tokens?: number | undefined;
 }>;
 export type StoredEvalDef = z.infer<typeof StoredEvalDefSchema>;
+export declare function resolveScorePolicy(value: Pick<EvalDefRefinementValue, "scored_by" | "score_policy">): "required" | "author_fill";
+export {};

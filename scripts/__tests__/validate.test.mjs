@@ -4,12 +4,17 @@ import {
   mkdir,
   mkdtemp,
   rm,
+  symlink,
   writeFile,
 } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
+import {
+  buildAgentBrief,
+  EvalDefSchema,
+} from "@evalhub/schemas";
 import { validateRepository } from "../validate.mjs";
 
 const validEval = {
@@ -54,6 +59,35 @@ tasks:
     prompt: Say yes
     expected: yes
 `;
+
+function makePublishedResult(
+  sourceUrl = "https://example.com/official-results",
+) {
+  return {
+    eval_id: "sample-eval",
+    submission: {
+      kind: "upstream_author_publication",
+      importer_version: "1.0.0",
+      retrieved_on: "2026-08-01",
+      source: {
+        url: sourceUrl,
+        snapshot_sha256: "a".repeat(64),
+      },
+    },
+    results: [
+      {
+        participant: { model: "Official Model" },
+        score: 88,
+      },
+    ],
+  };
+}
+
+async function writePublishedResult(filePath, targetBytes) {
+  const source = JSON.stringify(makePublishedResult());
+  assert.ok(source.length <= targetBytes);
+  await writeFile(filePath, `${source}${" ".repeat(targetBytes - source.length)}`);
+}
 
 async function makeFixture(t) {
   const root = await mkdtemp(path.join(os.tmpdir(), "evalhub-template-"));
@@ -105,6 +139,22 @@ test("exports a repository validator without running the CLI", async () => {
   assert.equal(typeof module.validateRepository, "function");
 });
 
+test("vendored schemas expose a loadable agent brief builder", () => {
+  const definition = EvalDefSchema.parse(validEval);
+  const brief = buildAgentBrief(definition, {
+    siteOrigin: "https://evalhub.example",
+    cliPackageSpec: "@evalhub/cli@0.2.0",
+  });
+
+  assert.match(brief, /^---\nschema: evalhub-brief\/v1/m);
+  // 无 taskId（公开 ?format=brief 端点）分支：可以直接下载并本地运行；
+  // 只有用户决定正式提交成绩时才领取任务卡，见
+  // packages/schemas/src/agent-brief.ts 的 taskId === null 分支。
+  assert.match(brief, /下载和本地运行不需要创建提交任务/);
+  assert.match(brief, /点击「提交成绩」领取任务卡/);
+  assert.doesNotMatch(brief, /evalhub connect/);
+});
+
 test("validates a complete repository with the shared contracts", async (t) => {
   const { root } = await makeFixture(t);
 
@@ -112,6 +162,173 @@ test("validates a complete repository with the shared contracts", async (t) => {
     evalCount: 1,
     evalIds: ["sample-eval"],
   });
+});
+
+test("requires a published numeric baseline when baseline_policy is required", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  await writeFile(
+    path.join(evalDir, "eval.yaml"),
+    `${validEvalYaml}score_policy: required\nbaseline_policy: required\n`,
+  );
+
+  await expectInvalid(root, /baseline_policy=required requires at least one published-results/);
+});
+
+test("rejects a null published baseline before merge", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  await writeFile(
+    path.join(evalDir, "eval.yaml"),
+    `${validEvalYaml}score_policy: required\nbaseline_policy: required\n`,
+  );
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  await writeFile(
+    path.join(directory, "official.json"),
+    `${JSON.stringify({
+      eval_id: "sample-eval",
+      submission: {
+        kind: "upstream_author_publication",
+        importer_version: "1.0.0",
+        retrieved_on: "2026-08-01",
+        source: {
+          url: "https://example.com/official-results",
+          snapshot_sha256: "a".repeat(64),
+        },
+      },
+      results: [
+        {
+          participant: { model: "Official Model" },
+          score: null,
+        },
+      ],
+    }, null, 2)}\n`,
+  );
+
+  await expectInvalid(
+    root,
+    /upstream_author_publication submissions must include a non-null score/,
+    /score_policy=required.*score.*null/,
+  );
+});
+
+test("accepts a reviewed published baseline with structured component metrics", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  await writeFile(
+    path.join(evalDir, "eval.yaml"),
+    `${validEvalYaml}score_policy: required\nbaseline_policy: required\n`,
+  );
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  await writeFile(
+    path.join(directory, "official.json"),
+    `${JSON.stringify({
+      eval_id: "sample-eval",
+      submission: {
+        kind: "upstream_author_publication",
+        importer_version: "1.0.0",
+        retrieved_on: "2026-08-01",
+        source: {
+          url: "https://example.com/official-results",
+          snapshot_sha256: "a".repeat(64),
+        },
+      },
+      results: [
+        {
+          participant: { model: "Official Model" },
+          score: 88,
+          supplementary_views: [
+            {
+              type: "metric_table",
+              title: "Components",
+              columns: ["Component", "Score"],
+              rows: [{ cells: ["Language", 88] }],
+            },
+          ],
+        },
+      ],
+    }, null, 2)}\n`,
+  );
+
+  assert.deepEqual(await validateRepository(root), {
+    evalCount: 1,
+    evalIds: ["sample-eval"],
+  });
+});
+
+test("rejects credentials embedded in a published result source URL", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  await writeFile(
+    path.join(evalDir, "eval.yaml"),
+    `${validEvalYaml}score_policy: required\nbaseline_policy: required\n`,
+  );
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  await writeFile(
+    path.join(directory, "official.json"),
+    `${JSON.stringify(
+      makePublishedResult("https://user:password@example.com/results"),
+      null,
+      2,
+    )}\n`,
+  );
+
+  await expectInvalid(
+    root,
+    /source\.url must use https without embedded credentials/,
+  );
+});
+
+test("enforces the production per-file limit for published results", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  await writeFile(
+    path.join(evalDir, "eval.yaml"),
+    `${validEvalYaml}score_policy: required\nbaseline_policy: required\n`,
+  );
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  await writePublishedResult(
+    path.join(directory, "too-large.json"),
+    1_048_577,
+  );
+
+  await expectInvalid(root, /published result exceeds 1048576 bytes/);
+});
+
+test("enforces the production aggregate limit for published results", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  await writeFile(
+    path.join(evalDir, "eval.yaml"),
+    `${validEvalYaml}score_policy: required\nbaseline_policy: required\n`,
+  );
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  await Promise.all(
+    Array.from({ length: 9 }, (_unused, index) =>
+      writePublishedResult(
+        path.join(directory, `official-${index}.json`),
+        932_068,
+      ),
+    ),
+  );
+
+  await expectInvalid(
+    root,
+    /published-results exceeds 8388608 bytes in total/,
+  );
+});
+
+test("runs content-security checks through validateRepository", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  await Promise.all([
+    writeFile(path.join(evalDir, ".env"), "NOT_A_SECRET=fixture\n"),
+    symlink("README.md", path.join(evalDir, "linked.md")),
+  ]);
+
+  await expectInvalid(
+    root,
+    /hidden files and directories are not allowed/,
+    /symbolic links are not allowed/,
+  );
 });
 
 test("reports a missing CODEOWNERS root once without missing-rule cascades", async (t) => {

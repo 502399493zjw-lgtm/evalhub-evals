@@ -1,3 +1,4 @@
+import { resolveScorePolicy } from "./eval-def.js";
 const EXACT_CLI_PACKAGE_SPEC = /^@evalhub\/cli@(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/u;
 const OPAQUE_TASK_ID = /^task_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u;
 const PAIRING_CODE = /^[0-9A-HJ-NP-TV-Z]{4}(?:-[0-9A-HJ-NP-TV-Z]{4}){4}$/u;
@@ -35,9 +36,9 @@ export function buildAgentBrief(definition, options) {
                 `${platformEnvironment} evalhub run ${shellToken(definition.id)} --model "$MODEL_ID" --out ${shellToken(output)}`,
             ].join("\n")),
         ].join("\n\n");
-    const submission = definition.scored_by === "author"
-        ? "用户在网页确认发布后，本评测由作者判分：结果自带 score 时，出现 awaiting author approval 是正常状态；score=null 时会 awaiting grading，完成判分前不会公开。"
-        : "用户在网页确认发布后，结果仍须经评测作者认可才会计入公开排行榜；未认可的结果不计榜。";
+    const submission = resolveScorePolicy(definition) === "author_fill"
+        ? "用户在网页确认发布后，本评测允许作者补分：结果自带 score 时，出现 awaiting author approval 是正常状态；score=null 时会 awaiting grading，完成判分前不会公开。"
+        : "本评测要求结果自带数值 score；score=null 会在提交校验时直接失败。用户确认发布后，成绩仍须经评测作者认可才会计入公开排行榜。";
     const title = singleLineHeading(definition.name);
     const prerequisites = taskId === null
         ? [
@@ -64,6 +65,7 @@ eval: ${yamlScalar(definition.id)}
 name: ${yamlScalar(definition.name)}
 interface: ${yamlScalar(definition.interface)}
 scored_by: ${yamlScalar(definition.scored_by)}
+score_policy: ${yamlScalar(resolveScorePolicy(definition))}
 score_unit: ${yamlScalar(definition.score_unit)}
 est_tokens: ${definition.est_tokens ?? "null"}
 submit_format: result-v1
