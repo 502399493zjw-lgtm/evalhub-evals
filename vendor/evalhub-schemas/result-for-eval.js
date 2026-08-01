@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { validateParticipantForEval, } from "./participant-for-eval.js";
+import { resolveScorePolicy } from "./eval-def.js";
 function customIssue(path, message) {
     return {
         code: "custom",
@@ -24,10 +25,6 @@ export function validateResultForEval(context, resultFile) {
     if (resultFile.eval_id !== context.id) {
         issues.push(customIssue(["eval_id"], `result eval_id must match eval.id "${context.id}"`));
     }
-    if (origin === "upstream_author_publication" &&
-        context.scored_by !== "author") {
-        issues.push(customIssue(["submission", "kind"], "upstream_author_publication submissions require an eval with scored_by=author"));
-    }
     if ((context.interface === "chat" || context.interface === "agent") &&
         resultFile.results.length !== 1) {
         issues.push(customIssue(["results"], `interface=${context.interface} requires exactly one result`));
@@ -37,7 +34,6 @@ export function validateResultForEval(context, resultFile) {
     }
     const dialogueParticipants = new Set();
     const envelopeParticipants = new Set(resultFile.results.map((result) => runParticipantKey(result.participant)));
-    const legacyEnvelopeParticipants = new Set(resultFile.results.map((result) => result.participant.model));
     for (const [index, result] of resultFile.results.entries()) {
         const participantPath = ["results", index, "participant"];
         const participantValidation = validateParticipantForEval(context, result.participant, origin);
@@ -55,10 +51,8 @@ export function validateResultForEval(context, resultFile) {
                 dialogueParticipants.add(identity);
             }
         }
-        // 判分模型（2026-07-18 拍板）：
-        // - scored_by=author 表示「作者判分选项开启」——既收自带分数（默认模式，待作者认可），
-        //   也收 score=null（请作者判分）；两种都合法，不再强制 null。
-        // - 非 author 评测集未开启作者判分：score=null 无人回填，必须自带分数。
+        // scored_by 只表达谁有权认可成绩；score_policy 独立表达是否允许先交空分。
+        // 未声明 score_policy 的旧评测保持兼容（author => author_fill，local => required）。
         // 默认「分」制评测集保持 0-100 契约；自定义量纲（score_unit 非「分」）放开上限（≥0 有限已在基础校验）。
         if ((context.score_unit ?? "分") === "分" && result.score !== null && result.score > 100) {
             issues.push(customIssue(["results", index, "score"], "「分」制评测集 score 必须在 0-100 内"));
@@ -67,10 +61,13 @@ export function validateResultForEval(context, resultFile) {
             result.score === null) {
             issues.push(customIssue(["results", index, "score"], "upstream_author_publication submissions must include a non-null score"));
         }
-        if (context.scored_by !== "author" && result.score === null) {
-            issues.push(customIssue(["results", index, "score"], `该评测集未开启作者判分（scored_by=${context.scored_by}），提交必须自带非空 score`));
+        if (resolveScorePolicy(context) === "required" && result.score === null) {
+            issues.push(customIssue(["results", index, "score"], "该评测集要求提交数值成绩（score_policy=required），score 不能为 null"));
         }
         if (origin === "upstream_author_publication") {
+            // 上游官方发布不是本站复跑，因此逐题结果、运行用量和 showcase/输出证据
+            // 一律禁止。来源中公布的分项或趋势只能进入 supplementary_views；
+            // 这些结构化辅助视图不会参与任何榜单排序。
             for (const field of ["usage", "task_results", "showcases"]) {
                 if (result[field] !== undefined) {
                     issues.push(customIssue(["results", index, field], `upstream_author_publication results cannot include ${field}`));
@@ -91,10 +88,7 @@ export function validateResultForEval(context, resultFile) {
                 teamGamesShowcaseCount += 1;
             }
             for (const [participantIndex, participant] of showcase.participants.entries()) {
-                const legacyHeadToHeadParticipant = showcase.type === "head_to_head" &&
-                    legacyEnvelopeParticipants.has(participant.key);
-                if (!envelopeParticipants.has(participant.key) &&
-                    !legacyHeadToHeadParticipant) {
+                if (!envelopeParticipants.has(participant.key)) {
                     issues.push(customIssue([...showcasePath, "participants", participantIndex, "key"], `${showcase.type} participant must occur in the same dialogue envelope`));
                 }
             }

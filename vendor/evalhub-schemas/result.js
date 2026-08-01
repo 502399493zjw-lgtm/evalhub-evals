@@ -20,6 +20,7 @@ export const HEAD_TO_HEAD_MAX_GAMES_PER_MATCHUP = 100;
 export const RESULT_FILE_MAX_RESULTS = 256;
 export const RESULT_ENTRY_MAX_TASK_RESULTS = 1_024;
 export const RESULT_ENTRY_MAX_SHOWCASES = 256;
+export const RESULT_ENTRY_MAX_SUPPLEMENTARY_VIEWS = 32;
 // Showcase task anchoring (compare/transcript.task_id → eval task id)：让战报
 // 可挂到具体题目，详情页按题聚合展示。上限对齐 participant key 的 255。
 export const SHOWCASE_TASK_ID_MAX_LENGTH = 255;
@@ -346,6 +347,139 @@ function refineTeamGamesShowcase(showcase, ctx) {
     }
 }
 export const TeamGamesShowcaseSchema = TeamGamesShowcaseObjectSchema.superRefine(refineTeamGamesShowcase);
+const SUPPLEMENTARY_VIEW_TITLE_MAX_LENGTH = 200;
+const SUPPLEMENTARY_VIEW_NOTE_MAX_LENGTH = 2_000;
+const METRIC_TABLE_MAX_COLUMNS = 20;
+const METRIC_TABLE_MAX_ROWS = 200;
+const METRIC_TABLE_CELL_MAX_LENGTH = 500;
+const LINE_CHART_MAX_SERIES = 12;
+const LINE_CHART_MAX_POINTS_PER_SERIES = 500;
+const SupplementaryViewTitleSchema = z
+    .string()
+    .min(1, "supplementary view title must not be empty")
+    .max(SUPPLEMENTARY_VIEW_TITLE_MAX_LENGTH);
+const SupplementaryViewNoteSchema = z
+    .string()
+    .min(1, "supplementary view note must not be empty")
+    .max(SUPPLEMENTARY_VIEW_NOTE_MAX_LENGTH)
+    .optional();
+const MetricTableViewObjectSchema = z.object({
+    type: z.literal("metric_table"),
+    title: SupplementaryViewTitleSchema,
+    columns: z
+        .array(z
+        .string()
+        .min(1, "metric_table column must not be empty")
+        .max(METRIC_TABLE_CELL_MAX_LENGTH))
+        .min(1)
+        .max(METRIC_TABLE_MAX_COLUMNS),
+    rows: z
+        .array(z.object({
+        cells: z
+            .array(z.union([
+            z.string().max(METRIC_TABLE_CELL_MAX_LENGTH),
+            z.number().finite(),
+            z.null(),
+        ]))
+            .max(METRIC_TABLE_MAX_COLUMNS),
+    }))
+        .min(1)
+        .max(METRIC_TABLE_MAX_ROWS),
+    note: SupplementaryViewNoteSchema,
+});
+function refineMetricTableView(view, ctx) {
+    const seenColumns = new Set();
+    for (const [index, column] of view.columns.entries()) {
+        if (column.trim().length === 0) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["columns", index],
+                message: "metric_table column must not be empty or whitespace",
+            });
+        }
+        if (seenColumns.has(column)) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["columns", index],
+                message: "metric_table columns must be unique",
+            });
+        }
+        seenColumns.add(column);
+    }
+    for (const [index, row] of view.rows.entries()) {
+        if (row.cells.length !== view.columns.length) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["rows", index, "cells"],
+                message: "metric_table row cells must match the column count",
+            });
+        }
+    }
+}
+const LineChartViewObjectSchema = z.object({
+    type: z.literal("line_chart"),
+    title: SupplementaryViewTitleSchema,
+    x_label: z.string().min(1).max(100).optional(),
+    y_label: z.string().min(1).max(100).optional(),
+    series: z
+        .array(z.object({
+        name: z.string().min(1).max(120),
+        points: z
+            .array(z.object({
+            x: z.union([z.string().min(1).max(120), z.number().finite()]),
+            y: z.number().finite(),
+        }))
+            .min(1)
+            .max(LINE_CHART_MAX_POINTS_PER_SERIES),
+    }))
+        .min(1)
+        .max(LINE_CHART_MAX_SERIES),
+    note: SupplementaryViewNoteSchema,
+});
+function refineLineChartView(view, ctx) {
+    const seenSeries = new Set();
+    for (const [seriesIndex, series] of view.series.entries()) {
+        if (series.name.trim().length === 0) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["series", seriesIndex, "name"],
+                message: "line_chart series name must not be empty or whitespace",
+            });
+        }
+        if (seenSeries.has(series.name)) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["series", seriesIndex, "name"],
+                message: "line_chart series names must be unique",
+            });
+        }
+        seenSeries.add(series.name);
+        const seenX = new Set();
+        for (const [pointIndex, point] of series.points.entries()) {
+            const xKey = JSON.stringify([typeof point.x, point.x]);
+            if (seenX.has(xKey)) {
+                ctx.addIssue({
+                    code: "custom",
+                    path: ["series", seriesIndex, "points", pointIndex, "x"],
+                    message: "line_chart x values must be unique within a series",
+                });
+            }
+            seenX.add(xKey);
+        }
+    }
+}
+const SupplementaryViewDiscriminatedUnionSchema = z.discriminatedUnion("type", [
+    MetricTableViewObjectSchema,
+    LineChartViewObjectSchema,
+]);
+export const SupplementaryViewSchema = SupplementaryViewDiscriminatedUnionSchema.superRefine((view, ctx) => {
+    if (view.type === "metric_table") {
+        refineMetricTableView(view, ctx);
+    }
+    if (view.type === "line_chart") {
+        refineLineChartView(view, ctx);
+    }
+});
 const ShowcaseDiscriminatedUnionSchema = z.discriminatedUnion("type", [
     z.object({
         type: z.literal("compare"),
@@ -415,8 +549,10 @@ export const ResultEntrySchema = z.object({
             });
         }
     }),
-    // score 量纲由评测集自定（2026-07-20 owner 计分模型）：默认「分」制 0-100 在
-    // result-for-eval 的 eval 感知校验里收紧；自定义量纲（如 CEO-bench 元）只要求 ≥0 有限值。
+    // results[] 构成可排名的主结果表；score 是每行的主成绩。评测集可另外声明
+    // raw_metric.tiebreak_value 作为同分规则，评测榜名次再派生全站积分。量纲由
+    // 评测集自定（2026-07-20 owner 计分模型）：默认「分」制 0-100 在
+    // result-for-eval 的 eval 感知校验里收紧；自定义量纲只要求 ≥0 有限值。
     score: z.number().finite().min(0).nullable(),
     // tiebreak_value（可选数值键）：供评测集级同分 tiebreak（eval.yaml tiebreak 声明）排序用
     raw_metric: z
@@ -435,6 +571,12 @@ export const ResultEntrySchema = z.object({
     showcases: z
         .array(ShowcaseSchema)
         .max(RESULT_ENTRY_MAX_SHOWCASES, `result showcases cannot exceed ${RESULT_ENTRY_MAX_SHOWCASES}`)
+        .optional(),
+    // 结构化辅助展示永不成为 score / tiebreak 输入，也不作为逐题运行证据。
+    // 表格和折线图只负责解释主结果、展示分项或其他观察角度。
+    supplementary_views: z
+        .array(SupplementaryViewSchema)
+        .max(RESULT_ENTRY_MAX_SUPPLEMENTARY_VIEWS, `result supplementary_views cannot exceed ${RESULT_ENTRY_MAX_SUPPLEMENTARY_VIEWS}`)
         .optional(),
 });
 const IsoCalendarDateSchema = z
@@ -504,12 +646,17 @@ export const UpstreamAuthorPublicationSubmissionSchema = z
             .url()
             .refine((value) => {
             try {
-                return new URL(value).protocol === "https:";
+                const parsed = new URL(value);
+                return (parsed.protocol === "https:" &&
+                    parsed.username === "" &&
+                    parsed.password === "");
             }
             catch {
                 return false;
             }
-        }, { message: "source.url must use https" }),
+        }, {
+            message: "source.url must use https without embedded credentials",
+        }),
         snapshot_sha256: z
             .string()
             .regex(/^[0-9a-f]{64}$/, "source.snapshot_sha256 must be 64 lowercase hexadecimal characters"),

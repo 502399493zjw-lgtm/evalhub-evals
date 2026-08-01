@@ -1,12 +1,12 @@
 # CEO-Bench（NovaMind 创业经营）
 
-这是 Princeton University 的 **CEO-Bench: Can Agents Play the Long Game?** 的 EvalHub 接入。CEO-Bench 让 agent 经营虚构的 NovaMind AI SaaS 公司：以 1,000,000 美元开局，持续做定价、产品、营销、研发、算力和企业客户决策，目标是最大化终局现金。
+Princeton University 的 **CEO-Bench: Can Agents Play the Long Game?** 让 agent 经营虚构的 NovaMind AI SaaS 公司：以 1,000,000 美元开局，持续做定价、产品、营销、研发、算力和企业客户决策，目标是最大化终局现金。
 
 - 项目官网：<https://ceobench.com/>
 - 论文：<https://arxiv.org/abs/2606.18543>
 - 官方源码仓库：<https://github.com/zlab-princeton/ceobench-src>
 - 官方可运行仓库：<https://github.com/zlab-princeton/run-ceobench>
-- 本接入钉死的可运行仓库 commit：`f5d500688d95256906fd02cc5aa7524f2fe08d5b`
+- 当前评测采用的可运行仓库 commit：`f5d500688d95256906fd02cc5aa7524f2fe08d5b`
 - 原作者：Haozhe Chen、Karthik Narasimhan、Zhuang Liu（Princeton University）
 
 本目录同时支持两类成绩，但不会混淆它们的来源：
@@ -16,7 +16,7 @@
 
 页面统一展示模型、终局现金和完成状态，不要求在每条成绩旁标出底层运行天数。来源快照与运行证据仍保留已公开的实际终点，供作者审计；省略公开标签不代表不同运行配置已经被证明完全等价。
 
-本接入不是 Princeton 官方认证或作者背书。两个上游 GitHub 仓库在本接入时没有代码许可证，因此这里只链接并固定官方来源，不复制或重新发布其代码、文档、数据库或二进制。论文页面的 CC BY 4.0 标记不自动授权这些仓库内容。
+EvalHub 页面与转换器不代表 Princeton 官方认证或作者背书。两个上游 GitHub 仓库在当前评测定义采用该版本时没有代码许可证，因此这里只链接并固定官方来源，不复制或重新发布其代码、文档、数据库或二进制。论文页面的 CC BY 4.0 标记不自动授权这些仓库内容。
 
 ## EvalHub 固定复现配置
 
@@ -29,7 +29,7 @@
 5. agent 运行 71 个完整周，到第 497 天结束；若现金严格小于 0，则在当周提前破产。未破产却提前停止的运行无效。
 6. 遵守官方反作弊边界：不得读取、解密、解压、反汇编或以其他方式检查 `world.nmdb` 与 `novamind-operation`。
 
-为什么这套复现配置停在 497 天：官方源码的 bash、Claude Code 和 Codex 三套基线会把 `--days 500` 向下归一为 71 个完整周，并以 `497` 创建 session。公开 CLI 的 `next-week` 每次只能前进 7 天，没有剩余 3 天的推进命令；若从 497 再推进一次会到 504 天。为保证新的 EvalHub 证据提交可复现、可比较，本接入固定 71 个整周的边界，并拒绝 500、504 或其他非破产终点。它是 EvalHub 的固定复现配置，不是对所有 Princeton 历史运行配置的重新命名。
+为什么这套复现配置停在 497 天：官方源码的 bash、Claude Code 和 Codex 三套基线会把 `--days 500` 向下归一为 71 个完整周，并以 `497` 创建 session。公开 CLI 的 `next-week` 每次只能前进 7 天，没有剩余 3 天的推进命令；若从 497 再推进一次会到 504 天。为保证新的 EvalHub 证据提交可复现、可比较，当前评测定义固定 71 个整周的边界，并拒绝 500、504 或其他非破产终点。它是 EvalHub 的固定复现配置，不是对所有 Princeton 历史运行配置的重新命名。
 
 每周推进所需的 rationale 和四个时间跨度的现金预测可保留在参赛者自己的私有运行目录中作为诊断。公开证据只保留每周推进日和规定的终局现金查询；官方公开材料没有给出将预测指标与终局现金合成一个总分的权重，因此本评测不虚构综合分。
 

@@ -3,6 +3,7 @@ export declare const HEAD_TO_HEAD_MAX_GAMES_PER_MATCHUP = 100;
 export declare const RESULT_FILE_MAX_RESULTS = 256;
 export declare const RESULT_ENTRY_MAX_TASK_RESULTS = 1024;
 export declare const RESULT_ENTRY_MAX_SHOWCASES = 256;
+export declare const RESULT_ENTRY_MAX_SUPPLEMENTARY_VIEWS = 32;
 export declare const SHOWCASE_TASK_ID_MAX_LENGTH = 255;
 export declare const ParticipantHarnessSchema: z.ZodEffects<z.ZodString, string, string>;
 export declare const ParticipantHarnessVersionSchema: z.ZodEffects<z.ZodString, string, string>;
@@ -288,6 +289,134 @@ export declare const TeamGamesShowcaseSchema: z.ZodEffects<z.ZodObject<{
         }];
         winner: string;
     }[];
+}>;
+export declare const SupplementaryViewSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type", [z.ZodObject<{
+    type: z.ZodLiteral<"metric_table">;
+    title: z.ZodString;
+    columns: z.ZodArray<z.ZodString, "many">;
+    rows: z.ZodArray<z.ZodObject<{
+        cells: z.ZodArray<z.ZodUnion<[z.ZodString, z.ZodNumber, z.ZodNull]>, "many">;
+    }, "strip", z.ZodTypeAny, {
+        cells: (string | number | null)[];
+    }, {
+        cells: (string | number | null)[];
+    }>, "many">;
+    note: z.ZodOptional<z.ZodString>;
+}, "strip", z.ZodTypeAny, {
+    type: "metric_table";
+    title: string;
+    columns: string[];
+    rows: {
+        cells: (string | number | null)[];
+    }[];
+    note?: string | undefined;
+}, {
+    type: "metric_table";
+    title: string;
+    columns: string[];
+    rows: {
+        cells: (string | number | null)[];
+    }[];
+    note?: string | undefined;
+}>, z.ZodObject<{
+    type: z.ZodLiteral<"line_chart">;
+    title: z.ZodString;
+    x_label: z.ZodOptional<z.ZodString>;
+    y_label: z.ZodOptional<z.ZodString>;
+    series: z.ZodArray<z.ZodObject<{
+        name: z.ZodString;
+        points: z.ZodArray<z.ZodObject<{
+            x: z.ZodUnion<[z.ZodString, z.ZodNumber]>;
+            y: z.ZodNumber;
+        }, "strip", z.ZodTypeAny, {
+            x: string | number;
+            y: number;
+        }, {
+            x: string | number;
+            y: number;
+        }>, "many">;
+    }, "strip", z.ZodTypeAny, {
+        name: string;
+        points: {
+            x: string | number;
+            y: number;
+        }[];
+    }, {
+        name: string;
+        points: {
+            x: string | number;
+            y: number;
+        }[];
+    }>, "many">;
+    note: z.ZodOptional<z.ZodString>;
+}, "strip", z.ZodTypeAny, {
+    type: "line_chart";
+    title: string;
+    series: {
+        name: string;
+        points: {
+            x: string | number;
+            y: number;
+        }[];
+    }[];
+    note?: string | undefined;
+    x_label?: string | undefined;
+    y_label?: string | undefined;
+}, {
+    type: "line_chart";
+    title: string;
+    series: {
+        name: string;
+        points: {
+            x: string | number;
+            y: number;
+        }[];
+    }[];
+    note?: string | undefined;
+    x_label?: string | undefined;
+    y_label?: string | undefined;
+}>]>, {
+    type: "metric_table";
+    title: string;
+    columns: string[];
+    rows: {
+        cells: (string | number | null)[];
+    }[];
+    note?: string | undefined;
+} | {
+    type: "line_chart";
+    title: string;
+    series: {
+        name: string;
+        points: {
+            x: string | number;
+            y: number;
+        }[];
+    }[];
+    note?: string | undefined;
+    x_label?: string | undefined;
+    y_label?: string | undefined;
+}, {
+    type: "metric_table";
+    title: string;
+    columns: string[];
+    rows: {
+        cells: (string | number | null)[];
+    }[];
+    note?: string | undefined;
+} | {
+    type: "line_chart";
+    title: string;
+    series: {
+        name: string;
+        points: {
+            x: string | number;
+            y: number;
+        }[];
+    }[];
+    note?: string | undefined;
+    x_label?: string | undefined;
+    y_label?: string | undefined;
 }>;
 export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type", [z.ZodObject<{
     type: z.ZodLiteral<"compare">;
@@ -1155,6 +1284,134 @@ export declare const ResultEntrySchema: z.ZodObject<{
         score?: number | undefined;
         caption?: string | undefined;
     }>, "many">>;
+    supplementary_views: z.ZodOptional<z.ZodArray<z.ZodEffects<z.ZodDiscriminatedUnion<"type", [z.ZodObject<{
+        type: z.ZodLiteral<"metric_table">;
+        title: z.ZodString;
+        columns: z.ZodArray<z.ZodString, "many">;
+        rows: z.ZodArray<z.ZodObject<{
+            cells: z.ZodArray<z.ZodUnion<[z.ZodString, z.ZodNumber, z.ZodNull]>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            cells: (string | number | null)[];
+        }, {
+            cells: (string | number | null)[];
+        }>, "many">;
+        note: z.ZodOptional<z.ZodString>;
+    }, "strip", z.ZodTypeAny, {
+        type: "metric_table";
+        title: string;
+        columns: string[];
+        rows: {
+            cells: (string | number | null)[];
+        }[];
+        note?: string | undefined;
+    }, {
+        type: "metric_table";
+        title: string;
+        columns: string[];
+        rows: {
+            cells: (string | number | null)[];
+        }[];
+        note?: string | undefined;
+    }>, z.ZodObject<{
+        type: z.ZodLiteral<"line_chart">;
+        title: z.ZodString;
+        x_label: z.ZodOptional<z.ZodString>;
+        y_label: z.ZodOptional<z.ZodString>;
+        series: z.ZodArray<z.ZodObject<{
+            name: z.ZodString;
+            points: z.ZodArray<z.ZodObject<{
+                x: z.ZodUnion<[z.ZodString, z.ZodNumber]>;
+                y: z.ZodNumber;
+            }, "strip", z.ZodTypeAny, {
+                x: string | number;
+                y: number;
+            }, {
+                x: string | number;
+                y: number;
+            }>, "many">;
+        }, "strip", z.ZodTypeAny, {
+            name: string;
+            points: {
+                x: string | number;
+                y: number;
+            }[];
+        }, {
+            name: string;
+            points: {
+                x: string | number;
+                y: number;
+            }[];
+        }>, "many">;
+        note: z.ZodOptional<z.ZodString>;
+    }, "strip", z.ZodTypeAny, {
+        type: "line_chart";
+        title: string;
+        series: {
+            name: string;
+            points: {
+                x: string | number;
+                y: number;
+            }[];
+        }[];
+        note?: string | undefined;
+        x_label?: string | undefined;
+        y_label?: string | undefined;
+    }, {
+        type: "line_chart";
+        title: string;
+        series: {
+            name: string;
+            points: {
+                x: string | number;
+                y: number;
+            }[];
+        }[];
+        note?: string | undefined;
+        x_label?: string | undefined;
+        y_label?: string | undefined;
+    }>]>, {
+        type: "metric_table";
+        title: string;
+        columns: string[];
+        rows: {
+            cells: (string | number | null)[];
+        }[];
+        note?: string | undefined;
+    } | {
+        type: "line_chart";
+        title: string;
+        series: {
+            name: string;
+            points: {
+                x: string | number;
+                y: number;
+            }[];
+        }[];
+        note?: string | undefined;
+        x_label?: string | undefined;
+        y_label?: string | undefined;
+    }, {
+        type: "metric_table";
+        title: string;
+        columns: string[];
+        rows: {
+            cells: (string | number | null)[];
+        }[];
+        note?: string | undefined;
+    } | {
+        type: "line_chart";
+        title: string;
+        series: {
+            name: string;
+            points: {
+                x: string | number;
+                y: number;
+            }[];
+        }[];
+        note?: string | undefined;
+        x_label?: string | undefined;
+        y_label?: string | undefined;
+    }>, "many">>;
 }, "strip", z.ZodTypeAny, {
     participant: {
         model: string;
@@ -1243,6 +1500,28 @@ export declare const ResultEntrySchema: z.ZodObject<{
         score?: number | undefined;
         caption?: string | undefined;
     })[] | undefined;
+    supplementary_views?: ({
+        type: "metric_table";
+        title: string;
+        columns: string[];
+        rows: {
+            cells: (string | number | null)[];
+        }[];
+        note?: string | undefined;
+    } | {
+        type: "line_chart";
+        title: string;
+        series: {
+            name: string;
+            points: {
+                x: string | number;
+                y: number;
+            }[];
+        }[];
+        note?: string | undefined;
+        x_label?: string | undefined;
+        y_label?: string | undefined;
+    })[] | undefined;
 }, {
     participant: {
         model: string;
@@ -1330,6 +1609,28 @@ export declare const ResultEntrySchema: z.ZodObject<{
         src: string;
         score?: number | undefined;
         caption?: string | undefined;
+    })[] | undefined;
+    supplementary_views?: ({
+        type: "metric_table";
+        title: string;
+        columns: string[];
+        rows: {
+            cells: (string | number | null)[];
+        }[];
+        note?: string | undefined;
+    } | {
+        type: "line_chart";
+        title: string;
+        series: {
+            name: string;
+            points: {
+                x: string | number;
+                y: number;
+            }[];
+        }[];
+        note?: string | undefined;
+        x_label?: string | undefined;
+        y_label?: string | undefined;
     })[] | undefined;
 }>;
 export declare const RunSubmissionSchema: z.ZodObject<{
@@ -1944,6 +2245,134 @@ export declare const ResultFileSchema: z.ZodObject<{
             score?: number | undefined;
             caption?: string | undefined;
         }>, "many">>;
+        supplementary_views: z.ZodOptional<z.ZodArray<z.ZodEffects<z.ZodDiscriminatedUnion<"type", [z.ZodObject<{
+            type: z.ZodLiteral<"metric_table">;
+            title: z.ZodString;
+            columns: z.ZodArray<z.ZodString, "many">;
+            rows: z.ZodArray<z.ZodObject<{
+                cells: z.ZodArray<z.ZodUnion<[z.ZodString, z.ZodNumber, z.ZodNull]>, "many">;
+            }, "strip", z.ZodTypeAny, {
+                cells: (string | number | null)[];
+            }, {
+                cells: (string | number | null)[];
+            }>, "many">;
+            note: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            type: "metric_table";
+            title: string;
+            columns: string[];
+            rows: {
+                cells: (string | number | null)[];
+            }[];
+            note?: string | undefined;
+        }, {
+            type: "metric_table";
+            title: string;
+            columns: string[];
+            rows: {
+                cells: (string | number | null)[];
+            }[];
+            note?: string | undefined;
+        }>, z.ZodObject<{
+            type: z.ZodLiteral<"line_chart">;
+            title: z.ZodString;
+            x_label: z.ZodOptional<z.ZodString>;
+            y_label: z.ZodOptional<z.ZodString>;
+            series: z.ZodArray<z.ZodObject<{
+                name: z.ZodString;
+                points: z.ZodArray<z.ZodObject<{
+                    x: z.ZodUnion<[z.ZodString, z.ZodNumber]>;
+                    y: z.ZodNumber;
+                }, "strip", z.ZodTypeAny, {
+                    x: string | number;
+                    y: number;
+                }, {
+                    x: string | number;
+                    y: number;
+                }>, "many">;
+            }, "strip", z.ZodTypeAny, {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }, {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }>, "many">;
+            note: z.ZodOptional<z.ZodString>;
+        }, "strip", z.ZodTypeAny, {
+            type: "line_chart";
+            title: string;
+            series: {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }[];
+            note?: string | undefined;
+            x_label?: string | undefined;
+            y_label?: string | undefined;
+        }, {
+            type: "line_chart";
+            title: string;
+            series: {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }[];
+            note?: string | undefined;
+            x_label?: string | undefined;
+            y_label?: string | undefined;
+        }>]>, {
+            type: "metric_table";
+            title: string;
+            columns: string[];
+            rows: {
+                cells: (string | number | null)[];
+            }[];
+            note?: string | undefined;
+        } | {
+            type: "line_chart";
+            title: string;
+            series: {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }[];
+            note?: string | undefined;
+            x_label?: string | undefined;
+            y_label?: string | undefined;
+        }, {
+            type: "metric_table";
+            title: string;
+            columns: string[];
+            rows: {
+                cells: (string | number | null)[];
+            }[];
+            note?: string | undefined;
+        } | {
+            type: "line_chart";
+            title: string;
+            series: {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }[];
+            note?: string | undefined;
+            x_label?: string | undefined;
+            y_label?: string | undefined;
+        }>, "many">>;
     }, "strip", z.ZodTypeAny, {
         participant: {
             model: string;
@@ -2032,6 +2461,28 @@ export declare const ResultFileSchema: z.ZodObject<{
             score?: number | undefined;
             caption?: string | undefined;
         })[] | undefined;
+        supplementary_views?: ({
+            type: "metric_table";
+            title: string;
+            columns: string[];
+            rows: {
+                cells: (string | number | null)[];
+            }[];
+            note?: string | undefined;
+        } | {
+            type: "line_chart";
+            title: string;
+            series: {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }[];
+            note?: string | undefined;
+            x_label?: string | undefined;
+            y_label?: string | undefined;
+        })[] | undefined;
     }, {
         participant: {
             model: string;
@@ -2119,6 +2570,28 @@ export declare const ResultFileSchema: z.ZodObject<{
             src: string;
             score?: number | undefined;
             caption?: string | undefined;
+        })[] | undefined;
+        supplementary_views?: ({
+            type: "metric_table";
+            title: string;
+            columns: string[];
+            rows: {
+                cells: (string | number | null)[];
+            }[];
+            note?: string | undefined;
+        } | {
+            type: "line_chart";
+            title: string;
+            series: {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }[];
+            note?: string | undefined;
+            x_label?: string | undefined;
+            y_label?: string | undefined;
         })[] | undefined;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
@@ -2224,6 +2697,28 @@ export declare const ResultFileSchema: z.ZodObject<{
             src: string;
             score?: number | undefined;
             caption?: string | undefined;
+        })[] | undefined;
+        supplementary_views?: ({
+            type: "metric_table";
+            title: string;
+            columns: string[];
+            rows: {
+                cells: (string | number | null)[];
+            }[];
+            note?: string | undefined;
+        } | {
+            type: "line_chart";
+            title: string;
+            series: {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }[];
+            note?: string | undefined;
+            x_label?: string | undefined;
+            y_label?: string | undefined;
         })[] | undefined;
     }[];
     eval_commit?: string | undefined;
@@ -2331,10 +2826,39 @@ export declare const ResultFileSchema: z.ZodObject<{
             score?: number | undefined;
             caption?: string | undefined;
         })[] | undefined;
+        supplementary_views?: ({
+            type: "metric_table";
+            title: string;
+            columns: string[];
+            rows: {
+                cells: (string | number | null)[];
+            }[];
+            note?: string | undefined;
+        } | {
+            type: "line_chart";
+            title: string;
+            series: {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }[];
+            note?: string | undefined;
+            x_label?: string | undefined;
+            y_label?: string | undefined;
+        })[] | undefined;
     }[];
     eval_commit?: string | undefined;
 }>;
 export type Showcase = z.infer<typeof ShowcaseSchema>;
+export type SupplementaryView = z.infer<typeof SupplementaryViewSchema>;
+export type MetricTableView = Extract<SupplementaryView, {
+    type: "metric_table";
+}>;
+export type LineChartView = Extract<SupplementaryView, {
+    type: "line_chart";
+}>;
 export type HeadToHeadParticipant = HeadToHeadShowcaseValue["participants"][number];
 export type HeadToHeadMatchup = HeadToHeadShowcaseValue["matchups"][number];
 export type HeadToHeadShowcase = z.infer<typeof HeadToHeadShowcaseSchema>;

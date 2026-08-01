@@ -1,14 +1,14 @@
 # RSIBench-Data（数据中心型自改进）
 
-这是 Evolvent AI **RSIBench-Data: Benchmarking Data-Centric Research for Recursive Self-Improvement** 的第三方 EvalHub 接入。它评测一个完整“研究者系统”能否在固定外部栈和预算内，把目标模型的失败证据转化为更有效的训练数据：研究者诊断能力缺口，生成并验证 message-format 监督数据，经共享 Tinker LoRA SFT 训练候选检查点，读取受控的 Harbor/E2B 反馈迭代，最后在看到官方结果前选择一个检查点。
+Evolvent AI 提出的 **RSIBench-Data: Benchmarking Data-Centric Research for Recursive Self-Improvement** 评测一个完整“研究者系统”能否在固定外部栈和预算内，把目标模型的失败证据转化为更有效的训练数据：研究者诊断能力缺口，生成并验证 message-format 监督数据，经共享 Tinker LoRA SFT 训练候选检查点，读取受控的 Harbor/E2B 反馈迭代，最后在看到官方结果前选择一个检查点。
 
 - 项目官网：<https://rsibench.co/data/>
 - 论文：<https://arxiv.org/abs/2607.25886>
 - 作者仓库：<https://github.com/evolvent-ai/RSIBench-Data>
-- 本接入钉死的来源 commit：`39948a17925272367b64dd53427a4dba3f572f4e`
+- 当前评测采用的来源 commit：`39948a17925272367b64dd53427a4dba3f572f4e`
 - 原作者：Fanqing Meng、Lingxiao Du、Qiguang Chen、Ziqi Zhao、Haocheng Lu、Mengkang Hu、Michael Qizhe Shieh
 
-本接入不是 Evolvent AI、论文作者或 RSIBench 官方榜单的认证、背书或替代实现。它不会在 EvalHub 的受限 runner 内训练模型或执行云端评测；custom runner 只把六项运行声明与证据指纹转换成带数值分数的结果文件。非作者提交的成绩仍由评测作者复核，官网已发表成绩则按来源快照导入。
+EvalHub 页面与转换器不代表 Evolvent AI、论文作者或 RSIBench 官方榜单的认证、背书或替代实现。EvalHub 不会在受限 runner 内训练模型或执行云端评测；custom runner 只把六项运行声明与证据指纹转换成带数值分数的结果文件。非作者提交的成绩仍由评测作者复核，官网已发表成绩则按来源快照导入。
 
 ## 评测对象与固定边界
 
@@ -95,7 +95,7 @@ node evals/rsibench-data/official-result-to-envelope.mjs --participant codex-gpt
 
 转换器将分项与派生宏平均规范到小数点后最多 6 位。上游把 task error 和 timeout 反映在 Harbor 分数中，因此它们仍按失败计入，不做额外豁免、插值或“最佳重试”替换。输入不接受任意浮点分数：三项 SWE 与 GPQA 的分母为 100，Terminal-Bench 为 89，AIME 为 120；runner 从整数计数唯一派生分数，避免不可能的分数刻度或浮点容差争议。作者仍须把计数与 Harbor 聚合结果逐项交叉核对。
 
-论文和作者仓库没有定义跨六个 profile 的单一总分。为了适配 EvalHub 单榜，本接入使用六项百分制分数的等权算术平均作为展示分数；这是明确标注的 **EvalHub 派生指标**，不是 RSIBench-Data 官方复合指标，也不是相对 base model 的提升值。缺少任一 profile 或任一运行不合规时整份提交不判分，不计算部分总分。
+论文和作者仓库没有定义跨六个 profile 的单一总分。为了适配 EvalHub 单榜，当前评测定义使用六项百分制分数的等权算术平均作为展示分数；这是明确标注的 **EvalHub 派生指标**，不是 RSIBench-Data 官方复合指标，也不是相对 base model 的提升值。缺少任一 profile 或任一运行不合规时整份提交不判分，不计算部分总分。
 
 custom runner 输出六个 `task_results`、数值派生平均和证据索引。平台上的认可状态与分数是否存在是两件事：非作者提交可先带数值分数但保持待认可；评测作者本人提交且分数非空时，平台可按作者身份认可。评测作者至少要核对：
 
@@ -110,7 +110,7 @@ custom runner 输出六个 `task_results`、数值派生平均和证据索引。
 
 ## 许可证、分发与引用
 
-本目录没有复制上游代码、数据集、benchmark 任务、论文图表或运行 artifact；示例 JSON 完全是合成数据。来源仓库根目录在本接入时没有 `LICENSE`、`COPYING` 或 `NOTICE` 文件，GitHub 也没有识别出仓库许可证，但 README 徽章链接到 CC BY-NC 4.0。论文的 arXiv 页面单独标注为 CC BY 4.0。论文许可不会自动替代代码、子模块、上游 benchmark 与数据集各自的许可，因此本接入只链接并钉死来源，不重新分发不明或受限内容。实际运行者须分别遵守 RSIBench-Data、Tinker、Harbor、E2B、seed repositories 和六个目标 benchmark 的当前条款。
+本目录没有复制上游代码、数据集、benchmark 任务、论文图表或运行 artifact；示例 JSON 完全是合成数据。来源仓库根目录在当前评测定义采用该版本时没有 `LICENSE`、`COPYING` 或 `NOTICE` 文件，GitHub 也没有识别出仓库许可证，但 README 徽章链接到 CC BY-NC 4.0。论文的 arXiv 页面单独标注为 CC BY 4.0。论文许可不会自动替代代码、子模块、上游 benchmark 与数据集各自的许可，因此本目录只链接并钉死来源，不重新分发不明或受限内容。实际运行者须分别遵守 RSIBench-Data、Tinker、Harbor、E2B、seed repositories 和六个目标 benchmark 的当前条款。
 
 引用论文：
 

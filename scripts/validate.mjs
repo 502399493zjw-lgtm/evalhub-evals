@@ -5,7 +5,7 @@ import {
   ResultFileSchema,
   validateResultForEval,
 } from "@evalhub/schemas";
-import { lstat, readdir, readFile } from "node:fs/promises";
+import { lstat, readdir, readFile, realpath } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { parseDocument } from "yaml";
@@ -29,6 +29,9 @@ const AUTHORS_PLACEHOLDER = "@TODO-github-handle";
 const AUTHORS_HANDLE_PATTERN =
   /^@[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$/u;
 const MAINTAINER_HANDLE = "@502399493zjw-lgtm";
+const PUBLISHED_RESULT_FILE_MAX_BYTES = 1_048_576;
+const PUBLISHED_RESULTS_TOTAL_MAX_BYTES = 8_388_608;
+const PUBLISHED_RESULTS_MAX_FILES = 32;
 
 function codeownersSegmentMatches(pattern, value) {
   let source = "^";
@@ -477,6 +480,195 @@ async function parseYamlFile(filePath) {
   return document.toJS();
 }
 
+async function validatePublishedResults(evalDir, parsedEval, errors) {
+  const directory = path.join(evalDir, "published-results");
+  let directoryMetadata;
+  try {
+    directoryMetadata = await lstat(directory);
+  } catch (error) {
+    if (error && typeof error === "object" && error.code === "ENOENT") {
+      if (parsedEval.baseline_policy === "required") {
+        errors.push(
+          fileError(
+            directory,
+            "baseline_policy=required requires at least one published-results/*.json file",
+          ),
+        );
+      }
+      return;
+    }
+    errors.push(
+      fileError(directory, `unable to inspect directory: ${error.message}`),
+    );
+    return;
+  }
+  if (directoryMetadata.isSymbolicLink() || !directoryMetadata.isDirectory()) {
+    errors.push(
+      fileError(
+        directory,
+        "published-results must be a regular directory and cannot be a symbolic link",
+      ),
+    );
+    return;
+  }
+
+  let resolvedDirectory;
+  try {
+    const [resolvedEvalDir, publishedResultsDir] = await Promise.all([
+      realpath(evalDir),
+      realpath(directory),
+    ]);
+    if (publishedResultsDir !== path.join(resolvedEvalDir, "published-results")) {
+      errors.push(
+        fileError(
+          directory,
+          "published-results directory escapes its eval directory",
+        ),
+      );
+      return;
+    }
+    resolvedDirectory = publishedResultsDir;
+  } catch (error) {
+    errors.push(
+      fileError(
+        directory,
+        `unable to safely resolve directory: ${error.message}`,
+      ),
+    );
+    return;
+  }
+
+  let entries;
+  try {
+    entries = await readdir(directory, { withFileTypes: true });
+  } catch (error) {
+    errors.push(fileError(directory, `unable to read directory: ${error.message}`));
+    return;
+  }
+
+  if (entries.length > PUBLISHED_RESULTS_MAX_FILES) {
+    errors.push(
+      fileError(
+        directory,
+        `published-results accepts at most ${PUBLISHED_RESULTS_MAX_FILES} JSON files`,
+      ),
+    );
+  }
+
+  const files = [];
+  let totalSize = 0;
+  for (const entry of entries.sort((left, right) =>
+    left.name.localeCompare(right.name),
+  )) {
+    if (!/^[A-Za-z0-9][A-Za-z0-9._-]*\.json$/u.test(entry.name)) {
+      errors.push(
+        fileError(
+          path.join(directory, entry.name),
+          "published-results only accepts flat, visible .json files",
+        ),
+      );
+      continue;
+    }
+
+    const filePath = path.join(directory, entry.name);
+    let metadata;
+    try {
+      metadata = await lstat(filePath);
+    } catch (error) {
+      errors.push(
+        fileError(filePath, `unable to inspect published result: ${error.message}`),
+      );
+      continue;
+    }
+    if (metadata.isSymbolicLink() || !metadata.isFile()) {
+      errors.push(
+        fileError(
+          filePath,
+          "published-results only accepts regular files and does not allow symbolic links",
+        ),
+      );
+      continue;
+    }
+    if (metadata.size > PUBLISHED_RESULT_FILE_MAX_BYTES) {
+      errors.push(
+        fileError(
+          filePath,
+          `published result exceeds ${PUBLISHED_RESULT_FILE_MAX_BYTES} bytes`,
+        ),
+      );
+      continue;
+    }
+    totalSize += metadata.size;
+    if (totalSize > PUBLISHED_RESULTS_TOTAL_MAX_BYTES) {
+      errors.push(
+        fileError(
+          directory,
+          `published-results exceeds ${PUBLISHED_RESULTS_TOTAL_MAX_BYTES} bytes in total`,
+        ),
+      );
+      continue;
+    }
+
+    try {
+      const resolvedFile = await realpath(filePath);
+      if (path.dirname(resolvedFile) !== resolvedDirectory) {
+        errors.push(
+          fileError(filePath, "published result escapes its directory"),
+        );
+        continue;
+      }
+    } catch (error) {
+      errors.push(
+        fileError(filePath, `unable to safely resolve published result: ${error.message}`),
+      );
+      continue;
+    }
+    files.push(entry.name);
+  }
+  if (parsedEval.baseline_policy === "required" && files.length === 0) {
+    errors.push(
+      fileError(
+        directory,
+        "baseline_policy=required requires at least one published-results/*.json file",
+      ),
+    );
+  }
+
+  for (const name of files.sort()) {
+    const filePath = path.join(directory, name);
+    try {
+      const document = JSON.parse(await readFile(filePath, "utf8"));
+      const generic = ResultFileSchema.safeParse(document);
+      if (!generic.success) {
+        errors.push(fileError(filePath, formatIssues(generic.error)));
+        continue;
+      }
+      if (generic.data.eval_commit !== undefined) {
+        errors.push(
+          fileError(
+            filePath,
+            "published result must omit eval_commit; the platform binds the merged eval commit",
+          ),
+        );
+      }
+      if (generic.data.submission.kind !== "upstream_author_publication") {
+        errors.push(
+          fileError(
+            filePath,
+            "published result submission.kind must be upstream_author_publication",
+          ),
+        );
+      }
+      const contextual = validateResultForEval(parsedEval, generic.data);
+      if (!contextual.success) {
+        errors.push(fileError(filePath, formatIssues(contextual.error)));
+      }
+    } catch (error) {
+      errors.push(fileError(filePath, error.message));
+    }
+  }
+}
+
 export async function validateRepository(repositoryRoot = defaultRoot) {
   const root = path.resolve(repositoryRoot);
   const evalsDir = path.join(root, "evals");
@@ -581,6 +773,8 @@ export async function validateRepository(repositoryRoot = defaultRoot) {
       seenIds.add(parsedEval.id);
       evalIds.push(parsedEval.id);
     }
+
+    await validatePublishedResults(evalDir, parsedEval, errors);
 
     if (!requiredStatus.get("sample-result.json")) {
       continue;

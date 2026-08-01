@@ -2,7 +2,7 @@ id: rsibench-data
 name: RSIBench-Data（数据中心型自改进）
 category: useful
 display_category: agent
-description: 第三方接入 Evolvent AI 的 RSIBench-Data：研究者 Agent 在固定训练、服务和评测栈及资源预算下，诊断目标模型缺陷、合成训练数据、迭代 LoRA SFT 并选择检查点，最终以六类软件工程、终端、科学问答与数学任务的官方原生分数衡量数据中心型研究能力。
+description: RSIBench-Data 评测研究者 Agent 能否在固定训练、服务和评测栈及资源预算下，诊断目标模型缺陷、合成训练数据、迭代 LoRA SFT 并选择检查点，最终以六类软件工程、终端、科学问答与数学任务的原生分数衡量数据中心型研究能力。
 hook_title: Agent 能把失败证据变成真正有效的训练数据吗
 dimensions: [推理, 代码]
 interface: agent

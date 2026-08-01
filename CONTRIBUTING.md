@@ -19,6 +19,8 @@ From this monorepo, the equivalent command is:
 
 Complete `eval.yaml`, `README.md`, `AUTHORS`, `sample-result.json`, `tasks/README.md`, and `assets/README.md`. Put useful deterministic fixtures in `tasks/`; put only reviewable static display resources in `assets/`. A custom runner must have a literal-argv `command_template` with exactly one standalone `{output}` token and a safe slug-specific output filename.
 
+Declare `score_policy: required` when every submission must already contain a numeric score. Use `score_policy: author_fill` only when the author genuinely needs to score submitted artifacts later (and only with `scored_by: author`). If an official or trusted baseline is available, declare `baseline_policy: required` and add reviewed `upstream_author_publication` envelopes under `published-results/*.json`; the platform binds them to the merged eval commit and imports them without a user-visible secret. Preserve useful subgroup/component/trend metrics in `supplementary_views` (`metric_table` or `line_chart`) while keeping one documented main `score` for ranking.
+
 `AUTHORS` supports exactly one GitHub handle. For a new eval, it must be the GitHub user that opens the PR. For an existing eval, the PR creator must match the handle already present on the base branch and the PR must not change `AUTHORS`. The slug is a permanent identifier; change `eval.yaml.name` when only the display name needs to change.
 
 One PR may add or update exactly one `evals/<slug>/` directory and may not mix in repository-level changes. A third party cannot update someone else's eval, even with an approval or a claim in the PR body. Do not edit `.github/CODEOWNERS`: repository review remains with `@502399493zjw-lgtm`, while eval ownership is enforced independently from `AUTHORS` and the trusted PR actor.
@@ -53,10 +55,10 @@ For an OpenAI-compatible endpoint, keep both the participant and pinned judge cr
 export EVALHUB_MODEL_BASE_URL="https://api.example.com/v1"
 export EVALHUB_MODEL_API_KEY="<participant-key>"
 export EVALHUB_JUDGE_API_KEY="<judge-key>"
-evalhub run cold-jokes --local ./evals --adapter api --model your-model-20260710 --out cold-jokes-result.json
+evalhub run cold-jokes --local ./evals --adapter api --model kimi-k3 --out cold-jokes-result.json
 ```
 
-Participant model IDs must end in a real `YYYYMMDD` or `YYYY-MM-DD` date. Chat and agent envelopes contain exactly one result; dialogue envelopes contain at least two unique participants. Harness and harness version are an optional pair on agent participants only.
+Participant model IDs use the concrete name available at the calling API or harness (for example `kimi-k3`); a date suffix is not required. Chat and agent envelopes contain exactly one result; dialogue envelopes contain at least two unique participants. Harness and harness version are an optional pair on agent participants only.
 
 Submit the slug-specific output:
 
@@ -89,6 +91,8 @@ All six `interface × scored_by` combinations are valid. Choose the interface fr
 Rules are orthogonal:
 
 - `scoring=judge` requires a pinned `judge_model`; it may use either `scored_by=local` or `scored_by=author`.
-- `scored_by=author` requires a public `scoring_note`, and submitted result scores stay `null` until the author reviews them.
+- `scored_by=author` requires a public `scoring_note` and controls who recognizes a score; it does not by itself decide whether `score: null` is legal.
+- `score_policy=required` rejects `score: null`. `score_policy=author_fill` allows it and requires `scored_by=author`. For compatibility, an omitted policy resolves to `author_fill` on existing author-scored evals and `required` otherwise; new evals should state it explicitly.
+- `baseline_policy=required` makes a valid numeric `published-results/*.json` baseline part of publication readiness. `null` never satisfies that gate.
 - `runner=custom` requires `command_template`; `runner=builtin` must omit it.
 - A local-scored result has a numeric score before submission.
