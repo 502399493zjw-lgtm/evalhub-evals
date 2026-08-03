@@ -10,9 +10,11 @@ Evolvent AI 提出的 **RSIBench-Data: Benchmarking Data-Centric Research for Re
 
 EvalHub 页面与转换器不代表 Evolvent AI、论文作者或 RSIBench 官方榜单的认证、背书或替代实现。EvalHub 不会在受限 runner 内训练模型或执行云端评测；custom runner 只把六项运行声明与证据指纹转换成带数值分数的结果文件。非作者提交的成绩仍由评测作者复核，官网已发表成绩则按来源快照导入。
 
+当前 `protocol_revision: 2` 专门修正上游参与者身份：旧版曾把 Claude Code / Codex 拼入模型名，新版把基础模型与 harness 分栏保存。升版会让旧错误身份退出当前榜单，避免它与结构化身份重复出现；六项任务和宏平均计分公式没有改变。
+
 ## 评测对象与固定边界
 
-评测对象是由底层 LLM、agent scaffold、harness 版本和 reasoning effort 共同组成的完整研究者系统。论文也明确说明这些因素在主矩阵中绑定比较，并非底层模型的单因素消融。
+评测对象是由底层 LLM、agent scaffold、harness 版本和 reasoning effort 共同组成的完整研究者系统。论文也明确说明这些因素在主矩阵中绑定比较，并非底层模型的单因素消融。EvalHub 的结构化身份中，`participant.model` 只保存底层模型，`participant.harness` 单独保存 Codex 或 Claude Code；展示层可以组合两者，但不得再把 harness 塞进模型名。
 
 每份成绩必须完成六个相互独立的预算运行，每个运行对应一个 target profile，并符合论文主实验协议：
 
@@ -49,7 +51,7 @@ EvalHub 页面与转换器不代表 Evolvent AI、论文作者或 RSIBench 官�
 | Codex · gpt-5.6-sol | 33 | 15 | 9 | 20.22 (18/89) | 65 | 53.33 (64/120) | 32.593009 |
 | Codex · gpt-5.6-terra | 42 | 6 | 1 | 12.36 (11/89) | 64 | 33.33 (40/120) | 26.448814 |
 
-[`tasks/rsibench-official-results-2026-07-31.json`](tasks/rsibench-official-results-2026-07-31.json) 是可机读快照；`official-result-to-envelope.mjs` 会重新验证四位研究者、六项分母、官网显示值与整数计数及宏平均，然后生成 `upstream_author_publication` 结果。该类型的结果必须含非空 `score`，不能用它冒充一次独立 EvalHub 复跑。
+[`tasks/rsibench-official-results-2026-07-31.json`](tasks/rsibench-official-results-2026-07-31.json) 是可机读快照；`official-result-to-envelope.mjs` 会重新验证四位研究者的独立 `model` / `harness` 身份、六项分母、官网显示值与整数计数及宏平均，然后生成 `upstream_author_publication` 结果。该类型的结果必须含非空 `score`，不能用它冒充一次独立 EvalHub 复跑。
 
 四份生成后的信封签入 [`published-results/`](published-results/)：仓库同步时会把它们作为当前评测版本的受信官方基线导入。每份信封同时提供用于总体榜单的数值宏平均，以及带官网显示值、成功次数、固定分母和精确分项分数的 `supplementary_views` 表。上游发表结果不伪装成本地逐题运行，因此不写 `task_results`；这样总体排名保持单一口径，详情页仍能审计和比较所有非整体信息。`score_policy: required` 禁止提交 `null` 分数；`baseline_policy: required` 还要求每个发布版本至少成功导入一条非空官方基线，否则该版本不能被投稿任务误判为发布完成。
 

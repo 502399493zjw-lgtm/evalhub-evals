@@ -179,6 +179,9 @@ export const EvalReferencesSchema = z
 const evalDefShape = {
     id: EvalIdSchema,
     hackathon_id: EvalIdSchema.optional(),
+    // 单调递增的计分协议版本。展示文案、README、引用链接或官方基线更新不应升版；
+    // 任务、运行方式、主分数、同分规则等可比性语义变化时必须递增。
+    protocol_revision: z.number().int().positive().default(1),
     name: z.string().min(1),
     category: z.enum(["fun", "useful"]),
     // 展示类目（可选，作者显式声明）；缺省时平台按 interface/category 启发式推导

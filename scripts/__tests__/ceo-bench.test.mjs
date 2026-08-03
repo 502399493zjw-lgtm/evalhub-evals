@@ -3,6 +3,7 @@ import {
   cp,
   mkdtemp,
   readFile,
+  readdir,
   rm,
   symlink,
   writeFile,
@@ -17,6 +18,10 @@ const testDirectory = path.dirname(fileURLToPath(import.meta.url));
 const repositoryRoot = path.resolve(testDirectory, "../..");
 const evalDirectory = path.join(repositoryRoot, "evals", "ceo-bench");
 const packer = path.join(evalDirectory, "pack-to-result.mjs");
+const officialImporter = path.join(
+  evalDirectory,
+  "official-result-to-envelope.mjs",
+);
 const sanitizer = path.join(evalDirectory, "sanitize-history.mjs");
 const exampleSubmission = path.join(evalDirectory, "tasks", "example-evidence");
 const officialResultsSnapshot = path.join(
@@ -49,6 +54,13 @@ function runPacker(manifest, output, extraArgs = []) {
     [packer, manifest, "--out", output, ...extraArgs],
     { encoding: "utf8" },
   );
+}
+
+function runOfficialImporter(...args) {
+  return spawnSync(process.execPath, [officialImporter, ...args], {
+    cwd: repositoryRoot,
+    encoding: "utf8",
+  });
 }
 
 function runSanitizer(input, output) {
@@ -186,6 +198,38 @@ test("pins Princeton published scores separately from EvalHub rerun claims", asy
       ),
     ),
   );
+});
+
+test("deterministically generates all 17 versioned Princeton baselines", async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "ceo-bench-official-"));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const outputDirectory = path.join(root, "published-results");
+
+  const run = runOfficialImporter("--all", "--out-dir", outputDirectory);
+
+  assert.equal(run.status, 0, run.stderr);
+  const generated = (await readdir(outputDirectory)).sort();
+  const committedDirectory = path.join(evalDirectory, "published-results");
+  const committed = (await readdir(committedDirectory)).sort();
+  assert.equal(generated.length, 17);
+  assert.deepEqual(generated, committed);
+  for (const file of generated) {
+    assert.deepEqual(
+      await readFile(path.join(outputDirectory, file)),
+      await readFile(path.join(committedDirectory, file)),
+    );
+  }
+
+  const top = await readJson(path.join(outputDirectory, "claude-fable-5.json"));
+  assert.equal(top.submission.kind, "upstream_author_publication");
+  assert.equal(top.results[0].participant.model, "Claude Fable 5");
+  assert.equal(top.results[0].score, 12630078);
+  assert.equal(top.results[0].raw_metric.tiebreak_value, 500);
+  assert.ok(!Object.hasOwn(top, "eval_commit"));
+
+  const bankrupt = await readJson(path.join(outputDirectory, "grok-4.20.json"));
+  assert.equal(bankrupt.results[0].score, 0);
+  assert.equal(bankrupt.results[0].raw_metric.tiebreak_value, 59);
 });
 
 test("sanitizes upstream history with a deterministic field whitelist", async (t) => {
