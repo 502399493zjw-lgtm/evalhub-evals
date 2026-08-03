@@ -22,7 +22,7 @@ const exampleSubmission = path.join(evalDirectory, "tasks", "example-evidence");
 const officialResultsSnapshot = path.join(
   evalDirectory,
   "tasks",
-  "princeton-official-results-2026-07-23.json",
+  "princeton-official-results-2026-08-03.json",
 );
 const trajectoryManifestSummary = path.join(
   evalDirectory,
@@ -148,8 +148,9 @@ test("pins Princeton published scores separately from EvalHub rerun claims", asy
   );
 
   assert.equal(snapshot.source_kind, "upstream_official_publication");
-  assert.equal(snapshot.results.length, 17);
-  assert.equal(scores.size, 17);
+  assert.equal(snapshot.results.length, 18);
+  assert.equal(scores.size, 18);
+  assert.equal(scores.get("Kimi K3"), 22148357);
   assert.equal(scores.get("Claude Fable 5"), 12630078);
   assert.equal(scores.get("GPT-5.6 Sol"), 11313982);
   assert.equal(scores.get("Grok 4.20"), 0);
@@ -167,13 +168,13 @@ test("pins Princeton published scores separately from EvalHub rerun claims", asy
   assert.equal(gemini.manifest_alignment, "cohort_conflict");
   assert.equal(grok.manifest_model, null);
   assert.equal(grok.manifest_alignment, "missing");
-  assert.equal(trajectorySummary.models.length, 16);
+  assert.equal(trajectorySummary.models.length, 17);
   assert.equal(
     trajectorySummary.models.reduce(
       (total, model) => total + model.runs.length,
       0,
     ),
-    48,
+    51,
   );
   assert.ok(
     trajectorySummary.models.every((model) =>

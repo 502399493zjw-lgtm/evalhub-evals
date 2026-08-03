@@ -2,15 +2,15 @@
   "schema_version": 1,
   "benchmark": "ceo-bench",
   "source_kind": "upstream_official_publication",
-  "retrieved_on": "2026-07-23",
+  "retrieved_on": "2026-08-03",
   "score_authority": {
     "url": "https://ceobench.com/",
-    "sha256": "18122edfd8b7cd0ff8b133ba06fe66c76c655e7a230f53c2fc44b187536ad610",
+    "sha256": "97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292",
     "rule": "Use the Princeton homepage results table for published scores; do not replace them with values derived from the trajectory manifest."
   },
   "trajectory_support": {
     "url": "https://ceobench.com/trajectory-viewer/data/runs/manifest.json?v=12",
-    "sha256": "3e2821f74330be907b85c35d8f6ac22ce1cbb32d0a3038ef05cee241a4f399f4",
+    "sha256": "42dd323b0a00c9d5a8fc96fa84fbb573a6db0e3d77654ece6480aa8c58ef85b1",
     "local_summary": "princeton-trajectory-manifest-v12-summary.json",
     "rule": "The manifest only supports provenance, run IDs, and disclosed run boundaries. It is not the score authority and does not currently include Grok 4.5."
   },
@@ -23,6 +23,16 @@
     "Grok 4.5 appears on the homepage but is absent from the supporting manifest."
   ],
   "results": [
+    {
+      "model_display": "Kimi K3",
+      "score_usd": 22148357,
+      "bankrupt_runs": 1,
+      "run_count": 3,
+      "homepage_max_survival_days": 500,
+      "scoring_status": "has_completed_run",
+      "manifest_model": "kimi-k3",
+      "manifest_alignment": "model_level_support_only"
+    },
     {
       "model_display": "Claude Fable 5",
       "score_usd": 12630078,

@@ -16,9 +16,9 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "ceo-bench";
-const IMPORTER_VERSION = "ceo-bench/official-result-to-envelope@1.0.0";
+const IMPORTER_VERSION = "ceo-bench/official-result-to-envelope@1.0.1";
 const SNAPSHOT_URL = new URL(
-  "./tasks/princeton-official-results-2026-07-23.json",
+  "./tasks/princeton-official-results-2026-08-03.json",
   import.meta.url,
 );
 const EVAL_COMMIT_PATTERN = /^[a-f0-9]{7,40}$/u;
@@ -115,8 +115,8 @@ function readSnapshot() {
     "官方成绩快照缺少合法页面 SHA-256",
   );
   assert(
-    Array.isArray(snapshot?.results) && snapshot.results.length === 17,
-    "官方成绩快照必须恰好包含 17 个模型",
+    Array.isArray(snapshot?.results) && snapshot.results.length === 18,
+    "官方成绩快照必须恰好包含 18 个模型",
   );
 
   const ids = new Set();

@@ -16,7 +16,7 @@ Princeton University 的 **CEO-Bench: Can Agents Play the Long Game?** 让 agent
 
 页面统一展示模型、终局现金和完成状态，不要求在每条成绩旁标出底层运行天数。来源快照与运行证据仍保留已公开的实际终点，供作者审计；省略公开标签不代表不同运行配置已经被证明完全等价。
 
-17 份 Princeton 官网成绩由钉死的 [`tasks/princeton-official-results-2026-07-23.json`](tasks/princeton-official-results-2026-07-23.json) 确定性生成并签入 [`published-results/`](published-results/)。同步服务把这些 `upstream_author_publication` 信封绑定到当前成绩协议版本，因此新数据库和已有部署都不再依赖一次性的历史手工导入。它们只有上游公开的模型身份，不虚构未发布的 harness 或 harness 版本。
+18 份 Princeton 官网成绩由钉死的 [`tasks/princeton-official-results-2026-08-03.json`](tasks/princeton-official-results-2026-08-03.json) 确定性生成并签入 [`published-results/`](published-results/)。同步服务把这些 `upstream_author_publication` 信封绑定到当前成绩协议版本，因此新数据库和已有部署都不再依赖一次性的历史手工导入。它们只有上游公开的模型身份，不虚构未发布的 harness 或 harness 版本。
 
 EvalHub 页面与转换器不代表 Princeton 官方认证或作者背书。两个上游 GitHub 仓库在当前评测定义采用该版本时没有代码许可证，因此这里只链接并固定官方来源，不复制或重新发布其代码、文档、数据库或二进制。论文页面的 CC BY 4.0 标记不自动授权这些仓库内容。
 
@@ -91,7 +91,7 @@ npx @evalhub/cli@0.1.0 submit ceo-bench-result.json
 
 转换器始终输出 `score: null`。平台接收后仍是待作者判分、待认可状态。
 
-重新生成签入仓库的 17 份 Princeton 官网成绩：
+重新生成签入仓库的 18 份 Princeton 官网成绩：
 
 ```bash
 node evals/ceo-bench/official-result-to-envelope.mjs \

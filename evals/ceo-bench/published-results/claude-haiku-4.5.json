@@ -2,12 +2,12 @@
   "eval_id": "ceo-bench",
   "submission": {
     "kind": "upstream_author_publication",
-    "importer_version": "ceo-bench/official-result-to-envelope@1.0.0",
-    "retrieved_on": "2026-07-23",
+    "importer_version": "ceo-bench/official-result-to-envelope@1.0.1",
+    "retrieved_on": "2026-08-03",
     "source": {
       "title": "Princeton CEO-Bench official results",
       "url": "https://ceobench.com/",
-      "snapshot_sha256": "18122edfd8b7cd0ff8b133ba06fe66c76c655e7a230f53c2fc44b187536ad610"
+      "snapshot_sha256": "97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292"
     }
   },
   "results": [
@@ -44,7 +44,7 @@
           "note": "辅助展示不参与主分排序；同为 0 USD 时，最长存活天数按评测定义用于打破同分。"
         }
       ],
-      "detail": "Princeton CEO-Bench 官网于 2026-07-23 公开的模型级成绩：59,625 USD，3 次运行中 2 次破产，官网最长存活 500 天。该记录只复现钉死的上游公开结果，不表示 EvalHub 独立复跑。"
+      "detail": "Princeton CEO-Bench 官网于 2026-08-03 公开的模型级成绩：59,625 USD，3 次运行中 2 次破产，官网最长存活 500 天。该记录只复现钉死的上游公开结果，不表示 EvalHub 独立复跑。"
     }
   ]
 }
