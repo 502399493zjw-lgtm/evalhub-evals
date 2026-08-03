@@ -660,11 +660,10 @@ export const ResultFileSchema = z
         .max(RESULT_FILE_MAX_RESULTS, `result file results cannot exceed ${RESULT_FILE_MAX_RESULTS}`),
 })
     .superRefine((file, ctx) => {
-    if (file.submission.kind === "upstream_author_publication")
-        return;
     for (const [index, result] of file.results.entries()) {
         const participant = result.participant;
-        if (participant.harness !== undefined &&
+        if (file.submission.kind !== "upstream_author_publication" &&
+            participant.harness !== undefined &&
             participant.harness_version === undefined) {
             ctx.addIssue({
                 code: "custom",
