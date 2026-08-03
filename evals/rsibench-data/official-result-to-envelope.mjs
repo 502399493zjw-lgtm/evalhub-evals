@@ -15,7 +15,7 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "rsibench-data";
-const IMPORTER_VERSION = "rsibench-data/official-result-to-envelope@1.1.0";
+const IMPORTER_VERSION = "rsibench-data/official-result-to-envelope@1.2.0";
 const SNAPSHOT_URL = new URL(
   "./tasks/rsibench-official-results-2026-07-31.json",
   import.meta.url,
@@ -103,6 +103,21 @@ function readSnapshot() {
     assert(!participantIds.has(result.participant_id), `重复 participant_id ${result.participant_id}`);
     participantIds.add(result.participant_id);
     assert(typeof result?.model_display === "string" && result.model_display.length > 0, "model_display 不能为空");
+    assert(
+      typeof result?.participant?.model === "string" &&
+        result.participant.model.length > 0,
+      `${result.participant_id}.participant.model 不能为空`,
+    );
+    assert(
+      typeof result?.participant?.harness === "string" &&
+        result.participant.harness.length > 0,
+      `${result.participant_id}.participant.harness 不能为空`,
+    );
+    assert(
+      result.model_display ===
+        `${result.participant.harness} · ${result.participant.model}`,
+      `${result.participant_id} 的 model_display 必须由 harness 与 model 组成`,
+    );
     assert(Array.isArray(result?.official_scores) && result.official_scores.length === 6, `${result.participant_id} 必须包含六个官方分项`);
     const seenTasks = new Set();
     const exactScores = [];
@@ -173,7 +188,7 @@ function buildEnvelope(snapshot, benchmarkById, result, evalCommit) {
     },
     results: [
       {
-        participant: { model: result.model_display },
+        participant: result.participant,
         score: result.derived_evalhub_score,
         supplementary_views: [
           {
