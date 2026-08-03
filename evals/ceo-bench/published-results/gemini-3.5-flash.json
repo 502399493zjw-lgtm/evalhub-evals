@@ -1,0 +1,50 @@
+{
+  "eval_id": "ceo-bench",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "ceo-bench/official-result-to-envelope@1.0.1",
+    "retrieved_on": "2026-08-03",
+    "source": {
+      "title": "Princeton CEO-Bench official results",
+      "url": "https://ceobench.com/",
+      "snapshot_sha256": "97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292"
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "Gemini 3.5 Flash"
+      },
+      "score": 75126,
+      "raw_metric": {
+        "label": "Princeton 官网公开成绩",
+        "value": "75,126 USD · 至少一次完成",
+        "tiebreak_value": 500
+      },
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "title": "Princeton 官网运行摘要",
+          "columns": [
+            "运行数",
+            "破产运行",
+            "最长存活天数",
+            "官网状态"
+          ],
+          "rows": [
+            {
+              "cells": [
+                3,
+                0,
+                500,
+                "至少一次完成"
+              ]
+            }
+          ],
+          "note": "辅助展示不参与主分排序；同为 0 USD 时，最长存活天数按评测定义用于打破同分。"
+        }
+      ],
+      "detail": "Princeton CEO-Bench 官网于 2026-08-03 公开的模型级成绩：75,126 USD，3 次运行中 0 次破产，官网最长存活 500 天。该记录只复现钉死的上游公开结果，不表示 EvalHub 独立复跑。"
+    }
+  ]
+}
