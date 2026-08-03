@@ -47,17 +47,6 @@ export function validateParticipantForEval(context, participant, origin = "run")
             issues.push(customIssue(["model", ...issue.path], issue.message));
         }
     }
-    if (origin === "upstream_author_publication") {
-        for (const field of ["harness", "harness_version", "config"]) {
-            if (participant[field] !== undefined) {
-                issues.push(customIssue([field], `upstream_author_publication participants cannot include ${field}`));
-            }
-        }
-        if (issues.length > 0) {
-            return { success: false, error: new z.ZodError(issues) };
-        }
-        return { success: true, data: participant };
-    }
     if (participant.harness !== undefined) {
         const harnessValidation = ParticipantHarnessSchema.safeParse(participant.harness);
         if (!harnessValidation.success) {
@@ -73,6 +62,19 @@ export function validateParticipantForEval(context, participant, origin = "run")
                 issues.push(customIssue(["harness_version", ...issue.path], issue.message));
             }
         }
+    }
+    if (origin === "upstream_author_publication") {
+        if (participant.config !== undefined) {
+            issues.push(customIssue(["config"], "upstream_author_publication participants cannot include config"));
+        }
+        if (participant.harness_version !== undefined &&
+            participant.harness === undefined) {
+            issues.push(customIssue(["harness"], "upstream harness_version requires harness"));
+        }
+        if (issues.length > 0) {
+            return { success: false, error: new z.ZodError(issues) };
+        }
+        return { success: true, data: participant };
     }
     if (context.interface === "chat") {
         if (participant.harness !== undefined) {

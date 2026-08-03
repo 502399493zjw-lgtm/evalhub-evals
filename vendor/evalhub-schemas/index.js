@@ -25,6 +25,8 @@ export function participantKey(participant, origin = {}) {
             "upstream_author_publication",
             origin.source.url,
             participant.model,
+            participant.harness ?? null,
+            participant.harness_version ?? null,
         ]);
     }
     return JSON.stringify([

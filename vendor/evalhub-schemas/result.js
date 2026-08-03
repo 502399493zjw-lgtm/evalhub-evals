@@ -524,30 +524,11 @@ export const ShowcaseSchema = ShowcaseDiscriminatedUnionSchema.superRefine((show
     }
 });
 export const ResultEntrySchema = z.object({
-    participant: z
-        .object({
+    participant: z.object({
         model: ParticipantModelSchema,
         harness: ParticipantHarnessSchema.optional(),
         harness_version: ParticipantHarnessVersionSchema.optional(),
         config: ParticipantConfigSchema.optional(),
-    })
-        .superRefine((participant, ctx) => {
-        if (participant.harness !== undefined &&
-            participant.harness_version === undefined) {
-            ctx.addIssue({
-                code: "custom",
-                path: ["harness_version"],
-                message: "填了 harness 必带 harness_version",
-            });
-        }
-        if (participant.harness_version !== undefined &&
-            participant.harness === undefined) {
-            ctx.addIssue({
-                code: "custom",
-                path: ["harness"],
-                message: "填了 harness_version 必带 harness",
-            });
-        }
     }),
     // results[] 构成可排名的主结果表；score 是每行的主成绩。评测集可另外声明
     // raw_metric.tiebreak_value 作为同分规则，评测榜名次再派生全站积分。量纲由
@@ -668,7 +649,8 @@ export const ResultSubmissionSchema = z.union([
     UpstreamAuthorPublicationSubmissionSchema,
     RunSubmissionSchema,
 ]);
-export const ResultFileSchema = z.object({
+export const ResultFileSchema = z
+    .object({
     eval_id: z.string(),
     eval_commit: z.string().optional(),
     submission: ResultSubmissionSchema,
@@ -676,4 +658,27 @@ export const ResultFileSchema = z.object({
         .array(ResultEntrySchema)
         .min(1)
         .max(RESULT_FILE_MAX_RESULTS, `result file results cannot exceed ${RESULT_FILE_MAX_RESULTS}`),
+})
+    .superRefine((file, ctx) => {
+    if (file.submission.kind === "upstream_author_publication")
+        return;
+    for (const [index, result] of file.results.entries()) {
+        const participant = result.participant;
+        if (participant.harness !== undefined &&
+            participant.harness_version === undefined) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["results", index, "participant", "harness_version"],
+                message: "填了 harness 必带 harness_version",
+            });
+        }
+        if (participant.harness_version !== undefined &&
+            participant.harness === undefined) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["results", index, "participant", "harness"],
+                message: "填了 harness_version 必带 harness",
+            });
+        }
+    }
 });
