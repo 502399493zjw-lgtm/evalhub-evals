@@ -16,7 +16,7 @@ node evals/rsibench-data/pack-to-result.mjs \
 
 [`rsibench-official-results-2026-07-31.json`](rsibench-official-results-2026-07-31.json) 是官网 Official 矩阵的事实快照，包含四位研究者、六个 benchmark、固定分母、来源页面 SHA-256 与 EvalHub 派生宏平均。它不是 custom runner 的输入，也不表示 EvalHub 独立复跑。`../official-result-to-envelope.mjs` 只接受快照中四个固定 `participant_id`，并在生成 `upstream_author_publication` 结果前重新验证：
 
-1. 快照恰好含四位研究者与六个唯一 benchmark；
+1. 快照恰好含四位研究者与六个唯一 benchmark，且每位研究者的底层模型与 harness 独立声明、可重新组成官网展示名；
 2. 每个官网两位小数分数与固定分母下的整数成功计数一致；
 3. 六项精确百分比的等权平均与快照中的派生总分一致；
 4. 输出通过共享结果 schema 和本目录 `eval.yaml` 的上下文校验，且 `score` 必须为数值。

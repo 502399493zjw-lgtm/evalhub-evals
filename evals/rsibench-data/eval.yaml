@@ -1,4 +1,5 @@
 id: rsibench-data
+protocol_revision: 2
 name: RSIBench-Data（数据中心型自改进）
 category: useful
 display_category: agent

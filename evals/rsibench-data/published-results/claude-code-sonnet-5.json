@@ -2,7 +2,7 @@
   "eval_id": "rsibench-data",
   "submission": {
     "kind": "upstream_author_publication",
-    "importer_version": "rsibench-data/official-result-to-envelope@1.1.0",
+    "importer_version": "rsibench-data/official-result-to-envelope@1.2.0",
     "retrieved_on": "2026-07-31",
     "source": {
       "title": "RSIBench — Research Data & Results",
@@ -13,7 +13,8 @@
   "results": [
     {
       "participant": {
-        "model": "Claude Code · Sonnet-5"
+        "model": "Sonnet-5",
+        "harness": "Claude Code"
       },
       "score": 27.964107,
       "supplementary_views": [
