@@ -821,22 +821,12 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
     caption?: string | undefined;
 }>;
 export declare const ResultEntrySchema: z.ZodObject<{
-    participant: z.ZodEffects<z.ZodObject<{
+    participant: z.ZodObject<{
         model: z.ZodEffects<z.ZodString, string, string>;
         harness: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         harness_version: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         config: z.ZodOptional<z.ZodEffects<z.ZodRecord<z.ZodString, z.ZodUnknown>, Record<string, unknown>, Record<string, unknown>>>;
     }, "strip", z.ZodTypeAny, {
-        model: string;
-        harness?: string | undefined;
-        harness_version?: string | undefined;
-        config?: Record<string, unknown> | undefined;
-    }, {
-        model: string;
-        harness?: string | undefined;
-        harness_version?: string | undefined;
-        config?: Record<string, unknown> | undefined;
-    }>, {
         model: string;
         harness?: string | undefined;
         harness_version?: string | undefined;
@@ -1730,7 +1720,7 @@ export declare const ResultSubmissionSchema: z.ZodUnion<[z.ZodObject<{
     run_date: string;
     kind?: "run" | undefined;
 }>]>;
-export declare const ResultFileSchema: z.ZodObject<{
+export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
     eval_id: z.ZodString;
     eval_commit: z.ZodOptional<z.ZodString>;
     submission: z.ZodUnion<[z.ZodObject<{
@@ -1782,22 +1772,12 @@ export declare const ResultFileSchema: z.ZodObject<{
         kind?: "run" | undefined;
     }>]>;
     results: z.ZodArray<z.ZodObject<{
-        participant: z.ZodEffects<z.ZodObject<{
+        participant: z.ZodObject<{
             model: z.ZodEffects<z.ZodString, string, string>;
             harness: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
             harness_version: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
             config: z.ZodOptional<z.ZodEffects<z.ZodRecord<z.ZodString, z.ZodUnknown>, Record<string, unknown>, Record<string, unknown>>>;
         }, "strip", z.ZodTypeAny, {
-            model: string;
-            harness?: string | undefined;
-            harness_version?: string | undefined;
-            config?: Record<string, unknown> | undefined;
-        }, {
-            model: string;
-            harness?: string | undefined;
-            harness_version?: string | undefined;
-            config?: Record<string, unknown> | undefined;
-        }>, {
             model: string;
             harness?: string | undefined;
             harness_version?: string | undefined;
@@ -2595,6 +2575,262 @@ export declare const ResultFileSchema: z.ZodObject<{
         })[] | undefined;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
+    eval_id: string;
+    submission: {
+        runner_version: string;
+        run_date: string;
+        kind?: "run" | undefined;
+    } | {
+        kind: "upstream_author_publication";
+        importer_version: string;
+        retrieved_on: string;
+        source: {
+            url: string;
+            snapshot_sha256: string;
+            title?: string | undefined;
+        };
+    };
+    results: {
+        participant: {
+            model: string;
+            harness?: string | undefined;
+            harness_version?: string | undefined;
+            config?: Record<string, unknown> | undefined;
+        };
+        score: number | null;
+        raw_metric?: {
+            value: string;
+            label: string;
+            tiebreak_value?: number | undefined;
+        } | undefined;
+        detail?: string | undefined;
+        usage?: {
+            tokens?: number | undefined;
+        } | undefined;
+        task_results?: {
+            task_id: string;
+            score: number;
+            raw?: string | undefined;
+        }[] | undefined;
+        showcases?: ({
+            type: "head_to_head";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            matchups: {
+                a: string;
+                b: string;
+                a_wins: number;
+                b_wins: number;
+                draws: number;
+            }[];
+        } | {
+            type: "team_games";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            games: {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }[];
+        } | {
+            type: "compare";
+            task: string;
+            content: string;
+            expected?: string | undefined;
+            task_id?: string | undefined;
+            verdict?: string | undefined;
+            score?: number | undefined;
+        } | {
+            type: "transcript";
+            title: string;
+            turns: {
+                content: string;
+                role: string;
+                status?: string | undefined;
+            }[];
+            task_id?: string | undefined;
+        } | {
+            type: "timeline";
+            title: string;
+            events: {
+                label: string;
+                t: string;
+            }[];
+            series?: {
+                t: string;
+                v: number;
+            }[] | undefined;
+        } | {
+            type: "image";
+            src: string;
+            score?: number | undefined;
+            caption?: string | undefined;
+        })[] | undefined;
+        supplementary_views?: ({
+            type: "metric_table";
+            title: string;
+            columns: string[];
+            rows: {
+                cells: (string | number | null)[];
+            }[];
+            note?: string | undefined;
+        } | {
+            type: "line_chart";
+            title: string;
+            series: {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }[];
+            note?: string | undefined;
+            x_label?: string | undefined;
+            y_label?: string | undefined;
+        })[] | undefined;
+    }[];
+    eval_commit?: string | undefined;
+}, {
+    eval_id: string;
+    submission: {
+        runner_version: string;
+        run_date: string;
+        kind?: "run" | undefined;
+    } | {
+        kind: "upstream_author_publication";
+        importer_version: string;
+        retrieved_on: string;
+        source: {
+            url: string;
+            snapshot_sha256: string;
+            title?: string | undefined;
+        };
+    };
+    results: {
+        participant: {
+            model: string;
+            harness?: string | undefined;
+            harness_version?: string | undefined;
+            config?: Record<string, unknown> | undefined;
+        };
+        score: number | null;
+        raw_metric?: {
+            value: string;
+            label: string;
+            tiebreak_value?: number | undefined;
+        } | undefined;
+        detail?: string | undefined;
+        usage?: {
+            tokens?: number | undefined;
+        } | undefined;
+        task_results?: {
+            task_id: string;
+            score: number;
+            raw?: string | undefined;
+        }[] | undefined;
+        showcases?: ({
+            type: "head_to_head";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            matchups: {
+                a: string;
+                b: string;
+                a_wins: number;
+                b_wins: number;
+                draws: number;
+            }[];
+        } | {
+            type: "team_games";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            games: {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }[];
+        } | {
+            type: "compare";
+            task: string;
+            content: string;
+            expected?: string | undefined;
+            task_id?: string | undefined;
+            verdict?: string | undefined;
+            score?: number | undefined;
+        } | {
+            type: "transcript";
+            title: string;
+            turns: {
+                content: string;
+                role: string;
+                status?: string | undefined;
+            }[];
+            task_id?: string | undefined;
+        } | {
+            type: "timeline";
+            title: string;
+            events: {
+                label: string;
+                t: string;
+            }[];
+            series?: {
+                t: string;
+                v: number;
+            }[] | undefined;
+        } | {
+            type: "image";
+            src: string;
+            score?: number | undefined;
+            caption?: string | undefined;
+        })[] | undefined;
+        supplementary_views?: ({
+            type: "metric_table";
+            title: string;
+            columns: string[];
+            rows: {
+                cells: (string | number | null)[];
+            }[];
+            note?: string | undefined;
+        } | {
+            type: "line_chart";
+            title: string;
+            series: {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }[];
+            note?: string | undefined;
+            x_label?: string | undefined;
+            y_label?: string | undefined;
+        })[] | undefined;
+    }[];
+    eval_commit?: string | undefined;
+}>, {
     eval_id: string;
     submission: {
         runner_version: string;

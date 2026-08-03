@@ -107,6 +107,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     }, z.ZodTypeAny, "passthrough">>>;
     id: z.ZodString;
     hackathon_id: z.ZodOptional<z.ZodString>;
+    protocol_revision: z.ZodDefault<z.ZodNumber>;
     name: z.ZodString;
     category: z.ZodEnum<["fun", "useful"]>;
     display_category: z.ZodOptional<z.ZodEnum<["agent", "reason", "vision", "fun"]>>;
@@ -178,6 +179,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     leaderboard: "latest_session" | "rating";
     baseline_policy: "required" | "optional";
     scored_by: "local" | "author";
+    protocol_revision: number;
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -237,6 +239,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
     }, z.ZodTypeAny, "passthrough"> | undefined;
     hackathon_id?: string | undefined;
+    protocol_revision?: number | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
     references?: {
@@ -260,6 +263,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     leaderboard: "latest_session" | "rating";
     baseline_policy: "required" | "optional";
     scored_by: "local" | "author";
+    protocol_revision: number;
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -319,6 +323,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
     }, z.ZodTypeAny, "passthrough"> | undefined;
     hackathon_id?: string | undefined;
+    protocol_revision?: number | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
     references?: {
@@ -343,6 +348,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     leaderboard: "latest_session" | "rating";
     baseline_policy: "required" | "optional";
     scored_by: "local" | "author";
+    protocol_revision: number;
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -401,6 +407,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
     }, z.ZodTypeAny, "passthrough"> | undefined;
     hackathon_id?: string | undefined;
+    protocol_revision?: number | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
     references?: {
@@ -446,6 +453,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     }, z.ZodTypeAny, "passthrough">>>>;
     id: z.ZodString;
     hackathon_id: z.ZodOptional<z.ZodString>;
+    protocol_revision: z.ZodDefault<z.ZodNumber>;
     name: z.ZodString;
     category: z.ZodEnum<["fun", "useful"]>;
     display_category: z.ZodOptional<z.ZodEnum<["agent", "reason", "vision", "fun"]>>;
@@ -517,6 +525,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     leaderboard: "latest_session" | "rating";
     baseline_policy: "required" | "optional";
     scored_by: "local" | "author";
+    protocol_revision: number;
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -576,6 +585,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
     }, z.ZodTypeAny, "passthrough"> | null | undefined;
     hackathon_id?: string | undefined;
+    protocol_revision?: number | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
     references?: {
@@ -599,6 +609,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     leaderboard: "latest_session" | "rating";
     baseline_policy: "required" | "optional";
     scored_by: "local" | "author";
+    protocol_revision: number;
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -658,6 +669,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
     }, z.ZodTypeAny, "passthrough"> | null | undefined;
     hackathon_id?: string | undefined;
+    protocol_revision?: number | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
     references?: {
@@ -682,6 +694,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     leaderboard: "latest_session" | "rating";
     baseline_policy: "required" | "optional";
     scored_by: "local" | "author";
+    protocol_revision: number;
     name: string;
     category: "fun" | "useful";
     description: string;
@@ -740,6 +753,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
     }, z.ZodTypeAny, "passthrough"> | null | undefined;
     hackathon_id?: string | undefined;
+    protocol_revision?: number | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
     references?: {
