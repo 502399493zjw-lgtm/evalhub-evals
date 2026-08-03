@@ -1,4 +1,5 @@
 id: ceo-bench
+protocol_revision: 1
 name: CEO-Bench（NovaMind 创业经营）
 category: useful
 display_category: agent
@@ -9,6 +10,8 @@ interface: agent
 runner: custom
 scoring: custom
 scored_by: author
+score_policy: author_fill
+baseline_policy: required
 score_unit: USD
 tiebreak:
   metric: tiebreak_value

@@ -16,6 +16,6 @@ node evals/ceo-bench/pack-to-result.mjs \
 
 这些数据不是任何真实模型的实测成绩，也没有通过评测作者验证。真实提交必须另建提交目录，不要修改或冒充这些夹具。
 
-`princeton-official-results-2026-07-23.json` 是 Princeton 官网公开结果的结构化来源快照。官网结果表是分数权威来源，轨迹清单只用于补充来源信息；两者不一致时不得用轨迹清单覆盖官网分数。`princeton-trajectory-manifest-v12-summary.json` 按 run ID 保留清单披露的配置终点、实际终点和破产状态，仅供内部追溯。当前清单与官网在 Gemini 3.5 Flash 的运行批次上存在冲突，且不包含 Grok 4.5，文件中已明确标注。
+`princeton-official-results-2026-07-23.json` 是 Princeton 官网公开结果的结构化来源快照，也是 `../official-result-to-envelope.mjs` 生成 17 份版本化官方基线的唯一分数来源。官网结果表是分数权威来源，轨迹清单只用于补充来源信息；两者不一致时不得用轨迹清单覆盖官网分数。转换器使用官网快照的 SHA-256 作为来源指纹，并校验金额、状态、运行数、破产数和最长存活天数。`princeton-trajectory-manifest-v12-summary.json` 按 run ID 保留清单披露的配置终点、实际终点和破产状态，仅供内部追溯。当前清单与官网在 Gemini 3.5 Flash 的运行批次上存在冲突，且不包含 Grok 4.5，文件中已明确标注。
 
 这些快照用于作者录入和审计，不表示 EvalHub 已经独立复跑这些结果，也不要求公开页面逐条显示运行天数。
