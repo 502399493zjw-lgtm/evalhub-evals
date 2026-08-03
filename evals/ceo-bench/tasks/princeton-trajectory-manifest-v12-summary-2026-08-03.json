@@ -1,10 +1,11 @@
 {
   "schema_version": 1,
   "source_url": "https://ceobench.com/trajectory-viewer/data/runs/manifest.json?v=12",
-  "source_sha256": "3e2821f74330be907b85c35d8f6ac22ce1cbb32d0a3038ef05cee241a4f399f4",
-  "retrieved_on": "2026-07-23",
+  "source_sha256": "42dd323b0a00c9d5a8fc96fa84fbb573a6db0e3d77654ece6480aa8c58ef85b1",
+  "retrieved_on": "2026-08-03",
   "field_note": "total_days is the configured horizon; current_day is the disclosed run endpoint. This summary supports provenance only and must not be used as the published score authority.",
   "models": [
+    {"model":"kimi-k3","runs":[{"run_id":"9b8fa6a4","total_days":500,"current_day":500,"bankrupt":false},{"run_id":"bae92e25","total_days":500,"current_day":158,"bankrupt":true},{"run_id":"b5601d9b","total_days":500,"current_day":500,"bankrupt":false}]},
     {"model":"claude-fable-5","runs":[{"run_id":"2c0aeba9","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"3def3647","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"4f03ddc9","total_days":504,"current_day":385,"bankrupt":true}]},
     {"model":"gpt-5.6-sol","runs":[{"run_id":"63f6b1fb","total_days":500,"current_day":190,"bankrupt":true},{"run_id":"d1834c32","total_days":500,"current_day":500,"bankrupt":false},{"run_id":"786948e9","total_days":500,"current_day":192,"bankrupt":true}]},
     {"model":"claude-opus-4-8","runs":[{"run_id":"e2cbe2de","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"aad782be","total_days":504,"current_day":504,"bankrupt":false},{"run_id":"3f8f3efd","total_days":504,"current_day":134,"bankrupt":true}]},
