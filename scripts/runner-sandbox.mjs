@@ -82,8 +82,13 @@ export function buildDockerArgs({
   containerName = `evalhub-${slug}-test`,
   containerUser = hostSandboxUser(),
 }) {
+  const containerInput = `/workspace/evals/${slug}/tasks/example-submission.json`;
   const containerArgv = argv.map((token) =>
-    token === "{output}" ? "/output/result.json" : token,
+    token === "{output}"
+      ? "/output/result.json"
+      : token === "{input}"
+        ? containerInput
+        : token,
   );
   return [
     "run",

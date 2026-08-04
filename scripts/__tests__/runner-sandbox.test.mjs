@@ -11,7 +11,7 @@ test("builds a locked-down, argument-array Docker invocation", () => {
     argv: [
       "node",
       "evals/sample-eval/run.mjs",
-      "evals/sample-eval/tasks/input.json",
+      "{input}",
       "--out",
       "{output}",
     ],
@@ -30,6 +30,12 @@ test("builds a locked-down, argument-array Docker invocation", () => {
   assert.ok(args.includes("HOME=/nonexistent"));
   assert.ok(args.includes("NODE_ENV=production"));
   assert.ok(args.includes(RUNNER_IMAGE));
+  assert.ok(
+    args.includes(
+      "/workspace/evals/sample-eval/tasks/example-submission.json",
+    ),
+  );
+  assert.equal(args.includes("{input}"), false);
   assert.ok(args.includes("/output/result.json"));
   assert.ok(
     args.includes(
