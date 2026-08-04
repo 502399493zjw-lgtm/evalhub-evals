@@ -4,6 +4,7 @@ const CONTROL_CHARACTERS = /[\u0000-\u001f\u007f-\u009f]/u;
 const MAX_COMMAND_ARGV_TOKENS = 64;
 const MAX_COMMAND_ARGV_TOKEN_LENGTH = 4096;
 const MAX_COMMAND_OUTPUT_LENGTH = 1024;
+const MAX_COMMAND_INPUT_LENGTH = 4096;
 const MAX_EVAL_REFERENCE_URL_LENGTH = 2048;
 export const EvalIdSchema = z.string().regex(/^[a-z0-9][a-z0-9-]{1,63}$/);
 const CommandArgvTokenSchema = z
@@ -47,6 +48,18 @@ export const CommandOutputOverrideSchema = z
     .refine((value) => !value.startsWith("-"), {
     message: "output override 不能以 - 开头",
 });
+export const CommandInputOverrideSchema = z
+    .string()
+    .max(MAX_COMMAND_INPUT_LENGTH, `input override 最长 ${MAX_COMMAND_INPUT_LENGTH} 字符`)
+    .refine((value) => value.trim().length > 0, {
+    message: "input override 不能为空",
+})
+    .refine((value) => !CONTROL_CHARACTERS.test(value), {
+    message: "input override 不能包含控制字符",
+})
+    .refine((value) => !value.startsWith("-"), {
+    message: "input override 不能以 - 开头",
+});
 export const CommandTemplateSchema = z
     .object({
     argv: z
@@ -67,6 +80,7 @@ export const CommandTemplateSchema = z
         }
     }
     let outputPlaceholders = 0;
+    let inputPlaceholders = 0;
     for (const [index, arg] of value.argv.entries()) {
         if (index === 0 && arg.trim().length === 0) {
             ctx.addIssue({
@@ -86,6 +100,17 @@ export const CommandTemplateSchema = z
             }
             continue;
         }
+        if (arg === "{input}") {
+            inputPlaceholders += 1;
+            if (index === 0) {
+                ctx.addIssue({
+                    code: "custom",
+                    path: ["argv", index],
+                    message: "command_template.argv[0] 必须是 executable，不能是 {input}",
+                });
+            }
+            continue;
+        }
         if (arg.includes("{output}")) {
             ctx.addIssue({
                 code: "custom",
@@ -93,9 +118,16 @@ export const CommandTemplateSchema = z
                 message: "{output} 必须是独立的 argv token",
             });
         }
+        if (arg.includes("{input}")) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["argv", index],
+                message: "{input} 必须是独立的 argv token",
+            });
+        }
         const unknownPlaceholders = arg.match(/\{[^{}]+\}/g) ?? [];
         for (const placeholder of unknownPlaceholders) {
-            if (placeholder !== "{output}") {
+            if (placeholder !== "{output}" && placeholder !== "{input}") {
                 ctx.addIssue({
                     code: "custom",
                     path: ["argv", index],
@@ -119,8 +151,19 @@ export const CommandTemplateSchema = z
             message: "command_template.argv 必须且只能包含一个独立 {output} token",
         });
     }
+    if (inputPlaceholders > 1) {
+        ctx.addIssue({
+            code: "custom",
+            path: ["argv"],
+            message: "command_template.argv 最多包含一个独立 {input} token",
+        });
+    }
 })
     .transform(({ argv, output }) => ({ argv, output }));
+export const CustomRunnerModeSchema = z.enum([
+    "executable",
+    "external_workflow",
+]);
 /**
  * 评测集级同分 tiebreak 声明（可选）：同分（score 相等）时按 result raw_metric JSON 里
  * `metric` 指定的数值键排序，方向由 `order` 决定，`label` 供展示（如「存活天数」）。
@@ -195,6 +238,9 @@ const evalDefShape = {
         .max(2),
     interface: z.enum(["chat", "dialogue", "agent"]),
     runner: z.enum(["builtin", "custom"]),
+    // custom runner 分为可由 CLI 执行的 runner，以及先在外部基础设施运行、再由 CLI 打包的流程。
+    // 旧定义省略时按 executable 处理，保持兼容。
+    custom_mode: CustomRunnerModeSchema.optional(),
     scoring: z.enum(["exact", "judge", "custom"]),
     scored_by: z.enum(["local", "author"]),
     // 是否允许先交原始产物、后由作者补分。省略时保持历史兼容：author => author_fill，
@@ -261,6 +307,32 @@ function refineEvalDef(value, ctx, requireCustomCommandTemplate) {
             message: "runner=custom 必须提供 command_template",
         });
     }
+    if (v.runner === "builtin" && v.custom_mode !== undefined) {
+        ctx.addIssue({
+            code: "custom",
+            path: ["custom_mode"],
+            message: "runner=builtin 不能提供 custom_mode",
+        });
+    }
+    const inputPlaceholders = v.command_template?.argv.filter((arg) => arg === "{input}").length ?? 0;
+    if (v.runner === "custom" &&
+        v.custom_mode === "external_workflow" &&
+        inputPlaceholders !== 1) {
+        ctx.addIssue({
+            code: "custom",
+            path: ["command_template", "argv"],
+            message: "custom_mode=external_workflow 的 command_template.argv 必须包含一个独立 {input} token",
+        });
+    }
+    if (v.runner === "custom" &&
+        v.custom_mode !== "external_workflow" &&
+        inputPlaceholders > 0) {
+        ctx.addIssue({
+            code: "custom",
+            path: ["custom_mode"],
+            message: "command_template 使用 {input} 时必须声明 custom_mode=external_workflow",
+        });
+    }
     if (v.runner === "builtin" && v.command_template) {
         ctx.addIssue({
             code: "custom",
@@ -300,4 +372,7 @@ export const StoredEvalDefSchema = z
 }));
 export function resolveScorePolicy(value) {
     return value.score_policy ?? (value.scored_by === "author" ? "author_fill" : "required");
+}
+export function resolveCustomRunnerMode(value) {
+    return value.runner === "custom" ? (value.custom_mode ?? "executable") : null;
 }

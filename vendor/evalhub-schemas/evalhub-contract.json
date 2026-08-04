@@ -1,6 +1,6 @@
 {
-  "schemaContractVersion": "0.1.4",
-  "sourceSha256": "56b49d01e196a751012969e876b9f3d7ea98e30b931914ca64ef5dcf4e55ad02",
+  "schemaContractVersion": "0.1.5",
+  "sourceSha256": "523eeb596d1fbb5b5cf2b63dc0c1d8cb4314d1d373395a31da7fd0855ad91eda",
   "sourceFiles": [
     "agent-brief.ts",
     "command-plan.ts",

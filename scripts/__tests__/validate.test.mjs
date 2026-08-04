@@ -143,7 +143,7 @@ test("vendored schemas expose a loadable agent brief builder", () => {
   const definition = EvalDefSchema.parse(validEval);
   const brief = buildAgentBrief(definition, {
     siteOrigin: "https://evalhub.example",
-    cliPackageSpec: "@evalhub/cli@0.2.0",
+    cliPackageSpec: "@evalhub/cli",
   });
 
   assert.match(brief, /^---\nschema: evalhub-brief\/v1/m);
