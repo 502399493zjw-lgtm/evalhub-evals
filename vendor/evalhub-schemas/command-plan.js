@@ -1,4 +1,4 @@
-import { CommandOutputOverrideSchema, CommandOutputSchema, } from "./eval-def.js";
+import { CommandInputOverrideSchema, CommandOutputOverrideSchema, CommandOutputSchema, resolveCustomRunnerMode, } from "./eval-def.js";
 const POSIX_SAFE_ARGUMENT = /^[A-Za-z0-9_@%+=:,./-]+$/;
 function quoteShellArgument(argument) {
     if (POSIX_SAFE_ARGUMENT.test(argument)) {
@@ -32,8 +32,22 @@ export function buildEvalCommandPlan(evalDef, options = {}) {
                 reason: "custom_runner_command_unavailable",
             };
         }
+        const mode = resolveCustomRunnerMode(evalDef);
+        if (mode === "external_workflow" && options.input === undefined) {
+            return {
+                available: false,
+                reason: "custom_runner_input_required",
+            };
+        }
         const output = resolveOutput(evalDef.command_template.output, options.output);
-        const runArgv = evalDef.command_template.argv.map((argument) => argument === "{output}" ? output : argument);
+        const input = options.input === undefined
+            ? undefined
+            : CommandInputOverrideSchema.parse(options.input);
+        const runArgv = evalDef.command_template.argv.map((argument) => argument === "{output}"
+            ? output
+            : argument === "{input}" && input !== undefined
+                ? input
+                : argument);
         return availablePlan(runArgv, output);
     }
     const output = resolveOutput(`${evalDef.id}-result.json`, options.output);

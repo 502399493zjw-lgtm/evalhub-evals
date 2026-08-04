@@ -2,6 +2,7 @@ import { z } from "zod";
 export declare const EvalIdSchema: z.ZodString;
 export declare const CommandOutputSchema: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
 export declare const CommandOutputOverrideSchema: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
+export declare const CommandInputOverrideSchema: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
 export declare const CommandTemplateSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
     output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
@@ -25,6 +26,8 @@ export declare const CommandTemplateSchema: z.ZodEffects<z.ZodEffects<z.ZodObjec
     output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
 }, z.ZodTypeAny, "passthrough">>;
 export type CommandTemplate = z.infer<typeof CommandTemplateSchema>;
+export declare const CustomRunnerModeSchema: z.ZodEnum<["executable", "external_workflow"]>;
+export type CustomRunnerMode = z.infer<typeof CustomRunnerModeSchema>;
 /**
  * 评测集级同分 tiebreak 声明（可选）：同分（score 相等）时按 result raw_metric JSON 里
  * `metric` 指定的数值键排序，方向由 `order` 决定，`label` 供展示（如「存活天数」）。
@@ -75,6 +78,7 @@ type EvalDefRefinementValue = {
     scored_by: "local" | "author";
     score_policy?: "required" | "author_fill" | undefined;
     runner: "builtin" | "custom";
+    custom_mode?: CustomRunnerMode | undefined;
     judge_model?: string | undefined;
     scoring_note?: string | undefined;
     command_template?: CommandTemplate | null | undefined;
@@ -137,6 +141,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     dimensions: z.ZodArray<z.ZodEnum<["幽默", "语言", "推理", "代码", "博弈", "经营"]>, "many">;
     interface: z.ZodEnum<["chat", "dialogue", "agent"]>;
     runner: z.ZodEnum<["builtin", "custom"]>;
+    custom_mode: z.ZodOptional<z.ZodEnum<["executable", "external_workflow"]>>;
     scoring: z.ZodEnum<["exact", "judge", "custom"]>;
     scored_by: z.ZodEnum<["local", "author"]>;
     score_policy: z.ZodOptional<z.ZodEnum<["required", "author_fill"]>>;
@@ -199,6 +204,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         argv: string[];
         output: string;
     } | undefined;
+    custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
@@ -238,6 +244,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
     }, z.ZodTypeAny, "passthrough"> | undefined;
+    custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     protocol_revision?: number | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
@@ -283,6 +290,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         argv: string[];
         output: string;
     } | undefined;
+    custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
@@ -322,6 +330,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
     }, z.ZodTypeAny, "passthrough"> | undefined;
+    custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     protocol_revision?: number | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
@@ -367,6 +376,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         argv: string[];
         output: string;
     } | undefined;
+    custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
@@ -406,6 +416,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
     }, z.ZodTypeAny, "passthrough"> | undefined;
+    custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     protocol_revision?: number | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
@@ -483,6 +494,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     dimensions: z.ZodArray<z.ZodEnum<["幽默", "语言", "推理", "代码", "博弈", "经营"]>, "many">;
     interface: z.ZodEnum<["chat", "dialogue", "agent"]>;
     runner: z.ZodEnum<["builtin", "custom"]>;
+    custom_mode: z.ZodOptional<z.ZodEnum<["executable", "external_workflow"]>>;
     scoring: z.ZodEnum<["exact", "judge", "custom"]>;
     scored_by: z.ZodEnum<["local", "author"]>;
     score_policy: z.ZodOptional<z.ZodEnum<["required", "author_fill"]>>;
@@ -545,6 +557,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         argv: string[];
         output: string;
     } | null | undefined;
+    custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
@@ -584,6 +597,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
     }, z.ZodTypeAny, "passthrough"> | null | undefined;
+    custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     protocol_revision?: number | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
@@ -629,6 +643,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         argv: string[];
         output: string;
     } | null | undefined;
+    custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
@@ -668,6 +683,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
     }, z.ZodTypeAny, "passthrough"> | null | undefined;
+    custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     protocol_revision?: number | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
@@ -713,6 +729,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         argv: string[];
         output: string;
     } | null | undefined;
+    custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
     hook_title?: string | undefined;
@@ -752,6 +769,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         argv: z.ZodArray<z.ZodEffects<z.ZodString, string, string>, "many">;
         output: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
     }, z.ZodTypeAny, "passthrough"> | null | undefined;
+    custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     protocol_revision?: number | undefined;
     display_category?: "fun" | "agent" | "reason" | "vision" | undefined;
@@ -775,4 +793,5 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
 }>;
 export type StoredEvalDef = z.infer<typeof StoredEvalDefSchema>;
 export declare function resolveScorePolicy(value: Pick<EvalDefRefinementValue, "scored_by" | "score_policy">): "required" | "author_fill";
+export declare function resolveCustomRunnerMode(value: Pick<EvalDefRefinementValue, "runner" | "custom_mode">): CustomRunnerMode | null;
 export {};

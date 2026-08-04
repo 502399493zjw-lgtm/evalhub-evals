@@ -1,10 +1,10 @@
-import { resolveScorePolicy } from "./eval-def.js";
-const EXACT_CLI_PACKAGE_SPEC = /^@evalhub\/cli@(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/u;
+import { resolveCustomRunnerMode, resolveScorePolicy, } from "./eval-def.js";
+const CLI_PACKAGE_SPEC = "@evalhub/cli";
 const OPAQUE_TASK_ID = /^task_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/u;
 const PAIRING_CODE = /^[0-9A-HJ-NP-TV-Z]{4}(?:-[0-9A-HJ-NP-TV-Z]{4}){4}$/u;
 export function buildAgentBrief(definition, options) {
     const origin = siteOrigin(options.siteOrigin);
-    const cliPackageSpec = exactCliPackageSpec(options.cliPackageSpec);
+    const cliPackageSpec = cliPackageSpecValue(options.cliPackageSpec);
     const taskId = options.taskId === undefined ? null : opaqueTaskId(options.taskId);
     const pairingCode = options.pairingCode === undefined ? null : platformPairingCode(options.pairingCode);
     const briefUrl = `${origin}/api/evals/${encodeURIComponent(definition.id)}?format=brief`;
@@ -16,37 +16,46 @@ export function buildAgentBrief(definition, options) {
         : "成本未知，先小样本试跑。";
     const output = definition.command_template?.output ?? `${definition.id}-result.json`;
     const platformEnvironment = `EVALHUB_PLATFORM_URL=${shellToken(origin)}`;
-    const execution = definition.runner === "custom"
+    const customMode = resolveCustomRunnerMode(definition);
+    const execution = customMode === "external_workflow"
         ? [
-            `这是自定义 runner。详情页：${detailUrl}`,
-            `先让 CLI 下载平台钉死的源码 commit，但不执行：\n\n${shellBlock(`${platformEnvironment} evalhub run ${shellToken(definition.id)} --out ${shellToken(output)}`)}`,
-            "runner 及其依赖是不受平台信任的第三方代码。检查 CLI 打印的本地源码目录、commit、README、依赖、权限、网络访问和环境变量使用；把执行计划与命令给用户看，得到用户明确确认后才执行。如果固定源码链接或 commit 缺失、无法核对，就停下询问。",
-            "使用最小权限和最少环境变量运行；不得把整个 process.env 或与本评测无关的 API key 交给 runner。",
-            definition.command_template
-                ? `确认后通过 CLI 执行已下载的固定版本：\n\n${shellBlock(`${platformEnvironment} evalhub run ${shellToken(definition.id)} --out ${shellToken(output)} --allow-custom-code`)}`
-                : "评测尚未发布可执行命令；不要猜测命令，先查看源码 README。",
+            `这是需要外部基础设施的自定义评测。详情页：${detailUrl}`,
+            `先让 CLI 下载平台钉死的源码 commit，但不执行：\n\n${shellBlock(`${platformEnvironment} evalhub fetch ${shellToken(definition.id)}`)}`,
+            "检查 CLI 打印的本地源码目录、固定 commit、README、依赖、权限、网络访问和环境变量使用。如果源码链接或 commit 缺失、无法核对，就停下询问。",
+            "严格按 README 在评测指定的外部基础设施完成全部独立运行，保存真实 submission JSON；示例 JSON 只用于理解格式，不能作为提交输入。",
+            `外部运行全部完成后，用真实 submission JSON 打包结果（把 /path/to/submission.json 替换成实际文件路径）：\n\n${shellBlock(`${platformEnvironment} evalhub pack ${shellToken(definition.id)} --input /path/to/submission.json --out ${shellToken(output)}`)}`,
         ].join("\n\n")
-        : [
-            definition.scoring === "judge"
-                ? "执行前，请用户本人只在即将运行 CLI 的本地终端配置 EVALHUB_MODEL_BASE_URL、EVALHUB_MODEL_API_KEY 和 EVALHUB_JUDGE_API_KEY。Agent 不得索要、读取、记录或回显这些密钥，也不得将它们写入命令、日志或评测产物。用户确认配置完成后再继续。"
-                : "执行前，请用户本人只在即将运行 CLI 的本地终端配置 EVALHUB_MODEL_BASE_URL 和 EVALHUB_MODEL_API_KEY。Agent 不得索要、读取、记录或回显密钥，也不得将密钥写入命令、日志或评测产物。用户确认配置完成后再继续。",
-            "把下面示例值替换为用户已确认的模型 ID，再执行：",
-            shellBlock([
-                `MODEL_ID=${shellToken("kimi-k3")}`,
-                `${platformEnvironment} evalhub run ${shellToken(definition.id)} --model "$MODEL_ID" --out ${shellToken(output)}`,
-            ].join("\n")),
-        ].join("\n\n");
+        : customMode === "executable"
+            ? [
+                `这是自定义 runner。详情页：${detailUrl}`,
+                `先让 CLI 下载平台钉死的源码 commit，但不执行：\n\n${shellBlock(`${platformEnvironment} evalhub fetch ${shellToken(definition.id)}`)}`,
+                "runner 及其依赖是不受平台信任的第三方代码。检查 CLI 打印的本地源码目录、commit、README、依赖、权限、网络访问和环境变量使用；把执行计划与命令给用户看，得到用户明确确认后才执行。如果固定源码链接或 commit 缺失、无法核对，就停下询问。",
+                "使用最小权限和最少环境变量运行；不得把整个 process.env 或与本评测无关的 API key 交给 runner。",
+                definition.command_template
+                    ? `确认后通过 CLI 执行已下载的固定版本：\n\n${shellBlock(`${platformEnvironment} evalhub run ${shellToken(definition.id)} --out ${shellToken(output)} --allow-custom-code`)}`
+                    : "评测尚未发布可执行命令；不要猜测命令，先查看源码 README。",
+            ].join("\n\n")
+            : [
+                definition.scoring === "judge"
+                    ? "执行前，请用户本人只在即将运行 CLI 的本地终端配置 EVALHUB_MODEL_BASE_URL、EVALHUB_MODEL_API_KEY 和 EVALHUB_JUDGE_API_KEY。Agent 不得索要、读取、记录或回显这些密钥，也不得将它们写入命令、日志或评测产物。用户确认配置完成后再继续。"
+                    : "执行前，请用户本人只在即将运行 CLI 的本地终端配置 EVALHUB_MODEL_BASE_URL 和 EVALHUB_MODEL_API_KEY。Agent 不得索要、读取、记录或回显密钥，也不得将密钥写入命令、日志或评测产物。用户确认配置完成后再继续。",
+                "把下面示例值替换为用户已确认的模型 ID，再执行：",
+                shellBlock([
+                    `MODEL_ID=${shellToken("kimi-k3")}`,
+                    `${platformEnvironment} evalhub run ${shellToken(definition.id)} --model "$MODEL_ID" --out ${shellToken(output)}`,
+                ].join("\n")),
+            ].join("\n\n");
     const submission = resolveScorePolicy(definition) === "author_fill"
         ? "用户在网页确认发布后，本评测允许作者补分：结果自带 score 时，出现 awaiting author approval 是正常状态；score=null 时会 awaiting grading，完成判分前不会公开。"
         : "本评测要求结果自带数值 score；score=null 会在提交校验时直接失败。用户确认发布后，成绩仍须经评测作者认可才会计入公开排行榜。";
     const title = singleLineHeading(definition.name);
     const prerequisites = taskId === null
         ? [
-            `1. 安装平台指定的精确 CLI 版本：\n\n${shellBlock(`npm install -g ${shellToken(cliPackageSpec)}`)}`,
+            `1. 安装或更新到 npm 当前发布的最新版 CLI：\n\n${shellBlock(`npm install -g ${shellToken(cliPackageSpec)}`)}`,
             "2. 下载和本地运行不需要创建提交任务；只有用户决定正式提交成绩时才领取任务卡。",
         ].join("\n\n")
         : [
-            `1. 安装平台指定的精确 CLI 版本：\n\n${shellBlock(`npm install -g ${shellToken(cliPackageSpec)}`)}`,
+            `1. 安装或更新到 npm 当前发布的最新版 CLI：\n\n${shellBlock(`npm install -g ${shellToken(cliPackageSpec)}`)}`,
             pairingCode === null
                 ? `2. 按用户任务卡上的连接命令连接本次任务（平台地址 ${origin}）。`
                 : `2. 连接本次任务：\n\n${shellBlock(`evalhub connect ${shellToken(pairingCode)} --platform-url ${shellToken(origin)}`)}`,
@@ -57,7 +66,7 @@ export function buildAgentBrief(definition, options) {
         ? "成功只表示成绩草稿已上传，并不表示已经公开。把命令返回的任务页链接发给用户，请用户本人打开网页核对并点击确认公开。"
         : `成功只表示成绩草稿已上传，并不表示已经公开。上传成功后，再把同一个任务页链接发给用户一次，请用户本人打开网页核对并点击确认公开：\n\n${taskUrl}`;
     const submissionInstructions = taskId === null
-        ? `本地运行完成后先停下。只有用户决定正式提交时，才请用户本人打开下面页面并点击「提交成绩」领取任务卡：\n\n${startUrl}\n\n领取后使用新任务卡里的连接命令和提交步骤；不要把本地运行或未确认草稿当成提交进度。`
+        ? `评测执行完成后先停下。只有用户决定正式提交时，才请用户本人打开下面页面并点击「提交成绩」领取任务卡：\n\n${startUrl}\n\n领取后使用新任务卡里的连接命令和提交步骤；不要把评测产物或未确认草稿当成提交进度。`
         : `运行：\n\n${shellBlock(`evalhub submit ${shellToken(output)} --platform-url ${shellToken(origin)}`)}\n\n${reviewInstruction} Agent 不得代点确认、不得声称草稿已经公开，也不要因为等待网页确认或作者判分而重复提交。`;
     return `---
 schema: evalhub-brief/v1
@@ -122,10 +131,10 @@ function siteOrigin(raw) {
     }
     return url.origin;
 }
-function exactCliPackageSpec(raw) {
+function cliPackageSpecValue(raw) {
     const value = raw.trim();
-    if (!EXACT_CLI_PACKAGE_SPEC.test(value)) {
-        throw new Error("cliPackageSpec must be an exact @evalhub/cli@x.y.z version");
+    if (value !== CLI_PACKAGE_SPEC) {
+        throw new Error("cliPackageSpec must be exactly @evalhub/cli");
     }
     return value;
 }
