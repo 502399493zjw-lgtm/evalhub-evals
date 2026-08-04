@@ -10,7 +10,7 @@ Evolvent AI 提出的 **RSIBench-Data: Benchmarking Data-Centric Research for Re
 
 EvalHub 页面与转换器不代表 Evolvent AI、论文作者或 RSIBench 官方榜单的认证、背书或替代实现。EvalHub 不会在受限 runner 内训练模型或执行云端评测；custom runner 只把六项运行声明与证据指纹转换成带数值分数的结果文件。非作者提交的成绩仍由评测作者复核，官网已发表成绩则按来源快照导入。
 
-当前 `protocol_revision: 2` 专门修正上游参与者身份：旧版曾把 Claude Code / Codex 拼入模型名，新版把基础模型与 harness 分栏保存。升版会让旧错误身份退出当前榜单，避免它与结构化身份重复出现；六项任务和宏平均计分公式没有改变。
+当前 `protocol_revision: 3` 把评测明确标记为外部工作流，并要求转换器接收参赛者实际生成的提交 JSON，不再把仓库内的合成示例当作默认输入。`protocol_revision: 2` 曾专门修正上游参与者身份，把基础模型与 harness 分栏保存。六项任务和宏平均计分公式没有改变。
 
 ## 评测对象与固定边界
 
@@ -66,15 +66,24 @@ EvalHub 页面与转换器不代表 Evolvent AI、论文作者或 RSIBench 官�
 
 证据落地页应让作者核对原始文件与指纹，但不得公开密钥、临时签名 URL、`.env`、个人信息、目标 benchmark 的受保护任务/标签、未脱敏推理、Tinker 或 E2B 凭据。URL 不能包含 query、fragment、用户名或密码。若许可证或数据协议不允许公开某个原始文件，应发布允许分发的白名单摘要，并向作者提供可审计的合法来源；不能靠删除关键字段制造“通过验证”的假象。
 
-从 evals 仓库根目录生成结果：
+先安装 npm 当前发布的最新版 EvalHub CLI，下载并审查评测源码：
 
 ```bash
-node evals/rsibench-data/pack-to-result.mjs \
-  /absolute/path/to/rsibench-data-submission.json \
-  --out /absolute/path/to/rsibench-data-result.json
-npx @evalhub/cli@0.1.0 validate /absolute/path/to/rsibench-data-result.json
-npx @evalhub/cli@0.1.0 submit /absolute/path/to/rsibench-data-result.json
+npm install -g @evalhub/cli
+evalhub fetch rsibench-data
 ```
+
+按本 README 和上游 RSIBench-Data 文档，在 Harbor/E2B/Tinker 完成六次独立运行后，另建真实提交 JSON。[`tasks/example-submission.json`](tasks/example-submission.json) 只用于展示字段结构和转换器自测，不是默认提交输入，也不得当作真实成绩。然后让 CLI 用该真实 JSON 调用钉死 commit 内的转换器：
+
+```bash
+evalhub pack rsibench-data \
+  --input /absolute/path/to/rsibench-data-submission.json \
+  --out /absolute/path/to/rsibench-data-result.json
+evalhub validate /absolute/path/to/rsibench-data-result.json
+evalhub submit /absolute/path/to/rsibench-data-result.json
+```
+
+`evalhub run rsibench-data` 不会也不应启动这个评测：外部六次运行不在 CLI 的本地 runner 内完成。
 
 转换器不联网、不启动子进程、不下载依赖，也不接触 Tinker、E2B、Harbor 或模型服务。它严格检查 JSON 字段、固定协议、六项覆盖、整数成功次数、唯一 ID、公开 HTTPS 证据 URL 和 SHA-256 格式，并以原子方式写出六项等权宏平均的数值 `score`。缺项、非法计数或非法证据会直接使转换失败，不会生成 `null` 或部分分数。
 
