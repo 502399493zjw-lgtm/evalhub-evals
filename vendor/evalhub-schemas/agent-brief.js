@@ -66,7 +66,7 @@ export function buildAgentBrief(definition, options) {
         ? "成功只表示成绩草稿已上传，并不表示已经公开。把命令返回的任务页链接发给用户，请用户本人打开网页核对并点击确认公开。"
         : `成功只表示成绩草稿已上传，并不表示已经公开。上传成功后，再把同一个任务页链接发给用户一次，请用户本人打开网页核对并点击确认公开：\n\n${taskUrl}`;
     const submissionInstructions = taskId === null
-        ? `本地运行完成后先停下。只有用户决定正式提交时，才请用户本人打开下面页面并点击「提交成绩」领取任务卡：\n\n${startUrl}\n\n领取后使用新任务卡里的连接命令和提交步骤；不要把本地运行或未确认草稿当成提交进度。`
+        ? `评测执行完成后先停下。只有用户决定正式提交时，才请用户本人打开下面页面并点击「提交成绩」领取任务卡：\n\n${startUrl}\n\n领取后使用新任务卡里的连接命令和提交步骤；不要把评测产物或未确认草稿当成提交进度。`
         : `运行：\n\n${shellBlock(`evalhub submit ${shellToken(output)} --platform-url ${shellToken(origin)}`)}\n\n${reviewInstruction} Agent 不得代点确认、不得声称草稿已经公开，也不要因为等待网页确认或作者判分而重复提交。`;
     return `---
 schema: evalhub-brief/v1
