@@ -17,7 +17,7 @@ From this monorepo, the equivalent command is:
 ../packages/cli/node_modules/.bin/tsx ../packages/cli/src/index.ts init my-eval
 ```
 
-Complete `eval.yaml`, `README.md`, `AUTHORS`, `sample-result.json`, `tasks/README.md`, and `assets/README.md`. Put useful deterministic fixtures in `tasks/`; put only reviewable static display resources in `assets/`. A custom runner must have a literal-argv `command_template` with exactly one standalone `{output}` token and a safe slug-specific output filename.
+Complete `eval.yaml`, `README.md`, `AUTHORS`, `sample-result.json`, `tasks/README.md`, and `assets/README.md`. Put useful deterministic fixtures in `tasks/`; put only reviewable static display resources in `assets/`. A custom runner must have a literal-argv `command_template` with exactly one standalone `{output}` token and a safe slug-specific output filename. An external-workflow custom runner also uses one standalone `{input}` token and keeps a deterministic synthetic fixture at `tasks/example-submission.json`; the locked CI sandbox injects that fixture only to test the converter, while real `evalhub pack` calls still require the participant's explicit `--input` file.
 
 Declare a positive integer `protocol_revision` (start at `1`). Increase it when tasks, execution, the primary score, tiebreaks, or participant identity semantics change comparability. Do not increase it for copy, README, references, or official baseline-data maintenance. The platform binds accepted scores to the commit that first introduced the current revision while tracking the latest source commit separately, so maintenance-only changes do not clear a leaderboard and a real protocol change cannot inherit stale scores.
 
