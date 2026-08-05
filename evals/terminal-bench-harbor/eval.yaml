@@ -1,0 +1,26 @@
+id: terminal-bench-harbor
+protocol_revision: 1
+name: Terminal-Bench 2.1（Harbor 终端智能体）
+category: useful
+display_category: agent
+description: Terminal-Bench 2.1 让 Agent 在真实终端沙箱里独立完成编译代码、训练模型、配置服务与排查系统故障等端到端任务，由官方 Harbor 执行器在容器中运行并用任务自带校验脚本判定成败，以任务通过率衡量终端环境下的自主执行能力。
+hook_title: 把一台终端交给 Agent，它能自己把活干完吗
+dimensions: [代码, 推理]
+interface: agent
+runner: custom
+custom_mode: external_workflow
+scoring: custom
+scored_by: author
+score_policy: required
+baseline_policy: required
+score_unit: 分
+scoring_note: >-
+  参赛者必须用官方 Harbor 执行器在钉死的 Terminal-Bench 2.1 数据集上完成三次相互独立的完整运行，每次运行覆盖数据集全部任务，不得挑选子集、跳过失败任务或在失败后单独重试补分。三次运行使用同一模型、同一 agent、同一 harness 版本与同一最高推理强度，并各自使用全新的容器环境。分项分数由整数 resolved_tasks 除以该次运行的整数 total_tasks 得到通过率再乘 100；三次运行的 total_tasks 必须一致，以保证分母可比。主分 score 是三次运行通过率的算术平均（mean@3），与 Terminal-Bench 官网展示的 accuracy 口径一致。转换器只在结构、三次运行覆盖、整数计数范围和公开证据指纹全部合法后确定性写入数值分数，不产生 null。上游把任务错误与超时计为失败，本评测同样计为失败，不做豁免、插值或最佳重试替换。scored_by=author 表示参赛提交仍须由评测作者核对公开 artifact、Harbor 原始 run 输出、三次运行的独立性、模型与 harness 身份后认可。来自钉死官网快照的上游成绩以 upstream_author_publication 导入，只表示与官网公布值一致，不代表 EvalHub 独立复跑。
+command_template:
+  argv: [node, evals/terminal-bench-harbor/pack-to-result.mjs, "{input}", --out, "{output}"]
+  output: terminal-bench-harbor-result.json
+trials: 3
+tasks:
+  - id: terminal-bench-2-1-full
+    prompt: 使用官方 Harbor 执行器在钉死的 Terminal-Bench 2.1 数据集上完成一次覆盖全部任务的独立运行。Agent 在容器化终端沙箱内自主决策与执行，完成编译、训练、配置、排障等端到端任务；每个任务由数据集自带的校验脚本判定成败。必须使用声明的模型、agent 与最高推理强度，不得挑选子集、跳过失败任务、修改校验脚本或在失败后单独重试补分。共需三次相互独立的完整运行。
+    expected: 该次运行由 Harbor 与任务自带校验脚本判定的已解决任务数与总任务数，通过率范围 0 至 1；EvalHub 分项分数为通过率乘 100，主分为三次运行的算术平均。

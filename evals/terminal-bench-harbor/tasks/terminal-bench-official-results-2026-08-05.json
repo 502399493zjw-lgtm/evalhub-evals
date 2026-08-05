@@ -1,0 +1,35 @@
+{
+  "snapshot_id": "terminal-bench-2.1-official-2026-08-05",
+  "retrieved_on": "2026-08-05",
+  "source": {
+    "title": "Terminal-Bench 2.1 official leaderboard",
+    "url": "https://www.tbench.ai/leaderboard/terminal-bench/2.1",
+    "snapshot_sha256": "7308870578a75405cac3c629f863a3d39d85f5520469356663c7947f83000e44"
+  },
+  "notes": [
+    "本快照只记录官网 Terminal-Bench 2.1 榜单公开展示的 agent 身份、模型身份、accuracy 与其 95% 置信区间半宽，以及榜单标注的日期。",
+    "官网该页面没有公布每次运行的任务总数或已解决任务数，因此本快照不记录分母，也不由百分比反推整数计数。",
+    "accuracy 与 stderr_pct 按官网展示的一位小数原样保留，不做换算、补零或再次四舍五入。",
+    "官网存在并列名次（第 14 名两条），快照按官网展示顺序保留 rank 原值。",
+    "upstream_author_publication 只表示与钉死官网快照一致，不代表 EvalHub 独立复跑或对运行 artifact 的二次审计。"
+  ],
+  "entries": [
+    { "participant_id": "claude-code-fable-5", "rank": 1, "harness": "Claude Code", "model": "Fable 5", "accuracy_pct": 83.8, "stderr_pct": 1.2, "published_on": "2026-06-07" },
+    { "participant_id": "codex-gpt-5.5", "rank": 2, "harness": "Codex", "model": "GPT-5.5", "accuracy_pct": 83.1, "stderr_pct": 1.1, "published_on": "2026-05-01" },
+    { "participant_id": "terminus-2-fable-5", "rank": 3, "harness": "Terminus 2", "model": "Fable 5", "accuracy_pct": 80.4, "stderr_pct": 1.2, "published_on": "2026-06-05" },
+    { "participant_id": "cursor-cli-grok-4.5", "rank": 4, "harness": "Cursor CLI", "model": "Grok 4.5", "accuracy_pct": 79.3, "stderr_pct": 1.5, "published_on": "2026-07-09" },
+    { "participant_id": "claude-code-opus-4.8", "rank": 5, "harness": "Claude Code", "model": "Opus 4.8", "accuracy_pct": 78.9, "stderr_pct": 1.3, "published_on": "2026-07-09" },
+    { "participant_id": "codex-gpt-5.6-terra", "rank": 6, "harness": "Codex", "model": "GPT-5.6 Terra", "accuracy_pct": 78.4, "stderr_pct": 1.3, "published_on": "2026-07-11" },
+    { "participant_id": "terminus-2-gpt-5.5", "rank": 7, "harness": "Terminus 2", "model": "GPT-5.5", "accuracy_pct": 78.0, "stderr_pct": 1.2, "published_on": "2026-05-01" },
+    { "participant_id": "mini-swe-agent-muse-spark-1.1", "rank": 8, "harness": "mini-SWE-agent", "model": "Muse Spark 1.1", "accuracy_pct": 76.2, "stderr_pct": 1.2, "published_on": "2026-07-09" },
+    { "participant_id": "codex-gpt-5.6-luna", "rank": 9, "harness": "Codex", "model": "GPT-5.6 Luna", "accuracy_pct": 75.7, "stderr_pct": 1.3, "published_on": "2026-07-11" },
+    { "participant_id": "claude-code-sonnet-5", "rank": 10, "harness": "Claude Code", "model": "Sonnet 5", "accuracy_pct": 74.6, "stderr_pct": 1.6, "published_on": "2026-07-09" },
+    { "participant_id": "terminus-2-gemini-3-pro", "rank": 11, "harness": "Terminus 2", "model": "Gemini 3 Pro", "accuracy_pct": 73.9, "stderr_pct": 1.3, "published_on": "2026-05-01" },
+    { "participant_id": "claude-code-opus-4.7", "rank": 12, "harness": "Claude Code", "model": "Opus 4.7", "accuracy_pct": 68.9, "stderr_pct": 1.4, "published_on": "2026-05-01" },
+    { "participant_id": "terminus-2-opus-4.7", "rank": 13, "harness": "Terminus 2", "model": "Opus 4.7", "accuracy_pct": 66.1, "stderr_pct": 1.4, "published_on": "2026-05-01" },
+    { "participant_id": "gemini-cli-gemini-3-pro", "rank": 14, "harness": "Gemini CLI", "model": "Gemini 3 Pro", "accuracy_pct": 65.8, "stderr_pct": 1.4, "published_on": "2026-05-01" },
+    { "participant_id": "gemini-cli-gemini-3.1-pro", "rank": 14, "harness": "Gemini CLI", "model": "Gemini 3.1 Pro", "accuracy_pct": 65.8, "stderr_pct": 1.7, "published_on": "2026-05-05" },
+    { "participant_id": "terminus-2-gemini-3.1-pro", "rank": 16, "harness": "Terminus 2", "model": "Gemini 3.1 Pro", "accuracy_pct": 65.6, "stderr_pct": 1.7, "published_on": "2026-05-05" },
+    { "participant_id": "claude-code-glm-5.1", "rank": 17, "harness": "Claude Code", "model": "GLM-5.1", "accuracy_pct": 58.7, "stderr_pct": 1.2, "published_on": "2026-05-01" }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "eval_id": "terminal-bench-harbor",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "terminal-bench-harbor/official-result-to-envelope@1.0.0",
+    "retrieved_on": "2026-08-05",
+    "source": {
+      "title": "Terminal-Bench 2.1 official leaderboard",
+      "url": "https://www.tbench.ai/leaderboard/terminal-bench/2.1",
+      "snapshot_sha256": "7308870578a75405cac3c629f863a3d39d85f5520469356663c7947f83000e44"
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "GPT-5.6 Terra",
+        "harness": "Codex"
+      },
+      "score": 78.4,
+      "raw_metric": {
+        "label": "Terminal-Bench 官网公开 accuracy",
+        "value": "78.4% ± 1.3%"
+      },
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "title": "官网榜单公开字段",
+          "columns": [
+            "官网名次",
+            "harness",
+            "模型",
+            "accuracy",
+            "置信半宽",
+            "官网日期"
+          ],
+          "rows": [
+            {
+              "cells": [
+                6,
+                "Codex",
+                "GPT-5.6 Terra",
+                "78.4%",
+                "± 1.3%",
+                "2026-07-11"
+              ]
+            }
+          ],
+          "note": "辅助展示不参与排序。官网该页面未公布任务总数与已解决任务数，因此这里不展示分母，也不由百分比反推整数计数。"
+        }
+      ],
+      "detail": "Terminal-Bench 2.1 官网榜单于 2026-08-05 公开的成绩：Codex · GPT-5.6 Terra · accuracy 78.4% ± 1.3%，官网名次 6，官网标注日期 2026-07-11。该记录只复现钉死的上游公开结果，不表示 EvalHub 独立复跑，也不代表 Terminal-Bench 官方或 Harbor 维护者对 EvalHub 的认证或背书。"
+    }
+  ]
+}
