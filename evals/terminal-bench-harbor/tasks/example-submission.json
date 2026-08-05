@@ -18,22 +18,22 @@
   "runs": [
     {
       "run_id": "synthetic-tb21-run-1",
-      "resolved_tasks": 40,
-      "total_tasks": 80,
+      "resolved_tasks": 45,
+      "total_tasks": 89,
       "artifact_url": "https://example.com/terminal-bench-harbor/synthetic/run-1",
       "harbor_run_sha256": "9f2b1d4c6a8e0f3b5d7c9a1e2f4b6d8c0a2e4f6b8d0c2a4e6f8b0d2c4a6e8f01"
     },
     {
       "run_id": "synthetic-tb21-run-2",
-      "resolved_tasks": 44,
-      "total_tasks": 80,
+      "resolved_tasks": 49,
+      "total_tasks": 89,
       "artifact_url": "https://example.com/terminal-bench-harbor/synthetic/run-2",
       "harbor_run_sha256": "1a3c5e7b9d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4b6d8f0a23"
     },
     {
       "run_id": "synthetic-tb21-run-3",
-      "resolved_tasks": 42,
-      "total_tasks": 80,
+      "resolved_tasks": 47,
+      "total_tasks": 89,
       "artifact_url": "https://example.com/terminal-bench-harbor/synthetic/run-3",
       "harbor_run_sha256": "2b4d6f8a0c2e4b6d8f0a2c4e6b8d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b45"
     }

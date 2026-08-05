@@ -18,21 +18,21 @@
           "harbor_version": "0.20.0",
           "environment": "docker",
           "runs": 3,
-          "total_tasks_per_run": 80,
-          "evidence_fingerprint": "d72c6e18a926252ee6ed6165b9bec364777e1085ea32d3d76c5e6312e2b74298"
+          "total_tasks_per_run": 89,
+          "evidence_fingerprint": "d53d9b4fa73a7118f02b23ffae5743cda16f7bc8996a3221ed3eddcc3ef4aeab"
         }
       },
-      "score": 52.5,
+      "score": 52.808989,
       "raw_metric": {
         "label": "三次运行通过率 mean@3",
-        "value": "52.5 分"
+        "value": "52.808989 分"
       },
-      "detail": "Terminal-Bench 2.1 三次独立 Harbor 运行证据声明，数据集 terminal-bench@2.1。转换器已核对三次运行的唯一 run ID、一致分母 80、整数已解决任务数、公开 HTTPS 证据地址与三份唯一 SHA-256，并由整数计数确定性计算 mean@3 = 52.5 分。转换器不会输出 null；提交的数值成绩仍须由评测作者核对 Harbor 原始 run 输出、三次运行的独立性、数据集版本与模型及 harness 身份后认可。该结果不代表 Terminal-Bench 官方或 Harbor 维护者的认证或背书。",
+      "detail": "Terminal-Bench 2.1 三次独立 Harbor 运行证据声明，数据集 terminal-bench@2.1。转换器已核对三次运行的唯一 run ID、一致分母 89、整数已解决任务数、公开 HTTPS 证据地址与三份唯一 SHA-256，并由整数计数确定性计算 mean@3 = 52.808989 分。转换器不会输出 null；提交的数值成绩仍须由评测作者核对 Harbor 原始 run 输出、三次运行的独立性、数据集版本与模型及 harness 身份后认可。该结果不代表 Terminal-Bench 官方或 Harbor 维护者的认证或背书。",
       "task_results": [
         {
           "task_id": "terminal-bench-2-1-full",
-          "score": 52.5,
-          "raw": "{\"dataset\":\"terminal-bench@2.1\",\"environment\":\"docker\",\"harbor_version\":\"0.20.0\",\"mean_pass_rate_pct\":52.5,\"runs\":[{\"artifact_url\":\"https://example.com/terminal-bench-harbor/synthetic/run-1\",\"harbor_run_sha256\":\"9f2b1d4c6a8e0f3b5d7c9a1e2f4b6d8c0a2e4f6b8d0c2a4e6f8b0d2c4a6e8f01\",\"pass_rate_pct\":50,\"resolved_tasks\":40,\"run_id\":\"synthetic-tb21-run-1\",\"total_tasks\":80},{\"artifact_url\":\"https://example.com/terminal-bench-harbor/synthetic/run-2\",\"harbor_run_sha256\":\"1a3c5e7b9d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4b6d8f0a23\",\"pass_rate_pct\":55,\"resolved_tasks\":44,\"run_id\":\"synthetic-tb21-run-2\",\"total_tasks\":80},{\"artifact_url\":\"https://example.com/terminal-bench-harbor/synthetic/run-3\",\"harbor_run_sha256\":\"2b4d6f8a0c2e4b6d8f0a2c4e6b8d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b45\",\"pass_rate_pct\":52.5,\"resolved_tasks\":42,\"run_id\":\"synthetic-tb21-run-3\",\"total_tasks\":80}]}"
+          "score": 52.808989,
+          "raw": "{\"dataset\":\"terminal-bench@2.1\",\"environment\":\"docker\",\"harbor_version\":\"0.20.0\",\"mean_pass_rate_pct\":52.808989,\"runs\":[{\"artifact_url\":\"https://example.com/terminal-bench-harbor/synthetic/run-1\",\"harbor_run_sha256\":\"9f2b1d4c6a8e0f3b5d7c9a1e2f4b6d8c0a2e4f6b8d0c2a4e6f8b0d2c4a6e8f01\",\"pass_rate_pct\":50.561798,\"resolved_tasks\":45,\"run_id\":\"synthetic-tb21-run-1\",\"total_tasks\":89},{\"artifact_url\":\"https://example.com/terminal-bench-harbor/synthetic/run-2\",\"harbor_run_sha256\":\"1a3c5e7b9d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4b6d8f0a23\",\"pass_rate_pct\":55.05618,\"resolved_tasks\":49,\"run_id\":\"synthetic-tb21-run-2\",\"total_tasks\":89},{\"artifact_url\":\"https://example.com/terminal-bench-harbor/synthetic/run-3\",\"harbor_run_sha256\":\"2b4d6f8a0c2e4b6d8f0a2c4e6b8d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b45\",\"pass_rate_pct\":52.808989,\"resolved_tasks\":47,\"run_id\":\"synthetic-tb21-run-3\",\"total_tasks\":89}]}"
         }
       ],
       "supplementary_views": [
@@ -49,25 +49,25 @@
             {
               "cells": [
                 "synthetic-tb21-run-1",
-                40,
-                80,
-                "50%"
+                45,
+                89,
+                "50.561798%"
               ]
             },
             {
               "cells": [
                 "synthetic-tb21-run-2",
-                44,
-                80,
-                "55%"
+                49,
+                89,
+                "55.05618%"
               ]
             },
             {
               "cells": [
                 "synthetic-tb21-run-3",
-                42,
-                80,
-                "52.5%"
+                47,
+                89,
+                "52.808989%"
               ]
             }
           ],
@@ -81,29 +81,29 @@
           "series": [
             {
               "t": "synthetic-tb21-run-1",
-              "v": 50
+              "v": 50.561798
             },
             {
               "t": "synthetic-tb21-run-2",
-              "v": 55
+              "v": 55.05618
             },
             {
               "t": "synthetic-tb21-run-3",
-              "v": 52.5
+              "v": 52.808989
             }
           ],
           "events": [
             {
               "t": "synthetic-tb21-run-1",
-              "label": "synthetic-tb21-run-1 · 50 · 40/80 · task success rate"
+              "label": "synthetic-tb21-run-1 · 50.561798 · 45/89 · task success rate"
             },
             {
               "t": "synthetic-tb21-run-2",
-              "label": "synthetic-tb21-run-2 · 55 · 44/80 · task success rate"
+              "label": "synthetic-tb21-run-2 · 55.05618 · 49/89 · task success rate"
             },
             {
               "t": "synthetic-tb21-run-3",
-              "label": "synthetic-tb21-run-3 · 52.5 · 42/80 · task success rate"
+              "label": "synthetic-tb21-run-3 · 52.808989 · 47/89 · task success rate"
             }
           ]
         },
@@ -113,21 +113,21 @@
           "turns": [
             {
               "role": "system",
-              "content": "terminal-bench@2.1 · harbor 0.20.0 · environment docker · 三次运行证据总指纹 sha256:d72c6e18a926252ee6ed6165b9bec364777e1085ea32d3d76c5e6312e2b74298"
+              "content": "terminal-bench@2.1 · harbor 0.20.0 · environment docker · 三次运行证据总指纹 sha256:d53d9b4fa73a7118f02b23ffae5743cda16f7bc8996a3221ed3eddcc3ef4aeab"
             },
             {
               "role": "synthetic-tb21-run-1",
-              "content": "https://example.com/terminal-bench-harbor/synthetic/run-1 · resolved 40/80 · harbor_run sha256:9f2b1d4c6a8e0f3b5d7c9a1e2f4b6d8c0a2e4f6b8d0c2a4e6f8b0d2c4a6e8f01",
+              "content": "https://example.com/terminal-bench-harbor/synthetic/run-1 · resolved 45/89 · harbor_run sha256:9f2b1d4c6a8e0f3b5d7c9a1e2f4b6d8c0a2e4f6b8d0c2a4e6f8b0d2c4a6e8f01",
               "status": "author-review-required"
             },
             {
               "role": "synthetic-tb21-run-2",
-              "content": "https://example.com/terminal-bench-harbor/synthetic/run-2 · resolved 44/80 · harbor_run sha256:1a3c5e7b9d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4b6d8f0a23",
+              "content": "https://example.com/terminal-bench-harbor/synthetic/run-2 · resolved 49/89 · harbor_run sha256:1a3c5e7b9d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4b6d8f0a23",
               "status": "author-review-required"
             },
             {
               "role": "synthetic-tb21-run-3",
-              "content": "https://example.com/terminal-bench-harbor/synthetic/run-3 · resolved 42/80 · harbor_run sha256:2b4d6f8a0c2e4b6d8f0a2c4e6b8d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b45",
+              "content": "https://example.com/terminal-bench-harbor/synthetic/run-3 · resolved 47/89 · harbor_run sha256:2b4d6f8a0c2e4b6d8f0a2c4e6b8d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b45",
               "status": "author-review-required"
             }
           ]

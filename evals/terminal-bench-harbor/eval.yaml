@@ -15,7 +15,7 @@ score_policy: required
 baseline_policy: required
 score_unit: 分
 scoring_note: >-
-  参赛者必须用官方 Harbor 执行器在钉死的 Terminal-Bench 2.1 数据集上完成三次相互独立的完整运行，每次运行覆盖数据集全部任务，不得挑选子集、跳过失败任务或在失败后单独重试补分。三次运行使用同一模型、同一 agent、同一 harness 版本与同一最高推理强度，并各自使用全新的容器环境。分项分数由整数 resolved_tasks 除以该次运行的整数 total_tasks 得到通过率再乘 100；三次运行的 total_tasks 必须一致，以保证分母可比。主分 score 是三次运行通过率的算术平均（mean@3），与 Terminal-Bench 官网展示的 accuracy 口径一致。转换器只在结构、三次运行覆盖、整数计数范围和公开证据指纹全部合法后确定性写入数值分数，不产生 null。上游把任务错误与超时计为失败，本评测同样计为失败，不做豁免、插值或最佳重试替换。scored_by=author 表示参赛提交仍须由评测作者核对公开 artifact、Harbor 原始 run 输出、三次运行的独立性、模型与 harness 身份后认可。来自钉死官网快照的上游成绩以 upstream_author_publication 导入，只表示与官网公布值一致，不代表 EvalHub 独立复跑。
+  参赛者必须用官方 Harbor 执行器在钉死的 Terminal-Bench 2.1 数据集上完成三次相互独立的完整运行，每次运行覆盖数据集全部任务，不得挑选子集、跳过失败任务或在失败后单独重试补分。三次运行使用同一模型、同一 agent、同一 harness 版本与同一最高推理强度，并各自使用全新的容器环境。分项分数由整数 resolved_tasks 除以该次运行的整数 total_tasks 得到通过率再乘 100；三次运行的 total_tasks 必须都是 89，即 terminal-bench-2-1 仓库 tasks/ 下的任务目录数。主分 score 是三次运行通过率的算术平均（mean@3）。官网 accuracy 是每题 5 次尝试、在 445 次尝试上汇总的通过率，估计量与 mean@3 不同，两者不能直接等同。转换器只在结构、三次运行覆盖、整数计数范围和公开证据指纹全部合法后确定性写入数值分数，不产生 null。上游把任务错误与超时计为失败，本评测同样计为失败，不做豁免、插值或最佳重试替换。scored_by=author 表示参赛提交仍须由评测作者核对公开 artifact、Harbor 原始 run 输出、三次运行的独立性、模型与 harness 身份后认可。来自钉死官网快照的上游成绩以 upstream_author_publication 导入，只表示与官网公布值一致，不代表 EvalHub 独立复跑。
 command_template:
   argv: [node, evals/terminal-bench-harbor/pack-to-result.mjs, "{input}", --out, "{output}"]
   output: terminal-bench-harbor-result.json

@@ -7,6 +7,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { basename, dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   EvalDefSchema,
   ResultFileSchema,
@@ -69,7 +70,7 @@ function parseArgs(argv) {
 }
 
 function loadSnapshot() {
-  const filePath = new URL(SNAPSHOT_URL).pathname;
+  const filePath = fileURLToPath(SNAPSHOT_URL);
   let metadata;
   try {
     metadata = lstatSync(filePath);
@@ -120,12 +121,23 @@ function loadSnapshot() {
       `${entry.participant_id} 的 accuracy_pct 必须是 0 至 100 的数值`,
     );
     assert(
-      typeof entry.stderr_pct === "number" &&
-        Number.isFinite(entry.stderr_pct) &&
-        entry.stderr_pct >= 0 &&
-        entry.stderr_pct <= 100,
-      `${entry.participant_id} 的 stderr_pct 必须是 0 至 100 的数值`,
+      typeof entry.accuracy_stderr_pct === "number" &&
+        Number.isFinite(entry.accuracy_stderr_pct) &&
+        entry.accuracy_stderr_pct >= 0 &&
+        entry.accuracy_stderr_pct <= 100,
+      `${entry.participant_id} 的 accuracy_stderr_pct 必须是 0 至 100 的数值`,
     );
+    assert(
+      Number.isSafeInteger(entry.n_trials) && entry.n_trials >= 1,
+      `${entry.participant_id} 的 n_trials 必须是正整数`,
+    );
+    for (const key of ["pass_at_2", "pass_at_3", "pass_at_4", "pass_at_5"]) {
+      const value = entry[key];
+      assert(
+        typeof value === "number" && Number.isFinite(value) && value >= 0 && value <= 1,
+        `${entry.participant_id} 的 ${key} 必须是 0 至 1 的数值`,
+      );
+    }
     assert(
       Number.isSafeInteger(entry.rank) && entry.rank >= 1,
       `${entry.participant_id} 的 rank 必须是正整数`,
@@ -163,13 +175,22 @@ function buildEnvelope(snapshot, entry, evalCommit) {
         score,
         raw_metric: {
           label: "Terminal-Bench 官网公开 accuracy",
-          value: `${entry.accuracy_pct}% ± ${entry.stderr_pct}%`,
+          value: `${entry.accuracy_pct}% ± ${entry.accuracy_stderr_pct}%`,
         },
         supplementary_views: [
           {
             type: "metric_table",
             title: "官网榜单公开字段",
-            columns: ["官网名次", "harness", "模型", "accuracy", "置信半宽", "官网日期"],
+            columns: [
+              "官网名次",
+              "harness",
+              "模型",
+              "accuracy",
+              "标准误",
+              "尝试次数",
+              "pass@5",
+              "官网日期",
+            ],
             rows: [
               {
                 cells: [
@@ -177,19 +198,23 @@ function buildEnvelope(snapshot, entry, evalCommit) {
                   entry.harness,
                   entry.model,
                   `${entry.accuracy_pct}%`,
-                  `± ${entry.stderr_pct}%`,
+                  `± ${entry.accuracy_stderr_pct}%`,
+                  entry.n_trials,
+                  entry.pass_at_5,
                   entry.published_on,
                 ],
               },
             ],
             note:
-              "辅助展示不参与排序。官网该页面未公布任务总数与已解决任务数，因此这里不展示分母，也不由百分比反推整数计数。",
+              "辅助展示不参与排序。accuracy_stderr 是官网发布的标准误，不是 95% 置信区间半宽。官网 accuracy 在 n_trials 次尝试上汇总，与 EvalHub 主分 mean@3 的估计量不同，不能直接等同。",
           },
         ],
         detail:
           `Terminal-Bench 2.1 官网榜单于 ${snapshot.retrieved_on} 公开的成绩：` +
-          `${entry.harness} · ${entry.model} · accuracy ${entry.accuracy_pct}% ± ${entry.stderr_pct}%，` +
-          `官网名次 ${entry.rank}，官网标注日期 ${entry.published_on}。` +
+          `${entry.harness} · ${entry.model} · accuracy ${entry.accuracy_pct}%，` +
+          `官网发布标准误 ± ${entry.accuracy_stderr_pct}%（非 95% 置信区间），` +
+          `在 ${entry.n_trials} 次尝试上汇总，官网名次 ${entry.rank}，标注日期 ${entry.published_on}。` +
+          `官网 accuracy 与 EvalHub 主分 mean@3 的估计量不同，不能直接等同。` +
           `该记录只复现钉死的上游公开结果，不表示 EvalHub 独立复跑，也不代表 Terminal-Bench ` +
           `官方或 Harbor 维护者对 EvalHub 的认证或背书。`,
       },
@@ -230,6 +255,10 @@ function writeAtomically(targetPath, result) {
     throw new InputError(`输出目录无法读取：${error.message}`);
   }
   const target = resolve(targetDirectory, basename(targetPath));
+  assert(
+    target !== realpathSync(fileURLToPath(SNAPSHOT_URL)),
+    "输出文件不能覆盖钉死的官网快照",
+  );
   const temporary = resolve(
     targetDirectory,
     `.${basename(target)}.${process.pid}.${Date.now()}.tmp`,

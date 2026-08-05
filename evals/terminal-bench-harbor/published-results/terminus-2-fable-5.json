@@ -16,10 +16,10 @@
         "model": "Fable 5",
         "harness": "Terminus 2"
       },
-      "score": 80.4,
+      "score": 80.45,
       "raw_metric": {
         "label": "Terminal-Bench 官网公开 accuracy",
-        "value": "80.4% ± 1.2%"
+        "value": "80.45% ± 1.16%"
       },
       "supplementary_views": [
         {
@@ -30,7 +30,9 @@
             "harness",
             "模型",
             "accuracy",
-            "置信半宽",
+            "标准误",
+            "尝试次数",
+            "pass@5",
             "官网日期"
           ],
           "rows": [
@@ -39,16 +41,18 @@
                 3,
                 "Terminus 2",
                 "Fable 5",
-                "80.4%",
-                "± 1.2%",
+                "80.45%",
+                "± 1.16%",
+                445,
+                0.9213,
                 "2026-06-05"
               ]
             }
           ],
-          "note": "辅助展示不参与排序。官网该页面未公布任务总数与已解决任务数，因此这里不展示分母，也不由百分比反推整数计数。"
+          "note": "辅助展示不参与排序。accuracy_stderr 是官网发布的标准误，不是 95% 置信区间半宽。官网 accuracy 在 n_trials 次尝试上汇总，与 EvalHub 主分 mean@3 的估计量不同，不能直接等同。"
         }
       ],
-      "detail": "Terminal-Bench 2.1 官网榜单于 2026-08-05 公开的成绩：Terminus 2 · Fable 5 · accuracy 80.4% ± 1.2%，官网名次 3，官网标注日期 2026-06-05。该记录只复现钉死的上游公开结果，不表示 EvalHub 独立复跑，也不代表 Terminal-Bench 官方或 Harbor 维护者对 EvalHub 的认证或背书。"
+      "detail": "Terminal-Bench 2.1 官网榜单于 2026-08-05 公开的成绩：Terminus 2 · Fable 5 · accuracy 80.45%，官网发布标准误 ± 1.16%（非 95% 置信区间），在 445 次尝试上汇总，官网名次 3，标注日期 2026-06-05。官网 accuracy 与 EvalHub 主分 mean@3 的估计量不同，不能直接等同。该记录只复现钉死的上游公开结果，不表示 EvalHub 独立复跑，也不代表 Terminal-Bench 官方或 Harbor 维护者对 EvalHub 的认证或背书。"
     }
   ]
 }

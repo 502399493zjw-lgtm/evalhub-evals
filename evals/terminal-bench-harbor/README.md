@@ -4,13 +4,14 @@ Terminal-Bench 让 Agent 在真实的容器化终端里独立完成端到端任�
 
 - 项目官网与榜单：<https://www.tbench.ai/leaderboard/terminal-bench/2.1>
 - 任务库：<https://www.tbench.ai/tasks>
-- 数据集与执行器仓库：<https://github.com/harbor-framework/terminal-bench>
+- 2.1 数据集仓库（89 个任务）：<https://github.com/harbor-framework/terminal-bench-2-1>
+- Terminal-Bench 主仓库与执行器：<https://github.com/harbor-framework/terminal-bench>
 - Harbor 执行框架：<https://github.com/harbor-framework/harbor>
 - 论文：Terminal-Bench: Benchmarking Agents on Hard, Realistic Tasks in Command Line Interfaces（ICLR 2026）<https://openreview.net/forum?id=a7Qa4CcHak>
 
 ## 来源与边界
 
-Harbor 与 Terminal-Bench 均以 Apache License 2.0 发布。本目录**没有**复制上游代码、任务、数据集或运行 artifact，只链接并钉死来源；示例 JSON 完全是合成数据。实际运行者须自行遵守 Terminal-Bench、Harbor 以及各任务镜像依赖的当前条款。
+Harbor、Terminal-Bench 主仓库与 `terminal-bench-2-1` 数据集仓库均以 Apache License 2.0 发布（三者 LICENSE 均已核对）。本目录**没有**复制上游代码、任务、数据集或运行 artifact，只链接并钉死来源；示例 JSON 完全是合成数据。实际运行者须自行遵守 Terminal-Bench、Harbor 以及各任务镜像依赖的当前条款。
 
 EvalHub 页面与本目录的转换器不代表 Terminal-Bench 官方、Harbor 维护者或论文作者的认证、背书或替代实现。EvalHub 不在受限 runner 内运行容器或调用模型；custom runner 只把三次运行声明与证据指纹转换成带数值分数的结果文件。
 
@@ -27,13 +28,15 @@ EvalHub 页面与本目录的转换器不代表 Terminal-Bench 官方、Harbor �
 2. 每次运行使用全新的容器环境，互不复用工作副本或缓存结果。
 3. 三次运行使用同一模型、同一 agent、同一 harness 版本与同一最高推理强度（声明统一填写 `reasoning_effort: "max"`，作者再核对该 runner 的实际最高档配置）。
 4. 不得挑选子集、跳过失败任务、修改或绕过任务自带校验脚本，也不得在失败后单独重试该任务来补分。
-5. 三次运行的 `total_tasks` 必须一致，否则分母不可比，转换直接失败。
+5. 三次运行的 `total_tasks` 必须都是 **89**（`terminal-bench-2-1` 仓库 `tasks/` 下的任务目录数），否则转换直接失败。
 
 Harbor 默认使用本地 Docker 执行，也支持切换到云 sandbox 后端横向扩容；`protocol.environment` 记录本次实际使用的后端（例如 `docker`）。上游文档提醒沙箱化 agent 评测通常较慢，横向扩容是加速手段而非硬性要求。
 
 ## 计分
 
-分项分数由整数计数唯一确定：`resolved_tasks ÷ total_tasks × 100`。主分 `score` 是三次运行通过率的算术平均（**mean@3**），与官网 accuracy 口径一致，规范到小数点后最多 6 位。
+分项分数由整数计数唯一确定：`resolved_tasks ÷ total_tasks × 100`。主分 `score` 是三次运行通过率的算术平均（**mean@3**），规范到小数点后最多 6 位。
+
+**与官网 accuracy 的关系**：官网榜单要求每题 5 次尝试，其 accuracy 是在 445 次尝试（89 题 × 5）上汇总的通过率，并另行公布 `pass@2` 至 `pass@5`。本评测的 mean@3 是三次完整运行通过率的宏平均，**估计量与官网不同，不能直接等同**。两类成绩虽同列展示，比较时须注意这一差别。
 
 上游把任务错误与超时反映在通过率里，本评测同样计为失败，不做豁免、插值或「最佳重试」替换。缺少任一次运行、计数非法或证据不合规时整份提交不判分，不计算部分总分。
 
@@ -41,9 +44,11 @@ Harbor 默认使用本地 Docker 执行，也支持切换到云 sandbox 后端�
 
 ## 官网已发表成绩
 
-[`tasks/terminal-bench-official-results-2026-08-05.json`](tasks/terminal-bench-official-results-2026-08-05.json) 是官网榜单在 2026-08-05 的可机读快照，包含 17 条成绩的 harness、模型、accuracy、置信区间半宽、官网名次与官网标注日期，以及来源页面 SHA-256。
+[`tasks/terminal-bench-official-results-2026-08-05.json`](tasks/terminal-bench-official-results-2026-08-05.json) 是官网榜单在 2026-08-05 的可机读快照，包含 17 条成绩的 harness、模型、accuracy、accuracy_stderr、n_trials、`pass@2` 至 `pass@5`、官网名次与标注日期，以及来源页面 SHA-256。数值直接取自该页面内嵌数据的原始精度（例如 `83.82`），未做四舍五入；官网表格展示时才舍入到一位小数。
 
-**官网该页面没有公布任务总数或已解决任务数**，因此快照不记录分母，也**不由百分比反推整数计数**。这是与参赛提交路径的关键差别：参赛提交必须给出真实整数计数，而上游导入只保留官网确实公布的百分比。
+**关于标准误**：官网发布的字段是 `accuracy_stderr`（标准误）；该页面没有出现 “95%” 或 “confidence” 字样，因此快照据实记录为标准误，**不换算成任何置信区间**。
+
+**关于分母**：官网榜单页不直接展示任务数，但其内嵌数据的 `n_trials` 为 445（Claude Code · Opus 4.7 一条为 447），而 `terminal-bench-2-1` 仓库 `tasks/` 下正好有 **89** 个任务目录，两者一致（445 = 89 × 5）。参赛提交的 `total_tasks` 因此钉死为 89。上游导入路径仍只保留官网公布的百分比，不由百分比反推每题成败计数。
 
 `official-result-to-envelope.mjs` 会重新校验快照结构、17 条唯一身份、数值范围与日期格式，然后生成 `upstream_author_publication` 结果，签入 [`published-results/`](published-results/)。该类型结果必须含非空 `score`，不能用它冒充一次独立 EvalHub 复跑。
 

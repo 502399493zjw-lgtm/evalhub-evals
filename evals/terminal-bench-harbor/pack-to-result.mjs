@@ -26,8 +26,11 @@ const SHA256_PATTERN = /^[a-f0-9]{64}$/u;
 const SAFE_ID_PATTERN = /^[A-Za-z0-9._/:+-]+$/u;
 const RUN_ID_PATTERN = /^[A-Za-z0-9._-]{3,128}$/u;
 const CONTROL_CHARACTERS = /[\u0000-\u001f\u007f-\u009f]/u;
-const MIN_TOTAL_TASKS = 1;
-const MAX_TOTAL_TASKS = 10_000;
+// terminal-bench@2.1 的固定任务数。官网榜单页内嵌数据显示每条成绩
+// n_trials = 445 = 89 x 5（提交要求每题 5 次尝试），Claude Code · Opus 4.7
+// 一条为 447；数据集仓库同样是 89 个 task.toml。参赛运行必须覆盖全部 89 题，
+// 因此这里钉死分母，避免用 1 题 1 次刷出 100 分。
+const EXPECTED_TOTAL_TASKS = 89;
 
 class InputError extends Error {
   constructor(message) {
@@ -199,10 +202,8 @@ function validateRun(value, index) {
   const runId = nonEmptyString(value.run_id, `${label}.run_id`, 128);
   assert(RUN_ID_PATTERN.test(runId), `${label}.run_id 只能包含字母、数字和 ._-`);
   assert(
-    Number.isSafeInteger(value.total_tasks) &&
-      value.total_tasks >= MIN_TOTAL_TASKS &&
-      value.total_tasks <= MAX_TOTAL_TASKS,
-    `${label}.total_tasks 必须是 ${MIN_TOTAL_TASKS} 至 ${MAX_TOTAL_TASKS} 的安全整数`,
+    value.total_tasks === EXPECTED_TOTAL_TASKS,
+    `${label}.total_tasks 必须是 ${EXPECTED_TOTAL_TASKS}，即 terminal-bench@2.1 的全部任务`,
   );
   assert(
     Number.isSafeInteger(value.resolved_tasks) &&
