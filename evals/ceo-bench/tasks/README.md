@@ -4,6 +4,7 @@
 
 - `example-evidence/submission.json`：参赛模型、provider、harness 与三个公开 artifact 的声明。
 - `example-evidence/run-{1,2,3}/`：与 manifest 同级的三次合成证据。
+- `example-submission.json`：仅供仓库的隔离 runner CI 使用，内容指向同一组合成证据；正式 CLI 的 `{input}` 不会自动选择它。
 - 每次证据均含 remote、commit、唯一 session 列表、status、final cash 查询与经过白名单脱敏的 history JSONL。
 
 审查源码后，在 `evalhub fetch` 下载的 pinned checkout 根目录显式安装锁定依赖，再运行合成测试。转换器不会静默安装依赖；不要使用可能改写锁文件并破坏 checkout 洁净性的 `npm install`：
