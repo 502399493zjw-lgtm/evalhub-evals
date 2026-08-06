@@ -20,6 +20,8 @@ Princeton University 的 **CEO-Bench: Can Agents Play the Long Game?** 让 agent
 
 EvalHub 页面与转换器不代表 Princeton 官方认证或作者背书。两个上游 GitHub 仓库在当前评测定义采用该版本时没有代码许可证，因此这里只链接并固定官方来源，不复制或重新发布其代码、文档、数据库或二进制。论文页面的 CC BY 4.0 标记不自动授权这些仓库内容。
 
+当前 `protocol_revision: 2` 把评测明确标记为外部工作流，并要求转换器接收参赛者实际生成的提交 JSON。`protocol_revision: 1` 的正式命令曾引用仓库内的合成示例；计分规则没有改变，但执行方式和输入身份契约已经改变，因此本次提升协议版本，旧版本成绩不会被误认为与当前提交链路可直接比较。
+
 ## EvalHub 固定复现配置
 
 每个成绩必须提供三次运行，并且三次运行都满足：
@@ -37,22 +39,43 @@ EvalHub 页面与转换器不代表 Princeton 官方认证或作者背书。两�
 
 ## 跑三次并采集证据
 
-先在三个不同目录各自完成一次官方运行。不要在同一个工作副本里创建三个 session。
-
-从 EvalHub evals 仓库根目录创建一份完整提交目录。`submission.json` 与三个证据目录必须在同一父目录，不能只把 manifest 单独复制到其他位置：
+先在一个独立工作目录安装当前发布的 EvalHub CLI，下载并审查钉死的评测源码：
 
 ```bash
-mkdir -p ceobench-submission/run-{1,2,3}
-cp evals/ceo-bench/tasks/example-evidence/submission.json \
-  ceobench-submission/submission.json
+npm install -g @evalhub/cli
+evalhub fetch ceo-bench
 ```
+
+`evalhub fetch` 会打印评测目录和 pinned commit。根据打印路径找到该 checkout 的仓库根目录，检查 `package.json`、`package-lock.json`、本 README 和转换器源码后，在这个 pinned checkout 根目录显式安装锁定依赖，再回到最初执行 `evalhub fetch` 的工作目录：
+
+```bash
+export EVALHUB_EVALS_ROOT="/absolute/path/to/pinned/evalhub-evals-checkout"
+(
+  cd "$EVALHUB_EVALS_ROOT"
+  npm ci --ignore-scripts
+)
+```
+
+CLI 不会也不应静默安装候选仓库依赖。不要在 pinned checkout 中运行 `npm install`，因为它可能改写锁文件并触发洁净性检查；后续 `evalhub pack` 仍须从最初执行 `evalhub fetch` 的工作目录运行，才能复用同一个 checkout。
+
+先在三个不同目录各自完成一次官方运行。不要在同一个工作副本里创建三个 session。
+
+在 pinned checkout 之外创建一份完整提交目录，避免污染钉死源码。`submission.json` 与三个证据目录必须在同一父目录，不能只把 manifest 单独复制到其他位置：
+
+```bash
+export CEOBENCH_SUBMISSION_ROOT="/absolute/path/to/original-workdir/ceobench-submission"
+mkdir -p "$CEOBENCH_SUBMISSION_ROOT"/run-{1,2,3}
+cp "$EVALHUB_EVALS_ROOT/evals/ceo-bench/tasks/example-evidence/submission.json" \
+  "$CEOBENCH_SUBMISSION_ROOT/submission.json"
+```
+
+复制后立即编辑 `$CEOBENCH_SUBMISSION_ROOT/submission.json`：替换全部合成的 `participant.model`、`participant.harness`、`participant.harness_version`、`participant.config.provider` 和三个 `artifact_url`，并确认它们指向本次真实的模型、runner 版本与公开证据。不要原样提交 `example/synthetic-agent-20260723` 或 `example.com` 值；三个 `evidence_dir` 继续保持为该 manifest 同目录下的 `run-1`、`run-2`、`run-3`。
 
 每次结束后，设置这三个非敏感路径变量。把示例值换成当前 EvalHub evals 仓库、该次官方运行副本和本次输出目录的绝对路径；`CEOBENCH_SESSION_ID` 换成该次唯一的 session ID：
 
 ```bash
-export EVALHUB_EVALS_ROOT="/absolute/path/to/evalhub-evals"
 export CEOBENCH_RUN_ROOT="/absolute/path/to/run-ceobench-copy-1"
-export CEOBENCH_EVIDENCE_DIR="$EVALHUB_EVALS_ROOT/ceobench-submission/run-1"
+export CEOBENCH_EVIDENCE_DIR="$CEOBENCH_SUBMISSION_ROOT/run-1"
 export CEOBENCH_SESSION_ID="<session-id>"
 
 cd "$CEOBENCH_RUN_ROOT"
@@ -75,19 +98,20 @@ node "$EVALHUB_EVALS_ROOT/evals/ceo-bench/sanitize-history.mjs" \
 
 ## 生成结果
 
-填写提交目录中的 [`submission.json`](tasks/example-evidence/submission.json)。`participant.model` 必须包含与 `participant.config.provider` 一致的 provider 命名空间，并以真实模型发布日期结尾，例如 `anthropic/claude-sonnet-4-6-20260217`。`participant.config.reasoning_effort` 必须填写标准化值 `"max"`。三个 `evidence_dir` 保持为同目录下的 `run-1`、`run-2`、`run-3`。
+再次检查 `$CEOBENCH_SUBMISSION_ROOT/submission.json`。`participant.model` 必须包含与 `participant.config.provider` 一致的 provider 命名空间，并以真实模型发布日期结尾，例如 `anthropic/claude-sonnet-4-6-20260217`。`participant.config.reasoning_effort` 必须填写标准化值 `"max"`。三个 `artifact_url` 必须是对应这三个真实证据包的稳定公开 HTTPS 地址；三个 `evidence_dir` 保持为同目录下的 `run-1`、`run-2`、`run-3`。
 
-然后从 EvalHub evals 仓库根目录运行：
+然后回到最初执行 `evalhub fetch` 的工作目录，让 CLI 把真实 manifest 传给钉死 commit 内的转换器：
 
 ```bash
-node evals/ceo-bench/pack-to-result.mjs \
-  ceobench-submission/submission.json \
-  --out ceo-bench-result.json
-npx @evalhub/cli@0.1.0 validate ceo-bench-result.json
-npx @evalhub/cli@0.1.0 submit ceo-bench-result.json
+cd "/absolute/path/to/original-workdir"
+evalhub pack ceo-bench \
+  --input "$CEOBENCH_SUBMISSION_ROOT/submission.json" \
+  --out "$PWD/ceo-bench-result.json"
+evalhub validate "$PWD/ceo-bench-result.json"
+evalhub submit "$PWD/ceo-bench-result.json"
 ```
 
-转换器不调用模型，也不读取上游受保护文件。它会检查恰好三次独立运行、官方 remote 与 commit、协议参数、session 交叉一致性、运行是否完整、严格脱敏的逐周 history、唯一终局现金查询、文件大小与 SHA-256，并以原子方式写结果。
+转换器不调用模型，也不读取上游受保护文件。它只对声明格式与内部一致性做检查，包括恰好三次独立运行、官方 remote 与 commit、协议参数、session 交叉一致性、运行是否完整、严格脱敏的逐周 history、唯一终局现金查询、文件大小与 SHA-256，并以原子方式写结果；公开 artifact 内容、模型身份、运行过程及成绩真实性仍须评测作者审核。
 
 转换器始终输出 `score: null`。平台接收后仍是待作者判分、待认可状态。
 
