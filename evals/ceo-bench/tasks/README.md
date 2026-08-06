@@ -6,9 +6,10 @@
 - `example-evidence/run-{1,2,3}/`：与 manifest 同级的三次合成证据。
 - 每次证据均含 remote、commit、唯一 session 列表、status、final cash 查询与经过白名单脱敏的 history JSONL。
 
-可以从仓库根目录运行：
+审查源码后，在 `evalhub fetch` 下载的 pinned checkout 根目录显式安装锁定依赖，再运行合成测试。转换器不会静默安装依赖；不要使用可能改写锁文件并破坏 checkout 洁净性的 `npm install`：
 
 ```bash
+npm ci --ignore-scripts
 node evals/ceo-bench/pack-to-result.mjs \
   evals/ceo-bench/tasks/example-evidence/submission.json \
   --out /tmp/ceo-bench-example-result.json

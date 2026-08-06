@@ -687,10 +687,12 @@ function buildResult(manifest, runs, evalCommit) {
         },
         detail:
           `CEO-Bench 证据包，钉死官方运行仓库 commit ${PINNED_SOURCE_COMMIT}。` +
-          `已本地校验 3 个独立 session：seed 42、初始现金 1,000,000 USD、default 场景、` +
+          `转换器只完成 3 个独立 session 的声明格式与内部一致性检查：seed 42、` +
+          `初始现金 1,000,000 USD、default 场景、` +
           `相同 simulator_llm 配置、完整的 EvalHub 固定整周复现配置、` +
           `严格白名单脱敏的逐周 history 和唯一 final_cash 查询输出。` +
-          `${scoreExplanation}提交侧 score 保持 null，只有评测集作者核对公开 artifact 与本地 SHA-256 后才能判分和认可。` +
+          `这些检查不验证公开 artifact 内容、模型身份、运行过程或成绩真实性；${scoreExplanation}` +
+          `提交侧 score 保持 null，只有评测集作者核对公开 artifact 与本地 SHA-256 后才能判分和认可。` +
           `该 EvalHub 结果不代表 Princeton 官方榜单、官方认证或作者背书。`,
         showcases: [
           {
@@ -814,7 +816,9 @@ function main() {
   }
   const representative = result.results[0];
   console.log(
-    `pack-to-result: 已校验 3 次运行；${representative.raw_metric.value} → ${target}`,
+    `pack-to-result: 3 次运行的声明格式与内部一致性检查通过；` +
+      `公开 artifact 内容、模型身份及成绩真实性待评测作者审核；` +
+      `${representative.raw_metric.value} → ${target}`,
   );
 }
 

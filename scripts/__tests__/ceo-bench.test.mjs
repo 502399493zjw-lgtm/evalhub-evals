@@ -18,6 +18,7 @@ const repositoryRoot = path.resolve(testDirectory, "../..");
 const evalDirectory = path.join(repositoryRoot, "evals", "ceo-bench");
 const packer = path.join(evalDirectory, "pack-to-result.mjs");
 const sanitizer = path.join(evalDirectory, "sanitize-history.mjs");
+const sampleResult = path.join(evalDirectory, "sample-result.json");
 const exampleSubmission = path.join(evalDirectory, "tasks", "example-evidence");
 const officialResultsSnapshot = path.join(
   evalDirectory,
@@ -112,6 +113,9 @@ test("packs exactly three valid trials and selects the best completed run", asyn
   ]);
 
   assert.equal(run.status, 0, run.stderr);
+  assert.match(run.stdout, /声明格式与内部一致性检查通过/u);
+  assert.match(run.stdout, /公开 artifact 内容、模型身份及成绩真实性待评测作者审核/u);
+  assert.doesNotMatch(run.stdout, /已校验/u);
   const result = await readJson(fixture.output);
   const entry = result.results[0];
   assert.equal(result.eval_id, "ceo-bench");
@@ -134,10 +138,16 @@ test("packs exactly three valid trials and selects the best completed run", asyn
   assert.ok(!Object.hasOwn(entry.participant.config, "weeks"));
   assert.match(entry.raw_metric.value, /\$1,500,000\.00/);
   assert.doesNotMatch(entry.raw_metric.value, /497 天|71 个整周/);
+  assert.match(entry.detail, /只完成 3 个独立 session 的声明格式与内部一致性检查/u);
+  assert.match(entry.detail, /不验证公开 artifact 内容、模型身份、运行过程或成绩真实性/u);
   assert.match(entry.detail, /作者回填最高完整终局现金/);
   assert.doesNotMatch(entry.detail, /497 天|71 个整周/);
   assert.match(entry.participant.config.evidence_fingerprint, /^[a-f0-9]{64}$/u);
   assert.equal(entry.showcases[1].turns.length, 4);
+
+  const resultWithoutCommit = { ...result };
+  delete resultWithoutCommit.eval_commit;
+  assert.deepEqual(resultWithoutCommit, await readJson(sampleResult));
 });
 
 test("pins Princeton published scores separately from EvalHub rerun claims", async () => {
