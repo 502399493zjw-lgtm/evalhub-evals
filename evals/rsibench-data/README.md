@@ -66,12 +66,24 @@ EvalHub 页面与转换器不代表 Evolvent AI、论文作者或 RSIBench 官�
 
 证据落地页应让作者核对原始文件与指纹，但不得公开密钥、临时签名 URL、`.env`、个人信息、目标 benchmark 的受保护任务/标签、未脱敏推理、Tinker 或 E2B 凭据。URL 不能包含 query、fragment、用户名或密码。若许可证或数据协议不允许公开某个原始文件，应发布允许分发的白名单摘要，并向作者提供可审计的合法来源；不能靠删除关键字段制造“通过验证”的假象。
 
-先安装 npm 当前发布的最新版 EvalHub CLI，下载并审查评测源码：
+先在一个独立工作目录安装 npm 当前发布的最新版 EvalHub CLI，下载并审查评测源码：
 
 ```bash
 npm install -g @evalhub/cli
 evalhub fetch rsibench-data
 ```
+
+`evalhub fetch` 会打印评测目录和 pinned commit。根据打印路径找到该 checkout 的仓库根目录，检查 `package.json`、`package-lock.json`、本 README 和转换器源码后，在这个 pinned checkout 根目录显式安装锁定依赖，再回到最初执行 `evalhub fetch` 的工作目录：
+
+```bash
+export EVALHUB_EVALS_ROOT="/absolute/path/to/pinned/evalhub-evals-checkout"
+(
+  cd "$EVALHUB_EVALS_ROOT"
+  npm ci --ignore-scripts
+)
+```
+
+CLI 不会也不应静默安装候选仓库依赖。不要在 pinned checkout 中运行 `npm install`，因为它可能改写锁文件并触发洁净性检查；后续 `evalhub pack` 仍须从最初执行 `evalhub fetch` 的工作目录运行，才能复用同一个 checkout。
 
 按本 README 和上游 RSIBench-Data 文档，在 Harbor/E2B/Tinker 完成六次独立运行后，另建真实提交 JSON。[`tasks/example-submission.json`](tasks/example-submission.json) 只用于展示字段结构和转换器自测，不是默认提交输入，也不得当作真实成绩。然后让 CLI 用该真实 JSON 调用钉死 commit 内的转换器：
 
@@ -85,7 +97,7 @@ evalhub submit /absolute/path/to/rsibench-data-result.json
 
 `evalhub run rsibench-data` 不会也不应启动这个评测：外部六次运行不在 CLI 的本地 runner 内完成。
 
-转换器不联网、不启动子进程、不下载依赖，也不接触 Tinker、E2B、Harbor 或模型服务。它严格检查 JSON 字段、固定协议、六项覆盖、整数成功次数、唯一 ID、公开 HTTPS 证据 URL 和 SHA-256 格式，并以原子方式写出六项等权宏平均的数值 `score`。缺项、非法计数或非法证据会直接使转换失败，不会生成 `null` 或部分分数。
+转换器不联网、不启动子进程、不下载依赖，也不接触 Tinker、E2B、Harbor 或模型服务。它只对声明格式与内部一致性做检查，包括 JSON 字段、固定协议、六项覆盖、整数成功次数、唯一 ID、公开 HTTPS 证据 URL 和 SHA-256 格式，并以原子方式写出六项等权宏平均的数值 `score`。缺项、非法计数或非法证据会直接使转换失败，不会生成 `null` 或部分分数；公开 artifact 内容、模型身份、运行过程及成绩真实性仍须评测作者审核。
 
 重新生成仓库中四份上游官网成绩结果：
 

@@ -512,9 +512,11 @@ function buildResult(manifest, evalCommit) {
         },
         detail:
           `RSIBench-Data 六项证据声明，固定来源 commit ${SOURCE_COMMIT}。` +
-          `转换器已核对六个唯一 profile、独立 run ID、固定主协议、整数成功次数、` +
+          `转换器只完成声明格式与内部一致性检查：六个唯一 profile、独立 run ID、` +
+          `固定主协议、整数成功次数、` +
           `公开 HTTPS 证据地址和 18 个唯一 SHA-256，并由整数计数确定性计算 EvalHub 派生宏平均 ` +
-          `${displayNumber(proposedMacroAverage)} 分。转换器不会输出 null；非评测作者提交的数值成绩仍须由` +
+          `${displayNumber(proposedMacroAverage)} 分。这些检查不验证公开 artifact 内容、模型身份、` +
+          `运行过程或成绩真实性；转换器不会输出 null，非评测作者提交的数值成绩仍须由` +
           `评测作者核对原始 Harbor 结果、预算、检查点选择顺序、完整性审计、数据隔离与研究者身份后认可。` +
           `该宏平均不是上游官方指标，该 EvalHub 结果也不代表 Evolvent AI 的认证或背书。`,
         task_results: taskResults,
@@ -631,7 +633,9 @@ function main() {
   validateResultEnvelope(result);
   const target = writeResultAtomically(resolve(args.out), result, manifestPath);
   console.log(
-    `pack-to-result: 已校验 ${runs.length} 个 profile；${result.results[0].raw_metric.value} → ${target}`,
+    `pack-to-result: ${runs.length} 个 profile 的声明格式与内部一致性检查通过；` +
+      `公开 artifact 内容、模型身份及成绩真实性待评测作者审核；` +
+      `${result.results[0].raw_metric.value} → ${target}`,
   );
 }
 
