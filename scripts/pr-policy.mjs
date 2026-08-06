@@ -59,6 +59,212 @@ function parseEvalId(contents, source) {
   return matches[0][1];
 }
 
+function parsePolicyScalar(rawValue, source, key) {
+  const value = rawValue.trim();
+  if (value.startsWith('"')) {
+    let escaped = false;
+    let end = -1;
+    for (let index = 1; index < value.length; index += 1) {
+      if (escaped) {
+        escaped = false;
+      } else if (value[index] === "\\") {
+        escaped = true;
+      } else if (value[index] === '"') {
+        end = index;
+        break;
+      }
+    }
+    if (end > 0 && /^(?:\s+#.*)?$/u.test(value.slice(end + 1))) {
+      try {
+        const parsed = JSON.parse(value.slice(0, end + 1));
+        if (typeof parsed === "string") return parsed;
+      } catch {
+        // Rejected below as an ambiguous scalar.
+      }
+    }
+  } else if (value.startsWith("'")) {
+    let parsed = "";
+    let end = -1;
+    for (let index = 1; index < value.length; index += 1) {
+      if (value[index] !== "'") {
+        parsed += value[index];
+      } else if (value[index + 1] === "'") {
+        parsed += "'";
+        index += 1;
+      } else {
+        end = index;
+        break;
+      }
+    }
+    if (end > 0 && /^(?:\s+#.*)?$/u.test(value.slice(end + 1))) {
+      return parsed;
+    }
+  } else {
+    const withoutComment = value.replace(/\s+#.*$/u, "").trim();
+    if (/^[A-Za-z0-9_-]+$/u.test(withoutComment)) return withoutComment;
+  }
+  reject(
+    "ambiguous_new_eval_yaml",
+    `${source} ${key} must be a single plain or quoted scalar`,
+  );
+}
+
+function scanTopLevelPolicyFields(contents, source) {
+  if (contents.includes("\t")) {
+    reject(
+      "ambiguous_new_eval_yaml",
+      `${source} cannot use tabs in a new eval definition`,
+    );
+  }
+  const lines = contents.replace(/^\uFEFF/u, "").split(/\r?\n/gu);
+  const fields = new Map();
+  for (let lineIndex = 0; lineIndex < lines.length; lineIndex += 1) {
+    const line = lines[lineIndex];
+    if (line.trim().length === 0 || line.trimStart().startsWith("#")) continue;
+    if (/^\s/u.test(line)) continue;
+    const match = /^([A-Za-z_][A-Za-z0-9_-]*):(.*)$/u.exec(line);
+    if (match === null || fields.has(match[1])) {
+      reject(
+        "ambiguous_new_eval_yaml",
+        `${source} must use unique plain top-level mapping keys`,
+      );
+    }
+    fields.set(match[1], { lineIndex, rawValue: match[2] });
+  }
+  return { fields, lines };
+}
+
+function stripPolicyComment(line, source) {
+  let singleQuoted = false;
+  let doubleQuoted = false;
+  let escaped = false;
+  let result = "";
+  for (let index = 0; index < line.length; index += 1) {
+    const character = line[index];
+    if (doubleQuoted) {
+      result += character;
+      if (escaped) {
+        escaped = false;
+      } else if (character === "\\") {
+        escaped = true;
+      } else if (character === '"') {
+        doubleQuoted = false;
+      }
+      continue;
+    }
+    if (singleQuoted) {
+      result += character;
+      if (character === "'" && line[index + 1] === "'") {
+        result += line[index + 1];
+        index += 1;
+      } else if (character === "'") {
+        singleQuoted = false;
+      }
+      continue;
+    }
+    if (character === '"') {
+      doubleQuoted = true;
+      result += character;
+    } else if (character === "'") {
+      singleQuoted = true;
+      result += character;
+    } else if (
+      character === "#" &&
+      (index === 0 || /\s/u.test(line[index - 1]))
+    ) {
+      break;
+    } else {
+      result += character;
+    }
+  }
+  if (singleQuoted || doubleQuoted || escaped) {
+    reject(
+      "ambiguous_custom_command",
+      `${source} command_template cannot use multiline quoted scalars`,
+    );
+  }
+  return result;
+}
+
+function validateNewEvalDefinition(contents, source) {
+  const { fields, lines } = scanTopLevelPolicyFields(contents, source);
+  const runnerField = fields.get("runner");
+  if (runnerField === undefined) {
+    reject("runner_required", `${source} must explicitly declare runner`);
+  }
+  const runner = parsePolicyScalar(runnerField.rawValue, source, "runner");
+  if (runner !== "builtin" && runner !== "custom") {
+    reject("invalid_runner", `${source} runner must be builtin or custom`);
+  }
+  if (runner !== "custom") return;
+
+  const customModeField = fields.get("custom_mode");
+  if (customModeField === undefined) {
+    reject(
+      "custom_mode_required",
+      `${source} must explicitly declare custom_mode for a new custom eval`,
+    );
+  }
+  const customMode = parsePolicyScalar(
+    customModeField.rawValue,
+    source,
+    "custom_mode",
+  );
+  if (customMode !== "executable" && customMode !== "external_workflow") {
+    reject(
+      "invalid_custom_mode",
+      `${source} custom_mode must be executable or external_workflow`,
+    );
+  }
+
+  const commandField = fields.get("command_template");
+  if (commandField === undefined) return;
+  const nextFieldIndex = Math.min(
+    ...[...fields.values()]
+      .map(({ lineIndex }) => lineIndex)
+      .filter((lineIndex) => lineIndex > commandField.lineIndex),
+    lines.length,
+  );
+  const commandText = [
+    stripPolicyComment(commandField.rawValue, source),
+    ...lines
+      .slice(commandField.lineIndex + 1, nextFieldIndex)
+      .map((line) => stripPolicyComment(line, source)),
+  ].join("\n");
+  if (
+    commandText.includes("\\") ||
+    /(?:^|[\s:[,{])(?:[&*][A-Za-z0-9_-]+|!)/mu.test(commandText)
+  ) {
+    reject(
+      "ambiguous_custom_command",
+      `${source} command_template cannot use escapes, YAML anchors, aliases, or tags`,
+    );
+  }
+  if (
+    /^\s*(?:-\s*)?(?:[>|](?:[+-][1-9]?|[1-9][+-]?)?|[^\n:]+:\s*[>|](?:[+-][1-9]?|[1-9][+-]?)?)\s*$/mu.test(
+      commandText,
+    )
+  ) {
+    reject(
+      "ambiguous_custom_command",
+      `${source} command_template cannot use multiline scalar syntax`,
+    );
+  }
+  if (/(?:^|[/\s"'[\]{},:])\.\.(?=$|[/\s"'[\]{},:])/mu.test(commandText)) {
+    reject(
+      "ambiguous_custom_command",
+      `${source} command_template cannot use parent-directory path segments`,
+    );
+  }
+  const normalizedCommandText = commandText.replace(/\/+(?:\.\/+)*/gu, "/");
+  if (/tasks\/example-/u.test(normalizedCommandText)) {
+    reject(
+      "example_input_hardcoded",
+      `${source} command_template.argv cannot hard-code tasks/example-* fixtures; use {input} with custom_mode=external_workflow for participant input`,
+    );
+  }
+}
+
 function evalPath(pathname) {
   const segments = pathname.split("/");
   if (
@@ -266,6 +472,7 @@ export async function evaluatePullRequestPolicy({
   }
 
   if (baseEvalYaml === null) {
+    validateNewEvalDefinition(headEvalYaml, `head:${evalYamlPath}`);
     const headAuthors = await requiredText(
       readText,
       headRepository,

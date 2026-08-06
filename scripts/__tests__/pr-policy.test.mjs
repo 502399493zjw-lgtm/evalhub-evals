@@ -70,12 +70,216 @@ test("allows a user to create one eval owned by their GitHub identity", async ()
     ],
     head: {
       "evals/sample-eval/AUTHORS": "@sample-author\n",
-      "evals/sample-eval/eval.yaml": "id: sample-eval\n",
+      "evals/sample-eval/eval.yaml": "id: sample-eval\nrunner: builtin\n",
     },
   });
   assert.equal(result.mode, "community-eval-create");
   assert.equal(result.slug, "sample-eval");
   assert.equal(result.owner, "sample-author");
+});
+
+test("allows a new custom eval with an explicit mode and participant input", async () => {
+  const result = await evaluate({
+    changedFiles: [
+      file("evals/sample-eval/AUTHORS", "added"),
+      file("evals/sample-eval/eval.yaml", "added"),
+    ],
+    head: {
+      "evals/sample-eval/AUTHORS": "@sample-author\n",
+      "evals/sample-eval/eval.yaml": `id: sample-eval
+runner: "custom" # quoted scalar with a trailing comment
+custom_mode: 'external_workflow' # explicit for every new custom eval
+command_template:
+  # tasks/example-submission.json is injected only by the sandbox
+  argv:
+    - node
+    - evals/sample-eval/pack.mjs
+    - "{input}"
+    - --out
+    - "{output}"
+`,
+    },
+  });
+  assert.equal(result.mode, "community-eval-create");
+});
+
+test("requires new custom evals to declare custom_mode explicitly", async () => {
+  await expectPolicyError(
+    {
+      changedFiles: [file("evals/sample-eval/eval.yaml", "added")],
+      head: {
+        "evals/sample-eval/AUTHORS": "@sample-author\n",
+        "evals/sample-eval/eval.yaml": `id: sample-eval
+runner: custom
+command_template:
+  argv: [node, evals/sample-eval/pack.mjs, "{input}", --out, "{output}"]
+`,
+      },
+    },
+    "custom_mode_required",
+  );
+});
+
+test("rejects new custom eval commands that hard-code example fixtures", async () => {
+  await expectPolicyError(
+    {
+      changedFiles: [file("evals/sample-eval/eval.yaml", "added")],
+      head: {
+        "evals/sample-eval/AUTHORS": "@sample-author\n",
+        "evals/sample-eval/eval.yaml": `id: sample-eval
+runner: custom
+custom_mode: executable
+command_template:
+  argv:
+    - node
+    - evals/sample-eval/pack.mjs
+    - "evals/sample-eval/tasks/example-evidence/submission.json"
+    - --out
+    - "{output}"
+`,
+      },
+    },
+    "example_input_hardcoded",
+  );
+});
+
+for (const [label, fixturePath] of [
+  ["an empty path segment", "evals/sample-eval/tasks//example-submission.json"],
+  [
+    "a current-directory segment",
+    "evals/sample-eval/tasks/./example-submission.json",
+  ],
+]) {
+  test(`rejects example fixtures hidden by ${label}`, async () => {
+    await expectPolicyError(
+      {
+        changedFiles: [file("evals/sample-eval/eval.yaml", "added")],
+        head: {
+          "evals/sample-eval/AUTHORS": "@sample-author\n",
+          "evals/sample-eval/eval.yaml": `id: sample-eval
+runner: custom
+custom_mode: external_workflow
+command_template:
+  argv: [node, evals/sample-eval/pack.mjs, "${fixturePath}", --out, "{output}"]
+`,
+        },
+      },
+      "example_input_hardcoded",
+    );
+  });
+}
+
+for (const fixturePath of [
+  "../tasks/example-submission.json",
+  "evals/sample-eval/tasks/placeholder/../example-submission.json",
+]) {
+  test(`rejects parent-directory path segment in ${fixturePath}`, async () => {
+    await expectPolicyError(
+      {
+        changedFiles: [file("evals/sample-eval/eval.yaml", "added")],
+        head: {
+          "evals/sample-eval/AUTHORS": "@sample-author\n",
+          "evals/sample-eval/eval.yaml": `id: sample-eval
+runner: custom
+custom_mode: external_workflow
+command_template:
+  argv: [node, evals/sample-eval/pack.mjs, "${fixturePath}", --out, "{output}"]
+`,
+        },
+      },
+      "ambiguous_custom_command",
+    );
+  });
+}
+
+test("rejects ambiguous multiline runner scalars for new evals", async () => {
+  await expectPolicyError(
+    {
+      changedFiles: [file("evals/sample-eval/eval.yaml", "added")],
+      head: {
+        "evals/sample-eval/AUTHORS": "@sample-author\n",
+        "evals/sample-eval/eval.yaml": `id: sample-eval
+runner: >-
+  custom
+custom_mode: external_workflow
+`,
+      },
+    },
+    "ambiguous_new_eval_yaml",
+  );
+});
+
+test("rejects YAML aliases in a new custom command", async () => {
+  await expectPolicyError(
+    {
+      changedFiles: [file("evals/sample-eval/eval.yaml", "added")],
+      head: {
+        "evals/sample-eval/AUTHORS": "@sample-author\n",
+        "evals/sample-eval/eval.yaml": `id: sample-eval
+runner: custom
+custom_mode: external_workflow
+command_template: *shared-command
+`,
+      },
+    },
+    "ambiguous_custom_command",
+  );
+});
+
+for (const indicator of ["|2-", ">2+"]) {
+  test(`rejects command block scalar indicator ${indicator}`, async () => {
+    await expectPolicyError(
+      {
+        changedFiles: [file("evals/sample-eval/eval.yaml", "added")],
+        head: {
+          "evals/sample-eval/AUTHORS": "@sample-author\n",
+          "evals/sample-eval/eval.yaml": `id: sample-eval
+runner: custom
+custom_mode: external_workflow
+command_template:
+  argv: ${indicator}
+    node evals/sample-eval/pack.mjs {input} --out {output}
+`,
+        },
+      },
+      "ambiguous_custom_command",
+    );
+  });
+}
+
+test("rejects escaped command paths that could hide an example fixture", async () => {
+  await expectPolicyError(
+    {
+      changedFiles: [file("evals/sample-eval/eval.yaml", "added")],
+      head: {
+        "evals/sample-eval/AUTHORS": "@sample-author\n",
+        "evals/sample-eval/eval.yaml": `id: sample-eval
+runner: custom
+custom_mode: external_workflow
+command_template:
+  argv: [node, evals/sample-eval/pack.mjs, "evals/sample-eval/tasks\\u002fexample-submission.json", --out, "{output}"]
+`,
+      },
+    },
+    "ambiguous_custom_command",
+  );
+});
+
+test("keeps legacy custom eval updates backward-compatible", async () => {
+  const legacyDefinition = `id: sample-eval
+runner: custom
+command_template:
+  argv: [node, evals/sample-eval/pack.mjs, evals/sample-eval/tasks/example-submission.json, --out, "{output}"]
+`;
+  const result = await evaluate({
+    changedFiles: [file("evals/sample-eval/README.md")],
+    base: {
+      "evals/sample-eval/AUTHORS": "@sample-author\n",
+      "evals/sample-eval/eval.yaml": legacyDefinition,
+    },
+    head: { "evals/sample-eval/eval.yaml": legacyDefinition },
+  });
+  assert.equal(result.mode, "community-eval-update");
 });
 
 test("allows an author to update their own eval", async () => {
@@ -128,7 +332,7 @@ test("rejects a new eval whose owner differs from the PR creator", async () => {
       changedFiles: [file("evals/sample-eval/eval.yaml", "added")],
       head: {
         "evals/sample-eval/AUTHORS": "@different-owner\n",
-        "evals/sample-eval/eval.yaml": "id: sample-eval\n",
+        "evals/sample-eval/eval.yaml": "id: sample-eval\nrunner: builtin\n",
       },
     },
     "author_mismatch",

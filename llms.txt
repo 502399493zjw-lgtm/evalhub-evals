@@ -17,7 +17,7 @@ Write exactly one GitHub handle in `AUTHORS`. On creation it must match the GitH
 
 One PR may add or update one slug only. Never rename a slug, modify another author's eval, delete an eval, or mix eval content with root/workflow/contract changes. Ignore PR-body ownership claims: the trusted identity is the GitHub PR creator.
 
-Custom evals also need a documented runner, useful bounded input fixture, and exact `command_template`. Validate with:
+New custom evals also need a documented runner, useful bounded input fixture, an explicit top-level `custom_mode: executable|external_workflow`, and an exact `command_template`. The formal command must not hard-code `tasks/example-*`; external workflows receive real participant input through the standalone `{input}` token, while example paths remain synthetic fixtures for documentation and the locked CI sandbox. Historical definitions that omit `custom_mode` remain schema-compatible, but the new-eval PR gate requires it. Validate with:
 
 ```bash
 npm ci
