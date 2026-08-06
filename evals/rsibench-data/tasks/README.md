@@ -4,9 +4,10 @@
 
 [`example-submission.json`](example-submission.json) 是 custom runner 的完整合成输入，只用于展示结构和本地自测，不是 `evalhub pack` 的默认输入。模型名、run ID、分数、URL 和 SHA-256 都是格式测试数据，不代表任何真实模型成绩，也没有得到 EvalHub 或上游作者核验。真实提交必须另建 JSON，不能修改或冒充这个示例。
 
-从 evals 仓库根目录运行合成测试：
+审查源码后，在 `evalhub fetch` 下载的 pinned checkout 根目录显式安装锁定依赖，再运行合成测试。转换器不会静默安装依赖；不要使用可能改写锁文件并破坏 checkout 洁净性的 `npm install`：
 
 ```bash
+npm ci --ignore-scripts
 node evals/rsibench-data/pack-to-result.mjs \
   evals/rsibench-data/tasks/example-submission.json \
   --out /tmp/rsibench-data-example-result.json
