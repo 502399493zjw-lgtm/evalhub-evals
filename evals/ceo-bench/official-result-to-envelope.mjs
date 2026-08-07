@@ -16,11 +16,30 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "ceo-bench";
-const IMPORTER_VERSION = "ceo-bench/official-result-to-envelope@1.1.0";
+const IMPORTER_VERSION = "ceo-bench/official-result-to-envelope@1.2.0";
 const SNAPSHOT_URL = new URL(
   "./tasks/princeton-official-results-2026-08-03.json",
   import.meta.url,
 );
+
+/**
+ * 上游官网的写法不总能唯一确定平台侧的模型身份。这里只收敛"歧义标签 →
+ * 平台已登记身份"，不做相似度猜测：平台注册表故意不给 "Gemini 3 Flash" 建
+ * 全局 alias（同名可能指 preview 也可能指后续 GA），只对指纹匹配的 CEO-Bench
+ * 快照做绑定。本快照 sha256 97475ea0… 已被平台按该指纹判定为
+ * google/gemini-3-flash-preview，所以 envelope 直接写无歧义的身份。
+ *
+ * 上游原始写法不进 envelope，只留在钉死的 tasks/princeton-official-results-*.json
+ * 的 model_display 里 —— 那份快照连同它的页面 sha256 才是溯源依据，envelope 里
+ * 再写一遍歧义标签只会让平台又解析不了。
+ */
+const PLATFORM_MODEL_IDENTITY = new Map([
+  ["Gemini 3 Flash", "Gemini 3 Flash Preview"],
+]);
+
+function platformModelIdentity(modelDisplay) {
+  return PLATFORM_MODEL_IDENTITY.get(modelDisplay) ?? modelDisplay;
+}
 const EVAL_COMMIT_PATTERN = /^[a-f0-9]{7,40}$/u;
 const SHA256_PATTERN = /^[a-f0-9]{64}$/u;
 const MEAN_SURVIVAL_PATTERN = /^\d{1,3}\.\d ± \d{1,3}\.\d$/u;
@@ -241,7 +260,7 @@ function buildEnvelope(snapshot, result, evalCommit) {
     },
     results: [
       {
-        participant: { model: result.model_display },
+        participant: { model: platformModelIdentity(result.model_display) },
         score: result.score_usd,
         raw_metric: {
           label: "Princeton 官网公开成绩",
