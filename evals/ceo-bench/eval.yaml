@@ -5,6 +5,10 @@ category: useful
 display_category: agent
 description: CEO-Bench 让 Agent 以 100 万美元开局经营一家 AI 创业公司，连续处理定价、研发、增长、算力与企业客户决策，以终局现金衡量长期经营能力。
 hook_title: 给 Agent 500 天，它能把公司经营到最后吗
+upstream:
+  repo: zlab-princeton/ceobench-src
+  commit: d2b7b32e5301a571b77f5f68bd1032adbcd5b464
+  paper: https://arxiv.org/abs/2606.18543v2
 references:
   homepage: https://ceobench.com/
   paper: https://arxiv.org/abs/2606.18543v2
