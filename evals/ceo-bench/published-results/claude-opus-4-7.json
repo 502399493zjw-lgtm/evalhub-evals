@@ -2,7 +2,7 @@
   "eval_id": "ceo-bench",
   "submission": {
     "kind": "upstream_author_publication",
-    "importer_version": "ceo-bench/official-result-to-envelope@1.1.0",
+    "importer_version": "ceo-bench/official-result-to-envelope@1.2.0",
     "retrieved_on": "2026-08-03",
     "source": {
       "title": "Princeton CEO-Bench official results",
