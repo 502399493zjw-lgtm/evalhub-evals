@@ -19,6 +19,81 @@ command_template:
   argv: [node, evals/rsibench-data/pack-to-result.mjs, "{input}", --out, "{output}"]
   output: rsibench-data-result.json
 trials: 1
+detail_profile:
+  source_kind: upstream_publication
+  overview_note: >-
+    以下说明根据 RSIBench-Data 官方网站、论文和固定版本的作者仓库整理；官网 Official 矩阵是上游公开成绩的权威来源，
+    新的 EvalHub 证据提交则遵循本目录单独声明的外部工作流与转换器边界。
+  summary:
+    plain_language: >-
+      这不是直接跑 SWE-bench 或 GPQA，而是评测一个完整研究者系统能否在固定预算和训练栈内，
+      把目标模型的失败证据转化为更有效的训练数据：诊断缺陷、合成 message-format 监督、
+      LoRA SFT 训练、Harbor/E2B 反馈迭代，最后在看到官方结果前选择一个检查点。
+    why_it_matters: >-
+      数据中心型自改进不是让模型自己重跑自己，而是由外部研究者 Agent 在工具栈和成本边界内闭环优化数据生成、
+      训练配置与检查点选择。成败取决于研究者能否把评测反馈转化为有效监督，而不泄漏 benchmark 受保护材料。
+  method_steps:
+    - title: 固定六个独立的预算运行
+      description: >-
+        每个运行对应一个 target profile（三项 SWE、Terminal-Bench 2.0、GPQA Diamond、AIME 2026），
+        单独获得名义 16 小时墙钟和 500 USD Tinker 预算，不能共享或挪用。
+    - title: 研究者诊断并生成训练数据
+      description: >-
+        使用 Harbor/E2B 反馈诊断目标模型 Qwen/Qwen3.5-35B-A3B-Base 的能力缺口，
+        从允许的非 benchmark 公共来源或新合成内容生成 message-format 监督数据，
+        并提交白名单训练配置；不得把评测任务、标签、轨迹或受保护材料转化为训练监督。
+    - title: Tinker LoRA SFT 迭代
+      description: >-
+        每次尝试在共享 Tinker 训练服务上运行 LoRA SFT，产生候选检查点，
+        由 Harbor/E2B 反馈评估，研究者根据反馈迭代。
+    - title: 预先选择检查点并官方复评
+      description: >-
+        必须在看到官方结果前，从预算内已完成的尝试中选择一个检查点；
+        随后由来源的 run_official_eval.sh 在新的 E2B 环境中复评，不能继续训练。
+    - title: 转换器校验声明格式
+      description: >-
+        转换器只对六项运行声明与证据指纹做格式与内部一致性检查，
+        并从整数成功次数和固定分母确定性计算 EvalHub 派生宏平均；
+        不验证公开 artifact 内容、模型身份或成绩真实性，评测作者仍须核对后认可。
+  score_interpretation: >-
+    主分数是六项百分制分数的等权算术平均（EvalHub 派生指标，不是上游官方复合指标）。
+    六项分别由整数成功次数除以固定分母乘 100 唯一派生：三项 SWE 与 GPQA 分母 100，
+    Terminal-Bench 分母 89，AIME 分母 120（30 题 × 每题 4 次解码）。
+    官网四位研究者成绩是上游作者发布的汇总，不表示 EvalHub 独立复跑。
+  key_facts:
+    - value: "6"
+      label: 独立预算运行数
+      description: SWE-bench Verified/Multilingual/Pro、Terminal-Bench 2.0、GPQA Diamond、AIME 2026 各一次。
+      source_url: https://rsibench.co/data/
+    - value: 16 小时
+      label: 每项墙钟预算
+      description: 名义 57,600 秒墙钟预算，六项不能共享或挪用。
+      source_url: https://github.com/evolvent-ai/RSIBench-Data
+    - value: 500 USD
+      label: 每项 Tinker 成本预算
+      description: 固定 Tinker 预算，六项独立。
+      source_url: https://github.com/evolvent-ai/RSIBench-Data
+    - value: Qwen/Qwen3.5-35B-A3B-Base
+      label: 目标模型
+      description: 所有运行使用同一个固定目标模型。
+      source_url: https://github.com/evolvent-ai/RSIBench-Data
+    - value: Claude Opus 4.8
+      label: 外部 rollout 模型
+      description: 固定外部 rollout 模型。
+      source_url: https://github.com/evolvent-ai/RSIBench-Data
+    - value: "4"
+      label: 官网公开研究者数
+      description: Claude Code · Opus-4.8/Sonnet-5、Codex · gpt-5.6-sol/terra 的六项官方成绩。
+      source_url: https://rsibench.co/data/
+  caveats:
+    - title: 成绩来源不是 EvalHub 复跑
+      description: 签入的四份数值成绩只转录官网的模型级公开汇总；不附带 EvalHub usage、逐题结果、模型输出或执行轨迹。
+    - title: 宏平均是 EvalHub 派生指标
+      description: 上游论文和作者仓库没有定义跨六项的单一总分；六项等权宏平均是 EvalHub 为适配单榜显示而定义的派生指标。
+    - title: 新环境不等于 held-out 泛化
+      description: >-
+        论文主协议中的"新环境"是指检查点选择和官方复评使用同一 task subset；
+        结果只能解释为固定协议的可复现性能，不能宣称已证明对未见任务的自适应泛化。
 tasks:
   - id: swe-bench-verified
     prompt: 在钉死的 RSIBench-Data 主协议中，以 SWE-bench Verified profile 启动一次独立的 16 小时 / 500 USD 数据研究运行。研究者 Agent 只能改变合规的训练数据与白名单训练配置，必须从历史尝试中选择检查点后再做官方评测；不得把评测任务、标签、轨迹或其他受保护材料转化为训练监督。
