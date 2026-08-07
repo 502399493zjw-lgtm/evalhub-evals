@@ -480,6 +480,55 @@ async function parseYamlFile(filePath) {
   return document.toJS();
 }
 
+function supplementaryViewContract(view) {
+  if (view.type === "metric_table") {
+    return JSON.stringify({
+      type: view.type,
+      title: view.title,
+      label: view.label,
+      columns: view.columns,
+    });
+  }
+  return JSON.stringify({
+    type: view.type,
+    title: view.title,
+    label: view.label,
+    x_label: view.x_label,
+    y_label: view.y_label,
+  });
+}
+
+function validatePublishedSupplementaryContracts(
+  resultDocument,
+  filePath,
+  contracts,
+  errors,
+) {
+  for (const [resultIndex, result] of resultDocument.results.entries()) {
+    for (const [viewIndex, view] of (result.supplementary_views ?? []).entries()) {
+      if (view.id === undefined) {
+        continue;
+      }
+      const issuePath =
+        `results.${resultIndex}.supplementary_views.${viewIndex}.id`;
+      const contract = supplementaryViewContract(view);
+      const existing = contracts.get(view.id);
+      if (existing === undefined) {
+        contracts.set(view.id, { contract, filePath, issuePath });
+        continue;
+      }
+      if (existing.contract !== contract) {
+        errors.push(
+          fileError(
+            filePath,
+            `${issuePath}: supplementary view "${view.id}" must keep the same type, title, label, and columns or axis labels across every published participant; first defined at ${existing.filePath} (${existing.issuePath})`,
+          ),
+        );
+      }
+    }
+  }
+}
+
 async function validatePublishedResults(evalDir, parsedEval, errors) {
   const directory = path.join(evalDir, "published-results");
   let directoryMetadata;
@@ -634,6 +683,7 @@ async function validatePublishedResults(evalDir, parsedEval, errors) {
     );
   }
 
+  const supplementaryContracts = new Map();
   for (const name of files.sort()) {
     const filePath = path.join(directory, name);
     try {
@@ -659,6 +709,12 @@ async function validatePublishedResults(evalDir, parsedEval, errors) {
           ),
         );
       }
+      validatePublishedSupplementaryContracts(
+        generic.data,
+        filePath,
+        supplementaryContracts,
+        errors,
+      );
       const contextual = validateResultForEval(parsedEval, generic.data);
       if (!contextual.success) {
         errors.push(fileError(filePath, formatIssues(contextual.error)));

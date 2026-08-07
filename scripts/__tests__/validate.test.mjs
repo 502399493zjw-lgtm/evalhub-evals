@@ -83,6 +83,28 @@ function makePublishedResult(
   };
 }
 
+function makeSharedViewResult(model, view) {
+  return {
+    eval_id: "sample-eval",
+    submission: {
+      kind: "upstream_author_publication",
+      importer_version: "1.0.0",
+      retrieved_on: "2026-08-01",
+      source: {
+        url: "https://example.com/official-results",
+        snapshot_sha256: "a".repeat(64),
+      },
+    },
+    results: [
+      {
+        participant: { model },
+        score: 88,
+        supplementary_views: [view],
+      },
+    ],
+  };
+}
+
 async function writePublishedResult(filePath, targetBytes) {
   const source = JSON.stringify(makePublishedResult());
   assert.ok(source.length <= targetBytes);
@@ -248,6 +270,87 @@ test("accepts a reviewed published baseline with structured component metrics", 
       ],
     }, null, 2)}\n`,
   );
+
+  assert.deepEqual(await validateRepository(root), {
+    evalCount: 1,
+    evalIds: ["sample-eval"],
+  });
+});
+
+test("rejects a shared supplementary view id whose metadata drifts across participants", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  await writeFile(
+    path.join(evalDir, "eval.yaml"),
+    `${validEvalYaml}score_policy: required\nbaseline_policy: required\n`,
+  );
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  await writeFile(
+    path.join(directory, "a-official.json"),
+    `${JSON.stringify(
+      makeSharedViewResult("Official Model A", {
+        type: "metric_table",
+        id: "official-breakdown",
+        label: "分项",
+        title: "Components",
+        columns: ["Component", "Score"],
+        rows: [{ cells: ["Language", 88] }],
+      }),
+      null,
+      2,
+    )}\n`,
+  );
+  await writeFile(
+    path.join(directory, "b-official.json"),
+    `${JSON.stringify(
+      makeSharedViewResult("Official Model B", {
+        type: "metric_table",
+        id: "official-breakdown",
+        label: "分项",
+        title: "Component scores",
+        columns: ["Component", "Score"],
+        rows: [{ cells: ["Language", 74] }],
+      }),
+      null,
+      2,
+    )}\n`,
+  );
+
+  await expectInvalid(
+    root,
+    /supplementary view "official-breakdown" must keep the same type, title, label, and columns or axis labels across every published participant/,
+    /first defined at .*a-official\.json \(results\.0\.supplementary_views\.0\.id\)/,
+  );
+});
+
+test("accepts a shared supplementary view id whose rows differ per participant", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  await writeFile(
+    path.join(evalDir, "eval.yaml"),
+    `${validEvalYaml}score_policy: required\nbaseline_policy: required\n`,
+  );
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  for (const [name, model, value] of [
+    ["a-official.json", "Official Model A", 88],
+    ["b-official.json", "Official Model B", 74],
+  ]) {
+    await writeFile(
+      path.join(directory, name),
+      `${JSON.stringify(
+        makeSharedViewResult(model, {
+          type: "metric_table",
+          id: "official-breakdown",
+          label: "分项",
+          title: "Components",
+          columns: ["Component", "Score"],
+          rows: [{ cells: ["Language", value] }],
+        }),
+        null,
+        2,
+      )}\n`,
+    );
+  }
 
   assert.deepEqual(await validateRepository(root), {
     evalCount: 1,
