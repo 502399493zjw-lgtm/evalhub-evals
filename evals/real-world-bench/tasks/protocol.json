@@ -1,0 +1,134 @@
+{
+  "protocol_revision": 1,
+  "protocol_profile": "real-world-bench-v0.1.0-beta.1-evalhub-v1",
+  "source_snapshot": {
+    "repository": "https://github.com/citrolabs/ego-browser-benchmark-framework",
+    "release": "v0.1.0-beta.1",
+    "commit": "d005652fb082529f8426d09d234acbf57923c8d9",
+    "dataset_path": "data/real_world_bench.json",
+    "dataset_sha256": "f8349e0c19ae55911f710e0690f31e4067dd18488496a69ca0696cb3a1f6d73a",
+    "resource_manifest_sha256": "87510200edb50164172dc685ed5cf4397ce7be475f99e55d194760b0a0c3e489",
+    "resume_attachment_sha256": "297009a5a66a31286c6d853e4e44769fe92d047808cce5a05311c756525b91a5",
+    "resume_authoring_source_sha256": "26e8b35b977dd4ea09c7fcd94c9edb583103a30d5e9cff9b4b753d5a93d9cedc",
+    "ticket_rush_source_tree_sha256": "fd16d94a12146cfba26b476e02f591a1218c5dd0d643ab7e78ff1f7ebf83d2bb",
+    "adapter_sha256": "c7e1bca22bb72f43c9b68b6980f5a5c48f9f3afea080928f3492193fb69b3f37",
+    "odysseys_adapter_sha256": "d74fd7c308e46f23a69c7014915611951ffdf1e99b5f1c00efc5fc41b0d3fce0",
+    "task_resources_sha256": "51e3b64a8c3f48e60d838ab4448b2bb89393739d85714b730541d3db5a2001b5",
+    "judge_sha256": "5dd3cdbef85443cfaf016a259e3ca45515b186cdc8aa7edaa7b8e493df5afdbf",
+    "report_metric_sha256": "38d6835f99ae45b0fa3ef77fa9abbeb8b8a216bf5f008980c88f7067a251c112",
+    "config_sha256": "ede0045cf313b2824447b13ea85aca8b5e06bcb2a2aa199d5aba37e45ae91577",
+    "license_sha256": "4e756287a1d148b3e9144e62de20d7d6c16d85e9399d8d7970f3a2996b0b4ac5"
+  },
+  "dataset": {
+    "task_count": 31,
+    "rubric_count": 154,
+    "rubrics_per_task_min": 3,
+    "rubrics_per_task_max": 6,
+    "level_counts": {
+      "low": 6,
+      "medium": 16,
+      "high": 9
+    },
+    "login_required_task_count": 5,
+    "attachment_task_count": 1,
+    "local_site_task_count": 1
+  },
+  "execution": {
+    "iterations": 1,
+    "concurrency": 1,
+    "limit_mode": "time",
+    "task_timeout_seconds": 600,
+    "provider_retry_count": 2,
+    "provider_retry_scope": "provider error, abnormal session stop, or empty output only",
+    "harness": "ego-browser-benchmark-framework",
+    "harness_version": "v0.1.0-beta.1",
+    "provider": "pi",
+    "model_provider": "openai",
+    "browser_tool": "ego-browser",
+    "browser_tool_mode": "off",
+    "browser_tool_version": "participant-declared and held fixed within a comparison",
+    "screenshot_dedup_method": "sha256",
+    "screenshot_capture_mode": "cdp",
+    "reasoning_effort": "medium",
+    "resource_manifest": "tasks/resources.json",
+    "attachment_requirement": {
+      "task_id": "rwb-openai-careers-apply-01",
+      "filename": "resume-cloud-infra.pdf",
+      "sha256": "297009a5a66a31286c6d853e4e44769fe92d047808cce5a05311c756525b91a5",
+      "public_url": "https://raw.githubusercontent.com/citrolabs/ego-browser-benchmark-framework/d005652fb082529f8426d09d234acbf57923c8d9/data/attachments/resume-cloud-infra.pdf"
+    },
+    "local_site_requirement": {
+      "task_id": "rwb-lumen-ticket-rush-01",
+      "site_slug": "ticket-rush",
+      "route": "/ticket-rush",
+      "default_origin": "http://127.0.0.1:4374",
+      "source_tree_sha256": "fd16d94a12146cfba26b476e02f591a1218c5dd0d643ab7e78ff1f7ebf83d2bb"
+    }
+  },
+  "judge": {
+    "provider": "pi",
+    "model": "openai/gpt-5.6-terra",
+    "mode": "agent",
+    "thinking_level": "medium",
+    "max_screenshots": "all",
+    "rubric_evaluation": "independent_binary",
+    "confidence_affects_score": false,
+    "source_report_error_policy": "judge-error tasks have null scores and are excluded from rubric-micro, steps, and efficiency denominators; Perfect keeps the full task denominator",
+    "evalhub_submission_acceptance": "reject unless all 31 tasks and all 154 rubric decisions are complete"
+  },
+  "scoring": {
+    "main_score": "rubric_micro_average",
+    "formula": "sum(passed_rubrics) / sum(total_rubrics) * 100",
+    "range": [
+      0,
+      100
+    ],
+    "higher_is_better": true,
+    "round_decimal_places": 2,
+    "supplementary_metrics": [
+      "perfect_task_rate",
+      "average_steps",
+      "trajectory_efficiency",
+      "level_breakdown"
+    ],
+    "supplementary_rounding": {
+      "perfect_task_rate": 2,
+      "average_steps": 4,
+      "trajectory_efficiency": 4
+    }
+  },
+  "submission_contract": {
+    "protocol_revision": 1,
+    "protocol_profile": "real-world-bench-v0.1.0-beta.1-evalhub-v1",
+    "source_repository": "https://github.com/citrolabs/ego-browser-benchmark-framework",
+    "source_commit": "d005652fb082529f8426d09d234acbf57923c8d9",
+    "source_release": "v0.1.0-beta.1",
+    "dataset_sha256": "f8349e0c19ae55911f710e0690f31e4067dd18488496a69ca0696cb3a1f6d73a",
+    "resource_manifest_sha256": "87510200edb50164172dc685ed5cf4397ce7be475f99e55d194760b0a0c3e489",
+    "resume_attachment_sha256": "297009a5a66a31286c6d853e4e44769fe92d047808cce5a05311c756525b91a5",
+    "ticket_rush_source_tree_sha256": "fd16d94a12146cfba26b476e02f591a1218c5dd0d643ab7e78ff1f7ebf83d2bb",
+    "task_count": 31,
+    "rubric_count": 154,
+    "iterations": 1,
+    "concurrency": 1,
+    "limit_mode": "time",
+    "task_timeout_seconds": 600,
+    "provider_retry_count": 2,
+    "harness": "ego-browser-benchmark-framework",
+    "harness_version": "v0.1.0-beta.1",
+    "provider": "pi",
+    "model_provider": "openai",
+    "browser_tool": "ego-browser",
+    "browser_tool_mode": "off",
+    "screenshot_dedup_method": "sha256",
+    "screenshot_capture_mode": "cdp",
+    "reasoning_effort": "medium",
+    "judge_provider": "pi",
+    "judge_model": "openai/gpt-5.6-terra",
+    "judge_mode": "agent",
+    "judge_thinking_level": "medium",
+    "judge_max_screenshots": "all",
+    "score_metric": "rubric_micro_average",
+    "score_round_decimal_places": 2
+  }
+}

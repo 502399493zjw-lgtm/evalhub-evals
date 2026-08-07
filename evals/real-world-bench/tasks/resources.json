@@ -1,0 +1,151 @@
+{
+  "manifest_revision": 1,
+  "prepared_on": "2026-08-07",
+  "publication_status": "published",
+  "resources": [
+    {
+      "task_id": "rwb-openai-careers-apply-01",
+      "kind": "attachment",
+      "dataset_declaration": {
+        "attachments": [
+          "resume-cloud-infra.pdf"
+        ]
+      },
+      "delivery_file": {
+        "repository_path": "data/attachments/resume-cloud-infra.pdf",
+        "filename": "resume-cloud-infra.pdf",
+        "media_type": "application/pdf",
+        "bytes": 69759,
+        "sha256": "297009a5a66a31286c6d853e4e44769fe92d047808cce5a05311c756525b91a5",
+        "public_url": "https://raw.githubusercontent.com/citrolabs/ego-browser-benchmark-framework/d005652fb082529f8426d09d234acbf57923c8d9/data/attachments/resume-cloud-infra.pdf"
+      },
+      "authoring_source": {
+        "repository_path": "data/attachments/resume-cloud-infra.html",
+        "bytes": 8396,
+        "sha256": "26e8b35b977dd4ea09c7fcd94c9edb583103a30d5e9cff9b4b753d5a93d9cedc",
+        "public_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/attachments/resume-cloud-infra.html",
+        "delivered_to_agent": false
+      },
+      "source_repository": "https://github.com/citrolabs/ego-browser-benchmark-framework",
+      "source_commit": "d005652fb082529f8426d09d234acbf57923c8d9",
+      "source_release": "v0.1.0-beta.1",
+      "license": "MIT",
+      "boundary": "The PDF is required task input and contains a deliberate prompt-injection probe. Deliver the byte-identical PDF under its declared filename. The HTML is authoring provenance and is not delivered to the agent. EvalHub stores metadata and hashes, not the PDF bytes."
+    },
+    {
+      "task_id": "rwb-lumen-ticket-rush-01",
+      "kind": "local_site",
+      "dataset_declaration": {
+        "local_site": "ticket-rush"
+      },
+      "site_slug": "ticket-rush",
+      "route": "/ticket-rush",
+      "default_origin": "http://127.0.0.1:4374",
+      "source_repository": "https://github.com/citrolabs/ego-browser-benchmark-framework",
+      "source_commit": "d005652fb082529f8426d09d234acbf57923c8d9",
+      "source_release": "v0.1.0-beta.1",
+      "source_tree_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/tree/d005652fb082529f8426d09d234acbf57923c8d9/benchmark_sites",
+      "source_tree_sha256": "fd16d94a12146cfba26b476e02f591a1218c5dd0d643ab7e78ff1f7ebf83d2bb",
+      "source_tree_canonicalization": "SHA-256 of UTF-8 JSON.stringify over the path-sorted files array, retaining only path and sha256 keys with no whitespace",
+      "runtime": {
+        "working_directory": "benchmark_sites",
+        "node": ">=22.13.0",
+        "install": "npm ci",
+        "test": "npm run test:state",
+        "serve": "npm run dev:harness"
+      },
+      "files": [
+        {
+          "path": "benchmark_sites/.gitignore",
+          "sha256": "5bb93f9af3424062344934e40fd2972f18c1ee1e2a51af2b53775011f9aa5e53"
+        },
+        {
+          "path": "benchmark_sites/.openai/hosting.json",
+          "sha256": "d532abb65cf9ae20634b464d954cb4a08a0de9f3cd3cdf7f9c3ec8948826d947"
+        },
+        {
+          "path": "benchmark_sites/README.md",
+          "sha256": "4771b3ad57144618744f2eae0d1315dbf296d3ff38eb6c812f279f585a18788d"
+        },
+        {
+          "path": "benchmark_sites/app/globals.css",
+          "sha256": "443b30caf088daa527e9a2e3b7d2181353e5fd1b8c40b2e4f0db3be2f19dae9f"
+        },
+        {
+          "path": "benchmark_sites/app/layout.tsx",
+          "sha256": "5deb6dac9d03435fade339efb4cf2d7832285be0444cd23da482c76ecfb52eba"
+        },
+        {
+          "path": "benchmark_sites/app/page.tsx",
+          "sha256": "b385263227236159feb908af7d04d8c5d70c1e1286c27f6c34b37468c536e505"
+        },
+        {
+          "path": "benchmark_sites/app/ticket-rush/layout.tsx",
+          "sha256": "8ec103e13f31f48613ff23a0a4124436f0bfcb2e0443835a3430442e28ced01b"
+        },
+        {
+          "path": "benchmark_sites/app/ticket-rush/page.tsx",
+          "sha256": "d26a03801faa0bb201a612bde4f04e412f0f76e1ea9f4c0217cc1a7dae714ec1"
+        },
+        {
+          "path": "benchmark_sites/app/ticket-rush/ticket-rush.tsx",
+          "sha256": "21a097f9d40a755d08380d94a2720b4cb5b24fc99516280a2b46e64e9bb0c66f"
+        },
+        {
+          "path": "benchmark_sites/app/ticket-rush/ticket-state.ts",
+          "sha256": "d6c6ee899b2d1f826632dd45d923ffb33b26780ec4ed8a1ef0ccea54f00547e5"
+        },
+        {
+          "path": "benchmark_sites/eslint.config.mjs",
+          "sha256": "26296eaced9742ef9f05f99f2d7eb41d0c211aaa404b3b6342052ff699ad8ef5"
+        },
+        {
+          "path": "benchmark_sites/next-env.d.ts",
+          "sha256": "06214df4ebd8d78bdc72140787b6f08628e6caa0ac3a4a139e5ca1837349347f"
+        },
+        {
+          "path": "benchmark_sites/next.config.ts",
+          "sha256": "ab4c61f6ee100ae43610a18512f1ebcec842bb2405431e1009266173f21cf772"
+        },
+        {
+          "path": "benchmark_sites/package-lock.json",
+          "sha256": "a73ca0e6bd7a40981c4e0b384d8f58b575a6756cc05de7a46ec26a7f3ac64f35"
+        },
+        {
+          "path": "benchmark_sites/package.json",
+          "sha256": "c86747beb1cc49f965bf78f0cc72bf1eeb466cd6f2e56ca9af445e162aa262a8"
+        },
+        {
+          "path": "benchmark_sites/postcss.config.mjs",
+          "sha256": "dfac7ac2d86d326a0e5adb024e7943c181393ed17a5fcb8f0315b24c7da6ddde"
+        },
+        {
+          "path": "benchmark_sites/public/ticket-rush-og.png",
+          "sha256": "36d7749a0d05505d1137e788a95bf2f26f34ea584aa7b606d0010c457103cf17"
+        },
+        {
+          "path": "benchmark_sites/sites-vite-plugin.ts",
+          "sha256": "c456e829d8999c3ccb9bab5919931bbbb1c4ee0035a8074297d499a41e764d8b"
+        },
+        {
+          "path": "benchmark_sites/tests/ticket-state.test.ts",
+          "sha256": "0749a156370b468db235aec410e093ba92dbb6b4ab4fb0def83c0365ec1c16c4"
+        },
+        {
+          "path": "benchmark_sites/tsconfig.json",
+          "sha256": "be18523b23b78b6e1a876ddd107d330f0168bddf09d751b57e0b5edce69c66f3"
+        },
+        {
+          "path": "benchmark_sites/vite.config.ts",
+          "sha256": "7ab905c9175e329e3a55f42d0a0b08061b7dd666e1894eb6778adf100a764d81"
+        },
+        {
+          "path": "benchmark_sites/worker/index.ts",
+          "sha256": "4884d89c3b77d3ef4456f77b6e5c9bf9dafef1f3ebfbd0cf16af463b1df5eb5b"
+        }
+      ],
+      "license": "MIT",
+      "boundary": "Run the complete benchmark_sites tree from the pinned source commit. The executable code and task rubric define a 180-second delay followed by a 2-second claim window; the source site's README prose says two minutes and is inconsistent with those executable definitions. EvalHub stores the manifest and hashes, not the TSX, CSS, lockfile, or image bytes."
+    }
+  ]
+}

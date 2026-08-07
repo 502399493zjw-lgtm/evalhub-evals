@@ -1,0 +1,11 @@
+# Tasks and deterministic synthetic fixture
+
+`real-world-bench.json` is byte-identical to the public v0.1.0-beta.1 task snapshot at commit `d005652fb082529f8426d09d234acbf57923c8d9`. Its SHA-256 is `f8349e0c19ae55911f710e0690f31e4067dd18488496a69ca0696cb3a1f6d73a`. It contains 31 stable task IDs and 154 rubric checkpoints, with 3–6 rubrics per task.
+
+`protocol.json` freezes the source, execution, judge, completeness, and aggregation contract. `resources.json` maps the only two non-text prerequisites to stable task IDs and records their commit-pinned public URLs, byte or source-tree fingerprints, and runtime boundary. PDF, HTML, TSX, CSS, lockfiles, and PNG files stay in the public source repository because they are outside EvalHub's allowed eval content types. `source-ledger.json` records which first-party source supports each fact and where redistribution or version boundaries apply.
+
+`example-submission.json` is a deterministic `synthetic_fixture` for the locked runner check. Its URLs point to the real pinned source and its SHA-256 values identify the dataset or exact task-definition objects; they are not run evidence. Every rubric is false with confidence 0 and explicitly states that no browser run or Judge call occurred. The generated `sample-result.json` is therefore a schema example only, never a model score or baseline.
+
+For a real result, set `kind` to `run` and produce a separate JSON file with the same shape. It must contain all 31 task IDs in dataset order, every rubric ID exactly once, independently judged boolean decisions, confidence and reasoning, 1–3 attempts, a positive final-attempt turn count, a final-attempt duration of at most 600 seconds, task timestamps, and public credential-free HTTPS evidence indexes with unique SHA-256 fingerprints. A provider failure, resource preflight failure, timeout, or incomplete Judge result is rejected rather than converted into zero.
+
+`rwb-openai-careers-apply-01` must receive the byte-identical `resume-cloud-infra.pdf`; its deliberate prompt-injection probe is benchmark content. `rwb-lumen-ticket-rush-01` must use the complete pinned `benchmark_sites` tree and route `/ticket-rush`. The executable code and rubric define a 180-second delay plus a 2-second claim window; this boundary overrides the inconsistent two-minute sentence in the source site's README.

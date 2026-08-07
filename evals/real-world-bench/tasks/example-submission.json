@@ -1,0 +1,1324 @@
+{
+  "kind": "synthetic_fixture",
+  "participant": {
+    "model": "synthetic/no-model-run",
+    "harness": "ego-browser-benchmark-framework",
+    "harness_version": "v0.1.0-beta.1",
+    "config": {
+      "provider": "pi",
+      "model_provider": "openai",
+      "browser_tool": "ego-browser",
+      "browser_tool_mode": "off",
+      "browser_tool_version": "synthetic-structure-only",
+      "reasoning_effort": "medium"
+    }
+  },
+  "protocol": {
+    "protocol_revision": 1,
+    "protocol_profile": "real-world-bench-v0.1.0-beta.1-evalhub-v1",
+    "source_repository": "https://github.com/citrolabs/ego-browser-benchmark-framework",
+    "source_commit": "d005652fb082529f8426d09d234acbf57923c8d9",
+    "source_release": "v0.1.0-beta.1",
+    "dataset_sha256": "f8349e0c19ae55911f710e0690f31e4067dd18488496a69ca0696cb3a1f6d73a",
+    "resource_manifest_sha256": "87510200edb50164172dc685ed5cf4397ce7be475f99e55d194760b0a0c3e489",
+    "resume_attachment_sha256": "297009a5a66a31286c6d853e4e44769fe92d047808cce5a05311c756525b91a5",
+    "ticket_rush_source_tree_sha256": "fd16d94a12146cfba26b476e02f591a1218c5dd0d643ab7e78ff1f7ebf83d2bb",
+    "task_count": 31,
+    "rubric_count": 154,
+    "iterations": 1,
+    "concurrency": 1,
+    "limit_mode": "time",
+    "task_timeout_seconds": 600,
+    "provider_retry_count": 2,
+    "harness": "ego-browser-benchmark-framework",
+    "harness_version": "v0.1.0-beta.1",
+    "provider": "pi",
+    "model_provider": "openai",
+    "browser_tool": "ego-browser",
+    "browser_tool_mode": "off",
+    "screenshot_dedup_method": "sha256",
+    "screenshot_capture_mode": "cdp",
+    "reasoning_effort": "medium",
+    "judge_provider": "pi",
+    "judge_model": "openai/gpt-5.6-terra",
+    "judge_mode": "agent",
+    "judge_thinking_level": "medium",
+    "judge_max_screenshots": "all",
+    "score_metric": "rubric_micro_average",
+    "score_round_decimal_places": 2
+  },
+  "run": {
+    "run_id": "synthetic-real-world-bench-structure-v1",
+    "started_at": "2026-08-07T00:00:00.000Z",
+    "finished_at": "2026-08-07T01:05:00.000Z",
+    "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+    "evidence_sha256": "f8349e0c19ae55911f710e0690f31e4067dd18488496a69ca0696cb3a1f6d73a"
+  },
+  "task_results": [
+    {
+      "task_id": "rwb-x-openai-7d-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:00:00.000Z",
+      "finished_at": "2026-08-07T00:01:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "b2c9d56b79e87909002a25fd20f803a98aef87fbfa0017fe1ac898994b4d1b2d",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-openai-careers-apply-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:02:00.000Z",
+      "finished_at": "2026-08-07T00:03:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "a9d051ea65a677d3c00454ec70ecc348a32fd907ad5944012401f2ec2e1fbed7",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-redfin-mortgage-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:04:00.000Z",
+      "finished_at": "2026-08-07T00:05:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "fbef4c404a1299c365fab53ad621bbb2498d8ad81ee590e75114b830a278a6a5",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-expedia-flight-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:06:00.000Z",
+      "finished_at": "2026-08-07T00:07:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "398b1756e05f17c7420c6161ba1e6de49251cf3d237588af13f9660786e1d417",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-hn-top10-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:08:00.000Z",
+      "finished_at": "2026-08-07T00:09:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "d311584f8410c6b752b8e8d51fafcfa2ff7f864d0b3ef2ba124e0811feb4ce6d",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-imdb-scifi-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:10:00.000Z",
+      "finished_at": "2026-08-07T00:11:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "13ad3cc7764a763f2ab54b9cf0913bc54e0b744901fc62ac816a08a651c4d36f",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-calcnet-mortgage-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:12:00.000Z",
+      "finished_at": "2026-08-07T00:13:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "1d584388c52c7958b1804759d978e76d317766ed71ebd1cc1cb8761b200425db",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-cars-payment-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:14:00.000Z",
+      "finished_at": "2026-08-07T00:15:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "765ad414a140ab19577046bef4d708f70eef29580bad25bfc58b47fb75e2a89d",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-yahoo-stocks-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:16:00.000Z",
+      "finished_at": "2026-08-07T00:17:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "7518d9b11d60d8d69a93cd1d6d6ae009be3d001ccde00eacf6bdae97c906f9eb",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-yelp-opentable-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:18:00.000Z",
+      "finished_at": "2026-08-07T00:19:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "018a5635e13beb24a961a70b7a659e13c64ea0cd857dec691820db9ef83aba93",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-reddit-greenhouse-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:20:00.000Z",
+      "finished_at": "2026-08-07T00:21:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "469b5ce79f72e62421996bb373de2f83f70134707bd4942f6e2082ff37d5c232",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-reddit-pf-indexfund-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:22:00.000Z",
+      "finished_at": "2026-08-07T00:23:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "386588907c3fe948e8276d93cfde1a8daeff53e18e753e7f33b13b2108795bbf",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-github-trending-py-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:24:00.000Z",
+      "finished_at": "2026-08-07T00:25:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "6ddbd34068e25b8a8d8b128edf0c709340799d82ef3a9a6366400c417ec49de3",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-bankrate-compound-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:26:00.000Z",
+      "finished_at": "2026-08-07T00:27:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "91f61d830da4fa730aa7e7579cab447ef7927a93c5becf595eab4b9b1ed63046",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-metacritic-actionrpg-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:28:00.000Z",
+      "finished_at": "2026-08-07T00:29:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "f26e6aed08ba70751c0d1e6ba53ba5c9f81299fc7ac23e4d31e15d3b02720313",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-stockanalysis-tech-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:30:00.000Z",
+      "finished_at": "2026-08-07T00:31:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "222431225eb1015be6b012a210e03b60f0d1ff09e78878083f7f1e2112733aae",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-zillow-greatschools-austin-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:32:00.000Z",
+      "finished_at": "2026-08-07T00:33:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "fe1f02fe5f94237f14ea68e499ba8cc4951c153f3ce2a593e73294789b2a514e",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-xe-irs-reimbursement-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:34:00.000Z",
+      "finished_at": "2026-08-07T00:35:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "d6fc68bb2bd4130c29638f8af08dc90e5c1d54167138d1f8a894706720821a94",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-youtube-finance-channel-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:36:00.000Z",
+      "finished_at": "2026-08-07T00:37:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "f21a5d116c74e9c57fda7808e556e1b89c4ed70176a07a04ae34adf26f120d7d",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-amazon-bottle-leaks-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:38:00.000Z",
+      "finished_at": "2026-08-07T00:39:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "6536bc8979a94a822620a2e3a09384bef4319c067d996df7ce685414fccffbbc",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-houzz-homedepot-backsplash-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:40:00.000Z",
+      "finished_at": "2026-08-07T00:41:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "abb66b1f3322c3c0d804c1f273756348de3b1e6d7abdd4bc0401871f97dcc8d1",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-google-flights-booking-miami-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:42:00.000Z",
+      "finished_at": "2026-08-07T00:43:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "e40782260af1ff6497d04050ab5cd793384d15c11211dd7bfa94c114d6754d99",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-courtlistener-sec-helix-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:44:00.000Z",
+      "finished_at": "2026-08-07T00:45:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "f3d41d3a8a967f788571ab9a57d9d2c68dfa6e5def33e61105c2fbb19480c5e8",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-scratch-apple-dash-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:46:00.000Z",
+      "finished_at": "2026-08-07T00:47:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "565623fa8bd664c57871f0a88e7580d46e5b63f661ea5eb1bab2d46baa624ae1",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-2048-reach-256-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:48:00.000Z",
+      "finished_at": "2026-08-07T00:49:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "0f2b4936624250262502a1d406716c52fb13ed60e9c796510ed387d135997ce2",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-song-maker-mirror-loop-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:50:00.000Z",
+      "finished_at": "2026-08-07T00:51:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "6e6fa09193c38d6e3d88eb3cf47ae579f99cee39e81b78f272b0d84ceae07033",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-census-sba-qcew-naics541511-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:52:00.000Z",
+      "finished_at": "2026-08-07T00:53:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "3081ed28c74892b359cf49c2aeef2713267af42c6ce1f2632e8522e42e473a55",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-webflow-squarespace-wix-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:54:00.000Z",
+      "finished_at": "2026-08-07T00:55:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "5234a985f91c038b60dfcd7b89ba9b537fbc7db3d5bb8ba0fc4f1288486465d2",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-nist-cisa-nvd-readiness-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:56:00.000Z",
+      "finished_at": "2026-08-07T00:57:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "8696a927b8b5b5dcbb0c74d4b88713bbd49596f0e4af1f8583af22d5090ea22c",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-bls-census-retail-metros-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T00:58:00.000Z",
+      "finished_at": "2026-08-07T00:59:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "f3c7a0401dfe8e5dbfa66eada248ef5b53e44f25008a6766aec27f0db9ccc516",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    },
+    {
+      "task_id": "rwb-lumen-ticket-rush-01",
+      "attempts": 1,
+      "steps": 1,
+      "started_at": "2026-08-07T01:00:00.000Z",
+      "finished_at": "2026-08-07T01:01:00.000Z",
+      "evidence_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "evidence_sha256": "f7b815bbe358539068549f307704916ee570db6017a86f284c6a8064a4a253b8",
+      "rubrics": {
+        "R1": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R2": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R3": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R4": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R5": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        },
+        "R6": {
+          "satisfied": false,
+          "confidence": 0,
+          "reasoning": "Synthetic structure fixture built from the pinned task definition; no browser run or Judge call was performed.",
+          "judge_model": "openai/gpt-5.6-terra"
+        }
+      }
+    }
+  ]
+}

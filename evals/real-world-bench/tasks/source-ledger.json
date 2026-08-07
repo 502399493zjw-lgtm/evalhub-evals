@@ -1,0 +1,258 @@
+{
+  "ledger_revision": 2,
+  "retrieved_on": "2026-08-07",
+  "submission_kind": "new",
+  "slug": "real-world-bench",
+  "source_boundary": {
+    "repository": "https://github.com/citrolabs/ego-browser-benchmark-framework",
+    "release": "v0.1.0-beta.1",
+    "commit": "d005652fb082529f8426d09d234acbf57923c8d9",
+    "license": "MIT",
+    "evalhub_repository_commit": "2cd8e27e2837473b2eb81526a009847a3ad3c7ff"
+  },
+  "sources": [
+    {
+      "id": "native-release",
+      "source_kind": "evalhub_native_repository_release",
+      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/releases/tag/v0.1.0-beta.1",
+      "pinned_commit": "d005652fb082529f8426d09d234acbf57923c8d9",
+      "facts": [
+        "The repository publishes v0.1.0-beta.1 as a public beta release.",
+        "The harness evaluates browser agents in three stages: execution, judging, and reporting.",
+        "Controlled model comparisons hold the provider route, browser runtime and skill, task set, judge, limits, and concurrency fixed."
+      ],
+      "allowed_mappings": [
+        "eval.yaml references and upstream",
+        "README source and version boundary",
+        "protocol.json source snapshot"
+      ],
+      "boundary": "The release is the submission source. It is not evidence of a model score or EvalHub endorsement."
+    },
+    {
+      "id": "native-dataset",
+      "source_kind": "evalhub_native_task_snapshot",
+      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/data/real_world_bench.json",
+      "path": "data/real_world_bench.json",
+      "sha256": "f8349e0c19ae55911f710e0690f31e4067dd18488496a69ca0696cb3a1f6d73a",
+      "facts": [
+        "The snapshot contains 31 stable task IDs and 154 rubric checkpoints.",
+        "Difficulty counts are low=6, medium=16, high=9.",
+        "Five tasks declare requires_login=true; one task declares an attachment and one declares local_site=ticket-rush."
+      ],
+      "allowed_mappings": [
+        "eval.yaml tasks, labels, prompts, and expected rubric text",
+        "detail_profile counts",
+        "protocol.json dataset statistics",
+        "runner stable IDs and rubric completeness checks"
+      ],
+      "boundary": "The byte-exact release snapshot is redistributed under the repository MIT license. Third-party website content observed during a run is outside that license."
+    },
+    {
+      "id": "native-execution-config",
+      "source_kind": "evalhub_native_executable_config",
+      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/config.yaml",
+      "path": "config.yaml",
+      "sha256": "ede0045cf313b2824447b13ea85aca8b5e06bcb2a2aa199d5aba37e45ae91577",
+      "facts": [
+        "The default profile runs real-world-bench once with concurrency 1.",
+        "Time mode limits each task to 600 seconds.",
+        "Only errors or empty output retry, with retry_count=2.",
+        "The run provider is Pi, the browser tool is ego-browser, and the default reasoning level is medium.",
+        "The Pi model provider is openai, browser_tool_mode is off, and screenshots use SHA-256 deduplication with CDP capture.",
+        "The judge uses Pi with openai/gpt-5.6-terra at medium thinking and no screenshot cap."
+      ],
+      "allowed_mappings": [
+        "protocol.json execution and judge fields",
+        "eval.yaml method and scoring note",
+        "runner participant, timeout, and judge checks"
+      ],
+      "boundary": "CLI overrides exist in the source project. The EvalHub protocol deliberately freezes the published default profile for leaderboard comparability."
+    },
+    {
+      "id": "native-adapters-and-resources",
+      "source_kind": "evalhub_native_executable_code",
+      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/ego_bench/datasets/outcome_chinese.py",
+      "paths": [
+        "ego_bench/datasets/outcome_chinese.py",
+        "ego_bench/datasets/odysseys.py",
+        "ego_bench/task_resources.py"
+      ],
+      "sha256": {
+        "ego_bench/datasets/outcome_chinese.py": "c7e1bca22bb72f43c9b68b6980f5a5c48f9f3afea080928f3492193fb69b3f37",
+        "ego_bench/datasets/odysseys.py": "d74fd7c308e46f23a69c7014915611951ffdf1e99b5f1c00efc5fc41b0d3fce0",
+        "ego_bench/task_resources.py": "51e3b64a8c3f48e60d838ab4448b2bb89393739d85714b730541d3db5a2001b5"
+      },
+      "facts": [
+        "Real World Bench reuses the Odysseys task parser and per-rubric judge family.",
+        "Named attachments are staged for the task and local_site slugs resolve against the benchmark-site origin.",
+        "Resource preflight fails before a model call when an attachment is missing or the local site is unavailable."
+      ],
+      "allowed_mappings": [
+        "README resource delivery",
+        "tasks/resources.json",
+        "runner resource consistency checks"
+      ],
+      "boundary": "The EvalHub runner validates declarations and hashes offline; it does not launch the source harness or fetch resources."
+    },
+    {
+      "id": "native-judge",
+      "source_kind": "evalhub_native_scoring_code",
+      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/ego_bench/judges/odysseys_judge.py",
+      "path": "ego_bench/judges/odysseys_judge.py",
+      "sha256": "5dd3cdbef85443cfaf016a259e3ca45515b186cdc8aa7edaa7b8e493df5afdbf",
+      "facts": [
+        "Each rubric is judged independently with a boolean satisfied value and audit-only confidence.",
+        "A task score is the arithmetic mean of its rubric values and is rounded to four decimals.",
+        "A judge failure produces verdict=null and retains partial rubric evidence for audit."
+      ],
+      "allowed_mappings": [
+        "README rubric scoring and judge-error boundary",
+        "eval.yaml score interpretation",
+        "runner rubric decision schema"
+      ],
+      "boundary": "The offline EvalHub packer does not rerun this LLM Judge. It accepts only a complete externally judged envelope and leaves authenticity review to the author."
+    },
+    {
+      "id": "native-report-metrics",
+      "source_kind": "evalhub_native_reporting_code",
+      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/ego_bench/report/modules/odysseys.py",
+      "path": "ego_bench/report/modules/odysseys.py",
+      "sha256": "38d6835f99ae45b0fa3ef77fa9abbeb8b8a216bf5f008980c88f7067a251c112",
+      "facts": [
+        "Rubric Avg is the micro-average passed_rubrics / total_rubrics and is rounded to two decimals.",
+        "Perfect uses the full task pool denominator.",
+        "Average steps and Trajectory Efficiency use tasks with positive turn counts and are rounded to four decimals in the payload.",
+        "The report emits overall and by-level metrics."
+      ],
+      "allowed_mappings": [
+        "eval.yaml main-score explanation",
+        "README formulas",
+        "runner score and supplementary metric calculations"
+      ],
+      "boundary": "The source report can exclude judge-error tasks from some denominators. EvalHub requires complete judging before ranking, so accepted results have the fixed 31-task and 154-rubric denominators."
+    },
+    {
+      "id": "native-license-and-data-boundary",
+      "source_kind": "evalhub_native_license",
+      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/d005652fb082529f8426d09d234acbf57923c8d9/LICENSE",
+      "paths": [
+        "LICENSE",
+        "data/README.md"
+      ],
+      "sha256": {
+        "LICENSE": "4e756287a1d148b3e9144e62de20d7d6c16d85e9399d8d7970f3a2996b0b4ac5",
+        "data/README.md": "57a13880270d56ee8dc2fa51ce7dfb35b470549184a7c80d9eb6c357438354c9"
+      },
+      "facts": [
+        "The repository is licensed under MIT and names ego-browser-benchmark-framework contributors in the copyright notice.",
+        "The data README excludes named imported datasets and slices from MIT coverage but does not exclude real_world_bench.json.",
+        "The data README identifies named attachments and local sites as task resources."
+      ],
+      "allowed_mappings": [
+        "LICENSE.txt",
+        "README license, attribution, and redistribution boundary",
+        "detail_profile resource caveats"
+      ],
+      "boundary": "MIT covers the authored snapshot and source code. It does not license third-party websites, accounts, live page content, or run artifacts owned by others."
+    },
+    {
+      "id": "native-resume-attachment",
+      "source_kind": "evalhub_native_task_resource",
+      "url": "https://raw.githubusercontent.com/citrolabs/ego-browser-benchmark-framework/d005652fb082529f8426d09d234acbf57923c8d9/data/attachments/resume-cloud-infra.pdf",
+      "paths": [
+        "data/attachments/resume-cloud-infra.pdf",
+        "data/attachments/resume-cloud-infra.html"
+      ],
+      "sha256": {
+        "data/attachments/resume-cloud-infra.pdf": "297009a5a66a31286c6d853e4e44769fe92d047808cce5a05311c756525b91a5",
+        "data/attachments/resume-cloud-infra.html": "26e8b35b977dd4ea09c7fcd94c9edb583103a30d5e9cff9b4b753d5a93d9cedc"
+      },
+      "facts": [
+        "rwb-openai-careers-apply-01 declares resume-cloud-infra.pdf as task input.",
+        "The PDF contains a deliberate prompt-injection probe and must remain byte-identical.",
+        "The HTML file is authoring provenance and is not delivered to the agent."
+      ],
+      "allowed_mappings": [
+        "tasks/resources.json attachment entry",
+        "protocol.json attachment requirement",
+        "README execution prerequisite"
+      ],
+      "boundary": "The PDF and HTML remain in the pinned public source repository because EvalHub's eval content allowlist does not accept them. The EvalHub directory carries only metadata, URLs, byte counts, and hashes."
+    },
+    {
+      "id": "native-ticket-rush-site",
+      "source_kind": "evalhub_native_task_resource",
+      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/tree/d005652fb082529f8426d09d234acbf57923c8d9/benchmark_sites/app/ticket-rush",
+      "source_tree_file_count": 22,
+      "source_tree_sha256": "fd16d94a12146cfba26b476e02f591a1218c5dd0d643ab7e78ff1f7ebf83d2bb",
+      "facts": [
+        "rwb-lumen-ticket-rush-01 declares local_site=ticket-rush.",
+        "The executable source sets SALE_DELAY_MS=180000 and CLAIM_WINDOW_MS=2000.",
+        "The source task rubric independently identifies the valid click interval as 180000–182000 ms after navigation.",
+        "The benchmark_sites README describes the wait as two minutes, which conflicts with the executable code and task rubric."
+      ],
+      "allowed_mappings": [
+        "tasks/resources.json local-site manifest",
+        "protocol.json local-site requirement",
+        "README and detail_profile source inconsistency disclosure"
+      ],
+      "boundary": "The complete pinned benchmark_sites tree is the runnable resource. EvalHub stores only its path-sorted manifest and fingerprint; the task and executable code take precedence over the inconsistent README prose."
+    },
+    {
+      "id": "odysseys-paper",
+      "source_kind": "upstream_paper",
+      "url": "https://arxiv.org/abs/2604.24964",
+      "facts": [
+        "Odysseys presents long-horizon live-web tasks with independently graded rubric checkpoints.",
+        "The paper defines trajectory efficiency from per-task rubric score and step count."
+      ],
+      "allowed_mappings": [
+        "detail_profile methodology resource",
+        "README method lineage"
+      ],
+      "boundary": "Real World Bench is not the Odysseys 200-task dataset. No Odysseys model result is copied as a Real World Bench baseline."
+    },
+    {
+      "id": "odysseys-official-site",
+      "source_kind": "upstream_project_website",
+      "url": "https://odysseysbench.com/",
+      "facts": [
+        "The official project site describes rubric-based long-horizon live-web evaluation."
+      ],
+      "allowed_mappings": [
+        "README methodology context"
+      ],
+      "boundary": "The site supports the inherited method context only, not Real World Bench provenance or results."
+    },
+    {
+      "id": "ego-lite-official-docs",
+      "source_kind": "author_product_documentation",
+      "url": "https://lite.ego.app/document/en/docs/quick-start",
+      "facts": [
+        "The documentation describes the ego lite browser and ego-browser agent integration used by the source harness."
+      ],
+      "allowed_mappings": [
+        "detail_profile resources",
+        "README environment context"
+      ],
+      "boundary": "Product documentation does not prove any model score or endorse the EvalHub integration."
+    },
+    {
+      "id": "evalhub-contribution-contract",
+      "source_kind": "evalhub_repository",
+      "url": "https://github.com/502399493zjw-lgtm/evalhub-evals/blob/2cd8e27e2837473b2eb81526a009847a3ad3c7ff/CONTRIBUTING.md",
+      "pinned_commit": "2cd8e27e2837473b2eb81526a009847a3ad3c7ff",
+      "facts": [
+        "A PR may add or update exactly one eval slug and new custom external workflows require one standalone input token and one output token.",
+        "Custom runners are checked without network access as non-root with a read-only filesystem and bounded resources.",
+        "The content gate rejects hidden files, symlinks, executable modes, archives, credentials, and unsafe runner capabilities."
+      ],
+      "allowed_mappings": [
+        "eval.yaml runner contract",
+        "runner implementation",
+        "local validation checklist"
+      ],
+      "boundary": "This source defines EvalHub packaging and review rules, not Real World Bench content or results."
+    }
+  ]
+}
