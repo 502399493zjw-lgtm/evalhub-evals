@@ -1,8 +1,9 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "benchmark": "ceo-bench",
   "source_kind": "upstream_official_publication",
   "retrieved_on": "2026-08-03",
+  "reverified_on": "2026-08-07",
   "score_authority": {
     "url": "https://ceobench.com/",
     "sha256": "97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292",
@@ -29,6 +30,8 @@
       "bankrupt_runs": 1,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "386.0 ± 161.2",
+      "homepage_turns_per_week": "14.81",
       "scoring_status": "has_completed_run",
       "manifest_model": "kimi-k3",
       "manifest_alignment": "model_level_support_only"
@@ -39,6 +42,8 @@
       "bankrupt_runs": 1,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "461.7 ± 54.2",
+      "homepage_turns_per_week": "9.86",
       "scoring_status": "has_completed_run",
       "manifest_model": "claude-fable-5",
       "manifest_alignment": "model_level_support_only"
@@ -49,6 +54,8 @@
       "bankrupt_runs": 2,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "294.0 ± 145.7",
+      "homepage_turns_per_week": "25.96",
       "scoring_status": "has_completed_run",
       "manifest_model": "gpt-5.6-sol",
       "manifest_alignment": "model_level_support_only"
@@ -59,6 +66,8 @@
       "bankrupt_runs": 1,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "378.0 ± 172.5",
+      "homepage_turns_per_week": "16.64",
       "scoring_status": "has_completed_run",
       "manifest_model": "claude-opus-4-8",
       "manifest_alignment": "model_level_support_only"
@@ -69,6 +78,8 @@
       "bankrupt_runs": 0,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "500.0 ± 0.0",
+      "homepage_turns_per_week": "7.82",
       "scoring_status": "has_completed_run",
       "manifest_model": "qwen-3.7-max",
       "manifest_alignment": "model_level_support_only"
@@ -79,6 +90,8 @@
       "bankrupt_runs": 0,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "500.0 ± 0.0",
+      "homepage_turns_per_week": "58.37",
       "scoring_status": "has_completed_run",
       "manifest_model": "gemini-3.5-flash",
       "manifest_alignment": "cohort_conflict"
@@ -89,6 +102,8 @@
       "bankrupt_runs": 1,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "414.3 ± 121.2",
+      "homepage_turns_per_week": "14.33",
       "scoring_status": "has_completed_run",
       "manifest_model": "claude-opus-4-7",
       "manifest_alignment": "model_level_support_only"
@@ -99,6 +114,8 @@
       "bankrupt_runs": 1,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "470.7 ± 41.5",
+      "homepage_turns_per_week": "20.50",
       "scoring_status": "has_completed_run",
       "manifest_model": "claude-sonnet-5",
       "manifest_alignment": "model_level_support_only"
@@ -109,6 +126,8 @@
       "bankrupt_runs": 2,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "286.3 ± 153.3",
+      "homepage_turns_per_week": "19.35",
       "scoring_status": "has_completed_run",
       "manifest_model": "claude-haiku-4.5",
       "manifest_alignment": "model_level_support_only"
@@ -119,6 +138,8 @@
       "bankrupt_runs": 2,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "376.7 ± 105.6",
+      "homepage_turns_per_week": "25.24",
       "scoring_status": "has_completed_run",
       "manifest_model": "glm-5.2",
       "manifest_alignment": "model_level_support_only"
@@ -129,6 +150,8 @@
       "bankrupt_runs": 0,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "500.0 ± 0.0",
+      "homepage_turns_per_week": "16.64",
       "scoring_status": "has_completed_run",
       "manifest_model": "kimi-k2.6",
       "manifest_alignment": "model_level_support_only"
@@ -139,6 +162,8 @@
       "bankrupt_runs": 1,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "419.3 ± 114.1",
+      "homepage_turns_per_week": "14.37",
       "scoring_status": "has_completed_run",
       "manifest_model": "claude-sonnet-4.6",
       "manifest_alignment": "model_level_support_only"
@@ -149,6 +174,8 @@
       "bankrupt_runs": 2,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "401.0 ± 98.3",
+      "homepage_turns_per_week": "30.41",
       "scoring_status": "has_completed_run",
       "manifest_model": "gpt-5.5",
       "manifest_alignment": "model_level_support_only"
@@ -159,6 +186,8 @@
       "bankrupt_runs": 2,
       "run_count": 3,
       "homepage_max_survival_days": 500,
+      "homepage_mean_survival_days": "289.0 ± 154.0",
+      "homepage_turns_per_week": "21.01",
       "scoring_status": "has_completed_run",
       "manifest_model": null,
       "manifest_alignment": "missing"
@@ -169,6 +198,8 @@
       "bankrupt_runs": 3,
       "run_count": 3,
       "homepage_max_survival_days": 319,
+      "homepage_mean_survival_days": "155.7 ± 130.0",
+      "homepage_turns_per_week": "98.66",
       "scoring_status": "all_runs_bankrupt",
       "manifest_model": "glm-5.1",
       "manifest_alignment": "model_level_support_only"
@@ -179,6 +210,8 @@
       "bankrupt_runs": 3,
       "run_count": 3,
       "homepage_max_survival_days": 160,
+      "homepage_mean_survival_days": "136.3 ± 23.7",
+      "homepage_turns_per_week": "21.85",
       "scoring_status": "all_runs_bankrupt",
       "manifest_model": "deepseek-v4-pro",
       "manifest_alignment": "model_level_support_only"
@@ -189,6 +222,8 @@
       "bankrupt_runs": 3,
       "run_count": 3,
       "homepage_max_survival_days": 150,
+      "homepage_mean_survival_days": "137.0 ± 10.2",
+      "homepage_turns_per_week": "15.81",
       "scoring_status": "all_runs_bankrupt",
       "manifest_model": "gemini-3-flash",
       "manifest_alignment": "model_level_support_only"
@@ -199,6 +234,8 @@
       "bankrupt_runs": 3,
       "run_count": 3,
       "homepage_max_survival_days": 59,
+      "homepage_mean_survival_days": "36.0 ± 18.4",
+      "homepage_turns_per_week": "13.49",
       "scoring_status": "all_runs_bankrupt",
       "manifest_model": "grok-4.20",
       "manifest_alignment": "model_level_support_only"
@@ -207,11 +244,13 @@
   "references": [
     {
       "label": "Rule-based baseline",
+      "reference_kind": "rule_based_baseline",
       "score_usd": 15756408,
       "participant": false
     },
     {
       "label": "Estimated final cash upper bound",
+      "reference_kind": "estimated_upper_bound",
       "score_usd": 2200000000,
       "participant": false
     }

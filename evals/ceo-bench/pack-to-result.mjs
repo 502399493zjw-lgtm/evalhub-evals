@@ -711,6 +711,7 @@ function buildResult(manifest, runs, evalCommit) {
           },
           {
             type: "transcript",
+            task_id: "novamind-default-seed42",
             title: "公开证据索引（合规输出，不读取 world.nmdb 或 novamind-operation）",
             turns: [
               {

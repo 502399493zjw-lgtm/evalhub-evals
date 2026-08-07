@@ -5,6 +5,172 @@ category: useful
 display_category: agent
 description: CEO-Bench 让 Agent 以 100 万美元开局经营一家 AI 创业公司，连续处理定价、研发、增长、算力与企业客户决策，以终局现金衡量长期经营能力。
 hook_title: 给 Agent 500 天，它能把公司经营到最后吗
+references:
+  homepage: https://ceobench.com/
+  paper: https://arxiv.org/abs/2606.18543v2
+  repository: https://github.com/zlab-princeton/ceobench-src
+detail_profile:
+  source_kind: upstream_publication
+  overview_note: >-
+    以下说明根据 CEO-Bench 官方网站、论文 v2 和固定版本的作者仓库整理；Princeton 官网结果表是上游公开成绩的权威来源，
+    新的 EvalHub 证据提交则遵循本目录单独声明的 497 天整周复现边界。
+  summary:
+    plain_language: >-
+      这不是 CEO 知识问答，而是让 Agent 接手一家虚构的 AI SaaS 公司，观察同一套经营策略能否经受数百天的连锁反应。
+    why_it_matters: >-
+      价格、研发、营销、算力和客户决策会通过延迟反馈相互影响。Agent 必须主动查询不完整的业务数据，协调多个经营杠杆，
+      并在市场持续变化时修正计划；一次正确操作不足以证明它能长期经营。
+  method_steps:
+    - title: 从同一起点接手公司
+      description: 上游任务从 0 位客户和 1,000,000 USD 现金开始，使用固定 seed 42 的默认场景。
+    - title: 按周观察、决策和推进
+      description: Agent 可查询业务表并反复调整定价、营销、研发、算力、支持与企业销售，再推进一周并承担延迟出现的结果。
+    - title: 进行三次独立运行
+      description: Princeton 论文按模型运行三次并使用最高推理强度；新的 EvalHub 提交也必须提供三个相互独立、配置一致的证据包。
+    - title: 用终局现金形成主分数
+      description: 至少一次完整存活时取完整运行中最高终局现金；三次全部破产时记 0 USD，并以最长存活天数打破同分。
+  score_interpretation: >-
+    主分数是终局现金（USD），越高越好；现金严格低于 0 即破产。Princeton 官网成绩是上游作者发布的三次运行汇总，
+    不表示 EvalHub 独立复跑。新的 EvalHub 证据由评测作者核验后回填数值分数。
+  key_facts:
+    - value: 1,000,000 USD
+      label: 初始现金
+      description: NovaMind 从 0 位客户和同一笔启动资金开始。
+      source_url: https://ceobench.com/#benchmark
+    - value: 500 天
+      label: 上游公开任务时长
+      description: 论文与官网使用 500 天口径；EvalHub 新证据的整周复现边界固定为 497 天。
+      source_url: https://arxiv.org/html/2606.18543v2
+    - value: 3 次
+      label: 每个模型的公开实验运行数
+      description: 论文实验设置按模型运行三次，并以完成或破产状态汇总。
+      source_url: https://arxiv.org/html/2606.18543v2
+    - value: "34"
+      label: 可用经营工具
+      description: 覆盖查询、定价、增长、研发、运营、企业销售、信息获取和公开沟通。
+      source_url: https://ceobench.com/#benchmark
+    - value: "19"
+      label: 可查询业务表
+      description: Agent 需要主动查询业务数据库，而不是直接观察完整环境状态。
+      source_url: https://ceobench.com/#benchmark
+    - value: "26"
+      label: 客户群
+      description: 客户群具有隐藏偏好，市场还包含宏观周期、竞争冲击和延迟反馈。
+      source_url: https://ceobench.com/#benchmark
+  caveats:
+    - title: 成绩来源不是 EvalHub 复跑
+      description: 签入的 18 份数值成绩只转录 Princeton 官网的模型级公开汇总；不附带 EvalHub usage、逐题结果、模型输出或执行轨迹。
+    - title: 500 天发表口径与 497 天复现边界不同
+      description: 上游论文和官网声明 500 天；当前 EvalHub 协议因官方 CLI 只能整周推进而固定 71 周、497 天，不能把历史成绩重新命名为同配置复跑。
+    - title: 模拟环境不能覆盖真实公司经营
+      description: 论文指出模拟器仍简化了现实，产品质量被数值化，并未覆盖合规、安全和融资等真实经营环节；harness 选择也会显著影响表现。
+    - title: 许可与背书边界
+      description: 论文 v2 标注 CC BY 4.0，但上游两个 GitHub 仓库未声明代码许可证；本目录不重新分发其代码、数据库或可执行物，也不代表 Princeton 认证或背书。
+  overview_tables:
+    - id: ceo-bench-paper-v2-action-space
+      label: 论文 TABLE 1
+      title: Agent 的经营操作空间
+      note: 动作说明依据论文 v2 的八类操作做中文转述；示例工具名保持上游命名。
+      columns:
+        - id: category
+          label: 类别
+        - id: actions
+          label: 可执行动作
+        - id: tools
+          label: 示例工具
+      rows:
+        - id: database-query
+          cells:
+            - column_id: category
+              value: 数据库查询
+            - column_id: actions
+              value: 查询 19 张业务 SQL 表并分析经营数据
+            - column_id: tools
+              value: query
+        - id: monetization
+          cells:
+            - column_id: category
+              value: 定价与变现
+            - column_id: actions
+              value: 调整价格、用量配额、折扣与产品内广告
+            - column_id: tools
+              value: pricing.set_prices · pricing.set_usage_quotas
+        - id: growth
+          cells:
+            - column_id: category
+              value: 增长与市场扩张
+            - column_id: actions
+              value: 按渠道和客户群分配定向广告与推广
+            - column_id: tools
+              value: marketing.set_targeted_ad_spend · marketing.set_lead_promotion
+        - id: product
+          cells:
+            - column_id: category
+              value: 产品质量与研发
+            - column_id: actions
+              value: 选择模型层级、投入日常开发并启动研发项目
+            - column_id: tools
+              value: pricing.set_model_tiers · research.start_research_project
+        - id: reliability
+          cells:
+            - column_id: category
+              value: 可靠性与运营
+            - column_id: actions
+              value: 购买基础设施容量并投入客户支持
+            - column_id: tools
+              value: infrastructure.set_capacity_tier · analytics.set_targeted_ops_spend
+        - id: enterprise-sales
+          cells:
+            - column_id: category
+              value: 企业销售
+            - column_id: actions
+              value: 与企业客户就价格和套餐进行多轮谈判
+            - column_id: tools
+              value: enterprise.send_enterprise_deal · enterprise.reject_enterprise_deal
+        - id: information
+          cells:
+            - column_id: category
+              value: 信息获取
+            - column_id: actions
+              value: 购买市场研究，发现并理解新的客户群
+            - column_id: tools
+              value: market.research_market · market.research_group
+        - id: communication
+          cells:
+            - column_id: category
+              value: 公开沟通
+            - column_id: actions
+              value: 监测并回应客户投诉、竞品消息和经济变化
+            - column_id: tools
+              value: marketing.post_social_media · analytics.get_social_posts
+      caption: 该表解释可操作范围，不是成绩或执行轨迹。
+      source_url: https://arxiv.org/html/2606.18543v2
+  figures:
+    - id: ceo-bench-paper-v2-cash-trajectories
+      placement: insights
+      label: FIGURE 2 · PAPER V2
+      title: 论文 v2 各模型最佳运行的现金轨迹
+      src: https://arxiv.org/html/2606.18543v2/x4.png
+      alt: CEO-Bench 论文 Figure 2，展示论文 v2 各模型最佳运行在 500 天内的现金余额变化
+      caption: 论文 v2 原图，只呈现该论文版本的模型；当前官网后来增加的模型不在图中，因此它仅用于解释长周期结果，不参与当前榜单排名。
+      source_url: https://arxiv.org/html/2606.18543v2
+  resources_note: 下面只列上游作者或论文托管方提供的一手资料。
+  resources:
+    - title: CEO-Bench 官方网站与结果
+      summary: 查看当前任务说明、模型汇总成绩、破产次数、规则基线和版本更新记录。
+      url: https://ceobench.com/#benchmark
+    - title: 官方轨迹查看器
+      summary: 在上游网站查看作者公开的实验运行轨迹；这些轨迹不冒充 EvalHub 实跑。
+      url: https://ceobench.com/trajectory-viewer/
+    - title: CEO-Bench 论文 v2
+      summary: 阅读固定版本的评测设计、实验设置、结果、消融和局限。
+      url: https://arxiv.org/html/2606.18543v2
+    - title: 官方源码仓库
+      summary: 查看固定来源版本的模拟器、任务定义、代码、测试和文档。
+      url: https://github.com/zlab-princeton/ceobench-src/tree/d2b7b32e5301a571b77f5f68bd1032adbcd5b464
+    - title: 官方可运行仓库
+      summary: 查看 NovaMind 的运行入口、CLI 说明和公开执行边界。
+      url: https://github.com/zlab-princeton/run-ceobench/tree/f5d500688d95256906fd02cc5aa7524f2fe08d5b
 dimensions: [经营, 推理]
 interface: agent
 runner: custom
@@ -25,4 +191,5 @@ command_template:
 trials: 3
 tasks:
   - id: novamind-default-seed42
+    label: NovaMind 默认场景
     prompt: 在三个相互独立的官方 run-ceobench 工作副本中，各只创建一个 NovaMind session；使用 seed 42、初始现金 1,000,000 USD 和 default 场景，并保持相同 simulator_llm 配置。参赛 Agent 必须使用其 runner 的最高推理强度，持续经营至完整终点或现金小于 0 破产，通过官方 novamind-operation 接口决策、查询与按周推进，不得读取、解密、解压、反汇编或以其他方式检查 world.nmdb 和 novamind-operation。每次结束后使用本评测的白名单脱敏工具导出逐周推进边界和唯一终局现金查询，绝不公开原始 history，再组成三次运行证据包。EvalHub 固定复现配置的精确终点与采集方法见本目录 README。

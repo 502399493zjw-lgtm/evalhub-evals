@@ -2,7 +2,7 @@
   "eval_id": "ceo-bench",
   "submission": {
     "kind": "upstream_author_publication",
-    "importer_version": "ceo-bench/official-result-to-envelope@1.0.1",
+    "importer_version": "ceo-bench/official-result-to-envelope@1.1.0",
     "retrieved_on": "2026-08-03",
     "source": {
       "title": "Princeton CEO-Bench official results",
@@ -29,6 +29,8 @@
             "运行数",
             "破产运行",
             "最长存活天数",
+            "平均存活天数",
+            "Turns/week",
             "官网状态"
           ],
           "rows": [
@@ -37,14 +39,42 @@
                 3,
                 3,
                 319,
+                "155.7 ± 130.0",
+                "98.66",
                 "三次均破产"
               ]
             }
           ],
-          "note": "辅助展示不参与主分排序；同为 0 USD 时，最长存活天数按评测定义用于打破同分。"
+          "note": "数值逐项转录自 Princeton 官网结果表，辅助展示不参与主分排序；同为 0 USD 时，最长存活天数按评测定义用于打破同分。"
+        },
+        {
+          "type": "metric_table",
+          "title": "Princeton 官网参考值（非模型成绩）",
+          "columns": [
+            "参考项",
+            "公开金额",
+            "性质"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Rule-based baseline",
+                "15,756,408 USD",
+                "规则策略基线"
+              ]
+            },
+            {
+              "cells": [
+                "Estimated final cash upper bound",
+                "2,200,000,000 USD",
+                "估算上界（非运行成绩）"
+              ]
+            }
+          ],
+          "note": "这两项是上游官网的全局参考值，仅用于解读模型主分；估算上界不是模型、基线实跑或 EvalHub 成绩。"
         }
       ],
-      "detail": "Princeton CEO-Bench 官网于 2026-08-03 公开的模型级成绩：0 USD，3 次运行中 3 次破产，官网最长存活 319 天。该记录只复现钉死的上游公开结果，不表示 EvalHub 独立复跑。"
+      "detail": "Princeton CEO-Bench 官网于 2026-08-03 公开的模型级成绩：0 USD，3 次运行中 3 次破产，官网最长存活 319 天，平均存活 155.7 ± 130.0 天，Turns/week 为 98.66。该记录只复现钉死的上游公开结果，不表示 EvalHub 独立复跑。"
     }
   ]
 }
