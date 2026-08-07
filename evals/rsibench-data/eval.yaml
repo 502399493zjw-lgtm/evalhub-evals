@@ -24,6 +24,10 @@ detail_profile:
   overview_note: >-
     以下说明根据 RSIBench-Data 官方网站、论文和固定版本的作者仓库整理；官网 Official 矩阵是上游公开成绩的权威来源，
     新的 EvalHub 证据提交则遵循本目录单独声明的外部工作流与转换器边界。
+    2026-08-07 复核：官网页面指纹与 2026-07-31 快照一致，四位研究者成绩无变化；
+    上游默认分支在钉死 commit 之后新增的改动均未触及协议常量、数据集、分母与分数提取逻辑，
+    其中 Tinker eval proxy 默认改用 SDK 后端改变了官方复评的服务路径，这正是来源 commit
+    保持钉死、不随默认分支上移的理由。
   summary:
     plain_language: >-
       这不是直接跑 SWE-bench 或 GPQA，而是评测一个完整研究者系统能否在固定预算和训练栈内，
@@ -79,7 +83,9 @@ detail_profile:
       source_url: https://github.com/evolvent-ai/RSIBench-Data
     - value: Claude Opus 4.8
       label: 外部 rollout 模型
-      description: 固定外部 rollout 模型。
+      description: >-
+        对应上游 DATA_AGENT_ROLL_MODEL，是研究者生成的数据脚本合成训练数据时直接发起 rollout/API 调用所用的模型，
+        四位研究者共享同一取值；区分他们身份的是编排 harness 与编排模型，不是这个 rollout 执行模型。
       source_url: https://github.com/evolvent-ai/RSIBench-Data
     - value: "4"
       label: 官网公开研究者数

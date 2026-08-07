@@ -21,6 +21,11 @@ const SCHEMA_VERSION = "1.1";
 const SOURCE_REPOSITORY = "https://github.com/evolvent-ai/RSIBench-Data";
 const SOURCE_COMMIT = "39948a17925272367b64dd53427a4dba3f572f4e";
 const TARGET_MODEL = "Qwen/Qwen3.5-35B-A3B-Base";
+// ROLLOUT_MODEL: the model used by generated data scripts for rollout/API calls
+// during data synthesis (corresponds to DATA_AGENT_ROLL_MODEL in upstream .env).
+// This is a shared control variable across all researcher orchestrators; the four
+// researcher agents (Claude Code Opus-4.8/Sonnet-5, Codex gpt-5.6-sol/terra)
+// differ in their orchestrator harness and model, not this rollout executor.
 const ROLLOUT_MODEL = "claude-opus-4-8";
 const WALL_TIME_BUDGET_SEC = 57_600;
 const TINKER_COST_BUDGET_USD = 500;
