@@ -100,6 +100,17 @@ detail_profile:
       description: >-
         论文主协议中的"新环境"是指检查点选择和官方复评使用同一 task subset；
         结果只能解释为固定协议的可复现性能，不能宣称已证明对未见任务的自适应泛化。
+  resources_note: 下面只列上游作者或论文托管方提供的一手资料。
+  resources:
+    - title: RSIBench-Data 官方网站与 Official 矩阵
+      summary: 查看上游公开的四位研究者在六个 target profile 上的官方成绩汇总与协议说明。
+      url: https://rsibench.co/data/
+    - title: RSIBench-Data 论文
+      summary: 阅读数据中心型自改进的评测设计、主协议、预算约束、实验结果与局限。
+      url: https://arxiv.org/abs/2607.25886
+    - title: 官方源码仓库（固定来源 commit）
+      summary: 查看钉死版本的 target profile 定义、训练与服务栈配置、run_official_eval.sh 与文档。
+      url: https://github.com/evolvent-ai/RSIBench-Data/tree/39948a17925272367b64dd53427a4dba3f572f4e
 tasks:
   - id: swe-bench-verified
     prompt: 在钉死的 RSIBench-Data 主协议中，以 SWE-bench Verified profile 启动一次独立的 16 小时 / 500 USD 数据研究运行。研究者 Agent 只能改变合规的训练数据与白名单训练配置，必须从历史尝试中选择检查点后再做官方评测；不得把评测任务、标签、轨迹或其他受保护材料转化为训练监督。
