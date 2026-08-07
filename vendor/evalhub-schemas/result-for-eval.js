@@ -25,15 +25,30 @@ export function validateResultForEval(context, resultFile) {
     if (resultFile.eval_id !== context.id) {
         issues.push(customIssue(["eval_id"], `result eval_id must match eval.id "${context.id}"`));
     }
-    if ((context.interface === "chat" || context.interface === "agent") &&
+    // A real run envelope mirrors one execution session, so its cardinality is
+    // dictated by the eval interface. An upstream publication is instead one
+    // source snapshot and may legitimately publish a whole official leaderboard
+    // in the same envelope, irrespective of the interface used by real runs.
+    if (origin === "run" &&
+        (context.interface === "chat" || context.interface === "agent") &&
         resultFile.results.length !== 1) {
         issues.push(customIssue(["results"], `interface=${context.interface} requires exactly one result`));
     }
-    if (context.interface === "dialogue" && resultFile.results.length < 2) {
+    if (origin === "run" &&
+        context.interface === "dialogue" &&
+        resultFile.results.length < 2) {
         issues.push(customIssue(["results"], "interface=dialogue requires at least two results"));
     }
     const dialogueParticipants = new Set();
+    const upstreamParticipants = new Set();
     const envelopeParticipants = new Set(resultFile.results.map((result) => runParticipantKey(result.participant)));
+    const evalTaskIds = new Set((context.tasks ?? []).flatMap((task) => task.id === undefined ? [] : [task.id]));
+    // StoredEvalDef intentionally keeps task ids optional so historical evals
+    // remain readable. Repository authoring requires ids for every new/updated
+    // definition; only those fully identified task sets can safely enforce
+    // referential integrity without rejecting legacy run evidence.
+    const enforceTaskReferences = context.tasks !== undefined &&
+        context.tasks.every((task) => task.id !== undefined);
     for (const [index, result] of resultFile.results.entries()) {
         const participantPath = ["results", index, "participant"];
         const participantValidation = validateParticipantForEval(context, result.participant, origin);
@@ -42,7 +57,16 @@ export function validateResultForEval(context, resultFile) {
                 issues.push(customIssue([...participantPath, ...issue.path], issue.message));
             }
         }
-        if (context.interface === "dialogue") {
+        if (origin === "upstream_author_publication") {
+            const identity = runParticipantKey(result.participant);
+            if (upstreamParticipants.has(identity)) {
+                issues.push(customIssue([...participantPath, "model"], "upstream publication participant identities must be unique"));
+            }
+            else {
+                upstreamParticipants.add(identity);
+            }
+        }
+        else if (context.interface === "dialogue") {
             const identity = runParticipantKey(result.participant);
             if (dialogueParticipants.has(identity)) {
                 issues.push(customIssue([...participantPath, "model"], "dialogue participant identities must be unique"));
@@ -63,6 +87,33 @@ export function validateResultForEval(context, resultFile) {
         }
         if (resolveScorePolicy(context) === "required" && result.score === null) {
             issues.push(customIssue(["results", index, "score"], "该评测集要求提交数值成绩（score_policy=required），score 不能为 null"));
+        }
+        const taskResultCounts = new Map();
+        const maxTaskResultsPerTask = context.trials ?? 1;
+        for (const [taskResultIndex, taskResult] of (result.task_results ?? []).entries()) {
+            const taskIdPath = [
+                "results",
+                index,
+                "task_results",
+                taskResultIndex,
+                "task_id",
+            ];
+            if (enforceTaskReferences && !evalTaskIds.has(taskResult.task_id)) {
+                issues.push(customIssue(taskIdPath, "task_results[].task_id must reference an eval task id"));
+            }
+            const taskResultCount = (taskResultCounts.get(taskResult.task_id) ?? 0) + 1;
+            taskResultCounts.set(taskResult.task_id, taskResultCount);
+            if (taskResultCount > maxTaskResultsPerTask) {
+                issues.push(customIssue(taskIdPath, `duplicate task_result for the same task_id exceeds eval.trials=${maxTaskResultsPerTask}`));
+            }
+        }
+        for (const [showcaseIndex, showcase] of (result.showcases ?? []).entries()) {
+            if ((showcase.type === "compare" || showcase.type === "transcript") &&
+                showcase.task_id !== undefined &&
+                enforceTaskReferences &&
+                !evalTaskIds.has(showcase.task_id)) {
+                issues.push(customIssue(["results", index, "showcases", showcaseIndex, "task_id"], "showcase task_id must reference an eval task id"));
+            }
         }
         if (origin === "upstream_author_publication") {
             // 上游官方发布不是本站复跑，因此逐题结果、运行用量和 showcase/输出证据
@@ -103,10 +154,12 @@ export function validateResultForEval(context, resultFile) {
             }
         }
     }
-    if (context.leaderboard === "rating" && teamGamesShowcaseCount !== 1) {
+    if (origin === "run" &&
+        context.leaderboard === "rating" &&
+        teamGamesShowcaseCount !== 1) {
         issues.push(customIssue(["results"], "leaderboard=rating requires exactly one team_games showcase per dialogue envelope"));
     }
-    else if (teamGamesShowcaseCount > 1) {
+    else if (origin === "run" && teamGamesShowcaseCount > 1) {
         issues.push(customIssue(["results"], "a dialogue envelope may contain at most one team_games showcase"));
     }
     if (issues.length > 0) {

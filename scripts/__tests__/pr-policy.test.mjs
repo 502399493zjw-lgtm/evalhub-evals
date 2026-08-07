@@ -339,6 +339,78 @@ test("rejects a new eval whose owner differs from the PR creator", async () => {
   );
 });
 
+test("maintainer may create an eval owned by a GitHub org", async () => {
+  const result = await evaluate({
+    actor: MAINTAINER_LOGIN,
+    changedFiles: [
+      file("evals/org-owned/eval.yaml", "added"),
+      file("evals/org-owned/AUTHORS", "added"),
+    ],
+    head: {
+      "evals/org-owned/eval.yaml": "id: org-owned\nrunner: builtin\n",
+      "evals/org-owned/AUTHORS": "@zlab-princeton\n",
+    },
+  });
+
+  assert.equal(result.owner, "zlab-princeton");
+  assert.equal(result.slug, "org-owned");
+  assert.equal(result.mode, "community-eval-create");
+});
+
+test("maintainer may reassign AUTHORS of an existing eval", async () => {
+  const result = await evaluate({
+    actor: MAINTAINER_LOGIN,
+    changedFiles: [
+      file("evals/ceo-bench/AUTHORS"),
+      file("evals/ceo-bench/eval.yaml"),
+    ],
+    base: {
+      "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
+      "evals/ceo-bench/AUTHORS": `@${MAINTAINER_LOGIN}\n`,
+    },
+    head: {
+      "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
+      "evals/ceo-bench/AUTHORS": "@zlab-princeton\n",
+    },
+  });
+
+  assert.equal(result.slug, "ceo-bench");
+  // owner/mode 报的是合入后的归属：迁移走了就不再算官方评测。
+  assert.equal(result.owner, "zlab-princeton");
+  assert.equal(result.mode, "community-eval-update");
+});
+
+// AUTHORS 变更后 owner 改读 head，因此「只删 AUTHORS、留下 eval.yaml」这条路不再
+// 落回 base 归属，而是明确报缺文件：已存在的评测集必须始终带 AUTHORS。
+test("rejects dropping AUTHORS from an eval that still exists", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      changedFiles: [file("evals/ceo-bench/AUTHORS", "removed")],
+      base: {
+        "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
+        "evals/ceo-bench/AUTHORS": "@zlab-princeton\n",
+      },
+      head: { "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n" },
+    },
+    "required_file_missing",
+  );
+});
+
+test("maintainer may update an eval owned by someone else", async () => {
+  const result = await evaluate({
+    actor: MAINTAINER_LOGIN,
+    changedFiles: [file("evals/ceo-bench/eval.yaml")],
+    base: {
+      "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
+      "evals/ceo-bench/AUTHORS": "@zlab-princeton\n",
+    },
+    head: { "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n" },
+  });
+
+  assert.equal(result.owner, "zlab-princeton");
+});
+
 test("rejects changes to multiple eval slugs", async () => {
   await expectPolicyError(
     {

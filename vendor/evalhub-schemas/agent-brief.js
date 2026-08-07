@@ -17,11 +17,17 @@ export function buildAgentBrief(definition, options) {
     const output = definition.command_template?.output ?? `${definition.id}-result.json`;
     const platformEnvironment = `EVALHUB_PLATFORM_URL=${shellToken(origin)}`;
     const customMode = resolveCustomRunnerMode(definition);
+    const pinnedDependencyInstall = [
+        "先遵循已经审查过的 README。CLI 会打印 `Pinned checkout root: <绝对路径>`；如果该根目录存在 package-lock.json（或 README 明确要求安装其中的 Node 依赖），再对 CLI 打印的实际根目录安装锁定依赖，禁止省略 `--ignore-scripts`：",
+        shellBlock('npm ci --ignore-scripts --prefix "<CLI 打印的 Pinned checkout root 绝对路径>"'),
+        "`--prefix` 会让终端留在最初运行 EvalHub 的工作目录，后续 run/pack 必须继续从该目录执行，才能复用同一个 pinned checkout。CLI 不会自动安装依赖。你只可在用户确认后运行上述命令，不得修改或绕过 pinned checkout 的洁净性检查；没有 package-lock.json 且 README 未要求时，不要擅自运行 npm ci。",
+    ].join("\n\n");
     const execution = customMode === "external_workflow"
         ? [
             `这是需要外部基础设施的自定义评测。详情页：${detailUrl}`,
             `先让 CLI 下载平台钉死的源码 commit，但不执行：\n\n${shellBlock(`${platformEnvironment} evalhub fetch ${shellToken(definition.id)}`)}`,
             "检查 CLI 打印的本地源码目录、固定 commit、README、依赖、权限、网络访问和环境变量使用。如果源码链接或 commit 缺失、无法核对，就停下询问。",
+            pinnedDependencyInstall,
             "严格按 README 在评测指定的外部基础设施完成全部独立运行，保存真实 submission JSON；示例 JSON 只用于理解格式，不能作为提交输入。",
             `外部运行全部完成后，用真实 submission JSON 打包结果（把 /path/to/submission.json 替换成实际文件路径）：\n\n${shellBlock(`${platformEnvironment} evalhub pack ${shellToken(definition.id)} --input /path/to/submission.json --out ${shellToken(output)}`)}`,
         ].join("\n\n")
@@ -30,6 +36,7 @@ export function buildAgentBrief(definition, options) {
                 `这是自定义 runner。详情页：${detailUrl}`,
                 `先让 CLI 下载平台钉死的源码 commit，但不执行：\n\n${shellBlock(`${platformEnvironment} evalhub fetch ${shellToken(definition.id)}`)}`,
                 "runner 及其依赖是不受平台信任的第三方代码。检查 CLI 打印的本地源码目录、commit、README、依赖、权限、网络访问和环境变量使用；把执行计划与命令给用户看，得到用户明确确认后才执行。如果固定源码链接或 commit 缺失、无法核对，就停下询问。",
+                pinnedDependencyInstall,
                 "使用最小权限和最少环境变量运行；不得把整个 process.env 或与本评测无关的 API key 交给 runner。",
                 definition.command_template
                     ? `确认后通过 CLI 执行已下载的固定版本：\n\n${shellBlock(`${platformEnvironment} evalhub run ${shellToken(definition.id)} --out ${shellToken(output)} --allow-custom-code`)}`
@@ -101,6 +108,8 @@ ${execution}
 运行：
 
 ${shellBlock(`evalhub validate ${shellToken(output)}`)}
+
+该命令成功只表示结构与评测契约检查通过，未验证证据来源/模型身份/成绩真实性。
 
 不得编造分数或伪造输出；结果接受作者判断与社区复核，违规提交可能被拒绝或封禁。
 
