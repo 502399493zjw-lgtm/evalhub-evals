@@ -16,13 +16,15 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "ceo-bench";
-const IMPORTER_VERSION = "ceo-bench/official-result-to-envelope@1.0.1";
+const IMPORTER_VERSION = "ceo-bench/official-result-to-envelope@1.1.0";
 const SNAPSHOT_URL = new URL(
   "./tasks/princeton-official-results-2026-08-03.json",
   import.meta.url,
 );
 const EVAL_COMMIT_PATTERN = /^[a-f0-9]{7,40}$/u;
 const SHA256_PATTERN = /^[a-f0-9]{64}$/u;
+const MEAN_SURVIVAL_PATTERN = /^\d{1,3}\.\d ± \d{1,3}\.\d$/u;
+const TURNS_PER_WEEK_PATTERN = /^\d{1,3}\.\d{2}$/u;
 
 class InputError extends Error {
   constructor(message) {
@@ -102,13 +104,21 @@ function readSnapshot() {
   } catch (error) {
     throw new InputError(`官方成绩快照无法读取：${error.message}`);
   }
-  assert(snapshot?.schema_version === 1, "官方成绩快照 schema_version 必须是 1");
+  assert(snapshot?.schema_version === 2, "官方成绩快照 schema_version 必须是 2");
   assert(snapshot?.benchmark === EVAL_ID, `官方成绩快照 benchmark 必须是 ${EVAL_ID}`);
   assert(
     snapshot?.source_kind === "upstream_official_publication",
     "官方成绩快照 source_kind 不正确",
   );
   assert(/^\d{4}-\d{2}-\d{2}$/u.test(snapshot?.retrieved_on), "官方成绩快照 retrieved_on 不正确");
+  assert(
+    /^\d{4}-\d{2}-\d{2}$/u.test(snapshot?.reverified_on),
+    "官方成绩快照 reverified_on 不正确",
+  );
+  assert(
+    snapshot.reverified_on >= snapshot.retrieved_on,
+    "官方成绩快照 reverified_on 不能早于 retrieved_on",
+  );
   assert(typeof snapshot?.score_authority?.url === "string", "官方成绩快照缺少来源 URL");
   assert(
     SHA256_PATTERN.test(snapshot?.score_authority?.sha256),
@@ -118,6 +128,35 @@ function readSnapshot() {
     Array.isArray(snapshot?.results) && snapshot.results.length === 18,
     "官方成绩快照必须恰好包含 18 个模型",
   );
+  assert(
+    Array.isArray(snapshot?.references) && snapshot.references.length === 2,
+    "官方成绩快照必须包含规则基线和估算上界两项参考值",
+  );
+  const referenceKinds = new Set();
+  for (const reference of snapshot.references) {
+    assert(
+      reference?.reference_kind === "rule_based_baseline" ||
+        reference?.reference_kind === "estimated_upper_bound",
+      "官方成绩参考值 reference_kind 不合法",
+    );
+    assert(
+      !referenceKinds.has(reference.reference_kind),
+      `重复的官方成绩参考值 ${reference.reference_kind}`,
+    );
+    referenceKinds.add(reference.reference_kind);
+    assert(
+      typeof reference?.label === "string" && reference.label.length > 0,
+      `${reference.reference_kind}.label 不合法`,
+    );
+    assert(
+      Number.isSafeInteger(reference?.score_usd) && reference.score_usd > 0,
+      `${reference.reference_kind}.score_usd 必须是正安全整数`,
+    );
+    assert(
+      reference?.participant === false,
+      `${reference.reference_kind} 只能是非参赛参考值`,
+    );
+  }
 
   const ids = new Set();
   const names = new Set();
@@ -147,6 +186,27 @@ function readSnapshot() {
         result.homepage_max_survival_days >= 0 &&
         result.homepage_max_survival_days <= 500,
       `${id}.homepage_max_survival_days 不合法`,
+    );
+    assert(
+      typeof result.homepage_mean_survival_days === "string" &&
+        MEAN_SURVIVAL_PATTERN.test(result.homepage_mean_survival_days),
+      `${id}.homepage_mean_survival_days 必须保留官网的一位小数 ± 一位小数显示值`,
+    );
+    const [meanSurvival, survivalSpread] = result.homepage_mean_survival_days
+      .split(" ± ")
+      .map(Number);
+    assert(
+      meanSurvival >= 0 &&
+        meanSurvival <= 500 &&
+        survivalSpread >= 0 &&
+        survivalSpread <= 500,
+      `${id}.homepage_mean_survival_days 超出 0–500 天范围`,
+    );
+    assert(
+      typeof result.homepage_turns_per_week === "string" &&
+        TURNS_PER_WEEK_PATTERN.test(result.homepage_turns_per_week) &&
+        Number(result.homepage_turns_per_week) > 0,
+      `${id}.homepage_turns_per_week 必须保留官网的两位小数正数显示值`,
     );
     if (result.scoring_status === "all_runs_bankrupt") {
       assert(
@@ -194,24 +254,49 @@ function buildEnvelope(snapshot, result, evalCommit) {
           {
             type: "metric_table",
             title: "Princeton 官网运行摘要",
-            columns: ["运行数", "破产运行", "最长存活天数", "官网状态"],
+            columns: [
+              "运行数",
+              "破产运行",
+              "最长存活天数",
+              "平均存活天数",
+              "Turns/week",
+              "官网状态",
+            ],
             rows: [
               {
                 cells: [
                   result.run_count,
                   result.bankrupt_runs,
                   result.homepage_max_survival_days,
+                  result.homepage_mean_survival_days,
+                  result.homepage_turns_per_week,
                   allBankrupt ? "三次均破产" : "至少一次完成",
                 ],
               },
             ],
-            note: "辅助展示不参与主分排序；同为 0 USD 时，最长存活天数按评测定义用于打破同分。",
+            note: "数值逐项转录自 Princeton 官网结果表，辅助展示不参与主分排序；同为 0 USD 时，最长存活天数按评测定义用于打破同分。",
+          },
+          {
+            type: "metric_table",
+            title: "Princeton 官网参考值（非模型成绩）",
+            columns: ["参考项", "公开金额", "性质"],
+            rows: snapshot.references.map((reference) => ({
+              cells: [
+                reference.label,
+                `${reference.score_usd.toLocaleString("en-US")} USD`,
+                reference.reference_kind === "rule_based_baseline"
+                  ? "规则策略基线"
+                  : "估算上界（非运行成绩）",
+              ],
+            })),
+            note: "这两项是上游官网的全局参考值，仅用于解读模型主分；估算上界不是模型、基线实跑或 EvalHub 成绩。",
           },
         ],
         detail:
           `Princeton CEO-Bench 官网于 ${snapshot.retrieved_on} 公开的模型级成绩：` +
           `${result.score_usd.toLocaleString("en-US")} USD，${result.run_count} 次运行中 ${result.bankrupt_runs} 次破产，` +
-          `官网最长存活 ${result.homepage_max_survival_days} 天。该记录只复现钉死的上游公开结果，不表示 EvalHub 独立复跑。`,
+          `官网最长存活 ${result.homepage_max_survival_days} 天，平均存活 ${result.homepage_mean_survival_days} 天，` +
+          `Turns/week 为 ${result.homepage_turns_per_week}。该记录只复现钉死的上游公开结果，不表示 EvalHub 独立复跑。`,
       },
     ],
   };

@@ -8,6 +8,7 @@ Princeton University 的 **CEO-Bench: Can Agents Play the Long Game?** 让 agent
 - 官方可运行仓库：<https://github.com/zlab-princeton/run-ceobench>
 - 当前评测采用的可运行仓库 commit：`f5d500688d95256906fd02cc5aa7524f2fe08d5b`
 - 原作者：Haozhe Chen、Karthik Narasimhan、Zhuang Liu（Princeton University）
+- 一手来源台账：[`tasks/source-ledger-2026-08-07.json`](tasks/source-ledger-2026-08-07.json)
 
 本目录同时支持两类成绩，但不会混淆它们的来源：
 
@@ -16,9 +17,18 @@ Princeton University 的 **CEO-Bench: Can Agents Play the Long Game?** 让 agent
 
 页面统一展示模型、终局现金和完成状态，不要求在每条成绩旁标出底层运行天数。来源快照与运行证据仍保留已公开的实际终点，供作者审计；省略公开标签不代表不同运行配置已经被证明完全等价。
 
-18 份 Princeton 官网成绩由钉死的 [`tasks/princeton-official-results-2026-08-03.json`](tasks/princeton-official-results-2026-08-03.json) 确定性生成并签入 [`published-results/`](published-results/)。同步服务把这些 `upstream_author_publication` 信封绑定到当前成绩协议版本，因此新数据库和已有部署都不再依赖一次性的历史手工导入。它们只有上游公开的模型身份，不虚构未发布的 harness 或 harness 版本。
+18 份 Princeton 官网成绩由钉死的 [`tasks/princeton-official-results-2026-08-03.json`](tasks/princeton-official-results-2026-08-03.json) 确定性生成并签入 [`published-results/`](published-results/)。每份信封保持唯一主排名分数为官网 Best-run cash，并在 `supplementary_views` 中逐项保留破产次数、最长存活天数、官网显示的平均存活天数、Turns/week、规则策略基线和估算上界；这些辅助值不参与单独排名。同步服务把这些 `upstream_author_publication` 信封绑定到当前成绩协议版本，因此新数据库和已有部署都不再依赖一次性的历史手工导入。它们只有上游公开的模型身份，不虚构未发布的 harness 或 harness 版本，也不附带 EvalHub `usage`、`task_results` 或 `showcases`。
 
 EvalHub 页面与转换器不代表 Princeton 官方认证或作者背书。两个上游 GitHub 仓库在当前评测定义采用该版本时没有代码许可证，因此这里只链接并固定官方来源，不复制或重新发布其代码、文档、数据库或二进制。论文页面的 CC BY 4.0 标记不自动授权这些仓库内容。
+
+## 一手来源与版本边界
+
+[`tasks/source-ledger-2026-08-07.json`](tasks/source-ledger-2026-08-07.json) 逐项记录来源 URL、可支持的事实、允许映射到的投稿字段以及版本和许可边界。主要版本关系如下：
+
+- Princeton 官网结果表是模型分数和汇总指标的唯一权威来源。2026-08-07 复核时页面字节与 2026-08-03 快照一致，SHA-256 仍为 `97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292`。
+- 源码研究固定在 `ceobench-src@d2b7b32e5301a571b77f5f68bd1032adbcd5b464`；论文说明固定为 `arXiv:2606.18543v2`。论文 v2 标注 CC BY 4.0，但它早于官网后来加入的模型，因此论文图只用于解释任务和长周期趋势，不覆盖当前官网成绩。
+- 当前 EvalHub `protocol_revision: 2` 继续固定 `run-ceobench@f5d500688d95256906fd02cc5aa7524f2fe08d5b`。上游当前 main 已有后续模拟与计费修复，但没有一手证据证明官网 18 份成绩已全部按该新版重新运行；静默更换 pin 会改变可比性，因此本次来源和展示维护不更换执行协议。
+- 轨迹清单只支持 run ID、公开终点和破产状态等来源审计。它包含异质运行时长、缺少 Grok 4.5，并与官网的 Gemini 3.5 Flash 批次冲突；本目录不据此改写官网分数，也不复制没有单独数据许可证的逐日曲线。
 
 当前 `protocol_revision: 2` 把评测明确标记为外部工作流，并要求转换器接收参赛者实际生成的提交 JSON。`protocol_revision: 1` 的正式命令曾引用仓库内的合成示例；计分规则没有改变，但执行方式和输入身份契约已经改变，因此本次提升协议版本，旧版本成绩不会被误认为与当前提交链路可直接比较。
 
