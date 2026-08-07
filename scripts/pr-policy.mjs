@@ -481,10 +481,10 @@ export async function evaluatePullRequestPolicy({
       `head:${authorsPath}`,
     );
     const owner = parseAuthors(headAuthors, `head:${authorsPath}`);
-    if (!sameLogin(actor, owner)) {
+    if (!sameLogin(actor, owner) && !sameLogin(actor, MAINTAINER_LOGIN)) {
       reject(
         "author_mismatch",
-        `new eval owner @${owner} must match PR creator @${actor}`,
+        `new eval owner @${owner} must match PR creator @${actor}, unless the PR is opened by @${MAINTAINER_LOGIN}`,
       );
     }
     return {
@@ -497,10 +497,10 @@ export async function evaluatePullRequestPolicy({
     };
   }
 
-  if (changed.authorsChanged) {
+  if (changed.authorsChanged && !sameLogin(actor, MAINTAINER_LOGIN)) {
     reject(
       "author_change_forbidden",
-      `AUTHORS is immutable for existing eval ${slug}`,
+      `AUTHORS is immutable for existing eval ${slug} unless changed by @${MAINTAINER_LOGIN}`,
     );
   }
   const baseId = parseEvalId(baseEvalYaml, `base:${evalYamlPath}`);
@@ -517,12 +517,25 @@ export async function evaluatePullRequestPolicy({
     authorsPath,
     `base:${authorsPath}`,
   );
-  const owner = parseAuthors(baseAuthors, `base:${authorsPath}`);
-  if (!sameLogin(actor, owner)) {
+  const baseOwner = parseAuthors(baseAuthors, `base:${authorsPath}`);
+  if (!sameLogin(actor, baseOwner) && !sameLogin(actor, MAINTAINER_LOGIN)) {
     reject(
       "third_party_update_forbidden",
-      `@${actor} cannot update eval ${slug}, which belongs to @${owner}`,
+      `@${actor} cannot update eval ${slug}, which belongs to @${baseOwner}`,
     );
+  }
+  // 权限判定始终以 base 归属为准（谁现在拥有它）；审计摘要的 owner 则报合入后的归属，
+  // 这样 maintainer 用 admin 例外迁移 AUTHORS 时，摘要不会把迁移记成旧 owner 拥有。
+  let owner = baseOwner;
+  if (changed.authorsChanged) {
+    const headAuthors = await requiredText(
+      readText,
+      headRepository,
+      headSha,
+      authorsPath,
+      `head:${authorsPath}`,
+    );
+    owner = parseAuthors(headAuthors, `head:${authorsPath}`);
   }
   return {
     ...audit,
