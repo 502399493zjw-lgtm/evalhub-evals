@@ -1,0 +1,341 @@
+{
+  "sourceSha256": "aecdf5580fdb1db932449469da0477da84f3d35fb2c2787028c25282c60b92c4",
+  "registrySource": "scripts/ops/bootstrap-model-identity.sql",
+  "models": [
+    {
+      "modelId": "alibaba/qwen3.7-max",
+      "vendor": "Alibaba Cloud (Qwen)",
+      "displayName": "Qwen 3.7 Max",
+      "deprecated": false
+    },
+    {
+      "modelId": "alibaba/qwen3.7-max-preview",
+      "vendor": "Alibaba Cloud (Qwen)",
+      "displayName": "Qwen 3.7 Max Preview",
+      "deprecated": false
+    },
+    {
+      "modelId": "alibaba/qwen3.8-max",
+      "vendor": "Alibaba Cloud (Qwen)",
+      "displayName": "Qwen 3.8 Max",
+      "deprecated": false
+    },
+    {
+      "modelId": "alibaba/qwen3.8-max-preview",
+      "vendor": "Alibaba Cloud (Qwen)",
+      "displayName": "Qwen 3.8 Max Preview",
+      "deprecated": false
+    },
+    {
+      "modelId": "anthropic/claude-fable-5",
+      "vendor": "Anthropic",
+      "displayName": "Claude Fable 5",
+      "deprecated": false
+    },
+    {
+      "modelId": "anthropic/claude-haiku-4-5",
+      "vendor": "Anthropic",
+      "displayName": "Claude Haiku 4.5",
+      "deprecated": false
+    },
+    {
+      "modelId": "anthropic/claude-opus-4-7",
+      "vendor": "Anthropic",
+      "displayName": "Claude Opus 4.7",
+      "deprecated": false
+    },
+    {
+      "modelId": "anthropic/claude-opus-4-8",
+      "vendor": "Anthropic",
+      "displayName": "Claude Opus 4.8",
+      "deprecated": false
+    },
+    {
+      "modelId": "anthropic/claude-sonnet-4-6",
+      "vendor": "Anthropic",
+      "displayName": "Claude Sonnet 4.6",
+      "deprecated": false
+    },
+    {
+      "modelId": "anthropic/claude-sonnet-5",
+      "vendor": "Anthropic",
+      "displayName": "Claude Sonnet 5",
+      "deprecated": false
+    },
+    {
+      "modelId": "bytedance/doubao-seed-2.1-pro",
+      "vendor": "ByteDance (Doubao Seed)",
+      "displayName": "Doubao Seed 2.1 Pro",
+      "deprecated": false
+    },
+    {
+      "modelId": "bytedance/doubao-seed-2.1-turbo",
+      "vendor": "ByteDance (Doubao Seed)",
+      "displayName": "Doubao Seed 2.1 Turbo",
+      "deprecated": false
+    },
+    {
+      "modelId": "bytedance/doubao-seed-evolving",
+      "vendor": "ByteDance (Doubao Seed)",
+      "displayName": "Doubao Seed Evolving",
+      "deprecated": false
+    },
+    {
+      "modelId": "deepseek/deepseek-v4-pro",
+      "vendor": "DeepSeek",
+      "displayName": "DeepSeek V4 Pro",
+      "deprecated": false
+    },
+    {
+      "modelId": "google/gemini-3-flash-preview",
+      "vendor": "Google",
+      "displayName": "Gemini 3 Flash Preview",
+      "deprecated": false
+    },
+    {
+      "modelId": "google/gemini-3.5-flash",
+      "vendor": "Google",
+      "displayName": "Gemini 3.5 Flash",
+      "deprecated": false
+    },
+    {
+      "modelId": "meituan/longcat-2.0",
+      "vendor": "Meituan (LongCat)",
+      "displayName": "LongCat 2.0",
+      "deprecated": false
+    },
+    {
+      "modelId": "meituan/longcat-2.0-preview",
+      "vendor": "Meituan (LongCat)",
+      "displayName": "LongCat 2.0 Preview",
+      "deprecated": false
+    },
+    {
+      "modelId": "minimax/minimax-m3",
+      "vendor": "MiniMax",
+      "displayName": "MiniMax M3",
+      "deprecated": false
+    },
+    {
+      "modelId": "moonshot/kimi-k2.6",
+      "vendor": "Moonshot AI",
+      "displayName": "Kimi K2.6",
+      "deprecated": false
+    },
+    {
+      "modelId": "moonshot/kimi-k3",
+      "vendor": "Moonshot AI",
+      "displayName": "Kimi K3",
+      "deprecated": false
+    },
+    {
+      "modelId": "openai/gpt-5.5",
+      "vendor": "OpenAI",
+      "displayName": "GPT-5.5",
+      "deprecated": false
+    },
+    {
+      "modelId": "openai/gpt-5.6-sol",
+      "vendor": "OpenAI",
+      "displayName": "GPT-5.6 Sol",
+      "deprecated": false
+    },
+    {
+      "modelId": "openai/gpt-5.6-terra",
+      "vendor": "OpenAI",
+      "displayName": "GPT-5.6 Terra",
+      "deprecated": false
+    },
+    {
+      "modelId": "stepfun/step-3.7-flash",
+      "vendor": "StepFun",
+      "displayName": "Step 3.7 Flash",
+      "deprecated": false
+    },
+    {
+      "modelId": "tencent/hy3",
+      "vendor": "Tencent (Tencent Hy)",
+      "displayName": "Tencent Hy3",
+      "deprecated": false
+    },
+    {
+      "modelId": "tencent/hy3-preview",
+      "vendor": "Tencent (Tencent Hy)",
+      "displayName": "Tencent Hy3 Preview",
+      "deprecated": false
+    },
+    {
+      "modelId": "xai/grok-4.20",
+      "vendor": "xAI",
+      "displayName": "Grok 4.20",
+      "deprecated": false
+    },
+    {
+      "modelId": "xai/grok-4.5",
+      "vendor": "xAI",
+      "displayName": "Grok 4.5",
+      "deprecated": false
+    },
+    {
+      "modelId": "xiaomi/mimo-v2.5",
+      "vendor": "Xiaomi (MiMo)",
+      "displayName": "MiMo V2.5",
+      "deprecated": false
+    },
+    {
+      "modelId": "xiaomi/mimo-v2.5-pro",
+      "vendor": "Xiaomi (MiMo)",
+      "displayName": "MiMo V2.5 Pro",
+      "deprecated": false
+    },
+    {
+      "modelId": "zai/glm-5.1",
+      "vendor": "Z.ai",
+      "displayName": "GLM-5.1",
+      "deprecated": false
+    },
+    {
+      "modelId": "zai/glm-5.2",
+      "vendor": "Z.ai",
+      "displayName": "GLM-5.2",
+      "deprecated": false
+    }
+  ],
+  "aliases": [
+    {
+      "alias": "Claude Code · Opus-4.8",
+      "normalizedAlias": "claude-code-·-opus-4.8",
+      "canonicalModelId": "anthropic/claude-opus-4-8"
+    },
+    {
+      "alias": "Claude Code · Sonnet-5",
+      "normalizedAlias": "claude-code-·-sonnet-5",
+      "canonicalModelId": "anthropic/claude-sonnet-5"
+    },
+    {
+      "alias": "claude-haiku-4-5",
+      "normalizedAlias": "claude-haiku-4-5",
+      "canonicalModelId": "anthropic/claude-haiku-4-5"
+    },
+    {
+      "alias": "claude-haiku-4-5-20251001",
+      "normalizedAlias": "claude-haiku-4-5-20251001",
+      "canonicalModelId": "anthropic/claude-haiku-4-5"
+    },
+    {
+      "alias": "claude-opus-4-7",
+      "normalizedAlias": "claude-opus-4-7",
+      "canonicalModelId": "anthropic/claude-opus-4-7"
+    },
+    {
+      "alias": "claude-opus-4-8",
+      "normalizedAlias": "claude-opus-4-8",
+      "canonicalModelId": "anthropic/claude-opus-4-8"
+    },
+    {
+      "alias": "claude-sonnet-4-6",
+      "normalizedAlias": "claude-sonnet-4-6",
+      "canonicalModelId": "anthropic/claude-sonnet-4-6"
+    },
+    {
+      "alias": "Codex · gpt-5.6-sol",
+      "normalizedAlias": "codex-·-gpt-5.6-sol",
+      "canonicalModelId": "openai/gpt-5.6-sol"
+    },
+    {
+      "alias": "Codex · gpt-5.6-terra",
+      "normalizedAlias": "codex-·-gpt-5.6-terra",
+      "canonicalModelId": "openai/gpt-5.6-terra"
+    },
+    {
+      "alias": "gemini-3-flash-preview",
+      "normalizedAlias": "gemini-3-flash-preview",
+      "canonicalModelId": "google/gemini-3-flash-preview"
+    },
+    {
+      "alias": "gpt-5.6",
+      "normalizedAlias": "gpt-5.6",
+      "canonicalModelId": "openai/gpt-5.6-sol"
+    },
+    {
+      "alias": "grok-4.20-0309-reasoning",
+      "normalizedAlias": "grok-4.20-0309-reasoning",
+      "canonicalModelId": "xai/grok-4.20"
+    },
+    {
+      "alias": "grok-4.20-reasoning",
+      "normalizedAlias": "grok-4.20-reasoning",
+      "canonicalModelId": "xai/grok-4.20"
+    },
+    {
+      "alias": "grok-4.5-latest",
+      "normalizedAlias": "grok-4.5-latest",
+      "canonicalModelId": "xai/grok-4.5"
+    },
+    {
+      "alias": "Hunyuan Hy3",
+      "normalizedAlias": "hunyuan-hy3",
+      "canonicalModelId": "tencent/hy3"
+    },
+    {
+      "alias": "hy3",
+      "normalizedAlias": "hy3",
+      "canonicalModelId": "tencent/hy3"
+    },
+    {
+      "alias": "hy3-preview",
+      "normalizedAlias": "hy3-preview",
+      "canonicalModelId": "tencent/hy3-preview"
+    },
+    {
+      "alias": "Opus-4.8",
+      "normalizedAlias": "opus-4.8",
+      "canonicalModelId": "anthropic/claude-opus-4-8"
+    },
+    {
+      "alias": "qwen3.7-max",
+      "normalizedAlias": "qwen3.7-max",
+      "canonicalModelId": "alibaba/qwen3.7-max"
+    },
+    {
+      "alias": "qwen3.7-max-preview",
+      "normalizedAlias": "qwen3.7-max-preview",
+      "canonicalModelId": "alibaba/qwen3.7-max-preview"
+    },
+    {
+      "alias": "Qwen3.8 Max",
+      "normalizedAlias": "qwen3.8-max",
+      "canonicalModelId": "alibaba/qwen3.8-max"
+    },
+    {
+      "alias": "qwen3.8-max-preview",
+      "normalizedAlias": "qwen3.8-max-preview",
+      "canonicalModelId": "alibaba/qwen3.8-max-preview"
+    },
+    {
+      "alias": "Seed Evolving",
+      "normalizedAlias": "seed-evolving",
+      "canonicalModelId": "bytedance/doubao-seed-evolving"
+    },
+    {
+      "alias": "Seed2.1 Pro",
+      "normalizedAlias": "seed2.1-pro",
+      "canonicalModelId": "bytedance/doubao-seed-2.1-pro"
+    },
+    {
+      "alias": "Seed2.1 Turbo",
+      "normalizedAlias": "seed2.1-turbo",
+      "canonicalModelId": "bytedance/doubao-seed-2.1-turbo"
+    },
+    {
+      "alias": "Sonnet-5",
+      "normalizedAlias": "sonnet-5",
+      "canonicalModelId": "anthropic/claude-sonnet-5"
+    },
+    {
+      "alias": "Tencent Hunyuan Hy3",
+      "normalizedAlias": "tencent-hunyuan-hy3",
+      "canonicalModelId": "tencent/hy3"
+    }
+  ]
+}

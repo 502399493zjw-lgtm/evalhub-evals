@@ -3,6 +3,7 @@ import {
   cp,
   mkdir,
   mkdtemp,
+  readFile,
   rm,
   symlink,
   writeFile,
@@ -10,12 +11,29 @@ import {
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 import {
   buildAgentBrief,
   EvalDefSchema,
 } from "@evalhub/schemas";
+import { loadModelRegistry } from "../model-contract.mjs";
 import { validateRepository } from "../validate.mjs";
+
+const repositoryRoot = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../..",
+);
+const vendoredModelRegistry = path.join(
+  repositoryRoot,
+  "vendor/evalhub-models/registry.json",
+);
+
+// published-results 的 participant.model 现在要过平台注册表，所以夹具不能再用编造
+// 的名字。从快照里现取两个真实身份，快照换代时夹具跟着走，不用手改。
+const [KNOWN_MODEL_A, KNOWN_MODEL_B] = (await loadModelRegistry()).models
+  .filter((model) => !model.deprecated)
+  .map((model) => model.modelId);
 
 const validEval = {
   id: "sample-eval",
@@ -76,7 +94,7 @@ function makePublishedResult(
     },
     results: [
       {
-        participant: { model: "Official Model" },
+        participant: { model: KNOWN_MODEL_A },
         score: 88,
       },
     ],
@@ -117,9 +135,14 @@ async function makeFixture(t) {
 
   const evalDir = path.join(root, "evals", validEval.id);
   await mkdir(path.join(root, ".github"), { recursive: true });
+  await mkdir(path.join(root, "vendor", "evalhub-models"), { recursive: true });
   await mkdir(path.join(evalDir, "tasks"), { recursive: true });
   await mkdir(path.join(evalDir, "assets"));
   await Promise.all([
+    cp(
+      vendoredModelRegistry,
+      path.join(root, "vendor", "evalhub-models", "registry.json"),
+    ),
     writeFile(
       path.join(root, ".github", "CODEOWNERS"),
       "* @502399493zjw-lgtm\n",
@@ -219,7 +242,7 @@ test("rejects a null published baseline before merge", async (t) => {
       },
       results: [
         {
-          participant: { model: "Official Model" },
+          participant: { model: KNOWN_MODEL_A },
           score: null,
         },
       ],
@@ -231,6 +254,43 @@ test("rejects a null published baseline before merge", async (t) => {
     /upstream_author_publication submissions must include a non-null score/,
     /score_policy=required.*score.*null/,
   );
+});
+
+// 2026-08-07 事故的形态：投稿仓库合进了一个平台解析不了的 participant.model，
+// 直到 push 到 main 之后才在内容同步 webhook 里以 partial_sync 炸开。
+test("rejects a published participant.model the platform cannot resolve", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  await writeFile(
+    path.join(directory, "official.json"),
+    `${JSON.stringify(makePublishedResult(), null, 2).replace(
+      JSON.stringify(KNOWN_MODEL_A),
+      JSON.stringify("Gemini 3 Flash"),
+    )}\n`,
+  );
+
+  await expectInvalid(
+    root,
+    /results\[0\]\.participant\.model: "Gemini 3 Flash" 不在平台模型注册表中/u,
+    /建议改用：.*google\/gemini-3-flash-preview/u,
+  );
+});
+
+// 判定用的是 validator 自己那份快照，社区 PR 自带一份"放行自己"的 registry.json
+// 不能生效；被审那份只要被手改就必须报出来。
+test("rejects a hand-edited vendored model registry snapshot", async (t) => {
+  const { root } = await makeFixture(t);
+  const snapshot = path.join(root, "vendor", "evalhub-models", "registry.json");
+  const tampered = JSON.parse(await readFile(snapshot, "utf8"));
+  tampered.aliases.push({
+    alias: "Gemini 3 Flash",
+    normalizedAlias: "gemini-3-flash",
+    canonicalModelId: "google/gemini-3-flash-preview",
+  });
+  await writeFile(snapshot, `${JSON.stringify(tampered, null, 2)}\n`);
+
+  await expectInvalid(root, /sourceSha256 与内容不符/u, /不要手改快照/u);
 });
 
 test("accepts a reviewed published baseline with structured component metrics", async (t) => {
@@ -256,7 +316,7 @@ test("accepts a reviewed published baseline with structured component metrics", 
       },
       results: [
         {
-          participant: { model: "Official Model" },
+          participant: { model: KNOWN_MODEL_A },
           score: 88,
           supplementary_views: [
             {
@@ -288,7 +348,7 @@ test("rejects a shared supplementary view id whose metadata drifts across partic
   await writeFile(
     path.join(directory, "a-official.json"),
     `${JSON.stringify(
-      makeSharedViewResult("Official Model A", {
+      makeSharedViewResult(KNOWN_MODEL_A, {
         type: "metric_table",
         id: "official-breakdown",
         label: "分项",
@@ -303,7 +363,7 @@ test("rejects a shared supplementary view id whose metadata drifts across partic
   await writeFile(
     path.join(directory, "b-official.json"),
     `${JSON.stringify(
-      makeSharedViewResult("Official Model B", {
+      makeSharedViewResult(KNOWN_MODEL_B, {
         type: "metric_table",
         id: "official-breakdown",
         label: "分项",
@@ -332,8 +392,8 @@ test("accepts a shared supplementary view id whose rows differ per participant",
   const directory = path.join(evalDir, "published-results");
   await mkdir(directory);
   for (const [name, model, value] of [
-    ["a-official.json", "Official Model A", 88],
-    ["b-official.json", "Official Model B", 74],
+    ["a-official.json", KNOWN_MODEL_A, 88],
+    ["b-official.json", KNOWN_MODEL_B, 74],
   ]) {
     await writeFile(
       path.join(directory, name),
