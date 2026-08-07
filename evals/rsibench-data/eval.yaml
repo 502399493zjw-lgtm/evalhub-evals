@@ -5,6 +5,10 @@ category: useful
 display_category: agent
 description: RSIBench-Data 评测研究者 Agent 能否在固定训练、服务和评测栈及资源预算下，诊断目标模型缺陷、合成训练数据、迭代 LoRA SFT 并选择检查点，最终以六类软件工程、终端、科学问答与数学任务的原生分数衡量数据中心型研究能力。
 hook_title: Agent 能把失败证据变成真正有效的训练数据吗
+upstream:
+  repo: evolvent-ai/RSIBench-Data
+  commit: 39948a17925272367b64dd53427a4dba3f572f4e
+  paper: https://arxiv.org/abs/2607.25886
 dimensions: [推理, 代码]
 interface: agent
 runner: custom
