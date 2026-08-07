@@ -1,0 +1,4 @@
+interface:
+  display_name: "EvalHub Author Reader"
+  short_description: "Build source-backed EvalHub detail pages"
+  default_prompt: "Use $evalhub-author-reader to prepare and validate a source-backed EvalHub evaluation detail submission."

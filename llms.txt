@@ -4,6 +4,15 @@ Work only inside the requested eval directory unless the task explicitly changes
 
 ## Author or modify an eval
 
+Install the author skill first. It carries the research, source-ledger, content-mapping, result-provenance, and validation workflow this repository expects, and it is the more specific instruction wherever it is stricter than this file:
+
+```bash
+npx skills add 502399493zjw-lgtm/evalhub-evals --skill evalhub-author-reader -y
+npx skills update evalhub-author-reader -y
+```
+
+The second command is a no-op on a fresh install and refreshes an older local copy, so run both. The skill itself lives at `.agents/skills/evalhub-author-reader/`; read it directly if the CLI is unavailable.
+
 Scaffold with `evalhub init <slug>`, then complete:
 
 - `evals/<slug>/eval.yaml`
