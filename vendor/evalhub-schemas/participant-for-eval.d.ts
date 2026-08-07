@@ -12,6 +12,14 @@ export type ResultValidationContext = {
     score_unit?: string;
     leaderboard?: "latest_session" | "rating";
     trials?: number;
+    /**
+     * Full eval definitions always provide tasks. It remains optional on this
+     * minimal context type so older callers that never submit task-scoped
+     * evidence remain source compatible.
+     */
+    tasks?: ReadonlyArray<{
+        id?: string | undefined;
+    }>;
 };
 export type ResultValidationOrigin = "run" | "upstream_author_publication";
 type ResultParticipant = ResultEntry["participant"];

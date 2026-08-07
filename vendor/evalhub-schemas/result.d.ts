@@ -291,7 +291,6 @@ export declare const TeamGamesShowcaseSchema: z.ZodEffects<z.ZodObject<{
     }[];
 }>;
 export declare const SupplementaryViewSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type", [z.ZodObject<{
-    type: z.ZodLiteral<"metric_table">;
     title: z.ZodString;
     columns: z.ZodArray<z.ZodString, "many">;
     rows: z.ZodArray<z.ZodObject<{
@@ -302,6 +301,9 @@ export declare const SupplementaryViewSchema: z.ZodEffects<z.ZodDiscriminatedUni
         cells: (string | number | null)[];
     }>, "many">;
     note: z.ZodOptional<z.ZodString>;
+    id: z.ZodOptional<z.ZodString>;
+    label: z.ZodOptional<z.ZodString>;
+    type: z.ZodLiteral<"metric_table">;
 }, "strip", z.ZodTypeAny, {
     type: "metric_table";
     title: string;
@@ -309,6 +311,8 @@ export declare const SupplementaryViewSchema: z.ZodEffects<z.ZodDiscriminatedUni
     rows: {
         cells: (string | number | null)[];
     }[];
+    label?: string | undefined;
+    id?: string | undefined;
     note?: string | undefined;
 }, {
     type: "metric_table";
@@ -317,9 +321,10 @@ export declare const SupplementaryViewSchema: z.ZodEffects<z.ZodDiscriminatedUni
     rows: {
         cells: (string | number | null)[];
     }[];
+    label?: string | undefined;
+    id?: string | undefined;
     note?: string | undefined;
 }>, z.ZodObject<{
-    type: z.ZodLiteral<"line_chart">;
     title: z.ZodString;
     x_label: z.ZodOptional<z.ZodString>;
     y_label: z.ZodOptional<z.ZodString>;
@@ -349,6 +354,9 @@ export declare const SupplementaryViewSchema: z.ZodEffects<z.ZodDiscriminatedUni
         }[];
     }>, "many">;
     note: z.ZodOptional<z.ZodString>;
+    id: z.ZodOptional<z.ZodString>;
+    label: z.ZodOptional<z.ZodString>;
+    type: z.ZodLiteral<"line_chart">;
 }, "strip", z.ZodTypeAny, {
     type: "line_chart";
     title: string;
@@ -359,6 +367,8 @@ export declare const SupplementaryViewSchema: z.ZodEffects<z.ZodDiscriminatedUni
             y: number;
         }[];
     }[];
+    label?: string | undefined;
+    id?: string | undefined;
     note?: string | undefined;
     x_label?: string | undefined;
     y_label?: string | undefined;
@@ -372,6 +382,8 @@ export declare const SupplementaryViewSchema: z.ZodEffects<z.ZodDiscriminatedUni
             y: number;
         }[];
     }[];
+    label?: string | undefined;
+    id?: string | undefined;
     note?: string | undefined;
     x_label?: string | undefined;
     y_label?: string | undefined;
@@ -382,6 +394,8 @@ export declare const SupplementaryViewSchema: z.ZodEffects<z.ZodDiscriminatedUni
     rows: {
         cells: (string | number | null)[];
     }[];
+    label?: string | undefined;
+    id?: string | undefined;
     note?: string | undefined;
 } | {
     type: "line_chart";
@@ -393,6 +407,8 @@ export declare const SupplementaryViewSchema: z.ZodEffects<z.ZodDiscriminatedUni
             y: number;
         }[];
     }[];
+    label?: string | undefined;
+    id?: string | undefined;
     note?: string | undefined;
     x_label?: string | undefined;
     y_label?: string | undefined;
@@ -403,6 +419,8 @@ export declare const SupplementaryViewSchema: z.ZodEffects<z.ZodDiscriminatedUni
     rows: {
         cells: (string | number | null)[];
     }[];
+    label?: string | undefined;
+    id?: string | undefined;
     note?: string | undefined;
 } | {
     type: "line_chart";
@@ -414,6 +432,8 @@ export declare const SupplementaryViewSchema: z.ZodEffects<z.ZodDiscriminatedUni
             y: number;
         }[];
     }[];
+    label?: string | undefined;
+    id?: string | undefined;
     note?: string | undefined;
     x_label?: string | undefined;
     y_label?: string | undefined;
@@ -530,13 +550,13 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
 }, "strip", z.ZodTypeAny, {
     type: "image";
     src: string;
-    score?: number | undefined;
     caption?: string | undefined;
+    score?: number | undefined;
 }, {
     type: "image";
     src: string;
-    score?: number | undefined;
     caption?: string | undefined;
+    score?: number | undefined;
 }>, z.ZodObject<{
     type: z.ZodLiteral<"head_to_head">;
     title: z.ZodString;
@@ -752,8 +772,8 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
 } | {
     type: "image";
     src: string;
-    score?: number | undefined;
     caption?: string | undefined;
+    score?: number | undefined;
 }, {
     type: "head_to_head";
     title: string;
@@ -817,10 +837,10 @@ export declare const ShowcaseSchema: z.ZodEffects<z.ZodDiscriminatedUnion<"type"
 } | {
     type: "image";
     src: string;
-    score?: number | undefined;
     caption?: string | undefined;
+    score?: number | undefined;
 }>;
-export declare const ResultEntrySchema: z.ZodObject<{
+export declare const ResultEntrySchema: z.ZodEffects<z.ZodObject<{
     participant: z.ZodObject<{
         model: z.ZodEffects<z.ZodString, string, string>;
         harness: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
@@ -984,13 +1004,13 @@ export declare const ResultEntrySchema: z.ZodObject<{
     }, "strip", z.ZodTypeAny, {
         type: "image";
         src: string;
-        score?: number | undefined;
         caption?: string | undefined;
+        score?: number | undefined;
     }, {
         type: "image";
         src: string;
-        score?: number | undefined;
         caption?: string | undefined;
+        score?: number | undefined;
     }>, z.ZodObject<{
         type: z.ZodLiteral<"head_to_head">;
         title: z.ZodString;
@@ -1206,8 +1226,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
     } | {
         type: "image";
         src: string;
-        score?: number | undefined;
         caption?: string | undefined;
+        score?: number | undefined;
     }, {
         type: "head_to_head";
         title: string;
@@ -1271,11 +1291,10 @@ export declare const ResultEntrySchema: z.ZodObject<{
     } | {
         type: "image";
         src: string;
-        score?: number | undefined;
         caption?: string | undefined;
+        score?: number | undefined;
     }>, "many">>;
     supplementary_views: z.ZodOptional<z.ZodArray<z.ZodEffects<z.ZodDiscriminatedUnion<"type", [z.ZodObject<{
-        type: z.ZodLiteral<"metric_table">;
         title: z.ZodString;
         columns: z.ZodArray<z.ZodString, "many">;
         rows: z.ZodArray<z.ZodObject<{
@@ -1286,6 +1305,9 @@ export declare const ResultEntrySchema: z.ZodObject<{
             cells: (string | number | null)[];
         }>, "many">;
         note: z.ZodOptional<z.ZodString>;
+        id: z.ZodOptional<z.ZodString>;
+        label: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"metric_table">;
     }, "strip", z.ZodTypeAny, {
         type: "metric_table";
         title: string;
@@ -1293,6 +1315,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
         rows: {
             cells: (string | number | null)[];
         }[];
+        label?: string | undefined;
+        id?: string | undefined;
         note?: string | undefined;
     }, {
         type: "metric_table";
@@ -1301,9 +1325,10 @@ export declare const ResultEntrySchema: z.ZodObject<{
         rows: {
             cells: (string | number | null)[];
         }[];
+        label?: string | undefined;
+        id?: string | undefined;
         note?: string | undefined;
     }>, z.ZodObject<{
-        type: z.ZodLiteral<"line_chart">;
         title: z.ZodString;
         x_label: z.ZodOptional<z.ZodString>;
         y_label: z.ZodOptional<z.ZodString>;
@@ -1333,6 +1358,9 @@ export declare const ResultEntrySchema: z.ZodObject<{
             }[];
         }>, "many">;
         note: z.ZodOptional<z.ZodString>;
+        id: z.ZodOptional<z.ZodString>;
+        label: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"line_chart">;
     }, "strip", z.ZodTypeAny, {
         type: "line_chart";
         title: string;
@@ -1343,6 +1371,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
                 y: number;
             }[];
         }[];
+        label?: string | undefined;
+        id?: string | undefined;
         note?: string | undefined;
         x_label?: string | undefined;
         y_label?: string | undefined;
@@ -1356,6 +1386,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
                 y: number;
             }[];
         }[];
+        label?: string | undefined;
+        id?: string | undefined;
         note?: string | undefined;
         x_label?: string | undefined;
         y_label?: string | undefined;
@@ -1366,6 +1398,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
         rows: {
             cells: (string | number | null)[];
         }[];
+        label?: string | undefined;
+        id?: string | undefined;
         note?: string | undefined;
     } | {
         type: "line_chart";
@@ -1377,6 +1411,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
                 y: number;
             }[];
         }[];
+        label?: string | undefined;
+        id?: string | undefined;
         note?: string | undefined;
         x_label?: string | undefined;
         y_label?: string | undefined;
@@ -1387,6 +1423,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
         rows: {
             cells: (string | number | null)[];
         }[];
+        label?: string | undefined;
+        id?: string | undefined;
         note?: string | undefined;
     } | {
         type: "line_chart";
@@ -1398,6 +1436,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
                 y: number;
             }[];
         }[];
+        label?: string | undefined;
+        id?: string | undefined;
         note?: string | undefined;
         x_label?: string | undefined;
         y_label?: string | undefined;
@@ -1487,8 +1527,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
     } | {
         type: "image";
         src: string;
-        score?: number | undefined;
         caption?: string | undefined;
+        score?: number | undefined;
     })[] | undefined;
     supplementary_views?: ({
         type: "metric_table";
@@ -1497,6 +1537,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
         rows: {
             cells: (string | number | null)[];
         }[];
+        label?: string | undefined;
+        id?: string | undefined;
         note?: string | undefined;
     } | {
         type: "line_chart";
@@ -1508,6 +1550,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
                 y: number;
             }[];
         }[];
+        label?: string | undefined;
+        id?: string | undefined;
         note?: string | undefined;
         x_label?: string | undefined;
         y_label?: string | undefined;
@@ -1597,8 +1641,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
     } | {
         type: "image";
         src: string;
-        score?: number | undefined;
         caption?: string | undefined;
+        score?: number | undefined;
     })[] | undefined;
     supplementary_views?: ({
         type: "metric_table";
@@ -1607,6 +1651,8 @@ export declare const ResultEntrySchema: z.ZodObject<{
         rows: {
             cells: (string | number | null)[];
         }[];
+        label?: string | undefined;
+        id?: string | undefined;
         note?: string | undefined;
     } | {
         type: "line_chart";
@@ -1618,6 +1664,236 @@ export declare const ResultEntrySchema: z.ZodObject<{
                 y: number;
             }[];
         }[];
+        label?: string | undefined;
+        id?: string | undefined;
+        note?: string | undefined;
+        x_label?: string | undefined;
+        y_label?: string | undefined;
+    })[] | undefined;
+}>, {
+    participant: {
+        model: string;
+        harness?: string | undefined;
+        harness_version?: string | undefined;
+        config?: Record<string, unknown> | undefined;
+    };
+    score: number | null;
+    raw_metric?: {
+        value: string;
+        label: string;
+        tiebreak_value?: number | undefined;
+    } | undefined;
+    detail?: string | undefined;
+    usage?: {
+        tokens?: number | undefined;
+    } | undefined;
+    task_results?: {
+        task_id: string;
+        score: number;
+        raw?: string | undefined;
+    }[] | undefined;
+    showcases?: ({
+        type: "head_to_head";
+        title: string;
+        participants: {
+            label: string;
+            key: string;
+        }[];
+        matchups: {
+            a: string;
+            b: string;
+            a_wins: number;
+            b_wins: number;
+            draws: number;
+        }[];
+    } | {
+        type: "team_games";
+        title: string;
+        participants: {
+            label: string;
+            key: string;
+        }[];
+        games: {
+            game_no: number;
+            sides: [{
+                key: string;
+                participants: string[];
+            }, {
+                key: string;
+                participants: string[];
+            }];
+            winner: string;
+        }[];
+    } | {
+        type: "compare";
+        task: string;
+        content: string;
+        expected?: string | undefined;
+        task_id?: string | undefined;
+        verdict?: string | undefined;
+        score?: number | undefined;
+    } | {
+        type: "transcript";
+        title: string;
+        turns: {
+            content: string;
+            role: string;
+            status?: string | undefined;
+        }[];
+        task_id?: string | undefined;
+    } | {
+        type: "timeline";
+        title: string;
+        events: {
+            label: string;
+            t: string;
+        }[];
+        series?: {
+            t: string;
+            v: number;
+        }[] | undefined;
+    } | {
+        type: "image";
+        src: string;
+        caption?: string | undefined;
+        score?: number | undefined;
+    })[] | undefined;
+    supplementary_views?: ({
+        type: "metric_table";
+        title: string;
+        columns: string[];
+        rows: {
+            cells: (string | number | null)[];
+        }[];
+        label?: string | undefined;
+        id?: string | undefined;
+        note?: string | undefined;
+    } | {
+        type: "line_chart";
+        title: string;
+        series: {
+            name: string;
+            points: {
+                x: string | number;
+                y: number;
+            }[];
+        }[];
+        label?: string | undefined;
+        id?: string | undefined;
+        note?: string | undefined;
+        x_label?: string | undefined;
+        y_label?: string | undefined;
+    })[] | undefined;
+}, {
+    participant: {
+        model: string;
+        harness?: string | undefined;
+        harness_version?: string | undefined;
+        config?: Record<string, unknown> | undefined;
+    };
+    score: number | null;
+    raw_metric?: {
+        value: string;
+        label: string;
+        tiebreak_value?: number | undefined;
+    } | undefined;
+    detail?: string | undefined;
+    usage?: {
+        tokens?: number | undefined;
+    } | undefined;
+    task_results?: {
+        task_id: string;
+        score: number;
+        raw?: string | undefined;
+    }[] | undefined;
+    showcases?: ({
+        type: "head_to_head";
+        title: string;
+        participants: {
+            label: string;
+            key: string;
+        }[];
+        matchups: {
+            a: string;
+            b: string;
+            a_wins: number;
+            b_wins: number;
+            draws: number;
+        }[];
+    } | {
+        type: "team_games";
+        title: string;
+        participants: {
+            label: string;
+            key: string;
+        }[];
+        games: {
+            game_no: number;
+            sides: [{
+                key: string;
+                participants: string[];
+            }, {
+                key: string;
+                participants: string[];
+            }];
+            winner: string;
+        }[];
+    } | {
+        type: "compare";
+        task: string;
+        content: string;
+        expected?: string | undefined;
+        task_id?: string | undefined;
+        verdict?: string | undefined;
+        score?: number | undefined;
+    } | {
+        type: "transcript";
+        title: string;
+        turns: {
+            content: string;
+            role: string;
+            status?: string | undefined;
+        }[];
+        task_id?: string | undefined;
+    } | {
+        type: "timeline";
+        title: string;
+        events: {
+            label: string;
+            t: string;
+        }[];
+        series?: {
+            t: string;
+            v: number;
+        }[] | undefined;
+    } | {
+        type: "image";
+        src: string;
+        caption?: string | undefined;
+        score?: number | undefined;
+    })[] | undefined;
+    supplementary_views?: ({
+        type: "metric_table";
+        title: string;
+        columns: string[];
+        rows: {
+            cells: (string | number | null)[];
+        }[];
+        label?: string | undefined;
+        id?: string | undefined;
+        note?: string | undefined;
+    } | {
+        type: "line_chart";
+        title: string;
+        series: {
+            name: string;
+            points: {
+                x: string | number;
+                y: number;
+            }[];
+        }[];
+        label?: string | undefined;
+        id?: string | undefined;
         note?: string | undefined;
         x_label?: string | undefined;
         y_label?: string | undefined;
@@ -1771,7 +2047,7 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         run_date: string;
         kind?: "run" | undefined;
     }>]>;
-    results: z.ZodArray<z.ZodObject<{
+    results: z.ZodArray<z.ZodEffects<z.ZodObject<{
         participant: z.ZodObject<{
             model: z.ZodEffects<z.ZodString, string, string>;
             harness: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
@@ -1935,13 +2211,13 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         }, "strip", z.ZodTypeAny, {
             type: "image";
             src: string;
-            score?: number | undefined;
             caption?: string | undefined;
+            score?: number | undefined;
         }, {
             type: "image";
             src: string;
-            score?: number | undefined;
             caption?: string | undefined;
+            score?: number | undefined;
         }>, z.ZodObject<{
             type: z.ZodLiteral<"head_to_head">;
             title: z.ZodString;
@@ -2157,8 +2433,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         } | {
             type: "image";
             src: string;
-            score?: number | undefined;
             caption?: string | undefined;
+            score?: number | undefined;
         }, {
             type: "head_to_head";
             title: string;
@@ -2222,11 +2498,10 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         } | {
             type: "image";
             src: string;
-            score?: number | undefined;
             caption?: string | undefined;
+            score?: number | undefined;
         }>, "many">>;
         supplementary_views: z.ZodOptional<z.ZodArray<z.ZodEffects<z.ZodDiscriminatedUnion<"type", [z.ZodObject<{
-            type: z.ZodLiteral<"metric_table">;
             title: z.ZodString;
             columns: z.ZodArray<z.ZodString, "many">;
             rows: z.ZodArray<z.ZodObject<{
@@ -2237,6 +2512,9 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
                 cells: (string | number | null)[];
             }>, "many">;
             note: z.ZodOptional<z.ZodString>;
+            id: z.ZodOptional<z.ZodString>;
+            label: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"metric_table">;
         }, "strip", z.ZodTypeAny, {
             type: "metric_table";
             title: string;
@@ -2244,6 +2522,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             rows: {
                 cells: (string | number | null)[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
         }, {
             type: "metric_table";
@@ -2252,9 +2532,10 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             rows: {
                 cells: (string | number | null)[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
         }>, z.ZodObject<{
-            type: z.ZodLiteral<"line_chart">;
             title: z.ZodString;
             x_label: z.ZodOptional<z.ZodString>;
             y_label: z.ZodOptional<z.ZodString>;
@@ -2284,6 +2565,9 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
                 }[];
             }>, "many">;
             note: z.ZodOptional<z.ZodString>;
+            id: z.ZodOptional<z.ZodString>;
+            label: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"line_chart">;
         }, "strip", z.ZodTypeAny, {
             type: "line_chart";
             title: string;
@@ -2294,6 +2578,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
                     y: number;
                 }[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
             x_label?: string | undefined;
             y_label?: string | undefined;
@@ -2307,6 +2593,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
                     y: number;
                 }[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
             x_label?: string | undefined;
             y_label?: string | undefined;
@@ -2317,6 +2605,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             rows: {
                 cells: (string | number | null)[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
         } | {
             type: "line_chart";
@@ -2328,6 +2618,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
                     y: number;
                 }[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
             x_label?: string | undefined;
             y_label?: string | undefined;
@@ -2338,6 +2630,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             rows: {
                 cells: (string | number | null)[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
         } | {
             type: "line_chart";
@@ -2349,6 +2643,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
                     y: number;
                 }[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
             x_label?: string | undefined;
             y_label?: string | undefined;
@@ -2438,8 +2734,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         } | {
             type: "image";
             src: string;
-            score?: number | undefined;
             caption?: string | undefined;
+            score?: number | undefined;
         })[] | undefined;
         supplementary_views?: ({
             type: "metric_table";
@@ -2448,6 +2744,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             rows: {
                 cells: (string | number | null)[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
         } | {
             type: "line_chart";
@@ -2459,6 +2757,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
                     y: number;
                 }[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
             x_label?: string | undefined;
             y_label?: string | undefined;
@@ -2548,8 +2848,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         } | {
             type: "image";
             src: string;
-            score?: number | undefined;
             caption?: string | undefined;
+            score?: number | undefined;
         })[] | undefined;
         supplementary_views?: ({
             type: "metric_table";
@@ -2558,6 +2858,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             rows: {
                 cells: (string | number | null)[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
         } | {
             type: "line_chart";
@@ -2569,6 +2871,236 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
                     y: number;
                 }[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
+            note?: string | undefined;
+            x_label?: string | undefined;
+            y_label?: string | undefined;
+        })[] | undefined;
+    }>, {
+        participant: {
+            model: string;
+            harness?: string | undefined;
+            harness_version?: string | undefined;
+            config?: Record<string, unknown> | undefined;
+        };
+        score: number | null;
+        raw_metric?: {
+            value: string;
+            label: string;
+            tiebreak_value?: number | undefined;
+        } | undefined;
+        detail?: string | undefined;
+        usage?: {
+            tokens?: number | undefined;
+        } | undefined;
+        task_results?: {
+            task_id: string;
+            score: number;
+            raw?: string | undefined;
+        }[] | undefined;
+        showcases?: ({
+            type: "head_to_head";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            matchups: {
+                a: string;
+                b: string;
+                a_wins: number;
+                b_wins: number;
+                draws: number;
+            }[];
+        } | {
+            type: "team_games";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            games: {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }[];
+        } | {
+            type: "compare";
+            task: string;
+            content: string;
+            expected?: string | undefined;
+            task_id?: string | undefined;
+            verdict?: string | undefined;
+            score?: number | undefined;
+        } | {
+            type: "transcript";
+            title: string;
+            turns: {
+                content: string;
+                role: string;
+                status?: string | undefined;
+            }[];
+            task_id?: string | undefined;
+        } | {
+            type: "timeline";
+            title: string;
+            events: {
+                label: string;
+                t: string;
+            }[];
+            series?: {
+                t: string;
+                v: number;
+            }[] | undefined;
+        } | {
+            type: "image";
+            src: string;
+            caption?: string | undefined;
+            score?: number | undefined;
+        })[] | undefined;
+        supplementary_views?: ({
+            type: "metric_table";
+            title: string;
+            columns: string[];
+            rows: {
+                cells: (string | number | null)[];
+            }[];
+            label?: string | undefined;
+            id?: string | undefined;
+            note?: string | undefined;
+        } | {
+            type: "line_chart";
+            title: string;
+            series: {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }[];
+            label?: string | undefined;
+            id?: string | undefined;
+            note?: string | undefined;
+            x_label?: string | undefined;
+            y_label?: string | undefined;
+        })[] | undefined;
+    }, {
+        participant: {
+            model: string;
+            harness?: string | undefined;
+            harness_version?: string | undefined;
+            config?: Record<string, unknown> | undefined;
+        };
+        score: number | null;
+        raw_metric?: {
+            value: string;
+            label: string;
+            tiebreak_value?: number | undefined;
+        } | undefined;
+        detail?: string | undefined;
+        usage?: {
+            tokens?: number | undefined;
+        } | undefined;
+        task_results?: {
+            task_id: string;
+            score: number;
+            raw?: string | undefined;
+        }[] | undefined;
+        showcases?: ({
+            type: "head_to_head";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            matchups: {
+                a: string;
+                b: string;
+                a_wins: number;
+                b_wins: number;
+                draws: number;
+            }[];
+        } | {
+            type: "team_games";
+            title: string;
+            participants: {
+                label: string;
+                key: string;
+            }[];
+            games: {
+                game_no: number;
+                sides: [{
+                    key: string;
+                    participants: string[];
+                }, {
+                    key: string;
+                    participants: string[];
+                }];
+                winner: string;
+            }[];
+        } | {
+            type: "compare";
+            task: string;
+            content: string;
+            expected?: string | undefined;
+            task_id?: string | undefined;
+            verdict?: string | undefined;
+            score?: number | undefined;
+        } | {
+            type: "transcript";
+            title: string;
+            turns: {
+                content: string;
+                role: string;
+                status?: string | undefined;
+            }[];
+            task_id?: string | undefined;
+        } | {
+            type: "timeline";
+            title: string;
+            events: {
+                label: string;
+                t: string;
+            }[];
+            series?: {
+                t: string;
+                v: number;
+            }[] | undefined;
+        } | {
+            type: "image";
+            src: string;
+            caption?: string | undefined;
+            score?: number | undefined;
+        })[] | undefined;
+        supplementary_views?: ({
+            type: "metric_table";
+            title: string;
+            columns: string[];
+            rows: {
+                cells: (string | number | null)[];
+            }[];
+            label?: string | undefined;
+            id?: string | undefined;
+            note?: string | undefined;
+        } | {
+            type: "line_chart";
+            title: string;
+            series: {
+                name: string;
+                points: {
+                    x: string | number;
+                    y: number;
+                }[];
+            }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
             x_label?: string | undefined;
             y_label?: string | undefined;
@@ -2675,8 +3207,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         } | {
             type: "image";
             src: string;
-            score?: number | undefined;
             caption?: string | undefined;
+            score?: number | undefined;
         })[] | undefined;
         supplementary_views?: ({
             type: "metric_table";
@@ -2685,6 +3217,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             rows: {
                 cells: (string | number | null)[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
         } | {
             type: "line_chart";
@@ -2696,6 +3230,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
                     y: number;
                 }[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
             x_label?: string | undefined;
             y_label?: string | undefined;
@@ -2803,8 +3339,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         } | {
             type: "image";
             src: string;
-            score?: number | undefined;
             caption?: string | undefined;
+            score?: number | undefined;
         })[] | undefined;
         supplementary_views?: ({
             type: "metric_table";
@@ -2813,6 +3349,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             rows: {
                 cells: (string | number | null)[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
         } | {
             type: "line_chart";
@@ -2824,6 +3362,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
                     y: number;
                 }[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
             x_label?: string | undefined;
             y_label?: string | undefined;
@@ -2931,8 +3471,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         } | {
             type: "image";
             src: string;
-            score?: number | undefined;
             caption?: string | undefined;
+            score?: number | undefined;
         })[] | undefined;
         supplementary_views?: ({
             type: "metric_table";
@@ -2941,6 +3481,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             rows: {
                 cells: (string | number | null)[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
         } | {
             type: "line_chart";
@@ -2952,6 +3494,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
                     y: number;
                 }[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
             x_label?: string | undefined;
             y_label?: string | undefined;
@@ -3059,8 +3603,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         } | {
             type: "image";
             src: string;
-            score?: number | undefined;
             caption?: string | undefined;
+            score?: number | undefined;
         })[] | undefined;
         supplementary_views?: ({
             type: "metric_table";
@@ -3069,6 +3613,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             rows: {
                 cells: (string | number | null)[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
         } | {
             type: "line_chart";
@@ -3080,6 +3626,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
                     y: number;
                 }[];
             }[];
+            label?: string | undefined;
+            id?: string | undefined;
             note?: string | undefined;
             x_label?: string | undefined;
             y_label?: string | undefined;

@@ -348,6 +348,7 @@ function refineTeamGamesShowcase(showcase, ctx) {
 }
 export const TeamGamesShowcaseSchema = TeamGamesShowcaseObjectSchema.superRefine(refineTeamGamesShowcase);
 const SUPPLEMENTARY_VIEW_TITLE_MAX_LENGTH = 200;
+const SUPPLEMENTARY_VIEW_LABEL_MAX_LENGTH = 80;
 const SUPPLEMENTARY_VIEW_NOTE_MAX_LENGTH = 2_000;
 const METRIC_TABLE_MAX_COLUMNS = 20;
 const METRIC_TABLE_MAX_ROWS = 200;
@@ -358,6 +359,18 @@ const SupplementaryViewTitleSchema = z
     .string()
     .min(1, "supplementary view title must not be empty")
     .max(SUPPLEMENTARY_VIEW_TITLE_MAX_LENGTH);
+const SupplementaryViewIdSchema = z
+    .string()
+    .regex(/^[a-z0-9][a-z0-9-]{0,63}$/, "supplementary view id must be a stable lowercase slug");
+const SupplementaryViewLabelSchema = z
+    .string()
+    .min(1, "supplementary view label must not be empty")
+    .max(SUPPLEMENTARY_VIEW_LABEL_MAX_LENGTH)
+    .optional();
+const SupplementaryViewIdentityShape = {
+    id: SupplementaryViewIdSchema.optional(),
+    label: SupplementaryViewLabelSchema,
+};
 const SupplementaryViewNoteSchema = z
     .string()
     .min(1, "supplementary view note must not be empty")
@@ -365,6 +378,7 @@ const SupplementaryViewNoteSchema = z
     .optional();
 const MetricTableViewObjectSchema = z.object({
     type: z.literal("metric_table"),
+    ...SupplementaryViewIdentityShape,
     title: SupplementaryViewTitleSchema,
     columns: z
         .array(z
@@ -418,6 +432,7 @@ function refineMetricTableView(view, ctx) {
 }
 const LineChartViewObjectSchema = z.object({
     type: z.literal("line_chart"),
+    ...SupplementaryViewIdentityShape,
     title: SupplementaryViewTitleSchema,
     x_label: z.string().min(1).max(100).optional(),
     y_label: z.string().min(1).max(100).optional(),
@@ -523,7 +538,7 @@ export const ShowcaseSchema = ShowcaseDiscriminatedUnionSchema.superRefine((show
         refineTeamGamesShowcase(showcase, ctx);
     }
 });
-export const ResultEntrySchema = z.object({
+const ResultEntryObjectSchema = z.object({
     participant: z.object({
         model: ParticipantModelSchema,
         harness: ParticipantHarnessSchema.optional(),
@@ -559,6 +574,24 @@ export const ResultEntrySchema = z.object({
         .array(SupplementaryViewSchema)
         .max(RESULT_ENTRY_MAX_SUPPLEMENTARY_VIEWS, `result supplementary_views cannot exceed ${RESULT_ENTRY_MAX_SUPPLEMENTARY_VIEWS}`)
         .optional(),
+});
+export const ResultEntrySchema = ResultEntryObjectSchema.superRefine((result, ctx) => {
+    const supplementaryViewIds = new Set();
+    for (const [index, view] of (result.supplementary_views ?? []).entries()) {
+        if (view.id === undefined) {
+            continue;
+        }
+        if (supplementaryViewIds.has(view.id)) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["supplementary_views", index, "id"],
+                message: "supplementary view ids must be unique within one result",
+            });
+        }
+        else {
+            supplementaryViewIds.add(view.id);
+        }
+    }
 });
 const IsoCalendarDateSchema = z
     .string()
