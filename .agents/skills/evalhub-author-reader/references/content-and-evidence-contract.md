@@ -14,6 +14,8 @@ The platform controls a fixed order and fixed reader module names: hero/source; 
 
 The five reader modules remain visible in that order even when their data is absent; the platform renders an explicit empty state inside the missing module. Missing `detail_profile` is tolerated only for already-synced historical records; the evals repository rejects new submissions without it. Invalid historical JSON must degrade by dropping the invalid content and rendering the relevant empty state instead of breaking the page.
 
+Reader completeness means every supported source fact is mapped to the correct module, not that every optional field is populated. Never invent a chart, task output, trace, table row, or image to avoid an empty state.
+
 ## `detail_profile` field contract
 
 ```yaml
@@ -217,6 +219,8 @@ For new or updated result files, `id` and `label` are authoring requirements eve
 
 When the same logical `metric_table` is published for multiple participants, reuse the exact same `id`, `title`, `columns`, and `label` in every result. Use a different `id` for a different logical table. The platform groups by `id` first and abandons the complete derived comparison if any of those four fields differs; it never partially merges a mismatched group. Only historical views without `id` use the compatibility grouping of exact `title`, `columns`, and `label`, so new data must not rely on that fallback. A derived comparison is a display-only rearrangement, retains every source cell verbatim, links every row to its source result, and is labeled `EVALHUB 对齐 · 非来源方原表`. The original per-participant payload remains stored under the data contract; a reader page with an insights figure may omit redundant per-participant original-table tabs and show only the derived tabs.
 
+The authoring validator extends that rule to every shared supplementary-view ID. Across published participants, a shared ID must keep identical `type`, `title`, and `label`; metric tables must also keep identical `columns`, while line charts must keep identical `x_label` and `y_label`. Rows, series, points, and notes may differ. This stricter gate prevents content drift from silently breaking cross-model reader tabs.
+
 There is no dedicated `derived` or `formula` property. If the primary `score` is reproducibly derived, begin the result's `detail` with `Derived:` and include the complete formula and source inputs. If a supplementary value is derived, put the same disclosure in that view's `note`, for example: `Derived: macro_average = (Language + Reasoning) / 2 using the two source-published cells above.` A derived value is never labeled official, and a missing source input means the derived value must be omitted.
 
 ## Acceptance checklist
@@ -232,6 +236,7 @@ There is no dedicated `derived` or `formula` property. If the primary `score` is
 - Main score and supplementary views have distinct roles.
 - Every new or updated supplementary view has a unique stable `id`, a short `label`, and a source-backed or explicitly derived payload.
 - The same logical cross-participant metric table reuses an exact `id`, `title`, `columns`, and `label`; distinct logical tables use distinct IDs.
+- The same logical cross-participant line chart reuses an exact `id`, `title`, `label`, `x_label`, and `y_label`; participant-specific series and points remain source-backed.
 - Derived primary scores disclose their formula in `detail`; derived supplementary values disclose it in `note`.
 - Unsupported optional content is omitted rather than filled with guesses.
 - Every overview table has a primary-source URL, complete rows, and stable unique table, column, and row IDs; result metrics are not placed there.

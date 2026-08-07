@@ -18,6 +18,8 @@ Read these files completely:
 
 Also inspect repository-local instructions and CI configuration. If any instruction conflicts, follow the more specific repository instruction and report the conflict.
 
+After classifying the source shape, read the matching section of `references/golden-reader-patterns.md`: use the CEO-style pattern for long-horizon operating results, the RSI-style pattern for multi-benchmark result tables, and the task-case pattern for every upstream task.
+
 ## Scope the submission
 
 Confirm only what cannot be learned safely:
@@ -89,6 +91,8 @@ Choose the result path by evidence origin:
 
 Use the complete upstream-envelope, `metric_table`, and `line_chart` examples in `references/content-and-evidence-contract.md` as the canonical authoring shapes. Parsers may tolerate historical supplementary views without `id` or `label`, but every new or updated view in `sample-result.json` or `published-results/*.json` must provide both as non-empty strings; IDs must be stable slug-style values and unique within one result. The standalone repository validator enforces this stricter authoring boundary without changing runtime compatibility.
 
+Treat one supplementary-view `id` as one logical reader tab across all published participants. For that ID, keep `type`, `title`, `label`, and table `columns` or chart axis labels exactly identical in every result; only rows, series, points, and notes may vary. This lets the platform safely derive CEO-style participant summaries and RSI-style per-benchmark comparison tabs. Do not suffix the ID with a participant name.
+
 Put one ranking number in `score`. Preserve source-published subgroups, components, scenarios, or trends in `supplementary_views` only when the source actually provides the points. There is no separate `derived` or `formula` field: put a derived primary score's status, formula, and source inputs in the result `detail`; put the same information for a derived supplementary value in that view's `note`. Prefix the explanation with `Derived:` and do not call the value official.
 
 Every `task_results[].task_id` and optional `compare` or `transcript` showcase `task_id` must reference a stable task ID in `eval.yaml`. A real run may emit one task result per configured trial, so the same task ID may appear at most the `trials` value declared in `eval.yaml` times within one result; the next occurrence is invalid.
@@ -131,9 +135,22 @@ Run the eval or custom runner when practical and verify its generated envelope w
 - every overview table is a complete transcription with unique stable table, column, and row IDs and a primary-source HTTPS URL;
 - official aggregate data is not presented as an EvalHub rerun;
 - sample data is not presented as evidence;
+- shared supplementary-view IDs keep one exact metadata contract across all published participants;
 - every task declares a unique stable slug-style ID, task references resolve, and each task ID appears no more than the configured `trials` count;
 - optional sections disappear cleanly when unsupported;
 - the diff stays within one eval directory plus its exact CODEOWNERS rule.
+
+Complete this reader-readiness matrix from the final files before handoff. “Empty” is acceptable only when the source ledger or run evidence genuinely has no supported content; never fill a module to make the matrix look complete.
+
+| Reader module | Required data check |
+| --- | --- |
+| `榜单` | Primary `score`, unit/direction, participant identity, and result provenance agree. |
+| `官方分项结果` | Every supported source table/chart is preserved; shared view contracts are identical across participants. |
+| `关于这套评测` | All required `detail_profile` fields and at least one primary source are complete. |
+| `题目案例` | Stable task ID; executable `prompt`; full upstream `display_prompt`; translation and real model evidence when available. |
+| `资料与分析` | Source-backed resources and figures only; unsupported optional blocks are omitted. |
+
+Do not reduce the stored official leaderboard to three or four participants merely to imitate a compact task-case control. The platform may show up to four real model results inside a task case; only real `task_results` or task-linked showcases qualify, and an upstream aggregate never does.
 
 If a local platform preview is available, inspect the generic `/e/<slug>` rendering for content order and missing-data fallbacks. Do not change platform styling as part of an eval submission; use the repository's visual-design workflow separately when visual implementation is explicitly requested.
 
