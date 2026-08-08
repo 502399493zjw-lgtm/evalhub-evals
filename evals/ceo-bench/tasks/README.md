@@ -18,9 +18,9 @@ node evals/ceo-bench/pack-to-result.mjs \
 
 这些数据不是任何真实模型的实测成绩，也没有通过评测作者验证。真实提交必须另建提交目录，不要修改或冒充这些夹具。
 
-`source-ledger-2026-08-07.json` 是本次更新建立的一手来源台账。它逐项记录官方项目网站、论文 v2、固定源码、固定运行仓库、CLI 文档和轨迹清单能够支持的事实，以及这些事实可映射到的 EvalHub 字段、版本边界和许可边界。台账不包含凭证、上游可执行物或加密材料。
+`source-ledger-2026-08-08.json` 是本次更新复核的一手来源台账。它逐项记录官方项目网站、论文 v2、固定源码、固定运行仓库、CLI 文档和轨迹清单能够支持的事实，以及这些事实可映射到的 EvalHub 字段、版本边界和许可边界。台账不包含凭证、上游可执行物或加密材料。
 
-`princeton-official-results-2026-08-03.json` 是 Princeton 官网公开结果的当前结构化来源快照，也是 `../official-result-to-envelope.mjs` 生成 18 份版本化官方基线的唯一分数来源；2026-08-07 再次抓取时页面 SHA-256 与快照一致。快照保留官网 Best-run cash、破产次数、最长存活天数、平均存活天数显示值、Turns/week、规则策略基线和估算上界。转换器将 Best-run cash 作为唯一主分数，其余真实公开值只进入 `supplementary_views`，并校验其显示精度和范围。
+`princeton-official-results-2026-08-03.json` 是 Princeton 官网公开结果的当前结构化来源快照，也是 `../official-result-to-envelope.mjs` 生成 18 份版本化官方基线的唯一分数来源；2026-08-08 再次抓取时页面 SHA-256 与快照一致。快照保留官网 Best-run cash、破产次数、最长存活天数、平均存活天数显示值、Turns/week、规则策略基线和估算上界。转换器将 Best-run cash 作为唯一主分数，其余真实公开值只进入 `supplementary_views`，并校验其显示精度和范围。
 
 对应的 `princeton-trajectory-manifest-v12-summary-2026-08-03.json` 按 run ID 保留清单披露的配置终点、实际终点和破产状态。带日期的旧快照继续保留作历史审计，不会被当前转换器读取。官网结果表是分数权威来源，轨迹清单只用于补充来源信息；两者不一致时不得用轨迹清单覆盖官网分数。当前清单与官网在 Gemini 3.5 Flash 的运行批次上存在冲突，且不包含 Grok 4.5，文件中已明确标注。因为轨迹数据没有单独的分发许可证且批次并不完整，本目录只链接官方查看器，不把逐日点复制为 `line_chart`。
 
