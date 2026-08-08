@@ -14,6 +14,12 @@ import {
   validateEvalContent,
   validateNoGitlinks,
 } from "./content-security.mjs";
+import {
+  buildModelIndex,
+  checkModelStrings,
+  loadModelRegistry,
+} from "./model-contract.mjs";
+import { vendorEvalhubModels } from "./vendor-evalhub-models.mjs";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const defaultRoot = path.resolve(scriptDir, "..");
@@ -529,7 +535,12 @@ function validatePublishedSupplementaryContracts(
   }
 }
 
-async function validatePublishedResults(evalDir, parsedEval, errors) {
+async function validatePublishedResults(
+  evalDir,
+  parsedEval,
+  errors,
+  modelIndex = null,
+) {
   const directory = path.join(evalDir, "published-results");
   let directoryMetadata;
   try {
@@ -719,9 +730,53 @@ async function validatePublishedResults(evalDir, parsedEval, errors) {
       if (!contextual.success) {
         errors.push(fileError(filePath, formatIssues(contextual.error)));
       }
+      // 平台导入时解析不了的 participant.model 会让这份成绩被跳过，进而让整批
+      // 内容同步以 partial_sync 打回。在 PR 阶段就拦住，而不是等 push 到 main
+      // 之后在 webhook 里炸开（2026-08-07 事故的形态）。
+      if (modelIndex !== null) {
+        for (const failure of checkModelStrings(
+          (generic.data.results ?? []).map((result, position) => ({
+            model: result?.participant?.model,
+            location: `results[${position}].participant.model`,
+          })),
+          modelIndex,
+        )) {
+          errors.push(
+            fileError(filePath, `${failure.location}: ${failure.reason}`),
+          );
+        }
+      }
     } catch (error) {
       errors.push(fileError(filePath, error.message));
     }
+  }
+}
+
+/**
+ * 快照有两个用途，来源刻意分开：
+ * - 判定用 validator 自己旁边那份（社区 PR 的 CI 跑的是 base 分支的 validator，
+ *   所以数据也来自 base）。被审目录里的快照绝不参与判定 —— 否则一个 PR 自带
+ *   一份写了任意 alias 的 registry.json 就能把自己放过。
+ * - 完整性检查针对被审的那棵树：手改快照必须在 PR 阶段就报出来，而不是等它合进
+ *   main 之后让后续投稿以为某个拼写是合法的。
+ */
+async function loadModelIndexForValidation(root, errors) {
+  const reviewedSnapshot = path.join(
+    root,
+    "vendor/evalhub-models/registry.json",
+  );
+  try {
+    await vendorEvalhubModels({ check: true, output: reviewedSnapshot });
+  } catch (error) {
+    errors.push(fileError(reviewedSnapshot, error.message));
+  }
+  try {
+    return buildModelIndex(await loadModelRegistry());
+  } catch (error) {
+    errors.push(
+      fileError("vendor/evalhub-models/registry.json", error.message),
+    );
+    return null;
   }
 }
 
@@ -738,6 +793,7 @@ export async function validateRepository(repositoryRoot = defaultRoot) {
   errors.push(
     ...gitlinkProblems.map(({ filePath, message }) => fileError(filePath, message)),
   );
+  const modelIndex = await loadModelIndexForValidation(root, errors);
 
   for (const dirName of evalDirectories) {
     const evalDir = path.join(evalsDir, dirName);
@@ -830,7 +886,9 @@ export async function validateRepository(repositoryRoot = defaultRoot) {
       evalIds.push(parsedEval.id);
     }
 
-    await validatePublishedResults(evalDir, parsedEval, errors);
+    // 只校验 published-results 的模型身份：sample-result.json 用的是刻意造的
+    // example/synthetic-* 参赛者，本来就不该出现在平台注册表里。
+    await validatePublishedResults(evalDir, parsedEval, errors, modelIndex);
 
     if (!requiredStatus.get("sample-result.json")) {
       continue;
