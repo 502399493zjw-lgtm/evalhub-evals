@@ -27,6 +27,38 @@
       "title": "RSIBench-Data: Benchmarking Data-Centric Research for Recursive Self-Improvement",
       "url": "https://arxiv.org/abs/2607.25886",
       "quote": "Each main run has a nominal 16-hour wall-clock budget and a $500 Tinker budget."
+    },
+    "rollout_model": "Claude Opus 4.8",
+    "researcher_agents": [
+      {
+        "participant_id": "claude-code-opus-4.8",
+        "harness": "Claude Code",
+        "model": "Opus-4.8",
+        "reasoning_effort": "high"
+      },
+      {
+        "participant_id": "claude-code-sonnet-5",
+        "harness": "Claude Code",
+        "model": "Sonnet-5",
+        "reasoning_effort": "high"
+      },
+      {
+        "participant_id": "codex-gpt-5.6-sol",
+        "harness": "Codex",
+        "model": "gpt-5.6-sol",
+        "reasoning_effort": "max"
+      },
+      {
+        "participant_id": "codex-gpt-5.6-terra",
+        "harness": "Codex",
+        "model": "gpt-5.6-terra",
+        "reasoning_effort": "max"
+      }
+    ],
+    "researcher_agents_source": {
+      "title": "RSIBench-Data: Benchmarking Data-Centric Research for Recursive Self-Improvement",
+      "url": "https://arxiv.org/abs/2607.25886",
+      "quote": "The Claude Code agents run at high reasoning effort, while the Codex agents run at max reasoning effort; all agents receive the same task interface, data-use constraints, and budget. Across all experiments, Claude Opus 4.8 is fixed as the external rollout model for generating reasoning traces, tool-use sequences, or full trajectories."
     }
   },
   "base_reference": {
@@ -140,12 +172,36 @@
       ],
       "derived_evalhub_score": 26.657615,
       "resource_use": [
-        { "task_id": "swe-bench-verified", "time_hours": 10.21, "tinker_cost_usd": 195.9 },
-        { "task_id": "swe-bench-multilingual", "time_hours": 12.68, "tinker_cost_usd": 195.7 },
-        { "task_id": "swe-bench-pro", "time_hours": 2.19, "tinker_cost_usd": 17.54 },
-        { "task_id": "terminal-bench-2", "time_hours": 8.99, "tinker_cost_usd": 175.63 },
-        { "task_id": "gpqa-diamond", "time_hours": 5.98, "tinker_cost_usd": 27.92 },
-        { "task_id": "aime", "time_hours": 4.89, "tinker_cost_usd": 61.36 }
+        {
+          "task_id": "swe-bench-verified",
+          "time_hours": 10.21,
+          "tinker_cost_usd": 195.9
+        },
+        {
+          "task_id": "swe-bench-multilingual",
+          "time_hours": 12.68,
+          "tinker_cost_usd": 195.7
+        },
+        {
+          "task_id": "swe-bench-pro",
+          "time_hours": 2.19,
+          "tinker_cost_usd": 17.54
+        },
+        {
+          "task_id": "terminal-bench-2",
+          "time_hours": 8.99,
+          "tinker_cost_usd": 175.63
+        },
+        {
+          "task_id": "gpqa-diamond",
+          "time_hours": 5.98,
+          "tinker_cost_usd": 27.92
+        },
+        {
+          "task_id": "aime",
+          "time_hours": 4.89,
+          "tinker_cost_usd": 61.36
+        }
       ]
     },
     {
@@ -189,12 +245,36 @@
       ],
       "derived_evalhub_score": 27.964107,
       "resource_use": [
-        { "task_id": "swe-bench-verified", "time_hours": 14.91, "tinker_cost_usd": 181.7 },
-        { "task_id": "swe-bench-multilingual", "time_hours": 14.2, "tinker_cost_usd": 363.77 },
-        { "task_id": "swe-bench-pro", "time_hours": 9.54, "tinker_cost_usd": 45.63 },
-        { "task_id": "terminal-bench-2", "time_hours": 8.87, "tinker_cost_usd": 157.85 },
-        { "task_id": "gpqa-diamond", "time_hours": 6.43, "tinker_cost_usd": 16.03 },
-        { "task_id": "aime", "time_hours": 9.29, "tinker_cost_usd": 121.21 }
+        {
+          "task_id": "swe-bench-verified",
+          "time_hours": 14.91,
+          "tinker_cost_usd": 181.7
+        },
+        {
+          "task_id": "swe-bench-multilingual",
+          "time_hours": 14.2,
+          "tinker_cost_usd": 363.77
+        },
+        {
+          "task_id": "swe-bench-pro",
+          "time_hours": 9.54,
+          "tinker_cost_usd": 45.63
+        },
+        {
+          "task_id": "terminal-bench-2",
+          "time_hours": 8.87,
+          "tinker_cost_usd": 157.85
+        },
+        {
+          "task_id": "gpqa-diamond",
+          "time_hours": 6.43,
+          "tinker_cost_usd": 16.03
+        },
+        {
+          "task_id": "aime",
+          "time_hours": 9.29,
+          "tinker_cost_usd": 121.21
+        }
       ]
     },
     {
@@ -238,12 +318,36 @@
       ],
       "derived_evalhub_score": 32.593009,
       "resource_use": [
-        { "task_id": "swe-bench-verified", "time_hours": 4.41, "tinker_cost_usd": 55.61 },
-        { "task_id": "swe-bench-multilingual", "time_hours": 5.99, "tinker_cost_usd": 78.64 },
-        { "task_id": "swe-bench-pro", "time_hours": 11.61, "tinker_cost_usd": 300.49 },
-        { "task_id": "terminal-bench-2", "time_hours": 9.56, "tinker_cost_usd": 69.07 },
-        { "task_id": "gpqa-diamond", "time_hours": 2.42, "tinker_cost_usd": 10.37 },
-        { "task_id": "aime", "time_hours": 8.9, "tinker_cost_usd": 63.87 }
+        {
+          "task_id": "swe-bench-verified",
+          "time_hours": 4.41,
+          "tinker_cost_usd": 55.61
+        },
+        {
+          "task_id": "swe-bench-multilingual",
+          "time_hours": 5.99,
+          "tinker_cost_usd": 78.64
+        },
+        {
+          "task_id": "swe-bench-pro",
+          "time_hours": 11.61,
+          "tinker_cost_usd": 300.49
+        },
+        {
+          "task_id": "terminal-bench-2",
+          "time_hours": 9.56,
+          "tinker_cost_usd": 69.07
+        },
+        {
+          "task_id": "gpqa-diamond",
+          "time_hours": 2.42,
+          "tinker_cost_usd": 10.37
+        },
+        {
+          "task_id": "aime",
+          "time_hours": 8.9,
+          "tinker_cost_usd": 63.87
+        }
       ]
     },
     {
@@ -287,12 +391,36 @@
       ],
       "derived_evalhub_score": 26.448814,
       "resource_use": [
-        { "task_id": "swe-bench-verified", "time_hours": 2.8, "tinker_cost_usd": 59.79 },
-        { "task_id": "swe-bench-multilingual", "time_hours": 5.18, "tinker_cost_usd": 56.87 },
-        { "task_id": "swe-bench-pro", "time_hours": 3.85, "tinker_cost_usd": 34.39 },
-        { "task_id": "terminal-bench-2", "time_hours": 6.67, "tinker_cost_usd": 186.96 },
-        { "task_id": "gpqa-diamond", "time_hours": 1.14, "tinker_cost_usd": 4.8 },
-        { "task_id": "aime", "time_hours": 1.85, "tinker_cost_usd": 8.5 }
+        {
+          "task_id": "swe-bench-verified",
+          "time_hours": 2.8,
+          "tinker_cost_usd": 59.79
+        },
+        {
+          "task_id": "swe-bench-multilingual",
+          "time_hours": 5.18,
+          "tinker_cost_usd": 56.87
+        },
+        {
+          "task_id": "swe-bench-pro",
+          "time_hours": 3.85,
+          "tinker_cost_usd": 34.39
+        },
+        {
+          "task_id": "terminal-bench-2",
+          "time_hours": 6.67,
+          "tinker_cost_usd": 186.96
+        },
+        {
+          "task_id": "gpqa-diamond",
+          "time_hours": 1.14,
+          "tinker_cost_usd": 4.8
+        },
+        {
+          "task_id": "aime",
+          "time_hours": 1.85,
+          "tinker_cost_usd": 8.5
+        }
       ]
     }
   ]
