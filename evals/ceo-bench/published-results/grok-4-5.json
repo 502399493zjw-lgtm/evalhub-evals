@@ -2,7 +2,7 @@
   "eval_id": "ceo-bench",
   "submission": {
     "kind": "upstream_author_publication",
-    "importer_version": "ceo-bench/official-result-to-envelope@1.2.0",
+    "importer_version": "ceo-bench/official-result-to-envelope@1.3.0",
     "retrieved_on": "2026-08-03",
     "source": {
       "title": "Princeton CEO-Bench official results",
@@ -24,6 +24,8 @@
       "supplementary_views": [
         {
           "type": "metric_table",
+          "id": "official-run-summary",
+          "label": "运行摘要",
           "title": "Princeton 官网运行摘要",
           "columns": [
             "运行数",
@@ -49,6 +51,8 @@
         },
         {
           "type": "metric_table",
+          "id": "official-reference-values",
+          "label": "参考值",
           "title": "Princeton 官网参考值（非模型成绩）",
           "columns": [
             "参考项",

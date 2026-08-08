@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "benchmark": "ceo-bench",
-  "prepared_on": "2026-08-07",
+  "prepared_on": "2026-08-08",
   "policy": {
     "source_rule": "Benchmark facts use only the upstream authors' website, paper, GitHub repositories, code, documentation, tests, and published trajectory index.",
     "result_rule": "The Princeton homepage results table is the sole authority for published model scores and summary metrics. Trajectory files are provenance support only.",
@@ -12,17 +12,18 @@
       "id": "official-website-results",
       "source_kind": "upstream_project_website",
       "url": "https://ceobench.com/#benchmark",
-      "retrieved_on": "2026-08-07",
+      "retrieved_on": "2026-08-08",
       "version": {
         "snapshot_sha256": "97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292",
-        "note": "The page bytes re-fetched on 2026-08-07 matched the score snapshot captured on 2026-08-03."
+        "note": "The page bytes re-fetched on 2026-08-08 matched the score snapshot captured on 2026-08-03."
       },
       "facts": [
         "CEO-Bench operates a simulated AI startup for 500 days from 1,000,000 USD.",
         "The public interface is summarized as 34 tools, 19 business tables, and 26 customer groups.",
         "The results table publishes model, bankruptcy count out of three runs, best-run cash, maximum survival days, mean survival days with a plus-minus value, and turns per week.",
         "The table also publishes a 15,756,408 USD rule-based baseline and a 2,200,000,000 USD estimated final-cash upper bound.",
-        "The 2026-07-08 changelog says an insufficient-quota mechanic changed and that the website plots, data, and codebase were updated while paper updates were still in progress."
+        "The 2026-07-08 changelog says an insufficient-quota mechanic changed and that the website plots, data, and codebase were updated while paper updates were still in progress.",
+        "The homepage results table lists 18 models; the chart data file runs-data.js?v=15 lists 17 and omits Grok 4.5, which appears only in the table."
       ],
       "allowed_mappings": [
         "eval.yaml description and detail_profile",
@@ -40,7 +41,7 @@
       "id": "paper-v2",
       "source_kind": "upstream_paper",
       "url": "https://arxiv.org/html/2606.18543v2",
-      "retrieved_on": "2026-08-07",
+      "retrieved_on": "2026-08-08",
       "version": {
         "identifier": "arXiv:2606.18543v2",
         "revised_on": "2026-07-22",
@@ -67,7 +68,7 @@
       "id": "source-readme",
       "source_kind": "upstream_repository",
       "url": "https://github.com/zlab-princeton/ceobench-src/blob/d2b7b32e5301a571b77f5f68bd1032adbcd5b464/README.md",
-      "retrieved_on": "2026-08-07",
+      "retrieved_on": "2026-08-08",
       "version": {
         "repository": "zlab-princeton/ceobench-src",
         "commit": "d2b7b32e5301a571b77f5f68bd1032adbcd5b464",
@@ -92,7 +93,7 @@
       "id": "primary-score-code",
       "source_kind": "upstream_source_code",
       "url": "https://github.com/zlab-princeton/ceobench-src/blob/d2b7b32e5301a571b77f5f68bd1032adbcd5b464/src/saas_bench/benchmark.py",
-      "retrieved_on": "2026-08-07",
+      "retrieved_on": "2026-08-08",
       "version": {
         "commit": "d2b7b32e5301a571b77f5f68bd1032adbcd5b464",
         "license": null
@@ -114,7 +115,7 @@
       "id": "default-config-code",
       "source_kind": "upstream_source_code",
       "url": "https://github.com/zlab-princeton/ceobench-src/blob/d2b7b32e5301a571b77f5f68bd1032adbcd5b464/src/saas_bench/config.py",
-      "retrieved_on": "2026-08-07",
+      "retrieved_on": "2026-08-08",
       "version": {
         "commit": "d2b7b32e5301a571b77f5f68bd1032adbcd5b464",
         "license": null
@@ -136,7 +137,7 @@
       "id": "cli-contract",
       "source_kind": "upstream_documentation",
       "url": "https://github.com/zlab-princeton/ceobench-src/blob/d2b7b32e5301a571b77f5f68bd1032adbcd5b464/public/docs/cli.md",
-      "retrieved_on": "2026-08-07",
+      "retrieved_on": "2026-08-08",
       "version": {
         "commit": "d2b7b32e5301a571b77f5f68bd1032adbcd5b464",
         "license": null
@@ -144,7 +145,8 @@
       "facts": [
         "next-week requires a non-empty rationale and cash predictions for four horizons.",
         "Each prediction interval must satisfy lower less than or equal to point less than or equal to upper.",
-        "The documentation defines forecast error, coverage, and sharpness diagnostics."
+        "The documentation defines forecast error, coverage, and sharpness diagnostics.",
+        "The pinned runnable repository docs/cli.md confirms the 13 positional arguments (rationale plus 12 forecast values); docs/cli-reference.md in the same repository is stale and still shows a removed three-argument form."
       ],
       "allowed_mappings": [
         "README input validation and evidence boundary",
@@ -160,13 +162,15 @@
       "source_kind": "upstream_documentation",
       "url": "https://github.com/zlab-princeton/ceobench-src/blob/d2b7b32e5301a571b77f5f68bd1032adbcd5b464/public/docs/tools-reference.md",
       "related_url": "https://github.com/zlab-princeton/ceobench-src/blob/d2b7b32e5301a571b77f5f68bd1032adbcd5b464/public/docs/tables-reference.md",
-      "retrieved_on": "2026-08-07",
+      "retrieved_on": "2026-08-08",
       "version": {
         "commit": "d2b7b32e5301a571b77f5f68bd1032adbcd5b464",
         "license": null
       },
       "facts": [
-        "The public action and query references cover pricing, quotas, marketing, research, infrastructure, support, enterprise sales, market research, social media, and observable business tables."
+        "The public action and query references cover pricing, quotas, marketing, research, infrastructure, support, enterprise sales, market research, social media, and observable business tables.",
+        "The authoritative tool inventory is 34 tools in tools.py TOOL_DOCS; the separate tool_docs.json (32 entries) is a stale orphan that still names removed tools such as set_ad_channel_spend and log_rationale.",
+        "The source defines 20 R&D research tiers (10 standard plus 10 frontier); simulator_instructions.md and the public tools-reference.md still say 10 tiers."
       ],
       "allowed_mappings": [
         "detail_profile action-space summary",
@@ -182,7 +186,7 @@
       "source_kind": "upstream_runnable_repository",
       "url": "https://github.com/zlab-princeton/run-ceobench/tree/f5d500688d95256906fd02cc5aa7524f2fe08d5b",
       "related_url": "https://github.com/zlab-princeton/ceobench-src/blob/d2b7b32e5301a571b77f5f68bd1032adbcd5b464/src/saas_bench/agents/bash_agent/run_test.py",
-      "retrieved_on": "2026-08-07",
+      "retrieved_on": "2026-08-08",
       "version": {
         "evalhub_protocol_commit": "f5d500688d95256906fd02cc5aa7524f2fe08d5b",
         "latest_reviewed_main_commit": "885ae1d7d09b3effa08825ce7f03075224ebe373",
@@ -191,7 +195,9 @@
       "facts": [
         "The official runnable repository exposes the NovaMind operation interface used by the external workflow.",
         "Its weekly operation advances in seven-day increments.",
-        "The canonical upstream bash harness normalizes a 500-day request to 497 days so it can run complete weeks."
+        "The canonical upstream bash harness normalizes a 500-day request to 497 days so it can run complete weeks.",
+        "The pinned commit f5d5006 is a strict subset of the reviewed runnable-repository HEAD 885ae1d: the only differing file is the novamind-operation binary, rebuilt by four billing-fix artifact updates, with no CLI, doc, or schema change.",
+        "The runnable README treats reading, decrypting, unzipping, disassembling, or otherwise inspecting world.nmdb or ./novamind-operation as a benchmark violation that fails the run immediately."
       ],
       "allowed_mappings": [
         "eval.yaml external_workflow task and command contract",
@@ -212,7 +218,8 @@
         "snapshot_sha256": "42dd323b0a00c9d5a8fc96fa84fbb573a6db0e3d77654ece6480aa8c58ef85b1"
       },
       "facts": [
-        "The index discloses model-level run IDs, configured horizons, observed terminal days, and bankruptcy status for its listed cohorts."
+        "The index discloses model-level run IDs, configured horizons, observed terminal days, and bankruptcy status for its listed cohorts.",
+        "On 2026-08-08 the live manifest (v=15) listed 17 models and 51 runs, still without a Grok 4.5 entry; the pinned v12 summary snapshot remains the reviewed reference artifact and is not the score authority."
       ],
       "allowed_mappings": [
         "trajectory provenance summary and README caveats only"
@@ -227,14 +234,15 @@
       "id": "integrity-analysis",
       "source_kind": "upstream_documentation",
       "url": "https://github.com/zlab-princeton/ceobench-src/blob/d2b7b32e5301a571b77f5f68bd1032adbcd5b464/docs/analyze_trajectory.md",
-      "retrieved_on": "2026-08-07",
+      "retrieved_on": "2026-08-08",
       "version": {
         "commit": "d2b7b32e5301a571b77f5f68bd1032adbcd5b464",
         "license": null
       },
       "facts": [
         "The upstream database is SQLCipher-protected, but the authors state that a bundled key can be extracted from the runnable artifact.",
-        "The authors recommend isolating the agent from the executable and having a human evaluator inspect traces."
+        "The authors recommend isolating the agent from the executable and having a human evaluator inspect traces.",
+        "The runnable README Rules section enumerates unzip, strings, xxd, sqlite3, sqlcipher, python -m zipfile, dis, marshal.loads, debugger attachment, and reading /proc/<pid>/mem as violations when applied to world.nmdb or ./novamind-operation."
       ],
       "allowed_mappings": [
         "author_fill policy",

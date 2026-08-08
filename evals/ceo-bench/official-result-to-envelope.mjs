@@ -16,7 +16,7 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "ceo-bench";
-const IMPORTER_VERSION = "ceo-bench/official-result-to-envelope@1.2.0";
+const IMPORTER_VERSION = "ceo-bench/official-result-to-envelope@1.3.0";
 const SNAPSHOT_URL = new URL(
   "./tasks/princeton-official-results-2026-08-03.json",
   import.meta.url,
@@ -272,6 +272,8 @@ function buildEnvelope(snapshot, result, evalCommit) {
         supplementary_views: [
           {
             type: "metric_table",
+            id: "official-run-summary",
+            label: "运行摘要",
             title: "Princeton 官网运行摘要",
             columns: [
               "运行数",
@@ -297,6 +299,8 @@ function buildEnvelope(snapshot, result, evalCommit) {
           },
           {
             type: "metric_table",
+            id: "official-reference-values",
+            label: "参考值",
             title: "Princeton 官网参考值（非模型成绩）",
             columns: ["参考项", "公开金额", "性质"],
             rows: snapshot.references.map((reference) => ({
