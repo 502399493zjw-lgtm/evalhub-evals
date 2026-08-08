@@ -271,8 +271,7 @@ detail_profile:
 tasks:
   - id: swe-bench-verified
     label: SWE-bench Verified profile
-    prompt: 在钉死的 RSIBench-Data 主协议中，以 SWE-bench Verified profile 启动一次独立的 16 小时 / 500 USD 数据研究运行。研究者 Agent 只能改变合规的训练数据与白名单训练配置，必须从历史尝试中选择检查点后再做官方评测；不得把评测任务、标签、轨迹或其他受保护材料转化为训练监督。
-    display_prompt: |-
+    prompt: |-
       benchmarks/swe_bench_verified/spec.json @ 39948a1
       {
         "schema_version": "0.1.0",
@@ -321,11 +320,11 @@ tasks:
         ],
         "primary_metric": "hidden_resolved_rate_gain"
       }
+    run_spec: 在钉死的 RSIBench-Data 主协议中，以 SWE-bench Verified profile 启动一次独立的 16 小时 / 500 USD 数据研究运行。研究者 Agent 只能改变合规的训练数据与白名单训练配置，必须从历史尝试中选择检查点后再做官方评测；不得把评测任务、标签、轨迹或其他受保护材料转化为训练监督。
     expected: 所选检查点在固定 seed=23 的 100 题子集上由 Mini-SWE-Agent 与官方 verifier 得到的 resolved rate，范围 0 至 1；EvalHub 分项分数为该值乘 100。
   - id: swe-bench-multilingual
     label: SWE-bench Multilingual profile
-    prompt: 在钉死的 RSIBench-Data 主协议中，以 SWE-bench Multilingual profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
-    display_prompt: |-
+    prompt: |-
       benchmarks/swe_bench_multilingual/spec.json @ 39948a1
       {
         "schema_version": "0.1.0",
@@ -373,11 +372,11 @@ tasks:
         ],
         "primary_metric": "multilingual_resolved_rate_gain"
       }
+    run_spec: 在钉死的 RSIBench-Data 主协议中，以 SWE-bench Multilingual profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
     expected: 所选检查点在固定 seed=23 的 100 题多语言子集上由 Mini-SWE-Agent 与语言特定测试得到的 resolved rate，范围 0 至 1；EvalHub 分项分数为该值乘 100。
   - id: swe-bench-pro
     label: SWE-bench Pro profile
-    prompt: 在钉死的 RSIBench-Data 主协议中，以 SWE-bench Pro profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
-    display_prompt: |-
+    prompt: |-
       benchmarks/swe_bench_pro/spec.json @ 39948a1
       {
         "schema_version": "0.1.0",
@@ -427,11 +426,11 @@ tasks:
         ],
         "primary_metric": "swe_bench_pro_resolved_rate_gain"
       }
+    run_spec: 在钉死的 RSIBench-Data 主协议中，以 SWE-bench Pro profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
     expected: 所选检查点在固定 seed=23 的 100 题子集上由 Mini-SWE-Agent 与 issue-specific tests 得到的 resolved rate，范围 0 至 1；EvalHub 分项分数为该值乘 100。
   - id: terminal-bench-2
     label: Terminal-Bench 2.0 profile
-    prompt: 在钉死的 RSIBench-Data 主协议中，以 Terminal-Bench 2.0 profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
-    display_prompt: |-
+    prompt: |-
       benchmarks/terminal_bench_2/spec.json @ 39948a1
       {
         "schema_version": "0.1.0",
@@ -482,11 +481,11 @@ tasks:
         ],
         "primary_metric": "hidden_resolved_rate_gain"
       }
+    run_spec: 在钉死的 RSIBench-Data 主协议中，以 Terminal-Bench 2.0 profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
     expected: 所选检查点在完整 89 题集合上由 Terminus-2 与任务 verifier 得到的 task success rate，范围 0 至 1；EvalHub 分项分数为该值乘 100。
   - id: gpqa-diamond
     label: GPQA Diamond profile
-    prompt: 在钉死的 RSIBench-Data 主协议中，以 GPQA Diamond profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
-    display_prompt: |-
+    prompt: |-
       benchmarks/gpqa_diamond/spec.json @ 39948a1
       {
         "schema_version": "0.1.0",
@@ -534,11 +533,11 @@ tasks:
         ],
         "primary_metric": "gpqa_diamond_accuracy_gain"
       }
+    run_spec: 在钉死的 RSIBench-Data 主协议中，以 GPQA Diamond profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
     expected: 所选检查点在固定 seed=23 的 100 题子集上由 Terminus-2 与 exact answer verifier 得到的 accuracy，范围 0 至 1；EvalHub 分项分数为该值乘 100。
   - id: aime
     label: AIME 2026 profile
-    prompt: 在钉死的 RSIBench-Data 主协议中，以 AIME 2026 profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
-    display_prompt: |-
+    prompt: |-
       benchmarks/aime/spec.json @ 39948a1
       {
         "schema_version": "0.1.0",
@@ -587,4 +586,5 @@ tasks:
         ],
         "primary_metric": "aime_accuracy_gain"
       }
+    run_spec: 在钉死的 RSIBench-Data 主协议中，以 AIME 2026 profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
     expected: 所选检查点在完整 30 题集合、每题 4 次解码下由 Terminus-2 与整数答案 verifier 得到的 avg@4 accuracy，范围 0 至 1；EvalHub 分项分数为该值乘 100。
