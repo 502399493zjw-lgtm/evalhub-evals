@@ -6,6 +6,7 @@ import {
   unlinkSync,
   writeFileSync,
 } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { basename, dirname, resolve } from "node:path";
 import {
   EvalDefSchema,
@@ -15,13 +16,14 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "rsibench-data";
-const IMPORTER_VERSION = "rsibench-data/official-result-to-envelope@1.3.0";
+const IMPORTER_VERSION = "rsibench-data/official-result-to-envelope@1.4.0";
 const SNAPSHOT_URL = new URL(
   "./tasks/rsibench-official-results-2026-07-31.json",
   import.meta.url,
 );
 const EVAL_COMMIT_PATTERN = /^[a-f0-9]{7,40}$/u;
 const SHA256_PATTERN = /^[a-f0-9]{64}$/u;
+const CONTROL_CHARACTERS = /[\u0000-\u001f\u007f-\u009f]/u;
 
 class InputError extends Error {
   constructor(message) {
@@ -36,6 +38,46 @@ function assert(condition, message) {
 
 function roundSix(value) {
   return Number(value.toFixed(6));
+}
+
+function isIpLiteral(hostname) {
+  if (hostname.startsWith("[") && hostname.endsWith("]")) return true;
+  const octets = hostname.split(".");
+  return (
+    octets.length === 4 &&
+    octets.every(
+      (octet) => /^(?:0|[1-9]\d{0,2})$/u.test(octet) && Number(octet) <= 255,
+    )
+  );
+}
+
+function validateHttpsArtifactUrl(value, label) {
+  assert(typeof value === "string", `${label} 必须是字符串`);
+  assert(value.trim() === value && value.length > 0, `${label} 不能为空或带首尾空格`);
+  assert(value.length <= 2048, `${label} 最长 2048 个字符`);
+  assert(!CONTROL_CHARACTERS.test(value), `${label} 不能包含控制字符`);
+  let url;
+  try {
+    url = new URL(value);
+  } catch (error) {
+    throw new InputError(`${label} 不是合法 URL：${error.message}`);
+  }
+  assert(url.protocol === "https:", `${label} 必须使用 https`);
+  assert(url.username === "" && url.password === "", `${label} 不能内嵌用户名或密码`);
+  assert(url.port === "", `${label} 不能使用自定义端口`);
+  assert(url.search === "", `${label} 不能包含 query 参数或临时签名`);
+  assert(url.hash === "", `${label} 不能包含 fragment`);
+  const hostname = url.hostname.toLowerCase();
+  assert(!hostname.endsWith("."), `${label} 主机名不能以点结尾`);
+  assert(
+    hostname.includes(".") &&
+      hostname !== "localhost" &&
+      !hostname.endsWith(".localhost") &&
+      !hostname.endsWith(".local") &&
+      !isIpLiteral(hostname),
+    `${label} 必须指向公开主机`,
+  );
+  return url.toString();
 }
 
 function parseArgs(argv) {
@@ -78,7 +120,7 @@ function readSnapshot() {
     "官方成绩快照 source_kind 不正确",
   );
   assert(/^\d{4}-\d{2}-\d{2}$/u.test(value?.retrieved_on), "官方成绩快照 retrieved_on 不正确");
-  assert(typeof value?.score_authority?.url === "string", "官方成绩快照缺少来源 URL");
+  validateHttpsArtifactUrl(value?.score_authority?.url, "score_authority.url");
   assert(
     SHA256_PATTERN.test(value?.score_authority?.snapshot_sha256),
     "官方成绩快照缺少合法页面 SHA-256",
@@ -113,12 +155,56 @@ function readSnapshot() {
     typeof constants?.target_model === "string" && constants.target_model.length > 0,
     "protocol_constants.target_model 不能为空",
   );
+  validateHttpsArtifactUrl(
+    constants?.source?.url,
+    "protocol_constants.source.url",
+  );
   assert(
-    typeof constants?.source?.url === "string" &&
-      constants.source.url.startsWith("https://") &&
-      typeof constants?.source?.quote === "string" &&
+    typeof constants?.source?.quote === "string" &&
       constants.source.quote.length > 0,
-    "protocol_constants.source 必须给出 https 一手来源与原文引用",
+    "protocol_constants.source 必须给出原文引用",
+  );
+
+  assert(
+    typeof constants?.rollout_model === "string" &&
+      constants.rollout_model.length > 0,
+    "protocol_constants.rollout_model 不能为空",
+  );
+  assert(
+    Array.isArray(constants?.researcher_agents) &&
+      constants.researcher_agents.length === 4,
+    "protocol_constants.researcher_agents 必须覆盖四位已发表研究者",
+  );
+  const agentById = new Map();
+  for (const agent of constants.researcher_agents) {
+    assert(
+      typeof agent?.participant_id === "string" && agent.participant_id.length > 0,
+      "researcher_agents.participant_id 不能为空",
+    );
+    assert(
+      !agentById.has(agent.participant_id),
+      `researcher_agents 重复 participant_id ${agent.participant_id}`,
+    );
+    for (const field of ["harness", "model", "reasoning_effort"]) {
+      assert(
+        typeof agent?.[field] === "string" && agent[field].length > 0,
+        `researcher_agents/${agent.participant_id}.${field} 不能为空`,
+      );
+    }
+    assert(
+      ["high", "max"].includes(agent.reasoning_effort),
+      `researcher_agents/${agent.participant_id}.reasoning_effort 必须是论文公布的 high 或 max`,
+    );
+    agentById.set(agent.participant_id, agent);
+  }
+  validateHttpsArtifactUrl(
+    constants?.researcher_agents_source?.url,
+    "protocol_constants.researcher_agents_source.url",
+  );
+  assert(
+    typeof constants?.researcher_agents_source?.quote === "string" &&
+      constants.researcher_agents_source.quote.length > 0,
+    "protocol_constants.researcher_agents_source 必须给出原文引用",
   );
 
   const baseReference = value?.base_reference;
@@ -184,6 +270,16 @@ function readSnapshot() {
       result.model_display ===
         `${result.participant.harness} · ${result.participant.model}`,
       `${result.participant_id} 的 model_display 必须由 harness 与 model 组成`,
+    );
+    const agent = agentById.get(result.participant_id);
+    assert(
+      agent !== undefined,
+      `${result.participant_id} 缺少 protocol_constants.researcher_agents 配置`,
+    );
+    assert(
+      agent.harness === result.participant.harness &&
+        agent.model === result.participant.model,
+      `${result.participant_id} 的 researcher_agents 身份与 participant 不一致`,
     );
     assert(Array.isArray(result?.official_scores) && result.official_scores.length === 6, `${result.participant_id} 必须包含六个官方分项`);
     const seenTasks = new Set();
@@ -254,6 +350,9 @@ function readSnapshot() {
 }
 
 function buildEnvelope(snapshot, benchmarkById, baseByTask, result, evalCommit) {
+  const agent = snapshot.protocol_constants.researcher_agents.find(
+    (candidate) => candidate.participant_id === result.participant_id,
+  );
   const usageByTask = new Map(
     result.resource_use.map((usage) => [usage.task_id, usage]),
   );
@@ -318,6 +417,8 @@ function buildEnvelope(snapshot, benchmarkById, baseByTask, result, evalCommit) 
               ],
             })),
             note:
+              "Derived：「成功/试次」为与官网两位小数唯一相容的整数计数（固定分母 100/100/100/89/100/120）；" +
+              "「精确分项分数」= 成功/试次 × 100。这两列由 EvalHub 反推，不是官网发表值。" +
               "辅助展示，不参与单独排名；总体分是六项精确百分制分数的等权宏平均。" +
               "最后一列是官方同一张矩阵里的未微调基线模型行，仅作对照，不是参赛结果。",
           },
@@ -337,8 +438,13 @@ function buildEnvelope(snapshot, benchmarkById, baseByTask, result, evalCommit) 
           },
         ],
         detail:
-          `上游官网六项官方成绩的 EvalHub 等权宏平均：${scoreDetails.join("、")}。` +
-          "括号内整数成功数由官网两位小数和固定分母唯一反推；宏平均是 EvalHub 派生指标，不是上游官方复合指标，也不表示 EvalHub 独立复跑。",
+          "Derived：宏平均 =（SWE-bench Verified + SWE-bench Multilingual + SWE-bench Pro + " +
+          "Terminal-Bench 2.0 + GPQA Diamond + AIME 2026）/ 6，" +
+          `输入取自 submission.source 的六项官网显示值：${scoreDetails.join("、")}。` +
+          "括号内整数成功数由官网两位小数和固定分母唯一反推；宏平均是 EvalHub 派生指标，不是上游官方复合指标，也不表示 EvalHub 独立复跑。" +
+          `比较边界（论文 4.1）：编排 harness ${result.participant.harness}，编排模型 ${result.participant.model}，` +
+          `reasoning effort ${agent.reasoning_effort}，固定外部 rollout 模型 ${snapshot.protocol_constants.rollout_model}，` +
+          `固定目标模型 ${snapshot.protocol_constants.target_model}。`,
       },
     ],
   };
@@ -381,6 +487,14 @@ function writeAtomically(outputPath, result) {
     throw new InputError(`输出目录无法读取：${error.message}`);
   }
   const target = resolve(outputDirectory, basename(declaredOutput));
+  assert(
+    target !== fileURLToPath(SNAPSHOT_URL),
+    "输出文件不能覆盖官方成绩快照",
+  );
+  assert(
+    target !== fileURLToPath(new URL("./eval.yaml", import.meta.url)),
+    "输出文件不能覆盖 eval.yaml",
+  );
   const temporary = resolve(
     outputDirectory,
     `.${basename(target)}.${process.pid}.${Date.now()}.tmp`,
