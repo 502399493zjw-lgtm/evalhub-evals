@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { validateParticipantForEval, } from "./participant-for-eval.js";
+import { isUpstreamAuthorPublicationSubmission, } from "./result.js";
 import { resolveScorePolicy } from "./eval-def.js";
 function customIssue(path, message) {
     return {
@@ -19,7 +20,10 @@ function runParticipantKey(participant) {
 export function validateResultForEval(context, resultFile) {
     const issues = [];
     let teamGamesShowcaseCount = 0;
-    const origin = resultFile.submission.kind === "upstream_author_publication"
+    // Derived from the provenance block, not the optional kind tag -- a file that
+    // omits the tag is still an upstream publication, and origin gates the
+    // run-only cardinality, identity and score rules below.
+    const origin = isUpstreamAuthorPublicationSubmission(resultFile.submission)
         ? "upstream_author_publication"
         : "run";
     if (resultFile.eval_id !== context.id) {

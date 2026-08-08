@@ -1097,7 +1097,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         id: z.ZodOptional<z.ZodString>;
         label: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         prompt: z.ZodEffects<z.ZodString, string, string>;
-        display_prompt: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+        run_spec: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         translation: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         expected: z.ZodOptional<z.ZodString>;
     }, "strip", z.ZodTypeAny, {
@@ -1105,14 +1105,14 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }, {
         prompt: string;
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
@@ -1135,7 +1135,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }[];
     score_policy?: "required" | "author_fill" | undefined;
@@ -1239,7 +1239,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
@@ -1353,7 +1353,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }[];
     score_policy?: "required" | "author_fill" | undefined;
@@ -1457,7 +1457,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
@@ -1572,7 +1572,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }[];
     command_template?: {
@@ -1675,7 +1675,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
@@ -2311,7 +2311,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         id: z.ZodOptional<z.ZodString>;
         label: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         prompt: z.ZodEffects<z.ZodString, string, string>;
-        display_prompt: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+        run_spec: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         translation: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         expected: z.ZodOptional<z.ZodString>;
     }, "strip", z.ZodTypeAny, {
@@ -2319,14 +2319,14 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }, {
         prompt: string;
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
@@ -2349,7 +2349,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }[];
     score_policy?: "required" | "author_fill" | undefined;
@@ -2453,7 +2453,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
@@ -2567,7 +2567,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }[];
     score_policy?: "required" | "author_fill" | undefined;
@@ -2671,7 +2671,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
@@ -2786,7 +2786,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }[];
     command_template?: {
@@ -2889,7 +2889,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         expected?: string | undefined;
         label?: string | undefined;
         id?: string | undefined;
-        display_prompt?: string | undefined;
+        run_spec?: string | undefined;
         translation?: string | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
