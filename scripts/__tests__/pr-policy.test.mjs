@@ -12,11 +12,22 @@ const headRepository = "contributor/evalhub-evals";
 const baseSha = "base-sha";
 const headSha = "head-sha";
 
-function makeEvent(actor = "sample-author") {
+const taskId = "evaltask_243e0b48-c968-4968-80ee-29221bde6cff";
+const otherTaskId = "evaltask_6cd42f94-1a05-4d7b-9f0e-2b8c1d4e5f60";
+
+function marker(kind, slug, task = taskId) {
+  return `<!-- evalhub-submission task=${task} kind=${kind} slug=${slug} -->`;
+}
+
+function submissionBody(kind, slug, task = taskId) {
+  return `AUTHORS: @spoofed-author\n\n${marker(kind, slug, task)}\n`;
+}
+
+function makeEvent(actor = "sample-author", body = "AUTHORS: @spoofed-author") {
   return {
     pull_request: {
       number: 42,
-      body: "AUTHORS: @spoofed-author",
+      body,
       user: { login: actor, id: actor === MAINTAINER_LOGIN ? 1 : 200 },
       base: { ref: "main", sha: baseSha, repo: { full_name: baseRepository } },
       head: { ref: "submission", sha: headSha, repo: { full_name: headRepository } },
@@ -34,6 +45,7 @@ function snapshotKey(repository, sha, pathname) {
 
 async function evaluate({
   actor = "sample-author",
+  body,
   changedFiles,
   base = {},
   head = {},
@@ -46,7 +58,7 @@ async function evaluate({
     snapshots.set(snapshotKey(headRepository, headSha, pathname), contents);
   }
   return evaluatePullRequestPolicy({
-    event: makeEvent(actor),
+    event: body === undefined ? makeEvent(actor) : makeEvent(actor, body),
     listChangedFiles: async () => changedFiles,
     readText: async (repository, sha, pathname) =>
       snapshots.get(snapshotKey(repository, sha, pathname)) ?? null,
@@ -63,6 +75,7 @@ async function expectPolicyError(options, expectedCode) {
 
 test("allows a user to create one eval owned by their GitHub identity", async () => {
   const result = await evaluate({
+    body: submissionBody("new", "sample-eval"),
     changedFiles: [
       file("evals/sample-eval/AUTHORS", "added"),
       file("evals/sample-eval/eval.yaml", "added"),
@@ -76,10 +89,12 @@ test("allows a user to create one eval owned by their GitHub identity", async ()
   assert.equal(result.mode, "community-eval-create");
   assert.equal(result.slug, "sample-eval");
   assert.equal(result.owner, "sample-author");
+  assert.equal(result.submissionTask, taskId);
 });
 
 test("allows a new custom eval with an explicit mode and participant input", async () => {
   const result = await evaluate({
+    body: submissionBody("new", "sample-eval"),
     changedFiles: [
       file("evals/sample-eval/AUTHORS", "added"),
       file("evals/sample-eval/eval.yaml", "added"),
@@ -272,6 +287,7 @@ command_template:
   argv: [node, evals/sample-eval/pack.mjs, evals/sample-eval/tasks/example-submission.json, --out, "{output}"]
 `;
   const result = await evaluate({
+    body: submissionBody("update", "sample-eval"),
     changedFiles: [file("evals/sample-eval/README.md")],
     base: {
       "evals/sample-eval/AUTHORS": "@sample-author\n",
@@ -284,6 +300,7 @@ command_template:
 
 test("allows an author to update their own eval", async () => {
   const result = await evaluate({
+    body: submissionBody("update", "sample-eval"),
     changedFiles: [file("evals/sample-eval/README.md")],
     base: {
       "evals/sample-eval/AUTHORS": "@sample-author\n",
@@ -292,6 +309,7 @@ test("allows an author to update their own eval", async () => {
     head: { "evals/sample-eval/eval.yaml": "id: sample-eval\n" },
   });
   assert.equal(result.mode, "community-eval-update");
+  assert.equal(result.submissionTask, taskId);
 });
 
 test("rejects a third party even if the PR body claims author approval", async () => {
@@ -517,4 +535,158 @@ test("recognizes a maintainer-owned eval as official", async () => {
     head: { "evals/official-eval/eval.yaml": "id: official-eval\n" },
   });
   assert.equal(result.mode, "official-eval-update");
+  assert.equal(result.submissionTask, null);
+});
+
+const createChangedFiles = [
+  file("evals/sample-eval/AUTHORS", "added"),
+  file("evals/sample-eval/eval.yaml", "added"),
+];
+const createHead = {
+  "evals/sample-eval/AUTHORS": "@sample-author\n",
+  "evals/sample-eval/eval.yaml": "id: sample-eval\nrunner: builtin\n",
+};
+const updateBase = {
+  "evals/sample-eval/AUTHORS": "@sample-author\n",
+  "evals/sample-eval/eval.yaml": "id: sample-eval\n",
+};
+const updateHead = { "evals/sample-eval/eval.yaml": "id: sample-eval\n" };
+
+function createOptions(body) {
+  return { body, changedFiles: createChangedFiles, head: createHead };
+}
+
+function updateOptions(body) {
+  return {
+    body,
+    changedFiles: [file("evals/sample-eval/README.md")],
+    base: updateBase,
+    head: updateHead,
+  };
+}
+
+test("rejects a community submission that never pasted the marker", async () => {
+  await expectPolicyError(
+    createOptions("AUTHORS: @sample-author\n"),
+    "submission_marker_required",
+  );
+  await expectPolicyError(
+    updateOptions("AUTHORS: @sample-author\n"),
+    "submission_marker_required",
+  );
+});
+
+test("rejects an empty or missing body on a community submission", async () => {
+  await expectPolicyError(createOptions(""), "submission_marker_required");
+  await expectPolicyError(createOptions(null), "submission_marker_required");
+});
+
+test("rejects a non-text pull request body instead of scanning it", async () => {
+  await expectPolicyError(createOptions(42), "invalid_pull_request_body");
+});
+
+test("rejects a body larger than the policy scan limit", async () => {
+  await expectPolicyError(
+    createOptions(`${marker("new", "sample-eval")}${"x".repeat(262_145)}`),
+    "invalid_pull_request_body",
+  );
+});
+
+test("separates a mistyped marker from a missing one", async () => {
+  const mistyped = [
+    "<!--evalhub-submission task=evaltask_243e0b48-c968-4968-80ee-29221bde6cff kind=new slug=sample-eval -->",
+    `<!-- evalhub-submission task=${taskId} kind=created slug=sample-eval -->`,
+    `<!-- evalhub-submission task=${taskId}  kind=new slug=sample-eval -->`,
+    "<!-- evalhub-submission task=evaltask_not-a-uuid kind=new slug=sample-eval -->",
+    `<!-- evalhub-submission task=${taskId} kind=new -->`,
+  ];
+  for (const body of mistyped) {
+    await expectPolicyError(createOptions(body), "submission_marker_malformed");
+  }
+});
+
+test("rejects two markers because the platform binds only the first", async () => {
+  await expectPolicyError(
+    createOptions(
+      `${marker("new", "sample-eval")}\n${marker("new", "sample-eval", otherTaskId)}\n`,
+    ),
+    "submission_marker_duplicated",
+  );
+});
+
+test("rejects a valid marker shadowed by an unparseable one", async () => {
+  await expectPolicyError(
+    createOptions(
+      `${marker("new", "sample-eval")}\n<!-- evalhub-submission task=broken -->\n`,
+    ),
+    "submission_marker_malformed",
+  );
+});
+
+test("rejects a marker that points at a different eval", async () => {
+  await expectPolicyError(
+    createOptions(submissionBody("new", "other-eval")),
+    "submission_marker_slug_mismatch",
+  );
+});
+
+test("rejects a marker whose kind contradicts the change", async () => {
+  await expectPolicyError(
+    createOptions(submissionBody("update", "sample-eval")),
+    "submission_marker_kind_mismatch",
+  );
+  await expectPolicyError(
+    updateOptions(submissionBody("new", "sample-eval")),
+    "submission_marker_kind_mismatch",
+  );
+});
+
+test("rejects a marker on a maintenance or delete pull request", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      body: submissionBody("update", "sample-eval"),
+      changedFiles: [file("README.md")],
+    },
+    "submission_marker_unexpected",
+  );
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      body: submissionBody("update", "sample-eval"),
+      changedFiles: [file("evals/sample-eval/eval.yaml", "removed")],
+      base: updateBase,
+    },
+    "submission_marker_unexpected",
+  );
+});
+
+test("keeps the marker optional for maintainer-authored submissions", async () => {
+  const result = await evaluate({
+    actor: MAINTAINER_LOGIN,
+    body: "AUTHORS: @sample-author\n",
+    ...updateOptions("AUTHORS: @sample-author\n"),
+  });
+  assert.equal(result.mode, "community-eval-update");
+  assert.equal(result.submissionTask, null);
+});
+
+test("still validates a marker the maintainer chose to include", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      ...updateOptions(submissionBody("update", "other-eval")),
+    },
+    "submission_marker_slug_mismatch",
+  );
+});
+
+test("lets pre-existing policy rejections win over marker enforcement", async () => {
+  await expectPolicyError(
+    {
+      actor: "third-party",
+      ...updateOptions("AUTHORS: @sample-author\n"),
+    },
+    "third_party_update_forbidden",
+  );
 });

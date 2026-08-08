@@ -20,6 +20,14 @@ const RESERVED_SLUGS = new Set([
   "settings",
   "submit",
 ]);
+// 必须与平台 evalSubmissionTask.ts 的 marker 正则逐字一致：平台按这个形状认领 PR，
+// CI 放宽一个字符，孤儿就会重新变成静默的。
+const SUBMISSION_MARKER_PATTERN =
+  /<!-- evalhub-submission task=(evaltask_[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}) kind=(new|update) slug=([a-z0-9](?:[a-z0-9-]{0,62}[a-z0-9])?) -->/gu;
+// 宽松探测：贴了但贴错的 marker，平台会直接匹配不到而静默跳过认领，
+// 所以"像 marker 但解析不出来"必须和"完全没贴"区分开报错。
+const SUBMISSION_MARKER_ATTEMPT_PATTERN = /<!--\s*evalhub-submission\b/gu;
+const MAX_POLICY_BODY_BYTES = 262_144;
 
 export class PullRequestPolicyError extends Error {
   constructor(code, message) {
@@ -35,6 +43,82 @@ function reject(code, message) {
 
 function sameLogin(left, right) {
   return left.toLocaleLowerCase("en-US") === right.toLocaleLowerCase("en-US");
+}
+
+function scanSubmissionMarker(rawBody) {
+  if (rawBody === null || rawBody === undefined) {
+    return { marker: null, attempts: 0 };
+  }
+  if (typeof rawBody !== "string") {
+    reject("invalid_pull_request_body", "pull request body must be text or null");
+  }
+  if (Buffer.byteLength(rawBody, "utf8") > MAX_POLICY_BODY_BYTES) {
+    reject(
+      "invalid_pull_request_body",
+      `pull request body exceeds the ${MAX_POLICY_BODY_BYTES}-byte policy scan limit`,
+    );
+  }
+  const attempts = [...rawBody.matchAll(SUBMISSION_MARKER_ATTEMPT_PATTERN)].length;
+  const matches = [...rawBody.matchAll(SUBMISSION_MARKER_PATTERN)];
+  if (matches.length > 1) {
+    reject(
+      "submission_marker_duplicated",
+      `pull request body carries ${matches.length} submission markers; the platform binds only the first, so exactly one is allowed`,
+    );
+  }
+  if (matches.length === 0) {
+    if (attempts > 0) {
+      reject(
+        "submission_marker_malformed",
+        "pull request body contains a submission marker the platform cannot parse; it must read exactly `<!-- evalhub-submission task=evaltask_<uuid> kind=new|update slug=<slug> -->` with single spaces",
+      );
+    }
+    return { marker: null, attempts };
+  }
+  if (attempts > 1) {
+    reject(
+      "submission_marker_malformed",
+      "pull request body contains an extra unparseable submission marker alongside the valid one; remove it so the binding is unambiguous",
+    );
+  }
+  const [, taskId, kind, slug] = matches[0];
+  return { marker: { taskId, kind, slug }, attempts };
+}
+
+function enforceSubmissionMarker(scan, { actor, slug, expectedKind }) {
+  const { marker } = scan;
+  if (expectedKind === null) {
+    if (marker !== null) {
+      reject(
+        "submission_marker_unexpected",
+        `this pull request is not an eval submission, so it must not carry submission marker ${marker.taskId}`,
+      );
+    }
+    return null;
+  }
+  if (marker === null) {
+    // 维护者手写的 PR 允许不走投稿链路；社区投稿必须带 marker，否则 task 会静默孤儿化。
+    if (!sameLogin(actor, MAINTAINER_LOGIN)) {
+      reject(
+        "submission_marker_required",
+        `eval submissions must carry the submission marker issued with your EvalHub submission task, otherwise the task can never be published; open this PR through the EvalHub submission flow, or copy \`<!-- evalhub-submission task=<your task id> kind=${expectedKind} slug=${slug} -->\` into the PR description verbatim`,
+      );
+    }
+    return null;
+  }
+  if (marker.slug !== slug) {
+    reject(
+      "submission_marker_slug_mismatch",
+      `submission marker slug ${JSON.stringify(marker.slug)} does not match the eval changed by this pull request ${JSON.stringify(slug)}`,
+    );
+  }
+  if (marker.kind !== expectedKind) {
+    reject(
+      "submission_marker_kind_mismatch",
+      `submission marker declares kind=${marker.kind}, but this pull request ${expectedKind === "new" ? "creates a new eval" : "updates an existing eval"}, so it must declare kind=${expectedKind}`,
+    );
+  }
+  return marker.taskId;
 }
 
 function parseAuthors(contents, source) {
@@ -400,6 +484,7 @@ export async function evaluatePullRequestPolicy({
 
   const changedFiles = await listChangedFiles();
   const changed = classifyChangedPaths(changedFiles);
+  const markerScan = scanSubmissionMarker(pullRequest.body);
   const audit = {
     actor,
     actorId,
@@ -418,7 +503,17 @@ export async function evaluatePullRequestPolicy({
         `repository maintenance PRs may only be opened by @${MAINTAINER_LOGIN}`,
       );
     }
-    return { ...audit, mode: "maintenance", owner: MAINTAINER_LOGIN };
+    enforceSubmissionMarker(markerScan, {
+      actor,
+      slug: null,
+      expectedKind: null,
+    });
+    return {
+      ...audit,
+      mode: "maintenance",
+      owner: MAINTAINER_LOGIN,
+      submissionTask: null,
+    };
   }
 
   const slug = changed.slug;
@@ -452,11 +547,13 @@ export async function evaluatePullRequestPolicy({
       `base:${authorsPath}`,
     );
     const owner = parseAuthors(baseAuthors, `base:${authorsPath}`);
+    enforceSubmissionMarker(markerScan, { actor, slug, expectedKind: null });
     return {
       ...audit,
       mode: "maintainer-eval-delete",
       owner,
       slug,
+      submissionTask: null,
     };
   }
   if (headEvalYaml === null) {
@@ -487,6 +584,11 @@ export async function evaluatePullRequestPolicy({
         `new eval owner @${owner} must match PR creator @${actor}, unless the PR is opened by @${MAINTAINER_LOGIN}`,
       );
     }
+    const submissionTask = enforceSubmissionMarker(markerScan, {
+      actor,
+      slug,
+      expectedKind: "new",
+    });
     return {
       ...audit,
       mode: sameLogin(owner, MAINTAINER_LOGIN)
@@ -494,6 +596,7 @@ export async function evaluatePullRequestPolicy({
         : "community-eval-create",
       owner,
       slug,
+      submissionTask,
     };
   }
 
@@ -537,6 +640,11 @@ export async function evaluatePullRequestPolicy({
     );
     owner = parseAuthors(headAuthors, `head:${authorsPath}`);
   }
+  const submissionTask = enforceSubmissionMarker(markerScan, {
+    actor,
+    slug,
+    expectedKind: "update",
+  });
   return {
     ...audit,
     mode: sameLogin(owner, MAINTAINER_LOGIN)
@@ -544,6 +652,7 @@ export async function evaluatePullRequestPolicy({
       : "community-eval-update",
     owner,
     slug,
+    submissionTask,
   };
 }
 
@@ -649,6 +758,9 @@ async function main() {
     `- Actor: \`@${result.actor}\` (GitHub user ID \`${result.actorId}\`)`,
     `- Changed files: \`${result.changedFileCount}\``,
     ...(result.slug ? [`- Slug: \`${result.slug}\``, `- Owner: \`@${result.owner}\``] : []),
+    ...(result.submissionTask
+      ? [`- Submission task: \`${result.submissionTask}\``]
+      : []),
     `- Head SHA: \`${result.headSha}\``,
     "",
   ].join("\n");

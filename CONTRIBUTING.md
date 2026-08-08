@@ -27,6 +27,14 @@ Declare `score_policy: required` when every submission must already contain a nu
 
 One PR may add or update exactly one `evals/<slug>/` directory and may not mix in repository-level changes. A third party cannot update someone else's eval, even with an approval or a claim in the PR body. Do not edit `.github/CODEOWNERS`: repository review remains with `@502399493zjw-lgtm`, while eval ownership is enforced independently from `AUTHORS` and the trusted PR actor.
 
+An eval PR opened for an EvalHub submission task must carry the submission marker EvalHub issued with that task, copied into the PR description verbatim:
+
+```
+<!-- evalhub-submission task=evaltask_<uuid> kind=new|update slug=<slug> -->
+```
+
+That marker is how the platform binds this PR to your submission and publishes it after merge; without it the submission can never leave `agent_working`, so `pr-policy` fails the PR. Exactly one marker is allowed, its `slug` must be the eval this PR changes, and `kind` must be `new` for a new eval or `update` for an existing one. Repository-maintenance and eval-deletion PRs are not submissions and must not carry a marker.
+
 Run the standalone gates before opening a PR:
 
 ```bash
