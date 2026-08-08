@@ -15,7 +15,7 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "rsibench-data";
-const IMPORTER_VERSION = "rsibench-data/official-result-to-envelope@1.2.0";
+const IMPORTER_VERSION = "rsibench-data/official-result-to-envelope@1.3.0";
 const SNAPSHOT_URL = new URL(
   "./tasks/rsibench-official-results-2026-07-31.json",
   import.meta.url,
@@ -97,6 +97,73 @@ function readSnapshot() {
     benchmarkById.set(benchmark.task_id, benchmark);
   }
 
+  const constants = value?.protocol_constants;
+  assert(
+    Number.isSafeInteger(constants?.wall_time_budget_sec) &&
+      constants.wall_time_budget_sec > 0,
+    "protocol_constants.wall_time_budget_sec 必须是正整数秒",
+  );
+  assert(
+    typeof constants?.tinker_cost_budget_usd === "number" &&
+      Number.isFinite(constants.tinker_cost_budget_usd) &&
+      constants.tinker_cost_budget_usd > 0,
+    "protocol_constants.tinker_cost_budget_usd 必须是正数",
+  );
+  assert(
+    typeof constants?.target_model === "string" && constants.target_model.length > 0,
+    "protocol_constants.target_model 不能为空",
+  );
+  assert(
+    typeof constants?.source?.url === "string" &&
+      constants.source.url.startsWith("https://") &&
+      typeof constants?.source?.quote === "string" &&
+      constants.source.quote.length > 0,
+    "protocol_constants.source 必须给出 https 一手来源与原文引用",
+  );
+
+  const baseReference = value?.base_reference;
+  assert(
+    typeof baseReference?.label === "string" && baseReference.label.length > 0,
+    "base_reference.label 不能为空",
+  );
+  assert(
+    baseReference?.model === constants.target_model,
+    "base_reference.model 必须是协议声明的目标模型",
+  );
+  assert(
+    typeof baseReference?.note === "string" && baseReference.note.length > 0,
+    "base_reference.note 必须说明它只展示、不参与排名",
+  );
+  assert(
+    Array.isArray(baseReference?.scores) && baseReference.scores.length === 6,
+    "base_reference.scores 必须覆盖六个分项",
+  );
+  const baseByTask = new Map();
+  for (const score of baseReference.scores) {
+    const benchmark = benchmarkById.get(score?.task_id);
+    assert(benchmark !== undefined, `base_reference 含未知 task_id ${score?.task_id}`);
+    assert(!baseByTask.has(score.task_id), `base_reference 重复 task_id ${score.task_id}`);
+    assert(
+      typeof score.published_percent === "number" &&
+        Number.isFinite(score.published_percent) &&
+        score.published_percent >= 0 &&
+        score.published_percent <= 100,
+      `base_reference/${score.task_id} published_percent 不合法`,
+    );
+    assert(
+      Number.isSafeInteger(score.inferred_successful_trials) &&
+        score.inferred_successful_trials >= 0 &&
+        score.inferred_successful_trials <= benchmark.total_trials,
+      `base_reference/${score.task_id} inferred_successful_trials 不合法`,
+    );
+    const exact = (score.inferred_successful_trials / benchmark.total_trials) * 100;
+    assert(
+      Number(exact.toFixed(2)) === score.published_percent,
+      `base_reference/${score.task_id} 整数计数与官网两位小数不一致`,
+    );
+    baseByTask.set(score.task_id, score);
+  }
+
   const participantIds = new Set();
   for (const result of value.results) {
     assert(typeof result?.participant_id === "string", "participant_id 必须是字符串");
@@ -151,13 +218,48 @@ function readSnapshot() {
       derived === result.derived_evalhub_score,
       `${result.participant_id} 派生宏平均应为 ${derived}`,
     );
+
+    assert(
+      Array.isArray(result?.resource_use) && result.resource_use.length === 6,
+      `${result.participant_id} 必须包含六个分项的官方用时与成本`,
+    );
+    const seenUsage = new Set();
+    for (const usage of result.resource_use) {
+      assert(
+        benchmarkById.has(usage?.task_id),
+        `${result.participant_id} resource_use 含未知 task_id ${usage?.task_id}`,
+      );
+      assert(
+        !seenUsage.has(usage.task_id),
+        `${result.participant_id} resource_use 重复 task_id ${usage.task_id}`,
+      );
+      seenUsage.add(usage.task_id);
+      assert(
+        typeof usage.time_hours === "number" &&
+          Number.isFinite(usage.time_hours) &&
+          usage.time_hours > 0 &&
+          usage.time_hours * 3600 <= constants.wall_time_budget_sec,
+        `${result.participant_id}/${usage.task_id} time_hours 超出协议墙钟预算或不合法`,
+      );
+      assert(
+        typeof usage.tinker_cost_usd === "number" &&
+          Number.isFinite(usage.tinker_cost_usd) &&
+          usage.tinker_cost_usd >= 0 &&
+          usage.tinker_cost_usd <= constants.tinker_cost_budget_usd,
+        `${result.participant_id}/${usage.task_id} tinker_cost_usd 超出协议预算或不合法`,
+      );
+    }
   }
-  return { value, benchmarkById };
+  return { value, benchmarkById, baseByTask };
 }
 
-function buildEnvelope(snapshot, benchmarkById, result, evalCommit) {
+function buildEnvelope(snapshot, benchmarkById, baseByTask, result, evalCommit) {
+  const usageByTask = new Map(
+    result.resource_use.map((usage) => [usage.task_id, usage]),
+  );
   const components = result.official_scores.map((score) => {
     const benchmark = benchmarkById.get(score.task_id);
+    const usage = usageByTask.get(score.task_id);
     return {
       taskId: score.task_id,
       name: benchmark.name,
@@ -167,6 +269,9 @@ function buildEnvelope(snapshot, benchmarkById, result, evalCommit) {
       exactPercent: roundSix(
         (score.inferred_successful_trials / benchmark.total_trials) * 100,
       ),
+      basePublishedPercent: baseByTask.get(score.task_id).published_percent,
+      timeHours: usage.time_hours,
+      tinkerCostUsd: usage.tinker_cost_usd,
     };
   });
   const scoreDetails = components.map(
@@ -193,17 +298,42 @@ function buildEnvelope(snapshot, benchmarkById, result, evalCommit) {
         supplementary_views: [
           {
             type: "metric_table",
+            id: "official-benchmark-breakdown",
+            label: "分榜成绩",
             title: "RSIBench 官方六项成绩",
-            columns: ["分项", "官网显示", "成功/试次", "精确分项分数"],
+            columns: [
+              "分项",
+              "官网显示",
+              "成功/试次",
+              "精确分项分数",
+              `基线模型官网显示（${snapshot.base_reference.model}）`,
+            ],
             rows: components.map((component) => ({
               cells: [
                 component.name,
                 `${component.publishedPercent}%`,
                 `${component.successfulTrials}/${component.totalTrials}`,
                 component.exactPercent,
+                `${component.basePublishedPercent}%`,
               ],
             })),
-            note: "辅助展示，不参与单独排名；总体分是六项精确百分制分数的等权宏平均。",
+            note:
+              "辅助展示，不参与单独排名；总体分是六项精确百分制分数的等权宏平均。" +
+              "最后一列是官方同一张矩阵里的未微调基线模型行，仅作对照，不是参赛结果。",
+          },
+          {
+            type: "metric_table",
+            id: "official-time-cost",
+            label: "时间与成本",
+            title: "RSIBench 官方用时与 Tinker 成本",
+            columns: ["分项", "用时（小时）", "Tinker 成本（USD）"],
+            rows: components.map((component) => ({
+              cells: [component.name, component.timeHours, component.tinkerCostUsd],
+            })),
+            note:
+              `官方矩阵同表转录的资源消耗，仅作展示，不进入评分；协议名义预算为每次主运行 ${
+                snapshot.protocol_constants.wall_time_budget_sec / 3600
+              } 小时墙钟与 ${snapshot.protocol_constants.tinker_cost_budget_usd} USD Tinker 额度。`,
           },
         ],
         detail:
@@ -275,12 +405,18 @@ function writeAtomically(outputPath, result) {
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
-  const { value: snapshot, benchmarkById } = readSnapshot();
+  const { value: snapshot, benchmarkById, baseByTask } = readSnapshot();
   const result = snapshot.results.find(
     (candidate) => candidate.participant_id === args.participant,
   );
   assert(result !== undefined, `未知研究者 ${args.participant}`);
-  const envelope = buildEnvelope(snapshot, benchmarkById, result, args.evalCommit);
+  const envelope = buildEnvelope(
+    snapshot,
+    benchmarkById,
+    baseByTask,
+    result,
+    args.evalCommit,
+  );
   validateEnvelope(envelope);
   const target = writeAtomically(args.out, envelope);
   console.log(

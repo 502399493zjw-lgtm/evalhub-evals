@@ -28,7 +28,8 @@ detail_profile:
   overview_note: >-
     以下说明根据 RSIBench-Data 官方网站、论文和固定版本的作者仓库整理；官网 Official 矩阵是上游公开成绩的权威来源，
     新的 EvalHub 证据提交则遵循本目录单独声明的外部工作流与转换器边界。
-    2026-08-07 复核：官网页面指纹与 2026-07-31 快照一致，四位研究者成绩无变化；
+    2026-08-08 复核：官网页面指纹与 2026-07-31 快照一致，四位研究者成绩无变化；
+    本次把官网同一张矩阵里此前未收录的未微调基线模型行与每项用时、Tinker 成本一并转录为展示视图。
     上游默认分支在钉死 commit 之后新增的改动均未触及协议常量、数据集、分母与分数提取逻辑，
     其中 Tinker eval proxy 默认改用 SDK 后端改变了官方复评的服务路径，这正是来源 commit
     保持钉死、不随默认分支上移的理由。
@@ -75,12 +76,15 @@ detail_profile:
       source_url: https://rsibench.co/data/
     - value: 16 小时
       label: 每项墙钟预算
-      description: 名义 57,600 秒墙钟预算，六项不能共享或挪用。
-      source_url: https://github.com/evolvent-ai/RSIBench-Data
+      description: >-
+        论文主协议原文写作 nominal 16-hour wall-clock budget，即 57,600 秒，六项不能共享或挪用；
+        来源仓库只给示例值，不给协议默认值。
+      source_url: https://arxiv.org/abs/2607.25886
     - value: 500 USD
       label: 每项 Tinker 成本预算
-      description: 固定 Tinker 预算，六项独立。
-      source_url: https://github.com/evolvent-ai/RSIBench-Data
+      description: >-
+        论文主协议原文写作 $500 Tinker budget，六项独立；来源仓库同样只给示例值，不给协议默认值。
+      source_url: https://arxiv.org/abs/2607.25886
     - value: Qwen/Qwen3.5-35B-A3B-Base
       label: 目标模型
       description: 所有运行使用同一个固定目标模型。
@@ -104,6 +108,155 @@ detail_profile:
       description: >-
         论文主协议中的"新环境"是指检查点选择和官方复评使用同一 task subset；
         结果只能解释为固定协议的可复现性能，不能宣称已证明对未见任务的自适应泛化。
+    - title: 分项低于未微调基线不算异常
+      description: >-
+        官方矩阵同表公布了未微调目标模型行：GPQA Diamond 61.00%、SWE-bench Multilingual 7.00%。
+        四位研究者中有几个在这两项低于该行，说明数据研究可能损害原有能力，
+        分项与总体分都不应读作"必然优于基线"。
+  overview_tables:
+    - id: official-evaluation-suite
+      label: 评测套件
+      title: 论文公布的六项官方评测套件构成
+      note: 该表解释每项官方复评的题量、覆盖比例、执行 runner 与指标，不含任何模型成绩。
+      columns:
+        - id: benchmark
+          label: 分项
+        - id: items
+          label: 评测题量
+        - id: original-size
+          label: 原始规模
+        - id: coverage
+          label: 覆盖
+        - id: runner
+          label: 评测 runner
+        - id: metric
+          label: 指标
+        - id: seed-factories
+          label: 种子数据仓库
+      rows:
+        - id: swe-bench-verified
+          cells:
+            - column_id: benchmark
+              value: SWE-bench Verified
+            - column_id: items
+              value: "100"
+            - column_id: original-size
+              value: "500"
+            - column_id: coverage
+              value: Fixed subset, 20.0%
+            - column_id: runner
+              value: Mini-SWE-Agent
+            - column_id: metric
+              value: Resolved rate
+            - column_id: seed-factories
+              value: SWE-smith; SWE-Gym; swe-factory
+        - id: swe-bench-multilingual
+          cells:
+            - column_id: benchmark
+              value: SWE-bench Multilingual
+            - column_id: items
+              value: "100"
+            - column_id: original-size
+              value: "300"
+            - column_id: coverage
+              value: Fixed subset, 33.3%
+            - column_id: runner
+              value: Mini-SWE-Agent
+            - column_id: metric
+              value: Resolved rate
+            - column_id: seed-factories
+              value: SWE-smith; SWE-Gym; swe-factory
+        - id: swe-bench-pro
+          cells:
+            - column_id: benchmark
+              value: SWE-bench Pro
+            - column_id: items
+              value: "100"
+            - column_id: original-size
+              value: "731"
+            - column_id: coverage
+              value: Fixed subset, 13.7%
+            - column_id: runner
+              value: Mini-SWE-Agent
+            - column_id: metric
+              value: Resolved rate
+            - column_id: seed-factories
+              value: SWE-smith; SWE-Gym; swe-factory
+        - id: terminal-bench-2
+          cells:
+            - column_id: benchmark
+              value: Terminal-Bench 2.0
+            - column_id: items
+              value: "89"
+            - column_id: original-size
+              value: "89"
+            - column_id: coverage
+              value: Full set
+            - column_id: runner
+              value: Terminus-2
+            - column_id: metric
+              value: Task success rate
+            - column_id: seed-factories
+              value: endless-terminals; tmax
+        - id: gpqa-diamond
+          cells:
+            - column_id: benchmark
+              value: GPQA Diamond
+            - column_id: items
+              value: "100"
+            - column_id: original-size
+              value: "198"
+            - column_id: coverage
+              value: Fixed subset, 50.5%
+            - column_id: runner
+              value: Terminus-2
+            - column_id: metric
+              value: Accuracy
+            - column_id: seed-factories
+              value: synthetic-data-kit
+        - id: aime
+          cells:
+            - column_id: benchmark
+              value: AIME 2026
+            - column_id: items
+              value: 30（每题 4 次解码）
+            - column_id: original-size
+              value: "30"
+            - column_id: coverage
+              value: Full set
+            - column_id: runner
+              value: Terminus-2
+            - column_id: metric
+              value: Accuracy
+            - column_id: seed-factories
+              value: synthetic-data-kit
+      caption: 转录自论文的评测套件表；覆盖比例由论文给出，不是 EvalHub 计算值。
+      source_url: https://arxiv.org/html/2607.25886v1
+  figures:
+    - id: official-framework-diagram
+      placement: overview
+      label: 官方框架图
+      title: 固定基础设施与开放的数据研究闭环
+      src: https://rsibench.co/assets/framework.png
+      alt: RSIBench-Data 官方框架图，展示固定的训练与服务基础设施、研究者输入、数据合成闭环，以及独立的官方评测环节
+      caption: 官网原图，说明协议把训练、服务、评测栈钉死，只把数据研究留给研究者 Agent。
+      source_url: https://rsibench.co/data/
+    - id: official-selection-trajectories
+      placement: insights
+      label: 官方候选轨迹
+      title: 六个分项上历次有效尝试的选择分轨迹
+      src: https://rsibench.co/assets/trajectories.png
+      alt: RSIBench-Data 官方轨迹图，按时间顺序展示六个分项各次有效尝试的候选选择分，星标为首次达到该运行历史最好成绩的候选
+      caption: 官网原图，横轴是按时间排序的有效尝试；它呈现的是选择阶段的候选分，不是官方复评分数，也不是 EvalHub 实跑记录。
+      source_url: https://rsibench.co/data/
+    - id: official-cost-pareto
+      placement: insights
+      label: 官方成本对照
+      title: 候选选择分与累计 Tinker 成本的对照
+      src: https://rsibench.co/assets/cost-pareto.png
+      alt: RSIBench-Data 官方图，展示六个分项上候选选择分与发现该候选所需累计 Tinker 成本的关系
+      caption: 官网原图，把候选质量放在发现它所需的累计成本上解读；成本轴与榜单分数无换算关系，不参与排名。
+      source_url: https://rsibench.co/data/
   resources_note: 下面只列上游作者或论文托管方提供的一手资料。
   resources:
     - title: RSIBench-Data 官方网站与 Official 矩阵
@@ -117,20 +270,321 @@ detail_profile:
       url: https://github.com/evolvent-ai/RSIBench-Data/tree/39948a17925272367b64dd53427a4dba3f572f4e
 tasks:
   - id: swe-bench-verified
+    label: SWE-bench Verified profile
     prompt: 在钉死的 RSIBench-Data 主协议中，以 SWE-bench Verified profile 启动一次独立的 16 小时 / 500 USD 数据研究运行。研究者 Agent 只能改变合规的训练数据与白名单训练配置，必须从历史尝试中选择检查点后再做官方评测；不得把评测任务、标签、轨迹或其他受保护材料转化为训练监督。
+    display_prompt: |-
+      benchmarks/swe_bench_verified/spec.json @ 39948a1
+      {
+        "schema_version": "0.1.0",
+        "benchmark_key": "swe_bench_verified",
+        "benchmark_id": "swe-bench-verified@1.0",
+        "target_benchmark": "swe-bench-verified",
+        "name": "SWE-bench Verified",
+        "display_name": "SWE-bench Verified",
+        "aliases": [
+          "swe-bench-verified",
+          "swe_bench_verified"
+        ],
+        "task_family": "swe",
+        "harbor_dataset": "benchmarks/swe_bench_verified/datasets/seed23_random_100",
+        "harbor_agent": "mini-swe-agent",
+        "harbor_agent_config_profile": "mini_swe_agent",
+        "instruction_profile": "swe_mini_swe_agent",
+        "data_agent_prompt_profile": "swe_mini_swe_agent",
+        "seed_factories": [
+          "SWE-smith",
+          "SWE-Gym",
+          "swe-factory"
+        ],
+        "workspace_context_path": "benchmarks/swe_bench_verified",
+        "public_split": "public-mini",
+        "hidden_split": "hidden",
+        "official_eval": {
+          "dataset_order": "seed23_random_100",
+          "n_tasks": 100,
+          "n_concurrent": 32,
+          "step_limit": 200,
+          "description": "RSIBench-Data official eval uses the fixed local seed=23 random 100-task SWE-bench Verified subset."
+        },
+        "locked_interfaces": {
+          "agent_scaffold": "rsibench-data-swe-agent",
+          "checker": "issue-specific tests",
+          "max_steps": 200,
+          "timeout_sec": 3000,
+          "serving_protocol": "openai-compatible"
+        },
+        "allowed_inputs": [
+          "benchmark description",
+          "repo/tool schema",
+          "base model diagnostic evaluation artifacts",
+          "public/proxy Harbor evaluation feedback"
+        ],
+        "primary_metric": "hidden_resolved_rate_gain"
+      }
     expected: 所选检查点在固定 seed=23 的 100 题子集上由 Mini-SWE-Agent 与官方 verifier 得到的 resolved rate，范围 0 至 1；EvalHub 分项分数为该值乘 100。
   - id: swe-bench-multilingual
+    label: SWE-bench Multilingual profile
     prompt: 在钉死的 RSIBench-Data 主协议中，以 SWE-bench Multilingual profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
+    display_prompt: |-
+      benchmarks/swe_bench_multilingual/spec.json @ 39948a1
+      {
+        "schema_version": "0.1.0",
+        "benchmark_key": "swe_bench_multilingual",
+        "benchmark_id": "swe-bench-multilingual@1.0",
+        "target_benchmark": "swe-bench-multilingual",
+        "name": "SWE-bench Multilingual",
+        "display_name": "SWE-bench Multilingual",
+        "aliases": [
+          "swe-bench-multilingual",
+          "swe_bench_multilingual"
+        ],
+        "task_family": "swe",
+        "harbor_dataset": "benchmarks/swe_bench_multilingual/datasets/seed23_random_100",
+        "harbor_agent": "mini-swe-agent",
+        "harbor_agent_config_profile": "mini_swe_agent",
+        "instruction_profile": "swe_mini_swe_agent",
+        "seed_factories": [
+          "SWE-smith",
+          "SWE-Gym",
+          "swe-factory"
+        ],
+        "workspace_context_path": "benchmarks/swe_bench_multilingual",
+        "public_split": "seed23-random-100",
+        "hidden_split": "seed23-random-100",
+        "official_eval": {
+          "dataset_order": "seed23_random_100",
+          "n_tasks": 100,
+          "n_concurrent": 32,
+          "step_limit": 200,
+          "description": "RSIBench-Data multilingual eval uses a fixed seed=23 random 100-task subset from SWE-bench Multilingual generated as local Harbor tasks."
+        },
+        "locked_interfaces": {
+          "agent_scaffold": "rsibench-data-swe-agent",
+          "checker": "language-specific SWE-bench Multilingual tests",
+          "max_steps": 200,
+          "timeout_sec": 3000,
+          "serving_protocol": "openai-compatible"
+        },
+        "allowed_inputs": [
+          "benchmark description",
+          "repo/tool schema",
+          "base model diagnostic evaluation artifacts",
+          "public/proxy Harbor evaluation feedback"
+        ],
+        "primary_metric": "multilingual_resolved_rate_gain"
+      }
     expected: 所选检查点在固定 seed=23 的 100 题多语言子集上由 Mini-SWE-Agent 与语言特定测试得到的 resolved rate，范围 0 至 1；EvalHub 分项分数为该值乘 100。
   - id: swe-bench-pro
+    label: SWE-bench Pro profile
     prompt: 在钉死的 RSIBench-Data 主协议中，以 SWE-bench Pro profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
+    display_prompt: |-
+      benchmarks/swe_bench_pro/spec.json @ 39948a1
+      {
+        "schema_version": "0.1.0",
+        "benchmark_key": "swe_bench_pro",
+        "benchmark_id": "swe-bench-pro@1.0",
+        "target_benchmark": "swe-bench-pro",
+        "name": "SWE-bench Pro",
+        "display_name": "SWE-bench Pro",
+        "aliases": [
+          "swe-bench-pro",
+          "swe_bench_pro",
+          "swebenchpro"
+        ],
+        "task_family": "swe",
+        "harbor_dataset": "benchmarks/swe_bench_pro/datasets/seed23_random_100",
+        "harbor_agent": "mini-swe-agent",
+        "harbor_agent_config_profile": "mini_swe_agent",
+        "instruction_profile": "swe_mini_swe_agent",
+        "data_agent_prompt_profile": "swe_mini_swe_agent",
+        "seed_factories": [
+          "SWE-smith",
+          "SWE-Gym",
+          "swe-factory"
+        ],
+        "workspace_context_path": "benchmarks/swe_bench_pro",
+        "public_split": "seed23-random-100",
+        "hidden_split": "seed23-random-100",
+        "official_eval": {
+          "dataset_order": "seed23_random_100",
+          "n_tasks": 100,
+          "n_concurrent": 32,
+          "step_limit": 200,
+          "description": "RSIBench-Data SWE-bench Pro eval uses a fixed seed=23 random 100-task subset from the 731-task SWE-bench Pro test split, downloaded as local Harbor tasks."
+        },
+        "locked_interfaces": {
+          "agent_scaffold": "rsibench-data-swe-agent",
+          "checker": "SWE-bench Pro issue-specific tests",
+          "max_steps": 200,
+          "timeout_sec": 3000,
+          "serving_protocol": "openai-compatible"
+        },
+        "allowed_inputs": [
+          "benchmark description",
+          "repo/tool schema",
+          "base model diagnostic evaluation artifacts",
+          "public/proxy Harbor evaluation feedback"
+        ],
+        "primary_metric": "swe_bench_pro_resolved_rate_gain"
+      }
     expected: 所选检查点在固定 seed=23 的 100 题子集上由 Mini-SWE-Agent 与 issue-specific tests 得到的 resolved rate，范围 0 至 1；EvalHub 分项分数为该值乘 100。
   - id: terminal-bench-2
+    label: Terminal-Bench 2.0 profile
     prompt: 在钉死的 RSIBench-Data 主协议中，以 Terminal-Bench 2.0 profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
+    display_prompt: |-
+      benchmarks/terminal_bench_2/spec.json @ 39948a1
+      {
+        "schema_version": "0.1.0",
+        "benchmark_key": "terminal_bench_2",
+        "benchmark_id": "terminal-bench-2@2.0",
+        "target_benchmark": "terminal-bench-2",
+        "name": "Terminal-Bench 2.0",
+        "display_name": "Terminal-Bench 2.0",
+        "aliases": [
+          "terminal-bench",
+          "terminal-bench-2",
+          "terminal_bench_2",
+          "tbench",
+          "tbench-2"
+        ],
+        "task_family": "terminal",
+        "harbor_dataset": "terminal-bench/terminal-bench-2",
+        "harbor_agent": "terminus-2",
+        "harbor_agent_config_profile": "terminus_2",
+        "instruction_profile": "terminal_bench_terminus_2",
+        "data_agent_prompt_profile": "terminal_bench_terminus_2",
+        "seed_factories": [
+          "endless-terminals",
+          "tmax"
+        ],
+        "workspace_context_path": "benchmarks/terminal_bench_2",
+        "public_split": "public",
+        "hidden_split": "hidden",
+        "official_eval": {
+          "dataset_order": "harbor_default",
+          "n_tasks": 89,
+          "n_concurrent": 32,
+          "step_limit": 200,
+          "description": "RSIBench-Data Terminal-Bench 2.0 eval uses the Harbor terminal-bench/terminal-bench-2 dataset."
+        },
+        "locked_interfaces": {
+          "agent_scaffold": "rsibench-data-terminal-agent",
+          "checker": "terminal-bench task verifiers",
+          "max_steps": 200,
+          "timeout_sec": 3000,
+          "serving_protocol": "openai-compatible"
+        },
+        "allowed_inputs": [
+          "benchmark description",
+          "repo/tool schema",
+          "public/proxy Harbor evaluation feedback",
+          "non-benchmark public terminal workflow sources"
+        ],
+        "primary_metric": "hidden_resolved_rate_gain"
+      }
     expected: 所选检查点在完整 89 题集合上由 Terminus-2 与任务 verifier 得到的 task success rate，范围 0 至 1；EvalHub 分项分数为该值乘 100。
   - id: gpqa-diamond
+    label: GPQA Diamond profile
     prompt: 在钉死的 RSIBench-Data 主协议中，以 GPQA Diamond profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
+    display_prompt: |-
+      benchmarks/gpqa_diamond/spec.json @ 39948a1
+      {
+        "schema_version": "0.1.0",
+        "benchmark_key": "gpqa_diamond",
+        "benchmark_id": "gpqa-diamond@1.0",
+        "target_benchmark": "gpqa-diamond",
+        "name": "GPQA Diamond",
+        "display_name": "GPQA Diamond",
+        "aliases": [
+          "gpqa",
+          "gpqa-diamond",
+          "gpqa_diamond"
+        ],
+        "task_family": "qa",
+        "harbor_dataset": "benchmarks/gpqa_diamond/datasets/seed23_random_100",
+        "harbor_agent": "terminus-2",
+        "harbor_agent_config_profile": "terminus_2",
+        "instruction_profile": "gpqa_diamond_terminus_2",
+        "data_agent_prompt_profile": "gpqa_diamond_terminus_2",
+        "seed_factories": [
+          "synthetic-data-kit"
+        ],
+        "workspace_context_path": "benchmarks/gpqa_diamond",
+        "public_split": "seed23-random-100",
+        "hidden_split": "seed23-random-100",
+        "official_eval": {
+          "dataset_order": "seed23_random_100",
+          "n_tasks": 100,
+          "n_concurrent": 32,
+          "step_limit": 200,
+          "description": "RSIBench-Data GPQA Diamond eval uses a fixed seed=23 random 100-task subset from the 198-task Harbor GPQA Diamond dataset, vendored as local Harbor tasks."
+        },
+        "locked_interfaces": {
+          "agent_scaffold": "rsibench-data-gpqa-terminal-agent",
+          "checker": "Harbor GPQA Diamond exact answer-file verifier",
+          "max_steps": 200,
+          "timeout_sec": 3600,
+          "serving_protocol": "openai-compatible"
+        },
+        "allowed_inputs": [
+          "benchmark description",
+          "repo/tool schema",
+          "aggregate Harbor evaluation feedback",
+          "non-GPQA public scientific reasoning sources"
+        ],
+        "primary_metric": "gpqa_diamond_accuracy_gain"
+      }
     expected: 所选检查点在固定 seed=23 的 100 题子集上由 Terminus-2 与 exact answer verifier 得到的 accuracy，范围 0 至 1；EvalHub 分项分数为该值乘 100。
   - id: aime
+    label: AIME 2026 profile
     prompt: 在钉死的 RSIBench-Data 主协议中，以 AIME 2026 profile 启动一次独立的 16 小时 / 500 USD 数据研究运行，并遵守固定训练服务、数据隔离、检查点预先选择与 Harbor/E2B 官方复评边界。
+    display_prompt: |-
+      benchmarks/aime/spec.json @ 39948a1
+      {
+        "schema_version": "0.1.0",
+        "benchmark_key": "aime",
+        "benchmark_id": "aime@1.0",
+        "target_benchmark": "aime",
+        "name": "AIME",
+        "display_name": "AIME",
+        "aliases": [
+          "aime",
+          "aime-2026",
+          "aime_2026"
+        ],
+        "task_family": "math",
+        "harbor_dataset": "benchmarks/aime/datasets/full_30_2026",
+        "harbor_agent": "terminus-2",
+        "harbor_agent_config_profile": "terminus_2",
+        "instruction_profile": "aime_terminus_2",
+        "data_agent_prompt_profile": "aime_terminus_2",
+        "seed_factories": [
+          "synthetic-data-kit"
+        ],
+        "workspace_context_path": "benchmarks/aime",
+        "public_split": "2026-full-30",
+        "hidden_split": "2026-full-30",
+        "official_eval": {
+          "dataset_order": "full_30_2026",
+          "n_tasks": 30,
+          "n_concurrent": 32,
+          "step_limit": 200,
+          "description": "RSIBench-Data AIME eval uses the full 30-task MathArena AIME 2026 dataset, vendored as local Harbor tasks, with Terminus-2 writing one integer answer to /app/answer.txt. AIME official eval uses avg@4, implemented as 4 Harbor attempts per task.",
+          "n_attempts": 4
+        },
+        "locked_interfaces": {
+          "agent_scaffold": "rsibench-data-aime-terminal-agent",
+          "checker": "Harbor AIME exact answer-file verifier",
+          "max_steps": 200,
+          "timeout_sec": 3000,
+          "serving_protocol": "openai-compatible"
+        },
+        "allowed_inputs": [
+          "benchmark description",
+          "repo/tool schema",
+          "aggregate Harbor evaluation feedback",
+          "non-AIME public math reasoning sources"
+        ],
+        "primary_metric": "aime_accuracy_gain"
+      }
     expected: 所选检查点在完整 30 题集合、每题 4 次解码下由 Terminus-2 与整数答案 verifier 得到的 avg@4 accuracy，范围 0 至 1；EvalHub 分项分数为该值乘 100。

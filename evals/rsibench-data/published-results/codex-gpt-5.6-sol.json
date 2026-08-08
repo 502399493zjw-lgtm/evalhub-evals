@@ -2,7 +2,7 @@
   "eval_id": "rsibench-data",
   "submission": {
     "kind": "upstream_author_publication",
-    "importer_version": "rsibench-data/official-result-to-envelope@1.2.0",
+    "importer_version": "rsibench-data/official-result-to-envelope@1.3.0",
     "retrieved_on": "2026-07-31",
     "source": {
       "title": "RSIBench — Research Data & Results",
@@ -20,12 +20,15 @@
       "supplementary_views": [
         {
           "type": "metric_table",
+          "id": "official-benchmark-breakdown",
+          "label": "分榜成绩",
           "title": "RSIBench 官方六项成绩",
           "columns": [
             "分项",
             "官网显示",
             "成功/试次",
-            "精确分项分数"
+            "精确分项分数",
+            "基线模型官网显示（Qwen/Qwen3.5-35B-A3B-Base）"
           ],
           "rows": [
             {
@@ -33,7 +36,8 @@
                 "SWE-bench Verified",
                 "33%",
                 "33/100",
-                33
+                33,
+                "12%"
               ]
             },
             {
@@ -41,7 +45,8 @@
                 "SWE-bench Multilingual",
                 "15%",
                 "15/100",
-                15
+                15,
+                "7%"
               ]
             },
             {
@@ -49,7 +54,8 @@
                 "SWE-bench Pro",
                 "9%",
                 "9/100",
-                9
+                9,
+                "0%"
               ]
             },
             {
@@ -57,7 +63,8 @@
                 "Terminal-Bench 2.0",
                 "20.22%",
                 "18/89",
-                20.224719
+                20.224719,
+                "1.12%"
               ]
             },
             {
@@ -65,7 +72,8 @@
                 "GPQA Diamond",
                 "65%",
                 "65/100",
-                65
+                65,
+                "61%"
               ]
             },
             {
@@ -73,11 +81,68 @@
                 "AIME 2026",
                 "53.33%",
                 "64/120",
-                53.333333
+                53.333333,
+                "30%"
               ]
             }
           ],
-          "note": "辅助展示，不参与单独排名；总体分是六项精确百分制分数的等权宏平均。"
+          "note": "辅助展示，不参与单独排名；总体分是六项精确百分制分数的等权宏平均。最后一列是官方同一张矩阵里的未微调基线模型行，仅作对照，不是参赛结果。"
+        },
+        {
+          "type": "metric_table",
+          "id": "official-time-cost",
+          "label": "时间与成本",
+          "title": "RSIBench 官方用时与 Tinker 成本",
+          "columns": [
+            "分项",
+            "用时（小时）",
+            "Tinker 成本（USD）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "SWE-bench Verified",
+                4.41,
+                55.61
+              ]
+            },
+            {
+              "cells": [
+                "SWE-bench Multilingual",
+                5.99,
+                78.64
+              ]
+            },
+            {
+              "cells": [
+                "SWE-bench Pro",
+                11.61,
+                300.49
+              ]
+            },
+            {
+              "cells": [
+                "Terminal-Bench 2.0",
+                9.56,
+                69.07
+              ]
+            },
+            {
+              "cells": [
+                "GPQA Diamond",
+                2.42,
+                10.37
+              ]
+            },
+            {
+              "cells": [
+                "AIME 2026",
+                8.9,
+                63.87
+              ]
+            }
+          ],
+          "note": "官方矩阵同表转录的资源消耗，仅作展示，不进入评分；协议名义预算为每次主运行 16 小时墙钟与 500 USD Tinker 额度。"
         }
       ],
       "detail": "上游官网六项官方成绩的 EvalHub 等权宏平均：SWE-bench Verified 33%（33/100）、SWE-bench Multilingual 15%（15/100）、SWE-bench Pro 9%（9/100）、Terminal-Bench 2.0 20.22%（18/89）、GPQA Diamond 65%（65/100）、AIME 2026 53.33%（64/120）。括号内整数成功数由官网两位小数和固定分母唯一反推；宏平均是 EvalHub 派生指标，不是上游官方复合指标，也不表示 EvalHub 独立复跑。"

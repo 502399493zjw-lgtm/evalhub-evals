@@ -7,7 +7,7 @@
     "title": "RSIBench — Research Data & Results",
     "url": "https://rsibench.co/data/",
     "snapshot_sha256": "c1ada61368496e1edf694dbf10a6e3a972f4bffc6e857f45351f05578f8df4fa",
-    "rule": "Use the Official column in the website's complete researcher-agent by benchmark matrix. Time and Tinker cost are not scoring inputs."
+    "rule": "Use the Official column in the website's complete researcher-agent by benchmark matrix as the only scoring input. The same table's Base model row and Time/Tinker cost columns are transcribed as display-only supplementary evidence and never enter the score."
   },
   "protocol_source": {
     "repository": "https://github.com/evolvent-ai/RSIBench-Data",
@@ -18,6 +18,53 @@
     "rule": "Infer the unique integer successful_trials count consistent with each two-decimal published percentage and the protocol's fixed denominator; convert that count to an exact percentage; then take the unweighted arithmetic mean across all six benchmarks.",
     "rounding": "Round the final macro average to at most six decimal places.",
     "upstream_metric_notice": "RSIBench-Data does not publish a cross-benchmark composite score. The macro average is an EvalHub-derived display metric."
+  },
+  "protocol_constants": {
+    "wall_time_budget_sec": 57600,
+    "tinker_cost_budget_usd": 500,
+    "target_model": "Qwen/Qwen3.5-35B-A3B-Base",
+    "source": {
+      "title": "RSIBench-Data: Benchmarking Data-Centric Research for Recursive Self-Improvement",
+      "url": "https://arxiv.org/abs/2607.25886",
+      "quote": "Each main run has a nominal 16-hour wall-clock budget and a $500 Tinker budget."
+    }
+  },
+  "base_reference": {
+    "label": "Base model",
+    "model": "Qwen/Qwen3.5-35B-A3B-Base",
+    "note": "Unadapted target-model reference row published in the same official matrix. It consumes no research budget, publishes no time or cost cell, and is not a researcher submission, so it is display-only and never a ranked participant.",
+    "scores": [
+      {
+        "task_id": "swe-bench-verified",
+        "published_percent": 12,
+        "inferred_successful_trials": 12
+      },
+      {
+        "task_id": "swe-bench-multilingual",
+        "published_percent": 7,
+        "inferred_successful_trials": 7
+      },
+      {
+        "task_id": "swe-bench-pro",
+        "published_percent": 0,
+        "inferred_successful_trials": 0
+      },
+      {
+        "task_id": "terminal-bench-2",
+        "published_percent": 1.12,
+        "inferred_successful_trials": 1
+      },
+      {
+        "task_id": "gpqa-diamond",
+        "published_percent": 61,
+        "inferred_successful_trials": 61
+      },
+      {
+        "task_id": "aime",
+        "published_percent": 30,
+        "inferred_successful_trials": 36
+      }
+    ]
   },
   "benchmarks": [
     {
@@ -91,7 +138,15 @@
           "inferred_successful_trials": 49
         }
       ],
-      "derived_evalhub_score": 26.657615
+      "derived_evalhub_score": 26.657615,
+      "resource_use": [
+        { "task_id": "swe-bench-verified", "time_hours": 10.21, "tinker_cost_usd": 195.9 },
+        { "task_id": "swe-bench-multilingual", "time_hours": 12.68, "tinker_cost_usd": 195.7 },
+        { "task_id": "swe-bench-pro", "time_hours": 2.19, "tinker_cost_usd": 17.54 },
+        { "task_id": "terminal-bench-2", "time_hours": 8.99, "tinker_cost_usd": 175.63 },
+        { "task_id": "gpqa-diamond", "time_hours": 5.98, "tinker_cost_usd": 27.92 },
+        { "task_id": "aime", "time_hours": 4.89, "tinker_cost_usd": 61.36 }
+      ]
     },
     {
       "participant_id": "claude-code-sonnet-5",
@@ -132,7 +187,15 @@
           "inferred_successful_trials": 59
         }
       ],
-      "derived_evalhub_score": 27.964107
+      "derived_evalhub_score": 27.964107,
+      "resource_use": [
+        { "task_id": "swe-bench-verified", "time_hours": 14.91, "tinker_cost_usd": 181.7 },
+        { "task_id": "swe-bench-multilingual", "time_hours": 14.2, "tinker_cost_usd": 363.77 },
+        { "task_id": "swe-bench-pro", "time_hours": 9.54, "tinker_cost_usd": 45.63 },
+        { "task_id": "terminal-bench-2", "time_hours": 8.87, "tinker_cost_usd": 157.85 },
+        { "task_id": "gpqa-diamond", "time_hours": 6.43, "tinker_cost_usd": 16.03 },
+        { "task_id": "aime", "time_hours": 9.29, "tinker_cost_usd": 121.21 }
+      ]
     },
     {
       "participant_id": "codex-gpt-5.6-sol",
@@ -173,7 +236,15 @@
           "inferred_successful_trials": 64
         }
       ],
-      "derived_evalhub_score": 32.593009
+      "derived_evalhub_score": 32.593009,
+      "resource_use": [
+        { "task_id": "swe-bench-verified", "time_hours": 4.41, "tinker_cost_usd": 55.61 },
+        { "task_id": "swe-bench-multilingual", "time_hours": 5.99, "tinker_cost_usd": 78.64 },
+        { "task_id": "swe-bench-pro", "time_hours": 11.61, "tinker_cost_usd": 300.49 },
+        { "task_id": "terminal-bench-2", "time_hours": 9.56, "tinker_cost_usd": 69.07 },
+        { "task_id": "gpqa-diamond", "time_hours": 2.42, "tinker_cost_usd": 10.37 },
+        { "task_id": "aime", "time_hours": 8.9, "tinker_cost_usd": 63.87 }
+      ]
     },
     {
       "participant_id": "codex-gpt-5.6-terra",
@@ -214,7 +285,15 @@
           "inferred_successful_trials": 40
         }
       ],
-      "derived_evalhub_score": 26.448814
+      "derived_evalhub_score": 26.448814,
+      "resource_use": [
+        { "task_id": "swe-bench-verified", "time_hours": 2.8, "tinker_cost_usd": 59.79 },
+        { "task_id": "swe-bench-multilingual", "time_hours": 5.18, "tinker_cost_usd": 56.87 },
+        { "task_id": "swe-bench-pro", "time_hours": 3.85, "tinker_cost_usd": 34.39 },
+        { "task_id": "terminal-bench-2", "time_hours": 6.67, "tinker_cost_usd": 186.96 },
+        { "task_id": "gpqa-diamond", "time_hours": 1.14, "tinker_cost_usd": 4.8 },
+        { "task_id": "aime", "time_hours": 1.85, "tinker_cost_usd": 8.5 }
+      ]
     }
   ]
 }
