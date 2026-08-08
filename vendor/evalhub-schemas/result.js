@@ -648,7 +648,14 @@ const UpstreamPublicationTitleSchema = z
 });
 export const UpstreamAuthorPublicationSubmissionSchema = z
     .object({
-    kind: z.literal("upstream_author_publication"),
+    // Optional for the same reason RunSubmissionSchema's kind is: the tag is
+    // redundant with the envelope's own shape, so a file may omit it. What
+    // actually distinguishes an upstream publication is the provenance triad
+    // below -- importer_version / retrieved_on / source -- which this .strict()
+    // object requires as a unit. Read the tag nowhere; use
+    // isUpstreamAuthorPublicationSubmission() so behaviour does not change when
+    // a file leaves kind out.
+    kind: z.literal("upstream_author_publication").optional(),
     importer_version: UpstreamPublicationImporterVersionSchema,
     retrieved_on: IsoCalendarDateSchema,
     source: z
@@ -682,6 +689,24 @@ export const ResultSubmissionSchema = z.union([
     UpstreamAuthorPublicationSubmissionSchema,
     RunSubmissionSchema,
 ]);
+/**
+ * Structural test for "this envelope carries upstream provenance".
+ *
+ * Prefer this over reading `submission.kind`: the tag is optional on both union
+ * branches, so on a file that omits it the literal comparison silently reports
+ * "run" for a genuine upstream publication -- and the upstream path is where the
+ * harness_version exemption and the import authorization checks live.
+ *
+ * Testing `source` alone is enough because
+ * UpstreamAuthorPublicationSubmissionSchema is `.strict()` and requires
+ * importer_version / retrieved_on / source together: a parsed submission has
+ * either all three or none. RunSubmissionSchema is a plain z.object, which
+ * strips unknown keys, so a run envelope never comes out of parsing with a
+ * `source` property attached.
+ */
+export function isUpstreamAuthorPublicationSubmission(submission) {
+    return "source" in submission;
+}
 export const ResultFileSchema = z
     .object({
     eval_id: z.string(),
@@ -695,7 +720,11 @@ export const ResultFileSchema = z
     .superRefine((file, ctx) => {
     for (const [index, result] of file.results.entries()) {
         const participant = result.participant;
-        if (file.submission.kind !== "upstream_author_publication" &&
+        // Upstream publications are exempt: the third party published a harness
+        // name without a version, and there is no true version to fill in.
+        // Structural check rather than the kind literal so the exemption survives
+        // a file that omits the tag.
+        if (!isUpstreamAuthorPublicationSubmission(file.submission) &&
             participant.harness !== undefined &&
             participant.harness_version === undefined) {
             ctx.addIssue({

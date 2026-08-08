@@ -494,16 +494,28 @@ const evalDefShape = {
             message: "tasks[].label 不能为空",
         })
             .optional(),
-        // 可执行评测协议。保留原始字符（包括首尾空白），只拒绝纯空白值。
+        // 唯一的题面字段：既是真正执行的指令，也是详情页展示的原文。
+        //
+        // - `runner: builtin`：这就是发给参赛模型的那句话。
+        // - `source_kind: upstream_publication`：逐字照抄上游公开的题面原文，
+        //   平台不得改写、摘要、截断或替换成链接；未替换的模板占位符也原样保留，
+        //   便于与上游 pinned commit 逐字比对。EvalHub 自己补充的运行约定写进
+        //   `run_spec`，绝不混进这里。
+        //
+        // 保留原始字符（包括首尾空白），只拒绝纯空白值；不设长度上限、不截断，
+        // 折叠由前端负责。
         prompt: z.string().min(1).refine((value) => value.trim().length > 0, {
             message: "tasks[].prompt 不能为空",
         }),
-        // 展示专用的完整题目原文。它不参与 runner/scorer 协议，也不应触发
-        // protocol_revision；不设置长度上限、不 trim、不截断，折叠由前端负责。
-        display_prompt: z
+        // EvalHub 为可复现而补充的运行规程：固定配置、证据采集口径、占位符实际取值等。
+        // 它**不在详情页渲染**，只随 eval 目录交到实际跑评测的人手里（`evalhub fetch`
+        // clone 作者仓库的 pinned commit），因此参赛者按它执行，读者不会把它误当题面。
+        // external_workflow 的参赛者靠它复现，所以改它必须按协议变更递增
+        // protocol_revision。
+        run_spec: z
             .string()
             .refine((value) => value.trim().length > 0, {
-            message: "tasks[].display_prompt 不能为空",
+            message: "tasks[].run_spec 不能为空",
         })
             .optional(),
         translation: z
