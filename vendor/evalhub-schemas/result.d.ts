@@ -1913,7 +1913,7 @@ export declare const RunSubmissionSchema: z.ZodObject<{
     kind?: "run" | undefined;
 }>;
 export declare const UpstreamAuthorPublicationSubmissionSchema: z.ZodObject<{
-    kind: z.ZodLiteral<"upstream_author_publication">;
+    kind: z.ZodOptional<z.ZodLiteral<"upstream_author_publication">>;
     importer_version: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
     retrieved_on: z.ZodEffects<z.ZodString, string, string>;
     source: z.ZodObject<{
@@ -1930,7 +1930,6 @@ export declare const UpstreamAuthorPublicationSubmissionSchema: z.ZodObject<{
         title?: string | undefined;
     }>;
 }, "strict", z.ZodTypeAny, {
-    kind: "upstream_author_publication";
     importer_version: string;
     retrieved_on: string;
     source: {
@@ -1938,8 +1937,8 @@ export declare const UpstreamAuthorPublicationSubmissionSchema: z.ZodObject<{
         snapshot_sha256: string;
         title?: string | undefined;
     };
+    kind?: "upstream_author_publication" | undefined;
 }, {
-    kind: "upstream_author_publication";
     importer_version: string;
     retrieved_on: string;
     source: {
@@ -1947,9 +1946,10 @@ export declare const UpstreamAuthorPublicationSubmissionSchema: z.ZodObject<{
         snapshot_sha256: string;
         title?: string | undefined;
     };
+    kind?: "upstream_author_publication" | undefined;
 }>;
 export declare const ResultSubmissionSchema: z.ZodUnion<[z.ZodObject<{
-    kind: z.ZodLiteral<"upstream_author_publication">;
+    kind: z.ZodOptional<z.ZodLiteral<"upstream_author_publication">>;
     importer_version: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
     retrieved_on: z.ZodEffects<z.ZodString, string, string>;
     source: z.ZodObject<{
@@ -1966,7 +1966,6 @@ export declare const ResultSubmissionSchema: z.ZodUnion<[z.ZodObject<{
         title?: string | undefined;
     }>;
 }, "strict", z.ZodTypeAny, {
-    kind: "upstream_author_publication";
     importer_version: string;
     retrieved_on: string;
     source: {
@@ -1974,8 +1973,8 @@ export declare const ResultSubmissionSchema: z.ZodUnion<[z.ZodObject<{
         snapshot_sha256: string;
         title?: string | undefined;
     };
+    kind?: "upstream_author_publication" | undefined;
 }, {
-    kind: "upstream_author_publication";
     importer_version: string;
     retrieved_on: string;
     source: {
@@ -1983,6 +1982,7 @@ export declare const ResultSubmissionSchema: z.ZodUnion<[z.ZodObject<{
         snapshot_sha256: string;
         title?: string | undefined;
     };
+    kind?: "upstream_author_publication" | undefined;
 }>, z.ZodObject<{
     kind: z.ZodOptional<z.ZodLiteral<"run">>;
     runner_version: z.ZodString;
@@ -1996,11 +1996,27 @@ export declare const ResultSubmissionSchema: z.ZodUnion<[z.ZodObject<{
     run_date: string;
     kind?: "run" | undefined;
 }>]>;
+/**
+ * Structural test for "this envelope carries upstream provenance".
+ *
+ * Prefer this over reading `submission.kind`: the tag is optional on both union
+ * branches, so on a file that omits it the literal comparison silently reports
+ * "run" for a genuine upstream publication -- and the upstream path is where the
+ * harness_version exemption and the import authorization checks live.
+ *
+ * Testing `source` alone is enough because
+ * UpstreamAuthorPublicationSubmissionSchema is `.strict()` and requires
+ * importer_version / retrieved_on / source together: a parsed submission has
+ * either all three or none. RunSubmissionSchema is a plain z.object, which
+ * strips unknown keys, so a run envelope never comes out of parsing with a
+ * `source` property attached.
+ */
+export declare function isUpstreamAuthorPublicationSubmission(submission: ResultSubmission): submission is UpstreamAuthorPublicationSubmission;
 export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
     eval_id: z.ZodString;
     eval_commit: z.ZodOptional<z.ZodString>;
     submission: z.ZodUnion<[z.ZodObject<{
-        kind: z.ZodLiteral<"upstream_author_publication">;
+        kind: z.ZodOptional<z.ZodLiteral<"upstream_author_publication">>;
         importer_version: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
         retrieved_on: z.ZodEffects<z.ZodString, string, string>;
         source: z.ZodObject<{
@@ -2017,7 +2033,6 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             title?: string | undefined;
         }>;
     }, "strict", z.ZodTypeAny, {
-        kind: "upstream_author_publication";
         importer_version: string;
         retrieved_on: string;
         source: {
@@ -2025,8 +2040,8 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             snapshot_sha256: string;
             title?: string | undefined;
         };
+        kind?: "upstream_author_publication" | undefined;
     }, {
-        kind: "upstream_author_publication";
         importer_version: string;
         retrieved_on: string;
         source: {
@@ -2034,6 +2049,7 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             snapshot_sha256: string;
             title?: string | undefined;
         };
+        kind?: "upstream_author_publication" | undefined;
     }>, z.ZodObject<{
         kind: z.ZodOptional<z.ZodLiteral<"run">>;
         runner_version: z.ZodString;
@@ -3113,7 +3129,6 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         run_date: string;
         kind?: "run" | undefined;
     } | {
-        kind: "upstream_author_publication";
         importer_version: string;
         retrieved_on: string;
         source: {
@@ -3121,6 +3136,7 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             snapshot_sha256: string;
             title?: string | undefined;
         };
+        kind?: "upstream_author_publication" | undefined;
     };
     results: {
         participant: {
@@ -3245,7 +3261,6 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         run_date: string;
         kind?: "run" | undefined;
     } | {
-        kind: "upstream_author_publication";
         importer_version: string;
         retrieved_on: string;
         source: {
@@ -3253,6 +3268,7 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             snapshot_sha256: string;
             title?: string | undefined;
         };
+        kind?: "upstream_author_publication" | undefined;
     };
     results: {
         participant: {
@@ -3377,7 +3393,6 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         run_date: string;
         kind?: "run" | undefined;
     } | {
-        kind: "upstream_author_publication";
         importer_version: string;
         retrieved_on: string;
         source: {
@@ -3385,6 +3400,7 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             snapshot_sha256: string;
             title?: string | undefined;
         };
+        kind?: "upstream_author_publication" | undefined;
     };
     results: {
         participant: {
@@ -3509,7 +3525,6 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         run_date: string;
         kind?: "run" | undefined;
     } | {
-        kind: "upstream_author_publication";
         importer_version: string;
         retrieved_on: string;
         source: {
@@ -3517,6 +3532,7 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             snapshot_sha256: string;
             title?: string | undefined;
         };
+        kind?: "upstream_author_publication" | undefined;
     };
     results: {
         participant: {
