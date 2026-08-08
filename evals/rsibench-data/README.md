@@ -7,6 +7,8 @@ Evolvent AI 提出的 **RSIBench-Data: Benchmarking Data-Centric Research for Re
 - 作者仓库：<https://github.com/evolvent-ai/RSIBench-Data>
 - 当前评测采用的来源 commit：`39948a17925272367b64dd53427a4dba3f572f4e`
 - 原作者：Fanqing Meng、Lingxiao Du、Qiguang Chen、Ziqi Zhao、Haocheng Lu、Mengkang Hu、Michael Qizhe Shieh
+- 作者单位：Evolvent AI、National University of Singapore（arXiv:2607.25886v1，2026-07-28，cs.SE）
+- 协议常量的一手出处：论文主协议原文 “Each main run has a nominal 16-hour wall-clock budget and a $500 Tinker budget.”，来源仓库只在示例里给 14400 秒 / 25 USD，不提供协议默认值，因此 16 小时与 500 USD 两项常量在 `detail_profile` 中引用论文而非仓库
 
 EvalHub 页面与转换器不代表 Evolvent AI、论文作者或 RSIBench 官方榜单的认证、背书或替代实现。EvalHub 不会在受限 runner 内训练模型或执行云端评测；custom runner 只把六项运行声明与证据指纹转换成带数值分数的结果文件。非作者提交的成绩仍由评测作者复核，官网已发表成绩则按来源快照导入。
 
@@ -53,13 +55,15 @@ EvalHub 页面与转换器不代表 Evolvent AI、论文作者或 RSIBench 官�
 
 [`tasks/rsibench-official-results-2026-07-31.json`](tasks/rsibench-official-results-2026-07-31.json) 是可机读快照；`official-result-to-envelope.mjs` 会重新验证四位研究者的独立 `model` / `harness` 身份、六项分母、官网显示值与整数计数及宏平均，然后生成 `upstream_author_publication` 结果。该类型的结果必须含非空 `score`，不能用它冒充一次独立 EvalHub 复跑。
 
-2026-08-07 重新抓取官网页面复核：页面 SHA-256 仍为 `c1ada61368496e1edf694dbf10a6e3a972f4bffc6e857f45351f05578f8df4fa`，与 2026-07-31 快照完全一致，四位研究者的 24 个分项分数无变化，因此不新增快照文件。官网矩阵还给出两类不计分的旁证列。一是每个 benchmark 的 base model 参考行，即目标模型未经微调的成绩（SWE Verified 12.00%、SWE Multilingual 7.00%、SWE Pro 0.00%、GPQA 61.00%、AIME 2026 30.00%、Terminal-Bench 2.0 1.12%；后两项与固定分母相容的唯一整数计数分别是 36/120 和 1/89）；base 行不消耗研究预算，其用时与成本格为空。二是四位研究者 24 个格子各自的实际用时与 Tinker 成本，用时介于 1.14 至 14.91 小时，成本介于 4.80 至 363.77 USD，全部落在每项 16 小时、500 USD 的预算上限内。base 行是未训练基线而非研究者系统的提交；官网把这张表描述为 “Official performance and resource use”，只有 Official 一列是成绩，Time 与 Tinker cost 属于资源消耗记录。因此快照与信封继续只收录 Official 分数列。
+2026-08-08 重新抓取官网页面复核：页面 SHA-256 仍为 `c1ada61368496e1edf694dbf10a6e3a972f4bffc6e857f45351f05578f8df4fa`，与 2026-07-31 快照完全一致，四位研究者的 24 个分项分数无变化，因此不新增快照文件。官网矩阵还给出两类不计分的旁证列。一是每个 benchmark 的 base model 参考行，即目标模型未经微调的成绩（SWE Verified 12.00%、SWE Multilingual 7.00%、SWE Pro 0.00%、GPQA 61.00%、AIME 2026 30.00%、Terminal-Bench 2.0 1.12%；后两项与固定分母相容的唯一整数计数分别是 36/120 和 1/89）；base 行不消耗研究预算，其用时与成本格为空。二是四位研究者 24 个格子各自的实际用时与 Tinker 成本，用时介于 1.14 至 14.91 小时，成本介于 4.80 至 363.77 USD，全部落在每项 16 小时、500 USD 的预算上限内。
+
+本次更新把这两类旁证按其真实性质收录：它们**不进入 `score`、不产生新参赛者**，而是作为展示视图转录进快照的 `base_reference` 与每位研究者的 `resource_use`，再由生成器输出到 `official-benchmark-breakdown` 的基线对照列和 `official-time-cost` 表。base 行仍不是研究者提交，因此不会成为第五位参赛者；`Qwen/Qwen3.5-35B-A3B-Base` 也不在平台模型登记表内，把它当参赛者会直接触发 `checkModelStrings` 的未知模型门禁。转录时逐格与官网当前页面重新比对，78 个数值全部一致。评分输入仍然只有 Official 一列，这一点由快照的 `score_authority.rule` 明文固定。
 
 同日复核上游仓库：钉死的 `39948a17925272367b64dd53427a4dba3f572f4e` 之后，默认分支已推进到 `4c807610243e7b481d382c5ed360c71c79a22f61`（2026-08-06），其间新增 9 个 commit，内容为 Kimi Code data agent harness、Tinker eval proxy 默认改用 SDK 后端、官方评测 Python 环境修复，以及 Docker 隔离的 session runner 与其 artifact 归档。逐一比对两个版本后确认：`benchmarks/*/spec.json` 完全未改动，六个 profile 的数据集、任务数、尝试次数与 Harbor agent 保持原样；`runner/run_official_eval.sh` 的改动全部是改用 venv 优先的 `PYTHON_BIN`、新增运行环境检查与日志重定向，`harbor_score` 提取与 `n_tasks` / `n_attempts` / `step_limit` 的传递逻辑逐行不变；新增的 Kimi Code 是与 Claude Code、Codex 并列的第三个可选编排 harness，不改变已发表四位研究者的运行口径。
 
 其中一条改动需要单独说明：`fa785fa` 把 Tinker eval proxy 的后端选择从「`tinker://` 检查点走 OpenAI 兼容 HTTP shim、base model 走 SDK」改为一律使用 SDK SamplingClient。它不改动任何协议常量、数据集、分母或分数提取逻辑，但**确实改变了官方复评时检查点采样所走的服务路径**，而服务实现正属于上述第 3 条锁定项。已发表的四位研究者成绩产生于钉死的 `39948a17`，不受影响；这条变更本身正是来源 commit 不能随默认分支上移的理由——上移会让此后的官方复评与已导入基线处在不同的服务路径上。因此 `protocol_revision` 保持 3，来源 commit 不上移；未来若要上移，需先评估该服务路径变更对可比性的影响。
 
-四份生成后的信封签入 [`published-results/`](published-results/)：仓库同步时会把它们作为当前评测版本的受信官方基线导入。每份信封同时提供用于总体榜单的数值宏平均，以及带官网显示值、成功次数、固定分母和精确分项分数的 `supplementary_views` 表。上游发表结果不伪装成本地逐题运行，因此不写 `task_results`；这样总体排名保持单一口径，详情页仍能审计和比较所有非整体信息。`score_policy: required` 禁止提交 `null` 分数；`baseline_policy: required` 还要求每个发布版本至少成功导入一条非空官方基线，否则该版本不能被投稿任务误判为发布完成。
+四份生成后的信封签入 [`published-results/`](published-results/)：仓库同步时会把它们作为当前评测版本的受信官方基线导入。每份信封同时提供用于总体榜单的数值宏平均，以及两张 `supplementary_views` 表：`official-benchmark-breakdown` 给出官网显示值、成功次数、固定分母、精确分项分数和未微调基线模型对照列，`official-time-cost` 给出官网同表的每项用时与 Tinker 成本。两张表在四份信封里共用同一组 `id` / `type` / `title` / `label` / `columns`，只有 `rows` 随研究者不同，平台因此可以安全地按分项派生对比视图。上游发表结果不伪装成本地逐题运行，因此不写 `task_results`；这样总体排名保持单一口径，详情页仍能审计和比较所有非整体信息。`score_policy: required` 禁止提交 `null` 分数；`baseline_policy: required` 还要求每个发布版本至少成功导入一条非空官方基线，否则该版本不能被投稿任务误判为发布完成。
 
 ## 输入声明与公开证据
 
