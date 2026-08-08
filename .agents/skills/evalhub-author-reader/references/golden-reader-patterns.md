@@ -89,8 +89,8 @@ If one participant is missing a source-published row or uses a genuinely differe
 
 Task examples are independent of aggregate published results:
 
-- `prompt` remains the exact executable protocol.
-- `display_prompt` contains the complete source-published original for every upstream task. Long text is intentionally stored in full; the platform owns default folding and expansion.
+- `prompt` is the one task statement: what runs and what the page shows. For an upstream task it is the complete source-published original, verbatim from the pinned commit. Long text is intentionally stored in full; the platform owns default folding and expansion.
+- `run_spec` holds EvalHub's own run procedure and is never rendered, so nothing a reader needs may live only there.
 - `translation` is complete when present.
 - Real `task_results` or task-linked showcases may provide model tabs. Never convert leaderboard aggregates, paper prose, or a design mock into fake task outputs or execution traces.
 - Do not add author-supplied “view prompt source” or “view official score source” buttons. Global sources belong in `detail_profile.resources` and result provenance belongs in `submission.source`.
