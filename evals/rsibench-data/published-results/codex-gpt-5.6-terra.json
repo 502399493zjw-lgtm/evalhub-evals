@@ -2,7 +2,7 @@
   "eval_id": "rsibench-data",
   "submission": {
     "kind": "upstream_author_publication",
-    "importer_version": "rsibench-data/official-result-to-envelope@1.3.0",
+    "importer_version": "rsibench-data/official-result-to-envelope@1.4.0",
     "retrieved_on": "2026-07-31",
     "source": {
       "title": "RSIBench — Research Data & Results",
@@ -86,7 +86,7 @@
               ]
             }
           ],
-          "note": "辅助展示，不参与单独排名；总体分是六项精确百分制分数的等权宏平均。最后一列是官方同一张矩阵里的未微调基线模型行，仅作对照，不是参赛结果。"
+          "note": "Derived：「成功/试次」为与官网两位小数唯一相容的整数计数（固定分母 100/100/100/89/100/120）；「精确分项分数」= 成功/试次 × 100。这两列由 EvalHub 反推，不是官网发表值。辅助展示，不参与单独排名；总体分是六项精确百分制分数的等权宏平均。最后一列是官方同一张矩阵里的未微调基线模型行，仅作对照，不是参赛结果。"
         },
         {
           "type": "metric_table",
@@ -145,7 +145,7 @@
           "note": "官方矩阵同表转录的资源消耗，仅作展示，不进入评分；协议名义预算为每次主运行 16 小时墙钟与 500 USD Tinker 额度。"
         }
       ],
-      "detail": "上游官网六项官方成绩的 EvalHub 等权宏平均：SWE-bench Verified 42%（42/100）、SWE-bench Multilingual 6%（6/100）、SWE-bench Pro 1%（1/100）、Terminal-Bench 2.0 12.36%（11/89）、GPQA Diamond 64%（64/100）、AIME 2026 33.33%（40/120）。括号内整数成功数由官网两位小数和固定分母唯一反推；宏平均是 EvalHub 派生指标，不是上游官方复合指标，也不表示 EvalHub 独立复跑。"
+      "detail": "Derived：宏平均 =（SWE-bench Verified + SWE-bench Multilingual + SWE-bench Pro + Terminal-Bench 2.0 + GPQA Diamond + AIME 2026）/ 6，输入取自 submission.source 的六项官网显示值：SWE-bench Verified 42%（42/100）、SWE-bench Multilingual 6%（6/100）、SWE-bench Pro 1%（1/100）、Terminal-Bench 2.0 12.36%（11/89）、GPQA Diamond 64%（64/100）、AIME 2026 33.33%（40/120）。括号内整数成功数由官网两位小数和固定分母唯一反推；宏平均是 EvalHub 派生指标，不是上游官方复合指标，也不表示 EvalHub 独立复跑。比较边界（论文 4.1）：编排 harness Codex，编排模型 gpt-5.6-terra，reasoning effort max，固定外部 rollout 模型 Claude Opus 4.8，固定目标模型 Qwen/Qwen3.5-35B-A3B-Base。"
     }
   ]
 }

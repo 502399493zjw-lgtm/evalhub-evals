@@ -16,7 +16,7 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "rsibench-data";
-const RUNNER_VERSION = "rsibench-data/pack-to-result@1.2.0";
+const RUNNER_VERSION = "rsibench-data/pack-to-result@1.3.0";
 const SCHEMA_VERSION = "1.1";
 const SOURCE_REPOSITORY = "https://github.com/evolvent-ai/RSIBench-Data";
 const SOURCE_COMMIT = "39948a17925272367b64dd53427a4dba3f572f4e";
@@ -397,8 +397,10 @@ function parseManifest(filePath) {
   return value;
 }
 
+// Keep this identical to official-result-to-envelope.mjs so both paths round once,
+// the same way, at the end.
 function roundSix(value) {
-  return Math.round((value + Number.EPSILON) * 1_000_000) / 1_000_000;
+  return Number(value.toFixed(6));
 }
 
 function displayNumber(value) {
@@ -465,8 +467,16 @@ function buildResult(manifest, evalCommit) {
       }),
     };
   });
+  // Average the exact fractions, not the per-task rounded display scores, so this
+  // path and official-result-to-envelope.mjs derive one identical leaderboard value.
   const proposedMacroAverage = roundSix(
-    taskResults.reduce((sum, task) => sum + task.score, 0) / taskResults.length,
+    manifest.runs.reduce(
+      (sum, run) =>
+        sum +
+        (run.successfulTrials / (run.profile.nTasks * run.profile.nAttempts)) *
+          100,
+      0,
+    ) / manifest.runs.length,
   );
   const evidenceFingerprint = sha256Text(
     JSON.stringify({
@@ -516,6 +526,9 @@ function buildResult(manifest, evalCommit) {
           value: `${displayNumber(proposedMacroAverage)} 分`,
         },
         detail:
+          `Derived：宏平均 = 六项百分制精确分数之和 / 6，` +
+          `每项精确分数 = 成功次数 / (题量 × 每题解码数) × 100，` +
+          `仅在最后一步取六位小数。` +
           `RSIBench-Data 六项证据声明，固定来源 commit ${SOURCE_COMMIT}。` +
           `转换器只完成声明格式与内部一致性检查：六个唯一 profile、独立 run ID、` +
           `固定主协议、整数成功次数、` +

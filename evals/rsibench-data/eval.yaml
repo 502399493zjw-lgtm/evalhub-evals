@@ -1,8 +1,7 @@
 id: rsibench-data
-protocol_revision: 3
+protocol_revision: 4
 name: RSIBench-Data（数据中心型自改进）
 category: useful
-display_category: agent
 description: RSIBench-Data 评测研究者 Agent 能否在固定训练、服务和评测栈及资源预算下，诊断目标模型缺陷、合成训练数据、迭代 LoRA SFT 并选择检查点，最终以六类软件工程、终端、科学问答与数学任务的原生分数衡量数据中心型研究能力。
 hook_title: Agent 能把失败证据变成真正有效的训练数据吗
 upstream:
@@ -113,6 +112,16 @@ detail_profile:
         官方矩阵同表公布了未微调目标模型行：GPQA Diamond 61.00%、SWE-bench Multilingual 7.00%。
         四位研究者中有几个在这两项低于该行，说明数据研究可能损害原有能力，
         分项与总体分都不应读作"必然优于基线"。
+    - title: 迭代改进不保证单调
+      description: >-
+        论文 5.1 报告：24 个设置中有 14 个的后续候选优于首个有效候选；
+        在达到观测峰值后仍继续搜索的 23 个设置中，18 个的最后一次尝试候选低于其历史最好值，另外 5 个只回到同一峰值。
+        该统计描述尝试序列，不是最终提交的检查点——历史最好选择仍会保留更早的峰值。
+    - title: 官网与论文有两处成本单元不一致
+      description: >-
+        钉死的官网快照（sha256 c1ada613…，2026-07-31 取回）是本投稿时间与成本列的转录依据。
+        论文 v1 表 2 在两个单元上不同：Claude Code Sonnet-5 的 Terminal-Bench 2.0 成本为 156.93（官网 157.85），
+        Codex gpt-5.6-sol 的 AIME 2026 成本为 63.65（官网 63.87）。两处都只涉及成本列，六项分数与排名不受影响。
   overview_tables:
     - id: official-evaluation-suite
       label: 评测套件
@@ -231,6 +240,72 @@ detail_profile:
             - column_id: seed-factories
               value: synthetic-data-kit
       caption: 转录自论文的评测套件表；覆盖比例由论文给出，不是 EvalHub 计算值。
+      source_url: https://arxiv.org/html/2607.25886v1
+    - id: official-researcher-agents
+      label: 研究者配置
+      title: 论文公布的四位研究者 Agent 配置
+      note: 该表解释四位已发表研究者的身份构成与推理档位，不含任何模型成绩。
+      columns:
+        - id: agent
+          label: 研究者 Agent
+        - id: harness
+          label: 编排 harness
+        - id: model
+          label: 编排模型
+        - id: effort
+          label: reasoning effort
+        - id: rollout
+          label: 外部 rollout 模型
+      rows:
+        - id: claude-code-opus-4-8
+          cells:
+            - column_id: agent
+              value: Claude Code · Opus-4.8
+            - column_id: harness
+              value: Claude Code
+            - column_id: model
+              value: Opus-4.8
+            - column_id: effort
+              value: high
+            - column_id: rollout
+              value: Claude Opus 4.8
+        - id: claude-code-sonnet-5
+          cells:
+            - column_id: agent
+              value: Claude Code · Sonnet-5
+            - column_id: harness
+              value: Claude Code
+            - column_id: model
+              value: Sonnet-5
+            - column_id: effort
+              value: high
+            - column_id: rollout
+              value: Claude Opus 4.8
+        - id: codex-gpt-5-6-sol
+          cells:
+            - column_id: agent
+              value: Codex · gpt-5.6-sol
+            - column_id: harness
+              value: Codex
+            - column_id: model
+              value: gpt-5.6-sol
+            - column_id: effort
+              value: max
+            - column_id: rollout
+              value: Claude Opus 4.8
+        - id: codex-gpt-5-6-terra
+          cells:
+            - column_id: agent
+              value: Codex · gpt-5.6-terra
+            - column_id: harness
+              value: Codex
+            - column_id: model
+              value: gpt-5.6-terra
+            - column_id: effort
+              value: max
+            - column_id: rollout
+              value: Claude Opus 4.8
+      caption: 转录自论文 4.1：Claude Code 两位研究者跑 high reasoning effort，Codex 两位跑 max；四位共享同一固定 rollout 模型。研究者身份包含底层模型、agent 脚手架与推理档位三者。
       source_url: https://arxiv.org/html/2607.25886v1
   figures:
     - id: official-framework-diagram

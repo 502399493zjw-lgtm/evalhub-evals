@@ -2,7 +2,7 @@
   "eval_id": "rsibench-data",
   "submission": {
     "kind": "run",
-    "runner_version": "rsibench-data/pack-to-result@1.2.0",
+    "runner_version": "rsibench-data/pack-to-result@1.3.0",
     "run_date": "2026-07-29"
   },
   "results": [
@@ -30,7 +30,7 @@
         "label": "六项等权宏平均",
         "value": "33.26779 分"
       },
-      "detail": "RSIBench-Data 六项证据声明，固定来源 commit 39948a17925272367b64dd53427a4dba3f572f4e。转换器只完成声明格式与内部一致性检查：六个唯一 profile、独立 run ID、固定主协议、整数成功次数、公开 HTTPS 证据地址和 18 个唯一 SHA-256，并由整数计数确定性计算 EvalHub 派生宏平均 33.26779 分。这些检查不验证公开 artifact 内容、模型身份、运行过程或成绩真实性；转换器不会输出 null，非评测作者提交的数值成绩仍须由评测作者核对原始 Harbor 结果、预算、检查点选择顺序、完整性审计、数据隔离与研究者身份后认可。该宏平均不是上游官方指标，该 EvalHub 结果也不代表 Evolvent AI 的认证或背书。",
+      "detail": "Derived：宏平均 = 六项百分制精确分数之和 / 6，每项精确分数 = 成功次数 / (题量 × 每题解码数) × 100，仅在最后一步取六位小数。RSIBench-Data 六项证据声明，固定来源 commit 39948a17925272367b64dd53427a4dba3f572f4e。转换器只完成声明格式与内部一致性检查：六个唯一 profile、独立 run ID、固定主协议、整数成功次数、公开 HTTPS 证据地址和 18 个唯一 SHA-256，并由整数计数确定性计算 EvalHub 派生宏平均 33.26779 分。这些检查不验证公开 artifact 内容、模型身份、运行过程或成绩真实性；转换器不会输出 null，非评测作者提交的数值成绩仍须由评测作者核对原始 Harbor 结果、预算、检查点选择顺序、完整性审计、数据隔离与研究者身份后认可。该宏平均不是上游官方指标，该 EvalHub 结果也不代表 Evolvent AI 的认证或背书。",
       "task_results": [
         {
           "task_id": "swe-bench-verified",
