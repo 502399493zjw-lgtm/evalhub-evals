@@ -1,10 +1,13 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
   evaluatePullRequestPolicy,
   MAINTAINER_LOGIN,
   PullRequestPolicyError,
+  readOwnershipHistoryFromGit,
+  reduceOwnershipHistory,
 } from "../pr-policy.mjs";
 
 const baseRepository = "502399493zjw-lgtm/evalhub-evals";
@@ -14,6 +17,14 @@ const headSha = "head-sha";
 
 const taskId = "evaltask_243e0b48-c968-4968-80ee-29221bde6cff";
 const otherTaskId = "evaltask_6cd42f94-1a05-4d7b-9f0e-2b8c1d4e5f60";
+
+test("reruns the trusted PR policy when the mutable pull request body is edited", () => {
+  const workflow = readFileSync(
+    new URL("../../.github/workflows/pr-policy.yml", import.meta.url),
+    "utf8",
+  );
+  assert.match(workflow, /pull_request_target:[\s\S]*types:\s*\[[^\]]*\bedited\b[^\]]*\]/u);
+});
 
 function marker(kind, slug, task = taskId) {
   return `<!-- evalhub-submission task=${task} kind=${kind} slug=${slug} -->`;
@@ -39,8 +50,50 @@ function file(filename, status = "modified", previous_filename) {
   return { filename, status, ...(previous_filename ? { previous_filename } : {}) };
 }
 
+function historyCommit(index) {
+  return index.toString(16).padStart(40, "0");
+}
+
+function historicalSnapshot(index, slug, owner = null) {
+  return {
+    commit: historyCommit(index),
+    evalYaml: owner === null ? null : `id: ${slug}\nrunner: builtin\n`,
+    authors: owner === null ? null : `@${owner}\n`,
+  };
+}
+
 function snapshotKey(repository, sha, pathname) {
   return `${repository}@${sha}:${pathname}`;
+}
+
+function ownershipHistoryForBase(base) {
+  const evalYamlPath = Object.keys(base).find((pathname) =>
+    pathname.endsWith("/eval.yaml"),
+  );
+  if (evalYamlPath === undefined) {
+    return {
+      active: false,
+      activeOwner: null,
+      canonicalOwner: null,
+      seen: false,
+      violations: [],
+    };
+  }
+  const authorsPath = `${evalYamlPath.slice(
+    0,
+    evalYamlPath.length - "eval.yaml".length,
+  )}AUTHORS`;
+  const owner =
+    typeof base[authorsPath] === "string"
+      ? base[authorsPath].trim().slice(1)
+      : "snapshot-owner";
+  return {
+    active: true,
+    activeOwner: owner,
+    canonicalOwner: owner,
+    seen: true,
+    violations: [],
+  };
 }
 
 async function evaluate({
@@ -49,6 +102,8 @@ async function evaluate({
   changedFiles,
   base = {},
   head = {},
+  ownershipHistory,
+  ownershipHistoryError = null,
 }) {
   const snapshots = new Map();
   for (const [pathname, contents] of Object.entries(base)) {
@@ -62,6 +117,12 @@ async function evaluate({
     listChangedFiles: async () => changedFiles,
     readText: async (repository, sha, pathname) =>
       snapshots.get(snapshotKey(repository, sha, pathname)) ?? null,
+    readOwnershipHistory: async () => {
+      if (ownershipHistoryError !== null) throw ownershipHistoryError;
+      return ownershipHistory === undefined
+        ? ownershipHistoryForBase(base)
+        : ownershipHistory;
+    },
   });
 }
 
@@ -92,7 +153,7 @@ test("allows a user to create one eval owned by their GitHub identity", async ()
   assert.equal(result.submissionTask, taskId);
 });
 
-test("allows a new custom eval with an external executable and participant input", async () => {
+test("allows a new custom eval with an explicit mode and participant input", async () => {
   const result = await evaluate({
     body: submissionBody("new", "sample-eval"),
     changedFiles: [
@@ -105,10 +166,10 @@ test("allows a new custom eval with an external executable and participant input
 runner: "custom" # quoted scalar with a trailing comment
 custom_mode: 'external_workflow' # explicit for every new custom eval
 command_template:
-  # Synthetic fixtures are documentation-only; participant input uses {input}.
+  # tasks/example-submission.json is injected only by the sandbox
   argv:
-    - python3
-    - evals/sample-eval/pack.py
+    - node
+    - evals/sample-eval/pack.mjs
     - "{input}"
     - --out
     - "{output}"
@@ -298,6 +359,35 @@ command_template:
   assert.equal(result.mode, "community-eval-update");
 });
 
+test("keeps a legacy custom eval restore backward-compatible", async () => {
+  const legacyDefinition = `id: sample-eval
+runner: custom
+command_template:
+  argv: [node, evals/sample-eval/pack.mjs, evals/sample-eval/tasks/example-submission.json, --out, "{output}"]
+`;
+  const result = await evaluate({
+    body: submissionBody("update", "sample-eval"),
+    changedFiles: [
+      file("evals/sample-eval/AUTHORS", "added"),
+      file("evals/sample-eval/eval.yaml", "added"),
+    ],
+    head: {
+      "evals/sample-eval/AUTHORS": "@sample-author\n",
+      "evals/sample-eval/eval.yaml": legacyDefinition,
+    },
+    ownershipHistory: {
+      active: false,
+      activeOwner: null,
+      canonicalOwner: "sample-author",
+      seen: true,
+      violations: [],
+    },
+  });
+
+  assert.equal(result.mode, "community-eval-restore");
+  assert.equal(result.owner, "sample-author");
+});
+
 test("allows an author to update their own eval", async () => {
   const result = await evaluate({
     body: submissionBody("update", "sample-eval"),
@@ -357,30 +447,479 @@ test("rejects a new eval whose owner differs from the PR creator", async () => {
   );
 });
 
-test("rejects a maintainer creating an eval on behalf of another owner", async () => {
+test("maintainer may create an eval owned by a GitHub org", async () => {
+  const result = await evaluate({
+    actor: MAINTAINER_LOGIN,
+    changedFiles: [
+      file("evals/org-owned/eval.yaml", "added"),
+      file("evals/org-owned/AUTHORS", "added"),
+    ],
+    head: {
+      "evals/org-owned/eval.yaml": "id: org-owned\nrunner: builtin\n",
+      "evals/org-owned/AUTHORS": "@zlab-princeton\n",
+    },
+  });
+
+  assert.equal(result.owner, "zlab-princeton");
+  assert.equal(result.slug, "org-owned");
+  assert.equal(result.mode, "community-eval-create");
+});
+
+test("RSIBench-style invalid restores do not overwrite canonical ownership", () => {
+  const result = reduceOwnershipHistory("rsibench-data", [
+    historicalSnapshot(1, "rsibench-data", MAINTAINER_LOGIN),
+    // An active-to-active maintainer transfer establishes the new canonical owner.
+    historicalSnapshot(2, "rsibench-data", "evolvent-ai"),
+    historicalSnapshot(3, "rsibench-data"),
+    // A deleted slug was incorrectly recreated under the maintainer account.
+    historicalSnapshot(4, "rsibench-data", MAINTAINER_LOGIN),
+    historicalSnapshot(5, "rsibench-data", MAINTAINER_LOGIN),
+    historicalSnapshot(6, "rsibench-data"),
+    // Repeating the bad restore still cannot rewrite the canonical owner.
+    historicalSnapshot(7, "rsibench-data", MAINTAINER_LOGIN),
+    historicalSnapshot(8, "rsibench-data"),
+  ]);
+
+  assert.equal(result.seen, true);
+  assert.equal(result.active, false);
+  assert.equal(result.canonicalOwner, "evolvent-ai");
+  assert.equal(result.violations.length, 2);
+  assert.deepEqual(
+    result.violations.map(({ actualOwner, expectedOwner, type }) => ({
+      actualOwner,
+      expectedOwner,
+      type,
+    })),
+    [
+      {
+        actualOwner: MAINTAINER_LOGIN,
+        expectedOwner: "evolvent-ai",
+        type: "restore_owner_mismatch",
+      },
+      {
+        actualOwner: MAINTAINER_LOGIN,
+        expectedOwner: "evolvent-ai",
+        type: "restore_owner_mismatch",
+      },
+    ],
+  );
+});
+
+test("preserves a legacy active-to-active ownership transfer as canonical", () => {
+  const result = reduceOwnershipHistory("legacy-eval", [
+    historicalSnapshot(1, "legacy-eval", MAINTAINER_LOGIN),
+    // This transfer may predate today's standalone AUTHORS-only PR rule; the
+    // trusted first-parent state transition remains authoritative history.
+    historicalSnapshot(2, "legacy-eval", "upstream-org"),
+  ]);
+
+  assert.equal(result.active, true);
+  assert.equal(result.activeOwner, "upstream-org");
+  assert.equal(result.canonicalOwner, "upstream-org");
+  assert.deepEqual(result.violations, []);
+});
+
+const deletedOrgOwnedHistory = {
+  active: false,
+  activeOwner: null,
+  canonicalOwner: "evolvent-ai",
+  seen: true,
+  violations: [
+    {
+      actualOwner: MAINTAINER_LOGIN,
+      commit: historyCommit(7),
+      expectedOwner: "evolvent-ai",
+      type: "restore_owner_mismatch",
+    },
+  ],
+};
+
+const activeWrongRestoredHistory = {
+  active: true,
+  activeOwner: "wrong-restorer",
+  canonicalOwner: "evolvent-ai",
+  seen: true,
+  violations: [
+    {
+      actualOwner: "wrong-restorer",
+      commit: historyCommit(9),
+      expectedOwner: "evolvent-ai",
+      type: "restore_owner_mismatch",
+    },
+  ],
+};
+
+test("rejects even a maintainer restore under a non-canonical owner", async () => {
   await expectPolicyError(
     {
       actor: MAINTAINER_LOGIN,
       changedFiles: [
-        file("evals/org-owned/eval.yaml", "added"),
-        file("evals/org-owned/AUTHORS", "added"),
+        file("evals/rsibench-data/eval.yaml", "added"),
+        file("evals/rsibench-data/AUTHORS", "added"),
       ],
       head: {
-        "evals/org-owned/eval.yaml": "id: org-owned\nrunner: builtin\n",
-        "evals/org-owned/AUTHORS": "@zlab-princeton\n",
+        "evals/rsibench-data/eval.yaml":
+          "id: rsibench-data\nrunner: builtin\n",
+        "evals/rsibench-data/AUTHORS": `@${MAINTAINER_LOGIN}\n`,
       },
+      ownershipHistory: deletedOrgOwnedHistory,
     },
-    "author_mismatch",
+    "restore_owner_mismatch",
   );
 });
 
-test("rejects a maintainer reassigning AUTHORS of an existing eval", async () => {
+test("allows a canonical-owner restore with an update submission marker", async () => {
+  const result = await evaluate({
+    actor: MAINTAINER_LOGIN,
+    body: submissionBody("update", "rsibench-data"),
+    changedFiles: [
+      file("evals/rsibench-data/eval.yaml", "added"),
+      file("evals/rsibench-data/AUTHORS", "added"),
+    ],
+    head: {
+      "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+      "evals/rsibench-data/AUTHORS": "@evolvent-ai\n",
+    },
+    ownershipHistory: deletedOrgOwnedHistory,
+  });
+
+  assert.equal(result.mode, "community-eval-restore");
+  assert.equal(result.owner, "evolvent-ai");
+  assert.equal(result.historicalOwnershipViolations, 1);
+  assert.equal(result.submissionTask, taskId);
+});
+
+test("rejects a new submission marker for a restored slug", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      body: submissionBody("new", "rsibench-data"),
+      changedFiles: [file("evals/rsibench-data/eval.yaml", "added")],
+      head: {
+        "evals/rsibench-data/eval.yaml":
+          "id: rsibench-data\nrunner: builtin\n",
+        "evals/rsibench-data/AUTHORS": "@evolvent-ai\n",
+      },
+      ownershipHistory: deletedOrgOwnedHistory,
+    },
+    "submission_marker_kind_mismatch",
+  );
+});
+
+test("freezes content updates while an active eval has a non-canonical owner", async () => {
+  await expectPolicyError(
+    {
+      actor: "wrong-restorer",
+      body: submissionBody("update", "rsibench-data"),
+      changedFiles: [file("evals/rsibench-data/README.md")],
+      base: {
+        "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+        "evals/rsibench-data/AUTHORS": "@wrong-restorer\n",
+      },
+      head: {
+        "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+      },
+      ownershipHistory: activeWrongRestoredHistory,
+    },
+    "ownership_repair_required",
+  );
+});
+
+test("freezes maintainer proxy updates until active ownership is repaired", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      changedFiles: [file("evals/rsibench-data/README.md")],
+      base: {
+        "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+        "evals/rsibench-data/AUTHORS": "@wrong-restorer\n",
+      },
+      head: {
+        "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+      },
+      ownershipHistory: activeWrongRestoredHistory,
+    },
+    "ownership_repair_required",
+  );
+});
+
+test("allows a maintainer-only standalone repair to the canonical owner", async () => {
+  const result = await evaluate({
+    actor: MAINTAINER_LOGIN,
+    changedFiles: [file("evals/rsibench-data/AUTHORS")],
+    base: {
+      "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+      "evals/rsibench-data/AUTHORS": "@wrong-restorer\n",
+    },
+    head: {
+      "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+      "evals/rsibench-data/AUTHORS": "@evolvent-ai\n",
+    },
+    ownershipHistory: activeWrongRestoredHistory,
+  });
+
+  assert.equal(result.mode, "community-eval-update");
+  assert.equal(result.owner, "evolvent-ai");
+  assert.equal(result.historicalOwnershipViolations, 1);
+  assert.equal(result.submissionTask, null);
+});
+
+test("rejects a submission marker on an active ownership repair", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      body: submissionBody("update", "rsibench-data"),
+      changedFiles: [file("evals/rsibench-data/AUTHORS")],
+      base: {
+        "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+        "evals/rsibench-data/AUTHORS": "@wrong-restorer\n",
+      },
+      head: {
+        "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+        "evals/rsibench-data/AUTHORS": "@evolvent-ai\n",
+      },
+      ownershipHistory: activeWrongRestoredHistory,
+    },
+    "submission_marker_unexpected",
+  );
+});
+
+test("rejects replacing an active ownership anomaly with a third owner", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      changedFiles: [file("evals/rsibench-data/AUTHORS")],
+      base: {
+        "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+        "evals/rsibench-data/AUTHORS": "@wrong-restorer\n",
+      },
+      head: {
+        "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+        "evals/rsibench-data/AUTHORS": "@third-owner\n",
+      },
+      ownershipHistory: activeWrongRestoredHistory,
+    },
+    "ownership_repair_required",
+  );
+});
+
+test("rejects ownership history whose active owner disagrees with base AUTHORS", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      changedFiles: [file("evals/rsibench-data/README.md")],
+      base: {
+        "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+        "evals/rsibench-data/AUTHORS": "@wrong-restorer\n",
+      },
+      head: {
+        "evals/rsibench-data/eval.yaml": "id: rsibench-data\nrunner: builtin\n",
+      },
+      ownershipHistory: {
+        ...activeWrongRestoredHistory,
+        activeOwner: "someone-else",
+      },
+    },
+    "ownership_history_invalid",
+  );
+});
+
+test("fails closed when ownership history is unavailable", async () => {
+  await expectPolicyError(
+    {
+      changedFiles: [file("evals/sample-eval/eval.yaml", "added")],
+      head: {
+        "evals/sample-eval/AUTHORS": "@sample-author\n",
+        "evals/sample-eval/eval.yaml":
+          "id: sample-eval\nrunner: builtin\n",
+      },
+      ownershipHistoryError: new PullRequestPolicyError(
+        "ownership_history_unavailable",
+        "history unavailable",
+      ),
+    },
+    "ownership_history_unavailable",
+  );
+});
+
+test("fails closed on an active update when ownership history is unavailable", async () => {
+  await expectPolicyError(
+    {
+      body: submissionBody("update", "sample-eval"),
+      changedFiles: [file("evals/sample-eval/README.md")],
+      base: {
+        "evals/sample-eval/AUTHORS": "@sample-author\n",
+        "evals/sample-eval/eval.yaml": "id: sample-eval\nrunner: builtin\n",
+      },
+      head: {
+        "evals/sample-eval/eval.yaml": "id: sample-eval\nrunner: builtin\n",
+      },
+      ownershipHistoryError: new PullRequestPolicyError(
+        "ownership_history_unavailable",
+        "history unavailable",
+      ),
+    },
+    "ownership_history_unavailable",
+  );
+});
+
+test("fails closed on an unparseable historical AUTHORS file", () => {
+  assert.throws(
+    () =>
+      reduceOwnershipHistory("sample-eval", [
+        {
+          ...historicalSnapshot(1, "sample-eval", "sample-author"),
+          authors: "not-a-handle\n",
+        },
+      ]),
+    (error) =>
+      error instanceof PullRequestPolicyError &&
+      error.code === "ownership_history_invalid",
+  );
+});
+
+test("fails closed when the trusted checkout is shallow", async () => {
+  await assert.rejects(
+    readOwnershipHistoryFromGit({
+      repoRoot: "/trusted",
+      baseSha: "a".repeat(40),
+      slug: "sample-eval",
+      runGit: async (_repoRoot, args) => {
+        assert.deepEqual(args, ["rev-parse", "--is-shallow-repository"]);
+        return Buffer.from("true\n");
+      },
+    }),
+    (error) =>
+      error instanceof PullRequestPolicyError &&
+      error.code === "ownership_history_shallow",
+  );
+});
+
+test("fails closed when trusted checkout HEAD differs from the base SHA", async () => {
+  const trustedBaseSha = "a".repeat(40);
+  const calls = [];
+  await assert.rejects(
+    readOwnershipHistoryFromGit({
+      repoRoot: "/trusted",
+      baseSha: trustedBaseSha,
+      slug: "sample-eval",
+      runGit: async (_repoRoot, args) => {
+        calls.push(args);
+        if (args[0] === "rev-parse" && args[1] === "--is-shallow-repository") {
+          return Buffer.from("false\n");
+        }
+        if (args[0] === "rev-parse" && args[1] === "--verify") {
+          return Buffer.from(`${trustedBaseSha}\n`);
+        }
+        if (args[0] === "rev-parse" && args[1] === "HEAD") {
+          return Buffer.from(`${"b".repeat(40)}\n`);
+        }
+        assert.fail(`unexpected git invocation: ${args.join(" ")}`);
+      },
+    }),
+    (error) =>
+      error instanceof PullRequestPolicyError &&
+      error.code === "ownership_history_unavailable",
+  );
+  assert.deepEqual(calls, [
+    ["rev-parse", "--is-shallow-repository"],
+    ["rev-parse", "--verify", `${trustedBaseSha}^{commit}`],
+    ["rev-parse", "HEAD"],
+  ]);
+});
+
+test("replays the trusted first-parent git transcript into ownership state", async () => {
+  const trustedBaseSha = "a".repeat(40);
+  const createCommit = "1".repeat(40);
+  const transferCommit = "2".repeat(40);
+  const evalYamlPath = "evals/sample-eval/eval.yaml";
+  const authorsPath = "evals/sample-eval/AUTHORS";
+  const responses = new Map([
+    [["rev-parse", "--is-shallow-repository"].join("\0"), "false\n"],
+    [
+      ["rev-parse", "--verify", `${trustedBaseSha}^{commit}`].join("\0"),
+      `${trustedBaseSha}\n`,
+    ],
+    [["rev-parse", "HEAD"].join("\0"), `${trustedBaseSha}\n`],
+    [
+      [
+        "rev-list",
+        "--first-parent",
+        "--reverse",
+        trustedBaseSha,
+        "--",
+        evalYamlPath,
+        authorsPath,
+      ].join("\0"),
+      `${createCommit}\n${transferCommit}\n`,
+    ],
+  ]);
+  for (const [commit, owner] of [
+    [createCommit, MAINTAINER_LOGIN],
+    [transferCommit, "upstream-org"],
+  ]) {
+    responses.set(
+      ["ls-tree", "--name-only", commit, "--", evalYamlPath].join("\0"),
+      `${evalYamlPath}\n`,
+    );
+    responses.set(
+      ["ls-tree", "--name-only", commit, "--", authorsPath].join("\0"),
+      `${authorsPath}\n`,
+    );
+    responses.set(
+      ["show", "--no-ext-diff", "--no-textconv", `${commit}:${evalYamlPath}`].join("\0"),
+      "id: sample-eval\nrunner: builtin\n",
+    );
+    responses.set(
+      ["show", "--no-ext-diff", "--no-textconv", `${commit}:${authorsPath}`].join("\0"),
+      `@${owner}\n`,
+    );
+  }
+
+  const result = await readOwnershipHistoryFromGit({
+    repoRoot: "/trusted",
+    baseSha: trustedBaseSha,
+    slug: "sample-eval",
+    runGit: async (_repoRoot, args) => {
+      const response = responses.get(args.join("\0"));
+      assert.notEqual(response, undefined, `unexpected git invocation: ${args.join(" ")}`);
+      return Buffer.from(response);
+    },
+  });
+
+  assert.equal(result.active, true);
+  assert.equal(result.activeOwner, "upstream-org");
+  assert.equal(result.canonicalOwner, "upstream-org");
+  assert.deepEqual(result.violations, []);
+});
+
+test("maintainer may reassign AUTHORS of an existing eval", async () => {
+  const result = await evaluate({
+    actor: MAINTAINER_LOGIN,
+    changedFiles: [file("evals/ceo-bench/AUTHORS")],
+    base: {
+      "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
+      "evals/ceo-bench/AUTHORS": `@${MAINTAINER_LOGIN}\n`,
+    },
+    head: {
+      "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
+      "evals/ceo-bench/AUTHORS": "@zlab-princeton\n",
+    },
+  });
+
+  assert.equal(result.slug, "ceo-bench");
+  // owner/mode 报的是合入后的归属：迁移走了就不再算官方评测。
+  assert.equal(result.owner, "zlab-princeton");
+  assert.equal(result.mode, "community-eval-update");
+});
+
+test("rejects mixing an active ownership transfer with eval content", async () => {
   await expectPolicyError(
     {
       actor: MAINTAINER_LOGIN,
       changedFiles: [
         file("evals/ceo-bench/AUTHORS"),
-        file("evals/ceo-bench/eval.yaml"),
+        file("evals/ceo-bench/README.md"),
       ],
       base: {
         "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
@@ -391,10 +930,31 @@ test("rejects a maintainer reassigning AUTHORS of an existing eval", async () =>
         "evals/ceo-bench/AUTHORS": "@zlab-princeton\n",
       },
     },
-    "author_change_forbidden",
+    "ownership_transfer_mixed_with_content",
   );
 });
 
+test("rejects a submission marker on a standalone ownership transfer", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      body: submissionBody("update", "ceo-bench"),
+      changedFiles: [file("evals/ceo-bench/AUTHORS")],
+      base: {
+        "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
+        "evals/ceo-bench/AUTHORS": `@${MAINTAINER_LOGIN}\n`,
+      },
+      head: {
+        "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
+        "evals/ceo-bench/AUTHORS": "@zlab-princeton\n",
+      },
+    },
+    "submission_marker_unexpected",
+  );
+});
+
+// AUTHORS 变更后 owner 改读 head，因此「只删 AUTHORS、留下 eval.yaml」这条路不再
+// 落回 base 归属，而是明确报缺文件：已存在的评测集必须始终带 AUTHORS。
 test("rejects dropping AUTHORS from an eval that still exists", async () => {
   await expectPolicyError(
     {
@@ -406,23 +966,22 @@ test("rejects dropping AUTHORS from an eval that still exists", async () => {
       },
       head: { "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n" },
     },
-    "author_change_forbidden",
+    "required_file_missing",
   );
 });
 
-test("rejects a maintainer updating an eval owned by someone else", async () => {
-  await expectPolicyError(
-    {
-      actor: MAINTAINER_LOGIN,
-      changedFiles: [file("evals/ceo-bench/eval.yaml")],
-      base: {
-        "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
-        "evals/ceo-bench/AUTHORS": "@zlab-princeton\n",
-      },
-      head: { "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n" },
+test("maintainer may update an eval owned by someone else", async () => {
+  const result = await evaluate({
+    actor: MAINTAINER_LOGIN,
+    changedFiles: [file("evals/ceo-bench/eval.yaml")],
+    base: {
+      "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
+      "evals/ceo-bench/AUTHORS": "@zlab-princeton\n",
     },
-    "third_party_update_forbidden",
-  );
+    head: { "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n" },
+  });
+
+  assert.equal(result.owner, "zlab-princeton");
 });
 
 test("rejects changes to multiple eval slugs", async () => {
@@ -478,18 +1037,18 @@ test("rejects a contributor deleting an eval", async () => {
   );
 });
 
-test("rejects the maintainer deleting an eval", async () => {
-  await expectPolicyError(
-    {
-      actor: MAINTAINER_LOGIN,
-      changedFiles: [file("evals/sample-eval/eval.yaml", "removed")],
-      base: {
-        "evals/sample-eval/AUTHORS": "@sample-author\n",
-        "evals/sample-eval/eval.yaml": "id: sample-eval\n",
-      },
+test("allows the maintainer to delete an eval", async () => {
+  const result = await evaluate({
+    actor: MAINTAINER_LOGIN,
+    changedFiles: [file("evals/sample-eval/eval.yaml", "removed")],
+    base: {
+      "evals/sample-eval/AUTHORS": "@sample-author\n",
+      "evals/sample-eval/eval.yaml": "id: sample-eval\n",
     },
-    "eval_delete_forbidden",
-  );
+  });
+  assert.equal(result.mode, "maintainer-eval-delete");
+  assert.equal(result.slug, "sample-eval");
+  assert.equal(result.owner, "sample-author");
 });
 
 test("rejects renaming a slug", async () => {
@@ -637,7 +1196,7 @@ test("rejects a marker whose kind contradicts the change", async () => {
   );
 });
 
-test("rejects a marker on a maintenance pull request", async () => {
+test("rejects a marker on a maintenance or delete pull request", async () => {
   await expectPolicyError(
     {
       actor: MAINTAINER_LOGIN,
@@ -646,20 +1205,24 @@ test("rejects a marker on a maintenance pull request", async () => {
     },
     "submission_marker_unexpected",
   );
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      body: submissionBody("update", "sample-eval"),
+      changedFiles: [file("evals/sample-eval/eval.yaml", "removed")],
+      base: updateBase,
+    },
+    "submission_marker_unexpected",
+  );
 });
 
 test("keeps the marker optional for maintainer-authored submissions", async () => {
   const result = await evaluate({
     actor: MAINTAINER_LOGIN,
-    body: `AUTHORS: @${MAINTAINER_LOGIN}\n`,
-    changedFiles: [file("evals/official-eval/README.md")],
-    base: {
-      "evals/official-eval/AUTHORS": `@${MAINTAINER_LOGIN}\n`,
-      "evals/official-eval/eval.yaml": "id: official-eval\n",
-    },
-    head: { "evals/official-eval/eval.yaml": "id: official-eval\n" },
+    body: "AUTHORS: @sample-author\n",
+    ...updateOptions("AUTHORS: @sample-author\n"),
   });
-  assert.equal(result.mode, "official-eval-update");
+  assert.equal(result.mode, "community-eval-update");
   assert.equal(result.submissionTask, null);
 });
 
@@ -667,13 +1230,7 @@ test("still validates a marker the maintainer chose to include", async () => {
   await expectPolicyError(
     {
       actor: MAINTAINER_LOGIN,
-      body: submissionBody("update", "other-eval"),
-      changedFiles: [file("evals/official-eval/README.md")],
-      base: {
-        "evals/official-eval/AUTHORS": `@${MAINTAINER_LOGIN}\n`,
-        "evals/official-eval/eval.yaml": "id: official-eval\n",
-      },
-      head: { "evals/official-eval/eval.yaml": "id: official-eval\n" },
+      ...updateOptions(submissionBody("update", "other-eval")),
     },
     "submission_marker_slug_mismatch",
   );

@@ -28,7 +28,11 @@ Confirm only what cannot be learned safely:
 - the source repository or exact source directory;
 - the target slug for an update, if the link does not identify it.
 
-Work inside exactly one `evals/<slug>/` unless the task explicitly changes a shared repository contract. Do not rename an existing slug. Preserve the owner in `AUTHORS` for updates. Do not edit `.github/CODEOWNERS`; the repository-wide maintainer rule is separate from eval ownership, which the PR policy derives from `AUTHORS` and the trusted PR actor.
+Work inside exactly one `evals/<slug>/` unless the task explicitly changes a shared repository contract. Do not rename an existing slug and never edit `.github/CODEOWNERS` for an eval submission.
+
+Before classifying or editing a slug, inspect the complete first-parent history of the official `main` branch for both `evals/<slug>/eval.yaml` and `evals/<slug>/AUTHORS`. Resolve `<official-main-sha>` from the official remote as an immutable commit: for a pull request use its exact base SHA, and before reading history verify that the fetched local object and checked-out trusted base equal that SHA. Do not substitute a moving, cached, or merely local `main` ref. For example, run `git rev-list --first-parent --reverse <official-main-sha> -- <both paths>` and read the corresponding snapshots from that same trusted commit history. Reconstruct the canonical owner in order: the first active `AUTHORS` establishes it; every trusted active-to-active `AUTHORS` change is an authoritative historical transfer, including transfers that predate the current standalone-transfer rule; deletion preserves it; a restore under a different handle is a historical violation and must not update it. Treat no matching history as a creation and a previously deleted slug as a restoration. Fail closed if full history is shallow, stale, unavailable, incomplete, or unparseable, or if the trusted checkout does not equal the recorded base SHA.
+
+For a never-seen creation, `AUTHORS` matches the PR creator unless the maintainer is deliberately registering a verified organization. For a restoration, preserve the reconstructed canonical owner even when the maintainer opens the PR; the PR actor must be that canonical owner or the designated maintainer acting as proxy. An ordinary member of an organization is not interchangeable with the organization's GitHub login. For a valid active update, preserve base-branch `AUTHORS`; the maintainer may proxy content updates for that owner without changing ownership. If active `AUTHORS` differs from the canonical owner because of an invalid restore, pause every other eval change, including deletion, and first make a standalone maintainer `AUTHORS`-only repair back to the canonical owner. `upstream.repo`, a paper author, or a source organization is provenance and never by itself changes platform ownership. A prospective ownership transfer may start only from a valid active state and is a separate maintainer-only PR that changes only `AUTHORS`; do not combine repair or transfer with eval content, creation, restoration, deletion, or a submission marker. Submission-task markers use `kind=new` only for never-seen creation and `kind=update` for active content updates and restorations. A maintainer-authored manual restoration that is not associated with a submission task may omit the marker; if any marker is present, it must use the correct historical classification.
 
 Do not merge, deploy, or broaden the PR beyond the requested eval. Never place credentials, hidden files, archives, symlinks, or executable binaries in the eval directory. Do not reject a documented third-party runner merely because it uses model or network calls, environment variables, subprocesses, external tools, compute, or elevated permissions.
 
@@ -103,7 +107,7 @@ Never fabricate, interpolate, smooth, or backfill model scores, trend points, in
 
 ## Stage 4: implement reproducibly
 
-For a new eval, scaffold with `evalhub init <slug>`, then replace every placeholder. Keep fixtures small, bounded, and reviewable.
+For a never-seen eval, scaffold with `evalhub init <slug>`, then replace every placeholder. For a restoration, recover the canonical owner before authoring and keep it unchanged. If an active slug needs ownership repair, finish that standalone repair before changing eval content. Keep fixtures small, bounded, and reviewable.
 
 For custom runners, validate metadata and documentation rather than runtime behavior:
 
@@ -124,7 +128,7 @@ Set `score_policy: required` when submissions must already contain a numeric sco
 
 ## Stage 5: validate and review
 
-Run the repository gates from the evals repository root:
+Identify all repository gates from the evals repository root:
 
 ```bash
 npm ci --ignore-scripts
@@ -146,7 +150,7 @@ Do not make a custom-runner trial run a publication condition. The runner's actu
 - shared supplementary-view IDs keep one exact metadata contract across all published participants;
 - every task declares a unique stable slug-style ID, task references resolve, and each task ID appears no more than the configured `trials` count;
 - optional sections disappear cleanly when unsupported;
-- the diff stays within one eval directory and leaves `.github/CODEOWNERS` unchanged.
+- the diff stays within exactly one eval directory and does not touch `CODEOWNERS` or repository-level files.
 
 Complete this reader-readiness matrix from the final files before handoff. “Empty” is acceptable only when the source ledger or run evidence genuinely has no supported content; never fill a module to make the matrix look complete.
 
