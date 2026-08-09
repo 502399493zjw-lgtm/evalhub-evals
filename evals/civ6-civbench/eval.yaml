@@ -156,6 +156,32 @@ detail_profile:
             - { column_id: difficulty, value: Immortal }
             - { column_id: victory, value: 全部启用 }
             - { column_id: blind-spot, value: 难度情境 }
+    - id: score-evidence-boundary
+      label: 评分责任
+      title: 正式主分、游戏指标与参考证据
+      note: 参照完整详情页的信息层级，区分真实三局结果、上游诊断指标与不可发布的推测值。
+      caption: 只有作者核对同一运行的三局 .eval、telemetry、diary 与 log 后，三场胜率才成为正式主分。
+      source_url: https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/civbench.py
+      columns:
+        - { id: layer, label: 层级 }
+        - { id: authority, label: 形成方式 / 责任方 }
+        - { id: leaderboard, label: 是否进入主榜 }
+      rows:
+        - id: official-score
+          cells:
+            - { column_id: layer, value: 正式主分 }
+            - { column_id: authority, value: 三个固定场景的真实胜利数 ÷ 3；作者核对完整运行证据后认可 }
+            - { column_id: leaderboard, value: 完整三局后才是 }
+        - id: game-diagnostics
+          cells:
+            - { column_id: layer, value: 游戏与上游诊断指标 }
+            - { column_id: authority, value: 终局回合、游戏内分数、动作和经济等 scorer 指标，只解释对局过程 }
+            - { column_id: leaderboard, value: 否 }
+        - id: ai-estimate
+          cells:
+            - { column_id: layer, value: AI 总结或估分 }
+            - { column_id: authority, value: 可以辅助阅读日志，但不能替代真实三局、作者核验或平台成绩 }
+            - { column_id: leaderboard, value: 否 }
   resources_note: 协议、场景和运行代码均链接到作者的一手来源；参赛前应以固定 commit 的文件为准。完整游戏运行必须在外部作者环境完成，EvalHub CLI 只负责下载协议与 pack，不支持一键 run。
   resources:
     - title: civ6-mcp 作者仓库
