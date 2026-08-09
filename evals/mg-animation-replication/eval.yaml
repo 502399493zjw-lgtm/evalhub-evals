@@ -5,6 +5,7 @@ category: useful
 description: >-
   给多模态 Agent 一张人物参考图，要求它在离线工作目录中自由创作并实际制作一支 30 秒、1080×1920、带音轨的竖屏 MG 动画。
   作者观看完整成片并按参考图利用、创意、视觉运动、叙事节奏、声音、技术质量与品牌规范给出 0–100 分；未完成人工评审前不生成榜单分数。
+  当前可查看四支真实成片与代表帧，但技术验收通过不等于最终得分。
 hook_title: 只给一张人物图，Agent 能独立完成一支真正可看的 30 秒 MG 动画吗
 dimensions: [代码]
 interface: agent
@@ -30,7 +31,9 @@ detail_profile:
   source_kind: evalhub_native
   overview_note: >-
     当前协议采用最新文件状态的“单图自由创作 30 秒 MG 动画”题面。工程目录沿用历史名称，但历史题面、复测和对照信息
-    都不属于本评测，也不会进入成绩或证据区。
+    都不属于本评测，也不会进入成绩或证据区。当前提供四支真实同题成片和无分数代表帧供查看；它们均通过媒体规格自动验收，
+    但尚未完成七项人工评审，所以暂无已验证总分，这不等于 0 分。这是外部工作流：EvalHub CLI 只下载协议并 pack 外部清单，
+    不支持 `evalhub run mg-animation-replication`。
   summary:
     plain_language: >-
       Agent 只看到一张人物照片、品牌素材和完整题面。它要自己观察人物、构思主题、写脚本、画图形、做动画、安排镜头与转场、
@@ -77,6 +80,10 @@ detail_profile:
       description: 失败、超时或无产物不通过自动补跑来抬分；无效尝试不混入当前结果。
       source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
   caveats:
+    - title: 有真实成片，但暂无已验证总分
+      description: >-
+        四支 30 秒 MP4 与代表帧来自当前 2026-08-03 同题运行，SHA-256 见公开资产清单。技术规格自动验收只证明媒体合同通过；
+        七项人工评审尚未按最终口径完成，所以不创建 published-results，也不能把通过状态解释为 100 分。
     - title: 创意视频需要人工判断
       description: >-
         参考图利用、独特性、运动质量、叙事和声音无法由当前规格验证器可靠代替；作者评审仍可能受审美偏好影响。
@@ -93,7 +100,16 @@ detail_profile:
     - title: 历史题面不具可比性
       description: >-
         当前题不提供参考视频且鼓励自由创作；历史题面的输入、目标和评分不同，任何数字都不可合并。
-  resources_note: 以下链接指向本评测合并后的第一方协议、转换器和来源台账；原始人物图、Logo、字体和模型成片不在投稿仓库中公开分发。
+  figures:
+    - id: mg-current-four-model-overview
+      placement: insights
+      label: 真实示例 · 未核分
+      title: 当前同题四模型代表帧
+      src: https://github.com/FrichXi/funeralai-web4/blob/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/mg-four-model-overview.png?raw=1
+      alt: GPT-5.6-Sol、Kimi-K3、Qwen3.8-Max 与 Doubao-Seed-Evolving 四支真实 MG 成片的代表帧并排总览
+      caption: 当前题目的真实代表帧，不含榜单分数；画面保留任务要求的原始 model-badge，没有为投稿重复加 Logo 或改造成证据卡片。
+      source_url: https://github.com/FrichXi/funeralai-web4/blob/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/mg-four-model-overview.png
+  resources_note: 以下链接包含第一方协议、转换器、真实未核分成片和 SHA-256 清单。人物输入不公开；EvalHub CLI 只负责 fetch/pack，不支持一键 run。
   resources:
     - title: 葬AI 单图 MG 视频 Bench 协议目录
       summary: 完整题面、七项评分量表、媒体合同、外部提交清单、证据边界和无网络转换器。
@@ -101,6 +117,21 @@ detail_profile:
     - title: EvalHub 评测集仓库
       summary: 本协议的版本历史、审阅记录和后续可比性修订均以该仓库为准。
       url: https://github.com/502399493zjw-lgtm/evalhub-evals
+    - title: 播放 GPT-5.6-Sol 真实成片
+      summary: 当前同题 30 秒 MP4；技术验收通过但尚未完成最终人工评分。
+      url: https://github.com/FrichXi/funeralai-web4/raw/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/GPT-5.6-Sol.mp4
+    - title: 播放 Kimi-K3 真实成片
+      summary: 当前同题 30 秒 MP4；技术验收通过但尚未完成最终人工评分。
+      url: https://github.com/FrichXi/funeralai-web4/raw/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Kimi-K3.mp4
+    - title: 播放 Qwen3.8-Max 真实成片
+      summary: 当前同题 30 秒 MP4；技术验收通过但尚未完成最终人工评分。
+      url: https://github.com/FrichXi/funeralai-web4/raw/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Qwen3.8-Max.mp4
+    - title: 播放 Doubao-Seed-Evolving 真实成片
+      summary: 当前同题 30 秒 MP4；技术验收通过但尚未完成最终人工评分。
+      url: https://github.com/FrichXi/funeralai-web4/raw/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Doubao-Seed-Evolving.mp4
+    - title: 真实未核分示例资产与 SHA-256 清单
+      summary: 四支成片、代表帧、来源任务和证据边界；用于核验产物，不代表已发布排行榜成绩。
+      url: https://github.com/FrichXi/funeralai-web4/tree/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809
 tasks:
   - id: mg-animation-image-creative-v2-20260803
     label: 单图自由创作 30 秒 MG 动画
