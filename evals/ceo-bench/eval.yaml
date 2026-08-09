@@ -152,116 +152,117 @@ detail_profile:
     - id: action-space
       label: 动作空间
       title: Agent 每周可调用的 8 类业务动作
-      note: 逐格转录自 ceobench.com 2026-08-09 快照的 action-space 表，未增删行列，也未改写示例工具名。
+      note: >-
+        译自 ceobench.com 2026-08-09 快照的 action-space 表，未增删行列；工具名是代码标识符，保留上游原文以便对照。
       caption: 一周之内这些动作可以任意次调用，Agent 自己决定何时进入下一周。
       source_url: https://ceobench.com
       columns:
-        - { id: category, label: Category }
-        - { id: actions, label: Actions }
-        - { id: tools, label: Example tools }
+        - { id: category, label: 动作类别 }
+        - { id: actions, label: 可做的事 }
+        - { id: tools, label: 示例工具 }
       rows:
         - id: database-query
           cells:
             - column_id: category
-              value: Database query
+              value: 数据库查询
             - column_id: actions
-              value: Query 19 business SQL databases and conduct data analytics
+              value: 查询 19 张业务 SQL 数据库表并做数据分析
             - column_id: tools
               value: query
         - id: pricing
           cells:
             - column_id: category
-              value: Pricing and monetization
+              value: 定价与变现
             - column_id: actions
-              value: Set prices, usage quotas, discounts, and in-product ads
+              value: 设定价格、用量配额、折扣与产品内广告
             - column_id: tools
               value: pricing.set_prices, pricing.set_usage_quotas
         - id: growth
           cells:
             - column_id: category
-              value: Growth and market expansion
+              value: 增长与市场拓展
             - column_id: actions
-              value: Allocate targeted advertising spend and promotion across channels and customer groups
+              value: 在各渠道与客群之间分配定向广告投放与促销
             - column_id: tools
               value: marketing.set_targeted_ad_spend, marketing.set_lead_promotion
         - id: product-rd
           cells:
             - column_id: category
-              value: Product quality and R&D
+              value: 产品质量与研发
             - column_id: actions
-              value: Choose model tiers, fund day-to-day development, and launch research projects
+              value: 选择模型档位、投入日常开发、立项研究项目
             - column_id: tools
               value: pricing.set_model_tiers, research.start_research_project
         - id: operations
           cells:
             - column_id: category
-              value: Operations and reliability
+              value: 运维与可靠性
             - column_id: actions
-              value: Buy infrastructure capacity and fund customer support
+              value: 采购基础设施算力并投入客户支持
             - column_id: tools
               value: infrastructure.set_capacity_tier, analytics.set_targeted_ops_spend
         - id: enterprise-sales
           cells:
             - column_id: category
-              value: Enterprise sales
+              value: 企业销售
             - column_id: actions
-              value: Conduct multi-turn negotiations over price and plan with enterprise prospects and renewals
+              value: 与企业潜客和续约客户就价格与套餐进行多轮议价
             - column_id: tools
               value: enterprise.send_enterprise_deal, enterprise.reject_enterprise_deal
         - id: information
           cells:
             - column_id: category
-              value: Information acquisition
+              value: 信息获取
             - column_id: actions
-              value: Pay for market research to discover new customer groups and learn more about existing groups
+              value: 付费做市场调研以发现新客群，并加深对已知客群的了解
             - column_id: tools
               value: market.research_market, market.research_group
         - id: public-communication
           cells:
             - column_id: category
-              value: Public communication
+              value: 公开发声
             - column_id: actions
               value: >-
-                Monitor social media for customer complaints, competitor news, and economic trends, then post or
-                reply to influence growth
+                监控社交媒体上的客户投诉、竞品动态与经济趋势，再通过发帖或回复影响增长
             - column_id: tools
               value: marketing.post_social_media, analytics.get_social_posts
     - id: stochastic-processes
       label: 随机过程
       title: 模拟器里的五类随机过程
-      note: 逐格转录自 ceobench.com 2026-08-09 快照的随机过程表，未增删行列。
+      note: >-
+        译自 ceobench.com 2026-08-09 快照的随机过程表，未增删行列；分布名沿用通用中文译名并附英文原文。
       caption: 这些分布决定了同一策略在三次运行里可能得到完全不同的结果。
       source_url: https://ceobench.com
       columns:
-        - { id: distribution, label: Distribution }
-        - { id: usage, label: Example use in simulator }
-        - { id: motivation, label: Motivation }
+        - { id: distribution, label: 分布 }
+        - { id: usage, label: 在模拟器里的用法举例 }
+        - { id: motivation, label: 为什么用它 }
       rows:
         - id: normal
           cells:
-            - { column_id: distribution, value: Normal }
-            - { column_id: usage, value: R&D project quality gain }
-            - { column_id: motivation, value: Captures uncertain payoff }
+            - { column_id: distribution, value: 正态分布（Normal） }
+            - { column_id: usage, value: 研发项目的质量增益 }
+            - { column_id: motivation, value: 刻画回报的不确定性 }
         - id: poisson
           cells:
-            - { column_id: distribution, value: Poisson }
-            - { column_id: usage, value: Daily new prospective customers for a group }
-            - { column_id: motivation, value: Models rate-based counts }
+            - { column_id: distribution, value: 泊松分布（Poisson） }
+            - { column_id: usage, value: 某个客群每日新增的潜在客户数 }
+            - { column_id: motivation, value: 刻画按速率发生的计数 }
         - id: bernoulli
           cells:
-            - { column_id: distribution, value: Bernoulli }
-            - { column_id: usage, value: Involuntary cancellation event }
-            - { column_id: motivation, value: Models binary shocks }
+            - { column_id: distribution, value: 伯努利分布（Bernoulli） }
+            - { column_id: usage, value: 非自愿流失事件 }
+            - { column_id: motivation, value: 刻画二值冲击 }
         - id: uniform
           cells:
-            - { column_id: distribution, value: Uniform }
-            - { column_id: usage, value: Reputation damage noise }
-            - { column_id: motivation, value: Adds bounded uncertainty }
+            - { column_id: distribution, value: 均匀分布（Uniform） }
+            - { column_id: usage, value: 声誉损伤的噪声 }
+            - { column_id: motivation, value: 加入有界的不确定性 }
         - id: log-normal
           cells:
-            - { column_id: distribution, value: Log-normal }
-            - { column_id: usage, value: Competitor quality-jump magnitude }
-            - { column_id: motivation, value: Models skewed positive shocks }
+            - { column_id: distribution, value: 对数正态分布（Log-normal） }
+            - { column_id: usage, value: 竞品质量跃升的幅度 }
+            - { column_id: motivation, value: 刻画右偏的正向冲击 }
   figures:
     - id: world-mechanics
       label: 世界机制
