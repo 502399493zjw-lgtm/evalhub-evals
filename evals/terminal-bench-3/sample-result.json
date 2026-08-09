@@ -1,0 +1,469 @@
+{
+  "eval_id": "terminal-bench-3",
+  "submission": {
+    "kind": "run",
+    "runner_version": "terminal-bench-3/pack-to-result@1.0.0",
+    "run_date": "2026-08-09"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-terminal-agent",
+        "harness": "example-harness",
+        "harness_version": "0.0.0-example"
+      },
+      "score": 20.27027,
+      "raw_metric": {
+        "label": "74 题通过率",
+        "value": "15/74",
+        "tiebreak_value": 20.27027
+      },
+      "detail": "在钉死的上游 tag v3.0.0（commit 2b0442c3c583b710ca8da14c8e601b99f2f1f244）全部 74 道题上各跑一次，数据集 frontier-bench/frontier-bench，Harbor job example/synthetic-harbor-job-0001。主分数 = 通过题数 ÷ 74 × 100 = 15 ÷ 74 × 100 = 20.27027。每题为二元判定，由与 Agent 隔离的独立 verifier 容器给出，不给部分分、不因超时或环境失败豁免。证据指纹 6558c623f6314973369a4891ef9a8bc010f75bcac53faaedf75b9e30724c9448，提交清单 sha256=22c665ea5b0bc815045fb848d5677f395607e20d8c9c193c86548a71d8458d38。题数与分母由转换器内置，不接受提交方覆盖。",
+      "task_results": [
+        {
+          "task_id": "atrx-vep-crispr",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "batched-eval-parity",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "biped-contact-dynamics",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "bun-sourcemap-leak",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "cad-model",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "cargo-flight-dispatch",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "cli-2ph-simplex",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "coq-block-bound",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "ctr-optimization",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "cumulative-layout-shift",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "data-anonymization",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "distributed-dedup",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "embedding-drift-monitor",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "erp-procurement-planning",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "exam-pdf-eval",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "fin-saccr-rwa",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "fix-uautomizer-soundness",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "foodstuff-beta-activity",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "formal-crypto",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "fp8-rmsnorm-gemm",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "freecad-impeller",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "freecad-platform-drawing",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "freecad-spring-clip",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "freight-dispatch-shift",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "glycan-ms2-elucidation",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "gpt2-codegolf",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "gsea-proteomics",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "heat-pump-warranty",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "hof-topology-interpenetration",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "html-js-filter",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "ico-path-patch",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "interleaved-vigenere",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "intrastat-meldung",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "jax-speedrun-gpu",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "ks-solver-cpp",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "kv-live-surgery",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "lake-temp-glm",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "layout-config-recreation",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "layout-config-recreation2",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "lean-midpoint-proof",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "legacy-utility-triage",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "live-database-cutover",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "math-eval-grader",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "medical-claims-processing",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "memcached-backdoor",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "mp-checkpoint-consolidation",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "music-harmony",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "mvcc-lsm-compaction",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "nextjs-performance",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "ontology-kg-querying",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "payments-pipeline-fix",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "photonic-waveguide-routing",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "pretrain-shard-corruption",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "production-planning",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "protein-autointerp-disulfide",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "react-lead-form",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "retro-console-soc",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "risk-scorer-replay",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "roy-polymorph-cn",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "rs-archive-clone",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "satb-audio-transcription",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "session-window-debug",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "sglang-qwen-burst",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "shadow-relay",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "sound-change-cascade",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "takens-embedding-lean",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "telecom-entity-resolution",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "uefi-bootkit",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "vba-userform-port",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "vf2-speedup-networkx",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "vllm-deepseek-streaming",
+          "score": 100,
+          "raw": "pass"
+        },
+        {
+          "task_id": "vpp-loss-divergence",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "wal-recovery-ordering",
+          "score": 0,
+          "raw": "fail"
+        },
+        {
+          "task_id": "wdm-design",
+          "score": 0,
+          "raw": "fail"
+        }
+      ],
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "run-domain-breakdown",
+          "label": "本次分域",
+          "title": "本次运行的分域通过情况",
+          "columns": [
+            "域",
+            "题数",
+            "通过题数",
+            "通过率"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Software",
+                20,
+                4,
+                20
+              ]
+            },
+            {
+              "cells": [
+                "Science",
+                15,
+                2,
+                13.333333
+              ]
+            },
+            {
+              "cells": [
+                "ML",
+                13,
+                3,
+                23.076923
+              ]
+            },
+            {
+              "cells": [
+                "Operations",
+                10,
+                3,
+                30
+              ]
+            },
+            {
+              "cells": [
+                "Security",
+                7,
+                1,
+                14.285714
+              ]
+            },
+            {
+              "cells": [
+                "Hardware",
+                5,
+                1,
+                20
+              ]
+            },
+            {
+              "cells": [
+                "Media",
+                4,
+                1,
+                25
+              ]
+            }
+          ],
+          "note": "分域统计由转换器按 eval.yaml 里每题的域标注确定性汇总，仅解释主分数，不参与排名；上游官方榜单不发表分域成绩。"
+        }
+      ]
+    }
+  ]
+}

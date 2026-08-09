@@ -1,0 +1,389 @@
+{
+  "manifest_version": 1,
+  "eval_id": "terminal-bench-3",
+  "protocol_revision": 1,
+  "upstream_commit": "2b0442c3c583b710ca8da14c8e601b99f2f1f244",
+  "upstream_dataset": "frontier-bench/frontier-bench",
+  "participant": {
+    "model": "example/synthetic-terminal-agent",
+    "harness": "example-harness",
+    "harness_version": "0.0.0-example"
+  },
+  "run_date": "2026-08-09",
+  "harbor_job": {
+    "job_id": "example/synthetic-harbor-job-0001",
+    "evidence_sha256": "6558c623f6314973369a4891ef9a8bc010f75bcac53faaedf75b9e30724c9448"
+  },
+  "tasks": [
+    {
+      "task_id": "atrx-vep-crispr",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "batched-eval-parity",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "biped-contact-dynamics",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "bun-sourcemap-leak",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "cad-model",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "cargo-flight-dispatch",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "cli-2ph-simplex",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "coq-block-bound",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "ctr-optimization",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "cumulative-layout-shift",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "data-anonymization",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "distributed-dedup",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "embedding-drift-monitor",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "erp-procurement-planning",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "exam-pdf-eval",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "fin-saccr-rwa",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "fix-uautomizer-soundness",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "foodstuff-beta-activity",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "formal-crypto",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "fp8-rmsnorm-gemm",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "freecad-impeller",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "freecad-platform-drawing",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "freecad-spring-clip",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "freight-dispatch-shift",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "glycan-ms2-elucidation",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "gpt2-codegolf",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "gsea-proteomics",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "heat-pump-warranty",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "hof-topology-interpenetration",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "html-js-filter",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "ico-path-patch",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "interleaved-vigenere",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "intrastat-meldung",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "jax-speedrun-gpu",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "ks-solver-cpp",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "kv-live-surgery",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "lake-temp-glm",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "layout-config-recreation",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "layout-config-recreation2",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "lean-midpoint-proof",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "legacy-utility-triage",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "live-database-cutover",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "math-eval-grader",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "medical-claims-processing",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "memcached-backdoor",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "mp-checkpoint-consolidation",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "music-harmony",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "mvcc-lsm-compaction",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "nextjs-performance",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "ontology-kg-querying",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "payments-pipeline-fix",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "photonic-waveguide-routing",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "pretrain-shard-corruption",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "production-planning",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "protein-autointerp-disulfide",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "react-lead-form",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "retro-console-soc",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "risk-scorer-replay",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "roy-polymorph-cn",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "rs-archive-clone",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "satb-audio-transcription",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "session-window-debug",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "sglang-qwen-burst",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "shadow-relay",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "sound-change-cascade",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "takens-embedding-lean",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "telecom-entity-resolution",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "uefi-bootkit",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "vba-userform-port",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "vf2-speedup-networkx",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "vllm-deepseek-streaming",
+      "passed": true,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "vpp-loss-divergence",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "wal-recovery-ordering",
+      "passed": false,
+      "verifier_separate": true
+    },
+    {
+      "task_id": "wdm-design",
+      "passed": false,
+      "verifier_separate": true
+    }
+  ]
+}
