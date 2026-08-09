@@ -16,7 +16,7 @@
         "model": "moonshot/kimi-k3"
       },
       "score": 22148357,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$22,148,357（存活 500/500 天），三次运行平均存活 386.0 ± 161.2 天，每周操作 14.81 轮，破产 1/3。榜单排名：第 1 名（官方口径）。官方站点展示名为「Kimi K3」，映射到 EvalHub 模型注册表中的 moonshot/kimi-k3；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。 官方参照项：Rule-based baseline 最佳运行现金 $15,756,408；Estimated final cash upper bound $2,200,000,000。",
+      "detail": "官方榜单第 1 名，站点展示名「Kimi K3」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -24,42 +24,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "1/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$22,148,357"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "386.0 ± 161.2"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "1/3",
+                500,
+                "386.0 ± 161.2",
                 14.81
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Kimi K3」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -73,7 +53,7 @@
         "model": "anthropic/claude-fable-5"
       },
       "score": 12630078,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$12,630,078（存活 500/500 天），三次运行平均存活 461.7 ± 54.2 天，每周操作 9.86 轮，破产 1/3。榜单排名：第 2 名（官方口径）。官方站点展示名为「Claude Fable 5」，映射到 EvalHub 模型注册表中的 anthropic/claude-fable-5；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 2 名，站点展示名「Claude Fable 5」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -81,42 +61,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "1/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$12,630,078"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "461.7 ± 54.2"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "1/3",
+                500,
+                "461.7 ± 54.2",
                 9.86
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Claude Fable 5」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -130,7 +90,7 @@
         "model": "openai/gpt-5.6-sol"
       },
       "score": 11313982,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$11,313,982（存活 500/500 天），三次运行平均存活 294.0 ± 145.7 天，每周操作 25.96 轮，破产 2/3。榜单排名：第 3 名（官方口径）。官方站点展示名为「GPT-5.6 Sol」，映射到 EvalHub 模型注册表中的 openai/gpt-5.6-sol；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 3 名，站点展示名「GPT-5.6 Sol」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -138,42 +98,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "2/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$11,313,982"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "294.0 ± 145.7"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "2/3",
+                500,
+                "294.0 ± 145.7",
                 25.96
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「GPT-5.6 Sol」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -187,7 +127,7 @@
         "model": "anthropic/claude-opus-4-8"
       },
       "score": 2399209,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$2,399,209（存活 500/500 天），三次运行平均存活 378.0 ± 172.5 天，每周操作 16.64 轮，破产 1/3。榜单排名：第 4 名（官方口径）。官方站点展示名为「Claude Opus 4.8」，映射到 EvalHub 模型注册表中的 anthropic/claude-opus-4-8；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 4 名，站点展示名「Claude Opus 4.8」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -195,42 +135,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "1/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$2,399,209"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "378.0 ± 172.5"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "1/3",
+                500,
+                "378.0 ± 172.5",
                 16.64
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Claude Opus 4.8」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -244,7 +164,7 @@
         "model": "alibaba/qwen3.7-max"
       },
       "score": 365346,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$365,346（存活 500/500 天），三次运行平均存活 500.0 ± 0.0 天，每周操作 7.82 轮，破产 0/3。榜单排名：第 5 名（官方口径）。官方站点展示名为「Qwen 3.7 Max」，映射到 EvalHub 模型注册表中的 alibaba/qwen3.7-max；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 5 名，站点展示名「Qwen 3.7 Max」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -252,42 +172,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "0/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$365,346"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "500.0 ± 0.0"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "0/3",
+                500,
+                "500.0 ± 0.0",
                 7.82
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Qwen 3.7 Max」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -301,7 +201,7 @@
         "model": "google/gemini-3.5-flash"
       },
       "score": 75126,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$75,126（存活 500/500 天），三次运行平均存活 500.0 ± 0.0 天，每周操作 58.37 轮，破产 0/3。榜单排名：第 6 名（官方口径）。官方站点展示名为「Gemini 3.5 Flash」，映射到 EvalHub 模型注册表中的 google/gemini-3.5-flash；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 6 名，站点展示名「Gemini 3.5 Flash」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -309,42 +209,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "0/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$75,126"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "500.0 ± 0.0"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "0/3",
+                500,
+                "500.0 ± 0.0",
                 58.37
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Gemini 3.5 Flash」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -358,7 +238,7 @@
         "model": "anthropic/claude-opus-4-7"
       },
       "score": 70620,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$70,620（存活 500/500 天），三次运行平均存活 414.3 ± 121.2 天，每周操作 14.33 轮，破产 1/3。榜单排名：第 7 名（官方口径）。官方站点展示名为「Claude Opus 4.7」，映射到 EvalHub 模型注册表中的 anthropic/claude-opus-4-7；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 7 名，站点展示名「Claude Opus 4.7」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -366,42 +246,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "1/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$70,620"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "414.3 ± 121.2"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "1/3",
+                500,
+                "414.3 ± 121.2",
                 14.33
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Claude Opus 4.7」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -415,7 +275,7 @@
         "model": "anthropic/claude-sonnet-5"
       },
       "score": 64459,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$64,459（存活 500/500 天），三次运行平均存活 470.7 ± 41.5 天，每周操作 20.5 轮，破产 1/3。榜单排名：第 8 名（官方口径）。官方站点展示名为「Claude Sonnet 5」，映射到 EvalHub 模型注册表中的 anthropic/claude-sonnet-5；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 8 名，站点展示名「Claude Sonnet 5」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -423,42 +283,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "1/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$64,459"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "470.7 ± 41.5"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "1/3",
+                500,
+                "470.7 ± 41.5",
                 20.5
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Claude Sonnet 5」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -472,7 +312,7 @@
         "model": "anthropic/claude-haiku-4-5"
       },
       "score": 59625,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$59,625（存活 500/500 天），三次运行平均存活 286.3 ± 153.3 天，每周操作 19.35 轮，破产 2/3。榜单排名：第 9 名（官方口径）。官方站点展示名为「Claude Haiku 4.5」，映射到 EvalHub 模型注册表中的 anthropic/claude-haiku-4-5；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 9 名，站点展示名「Claude Haiku 4.5」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -480,42 +320,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "2/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$59,625"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "286.3 ± 153.3"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "2/3",
+                500,
+                "286.3 ± 153.3",
                 19.35
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Claude Haiku 4.5」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -529,7 +349,7 @@
         "model": "zai/glm-5.2"
       },
       "score": 54327,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$54,327（存活 500/500 天），三次运行平均存活 376.7 ± 105.6 天，每周操作 25.24 轮，破产 2/3。榜单排名：第 10 名（官方口径）。官方站点展示名为「GLM 5.2」，映射到 EvalHub 模型注册表中的 zai/glm-5.2；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 10 名，站点展示名「GLM 5.2」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -537,42 +357,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "2/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$54,327"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "376.7 ± 105.6"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "2/3",
+                500,
+                "376.7 ± 105.6",
                 25.24
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「GLM 5.2」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -586,7 +386,7 @@
         "model": "moonshot/kimi-k2.6"
       },
       "score": 43598,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$43,598（存活 500/500 天），三次运行平均存活 500.0 ± 0.0 天，每周操作 16.64 轮，破产 0/3。榜单排名：第 11 名（官方口径）。官方站点展示名为「Kimi K2.6」，映射到 EvalHub 模型注册表中的 moonshot/kimi-k2.6；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 11 名，站点展示名「Kimi K2.6」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -594,42 +394,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "0/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$43,598"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "500.0 ± 0.0"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "0/3",
+                500,
+                "500.0 ± 0.0",
                 16.64
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Kimi K2.6」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -643,7 +423,7 @@
         "model": "anthropic/claude-sonnet-4-6"
       },
       "score": 38166,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$38,166（存活 500/500 天），三次运行平均存活 419.3 ± 114.1 天，每周操作 14.37 轮，破产 1/3。榜单排名：第 12 名（官方口径）。官方站点展示名为「Claude Sonnet 4.6」，映射到 EvalHub 模型注册表中的 anthropic/claude-sonnet-4-6；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 12 名，站点展示名「Claude Sonnet 4.6」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -651,42 +431,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "1/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$38,166"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "419.3 ± 114.1"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "1/3",
+                500,
+                "419.3 ± 114.1",
                 14.37
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Claude Sonnet 4.6」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -700,7 +460,7 @@
         "model": "openai/gpt-5.5"
       },
       "score": 33260,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$33,260（存活 500/500 天），三次运行平均存活 401.0 ± 98.3 天，每周操作 30.41 轮，破产 2/3。榜单排名：第 13 名（官方口径）。官方站点展示名为「GPT-5.5」，映射到 EvalHub 模型注册表中的 openai/gpt-5.5；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 13 名，站点展示名「GPT-5.5」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -708,42 +468,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "2/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$33,260"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "401.0 ± 98.3"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "2/3",
+                500,
+                "401.0 ± 98.3",
                 30.41
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「GPT-5.5」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -757,7 +497,7 @@
         "model": "xai/grok-4.5"
       },
       "score": 15909,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$15,909（存活 500/500 天），三次运行平均存活 289.0 ± 154.0 天，每周操作 21.01 轮，破产 2/3。榜单排名：第 14 名（官方口径）。官方站点展示名为「Grok 4.5」，映射到 EvalHub 模型注册表中的 xai/grok-4.5；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 14 名，站点展示名「Grok 4.5」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -765,42 +505,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "2/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$15,909"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                500
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "289.0 ± 154.0"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "2/3",
+                500,
+                "289.0 ± 154.0",
                 21.01
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Grok 4.5」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -814,7 +534,7 @@
         "model": "zai/glm-5.1"
       },
       "score": 0,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$0（存活 319/500 天），三次运行平均存活 155.7 ± 130.0 天，每周操作 98.66 轮，破产 3/3。榜单排名：第 15 名（官方口径）。官方站点展示名为「GLM 5.1」，映射到 EvalHub 模型注册表中的 zai/glm-5.1；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 15 名，站点展示名「GLM 5.1」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -822,42 +542,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "3/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$0"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                319
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "155.7 ± 130.0"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "3/3",
+                319,
+                "155.7 ± 130.0",
                 98.66
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「GLM 5.1」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -871,7 +571,7 @@
         "model": "deepseek/deepseek-v4-pro"
       },
       "score": 0,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$0（存活 160/500 天），三次运行平均存活 136.3 ± 23.7 天，每周操作 21.85 轮，破产 3/3。榜单排名：第 16 名（官方口径）。官方站点展示名为「DeepSeek V4 Pro」，映射到 EvalHub 模型注册表中的 deepseek/deepseek-v4-pro；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 16 名，站点展示名「DeepSeek V4 Pro」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -879,42 +579,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "3/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$0"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                160
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "136.3 ± 23.7"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "3/3",
+                160,
+                "136.3 ± 23.7",
                 21.85
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「DeepSeek V4 Pro」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -928,7 +608,7 @@
         "model": "google/gemini-3-flash-preview"
       },
       "score": 0,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$0（存活 150/500 天），三次运行平均存活 137.0 ± 10.2 天，每周操作 15.81 轮，破产 3/3。榜单排名：第 17 名（官方口径）。官方站点展示名为「Gemini 3 Flash」，映射到 EvalHub 模型注册表中的 google/gemini-3-flash-preview；官方站点的模型 API 标识即为 google/gemini-3-flash-preview。这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 17 名，站点展示名「Gemini 3 Flash」，对应模型 API 标识 google/gemini-3-flash-preview。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -936,42 +616,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "3/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$0"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                150
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "137.0 ± 10.2"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "3/3",
+                150,
+                "137.0 ± 10.2",
                 15.81
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Gemini 3 Flash」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
@@ -985,7 +645,7 @@
         "model": "xai/grok-4.20"
       },
       "score": 0,
-      "detail": "主要成绩为最佳运行结束现金（best-run，先比最长存活天数再比结束现金，与官方榜单口径一致）：$0（存活 59/500 天），三次运行平均存活 36.0 ± 18.4 天，每周操作 13.49 轮，破产 3/3。榜单排名：第 18 名（官方口径）。官方站点展示名为「Grok 4.20」，映射到 EvalHub 模型注册表中的 xai/grok-4.20；这是来源转录，不是 EvalHub 独立复跑。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。",
+      "detail": "官方榜单第 18 名，站点展示名「Grok 4.20」。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -993,42 +653,22 @@
           "label": "官方运行统计",
           "title": "官方发表的三次运行统计",
           "columns": [
-            "指标",
-            "官方发表值"
+            "破产（3 次运行）",
+            "最长存活天数",
+            "平均存活天数（± 标准差）",
+            "每周操作轮数"
           ],
           "rows": [
             {
               "cells": [
-                "破产（3 次运行中）",
-                "3/3"
-              ]
-            },
-            {
-              "cells": [
-                "最佳运行结束现金",
-                "$0"
-              ]
-            },
-            {
-              "cells": [
-                "最长存活天数（上限 500）",
-                59
-              ]
-            },
-            {
-              "cells": [
-                "平均存活天数（± 标准差）",
-                "36.0 ± 18.4"
-              ]
-            },
-            {
-              "cells": [
-                "每周操作轮数",
+                "3/3",
+                59,
+                "36.0 ± 18.4",
                 13.49
               ]
             }
           ],
-          "note": "逐格转录自官方榜单表中「Grok 4.20」一行的 Bankruptcy / Best-run cash / Max survival days / Mean survival days / Turns/week 五列，未做换算或补齐。官方同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408，Estimated final cash upper bound $2,200,000,000；两者不是模型，不作为参赛条目收录。展示用，不参与排名。来源：ceobench.com 2026-08-09 快照（sha256 97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292）。"
+          "note": "逐格转录自 ceobench.com 官方榜单表，未换算或补齐。同表另有两个非参赛参照行：Rule-based baseline 最佳运行现金 $15,756,408、Estimated final cash upper bound $2,200,000,000，两者不是模型，不作为参赛条目。展示用，不参与排名。"
         }
       ],
       "raw_metric": {
