@@ -11,7 +11,7 @@
 | [葬AI Benchmark 当前榜单](https://funeralai.cc/test/) | release `web4-graph-v2-leaderboard-20260804-v2`；2026-08-09 获取；HTML sha256 `957c69c46857f19325feecb51244e5fa16401d838e575510854adec93f1a388d` | 16 个模型的最终均分、中位数、用时、调用、成本与性价比 | `published-results/official-web4-graph-v2-2026-08-04.json` | 只转录最终 release 汇总；不展示逐轮或其他批次信息；不是 EvalHub 独立复跑 |
 | [当前方法说明](https://funeralai.cc/test/methodology/) | 2026-08-09 获取；HTML sha256 `e42d4f4213eb8d14c33e548caecca6c9cff5b33cc805cbfa2354a20aee60d34d` | 11 项权重、10 轮口径、失败记零、成本与性价比边界 | `eval.yaml` 方法、局限和评分表 | 只转录页面明确发布的信息 |
 | [历史公开框架仓库](https://github.com/FrichXi/personal-work-benchmark) | 公开仓库当前版本早于本题 | 项目历史与作者归属 | README 的历史说明 | 不用于定义本次题面、数据、评分器或运行版本 |
-| [libtv.md 葬AI Logo](https://libtv.md/assets/logo-zangai-text.png) | sha256 `e3bf841329f81c1f4b269f930299306cbc9a614a030049ba5e9369ad65a02086` | 作者权威透明文字 Logo | `detail_profile.figures[zangai-logo]` | 与工作区权威 `素材/logo.png` 字节一致；仅用 logo-only 模式 |
+| [libtv.md 葬AI Logo](https://libtv.md/assets/logo-zangai-text.png) | sha256 `e3bf841329f81c1f4b269f930299306cbc9a614a030049ba5e9369ad65a02086` | 作者权威透明文字 Logo | 平台为 `zangai-bench` 配置的机台封面／品牌位 | 与工作区权威 `素材/logo.png` 字节一致；不映射到 `detail_profile.figures`，不冒充原始图表 |
 
 ## 许可与署名
 

@@ -8,7 +8,7 @@
 
 来源、字段映射、版本和许可边界逐项记录在 `SOURCE-LEDGER.md`。
 
-详情页品牌图使用作者权威的透明文字 Logo，采用 `logo-only` 模式，不叠加模型版本角标，也不做重绘、改色或发光处理。
+作者权威透明 Logo 位于 `https://libtv.md/assets/logo-zangai-text.png`。它只用于平台封面或品牌位，不属于评测证据，因此不得写进 `detail_profile.figures`、不得显示在“原始图表”模块，也不得叠加模型版本角标、重绘、改色或发光。当前 EvalHub 定义没有投稿方可写的封面字段，平台若为 `zangai-bench` 配置专用机台封面，应在应用的 slug 封面映射中引用该权威 Logo，并使用 `contain` 保持完整比例。
 
 ## 运行协议
 
@@ -46,7 +46,7 @@ node evals/zangai-bench/pack-to-result.mjs <submission.json> --out <result.json>
 
 `published-results/official-web4-graph-v2-2026-08-04.json` 转录作者在 [当前榜单](https://funeralai.cc/test/) 发布的 `web4-graph-v2-leaderboard-20260804-v2`。只保留这个最终 release 的主分数、中位数、平均耗时、调用数、成本与性价比；不展示单轮明细，也不混入旧批次或中间结果。成本与性价比不进入主排名。
 
-当前 EvalHub 模型注册表能准确映射其中 12 个模型，它们作为一等成绩导入。Claude Opus 5、DeepSeek V4 Flash、GPT-5.6 Luna、ERNIE 5.1 暂无可解析的规范身份，不能冒险绑到相近模型；完整 16 模型最终总榜仍保存在“官方完整总榜”辅助表中，未被删减。所有发布成绩都是作者来源转录，不含 `task_results`、`showcases` 或 `usage`，不声称 EvalHub 复跑。
+当前 EvalHub 模型注册表能准确映射其中 12 个模型，它们作为一等成绩导入，并各自只展示一行最终汇总，不重复嵌入整张总表。Claude Opus 5、DeepSeek V4 Flash、GPT-5.6 Luna、ERNIE 5.1 暂无可解析的规范身份，不能冒险绑到相近模型；这 4 条的最终汇总集中保存在“待登记模型”辅助表中，因此完整 16 模型数据没有被删减。所有发布成绩都是作者来源转录，不含 `task_results`、`showcases` 或 `usage`，不声称 EvalHub 复跑。
 
 ## 文件
 

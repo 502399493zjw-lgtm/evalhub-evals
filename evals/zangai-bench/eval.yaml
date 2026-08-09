@@ -9,7 +9,6 @@ description: >-
 hook_title: 只给一份图数据，Agent 能做出真正可用的知识图谱吗
 references:
   homepage: https://funeralai.cc/test/
-  repository: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/zangai-bench
 dimensions: [代码, 推理]
 interface: agent
 runner: custom
@@ -107,7 +106,7 @@ detail_profile:
     - title: 四个官网模型暂不能成为平台一等成绩身份
       description: >-
         当前 EvalHub 模型注册表尚不能解析 Claude Opus 5、DeepSeek V4 Flash、GPT-5.6 Luna 与 ERNIE 5.1。
-        为避免把模型错绑到相近身份，这四条不进入一等 results；完整 16 模型总榜仍逐行保留在每条已映射成绩的“官方完整总榜”辅助表中。
+        为避免把模型错绑到相近身份，这四条不进入一等 results；其最终汇总集中保留在“待登记模型”辅助表中，已映射模型不再重复嵌入整张总表。
     - title: 新版协议来自作者本地工作树
       description: >-
         作者明确要求以本地 zangai-bench-v2 新题为准；一个月前的公开 GitHub 仓库只是历史框架，不能证明本题的精确 prompt、数据或 scorer。
@@ -179,15 +178,6 @@ detail_profile:
             - { column_id: dimension, value: 视觉稳定性 }
             - { column_id: weight, value: "8" }
             - { column_id: focus, value: 图形稳定、可见与主线程响应 }
-  figures:
-    - id: zangai-logo
-      placement: overview
-      label: 品牌标识
-      title: 葬AI
-      src: https://libtv.md/assets/logo-zangai-text.png
-      alt: 葬AI 的透明文字 Logo。
-      caption: 使用作者权威透明 Logo 的 logo-only 模式，不附加模型名、角标卡片、描边或发光。
-      source_url: https://libtv.md/
   resources_note: 公开资料只用于展示作者发布的方法与成绩；精确新版协议以本目录携带的题面、数据和摘要为准。
   resources:
     - title: 葬AI Benchmark 当前榜单
@@ -220,6 +210,7 @@ tasks:
          - 度数榜单容器为 data-bench="stats-top"，其中每行带 data-bench-node-id 与 data-bench-degree 属性；节点类型计数容器为 data-bench="stats-types"，每项带 data-bench-type 与 data-bench-count 属性；关系类型计数容器为 data-bench="stats-relations"，每项带 data-bench-relation 与 data-bench-count 属性。
 
       除第 7 条的标记契约外，不要指定或假设某个前端框架、图谱库、布局算法、路由结构或 DOM 结构。请把产物写入当前工作目录，并写一份简短的 README.md 说明预览命令。
+    translation: 题目原文已为中文，无需另行翻译。
     run_spec: >-
       每轮在干净工作目录创建 data/graph.json（sha256 f83313f6e50b2f1bb809c9c1fc0de2217c437e33b1fa417b571b6527b7df988e），
       使用锁定题面（sha256 cd7c9074d60e342fd877f70253444dc0fe278897fc6e20715800e67a336eef9c）与 OpenCode 1.17.9。
