@@ -180,6 +180,32 @@ detail_profile:
             - { column_id: dimension, value: 视觉稳定性 }
             - { column_id: weight, value: "8" }
             - { column_id: focus, value: 图形稳定、可见与主线程响应 }
+    - id: score-evidence-boundary
+      label: 评分责任
+      title: 正式主分、辅助指标与参考证据
+      note: 参照完整详情页的信息层级，把“谁确认正式分、哪些材料只作解释”单独列清。
+      caption: 只有作者核对过原始十轮运行与浏览器评分报告后的十轮均分进入主榜；辅助指标和 AI 解读不改变名次。
+      source_url: https://funeralai.cc/test/methodology/
+      columns:
+        - { id: layer, label: 层级 }
+        - { id: authority, label: 形成方式 / 责任方 }
+        - { id: leaderboard, label: 是否进入主榜 }
+      rows:
+        - id: official-score
+          cells:
+            - { column_id: layer, value: 正式主分 }
+            - { column_id: authority, value: 浏览器评分器 3.1 逐轮验收，作者核对十轮原始报告后发布均分 }
+            - { column_id: leaderboard, value: 是 }
+        - id: supporting-metrics
+          cells:
+            - { column_id: layer, value: 辅助指标 }
+            - { column_id: authority, value: 中位数、耗时、调用数、成本与性价比，只解释稳定性和资源消耗 }
+            - { column_id: leaderboard, value: 否 }
+        - id: ai-interpretation
+          cells:
+            - { column_id: layer, value: AI 解读或复述 }
+            - { column_id: authority, value: 可用于阅读报告，但不得替代作者核验，也不得改写原始分数 }
+            - { column_id: leaderboard, value: 否 }
   resources_note: 公开资料只用于展示作者发布的方法与最终成绩；精确新版协议以本目录携带的题面、数据和摘要为准。EvalHub CLI 只负责 fetch/pack，不支持一键 run。
   resources:
     - title: 葬AI Benchmark 当前榜单
