@@ -114,9 +114,6 @@ detail_profile:
     - title: 葬AI 单图 MG 视频 Bench 协议目录
       summary: 完整题面、七项评分量表、媒体合同、外部提交清单、证据边界和无网络转换器。
       url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
-    - title: EvalHub 评测集仓库
-      summary: 本协议的版本历史、审阅记录和后续可比性修订均以该仓库为准。
-      url: https://github.com/502399493zjw-lgtm/evalhub-evals
     - title: 播放 GPT-5.6-Sol 真实成片
       summary: 当前同题 30 秒 MP4；技术验收通过但尚未完成最终人工评分。
       url: https://github.com/FrichXi/funeralai-web4/raw/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/GPT-5.6-Sol.mp4
