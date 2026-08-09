@@ -4,8 +4,8 @@ name: 葬AI 单图 MG 视频 Bench
 category: useful
 description: >-
   给多模态 Agent 一张人物参考图，要求它在离线工作目录中自由创作并实际制作一支 30 秒、1080×1920、带音轨的竖屏 MG 动画。
-  作者观看完整成片并按参考图利用、创意、视觉运动、叙事节奏、声音、技术质量与品牌规范给出 0–100 分；未完成人工评审前不生成榜单分数。
-  当前可查看四支真实成片与代表帧，但技术验收通过不等于最终得分。
+  正式总分由作者观看完整成片后，按参考图利用、创意、视觉运动、叙事节奏、声音、技术质量与品牌规范人工给出 0–100 分；
+  AI 评分和自动技术验收只作参考，不能替代作者人工评分。未完成人工评审前不生成榜单分数。
 hook_title: 只给一张人物图，Agent 能独立完成一支真正可看的 30 秒 MG 动画吗
 dimensions: [代码]
 interface: agent
@@ -22,7 +22,7 @@ scoring_note: >-
   30 秒叙事与节奏完整性 10，音乐、音效与音画配合 10，成片技术质量与规格 10，Web4 品牌 UI 与文件命名 5。
   静态图轻微缩放或循环撑满 30 秒、看不出参考图来源、缺少最终视频、读取其他模型结果或违反离线边界，均判为无效结果。
   自动验收只验证时长、分辨率、帧率、H.264/yuv420p、AAC、文件名和三时点品牌像素特征，不等同于最终分数。
-  转换器输出 score=null，只有作者完成全部复核后才补写 0–100 的正式总分。
+  转换器输出 score=null，只有作者观看完整视频、完成全部人工复核后才补写 0–100 的正式总分；任何 AI 评价只作为作者审阅参考。
 command_template:
   argv: [node, evals/mg-animation-replication/pack-to-result.mjs, "{input}", --out, "{output}"]
   output: mg-animation-replication-result.json
@@ -32,7 +32,8 @@ detail_profile:
   overview_note: >-
     当前协议采用最新文件状态的“单图自由创作 30 秒 MG 动画”题面。工程目录沿用历史名称，但历史题面、复测和对照信息
     都不属于本评测，也不会进入成绩或证据区。当前提供四支真实同题成片和无分数代表帧供查看；它们均通过媒体规格自动验收，
-    但尚未完成七项人工评审，所以暂无已验证总分，这不等于 0 分。这是外部工作流：EvalHub CLI 只下载协议并 pack 外部清单，
+    但尚未完成作者七项人工评审，所以暂无已验证总分，这不等于 0 分。MG 动画的正式分由作者人工评分，AI 评分与自动验收只作参考。
+    这是外部工作流：EvalHub CLI 只下载协议并 pack 外部清单，
     不支持 `evalhub run mg-animation-replication`。
   summary:
     plain_language: >-
@@ -65,7 +66,7 @@ detail_profile:
   score_interpretation: >-
     主分数为单次成片的 0–100 分人工总分，越高越好，七项直接相加，不跨题、不跨轮平均。比较边界固定为同一张 2026-08-03
     人物图、同一输入资产、同一完整题面、同一 Pi 0.82.0/max harness、一次运行和同一媒体合同；自动验收通过只表示规格合格，
-    不能解释为 100 分。score=null 表示作者尚未完成正式评审。
+    不能解释为 100 分，AI 评分也只能作为参考。score=null 表示作者尚未完成正式人工评审。
   key_facts:
     - value: 30.0 ± 0.5 秒
       label: 唯一成片时长合同
@@ -79,6 +80,10 @@ detail_profile:
       label: 每个模型只有一次正式成片
       description: 失败、超时或无产物不通过自动补跑来抬分；无效尝试不混入当前结果。
       source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
+    - value: 作者人工评分
+      label: 正式榜单分的唯一确认入口
+      description: 作者必须观看完整 30 秒成片并按七项量表打分；AI 与自动验收只作参考。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
   caveats:
     - title: 有真实成片，但暂无已验证总分
       description: >-
@@ -86,7 +91,7 @@ detail_profile:
         七项人工评审尚未按最终口径完成，所以不创建 published-results，也不能把通过状态解释为 100 分。
     - title: 创意视频需要人工判断
       description: >-
-        参考图利用、独特性、运动质量、叙事和声音无法由当前规格验证器可靠代替；作者评审仍可能受审美偏好影响。
+        参考图利用、独特性、运动质量、叙事和声音无法由当前规格验证器或 AI 评分可靠代替；正式结果由作者人工观看完整视频后确认，AI 只作参考。
     - title: 品牌检测只是像素启发式
       description: >-
         三时点颜色计数能发现缺卡片或明显错误样式，但不能证明每一帧的文字完全正确，也不能代替实际观看完整成片。
@@ -102,10 +107,10 @@ detail_profile:
         当前题不提供参考视频且鼓励自由创作；历史题面的输入、目标和评分不同，任何数字都不可合并。
   overview_tables:
     - id: automatic-media-acceptance
-      label: 真实运行 · 自动验收
-      title: 四模型媒体与品牌合同验收（非人工总分）
-      note: 四支当前同题 30 秒成片的冻结 ffprobe/ffmpeg 验收；全部通过媒体规格与三时点品牌像素检查，但七项人工评分尚未完成。
-      caption: “通过”只表示时长、分辨率、帧率、编码、音轨、文件名和品牌卡满足技术合同，不能解释为 100 分，也不进入榜单。
+      label: 参考证据 · 非人工总分
+      title: 四模型媒体与品牌合同验收（仅供作者人工评分参考）
+      note: 四支当前同题 30 秒成片的冻结 ffprobe/ffmpeg 验收；全部通过媒体规格与三时点品牌像素检查，但作者七项人工评分尚未完成。
+      caption: “通过”只表示时长、分辨率、帧率、编码、音轨、文件名和品牌卡满足技术合同；AI 与自动验收均不能解释为 100 分，也不进入榜单。
       source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
       columns:
         - { id: model, label: 模型 }
@@ -142,6 +147,32 @@ detail_profile:
             - { column_id: media, value: 通过 }
             - { column_id: brand, value: 通过 }
             - { column_id: status, value: 通过 }
+    - id: score-evidence-boundary
+      label: 评分责任
+      title: 作者人工总分、自动验收与 AI 参考
+      note: 参照完整详情页的信息层级，明确谁确认正式分、哪些材料只作为审阅证据。
+      caption: MG 动画的正式榜单分由作者观看完整成片后人工给出；自动验收和 AI 评价都不能单独进入主榜。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
+      columns:
+        - { id: layer, label: 层级 }
+        - { id: authority, label: 形成方式 / 责任方 }
+        - { id: leaderboard, label: 是否进入主榜 }
+      rows:
+        - id: official-score
+          cells:
+            - { column_id: layer, value: 正式 0–100 总分 }
+            - { column_id: authority, value: 作者观看完整 30 秒成片并按七项量表人工评分 }
+            - { column_id: leaderboard, value: 作者确认后才是 }
+        - id: media-contract
+          cells:
+            - { column_id: layer, value: 自动媒体与品牌验收 }
+            - { column_id: authority, value: ffprobe / ffmpeg 与三时点像素检查，只证明技术合同通过 }
+            - { column_id: leaderboard, value: 否 }
+        - id: ai-reference
+          cells:
+            - { column_id: layer, value: AI 评分或总结 }
+            - { column_id: authority, value: 只能帮助作者审阅，不得替代人工观看或改写最终分 }
+            - { column_id: leaderboard, value: 否 }
   figures:
     - id: mg-current-four-model-overview
       placement: insights
