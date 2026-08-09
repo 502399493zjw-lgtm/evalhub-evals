@@ -1,0 +1,216 @@
+{
+  "eval_id": "chibi-3d-print-bench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "chibi-3d-print-bench/pack-to-result@1.0.0",
+    "run_date": "2026-08-09"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-3d-model",
+        "harness": "example-agent-harness",
+        "harness_version": "0.0.0-synthetic-fixture"
+      },
+      "score": 91,
+      "raw_metric": {
+        "label": "自动检查与盲审总分",
+        "value": "91 分"
+      },
+      "detail": "Derived: 主分 = 自动交付物 10 + 自动网格 25 + 自动切片 25 + 人工盲审 31 = 91。状态=scored；清单 sha256=99ab5f3b8627d37c8fe18d9955339787ec34410b572d5da0ce86f8b7226f8cfc。转换成功只证明结构与公式合规，作者仍须核对原始照片、产物和盲审表。",
+      "task_results": [
+        {
+          "task_id": "chibi-figure-a2-v2-20260803",
+          "score": 91,
+          "raw": "scored · auto 60/60 · blind 31/40"
+        }
+      ],
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "run-score-breakdown",
+          "label": "分项得分",
+          "title": "本次运行的固定分项得分",
+          "columns": [
+            "分项",
+            "得分",
+            "满分"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "交付物",
+                10,
+                10
+              ]
+            },
+            {
+              "cells": [
+                "网格",
+                25,
+                25
+              ]
+            },
+            {
+              "cells": [
+                "统一切片",
+                25,
+                25
+              ]
+            },
+            {
+              "cells": [
+                "人物相似度",
+                18,
+                25
+              ]
+            },
+            {
+              "cells": [
+                "雕塑一致性",
+                8,
+                10
+              ]
+            },
+            {
+              "cells": [
+                "预览清晰度",
+                5,
+                5
+              ]
+            }
+          ],
+          "note": "Derived: 前三项由转换器从原始检查字段按冻结公式重算；后三项来自作者认可的盲审表。六项之和等于主分。"
+        },
+        {
+          "type": "metric_table",
+          "id": "run-engineering-checks",
+          "label": "工程检查",
+          "title": "本次运行的网格与切片检查",
+          "columns": [
+            "检查项",
+            "结果"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "状态",
+                "scored"
+              ]
+            },
+            {
+              "cells": [
+                "STL 存在",
+                "是"
+              ]
+            },
+            {
+              "cells": [
+                "预览合格",
+                "是"
+              ]
+            },
+            {
+              "cells": [
+                "网格可解析",
+                "是"
+              ]
+            },
+            {
+              "cells": [
+                "三角面",
+                12480
+              ]
+            },
+            {
+              "cells": [
+                "水密",
+                "是"
+              ]
+            },
+            {
+              "cells": [
+                "连通分量",
+                1
+              ]
+            },
+            {
+              "cells": [
+                "尺寸合规",
+                "是"
+              ]
+            },
+            {
+              "cells": [
+                "稳定底面",
+                "是"
+              ]
+            },
+            {
+              "cells": [
+                "切片成功",
+                "是"
+              ]
+            },
+            {
+              "cells": [
+                "估计秒数",
+                1680
+              ]
+            },
+            {
+              "cells": [
+                "切片警告数",
+                0
+              ]
+            }
+          ],
+          "note": "这些是生成主分所用的原始工程检查；转换器不读取或展示人物照片、STL 和预览二进制。"
+        },
+        {
+          "type": "metric_table",
+          "id": "run-evidence-summary",
+          "label": "证据摘要",
+          "title": "本次运行的证据摘要状态",
+          "columns": [
+            "项目",
+            "值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "非空 SHA-256 数量",
+                7
+              ]
+            },
+            {
+              "cells": [
+                "运行日志",
+                "已绑定"
+              ]
+            },
+            {
+              "cells": [
+                "自动报告",
+                "已绑定"
+              ]
+            },
+            {
+              "cells": [
+                "盲审表",
+                "已绑定"
+              ]
+            },
+            {
+              "cells": [
+                "提交清单 SHA-256",
+                "99ab5f3b8627d37c8fe18d9955339787ec34410b572d5da0ce86f8b7226f8cfc"
+              ]
+            }
+          ],
+          "note": "仅显示摘要覆盖情况，不公开人物素材和二进制产物。作者认可前仍须核对原件。"
+        }
+      ]
+    }
+  ]
+}

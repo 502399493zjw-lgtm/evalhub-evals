@@ -1,0 +1,57 @@
+{
+  "manifest_version": 1,
+  "eval_id": "chibi-3d-print-bench",
+  "protocol_revision": 1,
+  "task_id": "chibi-figure-a2-v2-20260803",
+  "participant": {
+    "model": "example/synthetic-3d-model",
+    "harness": "example-agent-harness",
+    "harness_version": "0.0.0-synthetic-fixture"
+  },
+  "run_date": "2026-08-09",
+  "protocol": {
+    "prompt_sha256": "69c3fecf345bf5ce8be394624e3fcec2c5523f2ae8352607c56cf2015557af7d",
+    "reference_image_sha256": "6d89ce11b40c68c3c2c19cfd3e394bb09f6cad984b184b475c45afbc1f13eb64",
+    "print_contract_sha256": "953ca660c7dc89ea2c381320af0f5daf4511c60eea08eeb1079e8e8a71dd6e5f",
+    "a2l_process_sha256": "13eaa646495259a974c7924921a7e3e543cddcdef9eb519a30ded8a412875814",
+    "scorer_sha256": "e8711518e800763f126420bfbabf636b7f7e8bdd3e23e41f726e6f23a3fa4b77",
+    "pi_version": "0.82.0",
+    "timeout_seconds": 5400
+  },
+  "result": {
+    "status": "scored",
+    "artifacts": {
+      "stl_exists": true,
+      "preview_ok": true,
+      "builder_exists": true,
+      "readme_exists": true
+    },
+    "mesh": {
+      "parsed": true,
+      "triangle_count": 12480,
+      "watertight": true,
+      "component_count": 1,
+      "dimensions_mm": { "x": 38.4, "y": 35.7, "z": 56.2 },
+      "stable_bottom": true
+    },
+    "slicing": {
+      "succeeded": true,
+      "estimated_seconds": 1680,
+      "warning_count": 0
+    },
+    "manual": {
+      "likeness": 18,
+      "sculpt_coherence": 8,
+      "preview_clarity": 5
+    },
+    "evidence": {
+      "run_log_sha256": "05d89942439fe113ac5cd6c489b0ab6a385925ef98f9b3c58bbedc544e955c9e",
+      "automatic_report_sha256": "ad03977b9100193186bf432790059389e2c11e3d623194c9b9801483c267914f",
+      "blind_review_sha256": "f67ab93db00fe4406806a70e5d4a7895aeabf7d8c5f889105cf79ebfa5a04af9",
+      "stl_sha256": "fd0d9874096ce60712883f705b4a8f3d94a5577930d7349afadef57b9d1cbcf5",
+      "preview_sha256": "38802520c44b33f5a739d4912b8cae7c75ff53362f0ef54c3eaa58014eea89c5",
+      "builder_sha256": "f64fae8d8bc904e76b131391200efa525655965545074d5e37dcf3a0756fbe2e",
+      "readme_sha256": "16e0a71ad6b7ba2be1f39c16382436896893c5ee268b203038b4f63abe22f870"
+    }
+  }
+}

@@ -1,0 +1,168 @@
+id: chibi-3d-print-bench
+protocol_revision: 1
+name: Q版人物 3D 白模 Bench
+category: useful
+description: >-
+  给 Agent 一张人物参考照片，让它在离线环境中完成身份特征提取、单件式 Q 版白模建模、STL 导出、六视角预览和拓竹 A2L
+  切片验证。主分由 60 分确定性产物检查与 40 分盲审相似度量表相加，既考察模型是否真的交付可打印几何，也考察成品是否像参考人物。
+hook_title: AI 能把一张人物照片做成既像本人又能快速打印的 Q 版白模吗
+references:
+  repository: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
+dimensions: [代码, 推理]
+interface: agent
+runner: custom
+custom_mode: external_workflow
+scoring: custom
+scored_by: author
+score_policy: required
+baseline_policy: optional
+score_unit: 分
+scoring_note: >-
+  参赛 Agent 在一次 5400 秒上限的隔离运行中读取作者提供的冻结参考图，离线生成 model.stl、preview.png、重建脚本与 README。
+  自动部分满分 60：交付物 10、网格 25、统一切片 25；转换器从原始检查字段重新计算，不接受提交方自报总分。人工部分满分 40：
+  人物相似度 25、造型完整与雕塑一致性 10、预览清晰度 5，由作者对原始参考图和冻结盲审表复核后认可。最终分为两部分之和，范围 0–100；
+  失败、超时或缺失运行仍按实际存在的产物获得自动部分，人工分必须为 0。scored 状态必须提供运行日志、自动评分报告、盲审表及产物摘要。
+command_template:
+  argv: [node, evals/chibi-3d-print-bench/pack-to-result.mjs, "{input}", --out, "{output}"]
+  output: chibi-3d-print-bench-result.json
+trials: 1
+detail_profile:
+  source_kind: evalhub_native
+  overview_note: >-
+    本条目把作者 2026-08-03 冻结的单题协议整理成可公开复核的 EvalHub 原生定义；人物参考照片、STL、预览图和历史模型产物不随仓库分发，
+    只用摘要绑定，避免泄露人物素材或把未完成的人工评分写成榜单。
+  summary:
+    plain_language: >-
+      Agent 先看一张人物照片，再真正建出一个约 5–6 厘米高的 Q 版单色人像：脸、发型、服装、体型和姿态要能认出本人，模型还要封闭水密、
+      稳定贴床、没有悬空碎件，并能用统一的拓竹 A2L 参数在一小时内切片。它还必须交付可离线重建的脚本和一张含参考图与多视角的预览。
+    why_it_matters: >-
+      从照片到可打印 3D 资产同时要求视觉理解、几何构造、工程约束和工具闭环。只会写建模建议、只会做漂亮渲染、或只会导出无法打印的网格都不够；
+      这类任务能直接暴露 Agent 是否能把模糊的人类目标变成经过验证的实体制造文件。
+  method_steps:
+    - title: 冻结人物输入与运行环境
+      description: 作者为每位参赛者提供同一张参考图 image.png，并以 SHA-256 绑定；每个模型只运行一轮，墙钟上限 5400 秒，禁止联网、远程 API、安装新依赖或读取其他模型结果。
+    - title: 离线建模并留下重建路径
+      description: Agent 必须实际读取照片，提取可见身份特征，生成毫米单位的单件式 STL、至少 1600×900 的多视角 clay 预览、build_model.py 或 build_model.js，以及说明尺寸、取舍和命令的 README。
+    - title: 自动检查交付物与几何
+      description: 冻结 scorer 检查四类交付物、三角面数、水密性、连通分量、40–65 mm 高度与 50 mm 宽深上限、稳定底面，并依据写死的分值计算 35 分产物与网格得分。
+    - title: 用统一 A2L 参数切片
+      description: 在 Bambu Studio 02.07.01.62 中使用 A2L、0.4 mm 喷嘴、PLA、0.20 mm Standard、2 壁、10% 填充和自动树状支撑；成功切片、60/30 分钟阈值与警告共同决定 25 分。
+    - title: 冻结盲审相似度与展示质量
+      description: 作者在不知道参赛身份的条件下对参考照片和原始预览评分：人物相似度 25、造型完整与雕塑一致性 10、预览清晰度 5；转换器要求盲审表摘要并把三项与自动分相加。
+  score_interpretation: >-
+    主分 0–100，越高越好，单位为分；自动部分最多 60，人工盲审最多 40，直接相加且不设额外同分规则。60 分只能证明产物存在、网格与切片满足冻结检查，
+    不能证明像本人；40 分只评视觉结果，不能替代水密与打印约束。跨结果比较仅在同一参考图摘要、同一题面、同一 scorer 与同一 Bambu/A2L 参数下成立。
+  key_facts:
+    - value: 60 + 40
+      label: 自动检查与盲审的固定分配
+      description: 自动部分覆盖交付物、网格与切片；盲审覆盖人物相似度、雕塑一致性和预览清晰度。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
+    - value: 40–65 mm
+      label: 允许的成品高度范围
+      description: 目标高度为 50–60 mm，宽和深均不得超过 50 mm。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
+    - value: 60 分钟
+      label: 统一切片的硬时间上限
+      description: 30 分钟以内获得全部时间分，30–60 分钟只保留硬上限内的部分分，超过 60 分钟不满足时间项。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
+    - value: 1 次 / 5400 秒
+      label: 每个参赛 Agent 的运行预算
+      description: 单轮隔离运行，不自动重试；失败和超时原样进入证据清单。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
+  caveats:
+    - title: 参考照片不公开分发
+      description: 人物照片可能包含个人信息，只由作者在受控运行中提供，并通过固定 SHA-256 对齐；公开包不能单独启动完整评测，复跑者须从作者取得获授权的同一输入。
+    - title: 40 分依赖人工盲审
+      description: 相似度和雕塑质量不能由转换器自动证明。scored_by=author 表示作者须核对原始照片、未美化预览和冻结盲审表；摘要只能防止事后替换文件，不能替代审阅。
+    - title: 单题与单次运行不估计方差
+      description: 本版本只有一位参考人物、每个模型一轮，结果不能外推为通用人像建模能力，也没有跨随机种子的置信区间。
+    - title: 统一切片只近似真实打印
+      description: Bambu Studio 的估时、水密检查和稳定底面规则能筛掉大量工程失败，但不等于实际完成打印、拆支撑和耐久测试。
+    - title: 当前没有可发布基线
+      description: 历史六个模型只有 60 分自动部分，40 分盲审尚未完成；为避免把不完整成绩伪装成百分制结果，本版本不附 published-results，baseline_policy 保持 optional。
+  overview_tables:
+    - id: score-contract
+      label: 计分合同
+      title: 百分制固定分项与判定入口
+      note: 分值与阈值来自作者冻结的 2026-08-03 scorer 和人工量表；表内不含任何模型成绩。
+      caption: 转换器从提交清单中的原始检查值重新计算自动 60 分，再加作者认可的盲审 40 分。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
+      columns:
+        - { id: section, label: 分项 }
+        - { id: points, label: 满分 }
+        - { id: rule, label: 判定规则 }
+      rows:
+        - id: artifacts
+          cells:
+            - { column_id: section, value: 交付物 }
+            - { column_id: points, value: "10" }
+            - { column_id: rule, value: STL 3、合格预览 3、重建脚本 2、README 2 }
+        - id: mesh
+          cells:
+            - { column_id: section, value: 网格 }
+            - { column_id: points, value: "25" }
+            - { column_id: rule, value: 可解析 3、至少 100 三角面 2、水密 8、单一连通 4、尺寸合规 5、稳定底面 3 }
+        - id: slicing
+          cells:
+            - { column_id: section, value: 统一切片 }
+            - { column_id: points, value: "25" }
+            - { column_id: rule, value: 切片成功 10、不超过 60 分钟 7、不超过 30 分钟再加 5、无警告 3 }
+        - id: likeness
+          cells:
+            - { column_id: section, value: 人物相似度 }
+            - { column_id: points, value: "25" }
+            - { column_id: rule, value: 盲审照片中的脸部比例、五官表情、头部造型、服装体型与标志性姿态 }
+        - id: sculpt
+          cells:
+            - { column_id: section, value: 雕塑一致性 }
+            - { column_id: points, value: "10" }
+            - { column_id: rule, value: 多视角造型连贯、结构完整且没有用二维贴片冒充三维 }
+        - id: preview
+          cells:
+            - { column_id: section, value: 预览清晰度 }
+            - { column_id: points, value: "5" }
+            - { column_id: rule, value: 至少 1600×900，并在同一画布清楚展示参考图、面部近景、正面、3/4、侧面和背面 }
+  resources_note: 这是一套作者原生协议；公开仓库提供完整题面、计分合同、清单格式与转换器，受控素材仅以摘要绑定。
+  resources:
+    - title: Q版人物 3D 白模 Bench 协议包
+      summary: EvalHub 原生题面、运行规范、自动评分公式、人工盲审量表、提交清单和无网络转换器。
+      url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
+tasks:
+  - id: chibi-figure-a2-v2-20260803
+    label: Q版人物 A2 白模
+    prompt: |
+      # Q版人物 3D 打印白模制作
+
+      工作目录中提供了一张人物参考图 `image.png`。请先实际读取并观察图片，然后直接完成建模、预览和交付；不要只写方案或教程。
+
+      目标：根据照片中的主体人物，制作一个像本人、Q 版可爱、适合拓竹 A2 系列 FDM 打印机快速打印的单色白模。相似度优先依靠图片中可见的脸部比例、五官与表情、头部造型、服装轮廓、体型和标志性姿态；不要添加图片中没有的道具、文字或夸张饰品，也不要把画面边缘、背景或界面元素建进模型。
+
+      必须交付：
+
+      1. `deliverables/model.stl`：毫米单位、单件式白模，可直接切片。
+      2. `deliverables/preview.png`：至少 1600×900。白色或浅灰 clay render，白/浅灰背景；同一画布必须清楚展示参考照片、面部近景、正面、3/4、侧面和背面，不能只放一张透视图。
+      3. `build_model.py` 或 `build_model.js`：从工作目录离线重建 STL 与预览图的主脚本。不得依赖网络、远程 API、未随系统安装的软件或人工交互。
+      4. `README.md`：简述你从照片提取的身份特征、建模方法、实际模型尺寸、打印取舍和重建命令。
+
+      打印硬约束：
+
+      - 目标高度 50–60 mm；允许范围 40–65 mm。宽和深均不得超过 50 mm。
+      - 单一连通、封闭水密、法向一致、没有悬空独立零件或内部孤立壳体；底面必须稳定贴床。
+      - 头饰、耳部、服装边缘、手臂等易断结构要与主体可靠连接；显著细节厚度尽量不低于 1.2 mm。
+      - 为 FDM 设计：尽量自支撑或少支撑，避免大面积水平悬空、过细装饰、分离式附件和无法清理的深腔。
+      - 统一切片参数：Bambu Studio、A2L 0.4 mm 喷嘴、PLA、0.20 mm Standard、2 壁、10% 填充、自动树状支撑。目标总打印时间不超过 30 分钟，60 分钟为硬上限。
+      - 白模只表达几何，不做颜色贴图。不得把预览图或二维照片简单贴到平板上冒充 3D。
+
+      制作环境：
+
+      - 可使用系统已有的 Python 3、NumPy、Pillow、Node.js 与标准库；不要联网安装依赖。任何其他库都必须先在当前隔离环境中实际 import 成功，不能因主机其他 HOME 中装过就假定可用。
+      - 你可以自行实现 STL 写出、隐式曲面、体素、参数化网格或其他离线方法。
+      - 仅使用当前工作目录提供的素材与约束文件，不要调用任何外部生成服务。
+      - 请在交付前自行运行构建脚本，并检查文件存在、模型尺寸、网格完整性和预览可读性。
+    run_spec: >-
+      由作者把 SHA-256 为 6d89ce11b40c68c3c2c19cfd3e394bb09f6cad984b184b475c45afbc1f13eb64、821833 字节的冻结参考图
+      作为 image.png 放入每个全新隔离工作目录；题面 SHA-256 为 69c3fecf345bf5ce8be394624e3fcec2c5523f2ae8352607c56cf2015557af7d。
+      使用 Pi 0.82.0，thinking=max，可用工具 read/bash/edit/write/grep/find/ls，不加载扩展、技能、上下文文件、提示模板或主题；每个模型一轮，
+      墙钟上限 5400 秒，不自动重试。完成后执行 scorer SHA-256 e8711518e800763f126420bfbabf636b7f7e8bdd3e23e41f726e6f23a3fa4b77，
+      并用 Bambu Studio 02.07.01.62、A2L 0.4 mm 喷嘴、PLA、0.20 mm Standard、2 壁、10% 填充、自动树状支撑切片。
+      保存未修改的运行日志、scorer 报告、STL、预览、脚本与 README；作者按 tasks/README.md 盲审并生成提交清单。人物照片和二进制产物不上传到本仓库。
