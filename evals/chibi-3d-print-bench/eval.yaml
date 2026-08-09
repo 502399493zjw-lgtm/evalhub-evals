@@ -72,10 +72,10 @@ detail_profile:
       description: 单轮隔离运行，不自动重试；失败和超时原样进入证据清单。
       source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
   caveats:
-    - title: 有真实示例，但暂无已验证总分
+    - title: 有真实示例和自动部分，暂无已验证总分
       description: >-
-        三张 3/4 渲染来自当前冻结题目的真实模型产物，SHA-256 见公开资产清单；它们只证明“有产物可看”。自动 60 分与人工 40 分
-        尚未按最终口径全部复核，所以不创建 published-results，也不把自动检查值或技术通过状态当作百分制成绩。
+        三张 3/4 渲染来自当前冻结题目的真实模型产物，SHA-256 见公开资产清单；下方同时列出作者冻结 scorer 已生成的六模型自动部分。
+        人工 40 分尚未完成，所以不创建 published-results；自动分只按 /60 展示，不能当作百分制总分或榜单成绩。
     - title: 参考照片不公开分发
       description: 人物照片可能包含个人信息，只由作者在受控运行中提供，并通过固定 SHA-256 对齐；公开包不能单独启动完整评测，复跑者须从作者取得获授权的同一输入。
     - title: 40 分依赖人工盲审
@@ -128,6 +128,54 @@ detail_profile:
             - { column_id: section, value: 预览清晰度 }
             - { column_id: points, value: "5" }
             - { column_id: rule, value: 至少 1600×900，并在同一画布清楚展示参考图、面部近景、正面、3/4、侧面和背面 }
+    - id: automatic-partial-results
+      label: 真实运行 · 自动部分
+      title: 六模型自动检查结果（满分 60，非最终总分）
+      note: 作者冻结 scorer 与统一 A2L 切片流程的真实结果；人工盲审 40 分尚未完成，表中数字不进入榜单。
+      caption: 自动分覆盖交付物、网格和切片。hard pass 均为否，原因逐行保留；不得把这些 /60 数值换算或冒充百分制成绩。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
+      columns:
+        - { id: model, label: 模型 }
+        - { id: auto, label: 自动分 /60 }
+        - { id: slice, label: 切片分钟 }
+        - { id: note, label: 未通过项 }
+      rows:
+        - id: kimi-k3
+          cells:
+            - { column_id: model, value: Kimi K3 }
+            - { column_id: auto, value: "53" }
+            - { column_id: slice, value: "51.29" }
+            - { column_id: note, value: 缺少 README }
+        - id: gpt-5-6-sol
+          cells:
+            - { column_id: model, value: GPT-5.6 Sol }
+            - { column_id: auto, value: "48" }
+            - { column_id: slice, value: "62.65" }
+            - { column_id: note, value: 切片超过 60 分钟 }
+        - id: qwen-3-8-max
+          cells:
+            - { column_id: model, value: Qwen3.8 Max }
+            - { column_id: auto, value: "47" }
+            - { column_id: slice, value: "49.54" }
+            - { column_id: note, value: 网格非水密（21 条非流形边） }
+        - id: claude-fable-5
+          cells:
+            - { column_id: model, value: Claude Fable 5 }
+            - { column_id: auto, value: "40" }
+            - { column_id: slice, value: "73.54" }
+            - { column_id: note, value: 网格非水密且切片超过 60 分钟 }
+        - id: grok-4-5
+          cells:
+            - { column_id: model, value: Grok 4.5 }
+            - { column_id: auto, value: "40" }
+            - { column_id: slice, value: "70.46" }
+            - { column_id: note, value: 切片超过 60 分钟 }
+        - id: doubao-seed-evolving
+          cells:
+            - { column_id: model, value: Doubao Seed Evolving }
+            - { column_id: auto, value: "36" }
+            - { column_id: slice, value: "74.45" }
+            - { column_id: note, value: 非水密、2 个组件且切片超过 60 分钟 }
   figures:
     - id: gpt-5-6-sol-real-3q
       placement: insights
