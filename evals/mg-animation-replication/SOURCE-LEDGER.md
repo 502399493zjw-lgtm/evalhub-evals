@@ -1,17 +1,13 @@
-# 一手来源台账
+# 来源台账
 
-本条目是一套 EvalHub 原生协议；一手来源是作者 2026-07-21 冻结的本地任务归档。公开仓库不分发视频、品牌资产和历史产物，只记录事实与摘要。
-
-| 事实 | 冻结值 | 映射位置 | 边界 |
-| --- | --- | --- | --- |
-| 题面 | SHA-256 `17d3870e7fca163d8a7c269968bd9462254244c64aaed670ae7d40f6af8d438f` | `eval.yaml` task prompt | 逐字转录 |
-| 测试计划 | SHA-256 `f9a2f51da820b7cb4754715145d695d1a137b482e4e29f18a2576e704155bfa1` | 六项量表与运行规则 | 不复制历史成片 |
-| 测试配置 | SHA-256 `1facda3b3a305bc8ee5deb6e16312b0a45c2c64805366389515a8db80bd3f5dd` | task ID、5400 秒、输入与模型清单 | 历史模型清单不等于成绩 |
-| 品牌 JSON | SHA-256 `8fa8bbc2d279a9d8a1f3c742c589e82cbfd8d8b8b181066608336ffb0f6c59da` | 题面与 run_spec | 原文件不随包分发 |
-| 参考视频 | SHA-256 `86cab73954c05b6811e23c6ebefa5c923af585db19c65ac6a9eb5bd51a625ce9`；8964161 字节 | task `run_spec` | 不公开分发 |
-| Logo | SHA-256 `e3bf841329f81c1f4b269f930299306cbc9a614a030049ba5e9369ad65a02086` | task `run_spec` | 不公开分发 |
-| Fusion Pixel 字体 | SHA-256 `b4f59dce22df0f43425262611a786b7f1581fa2667fad5861afbfb249e5a8dba` | task `run_spec` | 不公开分发 |
-| 品牌校验脚本 | SHA-256 `227c12a6ba7dee103b52f8c35ca45a7f53cc4c7c441f2fe9414b27d49c708783` | 媒体检查说明 | 只能检查部分品牌像素，不产生总分 |
-| 参考媒体参数 | 1280×720；H.264；30000/1001 fps；56.704 秒；AAC 48 kHz 双声道 | `detail_profile` 与 run_spec | 由 ffprobe 对冻结文件确定性读取 |
-
-面向读者的一手 HTTPS 入口是合并后的协议包：<https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication>。当前没有独立论文或公共源仓库；详情页没有把本地路径冒充成读者可访问来源。
+| 声明或产物 | 第一方来源 | 类型 | 版本/日期 | 映射字段 | 许可与溯源边界 |
+| --- | --- | --- | --- | --- | --- |
+| 完整新题面 | 作者工程 `MG动画复刻测试/输入指令.md` | 冻结任务文件 | 2657 字节；SHA-256 `fd078a340b67206623a6b245d702d8419e4b6adeb47eb6c4ee29f963f7ef5e4b`；当前文件 2026-08-06 | `tasks[0].prompt` | 作者授权投稿；逐字转录当前文本 |
+| 人物参考图、Logo 与字体 | 作者工程 `MG动画复刻测试/素材/` | 冻结二进制输入 | SHA-256 分别为 `ce3f35f378b1890b3c26415f6f9576bcd4b787102264bca466eb9a01f0f4ca64`、`e3bf841329f81c1f4b269f930299306cbc9a614a030049ba5e9369ad65a02086`、`b4f59dce22df0f43425262611a786b7f1581fa2667fad5861afbfb249e5a8dba` | `tasks[0].run_spec` | 二进制不进入投稿仓库；只公开摘要 |
+| 当前品牌规范 | 作者工程 `MG动画复刻测试/品牌UI规范.json` | 冻结配置 | 1341 字节；SHA-256 `6f3574901581975f0fdd923c5026df555d63597f4af453de4bee747b415bf414`；当前文件 2026-08-09 | `tasks[0].run_spec`、题面品牌要求 | 模型版本字号按权威机器规范统一为 30 px；替代 2026-08-03 运行清单中的旧配置摘要 |
+| Harness 与运行边界 | 作者工程 `MG动画复刻测试/测试配置.json`、`运行测试.py` | 协议与执行代码 | Pi 0.82.0 / max / 1 轮 / 5400 秒 | 方法步骤、README | 不分发凭证或运行环境配置 |
+| 七项 100 分量表 | 作者工程 `MG动画复刻测试/测试计划.md` | 评分协议 | 2026-08-03 | `scoring_note`、README 评分表 | 只有作者观看完整成片后认可总分 |
+| 媒体与品牌验收 | 作者工程 `MG动画复刻测试/校验结果.py` | 验证代码 | ffprobe/ffmpeg，2026-08-03 | 方法步骤、局限 | 规格通过不等于主分数 |
+| 现有自动验收记录 | 作者工程当前结果目录 | 部分结果 | 当前工程资料 | 明确不映射到 `published-results` | 只有合格布尔值，无七项人工分；不导入 |
+| 历史题面与对照资料 | 作者工程过往存档与对照目录 | 历史资料 | 历史协议 | 明确排除 | 输入、目标和指标均不同，不可与当前题面合并 |
+| 投稿后的第一方协议 | `https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication` | EvalHub 原生定义 | protocol revision 1 | `detail_profile.resources` | 合并后由 EvalHub 仓库保存版本历史 |
