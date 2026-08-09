@@ -1,0 +1,311 @@
+id: civ6-civbench
+protocol_revision: 1
+name: CivBench（文明 VI 长程战略 Agent）
+category: useful
+description: >-
+  CivBench 让 Agent 通过 MCP 在《文明 VI》里连续经营、扩张、外交和作战，检验它能否在最多 330 回合的固定存档中持续读懂局势、
+  修正战略并争取胜利。固定标准赛道使用同一份 AGENTS.md 战略手册、同一 React Agent 和 Ground Control、Snowflake、Cry Havoc
+  三个场景；懂模帝主分按三个场景的胜率计算。
+hook_title: AI 能在三局《文明 VI》中真正打赢，而不只是把回合走下去吗
+upstream:
+  repo: lmwilki/civ6-mcp
+  commit: dd2019056371b92ea4854e879ddf05a8cad95e8a
+references:
+  homepage: https://civ6-mcp.lwilko.com/civbench
+  repository: https://github.com/lmwilki/civ6-mcp
+dimensions: [博弈, 经营]
+interface: agent
+runner: custom
+custom_mode: external_workflow
+scoring: custom
+scored_by: author
+score_policy: required
+baseline_policy: optional
+score_unit: 分
+scoring_note: >-
+  三个固定场景各运行一次上游 civbench_standard 赛道，必须使用钉死 commit 的完整 AGENTS.md 作为系统提示、上游固定 react() Agent、
+  对应 T1 存档、Quick 速度和 330 回合预算。主分是懂模帝适配指标：胜利场景数 ÷ 3 × 100，保留六位小数；败局、到达回合预算仍未胜
+  和运行失败均计 0，不删除也不补跑。转换器只验证三场清单、固定协议字段、上游 scorer 指标范围与证据摘要，并确定性生成数值结果；
+  scored_by=author 表示作者仍须核对 Inspect .eval、telemetry manifest、diary 与 log 是否来自同一真实运行。上游网页使用的 ELO 依赖
+  整个对局池，不作为单次提交的主分或同分规则。本条目未经上游作者认证或背书。
+command_template:
+  argv: [node, evals/civ6-civbench/pack-to-result.mjs, "{input}", --out, "{output}"]
+  output: civ6-civbench-result.json
+trials: 1
+detail_profile:
+  source_kind: upstream_publication
+  overview_note: >-
+    协议说明来自 Liam Wilkinson 的 civ6-mcp 作者仓库与官方 CivBench 文档，并固定在 commit dd201905；本条目只整理标准赛道协议，
+    不搬运《文明 VI》存档、游戏素材或历史试玩局，也不把结构示例当成真实成绩。
+  summary:
+    plain_language: >-
+      被评 Agent 要从三个固定的《文明 VI》开局连续玩到胜负或回合上限。它只能通过 MCP 的文字状态与工具行动，需要管理城市和单位、
+      研究科技与市政、处理外交和战争，并在几百回合里记住目标、监控对手、发现原计划失效后及时换路。
+    why_it_matters: >-
+      长程 Agent 的难点不是答对一次，而是让上千次局部决定共同服务于最终目标。《文明 VI》把不完全信息、资源取舍、对手建模、
+      工具调用和延迟收益放在同一环境里，能暴露短任务里不易出现的战略漂移、遗漏威胁和错误坚持。
+  method_steps:
+    - title: 固定上游版本与真实游戏环境
+      description: >-
+        参赛方从作者仓库 commit dd201905 检出代码，在正版 Steam《文明 VI》与 Gathering Storm、Python 3.12+、uv 和已启用
+        FireTuner 的本机环境运行；游戏规则由游戏引擎执行，懂模帝转换器不启动游戏也不调用模型。
+    - title: 锁定标准 Agent
+      description: >-
+        使用上游 civbench_standard：完整 AGENTS.md 是系统提示，Inspect AI 的固定 react() Agent 连接 civ6-mcp，禁止 run_lua，
+        默认消息与 token 上限保持上游值。参赛身份把基础模型写入 model，把 Codex、Claude Code 或其他编排产品写入 harness。
+    - title: 分别运行三个固定场景
+      description: >-
+        Ground Control、Snowflake、Cry Havoc 各从作者提供的 T1 存档独立运行一次，Quick 速度、最多 330 回合。每场都保留真实结局；
+        失败、败局或达到上限未胜不能从提交中删掉。
+    - title: 保存上游指标与证据
+      description: >-
+        每场保存 Inspect .eval、telemetry manifest、diary 和 log 的 SHA-256，并转录上游 scorer 产生的九个通用指标和该场景专属指标。
+        转换器校验清单结构与固定边界，但不声称只凭摘要就证明游戏确实运行过。
+    - title: 三场胜率形成主分
+      description: >-
+        只有 outcome.result=victory 的场景计 1 胜，其余计 0；三场相加后除以 3，再乘 100 并保留六位小数。上游通用指标、场景指标、
+        终局回合与游戏内分数只作辅助展示，不改变排名。
+  score_interpretation: >-
+    分数范围 0–100，越高越好，只可能是 0、33.333333、66.666667 或 100。它表示同一模型与 harness 在三个固定场景中的胜利比例，
+    是透明、可独立计算的懂模帝适配指标，不是上游官方 ELO。比较只在相同 commit、标准赛道、T1 存档、Quick 速度、330 回合预算和
+    相同 participant 身份语义下成立；相同分数并列，不用游戏内分数或耗时破同分。
+  key_facts:
+    - value: 3 个场景
+      label: Ground Control、Snowflake、Cry Havoc
+      description: 三场从不同文明、地图和难度的固定 T1 存档开始，分别考察节奏感知、战略重构和难度适应。
+      source_url: https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/web/content/docs/benchmarks.mdx
+    - value: 最多 330 回合
+      label: 每个场景的 Quick 速度回合预算
+      description: 上游三个 Scenario 定义的 turn_limit 均为 330。
+      source_url: https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/scenarios.py
+    - value: 48 小时
+      label: 上游每个 Inspect 任务的默认墙钟上限
+      description: civbench_standard 的默认 time_limit 为 172800 秒；它是保护上限，不是承诺的典型耗时。
+      source_url: https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/civbench.py
+    - value: 固定 AGENTS.md
+      label: 标准赛道给所有模型相同战略手册
+      description: STANDARD_SYSTEM_PROMPT 直接读取钉死 commit 根目录的完整 AGENTS.md，标准赛道再把它交给固定 react() Agent。
+      source_url: https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/prompts.py
+    - value: 76 个工具
+      label: 覆盖完整游戏循环的 MCP 接口
+      description: 作者 README 将工具覆盖概括为单位、城市、地图、研究、外交、贸易、政府、宗教、伟人、世界议会与胜利进度等。
+      source_url: https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/README.md
+  caveats:
+    - title: 主分数是懂模帝适配值
+      description: >-
+        上游网页用完成对局池计算 ELO，而单份 EvalHub 结果必须有独立稳定的数值。这里采用三场胜率，不把它称作官方 CivBench 排名；
+        ELO、上游 scorer 的游戏内分数和动作代理指标都不参与主榜排序。
+    - title: 需要商业游戏和本机 GUI 环境
+      description: >-
+        完整运行依赖 Steam《文明 VI》、Gathering Storm、FireTuner 端口及平台特定的启动自动化，不能在懂模帝无网络、只读、限资源的
+        runner 容器内直接复现。转换器只负责把外部运行证据清单封装成结果。
+    - title: 固定存档不消除运行方差
+      description: >-
+        相同地图能控制初始局面，但模型采样、游戏 AI 行为、工具错误与恢复路径仍可能改变结果。协议每场只要求一次运行，分数没有给出
+        跨随机种子或重复试验的置信区间。
+    - title: 动作计数不是完整战略质量
+      description: >-
+        上游 scorer 的经济、军事、空间、外交等维度包含产出增长或工具调用计数代理；它们有助于解释一局如何展开，但不能单独证明
+        决策正确，因此只作为辅助表格展示。
+    - title: 当前不附带来源基线
+      description: >-
+        本协议版本没有找到可按这三个固定场景、固定标准赛道和同一主分公式逐模型核验的完整官方结果，因此 baseline_policy 为 optional，
+        published-results 留空；历史开发日志和作者的先导实验不会被改写成正式基线。
+  overview_tables:
+    - id: scenario-matrix
+      label: 场景配置
+      title: 三个固定场景的上游配置
+      note: 逐格转录自钉死 commit 的官方 benchmark 文档与 evals/scenarios.py；不含模型成绩。
+      caption: 三个场景依次提高难度，并改变最容易误判的战略条件。
+      source_url: https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/web/content/docs/benchmarks.mdx
+      columns:
+        - { id: scenario, label: 场景 }
+        - { id: civilization, label: 文明 }
+        - { id: map, label: 地图 }
+        - { id: difficulty, label: 难度 }
+        - { id: victory, label: 胜利条件 }
+        - { id: blind-spot, label: 主要盲点 }
+      rows:
+        - id: ground-control
+          cells:
+            - { column_id: scenario, value: Ground Control }
+            - { column_id: civilization, value: Babylon (Hammurabi) }
+            - { column_id: map, value: "Pangaea, Standard" }
+            - { column_id: difficulty, value: Prince }
+            - { column_id: victory, value: 全部启用 }
+            - { column_id: blind-spot, value: 节奏感知 }
+        - id: snowflake
+          cells:
+            - { column_id: scenario, value: Snowflake }
+            - { column_id: civilization, value: Korea (Seondeok) }
+            - { column_id: map, value: "Six-Armed Snowflake, Small" }
+            - { column_id: difficulty, value: King }
+            - { column_id: victory, value: 仅征服胜利 }
+            - { column_id: blind-spot, value: 战略重构 }
+        - id: cry-havoc
+          cells:
+            - { column_id: scenario, value: Cry Havoc }
+            - { column_id: civilization, value: Sumeria (Gilgamesh) }
+            - { column_id: map, value: "Pangaea, Tiny" }
+            - { column_id: difficulty, value: Immortal }
+            - { column_id: victory, value: 全部启用 }
+            - { column_id: blind-spot, value: 难度情境 }
+  resources_note: 协议、场景和运行代码均链接到作者的一手来源；参赛前应以固定 commit 的文件为准。
+  resources:
+    - title: civ6-mcp 作者仓库
+      summary: MCP 服务、标准与开放赛道、场景、scorer、存档说明和 MIT 许可证的主要来源。
+      url: https://github.com/lmwilki/civ6-mcp/tree/dd2019056371b92ea4854e879ddf05a8cad95e8a
+    - title: CivBench 官方场景文档
+      summary: 三个场景的文明、地图、难度、胜利条件、设计意图和关键观察指标。
+      url: https://civ6-mcp.lwilko.com/docs/benchmarks
+    - title: CivBench 官方页面
+      summary: 作者维护的对局浏览与 ELO 展示页面；其对局池口径不同于本条目的独立三场胜率。
+      url: https://civ6-mcp.lwilko.com/civbench
+    - title: 作者的先导实验文章
+      summary: 说明将多种模型接入真实《文明 VI》的动机、初步观察和为何不能把小样本当成稳定模型排名。
+      url: https://www.lwilko.com/blog/i-gave-an-ai-a-civilization
+tasks:
+  - id: ground-control
+    label: Ground Control
+    prompt: |-
+      ## Scenario: Ground Control
+
+      **Civilisation:** Babylon (Hammurabi)
+      **Difficulty:** Prince
+      **Map:** Pangaea, Standard
+      **Game Speed:** Quick
+      **Turn Budget:** 330 turns
+
+      ### Objective
+
+      Play as Babylon on a Standard Pangaea map. Build a thriving empire, research technologies, and pursue a path to victory. Babylon's unique ability grants the full technology (not just a boost) when you trigger a eureka — leverage this to accelerate your progress.
+
+      ### Getting Started
+
+      The scenario save is loaded automatically. Call `get_game_overview` to orient yourself and begin playing.
+
+      ### Save Management
+
+      The game auto-saves every turn as `0_MCP_NNNN`. If you need to recover from a crash or bad state, call `list_saves` to find the most recent MCP autosave, then `load_game_save("0_MCP_NNNN")` to reload it. Do NOT load `0A_GROUND_CONTROL` to recover — that is the Turn 1 starting save and will erase all progress.
+    translation: |-
+      ## 场景：Ground Control
+
+      **文明：** 巴比伦（汉谟拉比）
+      **难度：** 王子
+      **地图：** 盘古大陆，标准
+      **游戏速度：** 快速
+      **回合预算：** 330 回合
+
+      ### 目标
+
+      在标准大小的盘古大陆地图上扮演巴比伦。建设繁荣的帝国、研究科技并追求一条胜利路线。巴比伦的独特能力会在触发尤里卡时直接授予完整科技（而不只是提供加成）——利用这一点加速发展。
+
+      ### 开始
+
+      场景存档会自动加载。调用 `get_game_overview` 确认局势，然后开始游戏。
+
+      ### 存档管理
+
+      游戏每回合自动保存为 `0_MCP_NNNN`。如需从崩溃或异常状态恢复，调用 `list_saves` 找到最新的 MCP 自动存档，再调用 `load_game_save("0_MCP_NNNN")` 加载。不要加载 `0A_GROUND_CONTROL` 来恢复——那是第 1 回合的起始存档，会清除全部进度。
+    run_spec: >-
+      使用 lmwilki/civ6-mcp commit dd2019056371b92ea4854e879ddf05a8cad95e8a 的 civbench_standard，保持完整 AGENTS.md
+      系统提示、固定 react() Agent、默认消息/token/time 限制和禁止 run_lua 的设置；在已安装正版 Steam《文明 VI》与 Gathering Storm、
+      已启用 FireTuner 且端口 4318 可用的本机环境执行 `inspect eval evals/civbench.py@civbench_standard --model <provider/model>
+      -T scenarios=ground_control -T model_id=<provider/model>`。必须从 0A_GROUND_CONTROL T1 存档独立开始，运行至胜负、330 回合预算
+      或不可恢复失败；保留 Inspect .eval、telemetry manifest、diary 与 log，并按 tasks/README.md 生成提交清单，不得省略非胜利场景。
+  - id: snowflake
+    label: Snowflake
+    prompt: |-
+      ## Scenario: Snowflake
+
+      **Civilisation:** Korea (Seondeok)
+      **Difficulty:** King
+      **Map:** Six-Armed Snowflake, Small
+      **Game Speed:** Quick
+      **Turn Budget:** 330 turns
+
+      ### Objective
+
+      Play as Korea on a Six-Armed Snowflake map. The map generates six peninsular arms radiating from a central hub. Only domination victory is enabled — science, culture, religious, and diplomatic victories are all disabled. You must capture all enemy original capitals to win.
+
+      ### Getting Started
+
+      The scenario save is loaded automatically. Call `get_game_overview` to orient yourself and begin playing.
+
+      ### Save Management
+
+      The game auto-saves every turn as `0_MCP_NNNN`. If you need to recover from a crash or bad state, call `list_saves` to find the most recent MCP autosave, then `load_game_save("0_MCP_NNNN")` to reload it. Do NOT load `0B_SNOWFLAKE` to recover — that is the Turn 1 starting save and will erase all progress.
+    translation: |-
+      ## 场景：Snowflake
+
+      **文明：** 韩国（善德女王）
+      **难度：** 国王
+      **地图：** 六角雪花，小型
+      **游戏速度：** 快速
+      **回合预算：** 330 回合
+
+      ### 目标
+
+      在六角雪花地图上扮演韩国。这张地图会生成从中央枢纽向外辐射的六条半岛臂。这里只启用征服胜利——科技、文化、宗教和外交胜利均被禁用。你必须占领所有敌人的原始首都才能获胜。
+
+      ### 开始
+
+      场景存档会自动加载。调用 `get_game_overview` 确认局势，然后开始游戏。
+
+      ### 存档管理
+
+      游戏每回合自动保存为 `0_MCP_NNNN`。如需从崩溃或异常状态恢复，调用 `list_saves` 找到最新的 MCP 自动存档，再调用 `load_game_save("0_MCP_NNNN")` 加载。不要加载 `0B_SNOWFLAKE` 来恢复——那是第 1 回合的起始存档，会清除全部进度。
+    run_spec: >-
+      使用 lmwilki/civ6-mcp commit dd2019056371b92ea4854e879ddf05a8cad95e8a 的 civbench_standard，保持完整 AGENTS.md
+      系统提示、固定 react() Agent、默认消息/token/time 限制和禁止 run_lua 的设置；在已安装正版 Steam《文明 VI》与 Gathering Storm、
+      已启用 FireTuner 且端口 4318 可用的本机环境执行 `inspect eval evals/civbench.py@civbench_standard --model <provider/model>
+      -T scenarios=snowflake -T model_id=<provider/model>`。必须从 0B_SNOWFLAKE T1 存档独立开始，运行至胜负、330 回合预算或不可恢复
+      失败；保留 Inspect .eval、telemetry manifest、diary 与 log，并按 tasks/README.md 生成提交清单，不得省略非胜利场景。
+  - id: cry-havoc
+    label: Cry Havoc
+    prompt: |-
+      ## Scenario: Cry Havoc
+
+      **Civilisation:** Sumeria (Gilgamesh)
+      **Difficulty:** Immortal
+      **Map:** Pangaea, Tiny
+      **Game Speed:** Quick
+      **Turn Budget:** 330 turns
+
+      ### Objective
+
+      Play as Sumeria on a Tiny Pangaea map at Immortal difficulty. At Immortal, AI civilisations receive +40% yields, +3 combat strength, and 2 free starting Warriors. All victory types are enabled. Build your empire and pursue victory.
+
+      ### Getting Started
+
+      The scenario save is loaded automatically. Call `get_game_overview` to orient yourself and begin playing.
+
+      ### Save Management
+
+      The game auto-saves every turn as `0_MCP_NNNN`. If you need to recover from a crash or bad state, call `list_saves` to find the most recent MCP autosave, then `load_game_save("0_MCP_NNNN")` to reload it. Do NOT load `0C_CRY_HAVOC` to recover — that is the Turn 1 starting save and will erase all progress.
+    translation: |-
+      ## 场景：Cry Havoc
+
+      **文明：** 苏美尔（吉尔伽美什）
+      **难度：** 神级以下一级（Immortal）
+      **地图：** 盘古大陆，极小
+      **游戏速度：** 快速
+      **回合预算：** 330 回合
+
+      ### 目标
+
+      在极小型盘古大陆地图、Immortal 难度下扮演苏美尔。在这一难度，AI 文明获得 +40% 产出、+3 战斗力和 2 个免费初始勇士。所有胜利类型均启用。建设你的帝国并争取胜利。
+
+      ### 开始
+
+      场景存档会自动加载。调用 `get_game_overview` 确认局势，然后开始游戏。
+
+      ### 存档管理
+
+      游戏每回合自动保存为 `0_MCP_NNNN`。如需从崩溃或异常状态恢复，调用 `list_saves` 找到最新的 MCP 自动存档，再调用 `load_game_save("0_MCP_NNNN")` 加载。不要加载 `0C_CRY_HAVOC` 来恢复——那是第 1 回合的起始存档，会清除全部进度。
+    run_spec: >-
+      使用 lmwilki/civ6-mcp commit dd2019056371b92ea4854e879ddf05a8cad95e8a 的 civbench_standard，保持完整 AGENTS.md
+      系统提示、固定 react() Agent、默认消息/token/time 限制和禁止 run_lua 的设置；在已安装正版 Steam《文明 VI》与 Gathering Storm、
+      已启用 FireTuner 且端口 4318 可用的本机环境执行 `inspect eval evals/civbench.py@civbench_standard --model <provider/model>
+      -T scenarios=cry_havoc -T model_id=<provider/model>`。必须从 0C_CRY_HAVOC T1 存档独立开始，运行至胜负、330 回合预算或不可恢复
+      失败；保留 Inspect .eval、telemetry manifest、diary 与 log，并按 tasks/README.md 生成提交清单，不得省略非胜利场景。

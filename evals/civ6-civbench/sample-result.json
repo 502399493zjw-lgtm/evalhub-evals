@@ -1,0 +1,306 @@
+{
+  "eval_id": "civ6-civbench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "civ6-civbench/pack-to-result@1.0.0",
+    "run_date": "2026-08-09"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-strategy-model",
+        "harness": "example-agent-harness",
+        "harness_version": "0.0.0-synthetic-fixture"
+      },
+      "score": 33.333333,
+      "raw_metric": {
+        "label": "三个固定场景胜率",
+        "value": "33.333333 分"
+      },
+      "detail": "Derived: 主分 = 胜利场景数 1 ÷ 固定场景数 3 × 100 = 33.333333。非胜利场景统一计 0；相同分数并列。上游 commit dd2019056371b92ea4854e879ddf05a8cad95e8a，标准赛道 civbench_standard。提交清单 sha256=ed9ba5cb585815140c67703801cc412c891ebfae08aec6d93816f8ea8b1c2ddd。转换成功只代表结构与固定协议字段合规，成绩仍须作者核对原始证据。",
+      "task_results": [
+        {
+          "task_id": "ground-control",
+          "score": 100,
+          "raw": "victory · turn 286 · Babylon · Science"
+        },
+        {
+          "task_id": "snowflake",
+          "score": 0,
+          "raw": "defeat · turn 241 · Macedon · Domination"
+        },
+        {
+          "task_id": "cry-havoc",
+          "score": 0,
+          "raw": "turn-limit · turn 330"
+        }
+      ],
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "run-scenario-outcomes",
+          "label": "三场结局",
+          "title": "本次运行的三个场景结局",
+          "columns": [
+            "场景",
+            "结局",
+            "计分",
+            "终止回合",
+            "赢家文明",
+            "胜利类型"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Ground Control",
+                "victory",
+                100,
+                286,
+                "Babylon",
+                "Science"
+              ]
+            },
+            {
+              "cells": [
+                "Snowflake",
+                "defeat",
+                0,
+                241,
+                "Macedon",
+                "Domination"
+              ]
+            },
+            {
+              "cells": [
+                "Cry Havoc",
+                "turn-limit",
+                0,
+                330,
+                null,
+                null
+              ]
+            }
+          ],
+          "note": "victory 计 100，其余结局计 0；三行算术平均即主分。辅助展示不另行参与排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "run-upstream-common-metrics",
+          "label": "通用指标",
+          "title": "上游 CivBench scorer 的通用指标",
+          "columns": [
+            "场景",
+            "游戏内分数",
+            "经济",
+            "军事",
+            "科技",
+            "文化",
+            "空间",
+            "外交",
+            "工具流畅度",
+            "已玩回合"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Ground Control",
+                812,
+                241.5,
+                18,
+                42,
+                31,
+                74,
+                12,
+                0.972,
+                285
+              ]
+            },
+            {
+              "cells": [
+                "Snowflake",
+                467,
+                158.25,
+                49,
+                36,
+                27,
+                91,
+                7,
+                0.941,
+                240
+              ]
+            },
+            {
+              "cells": [
+                "Cry Havoc",
+                592,
+                187.75,
+                63,
+                34,
+                29,
+                82,
+                5,
+                0.956,
+                329
+              ]
+            }
+          ],
+          "note": "逐场保留上游 scorer 输出；这些动作计数与产出代理只解释运行，不进入懂模帝主分。failed 场景没有 scorer 输出时保留 null。"
+        },
+        {
+          "type": "metric_table",
+          "id": "run-upstream-scenario-metrics",
+          "label": "场景指标",
+          "title": "上游 CivBench scorer 的场景专属指标",
+          "columns": [
+            "场景",
+            "指标",
+            "值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Ground Control",
+                "victory_check_freq",
+                0.084211
+              ]
+            },
+            {
+              "cells": [
+                "Ground Control",
+                "victory_check_count",
+                24
+              ]
+            },
+            {
+              "cells": [
+                "Ground Control",
+                "great_people_check_count",
+                15
+              ]
+            },
+            {
+              "cells": [
+                "Ground Control",
+                "spaceport_turn",
+                221
+              ]
+            },
+            {
+              "cells": [
+                "Ground Control",
+                "space_project_count",
+                5
+              ]
+            },
+            {
+              "cells": [
+                "Snowflake",
+                "cities_t50",
+                3
+              ]
+            },
+            {
+              "cells": [
+                "Snowflake",
+                "cities_t100",
+                6
+              ]
+            },
+            {
+              "cells": [
+                "Snowflake",
+                "cities_t150",
+                8
+              ]
+            },
+            {
+              "cells": [
+                "Snowflake",
+                "cities_t200",
+                9
+              ]
+            },
+            {
+              "cells": [
+                "Snowflake",
+                "map_scan_freq",
+                0.525
+              ]
+            },
+            {
+              "cells": [
+                "Snowflake",
+                "map_scan_count",
+                126
+              ]
+            },
+            {
+              "cells": [
+                "Snowflake",
+                "victory_check_count",
+                19
+              ]
+            },
+            {
+              "cells": [
+                "Snowflake",
+                "seowon_count",
+                8
+              ]
+            },
+            {
+              "cells": [
+                "Snowflake",
+                "military_unit_count",
+                37
+              ]
+            },
+            {
+              "cells": [
+                "Snowflake",
+                "exploration_pct",
+                94.6
+              ]
+            },
+            {
+              "cells": [
+                "Cry Havoc",
+                "first_attack_turn",
+                14
+              ]
+            },
+            {
+              "cells": [
+                "Cry Havoc",
+                "war_carts_by_t25",
+                4
+              ]
+            },
+            {
+              "cells": [
+                "Cry Havoc",
+                "ziggurat_count",
+                11
+              ]
+            },
+            {
+              "cells": [
+                "Cry Havoc",
+                "military_in_first_5_builds",
+                4
+              ]
+            },
+            {
+              "cells": [
+                "Cry Havoc",
+                "cities_captured_by_t40",
+                1
+              ]
+            }
+          ],
+          "note": "指标名称与场景归属来自钉死 commit 的 evals/metrics.py；值从本次 Inspect 结果转录，不参与懂模帝主分。"
+        }
+      ]
+    }
+  ]
+}

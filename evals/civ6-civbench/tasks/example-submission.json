@@ -1,0 +1,119 @@
+{
+  "manifest_version": 1,
+  "eval_id": "civ6-civbench",
+  "protocol_revision": 1,
+  "upstream_commit": "dd2019056371b92ea4854e879ddf05a8cad95e8a",
+  "track": "civbench_standard",
+  "participant": {
+    "model": "example/synthetic-strategy-model",
+    "harness": "example-agent-harness",
+    "harness_version": "0.0.0-synthetic-fixture"
+  },
+  "run_date": "2026-08-09",
+  "scenarios": [
+    {
+      "task_id": "ground-control",
+      "run_id": "synthetic-ground-control-001",
+      "outcome": {
+        "result": "victory",
+        "winner_civilization": "Babylon",
+        "winner_leader": "Hammurabi",
+        "victory_type": "Science"
+      },
+      "terminal_turn": 286,
+      "metrics": {
+        "overall_score": 812,
+        "economic": 241.5,
+        "military": 18,
+        "scientific": 42,
+        "cultural": 31,
+        "spatial": 74,
+        "diplomatic": 12,
+        "tool_fluency": 0.972,
+        "turns_played": 285,
+        "victory_check_freq": 0.084211,
+        "victory_check_count": 24,
+        "great_people_check_count": 15,
+        "spaceport_turn": 221,
+        "space_project_count": 5
+      },
+      "evidence": {
+        "inspect_eval_sha256": "75c10f3f4c15207dc22cc7dfeb5924334dea46afd1e76cf89b758a9eed5cc474",
+        "telemetry_manifest_sha256": "07dd7a7c4ea1e77d3a0e1177d9895ad742ce5bc555e77b99f6471a6b14fe8821",
+        "diary_sha256": "d7be3cc8cd0e53f18c83f1e5353291dce9ee8a5ae649797143fe42c2f90cecbd",
+        "log_sha256": "debcc41cd00c1498754d4f7487cc7b136e449c20d918ee0d3dfa7ac92d41ffca"
+      }
+    },
+    {
+      "task_id": "snowflake",
+      "run_id": "synthetic-snowflake-001",
+      "outcome": {
+        "result": "defeat",
+        "winner_civilization": "Macedon",
+        "winner_leader": "Alexander",
+        "victory_type": "Domination"
+      },
+      "terminal_turn": 241,
+      "metrics": {
+        "overall_score": 467,
+        "economic": 158.25,
+        "military": 49,
+        "scientific": 36,
+        "cultural": 27,
+        "spatial": 91,
+        "diplomatic": 7,
+        "tool_fluency": 0.941,
+        "turns_played": 240,
+        "cities_t50": 3,
+        "cities_t100": 6,
+        "cities_t150": 8,
+        "cities_t200": 9,
+        "map_scan_freq": 0.525,
+        "map_scan_count": 126,
+        "victory_check_count": 19,
+        "seowon_count": 8,
+        "military_unit_count": 37,
+        "exploration_pct": 94.6
+      },
+      "evidence": {
+        "inspect_eval_sha256": "b586873c04a9e2340987300861f470adc2e66d1faff659aa6d3e895a86efb5ed",
+        "telemetry_manifest_sha256": "c6e4979bb6c240cbad09f3b6a99deaaa38559d783f6a7db72d3e2e2db8905891",
+        "diary_sha256": "93d00b446123834e01a529787dbc770da78f9a265888382185b8f6c5f4a1ddeb",
+        "log_sha256": "a4a630b57a33ded0b7bfc3530b45079ab987c31f0c65f123ca03dbfdb19d478f"
+      }
+    },
+    {
+      "task_id": "cry-havoc",
+      "run_id": "synthetic-cry-havoc-001",
+      "outcome": {
+        "result": "turn-limit",
+        "winner_civilization": null,
+        "winner_leader": null,
+        "victory_type": null
+      },
+      "terminal_turn": 330,
+      "metrics": {
+        "overall_score": 592,
+        "economic": 187.75,
+        "military": 63,
+        "scientific": 34,
+        "cultural": 29,
+        "spatial": 82,
+        "diplomatic": 5,
+        "tool_fluency": 0.956,
+        "turns_played": 329,
+        "first_attack_turn": 14,
+        "war_carts_by_t25": 4,
+        "ziggurat_count": 11,
+        "military_in_first_5_builds": 4,
+        "cities_captured_by_t40": 1
+      },
+      "evidence": {
+        "inspect_eval_sha256": "de4e01c9d8a47f8a87c439cba97826f498f98955f827203f7f849851f016cdf4",
+        "telemetry_manifest_sha256": "e09dfb077233b7fe1400f190ca1cb17c3f5c4fd447a152268fe448e8563ecbe4",
+        "diary_sha256": "75fb38eb34afb8756aaf4133791b35138a6dd124da5589653d3484894c5cdcf1",
+        "log_sha256": "7353c596055bb55c66a7b576068b0b50dee1d72facb03a0f854ac10edd64f9dc"
+      }
+    }
+  ]
+}
