@@ -126,7 +126,12 @@ test("仓库里所有 published-results 的 participant.model 都能被平台解
   const index = buildModelIndex(await loadModelRegistry());
   const evalsDir = path.join(repositoryRoot, "evals");
   const entries = [];
-  for (const slug of await readdir(evalsDir)) {
+  // evals/ 下允许存在非目录条目（例如说明文件），只有目录才是 slug；
+  // validate.mjs 与 runner-sandbox.mjs 同样只认目录。
+  const evalSlugs = (await readdir(evalsDir, { withFileTypes: true }))
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name);
+  for (const slug of evalSlugs) {
     const resultsDir = path.join(evalsDir, slug, "published-results");
     let fileNames;
     try {
@@ -146,7 +151,11 @@ test("仓库里所有 published-results 的 participant.model 都能被平台解
       }
     }
   }
-  assert.ok(entries.length > 0, "没有扫到任何 published-results 记录");
+  // 仓库里有 eval 时这条守卫必须成立：扫不到任何记录说明扫描路径坏了。
+  // 仓库里没有 eval 时没有可扫的对象，守卫本身就无从成立。
+  if (evalSlugs.length > 0) {
+    assert.ok(entries.length > 0, "没有扫到任何 published-results 记录");
+  }
   assert.deepEqual(
     checkModelStrings(entries, index).map(
       (failure) => `${failure.location}: ${failure.reason}`,
