@@ -114,17 +114,17 @@ detail_profile:
     - title: 葬AI 单图 MG 视频 Bench 协议目录
       summary: 完整题面、七项评分量表、媒体合同、外部提交清单、证据边界和无网络转换器。
       url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
-    - title: 播放 GPT-5.6-Sol 真实成片
-      summary: 当前同题 30 秒 MP4；技术验收通过但尚未完成最终人工评分。
+    - title: 下载并查看 GPT-5.6-Sol 真实成片
+      summary: 当前同题 30 秒 MP4；链接下载原始文件，技术验收通过但尚未完成最终人工评分。
       url: https://github.com/FrichXi/funeralai-web4/raw/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/GPT-5.6-Sol.mp4
-    - title: 播放 Kimi-K3 真实成片
-      summary: 当前同题 30 秒 MP4；技术验收通过但尚未完成最终人工评分。
+    - title: 下载并查看 Kimi-K3 真实成片
+      summary: 当前同题 30 秒 MP4；链接下载原始文件，技术验收通过但尚未完成最终人工评分。
       url: https://github.com/FrichXi/funeralai-web4/raw/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Kimi-K3.mp4
-    - title: 播放 Qwen3.8-Max 真实成片
-      summary: 当前同题 30 秒 MP4；技术验收通过但尚未完成最终人工评分。
+    - title: 下载并查看 Qwen3.8-Max 真实成片
+      summary: 当前同题 30 秒 MP4；链接下载原始文件，技术验收通过但尚未完成最终人工评分。
       url: https://github.com/FrichXi/funeralai-web4/raw/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Qwen3.8-Max.mp4
-    - title: 播放 Doubao-Seed-Evolving 真实成片
-      summary: 当前同题 30 秒 MP4；技术验收通过但尚未完成最终人工评分。
+    - title: 下载并查看 Doubao-Seed-Evolving 真实成片
+      summary: 当前同题 30 秒 MP4；链接下载原始文件，技术验收通过但尚未完成最终人工评分。
       url: https://github.com/FrichXi/funeralai-web4/raw/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Doubao-Seed-Evolving.mp4
     - title: 真实未核分示例资产与 SHA-256 清单
       summary: 四支成片、代表帧、来源任务和证据边界；用于核验产物，不代表已发布排行榜成绩。
