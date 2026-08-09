@@ -1,6 +1,6 @@
 id: chibi-3d-print-bench
 protocol_revision: 1
-name: Q版人物 3D 白模 Bench
+name: 葬AI 3D 白模 Bench
 category: useful
 description: >-
   给 Agent 一张人物参考照片，让它在离线环境中完成身份特征提取、单件式 Q 版白模建模、STL 导出、六视角预览和拓竹 A2L
@@ -79,7 +79,7 @@ detail_profile:
     - title: 统一切片只近似真实打印
       description: Bambu Studio 的估时、水密检查和稳定底面规则能筛掉大量工程失败，但不等于实际完成打印、拆支撑和耐久测试。
     - title: 当前没有可发布基线
-      description: 历史六个模型只有 60 分自动部分，40 分盲审尚未完成；为避免把不完整成绩伪装成百分制结果，本版本不附 published-results，baseline_policy 保持 optional。
+      description: 当前没有完成 60 分自动复验与 40 分人工盲审的可发布数值基线；为避免把部分检查结果伪装成百分制结果，本版本不附 published-results，baseline_policy 保持 optional。
   overview_tables:
     - id: score-contract
       label: 计分合同
@@ -124,7 +124,7 @@ detail_profile:
             - { column_id: rule, value: 至少 1600×900，并在同一画布清楚展示参考图、面部近景、正面、3/4、侧面和背面 }
   resources_note: 这是一套作者原生协议；公开仓库提供完整题面、计分合同、清单格式与转换器，受控素材仅以摘要绑定。
   resources:
-    - title: Q版人物 3D 白模 Bench 协议包
+    - title: 葬AI 3D 白模 Bench 协议包
       summary: EvalHub 原生题面、运行规范、自动评分公式、人工盲审量表、提交清单和无网络转换器。
       url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
 tasks:
@@ -166,3 +166,32 @@ tasks:
       墙钟上限 5400 秒，不自动重试。完成后执行 scorer SHA-256 e8711518e800763f126420bfbabf636b7f7e8bdd3e23e41f726e6f23a3fa4b77，
       并用 Bambu Studio 02.07.01.62、A2L 0.4 mm 喷嘴、PLA、0.20 mm Standard、2 壁、10% 填充、自动树状支撑切片。
       保存未修改的运行日志、scorer 报告、STL、预览、脚本与 README；作者按 tasks/README.md 盲审并生成提交清单。人物照片和二进制产物不上传到本仓库。
+    translation: |-
+      # Printable Chibi Character White-Model Creation
+
+      The working directory contains one character reference image, `image.png`. Inspect the image first, then complete the modeling, preview, and deliverables directly; do not submit only a plan or tutorial.
+
+      Goal: use the main person in the photograph to create a recognizable, cute chibi-style monochrome model suitable for fast printing on a Bambu Lab A2-series FDM printer. Likeness should come from visible facial proportions, features and expression, head shape, clothing silhouette, body type, and signature pose. Do not add props, text, or exaggerated ornaments absent from the image, and do not model the frame edge, background, or interface elements.
+
+      Required deliverables:
+
+      1. `deliverables/model.stl`: millimeter units, one-piece white model, ready to slice.
+      2. `deliverables/preview.png`: at least 1600×900. Use a white or light-gray clay render on a white or light-gray background. One canvas must clearly show the reference photograph, a facial close-up, front, three-quarter, side, and rear views; one perspective view is insufficient.
+      3. `build_model.py` or `build_model.js`: the main script that rebuilds the STL and preview offline from the working directory. It must not depend on the network, remote APIs, software not already installed, or manual interaction.
+      4. `README.md`: briefly describe the identity features extracted from the photograph, the modeling method, actual model dimensions, printing trade-offs, and the rebuild command.
+
+      Printing constraints:
+
+      - Target height is 50–60 mm; 40–65 mm is allowed. Width and depth must each be at most 50 mm.
+      - The mesh must be one connected, closed, watertight piece with consistent normals, no detached floating parts or internal isolated shells, and a stable flat base.
+      - Fragile structures such as headwear, ears, clothing edges, and arms must be securely connected to the body; important detail thickness should preferably be at least 1.2 mm.
+      - Design for FDM: prefer self-supporting or low-support geometry and avoid broad horizontal overhangs, very thin decoration, separate accessories, and inaccessible deep cavities.
+      - Frozen slicing settings: Bambu Studio, A2L 0.4 mm nozzle, PLA, 0.20 mm Standard, two walls, 10% infill, and automatic tree supports. Target total print time is at most 30 minutes; 60 minutes is the hard limit.
+      - The white model represents geometry only and uses no color texture. Do not place the preview or photograph on a flat plate and present it as 3D.
+
+      Build environment:
+
+      - You may use the installed Python 3, NumPy, Pillow, Node.js, and standard libraries. Do not install dependencies over the network. Any other library must import successfully in the isolated environment; do not assume availability merely because it exists elsewhere on the host.
+      - You may implement STL export, implicit surfaces, voxels, parametric meshes, or another offline method.
+      - Use only the materials and constraint files supplied in the current working directory. Do not call external generation services.
+      - Before submission, run the build script and verify file existence, model dimensions, mesh integrity, and preview readability.
