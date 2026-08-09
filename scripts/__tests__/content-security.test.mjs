@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
+import { chmod, mkdir, mkdtemp, rm, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -53,6 +53,7 @@ test("rejects hidden files, unknown extensions, and symbolic links", async (t) =
 test("rejects disguised executable, archive, and invalid UTF-8 content", async (t) => {
   const { evalDir, parsedEval } = await fixture(t);
   await Promise.all([
+    writeFile(path.join(evalDir, "executable.txt"), Buffer.from("7f454c4602010100", "hex")),
     writeFile(path.join(evalDir, "archive.txt"), Buffer.from("504b03040000", "hex")),
     writeFile(path.join(evalDir, "binary.txt"), Buffer.from([0xc3, 0x28])),
   ]);
@@ -60,7 +61,10 @@ test("rejects disguised executable, archive, and invalid UTF-8 content", async (
   const result = messages(
     await validateEvalContent({ evalDir, slug: "sample-eval", parsedEval }),
   );
-  assert.match(result, /executable, archive, or WebAssembly content is not allowed/);
+  assert.equal(
+    result.match(/executable, archive, or WebAssembly content is not allowed/gu)?.length,
+    2,
+  );
   assert.match(result, /valid UTF-8 text/);
 });
 
@@ -95,14 +99,16 @@ test("rejects active SVG and recognizable credentials without printing values", 
   assert.doesNotMatch(result, /github_pat_abcdefghijklmnopqrstuvwxyz123456/);
 });
 
-test("rejects custom runner network, environment, and unsafe argv access", async (t) => {
+test("accepts custom runner runtime capabilities without source behavior auditing", async (t) => {
   const parsedEval = {
     runner: "custom",
     command_template: {
       argv: [
         "node",
         "evals/sample-eval/run.mjs",
-        "evals/other-eval/input.json",
+        "{input}",
+        "--endpoint",
+        "https://runner.example.test/api?a=1&b=2",
         "--out",
         "{output}",
       ],
@@ -112,16 +118,118 @@ test("rejects custom runner network, environment, and unsafe argv access", async
   const { evalDir } = await fixture(t, parsedEval);
   await writeFile(
     path.join(evalDir, "run.mjs"),
-    'import https from "node:https";\nimport module from "node:module";\nfetch(process.env.URL);\nprocess.getBuiltinModule("child_process");\n',
+    'import https from "node:https";\nimport { spawn } from "node:child_process";\nfetch(process.env.URL);\nspawn(process.env.TOOL);\nvoid https;\n',
   );
+  await chmod(path.join(evalDir, "run.mjs"), 0o755);
+
+  assert.deepEqual(
+    await validateEvalContent({ evalDir, slug: "sample-eval", parsedEval }),
+    [],
+  );
+});
+
+test("accepts language-neutral runner commands with valid checked-in references", async (t) => {
+  const parsedEval = {
+    runner: "custom",
+    command_template: {
+      argv: [
+        "/opt/third-party/bin/python3",
+        "evals/sample-eval/run.py",
+        "{input}",
+        "--out",
+        "{output}",
+      ],
+      output: "result.json",
+    },
+  };
+  const { evalDir } = await fixture(t, parsedEval);
+  await writeFile(
+    path.join(evalDir, "run.py"),
+    "import os, subprocess, urllib.request\nprint(os.environ.get('TOKEN'))\n",
+  );
+
+  assert.deepEqual(
+    await validateEvalContent({ evalDir, slug: "sample-eval", parsedEval }),
+    [],
+  );
+});
+
+test("rejects missing and cross-eval runner repository references", async (t) => {
+  const parsedEval = {
+    runner: "custom",
+    command_template: {
+      argv: [
+        "python3",
+        "./evals/sample-eval/missing.py",
+        "evals/other-eval/input.json",
+        "nested/../../outside-config.json",
+        "--config=../outside-option.json",
+        "--windows-config=..\\outside-option.json",
+        "--out",
+        "{output}",
+      ],
+      output: "result.json",
+    },
+  };
+  const { evalDir } = await fixture(t, parsedEval);
 
   const result = messages(
     await validateEvalContent({ evalDir, slug: "sample-eval", parsedEval }),
   );
-  assert.match(result, /cannot import network\/process module "node:https"/);
-  assert.match(result, /cannot import network\/process module "node:module"/);
-  assert.match(result, /cannot use process\.env/);
-  assert.match(result, /cannot use fetch/);
-  assert.match(result, /cannot use Node internal module access/);
-  assert.match(result, /can only read files inside evals\/sample-eval\//);
+  assert.match(result, /references a missing repository path: \.\/evals\/sample-eval\/missing\.py/);
+  assert.match(result, /repository paths must stay inside evals\/sample-eval\//);
+  assert.equal(
+    result.match(/repository path references cannot traverse a parent directory/gu)?.length,
+    3,
+  );
+});
+
+test("checks repository references embedded in option assignments", async (t) => {
+  const parsedEval = {
+    runner: "custom",
+    command_template: {
+      argv: [
+        "ruby",
+        "--script=./evals/sample-eval/missing.rb",
+        "--endpoint=https://runner.example.test/a/../b",
+        "--out",
+        "{output}",
+      ],
+      output: "result.json",
+    },
+  };
+  const { evalDir } = await fixture(t, parsedEval);
+
+  const result = messages(
+    await validateEvalContent({ evalDir, slug: "sample-eval", parsedEval }),
+  );
+  assert.match(
+    result,
+    /references a missing repository path: --script=\.\/evals\/sample-eval\/missing\.rb/,
+  );
+  assert.doesNotMatch(result, /--endpoint=/u);
+});
+
+test("allows documented absolute tools and external resource URIs", async (t) => {
+  const parsedEval = {
+    runner: "custom",
+    command_template: {
+      argv: [
+        "C:\\Tools\\runner.exe",
+        "--resource=file:///var/lib/runner/input.json",
+        "--source=s3://runner-bucket/object.json",
+        "evals/sample-eval/run.py",
+        "--out",
+        "{output}",
+      ],
+      output: "result.json",
+    },
+  };
+  const { evalDir } = await fixture(t, parsedEval);
+  await writeFile(path.join(evalDir, "run.py"), "print('user-side runner')\n");
+
+  assert.deepEqual(
+    await validateEvalContent({ evalDir, slug: "sample-eval", parsedEval }),
+    [],
+  );
 });

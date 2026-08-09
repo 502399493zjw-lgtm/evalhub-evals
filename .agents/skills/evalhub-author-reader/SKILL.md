@@ -28,9 +28,9 @@ Confirm only what cannot be learned safely:
 - the source repository or exact source directory;
 - the target slug for an update, if the link does not identify it.
 
-Work inside exactly one `evals/<slug>/` unless the task explicitly changes a shared repository contract. Do not rename an existing slug. Preserve the owner in `AUTHORS` for updates. A new eval needs one matching exact CODEOWNERS rule.
+Work inside exactly one `evals/<slug>/` unless the task explicitly changes a shared repository contract. Do not rename an existing slug. Preserve the owner in `AUTHORS` for updates. Do not edit `.github/CODEOWNERS`; the repository-wide maintainer rule is separate from eval ownership, which the PR policy derives from `AUTHORS` and the trusted PR actor.
 
-Do not merge, deploy, or broaden the PR beyond the requested eval. Never place credentials, model calls, hidden files, archives, symlinks, or executable binaries in the eval directory.
+Do not merge, deploy, or broaden the PR beyond the requested eval. Never place credentials, hidden files, archives, symlinks, or executable binaries in the eval directory. Do not reject a documented third-party runner merely because it uses model or network calls, environment variables, subprocesses, external tools, compute, or elevated permissions.
 
 ## Stage 1: inventory the evidence
 
@@ -62,7 +62,7 @@ Separate three layers:
 2. `published-results/*.json` contains reviewed source results and their supplementary views.
 3. Real run envelopes contain `task_results` and `showcases` as execution evidence.
 
-Author the protocol first: every `tasks[]` entry must declare a non-empty ID matching `^[a-z0-9][a-z0-9-]{0,63}$`; task IDs must be unique within the eval and remain unchanged while the task identity is unchanged. `prompt` is the single task-statement field: it is both the executable question and the exact text the detail page renders. There is no fallback field, so a missing or abridged `prompt` shows up as a missing question on the page rather than being silently replaced by other text. For an `upstream_publication`, `prompt` must be the complete source-published original, transcribed character-for-character from the pinned `upstream.commit`; never put a summary, excerpt, `[…]`, or link-only placeholder there, and preserve unreplaced upstream template placeholders verbatim so the text stays diffable against that commit. Put EvalHub's own reproduction procedure — anything not in the upstream original, such as pinned run configuration, evidence packaging, or redaction rules — in the optional `run_spec`. `run_spec` is delivered to the people who run the eval through this repository and is never rendered on the detail page, so it must not carry reader-facing task content. Add a concise `label` for the task tab and a complete `translation` when a faithful Chinese rendering is available. Long display text is a platform folding concern and must not be shortened in data. Interface, runner, scoring, scorer, score policy, baseline policy, score unit, trials, command template, and scoring note must agree with the README and runner behavior.
+Author the protocol first: every `tasks[]` entry must declare a non-empty ID matching `^[a-z0-9][a-z0-9-]{0,63}$`; task IDs must be unique within the eval and remain unchanged while the task identity is unchanged. `prompt` is the single task-statement field: it is both the executable question and the exact text the detail page renders. There is no fallback field, so a missing or abridged `prompt` shows up as a missing question on the page rather than being silently replaced by other text. For an `upstream_publication`, `prompt` must be the complete source-published original, transcribed character-for-character from the pinned `upstream.commit`; never put a summary, excerpt, `[…]`, or link-only placeholder there, and preserve unreplaced upstream template placeholders verbatim so the text stays diffable against that commit. Put EvalHub's own reproduction procedure — anything not in the upstream original, such as pinned run configuration, evidence packaging, or redaction rules — in the optional `run_spec`. `run_spec` is delivered to the people who run the eval through this repository and is never rendered on the detail page, so it must not carry reader-facing task content. Add a concise `label` for the task tab and a complete `translation` when a faithful Chinese rendering is available. Long display text is a platform folding concern and must not be shortened in data. Make interface, runner, scoring, scorer, score policy, baseline policy, score unit, trials, command template, and scoring note agree with the README, machine-readable metadata, and documented runner contract. Check obvious static inconsistencies without claiming to have established runtime behavior.
 
 Treat `protocol_revision` as the monotonic version of the scoring protocol. Keep it unchanged for corrections to `translation`, `label`, prose, `detail_profile`, README text, citations, or official baselines that do not change result comparability. Increment it when task identity, interaction or run procedure, scorer predicate or normalization, score aggregation or rounding, trials, primary metric or unit, or tie-break semantics change, and document the reason. For `prompt` the answer depends on the runner: a `runner: builtin` prompt is the executable model input, so any change to it increments; correcting an `upstream_publication` prompt toward the verbatim upstream original does not, because that text is a transcription rather than something EvalHub executes. A change to `run_spec` always increments, because `external_workflow` contestants follow it by hand.
 
@@ -87,7 +87,7 @@ Choose the result path by evidence origin:
 
 - An upstream paper/site/GitHub aggregate uses `submission.kind: upstream_author_publication`, a numeric primary `score`, source metadata, and optional `supplementary_views`. It must not include `usage`, `task_results`, or `showcases`.
 - A real EvalHub run may include `task_results` and `showcases`. Those fields must come from actual runner output, not a paper table, prose summary, or design mock.
-- `sample-result.json` is a schema and runner fixture. Never describe its demo participant, score, output, or trajectory as an official benchmark result or verified rerun.
+- `sample-result.json` is a schema and example envelope. Never describe its demo participant, score, output, or trajectory as an official benchmark result or verified rerun.
 
 Use the complete upstream-envelope, `metric_table`, and `line_chart` examples in `references/content-and-evidence-contract.md` as the canonical authoring shapes. Parsers may tolerate historical supplementary views without `id` or `label`, but every new or updated view in `sample-result.json` or `published-results/*.json` must provide both as non-empty strings; IDs must be stable slug-style values and unique within one result. The standalone repository validator enforces this stricter authoring boundary without changing runtime compatibility.
 
@@ -105,13 +105,20 @@ Never fabricate, interpolate, smooth, or backfill model scores, trend points, in
 
 For a new eval, scaffold with `evalhub init <slug>`, then replace every placeholder. Keep fixtures small, bounded, and reviewable.
 
-For custom runners:
+For custom runners, validate metadata and documentation rather than runtime behavior:
 
-- use literal argv with exactly one standalone `{output}` token;
-- perform no model or network calls;
-- validate bounded inputs and write an atomic result envelope;
-- run without network, as non-root, with a read-only filesystem and explicit resource limits;
-- document invocation, input format, failure behavior, isolation, and score production.
+- use the literal-argv placeholder required by the declared `custom_mode`, a safe slug-specific output name, and keep every checked-in repository path reference inside the eval directory; document any external executable, tool, or resource path as a user-environment requirement rather than implying that EvalHub supplies it;
+- resolve the command template and runner path, and flag obvious missing files, malformed placeholders, or contradictions with the README;
+- record the upstream repository or source URL;
+- pin a commit, tag, or release;
+- document installation and invocation;
+- document input and output conventions;
+- document required network access, tools, compute, and permissions;
+- document known limitations.
+
+EvalHub-hosted services and repository automation do not execute third-party runners, and EvalHub does not audit or guarantee them. Runners are downloaded and executed only in users' own environments, either directly or through a local tool after explicit confirmation. Users should review the source and code before running one and decide whether to use a container, virtual machine, or other isolation measures. Repository checks cover metadata syntax, referenced paths, schemas, and repository-file safety only; passing them does not establish that a runner is safe, compatible, or runnable.
+
+Inspect runner documentation and source only for obvious errors and accurate requirement disclosure. Do not treat that inspection as a security audit, reject runtime capabilities merely because they are powerful, or describe an unexecuted runner as tested, safe, compatible, or runnable.
 
 Set `score_policy: required` when submissions must already contain a numeric score. Use `author_fill` only for genuinely author-scored artifacts. Set `baseline_policy: required` only when a reviewed numeric baseline is included under `published-results/`.
 
@@ -120,14 +127,15 @@ Set `score_policy: required` when submissions must already contain a numeric sco
 Run the repository gates from the evals repository root:
 
 ```bash
-npm ci
-npm test
+npm ci --ignore-scripts
 npm run validate
 ```
 
-These automated gates validate structure and repository authoring invariants only. They do not fetch or verify source URLs, determine whether a license grants the needed rights, fact-check prose or numbers, or compare README and `detail_profile` claims with runner semantics. Complete those source-ledger, license-boundary, factual, and runner-code reviews manually even when every command passes.
+Run only the two commands above for an ordinary eval submission. Use `npm run test:maintenance` only when the task explicitly changes validators, schemas, vendored contracts, CI, or other repository infrastructure.
 
-Run the eval or custom runner when practical and verify its generated envelope with the same schema. Check that:
+These automated gates validate structure and repository authoring invariants only. They do not fetch or verify source URLs, determine whether a license grants the needed rights, fact-check prose or numbers, execute third-party runners, or establish runner safety or compatibility. Complete the source-ledger, license-boundary, factual, provenance, and obvious documentation-consistency reviews manually even when every command passes.
+
+Do not make a custom-runner trial run a publication condition. The runner's actual execution, compatibility, and safety belong to the user who downloads it. If the user independently runs it or explicitly asks for help in their own environment, validate the observed result envelope with the same schema, record the exact environment and scope of that observation, and do not call it EvalHub-verified or security-reviewed. Check that:
 
 - `detail_profile` and machine-readable source metadata are complete, source-backed, and free of `TODO`, `待补`, literal `placeholder`, `example.com`, and example digests;
 - every authored `submission.run_date` is a real `YYYY-MM-DD` calendar date;
@@ -138,7 +146,7 @@ Run the eval or custom runner when practical and verify its generated envelope w
 - shared supplementary-view IDs keep one exact metadata contract across all published participants;
 - every task declares a unique stable slug-style ID, task references resolve, and each task ID appears no more than the configured `trials` count;
 - optional sections disappear cleanly when unsupported;
-- the diff stays within one eval directory plus its exact CODEOWNERS rule.
+- the diff stays within one eval directory and leaves `.github/CODEOWNERS` unchanged.
 
 Complete this reader-readiness matrix from the final files before handoff. “Empty” is acceptable only when the source ledger or run evidence genuinely has no supported content; never fill a module to make the matrix look complete.
 
@@ -154,4 +162,4 @@ Do not reduce the stored official leaderboard to three or four participants mere
 
 If a local platform preview is available, inspect the generic `/e/<slug>` rendering for content order and missing-data fallbacks. Do not change platform styling as part of an eval submission; use the repository's visual-design workflow separately when visual implementation is explicitly requested.
 
-Before handoff, summarize the source kind, primary sources, protocol and score semantics, result provenance, omitted unsupported content, changed files, and validation results. Stop and ask only when source access, licensing, ownership, or a protocol-defining ambiguity remains unresolved.
+Before handoff, summarize the source kind, primary sources, protocol and score semantics, result provenance, omitted unsupported content, changed files, and validation results. For a custom runner, also state its documented source and requirements and whether it was not executed; never imply EvalHub runtime or security endorsement. Stop and ask only when source access, licensing, ownership, or a protocol-defining ambiguity remains unresolved.

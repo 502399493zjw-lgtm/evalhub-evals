@@ -96,7 +96,7 @@ When an upstream publication provides a task/scenario row that reliably matches 
 
 ## Built-in runner and protocol revision contract
 
-For `runner: builtin`, the scorer enum is not a sufficient description of behavior. Inspect the selected implementation under the EvalHub main repository's `packages/cli/src/scorers/` and the orchestration and aggregation in `packages/cli/src/commands/run.ts`. Confirm normalization, match predicate, per-task points, aggregation, rounding, and the relevant version. When those files are absent from a standalone checkout, the source ledger must include a credential-free HTTPS permalink pinned to an authoritative commit or release; without one, do not publish runner-semantic claims.
+This section applies only to EvalHub's built-in scorer implementation; it does not authorize EvalHub CI, preview services, or platform servers to execute a submitted custom runner. For `runner: builtin`, the scorer enum is not a sufficient description of behavior. Inspect the selected implementation under the EvalHub main repository's `packages/cli/src/scorers/` and the orchestration and aggregation in `packages/cli/src/commands/run.ts`. Confirm normalization, match predicate, per-task points, aggregation, rounding, and the relevant version. When those files are absent from a standalone checkout, the source ledger must include a credential-free HTTPS permalink pinned to an authoritative commit or release; without one, do not publish runner-semantic claims.
 
 `protocol_revision` is a monotonic scoring-protocol version. `translation`, `label`, prose, `detail_profile`, README, citation, and official-baseline corrections that preserve result comparability do not increment it. Changes to task identity, interaction or run procedure, scorer predicate or normalization, aggregation or rounding, trials, primary metric or unit, or tie-break semantics do increment it and require a recorded reason. `prompt` depends on the runner: for `runner: builtin` it is the executable model input, so every change increments; for an `upstream_publication` transcription, correcting it toward the verbatim upstream original does not, because EvalHub does not execute that text. A `run_spec` change always increments, because `external_workflow` contestants follow it by hand.
 
@@ -115,7 +115,7 @@ The ledger may remain a working review artifact, but every machine-checkable val
 
 Facts may be quoted as concise values only when the source states them or they are deterministic counts from the submitted files. Do not turn qualitative prose into a numeric metric.
 
-Repository tests and validators check structure and authoring invariants. They do not fetch or authenticate source URLs, decide whether a license grants particular rights, fact-check claims, or prove that README and `detail_profile` wording matches runner code. Those checks remain mandatory manual review gates.
+The ordinary repository content validator checks structure and authoring invariants without executing third-party runners. Maintenance tests exercise validator, schema, vendor, and CI infrastructure only when those contracts change. Neither path fetches or authenticates source URLs, decides whether a license grants particular rights, fact-checks claims, or proves runtime safety, compatibility, or correctness. Source-ledger, license-boundary, factual, provenance, and obvious documentation-consistency review remain manual gates; custom-runner execution and security review do not.
 
 ## Result and evidence matrix
 
@@ -123,7 +123,7 @@ Repository tests and validators check structure and authoring invariants. They d
 | --- | --- | --- | --- |
 | Real EvalHub run | One ranking metric | Real run submetrics if produced | Allowed when emitted by the run |
 | Upstream official publication | One sourced aggregate | Sourced tables/trends | Forbidden |
-| Sample fixture | Demo value for validation only | Demo structures only | Demo structures only |
+| Sample fixture | Schema illustration only | Demo structures only | Demo structures only |
 
 `metric_table` and `line_chart` are explanatory views and never ranking inputs. Give each a stable `id` and short `label` for tabs. Do not infer a curve from a table or invent intermediate points, and never combine numbers from different sources into a new metric.
 
@@ -131,7 +131,7 @@ Repository tests and validators check structure and authoring invariants. They d
 
 To make your eval benefit from this, keep the `title` and `columns` of the same logical table **identical across every result you publish**, and put the metric name in the first column when the table has one row per metric. Differing titles are treated as different tables and will not be aligned — which is the safe default, not a bug.
 
-Only the currently published, verified result should feed public result views. Draft, pending, superseded, or malformed payloads are not public evidence.
+Only the currently published, schema-valid, provenance-reviewed result should feed public result views. Draft, pending, superseded, or malformed payloads are not public evidence. This status concerns the result envelope and its provenance, not the safety or operability of any runner that may have produced it.
 
 ## Canonical upstream result envelope
 

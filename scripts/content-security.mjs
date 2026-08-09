@@ -13,12 +13,17 @@ export const CONTENT_LIMITS = Object.freeze({
 });
 
 const ALLOWED_EXTENSIONS = new Set([
+  ".cjs",
   ".json",
   ".jsonl",
+  ".js",
   ".md",
   ".mjs",
+  ".py",
+  ".sh",
   ".svg",
   ".txt",
+  ".ts",
   ".yaml",
 ]);
 const IMAGE_EXTENSIONS = new Set([".svg"]);
@@ -30,7 +35,6 @@ const SECRET_PATTERNS = [
   { label: "AWS access key", pattern: /\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/u },
   { label: "Slack token", pattern: /\bxox[baprs]-[A-Za-z0-9-]{20,}\b/u },
 ];
-const BANNED_RUNNER_IMPORT = /^(?:node:)?(?:child_process|cluster|dgram|dns|http|https|http2|inspector|module|net|process|tls|vm|worker_threads)$/u;
 
 function problem(filePath, message) {
   return { filePath, message };
@@ -95,42 +99,7 @@ function validateSvg(filePath, source, errors) {
   }
 }
 
-function importedSpecifiers(source) {
-  const values = [];
-  const patterns = [
-    /\b(?:import|export)\s+(?:[^"']*?\s+from\s+)?["']([^"']+)["']/gu,
-    /\brequire\s*\(\s*["']([^"']+)["']\s*\)/gu,
-  ];
-  for (const pattern of patterns) {
-    for (const match of source.matchAll(pattern)) values.push(match[1]);
-  }
-  return values;
-}
-
-function validateRunnerSource(filePath, source, errors) {
-  for (const specifier of importedSpecifiers(source)) {
-    if (BANNED_RUNNER_IMPORT.test(specifier) || ["undici", "ws"].includes(specifier)) {
-      errors.push(problem(filePath, `custom runner cannot import network/process module ${JSON.stringify(specifier)}`));
-    }
-  }
-  const bannedUsage = [
-    { label: "dynamic import", pattern: /\bimport\s*\(/u },
-    { label: "process.env", pattern: /\bprocess\s*\.\s*env\b/u },
-    { label: "fetch", pattern: /\bfetch\s*\(/u },
-    { label: "WebSocket", pattern: /\bWebSocket\b/u },
-    { label: "eval", pattern: /\beval\s*\(/u },
-    { label: "Function constructor", pattern: /\bnew\s+Function\s*\(/u },
-    { label: "home-directory lookup", pattern: /\b(?:homedir|userInfo)\s*\(/u },
-    { label: "Node internal module access", pattern: /\bprocess\s*\.\s*(?:binding|getBuiltinModule|dlopen)\s*\(/u },
-  ];
-  for (const { label, pattern } of bannedUsage) {
-    if (pattern.test(source)) {
-      errors.push(problem(filePath, `custom runner cannot use ${label}`));
-    }
-  }
-}
-
-function validateCommandTemplate(evalDir, slug, parsedEval, errors) {
+async function validateCommandTemplate(evalDir, slug, parsedEval, errors) {
   if (parsedEval?.runner !== "custom") return;
   const yamlPath = path.join(evalDir, "eval.yaml");
   const argv = parsedEval.command_template?.argv;
@@ -139,29 +108,59 @@ function validateCommandTemplate(evalDir, slug, parsedEval, errors) {
     return;
   }
   const expectedPrefix = `evals/${slug}/`;
-  if (argv[0] !== "node") {
-    errors.push(problem(yamlPath, "custom runner command must start with node"));
-  }
-  if (
-    typeof argv[1] !== "string" ||
-    !argv[1].startsWith(expectedPrefix) ||
-    path.extname(argv[1]).toLowerCase() !== ".mjs"
-  ) {
-    errors.push(problem(yamlPath, `custom runner entrypoint must be an .mjs file inside ${expectedPrefix}`));
-  }
   if (argv.filter((token) => token === "{output}").length !== 1) {
     errors.push(problem(yamlPath, "custom runner command must contain {output} exactly once"));
   }
   for (const token of argv) {
     if (typeof token !== "string") continue;
-    if (/[;&|`$<>\r\n]/u.test(token)) {
-      errors.push(problem(yamlPath, "custom runner argv cannot contain shell metacharacters"));
+
+    // Repository references may be written as an option value
+    // (`--config=evals/<slug>/...`) or with one or more leading `./` segments.
+    // URLs are runtime inputs, not checked-in repository paths.
+    let reference = token;
+    const assignment = /^(?:-{1,2}[^=]+|[A-Za-z_][A-Za-z0-9_]*)=(.*)$/u.exec(reference);
+    if (assignment !== null) reference = assignment[1];
+    if (/^[A-Za-z][A-Za-z0-9+.-]*:\/\//u.test(reference)) continue;
+
+    const pathSegments = reference.split(/[\\/]/u);
+    if (pathSegments.includes("..")) {
+      errors.push(problem(yamlPath, `custom runner repository path references cannot traverse a parent directory: ${token}`));
+      continue;
     }
-    if (token.startsWith("evals/") && !token.startsWith(expectedPrefix)) {
-      errors.push(problem(yamlPath, `custom runner can only read files inside ${expectedPrefix}`));
+    const normalizedReference = reference.replace(/^(?:\.\/)+/u, "");
+    if (!normalizedReference.startsWith("evals/")) continue;
+    if (!normalizedReference.startsWith(expectedPrefix)) {
+      errors.push(problem(yamlPath, `custom runner repository paths must stay inside ${expectedPrefix}`));
+      continue;
     }
-    if (token.includes("..") || path.isAbsolute(token)) {
-      errors.push(problem(yamlPath, "custom runner argv cannot contain absolute paths or parent traversal"));
+
+    const relativeReference = normalizedReference.slice(expectedPrefix.length);
+    const segments = relativeReference.split("/");
+    if (
+      relativeReference.length === 0 ||
+      segments.some((segment) => segment.length === 0 || segment === "." || segment === "..")
+    ) {
+      errors.push(problem(yamlPath, `custom runner has an invalid repository path reference: ${token}`));
+      continue;
+    }
+
+    const referencedPath = path.resolve(evalDir, ...segments);
+    const evalRoot = `${path.resolve(evalDir)}${path.sep}`;
+    if (!referencedPath.startsWith(evalRoot)) {
+      errors.push(problem(yamlPath, `custom runner repository paths must stay inside ${expectedPrefix}`));
+      continue;
+    }
+    try {
+      const metadata = await lstat(referencedPath);
+      if (!metadata.isFile() && !metadata.isDirectory()) {
+        errors.push(problem(yamlPath, `custom runner reference must resolve to a regular file or directory: ${token}`));
+      }
+    } catch (error) {
+      if (error && typeof error === "object" && error.code === "ENOENT") {
+        errors.push(problem(yamlPath, `custom runner references a missing repository path: ${token}`));
+      } else {
+        errors.push(problem(yamlPath, `unable to inspect custom runner reference ${token}: ${error.message}`));
+      }
     }
   }
   const output = parsedEval.command_template?.output;
@@ -240,9 +239,6 @@ export async function validateEvalContent({ evalDir, slug, parsedEval = null }) 
 
   for (const { filePath, relativePath, metadata } of files) {
     totalBytes += metadata.size;
-    if ((metadata.mode & 0o111) !== 0) {
-      errors.push(problem(filePath, "executable file mode is not allowed"));
-    }
     const extension = path.extname(relativePath).toLowerCase();
     if (relativePath !== "AUTHORS" && !ALLOWED_EXTENSIONS.has(extension)) {
       errors.push(problem(filePath, `file type ${extension || "<none>"} is not allowed`));
@@ -285,15 +281,12 @@ export async function validateEvalContent({ evalDir, slug, parsedEval = null }) 
     }
     validateStructuredText(filePath, extension, source, errors);
     if (extension === ".svg") validateSvg(filePath, source, errors);
-    if (parsedEval?.runner === "custom" && extension === ".mjs") {
-      validateRunnerSource(filePath, source, errors);
-    }
   }
 
   if (totalBytes > CONTENT_LIMITS.maxTotalBytes) {
     errors.push(problem(evalDir, `total content is ${totalBytes} bytes; limit is ${CONTENT_LIMITS.maxTotalBytes}`));
   }
-  validateCommandTemplate(evalDir, slug, parsedEval, errors);
+  await validateCommandTemplate(evalDir, slug, parsedEval, errors);
   return errors;
 }
 

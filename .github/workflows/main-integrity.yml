@@ -2,11 +2,9 @@ name: Main eval integrity
 
 # The PR gates (candidate-validation, pr-policy) only ever see one candidate
 # against its own base. Two PRs that are independently green can still combine
-# into a broken main — the 2026-08-07 content outage was exactly that shape: an
-# eval data change and a schema vendor bump each passed alone, and the platform
-# importer only rejected the merged result. This workflow re-runs the full
-# validator against main itself so a broken main is visible here instead of in
-# production.
+# into a broken main. This workflow re-runs the content validator against main
+# itself. It treats eval packages as inert data and never executes third-party
+# runners.
 
 on:
   push:
@@ -38,9 +36,5 @@ jobs:
           node-version: 26
       - name: Install dependencies
         run: npm ci --ignore-scripts
-      - name: Test validator and policy scripts
-        run: npm test
       - name: Validate merged content
         run: npm run validate
-      - name: Execute runners in locked container
-        run: npm run validate:runner

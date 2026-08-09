@@ -92,7 +92,7 @@ test("allows a user to create one eval owned by their GitHub identity", async ()
   assert.equal(result.submissionTask, taskId);
 });
 
-test("allows a new custom eval with an explicit mode and participant input", async () => {
+test("allows a new custom eval with an external executable and participant input", async () => {
   const result = await evaluate({
     body: submissionBody("new", "sample-eval"),
     changedFiles: [
@@ -105,10 +105,10 @@ test("allows a new custom eval with an explicit mode and participant input", asy
 runner: "custom" # quoted scalar with a trailing comment
 custom_mode: 'external_workflow' # explicit for every new custom eval
 command_template:
-  # tasks/example-submission.json is injected only by the sandbox
+  # Synthetic fixtures are documentation-only; participant input uses {input}.
   argv:
-    - node
-    - evals/sample-eval/pack.mjs
+    - python3
+    - evals/sample-eval/pack.py
     - "{input}"
     - --out
     - "{output}"
