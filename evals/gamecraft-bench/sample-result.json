@@ -1,0 +1,906 @@
+{
+  "eval_id": "gamecraft-bench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "gamecraft-bench/pack-to-result@1.0.0",
+    "run_date": "2026-08-09"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-game-agent",
+        "harness": "example-harness",
+        "harness_version": "0.0.0-structural-example"
+      },
+      "score": 34.62,
+      "raw_metric": {
+        "label": "140 题等权平均总分",
+        "value": "34.62 分",
+        "tiebreak_value": 34.62
+      },
+      "detail": "在钉死的来源 commit 21028dfa726b10e340f102961aba21ca8016499b 上用官方验分器跑完全部 140 道题，裁判为上游默认的 openai / gpt-5.5。总分 = 各题 reward（官方 reward.txt 的 [0,1] 值）等权平均 × 100，与上游榜单口径一致并保留两位小数。启动闸门 `godot --headless --path /workspace/game --quit-after 5` 通过 134/140 题，6 题记 0 分，累计被判分的 demo 共 705 个。提交清单 sha256=531e5cf3414ba21f03f05e6016535b8a6265a3bd795c730eb54d4d14367bea3c。题目集合、reward 值域、闸门与 reward 的一致性、demo 上限与裁判身份均由转换器强制校验，不接受提交方覆盖。",
+      "task_results": [
+        {
+          "task_id": "cardgame-autobattler",
+          "score": 0.093,
+          "raw": "reward=0.093 · BUILD=1 · demos=3 · example-cardgame-autobattler"
+        },
+        {
+          "task_id": "cardgame-gwent-war",
+          "score": 0.1153,
+          "raw": "reward=0.1153 · BUILD=1 · demos=6 · example-cardgame-gwent-war"
+        },
+        {
+          "task_id": "cardgame-inscription-dark",
+          "score": 0.5854,
+          "raw": "reward=0.5854 · BUILD=1 · demos=8 · example-cardgame-inscription-dark"
+        },
+        {
+          "task_id": "cardgame-poker-roguelike",
+          "score": 0.5114,
+          "raw": "reward=0.5114 · BUILD=1 · demos=4 · example-cardgame-poker-roguelike"
+        },
+        {
+          "task_id": "cardgame-spire-descent",
+          "score": 0.3678,
+          "raw": "reward=0.3678 · BUILD=1 · demos=4 · example-cardgame-spire-descent"
+        },
+        {
+          "task_id": "horror-dollhouse",
+          "score": 0.4414,
+          "raw": "reward=0.4414 · BUILD=1 · demos=3 · example-horror-dollhouse"
+        },
+        {
+          "task_id": "horror-floor-13",
+          "score": 0.6849,
+          "raw": "reward=0.6849 · BUILD=1 · demos=8 · example-horror-floor-13"
+        },
+        {
+          "task_id": "horror-lighthouse",
+          "score": 0.2146,
+          "raw": "reward=0.2146 · BUILD=1 · demos=10 · example-horror-lighthouse"
+        },
+        {
+          "task_id": "horror-signal-lost",
+          "score": 0.0242,
+          "raw": "reward=0.0242 · BUILD=1 · demos=3 · example-horror-signal-lost"
+        },
+        {
+          "task_id": "horror-tape-archive",
+          "score": 0.1082,
+          "raw": "reward=0.1082 · BUILD=1 · demos=8 · example-horror-tape-archive"
+        },
+        {
+          "task_id": "idle-ant-empire",
+          "score": 0.6733,
+          "raw": "reward=0.6733 · BUILD=1 · demos=2 · example-idle-ant-empire"
+        },
+        {
+          "task_id": "idle-dungeon-guild",
+          "score": 0.0501,
+          "raw": "reward=0.0501 · BUILD=1 · demos=7 · example-idle-dungeon-guild"
+        },
+        {
+          "task_id": "idle-factory-planet",
+          "score": 0.4953,
+          "raw": "reward=0.4953 · BUILD=1 · demos=9 · example-idle-factory-planet"
+        },
+        {
+          "task_id": "idle-spell-tower",
+          "score": 0.773,
+          "raw": "reward=0.773 · BUILD=1 · demos=7 · example-idle-spell-tower"
+        },
+        {
+          "task_id": "openworld-airship-trader",
+          "score": 0.6465,
+          "raw": "reward=0.6465 · BUILD=1 · demos=5 · example-openworld-airship-trader"
+        },
+        {
+          "task_id": "openworld-archaeology",
+          "score": 0.386,
+          "raw": "reward=0.386 · BUILD=1 · demos=7 · example-openworld-archaeology"
+        },
+        {
+          "task_id": "openworld-beast-tamer",
+          "score": 0.0715,
+          "raw": "reward=0.0715 · BUILD=1 · demos=7 · example-openworld-beast-tamer"
+        },
+        {
+          "task_id": "openworld-bounty",
+          "score": 0.3695,
+          "raw": "reward=0.3695 · BUILD=1 · demos=1 · example-openworld-bounty"
+        },
+        {
+          "task_id": "openworld-cartographer",
+          "score": 0.0774,
+          "raw": "reward=0.0774 · BUILD=1 · demos=3 · example-openworld-cartographer"
+        },
+        {
+          "task_id": "openworld-fishing",
+          "score": 0.2152,
+          "raw": "reward=0.2152 · BUILD=1 · demos=1 · example-openworld-fishing"
+        },
+        {
+          "task_id": "openworld-ghost",
+          "score": 0.7176,
+          "raw": "reward=0.7176 · BUILD=1 · demos=10 · example-openworld-ghost"
+        },
+        {
+          "task_id": "openworld-necromancer",
+          "score": 0.7225,
+          "raw": "reward=0.7225 · BUILD=1 · demos=8 · example-openworld-necromancer"
+        },
+        {
+          "task_id": "openworld-pokemon",
+          "score": 0.0488,
+          "raw": "reward=0.0488 · BUILD=1 · demos=4 · example-openworld-pokemon"
+        },
+        {
+          "task_id": "openworld-racing",
+          "score": 0.5514,
+          "raw": "reward=0.5514 · BUILD=1 · demos=7 · example-openworld-racing"
+        },
+        {
+          "task_id": "openworld-seasons-witch",
+          "score": 0.3618,
+          "raw": "reward=0.3618 · BUILD=1 · demos=6 · example-openworld-seasons-witch"
+        },
+        {
+          "task_id": "openworld-sky-islands",
+          "score": 0.5576,
+          "raw": "reward=0.5576 · BUILD=1 · demos=6 · example-openworld-sky-islands"
+        },
+        {
+          "task_id": "openworld-submarine",
+          "score": 0.4133,
+          "raw": "reward=0.4133 · BUILD=1 · demos=3 · example-openworld-submarine"
+        },
+        {
+          "task_id": "openworld-survival",
+          "score": 0.0141,
+          "raw": "reward=0.0141 · BUILD=1 · demos=6 · example-openworld-survival"
+        },
+        {
+          "task_id": "openworld-time-travel",
+          "score": 0.2359,
+          "raw": "reward=0.2359 · BUILD=1 · demos=4 · example-openworld-time-travel"
+        },
+        {
+          "task_id": "platformer-arcborne",
+          "score": 0.0566,
+          "raw": "reward=0.0566 · BUILD=1 · demos=8 · example-platformer-arcborne"
+        },
+        {
+          "task_id": "platformer-cozy-harbor-delivery",
+          "score": 0.3069,
+          "raw": "reward=0.3069 · BUILD=1 · demos=6 · example-platformer-cozy-harbor-delivery"
+        },
+        {
+          "task_id": "platformer-dig-descent",
+          "score": 0.5082,
+          "raw": "reward=0.5082 · BUILD=1 · demos=1 · example-platformer-dig-descent"
+        },
+        {
+          "task_id": "platformer-dread-wings",
+          "score": 0.2152,
+          "raw": "reward=0.2152 · BUILD=1 · demos=2 · example-platformer-dread-wings"
+        },
+        {
+          "task_id": "platformer-echo-climb",
+          "score": 0,
+          "raw": "reward=0 · BUILD=0 · demos=0 · example-platformer-echo-climb"
+        },
+        {
+          "task_id": "platformer-ink-trail",
+          "score": 0.236,
+          "raw": "reward=0.236 · BUILD=1 · demos=10 · example-platformer-ink-trail"
+        },
+        {
+          "task_id": "platformer-iron-vanguard",
+          "score": 0.3616,
+          "raw": "reward=0.3616 · BUILD=1 · demos=9 · example-platformer-iron-vanguard"
+        },
+        {
+          "task_id": "platformer-ivory-beats",
+          "score": 0.0171,
+          "raw": "reward=0.0171 · BUILD=1 · demos=1 · example-platformer-ivory-beats"
+        },
+        {
+          "task_id": "platformer-knight-quest",
+          "score": 0.1309,
+          "raw": "reward=0.1309 · BUILD=1 · demos=10 · example-platformer-knight-quest"
+        },
+        {
+          "task_id": "platformer-magnet-dash",
+          "score": 0.0388,
+          "raw": "reward=0.0388 · BUILD=1 · demos=7 · example-platformer-magnet-dash"
+        },
+        {
+          "task_id": "platformer-meat-gauntlet",
+          "score": 0.8434,
+          "raw": "reward=0.8434 · BUILD=1 · demos=8 · example-platformer-meat-gauntlet"
+        },
+        {
+          "task_id": "platformer-momentum-lab",
+          "score": 0.5499,
+          "raw": "reward=0.5499 · BUILD=1 · demos=9 · example-platformer-momentum-lab"
+        },
+        {
+          "task_id": "platformer-orbital-salvage",
+          "score": 0.0516,
+          "raw": "reward=0.0516 · BUILD=1 · demos=8 · example-platformer-orbital-salvage"
+        },
+        {
+          "task_id": "platformer-shape-shift",
+          "score": 0.6193,
+          "raw": "reward=0.6193 · BUILD=1 · demos=7 · example-platformer-shape-shift"
+        },
+        {
+          "task_id": "platformer-stealth-shadow-courier",
+          "score": 0.2903,
+          "raw": "reward=0.2903 · BUILD=1 · demos=2 · example-platformer-stealth-shadow-courier"
+        },
+        {
+          "task_id": "platformer-thunder-valkyrie",
+          "score": 0.2445,
+          "raw": "reward=0.2445 · BUILD=1 · demos=2 · example-platformer-thunder-valkyrie"
+        },
+        {
+          "task_id": "platformer-time-loop",
+          "score": 0,
+          "raw": "reward=0 · BUILD=0 · demos=0 · example-platformer-time-loop"
+        },
+        {
+          "task_id": "platformer-vessel-of-hallownest",
+          "score": 0.0708,
+          "raw": "reward=0.0708 · BUILD=1 · demos=5 · example-platformer-vessel-of-hallownest"
+        },
+        {
+          "task_id": "platformer-wall-dancer",
+          "score": 0.336,
+          "raw": "reward=0.336 · BUILD=1 · demos=1 · example-platformer-wall-dancer"
+        },
+        {
+          "task_id": "puzzle-circuit-wizard",
+          "score": 0.144,
+          "raw": "reward=0.144 · BUILD=1 · demos=8 · example-puzzle-circuit-wizard"
+        },
+        {
+          "task_id": "puzzle-goo-architect",
+          "score": 0.261,
+          "raw": "reward=0.261 · BUILD=1 · demos=2 · example-puzzle-goo-architect"
+        },
+        {
+          "task_id": "puzzle-gravity-shift",
+          "score": 0.6946,
+          "raw": "reward=0.6946 · BUILD=1 · demos=1 · example-puzzle-gravity-shift"
+        },
+        {
+          "task_id": "puzzle-lemming-factory",
+          "score": 0.3241,
+          "raw": "reward=0.3241 · BUILD=1 · demos=5 · example-puzzle-lemming-factory"
+        },
+        {
+          "task_id": "puzzle-pipe-crisis",
+          "score": 0.1467,
+          "raw": "reward=0.1467 · BUILD=1 · demos=2 · example-puzzle-pipe-crisis"
+        },
+        {
+          "task_id": "puzzle-portal-lab",
+          "score": 0.4533,
+          "raw": "reward=0.4533 · BUILD=1 · demos=6 · example-puzzle-portal-lab"
+        },
+        {
+          "task_id": "puzzle-rule-rewrite",
+          "score": 0.0063,
+          "raw": "reward=0.0063 · BUILD=1 · demos=10 · example-puzzle-rule-rewrite"
+        },
+        {
+          "task_id": "puzzle-sokoban-dungeon",
+          "score": 0.551,
+          "raw": "reward=0.551 · BUILD=1 · demos=9 · example-puzzle-sokoban-dungeon"
+        },
+        {
+          "task_id": "racing-drift-circuit",
+          "score": 0.2981,
+          "raw": "reward=0.2981 · BUILD=1 · demos=4 · example-racing-drift-circuit"
+        },
+        {
+          "task_id": "racing-rocket-trials",
+          "score": 0.0348,
+          "raw": "reward=0.0348 · BUILD=1 · demos=2 · example-racing-rocket-trials"
+        },
+        {
+          "task_id": "racing-terrain-climb",
+          "score": 0.1248,
+          "raw": "reward=0.1248 · BUILD=1 · demos=4 · example-racing-terrain-climb"
+        },
+        {
+          "task_id": "racing-trick-runner",
+          "score": 0,
+          "raw": "reward=0 · BUILD=0 · demos=0 · example-racing-trick-runner"
+        },
+        {
+          "task_id": "rhythm-beat-dungeon",
+          "score": 0,
+          "raw": "reward=0 · BUILD=0 · demos=0 · example-rhythm-beat-dungeon"
+        },
+        {
+          "task_id": "rhythm-conductor",
+          "score": 0.5336,
+          "raw": "reward=0.5336 · BUILD=1 · demos=10 · example-rhythm-conductor"
+        },
+        {
+          "task_id": "rhythm-dj-arena",
+          "score": 0.1885,
+          "raw": "reward=0.1885 · BUILD=1 · demos=7 · example-rhythm-dj-arena"
+        },
+        {
+          "task_id": "rhythm-garden",
+          "score": 0.5548,
+          "raw": "reward=0.5548 · BUILD=1 · demos=3 · example-rhythm-garden"
+        },
+        {
+          "task_id": "rhythm-note-highway",
+          "score": 0.4528,
+          "raw": "reward=0.4528 · BUILD=1 · demos=5 · example-rhythm-note-highway"
+        },
+        {
+          "task_id": "roguelike-action-void-harvest",
+          "score": 0.1953,
+          "raw": "reward=0.1953 · BUILD=1 · demos=1 · example-roguelike-action-void-harvest"
+        },
+        {
+          "task_id": "roguelike-breach-tactics",
+          "score": 0.3296,
+          "raw": "reward=0.3296 · BUILD=1 · demos=2 · example-roguelike-breach-tactics"
+        },
+        {
+          "task_id": "roguelike-dice-throne",
+          "score": 0.6243,
+          "raw": "reward=0.6243 · BUILD=1 · demos=5 · example-roguelike-dice-throne"
+        },
+        {
+          "task_id": "roguelike-dungeon-shop",
+          "score": 0.1506,
+          "raw": "reward=0.1506 · BUILD=1 · demos=8 · example-roguelike-dungeon-shop"
+        },
+        {
+          "task_id": "roguelike-ftl-voyage",
+          "score": 0.0646,
+          "raw": "reward=0.0646 · BUILD=1 · demos=5 · example-roguelike-ftl-voyage"
+        },
+        {
+          "task_id": "roguelike-garden-crawl",
+          "score": 0.3993,
+          "raw": "reward=0.3993 · BUILD=1 · demos=6 · example-roguelike-garden-crawl"
+        },
+        {
+          "task_id": "roguelike-potion-craft",
+          "score": 0.5228,
+          "raw": "reward=0.5228 · BUILD=1 · demos=2 · example-roguelike-potion-craft"
+        },
+        {
+          "task_id": "roguelike-relic-pinball",
+          "score": 0.8054,
+          "raw": "reward=0.8054 · BUILD=1 · demos=10 · example-roguelike-relic-pinball"
+        },
+        {
+          "task_id": "roguelike-rulescape",
+          "score": 0.7962,
+          "raw": "reward=0.7962 · BUILD=1 · demos=6 · example-roguelike-rulescape"
+        },
+        {
+          "task_id": "roguelike-slot-fortune",
+          "score": 0.2483,
+          "raw": "reward=0.2483 · BUILD=1 · demos=7 · example-roguelike-slot-fortune"
+        },
+        {
+          "task_id": "roguelike-spelunk-depths",
+          "score": 0.1833,
+          "raw": "reward=0.1833 · BUILD=1 · demos=7 · example-roguelike-spelunk-depths"
+        },
+        {
+          "task_id": "roguelike-train-heist",
+          "score": 0.1313,
+          "raw": "reward=0.1313 · BUILD=1 · demos=3 · example-roguelike-train-heist"
+        },
+        {
+          "task_id": "roguelike-wildwood",
+          "score": 0.5717,
+          "raw": "reward=0.5717 · BUILD=1 · demos=6 · example-roguelike-wildwood"
+        },
+        {
+          "task_id": "roguelike-word-spell",
+          "score": 0.0338,
+          "raw": "reward=0.0338 · BUILD=1 · demos=8 · example-roguelike-word-spell"
+        },
+        {
+          "task_id": "shooter-bullet-cathedral",
+          "score": 0.1012,
+          "raw": "reward=0.1012 · BUILD=1 · demos=7 · example-shooter-bullet-cathedral"
+        },
+        {
+          "task_id": "shooter-hotline-heist",
+          "score": 0.5901,
+          "raw": "reward=0.5901 · BUILD=1 · demos=9 · example-shooter-hotline-heist"
+        },
+        {
+          "task_id": "shooter-mech-sortie",
+          "score": 0.2904,
+          "raw": "reward=0.2904 · BUILD=1 · demos=1 · example-shooter-mech-sortie"
+        },
+        {
+          "task_id": "shooter-neon-arena",
+          "score": 0.7571,
+          "raw": "reward=0.7571 · BUILD=1 · demos=7 · example-shooter-neon-arena"
+        },
+        {
+          "task_id": "shooter-sky-duel",
+          "score": 0.2109,
+          "raw": "reward=0.2109 · BUILD=1 · demos=5 · example-shooter-sky-duel"
+        },
+        {
+          "task_id": "shooter-void-patrol",
+          "score": 0.8254,
+          "raw": "reward=0.8254 · BUILD=1 · demos=3 · example-shooter-void-patrol"
+        },
+        {
+          "task_id": "shooter-wave-commander",
+          "score": 0.253,
+          "raw": "reward=0.253 · BUILD=1 · demos=8 · example-shooter-wave-commander"
+        },
+        {
+          "task_id": "simulation-air-control",
+          "score": 0.0626,
+          "raw": "reward=0.0626 · BUILD=1 · demos=7 · example-simulation-air-control"
+        },
+        {
+          "task_id": "simulation-border-check",
+          "score": 0.0404,
+          "raw": "reward=0.0404 · BUILD=1 · demos=9 · example-simulation-border-check"
+        },
+        {
+          "task_id": "simulation-kitchen-rush",
+          "score": 0.5009,
+          "raw": "reward=0.5009 · BUILD=1 · demos=7 · example-simulation-kitchen-rush"
+        },
+        {
+          "task_id": "simulation-news-editor",
+          "score": 0.2186,
+          "raw": "reward=0.2186 · BUILD=1 · demos=6 · example-simulation-news-editor"
+        },
+        {
+          "task_id": "simulation-space-station",
+          "score": 0.4177,
+          "raw": "reward=0.4177 · BUILD=1 · demos=2 · example-simulation-space-station"
+        },
+        {
+          "task_id": "simulation-transit-web",
+          "score": 0.271,
+          "raw": "reward=0.271 · BUILD=1 · demos=2 · example-simulation-transit-web"
+        },
+        {
+          "task_id": "sports-archery-quest",
+          "score": 0.1748,
+          "raw": "reward=0.1748 · BUILD=1 · demos=8 · example-sports-archery-quest"
+        },
+        {
+          "task_id": "sports-boxing-gym",
+          "score": 0.8499,
+          "raw": "reward=0.8499 · BUILD=1 · demos=5 · example-sports-boxing-gym"
+        },
+        {
+          "task_id": "sports-fishing-tournament",
+          "score": 0.4983,
+          "raw": "reward=0.4983 · BUILD=1 · demos=7 · example-sports-fishing-tournament"
+        },
+        {
+          "task_id": "sports-skateboard-park",
+          "score": 0,
+          "raw": "reward=0 · BUILD=0 · demos=0 · example-sports-skateboard-park"
+        },
+        {
+          "task_id": "strategy-ant-colony",
+          "score": 0,
+          "raw": "reward=0 · BUILD=0 · demos=0 · example-strategy-ant-colony"
+        },
+        {
+          "task_id": "strategy-ashen-spire",
+          "score": 0.4587,
+          "raw": "reward=0.4587 · BUILD=1 · demos=1 · example-strategy-ashen-spire"
+        },
+        {
+          "task_id": "strategy-auto-chess",
+          "score": 0.1544,
+          "raw": "reward=0.1544 · BUILD=1 · demos=7 · example-strategy-auto-chess"
+        },
+        {
+          "task_id": "strategy-beastclash",
+          "score": 0.1376,
+          "raw": "reward=0.1376 · BUILD=1 · demos=5 · example-strategy-beastclash"
+        },
+        {
+          "task_id": "strategy-chess-variant",
+          "score": 0.4131,
+          "raw": "reward=0.4131 · BUILD=1 · demos=5 · example-strategy-chess-variant"
+        },
+        {
+          "task_id": "strategy-hex-conquest",
+          "score": 0.0277,
+          "raw": "reward=0.0277 · BUILD=1 · demos=6 · example-strategy-hex-conquest"
+        },
+        {
+          "task_id": "strategy-kingdom-cards",
+          "score": 0.7579,
+          "raw": "reward=0.7579 · BUILD=1 · demos=1 · example-strategy-kingdom-cards"
+        },
+        {
+          "task_id": "strategy-pirate-fleet",
+          "score": 0.21,
+          "raw": "reward=0.21 · BUILD=1 · demos=1 · example-strategy-pirate-fleet"
+        },
+        {
+          "task_id": "strategy-plant-defense",
+          "score": 0.5719,
+          "raw": "reward=0.5719 · BUILD=1 · demos=4 · example-strategy-plant-defense"
+        },
+        {
+          "task_id": "strategy-puzzle-magnet-lab",
+          "score": 0.0843,
+          "raw": "reward=0.0843 · BUILD=1 · demos=2 · example-strategy-puzzle-magnet-lab"
+        },
+        {
+          "task_id": "strategy-robot-factory",
+          "score": 0.158,
+          "raw": "reward=0.158 · BUILD=1 · demos=4 · example-strategy-robot-factory"
+        },
+        {
+          "task_id": "strategy-rogue-joker-poker",
+          "score": 0.7308,
+          "raw": "reward=0.7308 · BUILD=1 · demos=8 · example-strategy-rogue-joker-poker"
+        },
+        {
+          "task_id": "strategy-siege-engineer",
+          "score": 0.8067,
+          "raw": "reward=0.8067 · BUILD=1 · demos=1 · example-strategy-siege-engineer"
+        },
+        {
+          "task_id": "strategy-signal-rail-dispatcher",
+          "score": 0.2233,
+          "raw": "reward=0.2233 · BUILD=1 · demos=2 · example-strategy-signal-rail-dispatcher"
+        },
+        {
+          "task_id": "strategy-skirmish",
+          "score": 0.8171,
+          "raw": "reward=0.8171 · BUILD=1 · demos=7 · example-strategy-skirmish"
+        },
+        {
+          "task_id": "strategy-spell-tactics",
+          "score": 0.0411,
+          "raw": "reward=0.0411 · BUILD=1 · demos=1 · example-strategy-spell-tactics"
+        },
+        {
+          "task_id": "strategy-towerdefense",
+          "score": 0.4515,
+          "raw": "reward=0.4515 · BUILD=1 · demos=1 · example-strategy-towerdefense"
+        },
+        {
+          "task_id": "tycoon-creature-clinic-triage",
+          "score": 0.0946,
+          "raw": "reward=0.0946 · BUILD=1 · demos=6 · example-tycoon-creature-clinic-triage"
+        },
+        {
+          "task_id": "tycoon-dungeon-master",
+          "score": 0.358,
+          "raw": "reward=0.358 · BUILD=1 · demos=4 · example-tycoon-dungeon-master"
+        },
+        {
+          "task_id": "tycoon-farm",
+          "score": 0.5845,
+          "raw": "reward=0.5845 · BUILD=1 · demos=2 · example-tycoon-farm"
+        },
+        {
+          "task_id": "tycoon-funfair",
+          "score": 0.5561,
+          "raw": "reward=0.5561 · BUILD=1 · demos=8 · example-tycoon-funfair"
+        },
+        {
+          "task_id": "tycoon-garden-ecosystem-keeper",
+          "score": 0.5623,
+          "raw": "reward=0.5623 · BUILD=1 · demos=6 · example-tycoon-garden-ecosystem-keeper"
+        },
+        {
+          "task_id": "tycoon-gladiator-arena",
+          "score": 0.5049,
+          "raw": "reward=0.5049 · BUILD=1 · demos=7 · example-tycoon-gladiator-arena"
+        },
+        {
+          "task_id": "tycoon-music-label",
+          "score": 0.7046,
+          "raw": "reward=0.7046 · BUILD=1 · demos=10 · example-tycoon-music-label"
+        },
+        {
+          "task_id": "tycoon-pirate-port",
+          "score": 0.0234,
+          "raw": "reward=0.0234 · BUILD=1 · demos=2 · example-tycoon-pirate-port"
+        },
+        {
+          "task_id": "tycoon-potion-shop",
+          "score": 0.591,
+          "raw": "reward=0.591 · BUILD=1 · demos=1 · example-tycoon-potion-shop"
+        },
+        {
+          "task_id": "tycoon-railroad-baron",
+          "score": 0.641,
+          "raw": "reward=0.641 · BUILD=1 · demos=10 · example-tycoon-railroad-baron"
+        },
+        {
+          "task_id": "tycoon-space-colony",
+          "score": 0.7958,
+          "raw": "reward=0.7958 · BUILD=1 · demos=5 · example-tycoon-space-colony"
+        },
+        {
+          "task_id": "tycoon-submarine-pressure-rescue",
+          "score": 0.2399,
+          "raw": "reward=0.2399 · BUILD=1 · demos=2 · example-tycoon-submarine-pressure-rescue"
+        },
+        {
+          "task_id": "tycoon-tiny-factory-foreman",
+          "score": 0.6951,
+          "raw": "reward=0.6951 · BUILD=1 · demos=9 · example-tycoon-tiny-factory-foreman"
+        },
+        {
+          "task_id": "tycoon-trading-caravan-tycoon",
+          "score": 0.3104,
+          "raw": "reward=0.3104 · BUILD=1 · demos=5 · example-tycoon-trading-caravan-tycoon"
+        },
+        {
+          "task_id": "tycoon-wildhaven",
+          "score": 0.1127,
+          "raw": "reward=0.1127 · BUILD=1 · demos=1 · example-tycoon-wildhaven"
+        },
+        {
+          "task_id": "tycoon-zoo-keeper",
+          "score": 0.0598,
+          "raw": "reward=0.0598 · BUILD=1 · demos=10 · example-tycoon-zoo-keeper"
+        },
+        {
+          "task_id": "visualnovel-arcaneacademy",
+          "score": 0.121,
+          "raw": "reward=0.121 · BUILD=1 · demos=2 · example-visualnovel-arcaneacademy"
+        },
+        {
+          "task_id": "visualnovel-courtroom-clue-trial",
+          "score": 0.4084,
+          "raw": "reward=0.4084 · BUILD=1 · demos=8 · example-visualnovel-courtroom-clue-trial"
+        },
+        {
+          "task_id": "visualnovel-debate-club",
+          "score": 0.7583,
+          "raw": "reward=0.7583 · BUILD=1 · demos=9 · example-visualnovel-debate-club"
+        },
+        {
+          "task_id": "visualnovel-detective-noir",
+          "score": 0.3688,
+          "raw": "reward=0.3688 · BUILD=1 · demos=7 · example-visualnovel-detective-noir"
+        },
+        {
+          "task_id": "visualnovel-escape-room",
+          "score": 0.2263,
+          "raw": "reward=0.2263 · BUILD=1 · demos=3 · example-visualnovel-escape-room"
+        },
+        {
+          "task_id": "visualnovel-grimfable",
+          "score": 0.3381,
+          "raw": "reward=0.3381 · BUILD=1 · demos=3 · example-visualnovel-grimfable"
+        },
+        {
+          "task_id": "visualnovel-keepsake",
+          "score": 0.4787,
+          "raw": "reward=0.4787 · BUILD=1 · demos=7 · example-visualnovel-keepsake"
+        },
+        {
+          "task_id": "visualnovel-lastsignal",
+          "score": 0.1348,
+          "raw": "reward=0.1348 · BUILD=1 · demos=1 · example-visualnovel-lastsignal"
+        },
+        {
+          "task_id": "visualnovel-pactbound",
+          "score": 0.1328,
+          "raw": "reward=0.1328 · BUILD=1 · demos=2 · example-visualnovel-pactbound"
+        },
+        {
+          "task_id": "visualnovel-spy-handler",
+          "score": 0.6416,
+          "raw": "reward=0.6416 · BUILD=1 · demos=10 · example-visualnovel-spy-handler"
+        },
+        {
+          "task_id": "visualnovel-time-paradox",
+          "score": 0.6925,
+          "raw": "reward=0.6925 · BUILD=1 · demos=6 · example-visualnovel-time-paradox"
+        }
+      ],
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "run-family-breakdown",
+          "label": "本次分家族",
+          "title": "本次运行的分家族成绩",
+          "columns": [
+            "游戏族",
+            "题数",
+            "平均分",
+            "启动闸门通过"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Platformer",
+                19,
+                25.67,
+                "17/19"
+              ]
+            },
+            {
+              "cells": [
+                "Strategy",
+                17,
+                35.55,
+                "16/17"
+              ]
+            },
+            {
+              "cells": [
+                "Tycoon",
+                16,
+                42.71,
+                "16/16"
+              ]
+            },
+            {
+              "cells": [
+                "Open-world",
+                15,
+                35.93,
+                "15/15"
+              ]
+            },
+            {
+              "cells": [
+                "Roguelike",
+                14,
+                36.12,
+                "14/14"
+              ]
+            },
+            {
+              "cells": [
+                "Visual novel",
+                11,
+                39.1,
+                "11/11"
+              ]
+            },
+            {
+              "cells": [
+                "Puzzle",
+                8,
+                32.26,
+                "8/8"
+              ]
+            },
+            {
+              "cells": [
+                "Shooter",
+                7,
+                43.26,
+                "7/7"
+              ]
+            },
+            {
+              "cells": [
+                "Simulation",
+                6,
+                25.19,
+                "6/6"
+              ]
+            },
+            {
+              "cells": [
+                "Card game",
+                5,
+                33.46,
+                "5/5"
+              ]
+            },
+            {
+              "cells": [
+                "Horror",
+                5,
+                29.47,
+                "5/5"
+              ]
+            },
+            {
+              "cells": [
+                "Rhythm",
+                5,
+                34.59,
+                "4/5"
+              ]
+            },
+            {
+              "cells": [
+                "Idle",
+                4,
+                49.79,
+                "4/4"
+              ]
+            },
+            {
+              "cells": [
+                "Racing",
+                4,
+                11.44,
+                "3/4"
+              ]
+            },
+            {
+              "cells": [
+                "Sports",
+                4,
+                38.07,
+                "3/4"
+              ]
+            }
+          ],
+          "note": "各族平均分 = 该族题目 reward 的等权平均 × 100，由转换器按提交的逐题 reward 确定性算出，仅解释主分数，不参与排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "run-gate-summary",
+          "label": "闸门与取证",
+          "title": "启动闸门与取证摘要",
+          "columns": [
+            "项目",
+            "数值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "题目总数",
+                140
+              ]
+            },
+            {
+              "cells": [
+                "启动闸门通过题数",
+                134
+              ]
+            },
+            {
+              "cells": [
+                "记 0 分题数",
+                6
+              ]
+            },
+            {
+              "cells": [
+                "被判分的 demo 总数",
+                705
+              ]
+            },
+            {
+              "cells": [
+                "裁判后端 / 模型",
+                "openai / gpt-5.5"
+              ]
+            }
+          ],
+          "note": "闸门命令为 `godot --headless --path /workspace/game --quit-after 5`，失败即该题记 0 分；单题至多 10 个 demo 参与判分。辅助展示，不参与排名。"
+        }
+      ]
+    }
+  ]
+}

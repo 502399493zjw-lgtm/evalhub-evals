@@ -1,0 +1,978 @@
+{
+  "eval_id": "gamecraft-bench",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "gamecraft-bench/official-leaderboard-transcription@1.0.0",
+    "retrieved_on": "2026-08-09",
+    "source": {
+      "title": "GameCraft-Bench 官方项目页 Leaderboard（Overall 与四类分项，140 题全量）",
+      "url": "https://tongxuluo.github.io/gamecraft-bench-website/",
+      "snapshot_sha256": "0749c509b8e03869d0aee4d8825bb68a231b918ced9d29127e3f8580e936e85d"
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "Claude Fable 5",
+        "harness": "Claude Code"
+      },
+      "score": 65.72,
+      "raw_metric": {
+        "label": "官方总分（Overall）",
+        "value": "65.72",
+        "tiebreak_value": 65.72
+      },
+      "detail": "上游官方榜单第 1 名，来源方发表的汇总成绩，不是 EvalHub 独立复跑。上游榜单原始模型标识为 “Fable 5 high”（其中 high 为推理档位），此处按 EvalHub 平台模型注册表的 canonical 名记作 “Claude Fable 5”，编排 harness 为 Claude Code，上游标注的测试日期为 2026-07-20。总分 65.72 是 140 道题各自 [0,1] 得分的等权平均 ×100，取自 submission.source 的官方项目页快照，并与钉死 commit 21028dfa 的仓库 README 主结果表逐格一致。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-category-scores",
+          "label": "四类分项",
+          "title": "官方总分与四类分项成绩",
+          "columns": [
+            "指标",
+            "官方成绩"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                65.72
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                76.52
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                58.61
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                66.93
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                67.68
+              ]
+            }
+          ],
+          "note": "四个分项逐格转录自 submission.source 快照的官方榜单表，对应隐藏评分细则的四个类别：Mechanics = Core Mechanics、Depth = Content Depth、Visuals = Functional Visuals、Art = Presentation & Art。官方页面注明「Scores are percentages」。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "official-token-usage",
+          "label": "token 用量",
+          "title": "官方 token 用量",
+          "columns": [
+            "项目",
+            "官方数值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "评测题数",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Input tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Cache tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Output tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Avg input / task",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Avg output / task",
+                null
+              ]
+            }
+          ],
+          "note": "上游只对 4 个配置发布了 token 用量（README「Token usage」表：Kimi-K2.6、Claude Opus-4.7、DeepSeek-V4-Pro、GPT-5.5 (Codex)），本配置不在其中，因此六行全部留空，不做任何推算或补齐。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "GPT-5.6 Sol",
+        "harness": "Codex"
+      },
+      "score": 60.5,
+      "raw_metric": {
+        "label": "官方总分（Overall）",
+        "value": "60.50",
+        "tiebreak_value": 60.5
+      },
+      "detail": "上游官方榜单第 2 名，来源方发表的汇总成绩，不是 EvalHub 独立复跑。上游榜单原始模型标识为 “GPT-5.6-sol high”（其中 high 为推理档位），此处按 EvalHub 平台模型注册表的 canonical 名记作 “GPT-5.6 Sol”，编排 harness 为 Codex，上游标注的测试日期为 2026-07-17。总分 60.5 是 140 道题各自 [0,1] 得分的等权平均 ×100，取自 submission.source 的官方项目页快照，并与钉死 commit 21028dfa 的仓库 README 主结果表逐格一致。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-category-scores",
+          "label": "四类分项",
+          "title": "官方总分与四类分项成绩",
+          "columns": [
+            "指标",
+            "官方成绩"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                60.5
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                74.5
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                56.1
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                64.8
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                57.0
+              ]
+            }
+          ],
+          "note": "四个分项逐格转录自 submission.source 快照的官方榜单表，对应隐藏评分细则的四个类别：Mechanics = Core Mechanics、Depth = Content Depth、Visuals = Functional Visuals、Art = Presentation & Art。官方页面注明「Scores are percentages」。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "official-token-usage",
+          "label": "token 用量",
+          "title": "官方 token 用量",
+          "columns": [
+            "项目",
+            "官方数值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "评测题数",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Input tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Cache tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Output tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Avg input / task",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Avg output / task",
+                null
+              ]
+            }
+          ],
+          "note": "上游只对 4 个配置发布了 token 用量（README「Token usage」表：Kimi-K2.6、Claude Opus-4.7、DeepSeek-V4-Pro、GPT-5.5 (Codex)），本配置不在其中，因此六行全部留空，不做任何推算或补齐。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "Kimi K3",
+        "harness": "Kimi Code"
+      },
+      "score": 56.96,
+      "raw_metric": {
+        "label": "官方总分（Overall）",
+        "value": "56.96",
+        "tiebreak_value": 56.96
+      },
+      "detail": "上游官方榜单第 3 名，来源方发表的汇总成绩，不是 EvalHub 独立复跑。上游榜单原始模型标识为 “Kimi-K3”，此处按 EvalHub 平台模型注册表的 canonical 名记作 “Kimi K3”，编排 harness 为 Kimi Code，上游标注的测试日期为 2026-08-05。总分 56.96 是 140 道题各自 [0,1] 得分的等权平均 ×100，取自 submission.source 的官方项目页快照，并与钉死 commit 21028dfa 的仓库 README 主结果表逐格一致。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-category-scores",
+          "label": "四类分项",
+          "title": "官方总分与四类分项成绩",
+          "columns": [
+            "指标",
+            "官方成绩"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                56.96
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                73.03
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                53.38
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                56.9
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                53.59
+              ]
+            }
+          ],
+          "note": "四个分项逐格转录自 submission.source 快照的官方榜单表，对应隐藏评分细则的四个类别：Mechanics = Core Mechanics、Depth = Content Depth、Visuals = Functional Visuals、Art = Presentation & Art。官方页面注明「Scores are percentages」。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "official-token-usage",
+          "label": "token 用量",
+          "title": "官方 token 用量",
+          "columns": [
+            "项目",
+            "官方数值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "评测题数",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Input tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Cache tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Output tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Avg input / task",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Avg output / task",
+                null
+              ]
+            }
+          ],
+          "note": "上游只对 4 个配置发布了 token 用量（README「Token usage」表：Kimi-K2.6、Claude Opus-4.7、DeepSeek-V4-Pro、GPT-5.5 (Codex)），本配置不在其中，因此六行全部留空，不做任何推算或补齐。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "Claude Opus 4.7",
+        "harness": "Claude Code"
+      },
+      "score": 41.46,
+      "raw_metric": {
+        "label": "官方总分（Overall）",
+        "value": "41.46",
+        "tiebreak_value": 41.46
+      },
+      "detail": "上游官方榜单第 5 名，来源方发表的汇总成绩，不是 EvalHub 独立复跑。上游榜单原始模型标识为 “Opus-4.7 high”（其中 high 为推理档位），此处按 EvalHub 平台模型注册表的 canonical 名记作 “Claude Opus 4.7”，编排 harness 为 Claude Code，上游标注的测试日期为 2026-06-16。总分 41.46 是 140 道题各自 [0,1] 得分的等权平均 ×100，取自 submission.source 的官方项目页快照，并与钉死 commit 21028dfa 的仓库 README 主结果表逐格一致。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-category-scores",
+          "label": "四类分项",
+          "title": "官方总分与四类分项成绩",
+          "columns": [
+            "指标",
+            "官方成绩"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                41.46
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                55.34
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                39.48
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                42.78
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                36.86
+              ]
+            }
+          ],
+          "note": "四个分项逐格转录自 submission.source 快照的官方榜单表，对应隐藏评分细则的四个类别：Mechanics = Core Mechanics、Depth = Content Depth、Visuals = Functional Visuals、Art = Presentation & Art。官方页面注明「Scores are percentages」。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "official-token-usage",
+          "label": "token 用量",
+          "title": "官方 token 用量",
+          "columns": [
+            "项目",
+            "官方数值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "评测题数",
+                "140"
+              ]
+            },
+            {
+              "cells": [
+                "Input tokens total",
+                "1.58B"
+              ]
+            },
+            {
+              "cells": [
+                "Cache tokens total",
+                "1.50B"
+              ]
+            },
+            {
+              "cells": [
+                "Output tokens total",
+                "9.4M"
+              ]
+            },
+            {
+              "cells": [
+                "Avg input / task",
+                "11.3M"
+              ]
+            },
+            {
+              "cells": [
+                "Avg output / task",
+                "67.0K"
+              ]
+            }
+          ],
+          "note": "逐格转录自钉死 commit 21028dfa 的仓库 README「Token usage」表中标为 “Claude Opus-4.7” 的那一行。上游明确说明只报 token 计数而不报美元成本，因为各家定价、路由端点、缓存策略与企业协议不同。本目录不做任何单位换算或求和推算。辅助展示，不参与排名。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "GPT-5.5",
+        "harness": "Codex"
+      },
+      "score": 39.49,
+      "raw_metric": {
+        "label": "官方总分（Overall）",
+        "value": "39.49",
+        "tiebreak_value": 39.49
+      },
+      "detail": "上游官方榜单第 6 名，来源方发表的汇总成绩，不是 EvalHub 独立复跑。上游榜单原始模型标识为 “GPT-5.5 high”（其中 high 为推理档位），此处按 EvalHub 平台模型注册表的 canonical 名记作 “GPT-5.5”，编排 harness 为 Codex，上游标注的测试日期为 2026-06-16。总分 39.49 是 140 道题各自 [0,1] 得分的等权平均 ×100，取自 submission.source 的官方项目页快照，并与钉死 commit 21028dfa 的仓库 README 主结果表逐格一致。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-category-scores",
+          "label": "四类分项",
+          "title": "官方总分与四类分项成绩",
+          "columns": [
+            "指标",
+            "官方成绩"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                39.49
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                54.36
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                38.61
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                41.84
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                32.94
+              ]
+            }
+          ],
+          "note": "四个分项逐格转录自 submission.source 快照的官方榜单表，对应隐藏评分细则的四个类别：Mechanics = Core Mechanics、Depth = Content Depth、Visuals = Functional Visuals、Art = Presentation & Art。官方页面注明「Scores are percentages」。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "official-token-usage",
+          "label": "token 用量",
+          "title": "官方 token 用量",
+          "columns": [
+            "项目",
+            "官方数值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "评测题数",
+                "140"
+              ]
+            },
+            {
+              "cells": [
+                "Input tokens total",
+                "148.5M"
+              ]
+            },
+            {
+              "cells": [
+                "Cache tokens total",
+                "130.3M"
+              ]
+            },
+            {
+              "cells": [
+                "Output tokens total",
+                "2.8M"
+              ]
+            },
+            {
+              "cells": [
+                "Avg input / task",
+                "1.1M"
+              ]
+            },
+            {
+              "cells": [
+                "Avg output / task",
+                "20.0K"
+              ]
+            }
+          ],
+          "note": "逐格转录自钉死 commit 21028dfa 的仓库 README「Token usage」表中标为 “GPT-5.5 (Codex)” 的那一行。上游明确说明只报 token 计数而不报美元成本，因为各家定价、路由端点、缓存策略与企业协议不同。本目录不做任何单位换算或求和推算。辅助展示，不参与排名。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "Kimi K2.6",
+        "harness": "Kimi Code"
+      },
+      "score": 30.65,
+      "raw_metric": {
+        "label": "官方总分（Overall）",
+        "value": "30.65",
+        "tiebreak_value": 30.65
+      },
+      "detail": "上游官方榜单第 7 名，来源方发表的汇总成绩，不是 EvalHub 独立复跑。上游榜单原始模型标识为 “Kimi-K2.6”，此处按 EvalHub 平台模型注册表的 canonical 名记作 “Kimi K2.6”，编排 harness 为 Kimi Code，上游标注的测试日期为 2026-06-16。总分 30.65 是 140 道题各自 [0,1] 得分的等权平均 ×100，取自 submission.source 的官方项目页快照，并与钉死 commit 21028dfa 的仓库 README 主结果表逐格一致。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-category-scores",
+          "label": "四类分项",
+          "title": "官方总分与四类分项成绩",
+          "columns": [
+            "指标",
+            "官方成绩"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                30.65
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                39.76
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                28.07
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                33.66
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                27.99
+              ]
+            }
+          ],
+          "note": "四个分项逐格转录自 submission.source 快照的官方榜单表，对应隐藏评分细则的四个类别：Mechanics = Core Mechanics、Depth = Content Depth、Visuals = Functional Visuals、Art = Presentation & Art。官方页面注明「Scores are percentages」。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "official-token-usage",
+          "label": "token 用量",
+          "title": "官方 token 用量",
+          "columns": [
+            "项目",
+            "官方数值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "评测题数",
+                "140"
+              ]
+            },
+            {
+              "cells": [
+                "Input tokens total",
+                "2.24B"
+              ]
+            },
+            {
+              "cells": [
+                "Cache tokens total",
+                "2.22B"
+              ]
+            },
+            {
+              "cells": [
+                "Output tokens total",
+                "10.9M"
+              ]
+            },
+            {
+              "cells": [
+                "Avg input / task",
+                "16.0M"
+              ]
+            },
+            {
+              "cells": [
+                "Avg output / task",
+                "77.7K"
+              ]
+            }
+          ],
+          "note": "逐格转录自钉死 commit 21028dfa 的仓库 README「Token usage」表中标为 “Kimi-K2.6” 的那一行。上游明确说明只报 token 计数而不报美元成本，因为各家定价、路由端点、缓存策略与企业协议不同。本目录不做任何单位换算或求和推算。辅助展示，不参与排名。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "MiMo V2.5 Pro",
+        "harness": "Claude Code"
+      },
+      "score": 24.1,
+      "raw_metric": {
+        "label": "官方总分（Overall）",
+        "value": "24.10",
+        "tiebreak_value": 24.1
+      },
+      "detail": "上游官方榜单第 8 名，来源方发表的汇总成绩，不是 EvalHub 独立复跑。上游榜单原始模型标识为 “MiMo-V2.5-Pro”，此处按 EvalHub 平台模型注册表的 canonical 名记作 “MiMo V2.5 Pro”，编排 harness 为 Claude Code，上游标注的测试日期为 2026-06-16。总分 24.1 是 140 道题各自 [0,1] 得分的等权平均 ×100，取自 submission.source 的官方项目页快照，并与钉死 commit 21028dfa 的仓库 README 主结果表逐格一致。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-category-scores",
+          "label": "四类分项",
+          "title": "官方总分与四类分项成绩",
+          "columns": [
+            "指标",
+            "官方成绩"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                24.1
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                32.33
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                22.59
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                27.45
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                20.65
+              ]
+            }
+          ],
+          "note": "四个分项逐格转录自 submission.source 快照的官方榜单表，对应隐藏评分细则的四个类别：Mechanics = Core Mechanics、Depth = Content Depth、Visuals = Functional Visuals、Art = Presentation & Art。官方页面注明「Scores are percentages」。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "official-token-usage",
+          "label": "token 用量",
+          "title": "官方 token 用量",
+          "columns": [
+            "项目",
+            "官方数值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "评测题数",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Input tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Cache tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Output tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Avg input / task",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Avg output / task",
+                null
+              ]
+            }
+          ],
+          "note": "上游只对 4 个配置发布了 token 用量（README「Token usage」表：Kimi-K2.6、Claude Opus-4.7、DeepSeek-V4-Pro、GPT-5.5 (Codex)），本配置不在其中，因此六行全部留空，不做任何推算或补齐。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "GLM-5.1",
+        "harness": "Code Buddy"
+      },
+      "score": 18.29,
+      "raw_metric": {
+        "label": "官方总分（Overall）",
+        "value": "18.29",
+        "tiebreak_value": 18.29
+      },
+      "detail": "上游官方榜单第 9 名，来源方发表的汇总成绩，不是 EvalHub 独立复跑。上游榜单原始模型标识为 “GLM-5.1”，此处按 EvalHub 平台模型注册表的 canonical 名记作 “GLM-5.1”，编排 harness 为 Code Buddy，上游标注的测试日期为 2026-06-16。总分 18.29 是 140 道题各自 [0,1] 得分的等权平均 ×100，取自 submission.source 的官方项目页快照，并与钉死 commit 21028dfa 的仓库 README 主结果表逐格一致。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-category-scores",
+          "label": "四类分项",
+          "title": "官方总分与四类分项成绩",
+          "columns": [
+            "指标",
+            "官方成绩"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                18.29
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                25.23
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                17.8
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                21.14
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                14.59
+              ]
+            }
+          ],
+          "note": "四个分项逐格转录自 submission.source 快照的官方榜单表，对应隐藏评分细则的四个类别：Mechanics = Core Mechanics、Depth = Content Depth、Visuals = Functional Visuals、Art = Presentation & Art。官方页面注明「Scores are percentages」。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "official-token-usage",
+          "label": "token 用量",
+          "title": "官方 token 用量",
+          "columns": [
+            "项目",
+            "官方数值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "评测题数",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Input tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Cache tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Output tokens total",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Avg input / task",
+                null
+              ]
+            },
+            {
+              "cells": [
+                "Avg output / task",
+                null
+              ]
+            }
+          ],
+          "note": "上游只对 4 个配置发布了 token 用量（README「Token usage」表：Kimi-K2.6、Claude Opus-4.7、DeepSeek-V4-Pro、GPT-5.5 (Codex)），本配置不在其中，因此六行全部留空，不做任何推算或补齐。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "DeepSeek V4 Pro",
+        "harness": "Codex"
+      },
+      "score": 2.15,
+      "raw_metric": {
+        "label": "官方总分（Overall）",
+        "value": "2.15",
+        "tiebreak_value": 2.15
+      },
+      "detail": "上游官方榜单第 11 名，来源方发表的汇总成绩，不是 EvalHub 独立复跑。上游榜单原始模型标识为 “DeepSeek-V4-Pro”，此处按 EvalHub 平台模型注册表的 canonical 名记作 “DeepSeek V4 Pro”，编排 harness 为 Codex，上游标注的测试日期为 2026-06-16。总分 2.15 是 140 道题各自 [0,1] 得分的等权平均 ×100，取自 submission.source 的官方项目页快照，并与钉死 commit 21028dfa 的仓库 README 主结果表逐格一致。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-category-scores",
+          "label": "四类分项",
+          "title": "官方总分与四类分项成绩",
+          "columns": [
+            "指标",
+            "官方成绩"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                2.15
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                2.25
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                1.69
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                1.97
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                2.63
+              ]
+            }
+          ],
+          "note": "四个分项逐格转录自 submission.source 快照的官方榜单表，对应隐藏评分细则的四个类别：Mechanics = Core Mechanics、Depth = Content Depth、Visuals = Functional Visuals、Art = Presentation & Art。官方页面注明「Scores are percentages」。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "official-token-usage",
+          "label": "token 用量",
+          "title": "官方 token 用量",
+          "columns": [
+            "项目",
+            "官方数值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "评测题数",
+                "140"
+              ]
+            },
+            {
+              "cells": [
+                "Input tokens total",
+                "232.6M"
+              ]
+            },
+            {
+              "cells": [
+                "Cache tokens total",
+                "58.0M"
+              ]
+            },
+            {
+              "cells": [
+                "Output tokens total",
+                "7.8M"
+              ]
+            },
+            {
+              "cells": [
+                "Avg input / task",
+                "1.7M"
+              ]
+            },
+            {
+              "cells": [
+                "Avg output / task",
+                "55.4K"
+              ]
+            }
+          ],
+          "note": "逐格转录自钉死 commit 21028dfa 的仓库 README「Token usage」表中标为 “DeepSeek-V4-Pro” 的那一行。上游明确说明只报 token 计数而不报美元成本，因为各家定价、路由端点、缓存策略与企业协议不同。本目录不做任何单位换算或求和推算。辅助展示，不参与排名。"
+        }
+      ]
+    }
+  ]
+}

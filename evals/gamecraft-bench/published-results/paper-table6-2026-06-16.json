@@ -1,0 +1,1365 @@
+{
+  "eval_id": "gamecraft-bench",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "gamecraft-bench/paper-table4-table6-transcription@1.0.0",
+    "retrieved_on": "2026-08-09",
+    "source": {
+      "title": "GameCraft-Bench 论文 arXiv:2606.17861v1 Table 4 与 Table 6（全量与分家族成绩）",
+      "url": "https://arxiv.org/abs/2606.17861",
+      "snapshot_sha256": "9c8ca18e685a6d5682359efdf115b344e8b717a87efd1b58a9e5fbcc13e45045"
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "Claude Opus 4.7",
+        "harness": "Claude Code"
+      },
+      "score": 41.46,
+      "raw_metric": {
+        "label": "论文 Table 4 总分（Overall）",
+        "value": "41.46",
+        "tiebreak_value": 41.46
+      },
+      "detail": "论文 arXiv:2606.17861v1（2026-06-16 提交）Table 4 与 Table 6 发表的汇总成绩，来源方发表值，不是 EvalHub 独立复跑。上游论文的原始模型标识为 “Opus-4.7 high”（其中 high 为推理档位），此处按 EvalHub 平台模型注册表的 canonical 名记作 “Claude Opus 4.7”，编排 harness 为 Claude Code。总分 41.46 与官方项目页 2026-08-09 快照中同一配置的数值逐格一致。本信封的价值在于 Table 6 额外发表了 15 个游戏族 × 5 个指标的完整分家族成绩，这是官方榜单页没有的分项数据。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "paper-family-breakdown",
+          "label": "分家族成绩",
+          "title": "论文 Table 6：15 个游戏族的分家族成绩",
+          "columns": [
+            "游戏族",
+            "Overall",
+            "Mechanics",
+            "Depth",
+            "Visuals",
+            "Art"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Platformer",
+                36.57,
+                45.77,
+                35.5,
+                46.28,
+                29.55
+              ]
+            },
+            {
+              "cells": [
+                "Strategy",
+                44.73,
+                54.91,
+                46.78,
+                62.6,
+                30.65
+              ]
+            },
+            {
+              "cells": [
+                "Tycoon",
+                36.45,
+                48.31,
+                39.42,
+                45.11,
+                24.69
+              ]
+            },
+            {
+              "cells": [
+                "Open-world",
+                40.8,
+                47.88,
+                34.43,
+                29.57,
+                48.94
+              ]
+            },
+            {
+              "cells": [
+                "Roguelike",
+                40.1,
+                64.87,
+                38.79,
+                46.5,
+                28.05
+              ]
+            },
+            {
+              "cells": [
+                "Visual novel",
+                43.6,
+                56.33,
+                42.22,
+                50.99,
+                35.21
+              ]
+            },
+            {
+              "cells": [
+                "Puzzle",
+                35.87,
+                51.43,
+                26.43,
+                43.36,
+                35.44
+              ]
+            },
+            {
+              "cells": [
+                "Shooter",
+                40.28,
+                55.0,
+                40.57,
+                38.2,
+                34.58
+              ]
+            },
+            {
+              "cells": [
+                "Simulation",
+                38.29,
+                61.17,
+                37.33,
+                44.13,
+                26.93
+              ]
+            },
+            {
+              "cells": [
+                "Card game",
+                33.78,
+                54.67,
+                26.25,
+                18.48,
+                38.92
+              ]
+            },
+            {
+              "cells": [
+                "Horror",
+                57.3,
+                72.67,
+                49.0,
+                50.5,
+                61.92
+              ]
+            },
+            {
+              "cells": [
+                "Rhythm",
+                46.57,
+                62.0,
+                40.0,
+                24.7,
+                55.9
+              ]
+            },
+            {
+              "cells": [
+                "Idle",
+                56.99,
+                76.67,
+                61.25,
+                23.12,
+                58.82
+              ]
+            },
+            {
+              "cells": [
+                "Racing",
+                45.26,
+                55.83,
+                45.31,
+                23.15,
+                50.15
+              ]
+            },
+            {
+              "cells": [
+                "Sports",
+                48.24,
+                66.25,
+                40.62,
+                39.38,
+                51.95
+              ]
+            }
+          ],
+          "note": "逐格转录自 submission.source 论文 Table 6（标题原文：Family-level and benchmark-level results (%). For each model, rows report core mechanics (M), content depth (D), functional visuals (V), art and presentation (A), and overall score.）。只转录论文真实发表的单元格，不做任何跨族聚合或曲线拟合。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "paper-benchmark-level",
+          "label": "论文总表",
+          "title": "论文 Table 4：全量 140 题的总分与四类分项",
+          "columns": [
+            "指标",
+            "论文发表值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                41.46
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                55.34
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                39.48
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                42.78
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                36.86
+              ]
+            }
+          ],
+          "note": "逐格转录自 submission.source 论文 Table 4（标题原文：Benchmark-level results (%). Mechanics, Depth, Visuals, and Art correspond to the four rubric categories.）。这 5 个数值与官方项目页同一配置的榜单行逐格一致。辅助展示，不参与独立排名。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "MiMo V2.5 Pro",
+        "harness": "Claude Code"
+      },
+      "score": 24.1,
+      "raw_metric": {
+        "label": "论文 Table 4 总分（Overall）",
+        "value": "24.10",
+        "tiebreak_value": 24.1
+      },
+      "detail": "论文 arXiv:2606.17861v1（2026-06-16 提交）Table 4 与 Table 6 发表的汇总成绩，来源方发表值，不是 EvalHub 独立复跑。上游论文的原始模型标识为 “MiMo-V2.5-Pro”，此处按 EvalHub 平台模型注册表的 canonical 名记作 “MiMo V2.5 Pro”，编排 harness 为 Claude Code。总分 24.1 与官方项目页 2026-08-09 快照中同一配置的数值逐格一致。本信封的价值在于 Table 6 额外发表了 15 个游戏族 × 5 个指标的完整分家族成绩，这是官方榜单页没有的分项数据。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "paper-family-breakdown",
+          "label": "分家族成绩",
+          "title": "论文 Table 6：15 个游戏族的分家族成绩",
+          "columns": [
+            "游戏族",
+            "Overall",
+            "Mechanics",
+            "Depth",
+            "Visuals",
+            "Art"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Platformer",
+                22.64,
+                32.58,
+                17.5,
+                34.41,
+                18.46
+              ]
+            },
+            {
+              "cells": [
+                "Strategy",
+                20.72,
+                28.81,
+                20.11,
+                29.41,
+                14.12
+              ]
+            },
+            {
+              "cells": [
+                "Tycoon",
+                31.66,
+                41.34,
+                36.31,
+                39.42,
+                19.53
+              ]
+            },
+            {
+              "cells": [
+                "Open-world",
+                18.37,
+                17.22,
+                17.08,
+                11.81,
+                22.96
+              ]
+            },
+            {
+              "cells": [
+                "Roguelike",
+                24.31,
+                34.13,
+                21.27,
+                35.85,
+                18.19
+              ]
+            },
+            {
+              "cells": [
+                "Visual novel",
+                21.36,
+                27.64,
+                21.02,
+                29.63,
+                15.37
+              ]
+            },
+            {
+              "cells": [
+                "Puzzle",
+                24.58,
+                33.12,
+                21.09,
+                32.02,
+                21.21
+              ]
+            },
+            {
+              "cells": [
+                "Shooter",
+                25.96,
+                40.29,
+                19.0,
+                30.1,
+                25.02
+              ]
+            },
+            {
+              "cells": [
+                "Simulation",
+                27.21,
+                37.17,
+                28.17,
+                30.59,
+                20.53
+              ]
+            },
+            {
+              "cells": [
+                "Card game",
+                14.14,
+                26.67,
+                12.25,
+                4.95,
+                14.59
+              ]
+            },
+            {
+              "cells": [
+                "Horror",
+                34.55,
+                45.67,
+                26.0,
+                28.0,
+                41.14
+              ]
+            },
+            {
+              "cells": [
+                "Rhythm",
+                17.76,
+                31.0,
+                13.75,
+                16.34,
+                16.69
+              ]
+            },
+            {
+              "cells": [
+                "Idle",
+                38.87,
+                50.83,
+                41.25,
+                11.88,
+                42.94
+              ]
+            },
+            {
+              "cells": [
+                "Racing",
+                19.39,
+                23.75,
+                16.56,
+                9.51,
+                24.57
+              ]
+            },
+            {
+              "cells": [
+                "Sports",
+                31.66,
+                32.92,
+                38.75,
+                19.38,
+                29.29
+              ]
+            }
+          ],
+          "note": "逐格转录自 submission.source 论文 Table 6（标题原文：Family-level and benchmark-level results (%). For each model, rows report core mechanics (M), content depth (D), functional visuals (V), art and presentation (A), and overall score.）。只转录论文真实发表的单元格，不做任何跨族聚合或曲线拟合。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "paper-benchmark-level",
+          "label": "论文总表",
+          "title": "论文 Table 4：全量 140 题的总分与四类分项",
+          "columns": [
+            "指标",
+            "论文发表值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                24.1
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                32.33
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                22.59
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                27.45
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                20.65
+              ]
+            }
+          ],
+          "note": "逐格转录自 submission.source 论文 Table 4（标题原文：Benchmark-level results (%). Mechanics, Depth, Visuals, and Art correspond to the four rubric categories.）。这 5 个数值与官方项目页同一配置的榜单行逐格一致。辅助展示，不参与独立排名。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "GPT-5.5",
+        "harness": "Codex"
+      },
+      "score": 39.49,
+      "raw_metric": {
+        "label": "论文 Table 4 总分（Overall）",
+        "value": "39.49",
+        "tiebreak_value": 39.49
+      },
+      "detail": "论文 arXiv:2606.17861v1（2026-06-16 提交）Table 4 与 Table 6 发表的汇总成绩，来源方发表值，不是 EvalHub 独立复跑。上游论文的原始模型标识为 “GPT-5.5 high”（其中 high 为推理档位），此处按 EvalHub 平台模型注册表的 canonical 名记作 “GPT-5.5”，编排 harness 为 Codex。总分 39.49 与官方项目页 2026-08-09 快照中同一配置的数值逐格一致。本信封的价值在于 Table 6 额外发表了 15 个游戏族 × 5 个指标的完整分家族成绩，这是官方榜单页没有的分项数据。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "paper-family-breakdown",
+          "label": "分家族成绩",
+          "title": "论文 Table 6：15 个游戏族的分家族成绩",
+          "columns": [
+            "游戏族",
+            "Overall",
+            "Mechanics",
+            "Depth",
+            "Visuals",
+            "Art"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Platformer",
+                37.26,
+                50.51,
+                34.66,
+                45.49,
+                30.65
+              ]
+            },
+            {
+              "cells": [
+                "Strategy",
+                39.81,
+                50.96,
+                40.69,
+                56.61,
+                26.94
+              ]
+            },
+            {
+              "cells": [
+                "Tycoon",
+                31.55,
+                42.64,
+                36.85,
+                41.01,
+                17.45
+              ]
+            },
+            {
+              "cells": [
+                "Open-world",
+                40.17,
+                54.48,
+                39.23,
+                27.29,
+                40.51
+              ]
+            },
+            {
+              "cells": [
+                "Roguelike",
+                34.55,
+                50.99,
+                32.6,
+                43.42,
+                25.65
+              ]
+            },
+            {
+              "cells": [
+                "Visual novel",
+                42.15,
+                56.0,
+                45.61,
+                50.46,
+                28.5
+              ]
+            },
+            {
+              "cells": [
+                "Puzzle",
+                46.8,
+                67.97,
+                37.97,
+                53.34,
+                43.75
+              ]
+            },
+            {
+              "cells": [
+                "Shooter",
+                41.3,
+                64.0,
+                33.71,
+                44.89,
+                37.62
+              ]
+            },
+            {
+              "cells": [
+                "Simulation",
+                38.81,
+                53.83,
+                37.5,
+                40.1,
+                33.11
+              ]
+            },
+            {
+              "cells": [
+                "Card game",
+                25.5,
+                50.67,
+                23.25,
+                17.73,
+                20.29
+              ]
+            },
+            {
+              "cells": [
+                "Horror",
+                49.05,
+                59.67,
+                36.5,
+                44.0,
+                59.2
+              ]
+            },
+            {
+              "cells": [
+                "Rhythm",
+                42.65,
+                57.33,
+                40.75,
+                32.84,
+                42.45
+              ]
+            },
+            {
+              "cells": [
+                "Idle",
+                64.91,
+                90.83,
+                72.19,
+                28.12,
+                62.29
+              ]
+            },
+            {
+              "cells": [
+                "Racing",
+                37.15,
+                57.5,
+                35.0,
+                25.23,
+                35.69
+              ]
+            },
+            {
+              "cells": [
+                "Sports",
+                49.71,
+                52.08,
+                55.62,
+                33.75,
+                49.61
+              ]
+            }
+          ],
+          "note": "逐格转录自 submission.source 论文 Table 6（标题原文：Family-level and benchmark-level results (%). For each model, rows report core mechanics (M), content depth (D), functional visuals (V), art and presentation (A), and overall score.）。只转录论文真实发表的单元格，不做任何跨族聚合或曲线拟合。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "paper-benchmark-level",
+          "label": "论文总表",
+          "title": "论文 Table 4：全量 140 题的总分与四类分项",
+          "columns": [
+            "指标",
+            "论文发表值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                39.49
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                54.36
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                38.61
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                41.84
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                32.94
+              ]
+            }
+          ],
+          "note": "逐格转录自 submission.source 论文 Table 4（标题原文：Benchmark-level results (%). Mechanics, Depth, Visuals, and Art correspond to the four rubric categories.）。这 5 个数值与官方项目页同一配置的榜单行逐格一致。辅助展示，不参与独立排名。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "DeepSeek V4 Pro",
+        "harness": "Codex"
+      },
+      "score": 2.15,
+      "raw_metric": {
+        "label": "论文 Table 4 总分（Overall）",
+        "value": "2.15",
+        "tiebreak_value": 2.15
+      },
+      "detail": "论文 arXiv:2606.17861v1（2026-06-16 提交）Table 4 与 Table 6 发表的汇总成绩，来源方发表值，不是 EvalHub 独立复跑。上游论文的原始模型标识为 “DeepSeek-V4-Pro”，此处按 EvalHub 平台模型注册表的 canonical 名记作 “DeepSeek V4 Pro”，编排 harness 为 Codex。总分 2.15 与官方项目页 2026-08-09 快照中同一配置的数值逐格一致。本信封的价值在于 Table 6 额外发表了 15 个游戏族 × 5 个指标的完整分家族成绩，这是官方榜单页没有的分项数据。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "paper-family-breakdown",
+          "label": "分家族成绩",
+          "title": "论文 Table 6：15 个游戏族的分家族成绩",
+          "columns": [
+            "游戏族",
+            "Overall",
+            "Mechanics",
+            "Depth",
+            "Visuals",
+            "Art"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Platformer",
+                1.77,
+                0.39,
+                1.0,
+                2.67,
+                2.73
+              ]
+            },
+            {
+              "cells": [
+                "Strategy",
+                0.66,
+                1.35,
+                0.35,
+                0.88,
+                0.59
+              ]
+            },
+            {
+              "cells": [
+                "Tycoon",
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "cells": [
+                "Open-world",
+                0.4,
+                0.92,
+                0.0,
+                1.11,
+                0.28
+              ]
+            },
+            {
+              "cells": [
+                "Roguelike",
+                2.09,
+                1.71,
+                1.0,
+                3.48,
+                2.75
+              ]
+            },
+            {
+              "cells": [
+                "Visual novel",
+                1.06,
+                0.45,
+                0.82,
+                2.56,
+                0.91
+              ]
+            },
+            {
+              "cells": [
+                "Puzzle",
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "cells": [
+                "Shooter",
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "cells": [
+                "Simulation",
+                5.76,
+                6.5,
+                6.33,
+                5.62,
+                4.93
+              ]
+            },
+            {
+              "cells": [
+                "Card game",
+                2.45,
+                0.0,
+                0.0,
+                0.0,
+                7.0
+              ]
+            },
+            {
+              "cells": [
+                "Horror",
+                6.79,
+                7.33,
+                5.0,
+                2.0,
+                10.4
+              ]
+            },
+            {
+              "cells": [
+                "Rhythm",
+                1.69,
+                0.0,
+                0.0,
+                0.0,
+                4.83
+              ]
+            },
+            {
+              "cells": [
+                "Idle",
+                17.01,
+                33.33,
+                13.44,
+                6.88,
+                17.92
+              ]
+            },
+            {
+              "cells": [
+                "Racing",
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            {
+              "cells": [
+                "Sports",
+                12.91,
+                8.33,
+                18.12,
+                11.25,
+                10.38
+              ]
+            }
+          ],
+          "note": "逐格转录自 submission.source 论文 Table 6（标题原文：Family-level and benchmark-level results (%). For each model, rows report core mechanics (M), content depth (D), functional visuals (V), art and presentation (A), and overall score.）。只转录论文真实发表的单元格，不做任何跨族聚合或曲线拟合。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "paper-benchmark-level",
+          "label": "论文总表",
+          "title": "论文 Table 4：全量 140 题的总分与四类分项",
+          "columns": [
+            "指标",
+            "论文发表值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                2.15
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                2.25
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                1.69
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                1.97
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                2.63
+              ]
+            }
+          ],
+          "note": "逐格转录自 submission.source 论文 Table 4（标题原文：Benchmark-level results (%). Mechanics, Depth, Visuals, and Art correspond to the four rubric categories.）。这 5 个数值与官方项目页同一配置的榜单行逐格一致。辅助展示，不参与独立排名。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "Kimi K2.6",
+        "harness": "Kimi Code"
+      },
+      "score": 30.65,
+      "raw_metric": {
+        "label": "论文 Table 4 总分（Overall）",
+        "value": "30.65",
+        "tiebreak_value": 30.65
+      },
+      "detail": "论文 arXiv:2606.17861v1（2026-06-16 提交）Table 4 与 Table 6 发表的汇总成绩，来源方发表值，不是 EvalHub 独立复跑。上游论文的原始模型标识为 “Kimi-K2.6”，此处按 EvalHub 平台模型注册表的 canonical 名记作 “Kimi K2.6”，编排 harness 为 Kimi Code。总分 30.65 与官方项目页 2026-08-09 快照中同一配置的数值逐格一致。本信封的价值在于 Table 6 额外发表了 15 个游戏族 × 5 个指标的完整分家族成绩，这是官方榜单页没有的分项数据。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "paper-family-breakdown",
+          "label": "分家族成绩",
+          "title": "论文 Table 6：15 个游戏族的分家族成绩",
+          "columns": [
+            "游戏族",
+            "Overall",
+            "Mechanics",
+            "Depth",
+            "Visuals",
+            "Art"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Platformer",
+                28.94,
+                34.32,
+                22.71,
+                39.27,
+                28.43
+              ]
+            },
+            {
+              "cells": [
+                "Strategy",
+                32.48,
+                47.65,
+                32.22,
+                44.17,
+                21.23
+              ]
+            },
+            {
+              "cells": [
+                "Tycoon",
+                30.79,
+                38.5,
+                32.04,
+                39.3,
+                22.6
+              ]
+            },
+            {
+              "cells": [
+                "Open-world",
+                23.61,
+                26.99,
+                23.1,
+                19.05,
+                24.62
+              ]
+            },
+            {
+              "cells": [
+                "Roguelike",
+                35.17,
+                52.31,
+                33.22,
+                43.3,
+                26.27
+              ]
+            },
+            {
+              "cells": [
+                "Visual novel",
+                37.85,
+                45.73,
+                40.09,
+                46.49,
+                27.75
+              ]
+            },
+            {
+              "cells": [
+                "Puzzle",
+                25.42,
+                30.47,
+                18.12,
+                35.51,
+                26.23
+              ]
+            },
+            {
+              "cells": [
+                "Shooter",
+                33.66,
+                43.0,
+                30.43,
+                29.65,
+                34.61
+              ]
+            },
+            {
+              "cells": [
+                "Simulation",
+                36.14,
+                47.5,
+                40.83,
+                38.42,
+                25.6
+              ]
+            },
+            {
+              "cells": [
+                "Card game",
+                18.48,
+                29.0,
+                11.5,
+                10.57,
+                24.33
+              ]
+            },
+            {
+              "cells": [
+                "Horror",
+                28.94,
+                34.67,
+                17.5,
+                19.0,
+                42.19
+              ]
+            },
+            {
+              "cells": [
+                "Rhythm",
+                25.8,
+                41.0,
+                14.5,
+                22.91,
+                31.84
+              ]
+            },
+            {
+              "cells": [
+                "Idle",
+                41.65,
+                64.58,
+                38.75,
+                15.62,
+                45.87
+              ]
+            },
+            {
+              "cells": [
+                "Racing",
+                19.81,
+                20.0,
+                8.12,
+                8.33,
+                36.32
+              ]
+            },
+            {
+              "cells": [
+                "Sports",
+                41.61,
+                39.17,
+                44.38,
+                25.62,
+                46.74
+              ]
+            }
+          ],
+          "note": "逐格转录自 submission.source 论文 Table 6（标题原文：Family-level and benchmark-level results (%). For each model, rows report core mechanics (M), content depth (D), functional visuals (V), art and presentation (A), and overall score.）。只转录论文真实发表的单元格，不做任何跨族聚合或曲线拟合。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "paper-benchmark-level",
+          "label": "论文总表",
+          "title": "论文 Table 4：全量 140 题的总分与四类分项",
+          "columns": [
+            "指标",
+            "论文发表值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                30.65
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                39.76
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                28.07
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                33.66
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                27.99
+              ]
+            }
+          ],
+          "note": "逐格转录自 submission.source 论文 Table 4（标题原文：Benchmark-level results (%). Mechanics, Depth, Visuals, and Art correspond to the four rubric categories.）。这 5 个数值与官方项目页同一配置的榜单行逐格一致。辅助展示，不参与独立排名。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "GLM-5.1",
+        "harness": "Code Buddy"
+      },
+      "score": 18.29,
+      "raw_metric": {
+        "label": "论文 Table 4 总分（Overall）",
+        "value": "18.29",
+        "tiebreak_value": 18.29
+      },
+      "detail": "论文 arXiv:2606.17861v1（2026-06-16 提交）Table 4 与 Table 6 发表的汇总成绩，来源方发表值，不是 EvalHub 独立复跑。上游论文的原始模型标识为 “GLM-5.1”，此处按 EvalHub 平台模型注册表的 canonical 名记作 “GLM-5.1”，编排 harness 为 Code Buddy。总分 18.29 与官方项目页 2026-08-09 快照中同一配置的数值逐格一致。本信封的价值在于 Table 6 额外发表了 15 个游戏族 × 5 个指标的完整分家族成绩，这是官方榜单页没有的分项数据。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "paper-family-breakdown",
+          "label": "分家族成绩",
+          "title": "论文 Table 6：15 个游戏族的分家族成绩",
+          "columns": [
+            "游戏族",
+            "Overall",
+            "Mechanics",
+            "Depth",
+            "Visuals",
+            "Art"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Platformer",
+                15.09,
+                22.37,
+                11.95,
+                22.35,
+                11.99
+              ]
+            },
+            {
+              "cells": [
+                "Strategy",
+                16.6,
+                19.12,
+                18.97,
+                25.85,
+                9.19
+              ]
+            },
+            {
+              "cells": [
+                "Tycoon",
+                18.98,
+                27.25,
+                22.21,
+                26.4,
+                9.01
+              ]
+            },
+            {
+              "cells": [
+                "Open-world",
+                17.1,
+                22.53,
+                16.9,
+                11.75,
+                17.26
+              ]
+            },
+            {
+              "cells": [
+                "Roguelike",
+                19.62,
+                30.09,
+                19.06,
+                25.12,
+                13.35
+              ]
+            },
+            {
+              "cells": [
+                "Visual novel",
+                16.88,
+                21.45,
+                16.27,
+                24.33,
+                12.26
+              ]
+            },
+            {
+              "cells": [
+                "Puzzle",
+                23.71,
+                35.62,
+                20.94,
+                29.49,
+                18.91
+              ]
+            },
+            {
+              "cells": [
+                "Shooter",
+                17.74,
+                24.29,
+                16.29,
+                20.37,
+                15.26
+              ]
+            },
+            {
+              "cells": [
+                "Simulation",
+                29.15,
+                42.67,
+                30.0,
+                34.58,
+                20.17
+              ]
+            },
+            {
+              "cells": [
+                "Card game",
+                13.88,
+                18.67,
+                14.25,
+                7.91,
+                14.01
+              ]
+            },
+            {
+              "cells": [
+                "Horror",
+                22.21,
+                25.0,
+                10.5,
+                13.0,
+                36.68
+              ]
+            },
+            {
+              "cells": [
+                "Rhythm",
+                13.22,
+                15.33,
+                14.25,
+                12.13,
+                11.76
+              ]
+            },
+            {
+              "cells": [
+                "Idle",
+                25.41,
+                40.0,
+                24.06,
+                11.25,
+                26.57
+              ]
+            },
+            {
+              "cells": [
+                "Racing",
+                13.94,
+                33.33,
+                8.12,
+                7.86,
+                14.05
+              ]
+            },
+            {
+              "cells": [
+                "Sports",
+                19.77,
+                12.92,
+                25.62,
+                12.5,
+                19.97
+              ]
+            }
+          ],
+          "note": "逐格转录自 submission.source 论文 Table 6（标题原文：Family-level and benchmark-level results (%). For each model, rows report core mechanics (M), content depth (D), functional visuals (V), art and presentation (A), and overall score.）。只转录论文真实发表的单元格，不做任何跨族聚合或曲线拟合。辅助展示，不参与独立排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "paper-benchmark-level",
+          "label": "论文总表",
+          "title": "论文 Table 4：全量 140 题的总分与四类分项",
+          "columns": [
+            "指标",
+            "论文发表值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall 总分",
+                18.29
+              ]
+            },
+            {
+              "cells": [
+                "Mechanics 核心机制",
+                25.23
+              ]
+            },
+            {
+              "cells": [
+                "Depth 内容深度",
+                17.8
+              ]
+            },
+            {
+              "cells": [
+                "Visuals 可读视觉",
+                21.14
+              ]
+            },
+            {
+              "cells": [
+                "Art 美术表现",
+                14.59
+              ]
+            }
+          ],
+          "note": "逐格转录自 submission.source 论文 Table 4（标题原文：Benchmark-level results (%). Mechanics, Depth, Visuals, and Art correspond to the four rubric categories.）。这 5 个数值与官方项目页同一配置的榜单行逐格一致。辅助展示，不参与独立排名。"
+        }
+      ]
+    }
+  ]
+}
