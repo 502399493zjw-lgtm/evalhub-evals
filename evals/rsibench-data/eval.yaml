@@ -124,7 +124,8 @@ detail_profile:
     - title: 榜单第五位缺少资源数据，且不在论文主实验内
       description: >-
         论文主实验是 4 个研究者 Agent；官方榜单额外列出 Kimi K3 + Kimi Code 的六项分项成绩，但没有给它的用时与 Tinker 成本。
-        因此"时间与成本"视图只覆盖论文里的 4 个 Agent。
+        因此官方分项表的资源列只为论文里的 4 个 Agent 填入来源原值；Kimi 对应单元格保持空值并显示为“—”，不表示 0，
+        也没有用其他 Agent 的数字补齐。
     - title: 两个官方页面的两格成本数字不一致
       description: >-
         两页重叠的 Base model 与论文四个研究者 Agent 共 30 个分项分数逐格一致，但资源数据有两格不同：

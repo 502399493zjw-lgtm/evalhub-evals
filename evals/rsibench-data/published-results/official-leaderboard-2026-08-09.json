@@ -2,7 +2,7 @@
   "eval_id": "rsibench-data",
   "submission": {
     "kind": "upstream_author_publication",
-    "importer_version": "rsibench-data/official-leaderboard-transcription@1.0.0",
+    "importer_version": "rsibench-data/official-leaderboard-transcription@1.1.0",
     "retrieved_on": "2026-08-09",
     "source": {
       "title": "Leaderboard - Evolvent AI（RSIBench-Data 条目）",
@@ -20,17 +20,17 @@
           "type": "metric_table",
           "id": "official-benchmark-breakdown",
           "label": "分榜成绩",
-          "title": "官方六项分项成绩与加权贡献",
-          "columns": ["分项", "权重", "官网显示", "加权贡献", "未微调基线官网显示"],
+          "title": "官方六项分项成绩、资源消耗与加权贡献",
+          "columns": ["分项", "权重", "官网显示", "加权贡献", "未微调基线模型官网显示", "用时（小时）", "Tinker 成本（USD）"],
           "rows": [
-            { "cells": ["SWE-bench Verified", 0.2, "50.00%", 10, "12.00%"] },
-            { "cells": ["SWE-bench Multilingual", 0.2, "11.00%", 2.2, "7.00%"] },
-            { "cells": ["SWE-bench Pro", 0.2, "17.00%", 3.4, "0.00%"] },
-            { "cells": ["Terminal-Bench 2.0", 0.2, "9.00%", 1.8, "1.12%"] },
-            { "cells": ["GPQA Diamond", 0.1, "55.00%", 5.5, "61.00%"] },
-            { "cells": ["AIME 2026", 0.1, "44.17%", 4.417, "30.00%"] }
+            { "cells": ["SWE-bench Verified", 0.2, "50.00%", 10, "12.00%", null, null] },
+            { "cells": ["SWE-bench Multilingual", 0.2, "11.00%", 2.2, "7.00%", null, null] },
+            { "cells": ["SWE-bench Pro", 0.2, "17.00%", 3.4, "0.00%", null, null] },
+            { "cells": ["Terminal-Bench 2.0", 0.2, "9.00%", 1.8, "1.12%", null, null] },
+            { "cells": ["GPQA Diamond", 0.1, "55.00%", 5.5, "61.00%", null, null] },
+            { "cells": ["AIME 2026", 0.1, "44.17%", 4.417, "30.00%", null, null] }
           ],
-          "note": "六项成绩与权重逐格转录自 submission.source 快照。「加权贡献」= 权重 × 官网显示，由 EvalHub 按官方权重算出，只为让主分数可逐项复核。「未微调基线官网显示」是官方同表的 Base model 行（Qwen/Qwen3.5-35B-A3B-Base），仅作参照，不是参赛结果。辅助展示，不参与独立排名。"
+          "note": "六项成绩与权重逐格转录自 submission.source 快照。「加权贡献」= 权重 × 官网显示，由 EvalHub 按官方权重算出，只为让主分数可逐项复核。「未微调基线模型官网显示」是官方同表的 Base model 行（Qwen/Qwen3.5-35B-A3B-Base），仅作参照，不是参赛结果。用时与 Tinker 成本原值按分项对齐到同表，只作展示、不进入评分；协议名义预算为每次运行 16 小时墙钟与 500 USD Tinker 额度。来源没有发布 Kimi K3 的用时与 Tinker 成本，因此对应单元格为 null，页面按“—”展示；这不表示 0，也没有用其他参与者的数据补齐。辅助展示，不参与独立排名。"
         }
       ]
     },
@@ -43,33 +43,17 @@
           "type": "metric_table",
           "id": "official-benchmark-breakdown",
           "label": "分榜成绩",
-          "title": "官方六项分项成绩与加权贡献",
-          "columns": ["分项", "权重", "官网显示", "加权贡献", "未微调基线官网显示"],
+          "title": "官方六项分项成绩、资源消耗与加权贡献",
+          "columns": ["分项", "权重", "官网显示", "加权贡献", "未微调基线模型官网显示", "用时（小时）", "Tinker 成本（USD）"],
           "rows": [
-            { "cells": ["SWE-bench Verified", 0.2, "33.00%", 6.6, "12.00%"] },
-            { "cells": ["SWE-bench Multilingual", 0.2, "15.00%", 3, "7.00%"] },
-            { "cells": ["SWE-bench Pro", 0.2, "9.00%", 1.8, "0.00%"] },
-            { "cells": ["Terminal-Bench 2.0", 0.2, "20.22%", 4.044, "1.12%"] },
-            { "cells": ["GPQA Diamond", 0.1, "65.00%", 6.5, "61.00%"] },
-            { "cells": ["AIME 2026", 0.1, "53.33%", 5.333, "30.00%"] }
+            { "cells": ["SWE-bench Verified", 0.2, "33.00%", 6.6, "12.00%", 4.41, 55.61] },
+            { "cells": ["SWE-bench Multilingual", 0.2, "15.00%", 3, "7.00%", 5.99, 78.64] },
+            { "cells": ["SWE-bench Pro", 0.2, "9.00%", 1.8, "0.00%", 11.61, 300.49] },
+            { "cells": ["Terminal-Bench 2.0", 0.2, "20.22%", 4.044, "1.12%", 9.56, 69.07] },
+            { "cells": ["GPQA Diamond", 0.1, "65.00%", 6.5, "61.00%", 2.42, 10.37] },
+            { "cells": ["AIME 2026", 0.1, "53.33%", 5.333, "30.00%", 8.9, 63.65] }
           ],
-          "note": "六项成绩与权重逐格转录自 submission.source 快照。「加权贡献」= 权重 × 官网显示，由 EvalHub 按官方权重算出，只为让主分数可逐项复核。「未微调基线官网显示」是官方同表的 Base model 行（Qwen/Qwen3.5-35B-A3B-Base），仅作参照，不是参赛结果。辅助展示，不参与独立排名。"
-        },
-        {
-          "type": "metric_table",
-          "id": "official-time-cost",
-          "label": "时间与成本",
-          "title": "官方用时与 Tinker 成本",
-          "columns": ["分项", "用时（小时）", "Tinker 成本（USD）"],
-          "rows": [
-            { "cells": ["SWE-bench Verified", 4.41, 55.61] },
-            { "cells": ["SWE-bench Multilingual", 5.99, 78.64] },
-            { "cells": ["SWE-bench Pro", 11.61, 300.49] },
-            { "cells": ["Terminal-Bench 2.0", 9.56, 69.07] },
-            { "cells": ["GPQA Diamond", 2.42, 10.37] },
-            { "cells": ["AIME 2026", 8.9, 63.65] }
-          ],
-          "note": "转录自 submission.source 快照的资源消耗，仅作展示，不进入评分；协议名义预算为每次运行 16 小时墙钟与 500 USD Tinker 额度。边界：AIME 2026 的成本在 rsibench.co 官方矩阵页显示为 63.87，与本表所用榜单页数值 63.65 不一致；本目录统一采用 submission.source 的值，不做平均或推算。"
+          "note": "六项成绩与权重逐格转录自 submission.source 快照。「加权贡献」= 权重 × 官网显示，由 EvalHub 按官方权重算出，只为让主分数可逐项复核。「未微调基线模型官网显示」是官方同表的 Base model 行（Qwen/Qwen3.5-35B-A3B-Base），仅作参照，不是参赛结果。用时与 Tinker 成本原值按分项对齐到同表，只作展示、不进入评分；协议名义预算为每次运行 16 小时墙钟与 500 USD Tinker 额度。边界：AIME 2026 的成本在 rsibench.co 官方矩阵页显示为 63.87，与本表所用榜单页数值 63.65 不一致；本目录统一采用 submission.source 的值，不做平均或推算。辅助展示，不参与独立排名。"
         }
       ]
     },
@@ -82,33 +66,17 @@
           "type": "metric_table",
           "id": "official-benchmark-breakdown",
           "label": "分榜成绩",
-          "title": "官方六项分项成绩与加权贡献",
-          "columns": ["分项", "权重", "官网显示", "加权贡献", "未微调基线官网显示"],
+          "title": "官方六项分项成绩、资源消耗与加权贡献",
+          "columns": ["分项", "权重", "官网显示", "加权贡献", "未微调基线模型官网显示", "用时（小时）", "Tinker 成本（USD）"],
           "rows": [
-            { "cells": ["SWE-bench Verified", 0.2, "35.00%", 7, "12.00%"] },
-            { "cells": ["SWE-bench Multilingual", 0.2, "22.00%", 4.4, "7.00%"] },
-            { "cells": ["SWE-bench Pro", 0.2, "4.00%", 0.8, "0.00%"] },
-            { "cells": ["Terminal-Bench 2.0", 0.2, "5.62%", 1.124, "1.12%"] },
-            { "cells": ["GPQA Diamond", 0.1, "52.00%", 5.2, "61.00%"] },
-            { "cells": ["AIME 2026", 0.1, "49.17%", 4.917, "30.00%"] }
+            { "cells": ["SWE-bench Verified", 0.2, "35.00%", 7, "12.00%", 14.91, 181.7] },
+            { "cells": ["SWE-bench Multilingual", 0.2, "22.00%", 4.4, "7.00%", 14.2, 363.77] },
+            { "cells": ["SWE-bench Pro", 0.2, "4.00%", 0.8, "0.00%", 9.54, 45.63] },
+            { "cells": ["Terminal-Bench 2.0", 0.2, "5.62%", 1.124, "1.12%", 8.87, 156.93] },
+            { "cells": ["GPQA Diamond", 0.1, "52.00%", 5.2, "61.00%", 6.43, 16.03] },
+            { "cells": ["AIME 2026", 0.1, "49.17%", 4.917, "30.00%", 9.29, 121.21] }
           ],
-          "note": "六项成绩与权重逐格转录自 submission.source 快照。「加权贡献」= 权重 × 官网显示，由 EvalHub 按官方权重算出，只为让主分数可逐项复核。「未微调基线官网显示」是官方同表的 Base model 行（Qwen/Qwen3.5-35B-A3B-Base），仅作参照，不是参赛结果。辅助展示，不参与独立排名。"
-        },
-        {
-          "type": "metric_table",
-          "id": "official-time-cost",
-          "label": "时间与成本",
-          "title": "官方用时与 Tinker 成本",
-          "columns": ["分项", "用时（小时）", "Tinker 成本（USD）"],
-          "rows": [
-            { "cells": ["SWE-bench Verified", 14.91, 181.7] },
-            { "cells": ["SWE-bench Multilingual", 14.2, 363.77] },
-            { "cells": ["SWE-bench Pro", 9.54, 45.63] },
-            { "cells": ["Terminal-Bench 2.0", 8.87, 156.93] },
-            { "cells": ["GPQA Diamond", 6.43, 16.03] },
-            { "cells": ["AIME 2026", 9.29, 121.21] }
-          ],
-          "note": "转录自 submission.source 快照的资源消耗，仅作展示，不进入评分；协议名义预算为每次运行 16 小时墙钟与 500 USD Tinker 额度。边界：Terminal-Bench 2.0 的成本在 rsibench.co 官方矩阵页显示为 157.85，与本表所用榜单页数值 156.93 不一致；本目录统一采用 submission.source 的值，不做平均或推算。"
+          "note": "六项成绩与权重逐格转录自 submission.source 快照。「加权贡献」= 权重 × 官网显示，由 EvalHub 按官方权重算出，只为让主分数可逐项复核。「未微调基线模型官网显示」是官方同表的 Base model 行（Qwen/Qwen3.5-35B-A3B-Base），仅作参照，不是参赛结果。用时与 Tinker 成本原值按分项对齐到同表，只作展示、不进入评分；协议名义预算为每次运行 16 小时墙钟与 500 USD Tinker 额度。边界：Terminal-Bench 2.0 的成本在 rsibench.co 官方矩阵页显示为 157.85，与本表所用榜单页数值 156.93 不一致；本目录统一采用 submission.source 的值，不做平均或推算。辅助展示，不参与独立排名。"
         }
       ]
     },
@@ -121,33 +89,17 @@
           "type": "metric_table",
           "id": "official-benchmark-breakdown",
           "label": "分榜成绩",
-          "title": "官方六项分项成绩与加权贡献",
-          "columns": ["分项", "权重", "官网显示", "加权贡献", "未微调基线官网显示"],
+          "title": "官方六项分项成绩、资源消耗与加权贡献",
+          "columns": ["分项", "权重", "官网显示", "加权贡献", "未微调基线模型官网显示", "用时（小时）", "Tinker 成本（USD）"],
           "rows": [
-            { "cells": ["SWE-bench Verified", 0.2, "46.00%", 9.2, "12.00%"] },
-            { "cells": ["SWE-bench Multilingual", 0.2, "5.00%", 1, "7.00%"] },
-            { "cells": ["SWE-bench Pro", 0.2, "2.00%", 0.4, "0.00%"] },
-            { "cells": ["Terminal-Bench 2.0", 0.2, "10.11%", 2.022, "1.12%"] },
-            { "cells": ["GPQA Diamond", 0.1, "56.00%", 5.6, "61.00%"] },
-            { "cells": ["AIME 2026", 0.1, "40.83%", 4.083, "30.00%"] }
+            { "cells": ["SWE-bench Verified", 0.2, "46.00%", 9.2, "12.00%", 10.21, 195.9] },
+            { "cells": ["SWE-bench Multilingual", 0.2, "5.00%", 1, "7.00%", 12.68, 195.7] },
+            { "cells": ["SWE-bench Pro", 0.2, "2.00%", 0.4, "0.00%", 2.19, 17.54] },
+            { "cells": ["Terminal-Bench 2.0", 0.2, "10.11%", 2.022, "1.12%", 8.99, 175.63] },
+            { "cells": ["GPQA Diamond", 0.1, "56.00%", 5.6, "61.00%", 5.98, 27.92] },
+            { "cells": ["AIME 2026", 0.1, "40.83%", 4.083, "30.00%", 4.89, 61.36] }
           ],
-          "note": "六项成绩与权重逐格转录自 submission.source 快照。「加权贡献」= 权重 × 官网显示，由 EvalHub 按官方权重算出，只为让主分数可逐项复核。「未微调基线官网显示」是官方同表的 Base model 行（Qwen/Qwen3.5-35B-A3B-Base），仅作参照，不是参赛结果。辅助展示，不参与独立排名。"
-        },
-        {
-          "type": "metric_table",
-          "id": "official-time-cost",
-          "label": "时间与成本",
-          "title": "官方用时与 Tinker 成本",
-          "columns": ["分项", "用时（小时）", "Tinker 成本（USD）"],
-          "rows": [
-            { "cells": ["SWE-bench Verified", 10.21, 195.9] },
-            { "cells": ["SWE-bench Multilingual", 12.68, 195.7] },
-            { "cells": ["SWE-bench Pro", 2.19, 17.54] },
-            { "cells": ["Terminal-Bench 2.0", 8.99, 175.63] },
-            { "cells": ["GPQA Diamond", 5.98, 27.92] },
-            { "cells": ["AIME 2026", 4.89, 61.36] }
-          ],
-          "note": "转录自 submission.source 快照的资源消耗，仅作展示，不进入评分；协议名义预算为每次运行 16 小时墙钟与 500 USD Tinker 额度。本条目六格资源数据与 rsibench.co 官方矩阵页逐格一致。"
+          "note": "六项成绩与权重逐格转录自 submission.source 快照。「加权贡献」= 权重 × 官网显示，由 EvalHub 按官方权重算出，只为让主分数可逐项复核。「未微调基线模型官网显示」是官方同表的 Base model 行（Qwen/Qwen3.5-35B-A3B-Base），仅作参照，不是参赛结果。用时与 Tinker 成本原值按分项对齐到同表，只作展示、不进入评分；协议名义预算为每次运行 16 小时墙钟与 500 USD Tinker 额度。本条目六格资源数据与 rsibench.co 官方矩阵页逐格一致。辅助展示，不参与独立排名。"
         }
       ]
     },
@@ -160,33 +112,17 @@
           "type": "metric_table",
           "id": "official-benchmark-breakdown",
           "label": "分榜成绩",
-          "title": "官方六项分项成绩与加权贡献",
-          "columns": ["分项", "权重", "官网显示", "加权贡献", "未微调基线官网显示"],
+          "title": "官方六项分项成绩、资源消耗与加权贡献",
+          "columns": ["分项", "权重", "官网显示", "加权贡献", "未微调基线模型官网显示", "用时（小时）", "Tinker 成本（USD）"],
           "rows": [
-            { "cells": ["SWE-bench Verified", 0.2, "42.00%", 8.4, "12.00%"] },
-            { "cells": ["SWE-bench Multilingual", 0.2, "6.00%", 1.2, "7.00%"] },
-            { "cells": ["SWE-bench Pro", 0.2, "1.00%", 0.2, "0.00%"] },
-            { "cells": ["Terminal-Bench 2.0", 0.2, "12.36%", 2.472, "1.12%"] },
-            { "cells": ["GPQA Diamond", 0.1, "64.00%", 6.4, "61.00%"] },
-            { "cells": ["AIME 2026", 0.1, "33.33%", 3.333, "30.00%"] }
+            { "cells": ["SWE-bench Verified", 0.2, "42.00%", 8.4, "12.00%", 2.8, 59.79] },
+            { "cells": ["SWE-bench Multilingual", 0.2, "6.00%", 1.2, "7.00%", 5.18, 56.87] },
+            { "cells": ["SWE-bench Pro", 0.2, "1.00%", 0.2, "0.00%", 3.85, 34.39] },
+            { "cells": ["Terminal-Bench 2.0", 0.2, "12.36%", 2.472, "1.12%", 6.67, 186.96] },
+            { "cells": ["GPQA Diamond", 0.1, "64.00%", 6.4, "61.00%", 1.14, 4.8] },
+            { "cells": ["AIME 2026", 0.1, "33.33%", 3.333, "30.00%", 1.85, 8.5] }
           ],
-          "note": "六项成绩与权重逐格转录自 submission.source 快照。「加权贡献」= 权重 × 官网显示，由 EvalHub 按官方权重算出，只为让主分数可逐项复核。「未微调基线官网显示」是官方同表的 Base model 行（Qwen/Qwen3.5-35B-A3B-Base），仅作参照，不是参赛结果。辅助展示，不参与独立排名。"
-        },
-        {
-          "type": "metric_table",
-          "id": "official-time-cost",
-          "label": "时间与成本",
-          "title": "官方用时与 Tinker 成本",
-          "columns": ["分项", "用时（小时）", "Tinker 成本（USD）"],
-          "rows": [
-            { "cells": ["SWE-bench Verified", 2.8, 59.79] },
-            { "cells": ["SWE-bench Multilingual", 5.18, 56.87] },
-            { "cells": ["SWE-bench Pro", 3.85, 34.39] },
-            { "cells": ["Terminal-Bench 2.0", 6.67, 186.96] },
-            { "cells": ["GPQA Diamond", 1.14, 4.8] },
-            { "cells": ["AIME 2026", 1.85, 8.5] }
-          ],
-          "note": "转录自 submission.source 快照的资源消耗，仅作展示，不进入评分；协议名义预算为每次运行 16 小时墙钟与 500 USD Tinker 额度。本条目六格资源数据与 rsibench.co 官方矩阵页逐格一致。"
+          "note": "六项成绩与权重逐格转录自 submission.source 快照。「加权贡献」= 权重 × 官网显示，由 EvalHub 按官方权重算出，只为让主分数可逐项复核。「未微调基线模型官网显示」是官方同表的 Base model 行（Qwen/Qwen3.5-35B-A3B-Base），仅作参照，不是参赛结果。用时与 Tinker 成本原值按分项对齐到同表，只作展示、不进入评分；协议名义预算为每次运行 16 小时墙钟与 500 USD Tinker 额度。本条目六格资源数据与 rsibench.co 官方矩阵页逐格一致。辅助展示，不参与独立排名。"
         }
       ]
     }

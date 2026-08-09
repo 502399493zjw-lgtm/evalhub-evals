@@ -107,8 +107,9 @@ node evals/rsibench-data/pack-to-result.mjs <submission.json> --out <result.json
    Kimi 的六格只见于后续榜单。两页重叠部分只有两格成本数字不同
    （gpt-5.6-sol 的 AIME 63.65 对 63.87，Sonnet-5 的 Terminal-Bench 2.0 156.93 对
    157.85）。本条目采用榜单页的值并在表注里披露差异，没有取平均。
-3. Kimi K3 那一条在来源里没有发表任何用时与成本数据，因此它的结果信封直接省略
-   「时间与成本」视图，没有用空行占位，也没有用其他条目的数字补齐。
+3. Kimi K3 那一条在来源里没有发表任何用时与成本数据。为了让详情页把论文四个 Agent 已发表的
+   24 组资源数据与对应分项正确对齐，结果信封把资源列并入同一张分项表；Kimi 的对应单元格保持
+   JSON `null` 并显示为“—”，不表示 0，也没有用其他条目的数字补齐。
 
 **sample-result.json 只是结构示例。** 它是把 `tasks/example-submission.json` 喂给转换器
 得到的输出，participant 是刻意造的 `example/synthetic-research-agent`，六个通过数是为了
