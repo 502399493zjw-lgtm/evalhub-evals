@@ -1,0 +1,44 @@
+{
+  "manifest_version": 1,
+  "eval_id": "ceo-bench",
+  "protocol_revision": 1,
+  "upstream_commit": "d2b7b32e5301a571b77f5f68bd1032adbcd5b464",
+  "simulation": {
+    "days": 500,
+    "initial_cash_usd": 1000000,
+    "seed": 42,
+    "scenario": "default"
+  },
+  "participant": {
+    "model": "example/synthetic-ceo-agent",
+    "harness": "example-harness",
+    "harness_version": "0.0.0-structural-example"
+  },
+  "run_date": "2026-08-09",
+  "runs": [
+    {
+      "run_id": "example-run-1",
+      "days_survived": 500,
+      "bankrupt": false,
+      "ending_cash_usd": 3184266.51,
+      "agent_turns": 802,
+      "evidence_sha256": "6f4b1f0a4b0d7c2e9a5d3b8c1e7f0a2d4c6b8e0f1a3c5d7e9b1d3f5a7c9e1b3d"
+    },
+    {
+      "run_id": "example-run-2",
+      "days_survived": 500,
+      "bankrupt": false,
+      "ending_cash_usd": 741903.22,
+      "agent_turns": 655,
+      "evidence_sha256": "2a8c0e4f6b1d3a5c7e9f1b3d5a7c9e1f3b5d7a9c1e3f5b7d9a1c3e5f7b9d1a3c"
+    },
+    {
+      "run_id": "example-run-3",
+      "days_survived": 268,
+      "bankrupt": true,
+      "ending_cash_usd": -48120.75,
+      "agent_turns": 391,
+      "evidence_sha256": "9d1f3b5a7c9e1d3f5b7a9c1e3d5f7b9a1c3e5d7f9b1a3c5e7d9f1b3a5c7e9d1f"
+    }
+  ]
+}

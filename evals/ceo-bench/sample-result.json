@@ -1,0 +1,86 @@
+{
+  "eval_id": "ceo-bench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "ceo-bench/pack-to-result@1.0.0",
+    "run_date": "2026-08-09"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-ceo-agent",
+        "harness": "example-harness",
+        "harness_version": "0.0.0-structural-example"
+      },
+      "score": 3184266.51,
+      "raw_metric": {
+        "label": "最佳运行结束现金",
+        "value": "$3,184,266.51",
+        "tiebreak_value": 500
+      },
+      "detail": "最佳运行 example-run-1：存活 500 天，结束现金 $3,184,266.51。三次运行完成 2/3，平均存活 422.67 天。清单 sha256=5c84b68e2fa51252f1eccaac838e1c846d641f2071096f2de4d5517a19f6565b。",
+      "task_results": [
+        {
+          "task_id": "novamind-500-day-run",
+          "score": 3184266.51,
+          "raw": "example-run-1：存活 500 天，跑满全程，结束现金 $3,184,266.51，Agent 操作 802 轮，证据包 sha256=6f4b1f0a4b0d7c2e9a5d3b8c1e7f0a2d4c6b8e0f1a3c5d7e9b1d3f5a7c9e1b3d。"
+        },
+        {
+          "task_id": "novamind-500-day-run",
+          "score": 741903.22,
+          "raw": "example-run-2：存活 500 天，跑满全程，结束现金 $741,903.22，Agent 操作 655 轮，证据包 sha256=2a8c0e4f6b1d3a5c7e9f1b3d5a7c9e1f3b5d7a9c1e3f5b7d9a1c3e5f7b9d1a3c。"
+        },
+        {
+          "task_id": "novamind-500-day-run",
+          "score": 0,
+          "raw": "example-run-3：存活 268 天，破产结束，结束现金 -$48,120.75，Agent 操作 391 轮，证据包 sha256=9d1f3b5a7c9e1d3f5b7a9c1e3d5f7b9a1c3e5d7f9b1a3c5e7d9f1b3a5c7e9d1f。"
+        }
+      ],
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "per-run-outcomes",
+          "label": "三次运行",
+          "title": "三次独立运行的结束状态",
+          "columns": [
+            "运行",
+            "存活天数",
+            "是否破产",
+            "结束现金（USD）",
+            "Agent 操作轮数"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "example-run-1",
+                500,
+                "否",
+                3184266.51,
+                802
+              ]
+            },
+            {
+              "cells": [
+                "example-run-2",
+                500,
+                "否",
+                741903.22,
+                655
+              ]
+            },
+            {
+              "cells": [
+                "example-run-3",
+                268,
+                "是",
+                -48120.75,
+                391
+              ]
+            }
+          ],
+          "note": "三次运行均为 500 天、初始现金 $1,000,000.00、seed=42、scenario=default 的同一配置。破产触发条件只有现金为负一条；表中数值来自提交清单，仅作解释用途，不参与排名。"
+        }
+      ]
+    }
+  ]
+}
