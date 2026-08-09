@@ -2,6 +2,8 @@
 
 葬 AI Bench 的当前题目是 `graph-engineering-v2`：编码 Agent 只拿到 `tasks/graph.json`，需要交付一个离线可用的知识图谱探索器。输入含 649 个节点、1699 条关系、4 类节点与 16 类关系；题目同时验收搜索、筛选、邻接详情、缩放拖拽、重置、最短路径及精确统计。
 
+> **外部工作流边界：** 公开包包含当前题面、完整 graph、摘要与 pack 转换器，但不含作者 Playwright 评分器 3.1 或 OpenCode 1.17.9 十轮 harness。EvalHub CLI 只负责下载协议和封装外部运行清单；`evalhub run zangai-bench` 不受支持。PR 合并前平台预览应禁用正式安装指令，避免请求尚不存在的正式 slug。
+
 ## 新版来源边界
 
 本投稿按作者要求以本地 `zangai-bench-v2` 的新题为准。一个月前的 [personal-work-benchmark](https://github.com/FrichXi/personal-work-benchmark) 只保留为历史框架链接，不用于定义本次 prompt、graph、scorer 或运行版本。精确题面已内联进 `eval.yaml`，精确图数据放在 `tasks/graph.json`；未内嵌的作者浏览器评分器以源码 sha256、版本和完整权重表锁定。

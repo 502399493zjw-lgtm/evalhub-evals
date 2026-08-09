@@ -35,7 +35,8 @@ detail_profile:
   overview_note: >-
     本条目以作者 2026-08-09 提供的 zangai-bench-v2 新版 graph-engineering-v2 为准；旧 GitHub 仓库不定义本次题面。
     官网 release web4-graph-v2-leaderboard-20260804-v2 的 16 模型最终汇总成绩作为作者发布基线转录，
-    不展示逐轮或其他批次信息，也不是 EvalHub 独立复跑。
+    不展示逐轮或其他批次信息，也不是 EvalHub 独立复跑。这是 external workflow：公开包含题面与 graph，但不含作者浏览器评分器或
+    OpenCode harness；EvalHub CLI 只下载协议并 pack 作者外部运行清单，不支持 `evalhub run zangai-bench`。
   summary:
     plain_language: >-
       Agent 得到的不是一张已经画好的图，而是一份含 649 个实体和 1699 条关系的 JSON。它要从零交付一个离线可用的网页：
@@ -90,6 +91,10 @@ detail_profile:
       description: release web4-graph-v2-leaderboard-20260804-v2 公开了 16 个模型的最终汇总成绩；本条目不展示逐轮数据。
       source_url: https://funeralai.cc/test/
   caveats:
+    - title: 公开包不能独立复现作者正式分数
+      description: >-
+        本目录提供当前题面、完整 graph、固定摘要和结果转换器，但作者 Playwright 评分器 3.1 与 OpenCode 1.17.9 十轮 harness
+        不随包分发。第三方可以重建任务输入与结果信封结构，不能只凭下载包复跑出与官网同口径的正式分数。
     - title: 只覆盖一类知识图谱前端工程任务
       description: >-
         评测能同时压测数据处理、图算法与交互工程，但只有一个固定 AI 行业图谱和一个网页任务，不能代表通用软件工程或所有可视化能力。
@@ -178,7 +183,7 @@ detail_profile:
             - { column_id: dimension, value: 视觉稳定性 }
             - { column_id: weight, value: "8" }
             - { column_id: focus, value: 图形稳定、可见与主线程响应 }
-  resources_note: 公开资料只用于展示作者发布的方法与成绩；精确新版协议以本目录携带的题面、数据和摘要为准。
+  resources_note: 公开资料只用于展示作者发布的方法与最终成绩；精确新版协议以本目录携带的题面、数据和摘要为准。EvalHub CLI 只负责 fetch/pack，不支持一键 run。
   resources:
     - title: 葬AI Benchmark 当前榜单
       summary: 当前 release 的 16 模型最终主榜、用时、调用、成本与性价比数据来源；本条目不展示逐轮数据。
