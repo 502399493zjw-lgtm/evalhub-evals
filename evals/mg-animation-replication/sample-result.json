@@ -1,0 +1,228 @@
+{
+  "eval_id": "mg-animation-replication",
+  "submission": {
+    "kind": "run",
+    "runner_version": "mg-animation-replication/pack-to-result@1.0.0",
+    "run_date": "2026-08-09"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-video-model",
+        "harness": "example-agent-harness",
+        "harness_version": "0.0.0-synthetic-fixture"
+      },
+      "score": 80,
+      "raw_metric": {
+        "label": "六项复刻量表总分",
+        "value": "80 分"
+      },
+      "detail": "Derived: 主分 = 时间线 23 + 构图视觉 19 + 运动转场 11 + 技术质量 13 + 品牌交付 5 + 工具闭环 9 = 80。状态=scored；原片画面复用=否；清单 sha256=040625371560c5a969b1159c98d9b078c59d9d4ecf2bdce65ff561e4edae9490。转换成功只证明结构与求和合规，作者仍须核对原片、成片、日志和盲审证据。",
+      "task_results": [
+        {
+          "task_id": "mg-animation-replication-v1",
+          "score": 80,
+          "raw": "scored · frame-reuse no · Synthetic-Video-Model.mp4"
+        }
+      ],
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "run-rubric-breakdown",
+          "label": "六项得分",
+          "title": "本次运行的 MG 复刻量表",
+          "columns": [
+            "分项",
+            "得分",
+            "满分"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "镜头与时间线复刻",
+                23,
+                30
+              ]
+            },
+            {
+              "cells": [
+                "构图与视觉复刻",
+                19,
+                25
+              ]
+            },
+            {
+              "cells": [
+                "运动与转场",
+                11,
+                15
+              ]
+            },
+            {
+              "cells": [
+                "成片技术质量",
+                13,
+                15
+              ]
+            },
+            {
+              "cells": [
+                "Web4 品牌 UI 与文件命名",
+                5,
+                5
+              ]
+            },
+            {
+              "cells": [
+                "工具调用闭环",
+                9,
+                10
+              ]
+            }
+          ],
+          "note": "Derived: 六项来自作者认可的冻结盲审表，直接相加形成主分；invalid、failed、timeout、missing 的六项均为 0。"
+        },
+        {
+          "type": "metric_table",
+          "id": "run-media-checks",
+          "label": "媒体检查",
+          "title": "本次运行的成片与失效检查",
+          "columns": [
+            "检查项",
+            "值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "状态",
+                "scored"
+              ]
+            },
+            {
+              "cells": [
+                "原片画面复用",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "成片存在",
+                "是"
+              ]
+            },
+            {
+              "cells": [
+                "可播放",
+                "是"
+              ]
+            },
+            {
+              "cells": [
+                "文件名",
+                "Synthetic-Video-Model.mp4"
+              ]
+            },
+            {
+              "cells": [
+                "品牌采样通过",
+                "是"
+              ]
+            },
+            {
+              "cells": [
+                "临时文件已清理",
+                "是"
+              ]
+            },
+            {
+              "cells": [
+                "分辨率",
+                "1280×720"
+              ]
+            },
+            {
+              "cells": [
+                "帧率",
+                29.97003
+              ]
+            },
+            {
+              "cells": [
+                "时长（秒）",
+                56.704
+              ]
+            },
+            {
+              "cells": [
+                "音频采样率（Hz）",
+                48000
+              ]
+            },
+            {
+              "cells": [
+                "声道",
+                2
+              ]
+            }
+          ],
+          "note": "媒体字段来自受控运行的 ffprobe 与品牌检查报告，仅用于解释结果；帧复用失效结论还需日志、抽帧与人工复核。"
+        },
+        {
+          "type": "metric_table",
+          "id": "run-evidence-summary",
+          "label": "证据摘要",
+          "title": "本次运行的证据摘要状态",
+          "columns": [
+            "项目",
+            "值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "非空 SHA-256 数量",
+                5
+              ]
+            },
+            {
+              "cells": [
+                "运行日志",
+                "已绑定"
+              ]
+            },
+            {
+              "cells": [
+                "媒体报告",
+                "已绑定"
+              ]
+            },
+            {
+              "cells": [
+                "帧复用审计",
+                "已绑定"
+              ]
+            },
+            {
+              "cells": [
+                "盲审表",
+                "已绑定"
+              ]
+            },
+            {
+              "cells": [
+                "成片",
+                "已绑定"
+              ]
+            },
+            {
+              "cells": [
+                "提交清单 SHA-256",
+                "040625371560c5a969b1159c98d9b078c59d9d4ecf2bdce65ff561e4edae9490"
+              ]
+            }
+          ],
+          "note": "公开结果只显示摘要覆盖情况，不上传参考片、品牌资产或成片；作者认可前须核对原件。"
+        }
+      ]
+    }
+  ]
+}

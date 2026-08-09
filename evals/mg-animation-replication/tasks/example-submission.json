@@ -1,0 +1,56 @@
+{
+  "manifest_version": 1,
+  "eval_id": "mg-animation-replication",
+  "protocol_revision": 1,
+  "task_id": "mg-animation-replication-v1",
+  "participant": {
+    "model": "example/synthetic-video-model",
+    "harness": "example-agent-harness",
+    "harness_version": "0.0.0-synthetic-fixture"
+  },
+  "run_date": "2026-08-09",
+  "protocol": {
+    "prompt_sha256": "17d3870e7fca163d8a7c269968bd9462254244c64aaed670ae7d40f6af8d438f",
+    "plan_sha256": "f9a2f51da820b7cb4754715145d695d1a137b482e4e29f18a2576e704155bfa1",
+    "config_sha256": "1facda3b3a305bc8ee5deb6e16312b0a45c2c64805366389515a8db80bd3f5dd",
+    "brand_spec_sha256": "8fa8bbc2d279a9d8a1f3c742c589e82cbfd8d8b8b181066608336ffb0f6c59da",
+    "reference_video_sha256": "86cab73954c05b6811e23c6ebefa5c923af585db19c65ac6a9eb5bd51a625ce9",
+    "logo_sha256": "e3bf841329f81c1f4b269f930299306cbc9a614a030049ba5e9369ad65a02086",
+    "font_sha256": "b4f59dce22df0f43425262611a786b7f1581fa2667fad5861afbfb249e5a8dba",
+    "validator_sha256": "227c12a6ba7dee103b52f8c35ca45a7f53cc4c7c441f2fe9414b27d49c708783",
+    "timeout_seconds": 5400
+  },
+  "result": {
+    "status": "scored",
+    "original_frames_reused": false,
+    "media": {
+      "video_exists": true,
+      "playable": true,
+      "filename": "Synthetic-Video-Model.mp4",
+      "filename_ok": true,
+      "brand_ui_ok": true,
+      "temp_files_cleaned": true,
+      "width": 1280,
+      "height": 720,
+      "fps": 29.97003,
+      "duration_seconds": 56.704,
+      "audio_sample_rate_hz": 48000,
+      "audio_channels": 2
+    },
+    "rubric": {
+      "timeline": 23,
+      "composition_visual": 19,
+      "motion_transitions": 11,
+      "technical_quality": 13,
+      "brand_and_filename": 5,
+      "tool_loop": 9
+    },
+    "evidence": {
+      "run_log_sha256": "119ab86f18724f97ee2db42edb50c76224ccffa344437f4b2724aad2388471e3",
+      "media_report_sha256": "8e429e43f4fe079b2fd591bed7cebb8efe54d25dd29aa58f27e60919607c2e32",
+      "frame_reuse_audit_sha256": "6a39997949e88432ce71b69b44fd17ba915f28a5f447e206a3ebf38dc70db179",
+      "blind_review_sha256": "4aa774edea24f540573f4289a326aeb4bd0655ce5b69a1272f5ff905d6e6d3a7",
+      "video_sha256": "39d420b477bc2263e487886172e6aa3c7c012ccbcf87054693166a2f906896b9"
+    }
+  }
+}

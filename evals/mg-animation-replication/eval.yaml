@@ -1,0 +1,176 @@
+id: mg-animation-replication
+protocol_revision: 1
+name: MG 动画复刻 Bench
+category: useful
+description: >-
+  给 Agent 一支 56.704 秒参考片、Logo、像素字体和品牌规范，让它在离线环境中拆解镜头并独立重建一支 MG 动画。主分按时间线、构图视觉、
+  运动转场、技术质量、品牌交付和工具闭环六项量表计 100 分；直接拼入、叠加、转码或重封装参考片原始画面则整项无效并计 0。
+hook_title: AI 能独立重建一支 MG 宣传片，而不是偷偷复用原片画面吗
+references:
+  repository: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
+dimensions: [代码, 推理]
+interface: agent
+runner: custom
+custom_mode: external_workflow
+scoring: custom
+scored_by: author
+score_policy: required
+baseline_policy: optional
+score_unit: 分
+scoring_note: >-
+  每个 Agent 在一次 5400 秒上限的隔离运行中读取同一参考视频、Logo、Fusion Pixel 字体与品牌 JSON，离线完成镜头拆解、动画编程、
+  音画合成、编码和 ffprobe 验证，只交付一个按实际模型版本命名的 MP4。作者依据原始参考片、成片、运行日志、媒体报告与盲审表认可六项分数：
+  镜头与时间线复刻 30、构图与视觉复刻 25、运动与转场 15、成片技术质量 15、Web4 品牌 UI 与文件命名 5、工具调用闭环 10。
+  转换器校验范围并确定性求和，不接受提交方自报总分。若检测或审阅确认复用了参考片任一可见原始帧/片段，status 必须为 invalid、
+  original_frames_reused 必须为 true、六项必须全为 0，主分为 0；失败、超时和缺少成片同样计 0。
+command_template:
+  argv: [node, evals/mg-animation-replication/pack-to-result.mjs, "{input}", --out, "{output}"]
+  output: mg-animation-replication-result.json
+trials: 1
+detail_profile:
+  source_kind: evalhub_native
+  overview_note: >-
+    本条目整理作者 2026-07-21 冻结的五模型复刻协议。公开包包含完整题面、量表、素材摘要与转换器，不复制参考片、Logo、字体、历史成片或日志，
+    也不把尚未形成盲审数值的历史运行写成模型榜单。
+  summary:
+    plain_language: >-
+      Agent 要像动画师一样先观察一支完整宣传片，拆出镜头顺序、文字、构图、配色、转场、运动节奏与音画同步，再用本机工具从零重建可见画面。
+      它可以保留原片音轨，但不能把原视频帧塞进新成片；最后还要持续显示严格的右上角品牌卡，并用 ffprobe 验证唯一 MP4。
+    why_it_matters: >-
+      视频复刻把长上下文视觉分析、时间轴规划、程序化绘制、字体排版、媒体编码和自检串成一个真实生产闭环。最终文件是否可播放只是底线；
+      真正困难的是在不能像素复制的条件下恢复设计语言与运动节奏，并留下可信的工具使用证据。
+  method_steps:
+    - title: 冻结四项输入与隔离边界
+      description: 每个工作目录只放同一支参考视频、透明 Logo、Fusion Pixel 字体、品牌 JSON 和完整题面；一轮、5400 秒、不重试，不联网、不装依赖、不调用外部生成服务，也不读取其他模型结果。
+    - title: 主动读取媒体并拆解镜头
+      description: Agent 自行用 ffprobe、抽帧和本机分析工具确认 1280×720、约 29.97 fps、56.704 秒及音轨参数，识别镜头顺序、关键文字、布局、色调、转场和节奏；抽帧与缓存只能存在临时目录。
+    - title: 独立重建所有可见画面
+      description: 使用本机已有绘图、脚本和编码工具从零生成画面；禁止把参考片原始帧或视频片段拼入、叠加、转码或重封装到成片中，允许直接保留的只有音轨。
+    - title: 应用固定 Web4 标识
+      description: 全片右上角使用原始透明 Logo 和指定字体，在米白直角卡、深墨紫 2 px 硬边框与 8 px 硬阴影中显示实际模型版本；22 px 上右边距和卡片内容全片稳定。
+    - title: 构建、验证并清理
+      description: 只交付一个以实际模型版本命名的 MP4，提交前实际构建并用 ffprobe 验证；抽帧、缓存、脚本生成的临时帧等中间文件必须清理，运行日志保留供作者核对工具闭环。
+    - title: 盲审六项并执行失效门槛
+      description: 作者在隐藏参赛身份后按 30/25/15/15/5/10 六项量表评分，同时核对媒体报告、帧复用审计和原始日志；发现任何参考片可见画面复用时整项 invalid，主分固定为 0。
+  score_interpretation: >-
+    主分 0–100，越高越好，单位为分，是六项冻结量表的直接和；相同分数并列，不以时长或文件大小破同分。只有 status=scored 且
+    original_frames_reused=false 才能获得非零分；invalid、failed、timeout、missing 均为 0。比较仅在相同参考片、Logo、字体、品牌 JSON、
+    5400 秒预算与一次运行规则下成立。量表衡量这一支参考片的复刻质量，不等同于通用视频生成或创意能力。
+  key_facts:
+    - value: 56.704 秒
+      label: 冻结参考片时长
+      description: 参考片为 1280×720 H.264 视频，约 29.97 fps，带 48 kHz 双声道 AAC 音轨。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
+    - value: 30 + 25 + 15
+      label: 复刻相似度的三项核心分值
+      description: 时间线、构图视觉、运动转场合计 70 分，是主分的主体。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
+    - value: 0 分
+      label: 复用原片可见画面的整项结果
+      description: 原始帧或视频片段一旦被拼入、叠加、转码或重封装，结果无效；保留原片音轨不触发该规则。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
+    - value: 1 次 / 5400 秒
+      label: 每个参赛 Agent 的固定预算
+      description: 隔离工作目录、单轮运行、无自动重试；失败、超时和缺片原样记录。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
+  caveats:
+    - title: 参考片与品牌资产不公开分发
+      description: 参考视频、Logo 和字体仅由作者在受控运行中提供，通过 SHA-256 对齐；公开包不能单独启动完整评测，复跑者须从作者取得有权使用的同一素材。
+    - title: 主分依赖人工盲审
+      description: 镜头相似度、构图、运动质量和工具闭环不能由清单转换器证明。作者须查看原始参考片、成片、盲审表、媒体报告与运行日志；摘要只能绑定文件，不能替代内容审阅。
+    - title: 原帧复用审计存在检测边界
+      description: 审计应结合运行日志、构建脚本、抽帧比对和人工检查。简单哈希只能发现完全相同的帧，不能单独排除裁剪、重编码或轻微变形后的复用，因此 invalid 门槛最终由作者证据审阅执行。
+    - title: 单片与单次运行不代表通用能力
+      description: 本版本只有一支 56.704 秒 MG 宣传片、每个模型一轮，没有跨题材、语言、时长或随机种子的方差估计。
+    - title: 当前没有可发布基线
+      description: 冻结归档保留五个模型的 MP4 和日志，但没有完整、可公开复核的盲审数值表；本版本不从文件存在或品牌校验结果推断百分制成绩，因此不附 published-results。
+  overview_tables:
+    - id: score-rubric
+      label: 评分量表
+      title: MG 动画复刻百分制量表
+      note: 六项分值与失效门槛来自作者冻结的 2026-07-21 测试计划；表内不含任何模型成绩。
+      caption: 六项直接相加；复用参考片任一可见原始画面时整项无效并计 0。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
+      columns:
+        - { id: section, label: 分项 }
+        - { id: points, label: 满分 }
+        - { id: focus, label: 审阅重点 }
+      rows:
+        - id: timeline
+          cells:
+            - { column_id: section, value: 镜头与时间线复刻 }
+            - { column_id: points, value: "30" }
+            - { column_id: focus, value: 镜头顺序、段落时长、关键文字出场与音画同步 }
+        - id: visual
+          cells:
+            - { column_id: section, value: 构图与视觉复刻 }
+            - { column_id: points, value: "25" }
+            - { column_id: focus, value: 布局、比例、色调、排版、图形语言与主要视觉元素 }
+        - id: motion
+          cells:
+            - { column_id: section, value: 运动与转场 }
+            - { column_id: points, value: "15" }
+            - { column_id: focus, value: 缓动、位移、缩放、遮罩、切换方式与节奏 }
+        - id: technical
+          cells:
+            - { column_id: section, value: 成片技术质量 }
+            - { column_id: points, value: "15" }
+            - { column_id: focus, value: 可播放性、分辨率帧率时长音轨匹配、编码稳定与无明显瑕疵 }
+        - id: brand
+          cells:
+            - { column_id: section, value: Web4 品牌 UI 与文件命名 }
+            - { column_id: points, value: "5" }
+            - { column_id: focus, value: 固定直角卡规范、真实模型版本、全片稳定与非 final.mp4 文件名 }
+        - id: loop
+          cells:
+            - { column_id: section, value: 工具调用闭环 }
+            - { column_id: points, value: "10" }
+            - { column_id: focus, value: 参数读取、抽帧观察、动画构建、合成编码、ffprobe 验证与临时文件清理 }
+  resources_note: 这是一套作者原生协议；公开仓库提供完整题面、量表、素材指纹、清单格式和无网络转换器。
+  resources:
+    - title: MG 动画复刻 Bench 协议包
+      summary: EvalHub 原生题面、运行规范、品牌合同、人工量表、证据清单与确定性转换器。
+      url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
+tasks:
+  - id: mg-animation-replication-v1
+    label: 56.704 秒 MG 宣传片复刻
+    prompt: |
+      # MG 动画复刻测试
+
+      工作目录中提供：`测试视频.mp4`、`logo.png`、`fusion-pixel-12px-proportional.woff2` 和 `品牌UI规范.json`。
+
+      请使用本机已有工具，自行分析参考片并实际制作一支 MG 动画，尽可能复刻原片。不要只写方案或教程，直接生成成片。
+
+      ## 复刻要求
+
+      1. 尽量还原镜头顺序、时间线、构图、色调、排版、关键文字、转场、运动节奏与音画同步。
+      2. 自行读取参考片的分辨率、帧率、时长和音轨参数；最终成片应尽量保持一致。
+      3. 所有可见画面必须独立重建；禁止把参考片原始帧或视频片段拼入、叠加、转码或重封装到成片中。允许保留原片音轨。
+      4. 不联网、不安装新依赖、不调用外部生成服务、不读取其他模型结果。
+      5. 只提交一个最终版本。提交前必须实际构建并用 `ffprobe` 验证。
+      6. 抽帧、脚本、缓存、渲染帧等中间文件必须放在临时目录并在完成后清理。
+
+      ## 葬AI Web4 右上角标识
+
+      成片右上角必须全程显示葬AI Logo 和当前实际模型版本号，并严格读取 `品牌UI规范.json`：
+
+      - 使用 `logo.png` 原始透明素材和 `fusion-pixel-12px-proportional.woff2`。
+      - 米白色不透明直角卡片，禁止圆角、半透明、毛玻璃和白色胶囊样式。
+      - 深墨紫 2px 硬边框，右下 8px 同色硬阴影，无模糊。
+      - 左侧使用葬AI紫色竖条；型号文字使用 Fusion Pixel 和葬AI紫。
+      - 卡片锚定右上角，右边距和上边距均为 22px；位置、尺寸和内容全片稳定。
+      - 除该覆盖层外，不得因品牌处理剪辑、调色、变速或重混其他内容。
+
+      标准文件名：`GPT-5.6-Sol.mp4`、`Kimi-K3.mp4`、`Qwen3.8-Max-Preview.mp4`、`GLM-5.2.mp4`。以后更换模型时使用实际新版本名，禁止提交 `final.mp4`。
+
+      ## 唯一交付
+
+      - `<模型版本号>.mp4`：直接放在工作目录根目录。
+    run_spec: >-
+      作者向每个全新隔离工作目录提供完全相同的四项输入：参考视频 SHA-256 86cab73954c05b6811e23c6ebefa5c923af585db19c65ac6a9eb5bd51a625ce9，
+      Logo SHA-256 e3bf841329f81c1f4b269f930299306cbc9a614a030049ba5e9369ad65a02086，字体 SHA-256
+      b4f59dce22df0f43425262611a786b7f1581fa2667fad5861afbfb249e5a8dba，品牌 JSON SHA-256
+      8fa8bbc2d279a9d8a1f3c742c589e82cbfd8d8b8b181066608336ffb0f6c59da；题面 SHA-256
+      17d3870e7fca163d8a7c269968bd9462254244c64aaed670ae7d40f6af8d438f。参考片为 1280×720、H.264、30000/1001 fps、
+      56.704 秒，含 48 kHz 双声道 AAC。每个模型一轮、墙钟上限 5400 秒、不重试；工作目录隔离，禁止联网与读取其他结果。
+      保留唯一 MP4、原始运行日志、ffprobe 报告、帧复用审计和冻结盲审表；作者按 tasks/README.md 生成清单。参考片、Logo、字体、成片和日志均不上传本仓库。
