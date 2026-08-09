@@ -100,6 +100,48 @@ detail_profile:
     - title: 历史题面不具可比性
       description: >-
         当前题不提供参考视频且鼓励自由创作；历史题面的输入、目标和评分不同，任何数字都不可合并。
+  overview_tables:
+    - id: automatic-media-acceptance
+      label: 真实运行 · 自动验收
+      title: 四模型媒体与品牌合同验收（非人工总分）
+      note: 四支当前同题 30 秒成片的冻结 ffprobe/ffmpeg 验收；全部通过媒体规格与三时点品牌像素检查，但七项人工评分尚未完成。
+      caption: “通过”只表示时长、分辨率、帧率、编码、音轨、文件名和品牌卡满足技术合同，不能解释为 100 分，也不进入榜单。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
+      columns:
+        - { id: model, label: 模型 }
+        - { id: duration, label: 时长 }
+        - { id: media, label: 媒体规格 }
+        - { id: brand, label: 品牌 UI }
+        - { id: status, label: 自动验收 }
+      rows:
+        - id: gpt-5-6-sol
+          cells:
+            - { column_id: model, value: GPT-5.6-Sol }
+            - { column_id: duration, value: 30.0 秒 }
+            - { column_id: media, value: 通过 }
+            - { column_id: brand, value: 通过 }
+            - { column_id: status, value: 通过 }
+        - id: kimi-k3
+          cells:
+            - { column_id: model, value: Kimi-K3 }
+            - { column_id: duration, value: 30.0 秒 }
+            - { column_id: media, value: 通过 }
+            - { column_id: brand, value: 通过 }
+            - { column_id: status, value: 通过 }
+        - id: qwen-3-8-max
+          cells:
+            - { column_id: model, value: Qwen3.8-Max }
+            - { column_id: duration, value: 30.0 秒 }
+            - { column_id: media, value: 通过 }
+            - { column_id: brand, value: 通过 }
+            - { column_id: status, value: 通过 }
+        - id: doubao-seed-evolving
+          cells:
+            - { column_id: model, value: Doubao-Seed-Evolving }
+            - { column_id: duration, value: 30.0 秒 }
+            - { column_id: media, value: 通过 }
+            - { column_id: brand, value: 通过 }
+            - { column_id: status, value: 通过 }
   figures:
     - id: mg-current-four-model-overview
       placement: insights
