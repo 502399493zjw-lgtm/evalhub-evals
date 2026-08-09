@@ -91,10 +91,6 @@ detail_profile:
       description: release web4-graph-v2-leaderboard-20260804-v2 公开了 16 个模型的最终汇总成绩；本条目不展示逐轮数据。
       source_url: https://funeralai.cc/test/
   caveats:
-    - title: 公开包不能独立复现作者正式分数
-      description: >-
-        本目录提供当前题面、完整 graph、固定摘要和结果转换器，但作者 Playwright 评分器 3.1 与 OpenCode 1.17.9 十轮 harness
-        不随包分发。第三方可以重建任务输入与结果信封结构，不能只凭下载包复跑出与官网同口径的正式分数。
     - title: 只覆盖一类知识图谱前端工程任务
       description: >-
         评测能同时压测数据处理、图算法与交互工程，但只有一个固定 AI 行业图谱和一个网页任务，不能代表通用软件工程或所有可视化能力。
@@ -112,10 +108,11 @@ detail_profile:
       description: >-
         当前 EvalHub 模型注册表尚不能解析 Claude Opus 5、DeepSeek V4 Flash、GPT-5.6 Luna 与 ERNIE 5.1。
         为避免把模型错绑到相近身份，这四条不进入一等 results；其最终汇总集中保留在“待登记模型”辅助表中，已映射模型不再重复嵌入整张总表。
-    - title: 新版协议来自作者本地工作树
+    - title: 新版协议来自作者本地工作树，公开包不能独立复现正式分数
       description: >-
         作者明确要求以本地 zangai-bench-v2 新题为准；一个月前的公开 GitHub 仓库只是历史框架，不能证明本题的精确 prompt、数据或 scorer。
-        本目录因此直接携带新题数据与题面，并用 sha256 锁定未内嵌的作者评分器。
+        本目录因此直接携带新题数据与题面，并用 sha256 锁定未内嵌的作者评分器。作者 Playwright 评分器 3.1 与 OpenCode 1.17.9
+        十轮 harness 不随包分发；第三方可重建任务输入与结果信封结构，但不能只凭下载包复跑出与官网同口径的正式分数。
   overview_tables:
     - id: scoring-weights
       label: 评分权重
