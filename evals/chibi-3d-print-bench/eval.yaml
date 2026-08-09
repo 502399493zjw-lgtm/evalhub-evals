@@ -181,7 +181,7 @@ detail_profile:
       placement: insights
       label: 真实示例 · 未核分
       title: GPT-5.6-Sol 的 3/4 白模渲染
-      src: https://github.com/FrichXi/funeralai-web4/blob/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/GPT-5.6-Sol-3q.png?raw=1
+      src: https://raw.githubusercontent.com/FrichXi/funeralai-web4/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/GPT-5.6-Sol-3q.png
       alt: GPT-5.6-Sol 在当前 3D 白模题目中生成的真实灰白色 Q 版人物 3/4 渲染
       caption: 当前冻结题目的真实产物视图，仅供直观看成果；没有阶段分数，不是榜单证据，也未额外添加 Logo。
       source_url: https://github.com/FrichXi/funeralai-web4/blob/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/GPT-5.6-Sol-3q.png
@@ -189,7 +189,7 @@ detail_profile:
       placement: insights
       label: 真实示例 · 未核分
       title: Qwen3.8-Max 的 3/4 白模渲染
-      src: https://github.com/FrichXi/funeralai-web4/blob/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Qwen3.8-Max-3q.png?raw=1
+      src: https://raw.githubusercontent.com/FrichXi/funeralai-web4/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Qwen3.8-Max-3q.png
       alt: Qwen3.8-Max 在当前 3D 白模题目中生成的真实灰白色 Q 版人物 3/4 渲染
       caption: 当前冻结题目的真实产物视图，仅供直观看成果；没有阶段分数，不是榜单证据，也未额外添加 Logo。
       source_url: https://github.com/FrichXi/funeralai-web4/blob/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Qwen3.8-Max-3q.png
@@ -197,7 +197,7 @@ detail_profile:
       placement: insights
       label: 真实示例 · 未核分
       title: Kimi-K3 的 3/4 白模渲染
-      src: https://github.com/FrichXi/funeralai-web4/blob/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Kimi-K3-3q.png?raw=1
+      src: https://raw.githubusercontent.com/FrichXi/funeralai-web4/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Kimi-K3-3q.png
       alt: Kimi-K3 在当前 3D 白模题目中生成的真实灰白色 Q 版人物 3/4 渲染
       caption: 当前冻结题目的真实产物视图，仅供直观看成果；没有阶段分数，不是榜单证据，也未额外添加 Logo。
       source_url: https://github.com/FrichXi/funeralai-web4/blob/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Kimi-K3-3q.png
