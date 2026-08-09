@@ -60,6 +60,17 @@ test("PR and main workflows never execute third-party runners", async () => {
   assert.doesNotMatch(allWorkflowText, /\bdocker\b/iu);
 });
 
+test("PR policy reruns when the editable submission marker changes", async () => {
+  const { workflow } = await parseWorkflow("pr-policy.yml");
+  assert.deepEqual(workflow.on.pull_request_target.types, [
+    "opened",
+    "reopened",
+    "synchronize",
+    "edited",
+    "ready_for_review",
+  ]);
+});
+
 test("every workflow step is limited to approved repository gates", async () => {
   for (const fileName of await workflowFileNames()) {
     const { workflow } = await parseWorkflow(fileName);

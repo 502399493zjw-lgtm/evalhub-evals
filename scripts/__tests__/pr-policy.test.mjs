@@ -357,49 +357,44 @@ test("rejects a new eval whose owner differs from the PR creator", async () => {
   );
 });
 
-test("maintainer may create an eval owned by a GitHub org", async () => {
-  const result = await evaluate({
-    actor: MAINTAINER_LOGIN,
-    changedFiles: [
-      file("evals/org-owned/eval.yaml", "added"),
-      file("evals/org-owned/AUTHORS", "added"),
-    ],
-    head: {
-      "evals/org-owned/eval.yaml": "id: org-owned\nrunner: builtin\n",
-      "evals/org-owned/AUTHORS": "@zlab-princeton\n",
+test("rejects a maintainer creating an eval on behalf of another owner", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      changedFiles: [
+        file("evals/org-owned/eval.yaml", "added"),
+        file("evals/org-owned/AUTHORS", "added"),
+      ],
+      head: {
+        "evals/org-owned/eval.yaml": "id: org-owned\nrunner: builtin\n",
+        "evals/org-owned/AUTHORS": "@zlab-princeton\n",
+      },
     },
-  });
-
-  assert.equal(result.owner, "zlab-princeton");
-  assert.equal(result.slug, "org-owned");
-  assert.equal(result.mode, "community-eval-create");
+    "author_mismatch",
+  );
 });
 
-test("maintainer may reassign AUTHORS of an existing eval", async () => {
-  const result = await evaluate({
-    actor: MAINTAINER_LOGIN,
-    changedFiles: [
-      file("evals/ceo-bench/AUTHORS"),
-      file("evals/ceo-bench/eval.yaml"),
-    ],
-    base: {
-      "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
-      "evals/ceo-bench/AUTHORS": `@${MAINTAINER_LOGIN}\n`,
+test("rejects a maintainer reassigning AUTHORS of an existing eval", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      changedFiles: [
+        file("evals/ceo-bench/AUTHORS"),
+        file("evals/ceo-bench/eval.yaml"),
+      ],
+      base: {
+        "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
+        "evals/ceo-bench/AUTHORS": `@${MAINTAINER_LOGIN}\n`,
+      },
+      head: {
+        "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
+        "evals/ceo-bench/AUTHORS": "@zlab-princeton\n",
+      },
     },
-    head: {
-      "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
-      "evals/ceo-bench/AUTHORS": "@zlab-princeton\n",
-    },
-  });
-
-  assert.equal(result.slug, "ceo-bench");
-  // owner/mode 报的是合入后的归属：迁移走了就不再算官方评测。
-  assert.equal(result.owner, "zlab-princeton");
-  assert.equal(result.mode, "community-eval-update");
+    "author_change_forbidden",
+  );
 });
 
-// AUTHORS 变更后 owner 改读 head，因此「只删 AUTHORS、留下 eval.yaml」这条路不再
-// 落回 base 归属，而是明确报缺文件：已存在的评测集必须始终带 AUTHORS。
 test("rejects dropping AUTHORS from an eval that still exists", async () => {
   await expectPolicyError(
     {
@@ -411,22 +406,23 @@ test("rejects dropping AUTHORS from an eval that still exists", async () => {
       },
       head: { "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n" },
     },
-    "required_file_missing",
+    "author_change_forbidden",
   );
 });
 
-test("maintainer may update an eval owned by someone else", async () => {
-  const result = await evaluate({
-    actor: MAINTAINER_LOGIN,
-    changedFiles: [file("evals/ceo-bench/eval.yaml")],
-    base: {
-      "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
-      "evals/ceo-bench/AUTHORS": "@zlab-princeton\n",
+test("rejects a maintainer updating an eval owned by someone else", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      changedFiles: [file("evals/ceo-bench/eval.yaml")],
+      base: {
+        "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n",
+        "evals/ceo-bench/AUTHORS": "@zlab-princeton\n",
+      },
+      head: { "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n" },
     },
-    head: { "evals/ceo-bench/eval.yaml": "id: ceo-bench\nrunner: builtin\n" },
-  });
-
-  assert.equal(result.owner, "zlab-princeton");
+    "third_party_update_forbidden",
+  );
 });
 
 test("rejects changes to multiple eval slugs", async () => {
@@ -482,18 +478,18 @@ test("rejects a contributor deleting an eval", async () => {
   );
 });
 
-test("allows the maintainer to delete an eval", async () => {
-  const result = await evaluate({
-    actor: MAINTAINER_LOGIN,
-    changedFiles: [file("evals/sample-eval/eval.yaml", "removed")],
-    base: {
-      "evals/sample-eval/AUTHORS": "@sample-author\n",
-      "evals/sample-eval/eval.yaml": "id: sample-eval\n",
+test("rejects the maintainer deleting an eval", async () => {
+  await expectPolicyError(
+    {
+      actor: MAINTAINER_LOGIN,
+      changedFiles: [file("evals/sample-eval/eval.yaml", "removed")],
+      base: {
+        "evals/sample-eval/AUTHORS": "@sample-author\n",
+        "evals/sample-eval/eval.yaml": "id: sample-eval\n",
+      },
     },
-  });
-  assert.equal(result.mode, "maintainer-eval-delete");
-  assert.equal(result.slug, "sample-eval");
-  assert.equal(result.owner, "sample-author");
+    "eval_delete_forbidden",
+  );
 });
 
 test("rejects renaming a slug", async () => {
@@ -641,7 +637,7 @@ test("rejects a marker whose kind contradicts the change", async () => {
   );
 });
 
-test("rejects a marker on a maintenance or delete pull request", async () => {
+test("rejects a marker on a maintenance pull request", async () => {
   await expectPolicyError(
     {
       actor: MAINTAINER_LOGIN,
@@ -650,24 +646,20 @@ test("rejects a marker on a maintenance or delete pull request", async () => {
     },
     "submission_marker_unexpected",
   );
-  await expectPolicyError(
-    {
-      actor: MAINTAINER_LOGIN,
-      body: submissionBody("update", "sample-eval"),
-      changedFiles: [file("evals/sample-eval/eval.yaml", "removed")],
-      base: updateBase,
-    },
-    "submission_marker_unexpected",
-  );
 });
 
 test("keeps the marker optional for maintainer-authored submissions", async () => {
   const result = await evaluate({
     actor: MAINTAINER_LOGIN,
-    body: "AUTHORS: @sample-author\n",
-    ...updateOptions("AUTHORS: @sample-author\n"),
+    body: `AUTHORS: @${MAINTAINER_LOGIN}\n`,
+    changedFiles: [file("evals/official-eval/README.md")],
+    base: {
+      "evals/official-eval/AUTHORS": `@${MAINTAINER_LOGIN}\n`,
+      "evals/official-eval/eval.yaml": "id: official-eval\n",
+    },
+    head: { "evals/official-eval/eval.yaml": "id: official-eval\n" },
   });
-  assert.equal(result.mode, "community-eval-update");
+  assert.equal(result.mode, "official-eval-update");
   assert.equal(result.submissionTask, null);
 });
 
@@ -675,7 +667,13 @@ test("still validates a marker the maintainer chose to include", async () => {
   await expectPolicyError(
     {
       actor: MAINTAINER_LOGIN,
-      ...updateOptions(submissionBody("update", "other-eval")),
+      body: submissionBody("update", "other-eval"),
+      changedFiles: [file("evals/official-eval/README.md")],
+      base: {
+        "evals/official-eval/AUTHORS": `@${MAINTAINER_LOGIN}\n`,
+        "evals/official-eval/eval.yaml": "id: official-eval\n",
+      },
+      head: { "evals/official-eval/eval.yaml": "id: official-eval\n" },
     },
     "submission_marker_slug_mismatch",
   );
