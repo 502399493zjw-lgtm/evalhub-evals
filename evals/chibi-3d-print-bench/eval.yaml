@@ -4,8 +4,8 @@ name: 葬AI 3D 白模 Bench
 category: useful
 description: >-
   给 Agent 一张人物参考照片，让它在离线环境中完成身份特征提取、单件式 Q 版白模建模、STL 导出、六视角预览和拓竹 A2L
-  切片验证。主分由 60 分确定性产物检查与 40 分盲审相似度量表相加，既考察模型是否真的交付可打印几何，也考察成品是否像参考人物。
-  当前展示真实白模示例，但尚无完成自动复验与人工盲审的已验证总分；示例不是榜单成绩。
+  切片验证。正式总分由作者人工审核确认：60 分确定性产物检查提供工程证据，40 分盲审量表评价人物与雕塑质量，两部分经作者复核后相加。
+  AI 对图片或产物的评分只作参考，不能替代作者人工评分。当前展示真实白模示例，但尚无完成作者终审的已验证总分；示例不是榜单成绩。
 hook_title: AI 能把一张人物照片做成既像本人又能快速打印的 Q 版白模吗
 references:
   repository: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
@@ -23,6 +23,7 @@ scoring_note: >-
   自动部分满分 60：交付物 10、网格 25、统一切片 25；转换器从原始检查字段重新计算，不接受提交方自报总分。人工部分满分 40：
   人物相似度 25、造型完整与雕塑一致性 10、预览清晰度 5，由作者对原始参考图和冻结盲审表复核后认可。最终分为两部分之和，范围 0–100；
   失败、超时或缺失运行仍按实际存在的产物获得自动部分，人工分必须为 0。scored 状态必须提供运行日志、自动评分报告、盲审表及产物摘要。
+  最终榜单分只能由作者完成人工终审后确认；任何 AI 视觉评分、AI 总结或自动表中的 /60 阶段分都只是参考证据，不能单独发布为正式总分。
 command_template:
   argv: [node, evals/chibi-3d-print-bench/pack-to-result.mjs, "{input}", --out, "{output}"]
   output: chibi-3d-print-bench-result.json
@@ -30,7 +31,8 @@ trials: 1
 detail_profile:
   source_kind: evalhub_native
   overview_note: >-
-    当前暂无完成自动 60 分复验与人工 40 分盲审的已验证总分；这不表示模型得 0 分。下方展示的是作者 2026-08-03 同题运行中
+    当前暂无完成作者人工终审的已验证总分；这不表示模型得 0 分。3D 白模的正式分由作者人工评分确认，自动 scorer 与 AI 评分只作参考。
+    下方展示的是作者 2026-08-03 同题运行中
     三个真实模型产物的统一 3/4 白模渲染，仅用于直观看成果，不参与排名。人物参考照片不公开，图片不含阶段分数，也没有为了投稿
     添加 Logo、裁切或改造证据。这是外部工作流：EvalHub CLI 只下载协议并 pack 外部清单，不支持 `evalhub run chibi-3d-print-bench`。
   summary:
@@ -53,7 +55,8 @@ detail_profile:
       description: 作者在不知道参赛身份的条件下对参考照片和原始预览评分：人物相似度 25、造型完整与雕塑一致性 10、预览清晰度 5；转换器要求盲审表摘要并把三项与自动分相加。
   score_interpretation: >-
     主分 0–100，越高越好，单位为分；自动部分最多 60，人工盲审最多 40，直接相加且不设额外同分规则。60 分只能证明产物存在、网格与切片满足冻结检查，
-    不能证明像本人；40 分只评视觉结果，不能替代水密与打印约束。跨结果比较仅在同一参考图摘要、同一题面、同一 scorer 与同一 Bambu/A2L 参数下成立。
+    不能证明像本人；40 分只评视觉结果，不能替代水密与打印约束。最终总分必须由作者查看原始产物并人工确认；AI 评分只作参考。
+    跨结果比较仅在同一参考图摘要、同一题面、同一 scorer 与同一 Bambu/A2L 参数下成立。
   key_facts:
     - value: 60 + 40
       label: 自动检查与盲审的固定分配
@@ -71,6 +74,10 @@ detail_profile:
       label: 每个参赛 Agent 的运行预算
       description: 单轮隔离运行，不自动重试；失败和超时原样进入证据清单。
       source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
+    - value: 作者人工终审
+      label: 正式榜单分的唯一确认入口
+      description: 自动 scorer 和 AI 视觉评价只提供参考证据，不能自行生成或替代正式总分。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
   caveats:
     - title: 有真实示例和自动部分，暂无已验证总分
       description: >-
@@ -79,7 +86,7 @@ detail_profile:
     - title: 参考照片不公开分发
       description: 人物照片可能包含个人信息，只由作者在受控运行中提供，并通过固定 SHA-256 对齐；公开包不能单独启动完整评测，复跑者须从作者取得获授权的同一输入。
     - title: 40 分依赖人工盲审
-      description: 相似度和雕塑质量不能由转换器自动证明。scored_by=author 表示作者须核对原始照片、未美化预览和冻结盲审表；摘要只能防止事后替换文件，不能替代审阅。
+      description: 相似度和雕塑质量不能由转换器或 AI 评分自动证明。scored_by=author 表示作者须核对原始照片、未美化预览和冻结盲审表，并亲自确认最终总分；自动与 AI 结果都只能作为参考。
     - title: 单题与单次运行不估计方差
       description: 本版本只有一位参考人物、每个模型一轮，结果不能外推为通用人像建模能力，也没有跨随机种子的置信区间。
     - title: 统一切片只近似真实打印
@@ -129,10 +136,10 @@ detail_profile:
             - { column_id: points, value: "5" }
             - { column_id: rule, value: 至少 1600×900，并在同一画布清楚展示参考图、面部近景、正面、3/4、侧面和背面 }
     - id: automatic-partial-results
-      label: 真实运行 · 自动部分
-      title: 六模型自动检查结果（满分 60，非最终总分）
-      note: 作者冻结 scorer 与统一 A2L 切片流程的真实结果；人工盲审 40 分尚未完成，表中数字不进入榜单。
-      caption: 自动分覆盖交付物、网格和切片。hard pass 均为否，原因逐行保留；不得把这些 /60 数值换算或冒充百分制成绩。
+      label: 参考证据 · 非正式分
+      title: 六模型自动检查结果（满分 60，仅供作者人工评分参考）
+      note: 作者冻结 scorer 与统一 A2L 切片流程的真实结果；作者人工终审尚未完成，表中数字不进入榜单，AI 评价也不替代人工评分。
+      caption: 自动分覆盖交付物、网格和切片。hard pass 均为否，原因逐行保留；不得把这些 /60 数值换算或冒充作者确认的百分制成绩。
       source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
       columns:
         - { id: model, label: 模型 }
@@ -176,6 +183,32 @@ detail_profile:
             - { column_id: auto, value: "36" }
             - { column_id: slice, value: "74.45" }
             - { column_id: note, value: 非水密、2 个组件且切片超过 60 分钟 }
+    - id: score-evidence-boundary
+      label: 评分责任
+      title: 作者人工总分、自动检查与 AI 参考
+      note: 参照完整详情页的信息层级，明确谁确认正式分、哪些材料只作为审阅证据。
+      caption: 3D 白模的正式榜单分由作者人工终审确认；自动 /60 与 AI 评价都不能单独进入主榜。
+      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
+      columns:
+        - { id: layer, label: 层级 }
+        - { id: authority, label: 形成方式 / 责任方 }
+        - { id: leaderboard, label: 是否进入主榜 }
+      rows:
+        - id: official-score
+          cells:
+            - { column_id: layer, value: 正式 0–100 总分 }
+            - { column_id: authority, value: 作者查看参考图、原始白模、预览、自动报告与盲审表后人工确认 }
+            - { column_id: leaderboard, value: 作者确认后才是 }
+        - id: deterministic-checks
+          cells:
+            - { column_id: layer, value: 自动工程检查 /60 }
+            - { column_id: authority, value: 冻结 scorer 与统一 A2L 切片生成，供作者核对交付、网格和切片 }
+            - { column_id: leaderboard, value: 否，单独不发布 }
+        - id: ai-reference
+          cells:
+            - { column_id: layer, value: AI 视觉评分或总结 }
+            - { column_id: authority, value: 只能帮助作者审阅，不得替代人工判断或改写最终分 }
+            - { column_id: leaderboard, value: 否 }
   figures:
     - id: gpt-5-6-sol-real-3q
       placement: insights
