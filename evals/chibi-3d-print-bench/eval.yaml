@@ -214,26 +214,26 @@ detail_profile:
       placement: insights
       label: 真实示例 · 未核分
       title: GPT-5.6-Sol 的 3/4 白模渲染
-      src: https://raw.githubusercontent.com/FrichXi/funeralai-web4/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/GPT-5.6-Sol-3q.png
+      src: https://raw.githubusercontent.com/FrichXi/funeralai-web4/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809/GPT-5.6-Sol-3q.png
       alt: GPT-5.6-Sol 在当前 3D 白模题目中生成的真实灰白色 Q 版人物 3/4 渲染
       caption: 当前冻结题目的真实产物视图，仅供直观看成果；没有阶段分数，不是榜单证据，也未额外添加 Logo。
-      source_url: https://github.com/FrichXi/funeralai-web4/blob/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/GPT-5.6-Sol-3q.png
+      source_url: https://github.com/FrichXi/funeralai-web4/blob/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809/GPT-5.6-Sol-3q.png
     - id: qwen-3-8-max-real-3q
       placement: insights
       label: 真实示例 · 未核分
       title: Qwen3.8-Max 的 3/4 白模渲染
-      src: https://raw.githubusercontent.com/FrichXi/funeralai-web4/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Qwen3.8-Max-3q.png
+      src: https://raw.githubusercontent.com/FrichXi/funeralai-web4/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809/Qwen3.8-Max-3q.png
       alt: Qwen3.8-Max 在当前 3D 白模题目中生成的真实灰白色 Q 版人物 3/4 渲染
       caption: 当前冻结题目的真实产物视图，仅供直观看成果；没有阶段分数，不是榜单证据，也未额外添加 Logo。
-      source_url: https://github.com/FrichXi/funeralai-web4/blob/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Qwen3.8-Max-3q.png
+      source_url: https://github.com/FrichXi/funeralai-web4/blob/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809/Qwen3.8-Max-3q.png
     - id: kimi-k3-real-3q
       placement: insights
       label: 真实示例 · 未核分
       title: Kimi-K3 的 3/4 白模渲染
-      src: https://raw.githubusercontent.com/FrichXi/funeralai-web4/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Kimi-K3-3q.png
+      src: https://raw.githubusercontent.com/FrichXi/funeralai-web4/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809/Kimi-K3-3q.png
       alt: Kimi-K3 在当前 3D 白模题目中生成的真实灰白色 Q 版人物 3/4 渲染
       caption: 当前冻结题目的真实产物视图，仅供直观看成果；没有阶段分数，不是榜单证据，也未额外添加 Logo。
-      source_url: https://github.com/FrichXi/funeralai-web4/blob/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Kimi-K3-3q.png
+      source_url: https://github.com/FrichXi/funeralai-web4/blob/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809/Kimi-K3-3q.png
   resources_note: 这是一套作者原生外部工作流协议；公开仓库提供题面、计分合同、清单格式与转换器，受控输入仅以摘要绑定。EvalHub CLI 只负责 fetch/pack，不支持一键 run。
   resources:
     - title: 葬AI 3D 白模 Bench 协议包
@@ -241,7 +241,7 @@ detail_profile:
       url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/chibi-3d-print-bench
     - title: 真实未核分示例资产与 SHA-256 清单
       summary: 三个当前题目模型产物的 score-free 3/4 渲染；只用于成果预览，不代表已验证百分制成绩。
-      url: https://github.com/FrichXi/funeralai-web4/tree/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809
+      url: https://github.com/FrichXi/funeralai-web4/tree/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809
 tasks:
   - id: chibi-figure-a2-v2-20260803
     label: Q版人物 A2 白模
