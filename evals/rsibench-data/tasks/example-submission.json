@@ -1,0 +1,117 @@
+{
+  "manifest_version": 1,
+  "eval_id": "rsibench-data",
+  "protocol_revision": 1,
+  "upstream_commit": "4c807610243e7b481d382c5ed360c71c79a22f61",
+  "target_model": "Qwen/Qwen3.5-35B-A3B-Base",
+  "participant": {
+    "model": "example/synthetic-research-agent",
+    "harness": "example-harness",
+    "harness_version": "0.0.0-structural-example"
+  },
+  "run_date": "2026-08-09",
+  "runs": [
+    {
+      "task_id": "swe-bench-verified",
+      "run_id": "example-swe-verified-001",
+      "checkpoint": "tinker://example/sft-swe-verified-final",
+      "checkpoint_selected_before_official_eval": true,
+      "data_isolation_audit": "passed",
+      "official_eval": {
+        "passed": 31,
+        "n_tasks": 100,
+        "n_attempts": 1
+      },
+      "budget": {
+        "wall_clock_hours": 11.4,
+        "tinker_cost_usd": 188.2
+      },
+      "evidence_sha256": "a646340d2edd14972fd2dd35fed52368b39f6343681ed521d5fc339175ea7be9"
+    },
+    {
+      "task_id": "swe-bench-multilingual",
+      "run_id": "example-swe-multilingual-001",
+      "checkpoint": "tinker://example/sft-swe-multilingual-final",
+      "checkpoint_selected_before_official_eval": true,
+      "data_isolation_audit": "passed",
+      "official_eval": {
+        "passed": 18,
+        "n_tasks": 100,
+        "n_attempts": 1
+      },
+      "budget": {
+        "wall_clock_hours": 13.1,
+        "tinker_cost_usd": 204.7
+      },
+      "evidence_sha256": "5616991ce4e8f00b890e962d381e84f21bf4fde2ba5785da76cabfb1b83a23f2"
+    },
+    {
+      "task_id": "swe-bench-pro",
+      "run_id": "example-swe-pro-001",
+      "checkpoint": "tinker://example/sft-swe-pro-final",
+      "checkpoint_selected_before_official_eval": true,
+      "data_isolation_audit": "passed",
+      "official_eval": {
+        "passed": 3,
+        "n_tasks": 100,
+        "n_attempts": 1
+      },
+      "budget": {
+        "wall_clock_hours": 4.6,
+        "tinker_cost_usd": 41.9
+      },
+      "evidence_sha256": "3beed75a16d5f74109a4ade3f46f5cc2f5b94344f46ad818fcfb4f2c8ff70965"
+    },
+    {
+      "task_id": "terminal-bench-2",
+      "run_id": "example-terminal-bench-001",
+      "checkpoint": "tinker://example/sft-terminal-bench-final",
+      "checkpoint_selected_before_official_eval": true,
+      "data_isolation_audit": "passed",
+      "official_eval": {
+        "passed": 12,
+        "n_tasks": 89,
+        "n_attempts": 1
+      },
+      "budget": {
+        "wall_clock_hours": 9.3,
+        "tinker_cost_usd": 171.5
+      },
+      "evidence_sha256": "92bbc70ec37edf2eb56e86a31889ddf9e9eb044a9cf5bc6af8b14d41d8b93ee7"
+    },
+    {
+      "task_id": "gpqa-diamond",
+      "run_id": "example-gpqa-diamond-001",
+      "checkpoint": "tinker://example/sft-gpqa-diamond-final",
+      "checkpoint_selected_before_official_eval": true,
+      "data_isolation_audit": "passed",
+      "official_eval": {
+        "passed": 48,
+        "n_tasks": 100,
+        "n_attempts": 1
+      },
+      "budget": {
+        "wall_clock_hours": 6.2,
+        "tinker_cost_usd": 33.4
+      },
+      "evidence_sha256": "c39d401468a41fe254bc94ddaf5ee0d7efdbe63e44918d1d2c70e2bdd862f7ce"
+    },
+    {
+      "task_id": "aime",
+      "run_id": "example-aime-001",
+      "checkpoint": "tinker://example/sft-aime-final",
+      "checkpoint_selected_before_official_eval": true,
+      "data_isolation_audit": "passed",
+      "official_eval": {
+        "passed": 37,
+        "n_tasks": 30,
+        "n_attempts": 4
+      },
+      "budget": {
+        "wall_clock_hours": 5.1,
+        "tinker_cost_usd": 58.8
+      },
+      "evidence_sha256": "42ccc8f1d8db5684eb7c64822aac105a247ee734301a18caf19a149f60be5f5e"
+    }
+  ]
+}

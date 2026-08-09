@@ -1,0 +1,191 @@
+{
+  "eval_id": "rsibench-data",
+  "submission": {
+    "kind": "run",
+    "runner_version": "rsibench-data/pack-to-result@1.0.0",
+    "run_date": "2026-08-09"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-research-agent",
+        "harness": "example-harness",
+        "harness_version": "0.0.0-structural-example"
+      },
+      "score": 20.979962,
+      "raw_metric": {
+        "label": "六项加权总分",
+        "value": "20.979962 分",
+        "tiebreak_value": 20.979962
+      },
+      "detail": "六个 profile 各跑一次独立预算运行，目标模型 Qwen/Qwen3.5-35B-A3B-Base，来源 commit 4c807610243e7b481d382c5ed360c71c79a22f61。分项分数 = 官方复评通过数 ÷ 锁定分母 × 100；总分按官方榜单权重加权（SWE 三项与 Terminal-Bench 2.0 各 0.2，GPQA Diamond 与 AIME 2026 各 0.1）。提交清单 sha256=8d829384d080fc2405af3aeb7a84da4494b9ba1048becaed51d3b7c35f7db171。分母、权重与预算上限由转换器内置，不接受提交方覆盖。",
+      "task_results": [
+        {
+          "task_id": "swe-bench-verified",
+          "score": 31,
+          "raw": "31/100 · mini-swe-agent · tinker://example/sft-swe-verified-final"
+        },
+        {
+          "task_id": "swe-bench-multilingual",
+          "score": 18,
+          "raw": "18/100 · mini-swe-agent · tinker://example/sft-swe-multilingual-final"
+        },
+        {
+          "task_id": "swe-bench-pro",
+          "score": 3,
+          "raw": "3/100 · mini-swe-agent · tinker://example/sft-swe-pro-final"
+        },
+        {
+          "task_id": "terminal-bench-2",
+          "score": 13.483146,
+          "raw": "12/89 · terminus-2 · tinker://example/sft-terminal-bench-final"
+        },
+        {
+          "task_id": "gpqa-diamond",
+          "score": 48,
+          "raw": "48/100 · terminus-2 · tinker://example/sft-gpqa-diamond-final"
+        },
+        {
+          "task_id": "aime",
+          "score": 30.833333,
+          "raw": "37/120 · terminus-2 · tinker://example/sft-aime-final"
+        }
+      ],
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "run-benchmark-breakdown",
+          "label": "本次分项",
+          "title": "本次运行的六项分项成绩",
+          "columns": [
+            "分项",
+            "权重",
+            "通过/试次",
+            "分项分数",
+            "加权贡献"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "SWE-bench Verified",
+                0.2,
+                "31/100",
+                31,
+                6.2
+              ]
+            },
+            {
+              "cells": [
+                "SWE-bench Multilingual",
+                0.2,
+                "18/100",
+                18,
+                3.6
+              ]
+            },
+            {
+              "cells": [
+                "SWE-bench Pro",
+                0.2,
+                "3/100",
+                3,
+                0.6
+              ]
+            },
+            {
+              "cells": [
+                "Terminal-Bench 2.0",
+                0.2,
+                "12/89",
+                13.483146,
+                2.696629
+              ]
+            },
+            {
+              "cells": [
+                "GPQA Diamond",
+                0.1,
+                "48/100",
+                48,
+                4.8
+              ]
+            },
+            {
+              "cells": [
+                "AIME 2026",
+                0.1,
+                "37/120",
+                30.833333,
+                3.083333
+              ]
+            }
+          ],
+          "note": "分项分数与加权贡献由转换器按内置分母和官方权重确定性算出，仅解释主分数，不参与排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "run-budget-usage",
+          "label": "预算用量",
+          "title": "各 profile 的预算用量",
+          "columns": [
+            "分项",
+            "用时（小时）",
+            "Tinker 成本（USD）",
+            "运行标识"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "SWE-bench Verified",
+                11.4,
+                188.2,
+                "example-swe-verified-001"
+              ]
+            },
+            {
+              "cells": [
+                "SWE-bench Multilingual",
+                13.1,
+                204.7,
+                "example-swe-multilingual-001"
+              ]
+            },
+            {
+              "cells": [
+                "SWE-bench Pro",
+                4.6,
+                41.9,
+                "example-swe-pro-001"
+              ]
+            },
+            {
+              "cells": [
+                "Terminal-Bench 2.0",
+                9.3,
+                171.5,
+                "example-terminal-bench-001"
+              ]
+            },
+            {
+              "cells": [
+                "GPQA Diamond",
+                6.2,
+                33.4,
+                "example-gpqa-diamond-001"
+              ]
+            },
+            {
+              "cells": [
+                "AIME 2026",
+                5.1,
+                58.8,
+                "example-aime-001"
+              ]
+            }
+          ],
+          "note": "名义上限为每次运行 16 小时墙钟与 500 USD Tinker 额度；超出即转换失败。资源用量不进入评分。"
+        }
+      ]
+    }
+  ]
+}
