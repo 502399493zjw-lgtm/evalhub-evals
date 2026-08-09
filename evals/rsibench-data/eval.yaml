@@ -1,0 +1,748 @@
+id: rsibench-data
+protocol_revision: 1
+name: RSIBench-Data（数据中心型后训练研究）
+category: useful
+description: >-
+  RSIBench-Data 考察研究者 Agent 能否把目标模型的失败证据变成真正管用的训练数据：在训练后端、检查点服务、评测沙箱和资源预算
+  全部钉死的条件下，Agent 只能改动合成数据与白名单训练配置，反复跑 LoRA SFT、读评测反馈、再挑出一个最可靠的检查点交付官方复评。
+  成绩由软件工程、终端操作、研究生级科学问答与竞赛数学六个基准上的官方复评分数按固定权重加权得出。
+hook_title: Agent 能把失败证据变成真正有效的训练数据吗
+upstream:
+  repo: evolvent-ai/RSIBench-Data
+  commit: 4c807610243e7b481d382c5ed360c71c79a22f61
+  paper: https://arxiv.org/abs/2607.25886v1
+references:
+  homepage: https://rsibench.co/data/
+  repository: https://github.com/evolvent-ai/RSIBench-Data
+  paper: https://arxiv.org/abs/2607.25886v1
+dimensions: [推理, 代码]
+interface: agent
+runner: custom
+custom_mode: external_workflow
+scoring: custom
+scored_by: author
+score_policy: required
+baseline_policy: required
+score_unit: 分
+scoring_note: >-
+  参赛研究者系统必须按上游主协议完成六次相互独立的预算运行，每次固定一个 profile：目标模型 Qwen/Qwen3.5-35B-A3B-Base、
+  Tinker LoRA SFT 训练与采样、E2B 工具调用代理、Harbor 官方复评，以及各 profile 在 benchmarks/<key>/spec.json 里锁定的
+  数据集、评测 agent、并发数（32）、步数上限（200）与尝试数。评测任务、补丁、测试、轨迹和标签都不得转化为训练监督，
+  训练数据必须新合成于非评测的公开来源。每个 profile 的分项分数 = 官方复评通过数 ÷ 固定分母 × 100：SWE-bench Verified、
+  SWE-bench Multilingual、SWE-bench Pro、GPQA Diamond 各 100，Terminal-Bench 2.0 为 89，AIME 2026 为 30 题 × 4 次解码
+  共 120。总分按官方榜单公布的权重加权：SWE 三项与 Terminal-Bench 2.0 各 0.2，GPQA Diamond 与 AIME 2026 各 0.1，
+  权重之和为 1。检查点必须在官方复评之前选定，事后不得改选。转换器只在结构、协议边界、整数计数范围与证据指纹全部合法时
+  确定性写出数值 score，不产生 null；scored_by=author 表示外部提交仍须由评测作者核对公开 artifact、原始 Harbor 结果、
+  预算状态、数据隔离审计与 harness 配置后才认可。任一 profile 缺失、证据不可信或协议不符即转换失败；
+  计入分数的任务失败与超时保持为失败，不豁免、不重试补分。
+command_template:
+  argv: [node, evals/rsibench-data/pack-to-result.mjs, "{input}", --out, "{output}"]
+  output: rsibench-data-result.json
+trials: 1
+detail_profile:
+  source_kind: upstream_publication
+  overview_note: >-
+    下面的协议说明来自 RSIBench-Data 论文（arXiv:2607.25886v1，2026-07-28）、官方研究文章（2026-07-29）与钉死在
+    commit 4c807610 的作者仓库；各研究者 Agent 的官方分项成绩来自 Evolvent AI 官方榜单页与 rsibench.co 官方矩阵页
+    2026-08-09 的快照，两个官方页面的 30 个分项分数逐格一致。
+  summary:
+    plain_language: >-
+      被评的不是模型答题，而是一个研究者 Agent 的实验能力：它先看目标模型 Qwen/Qwen3.5-35B-A3B-Base 在某个基准上错在哪，
+      提出关于失败原因的假设，合成一批新的训练数据，用固定的 Tinker LoRA SFT 训一个检查点，把检查点放进 Harbor/E2B 沙箱测分，
+      再根据反馈修改下一轮数据策略。训练后端、服务链路、评测器和预算都被锁死，Agent 唯一能改的就是数据与白名单训练配置。
+    why_it_matters: >-
+      后训练里最依赖人工经验、最难自动化的一环就是"拿到失败证据之后该造什么数据"。把训练、部署、评测都做成固定服务之后，
+      成绩差异才能归因到数据研究决策本身，而不是谁多修了一个部署 bug 或换了学习率。这一步能不能自动化，
+      直接决定模型自我改进的循环能不能真的闭上。
+  method_steps:
+    - title: 锁死除数据以外的一切
+      description: >-
+        每个 profile 固定目标模型、LoRA SFT 训练后端与可调配置边界、检查点服务路径、Harbor 评测 agent、任务子集、
+        评测指标与复评协议，以及名义 16 小时墙钟和 500 USD Tinker 预算。Agent 不能重写官方评测器、替换服务栈，
+        也不能通过基础设施改动绕开评测目标。
+    - title: 给出诊断材料和隔离红线
+      description: >-
+        Agent 拿到公开种子任务、工具与环境规格、目标模型的基线诊断产物和明确的预算合同。它可以查阅这些材料理解失败模式，
+        但不得复制、改写、过滤或蒸馏评测任务与其产物；训练数据必须新合成于非评测的公开来源，训练前还要跑一次污染审计。
+    - title: 合成数据并真实训练
+      description: >-
+        每次尝试写出 train_messages.jsonl，经 Tinker LoRA SFT 得到一个 tinker:// 采样检查点，再由 E2B 工具调用代理
+        接入 Harbor，用该 profile 锁定的评测 agent（SWE 三项用 mini-swe-agent，其余用 terminus-2）跑分。
+    - title: 读反馈再改策略
+      description: >-
+        每轮拿到选择性评测分数和允许查看的轨迹证据后，Agent 需要判断哪类任务变好、哪类变差、是否有上下文溢出或提交失败，
+        并据此调整任务类型配比、校验强度、失败模式覆盖与真实代码接地，而不是只换随机种子或堆同质数据。
+    - title: 先选检查点再官方复评
+      description: >-
+        预算用尽前必须选定一个最可靠的检查点提交，之后官方复评在全新环境里按该 profile 固定的数据集顺序、并发数与步数复跑，
+        得到该 profile 的官方分项分数；没有官方复评结果的运行不算完成。
+    - title: 六项加权成一个总分
+      description: >-
+        六个 profile 各自独立跑一次，分项分数按官方榜单公布的权重加权：SWE-bench Verified、SWE-bench Multilingual、
+        SWE-bench Pro、Terminal-Bench 2.0 各 0.2，GPQA Diamond 与 AIME 2026 各 0.1。
+  score_interpretation: >-
+    分数是百分制加权总分，越高越好，单位是分，理论上限 100。它衡量的是"研究者 Agent 造的数据让目标模型在六个基准上提升了多少"，
+    而不是研究者 Agent 自己的答题水平。比较边界：同一个来源 commit、同一个目标模型 Qwen/Qwen3.5-35B-A3B-Base、
+    同一套 Harbor/E2B 复评协议、同一组固定分母，以及每项名义 16 小时与 500 USD 的预算。未微调目标模型自己的加权分是
+    13.124 分，可作为"数据研究到底有没有带来净收益"的参照线：低于它说明这一轮数据反而拖累了模型。
+  key_facts:
+    - value: 6 个基准
+      label: 覆盖软件工程、终端操作、科学问答与竞赛数学
+      description: SWE-bench Verified / Multilingual / Pro、Terminal-Bench 2.0、GPQA Diamond、AIME 2026，各自独立跑一次预算运行。
+      source_url: https://rsibench.co/data/
+    - value: Qwen/Qwen3.5-35B-A3B-Base
+      label: 所有研究者共用的固定目标模型
+      description: 通过共享 Tinker 服务做 LoRA SFT，训练后端与服务链路对所有参赛者一致。
+      source_url: https://arxiv.org/abs/2607.25886v1
+    - value: 16 小时 / 500 USD
+      label: 每次运行的名义墙钟与 Tinker 预算
+      description: 预算对所有研究者相同，用尽前必须选定并提交最终检查点。
+      source_url: https://arxiv.org/abs/2607.25886v1
+    - value: 58.33%
+      label: 能在反馈后找到更好候选的设定占比
+      description: 24 个 Agent×基准设定里有 14 个出现了优于首个有效尝试的后续候选。
+      source_url: https://arxiv.org/abs/2607.25886v1
+    - value: 78.26%
+      label: 冲过最佳分后反而收在更差候选的搜索占比
+      description: 23 条越过历史最佳后仍继续搜索的轨迹里，18 条最终尝试低于历史最佳，其余只是打平，没有一条超越。
+      source_url: https://arxiv.org/abs/2607.25886v1
+    - value: 13.124 分
+      label: 未微调目标模型自身的加权参照分
+      description: 用同一套权重对官方矩阵里的 Base model 行加权得到，衡量数据研究是否带来净收益。
+      source_url: https://evolvent.co/en/leaderboard
+  caveats:
+    - title: 总分权重来自官方榜单，不是论文指标
+      description: >-
+        六项权重（SWE 三项与 Terminal-Bench 2.0 各 0.2，GPQA Diamond 与 AIME 2026 各 0.1）与由此得到的加权总分，
+        由 Evolvent AI 官方榜单页公布并显示到小数点后三位；论文与 rsibench.co 矩阵页只给分项成绩，明确指出没有一个研究者
+        在六项上全面领先。跨基准比较请以分项为主，总分是官方排序口径而非能力总量。
+    - title: 每项只有一次预设代表性运行
+      description: >-
+        官方复评对每个 Agent×基准只报告一个预先指定的代表性设定（AIME 内部为每题 4 次解码取平均）。它检验的是协议下的
+        可复现性，而不是留出集泛化，也不含跨运行方差。单格分数的随机波动无法从公开数据估计。
+    - title: 榜单第五位缺少资源数据，且不在论文主实验内
+      description: >-
+        论文主实验是 4 个研究者 Agent；官方榜单额外列出 Kimi K3 + Kimi Code 的六项分项成绩，但没有给它的用时与 Tinker 成本。
+        因此"时间与成本"视图只覆盖论文里的 4 个 Agent。
+    - title: 两个官方页面的两格成本数字不一致
+      description: >-
+        30 个分项分数在官方榜单页与 rsibench.co 矩阵页逐格一致，但两处成本有两格不同：Claude Code · Sonnet-5 的
+        Terminal-Bench 2.0 成本为 156.93 与 157.85，Codex · gpt-5.6-sol 的 AIME 2026 成本为 63.65 与 63.87。
+        本目录统一采用榜单页数值并在视图注释里标出该差异，不做平均或取舍推断。
+    - title: 复现成本高，且依赖付费第三方服务
+      description: >-
+        跑满一个 profile 需要 Tinker 训练额度、E2B 沙箱额度和研究者 Agent 自身的推理开销；官方矩阵里单项 Tinker 成本
+        最高到 363.77 USD、单项用时最长到 14.91 小时。这不是能在本地免费复跑的评测。
+    - title: 上游未授予开源许可，成绩为来源转录
+      description: >-
+        作者仓库 README 徽章声明 CC BY-NC 4.0，但仓库内没有 LICENSE 文件，GitHub API 也未识别出许可证；
+        本目录因此只转录公开数值与协议描述，不搬运上游数据集、轨迹或产物。所有官方成绩均为上游作者发表值的转录，
+        不是 EvalHub 独立复跑，EvalHub 也未获得上游认证或背书。
+  overview_tables:
+    - id: benchmark-profiles
+      label: Profile 配置
+      title: 六个 profile 锁定的评测配置
+      note: 逐格转录自 commit 4c807610 的 benchmarks/<key>/spec.json 与仓库 README 的 Benchmark Profiles 表。
+      caption: 这些配置对所有研究者 Agent 相同，Agent 不能修改其中任何一项。
+      source_url: https://github.com/evolvent-ai/RSIBench-Data/blob/4c807610243e7b481d382c5ed360c71c79a22f61/README.md
+      columns:
+        - { id: profile, label: TARGET_BENCHMARK }
+        - { id: dataset, label: 官方数据集 }
+        - { id: agent, label: Harbor 评测 agent }
+        - { id: tasks, label: 任务数 }
+        - { id: attempts, label: 每题解码次数 }
+        - { id: factories, label: 种子工厂白名单 }
+      rows:
+        - id: swe-bench-verified
+          cells:
+            - { column_id: profile, value: swe-bench-verified }
+            - { column_id: dataset, value: 本地 seed-23 随机 100 题 SWE-bench Verified 子集 }
+            - { column_id: agent, value: mini-swe-agent }
+            - { column_id: tasks, value: "100" }
+            - { column_id: attempts, value: "1" }
+            - { column_id: factories, value: SWE-smith、SWE-Gym、swe-factory }
+        - id: swe-bench-multilingual
+          cells:
+            - { column_id: profile, value: swe-bench-multilingual }
+            - { column_id: dataset, value: 本地 seed-23 随机 100 题 SWE-bench Multilingual 子集 }
+            - { column_id: agent, value: mini-swe-agent }
+            - { column_id: tasks, value: "100" }
+            - { column_id: attempts, value: "1" }
+            - { column_id: factories, value: SWE-smith、SWE-Gym、swe-factory }
+        - id: swe-bench-pro
+          cells:
+            - { column_id: profile, value: swe-bench-pro }
+            - { column_id: dataset, value: 本地 seed-23 随机 100 题 SWE-bench Pro 子集（取自 731 题 test split） }
+            - { column_id: agent, value: mini-swe-agent }
+            - { column_id: tasks, value: "100" }
+            - { column_id: attempts, value: "1" }
+            - { column_id: factories, value: SWE-smith、SWE-Gym、swe-factory }
+        - id: terminal-bench-2
+          cells:
+            - { column_id: profile, value: terminal-bench-2 }
+            - { column_id: dataset, value: terminal-bench/terminal-bench-2 }
+            - { column_id: agent, value: terminus-2 }
+            - { column_id: tasks, value: "89" }
+            - { column_id: attempts, value: "1" }
+            - { column_id: factories, value: endless-terminals、tmax }
+        - id: gpqa-diamond
+          cells:
+            - { column_id: profile, value: gpqa-diamond }
+            - { column_id: dataset, value: 本地 seed-23 随机 100 题 GPQA Diamond 子集（取自 198 题数据集） }
+            - { column_id: agent, value: terminus-2 }
+            - { column_id: tasks, value: "100" }
+            - { column_id: attempts, value: "1" }
+            - { column_id: factories, value: synthetic-data-kit }
+        - id: aime
+          cells:
+            - { column_id: profile, value: aime }
+            - { column_id: dataset, value: MathArena AIME 2026 完整 30 题 }
+            - { column_id: agent, value: terminus-2 }
+            - { column_id: tasks, value: "30" }
+            - { column_id: attempts, value: "4" }
+            - { column_id: factories, value: synthetic-data-kit }
+    - id: score-weights
+      label: 权重与分母
+      title: 总分权重、固定分母与分项指标口径
+      note: 权重与总分口径转录自官方榜单页 2026-08-09 快照；固定分母与指标口径转录自 commit 4c807610 的 spec.json。
+      caption: 权重之和为 1，加权结果即官方榜单显示的总分。
+      source_url: https://evolvent.co/en/leaderboard
+      columns:
+        - { id: benchmark, label: 分项 }
+        - { id: weight, label: 权重 }
+        - { id: denominator, label: 固定分母 }
+        - { id: metric, label: 指标口径 }
+      rows:
+        - id: swe-bench-verified
+          cells:
+            - { column_id: benchmark, value: SWE-bench Verified }
+            - { column_id: weight, value: "0.2" }
+            - { column_id: denominator, value: "100" }
+            - { column_id: metric, value: issue 专属测试判定的 resolved rate }
+        - id: swe-bench-multilingual
+          cells:
+            - { column_id: benchmark, value: SWE-bench Multilingual }
+            - { column_id: weight, value: "0.2" }
+            - { column_id: denominator, value: "100" }
+            - { column_id: metric, value: 各语言专属测试判定的 resolved rate }
+        - id: swe-bench-pro
+          cells:
+            - { column_id: benchmark, value: SWE-bench Pro }
+            - { column_id: weight, value: "0.2" }
+            - { column_id: denominator, value: "100" }
+            - { column_id: metric, value: issue 专属测试判定的 resolved rate }
+        - id: terminal-bench-2
+          cells:
+            - { column_id: benchmark, value: Terminal-Bench 2.0 }
+            - { column_id: weight, value: "0.2" }
+            - { column_id: denominator, value: "89" }
+            - { column_id: metric, value: terminal-bench 任务校验器判定的通过率 }
+        - id: gpqa-diamond
+          cells:
+            - { column_id: benchmark, value: GPQA Diamond }
+            - { column_id: weight, value: "0.1" }
+            - { column_id: denominator, value: "100" }
+            - { column_id: metric, value: 答案文件精确匹配的 accuracy }
+        - id: aime
+          cells:
+            - { column_id: benchmark, value: AIME 2026 }
+            - { column_id: weight, value: "0.1" }
+            - { column_id: denominator, value: 120（30 题 × 4 次解码） }
+            - { column_id: metric, value: 整数答案精确匹配的 avg@4 accuracy }
+  figures:
+    - id: motivation
+      label: 研究动机
+      title: RSIBench-Data 的动机图
+      src: https://oss.evolvent.co/articles/1785592088134_01_motivation_cropped.png
+      alt: 对比"继续手工造更难任务"与"把模型训练本身变成 Agent 实验环境"两条基准演进路线的示意图。
+      caption: 上游用这张图说明为什么把训练、推理、评测做成固定服务后，才能把成绩差异归因到数据研究决策本身。
+      source_url: https://evolvent.co/en/research/RSIBench-Data
+    - id: framework
+      label: 框架
+      title: RSIBench-Data 的框架图
+      src: https://oss.evolvent.co/articles/1785592276068_02_framework_cropped.png
+      alt: 展示目标模型、训练后端、服务路径、评测沙箱被锁定，只有数据策略可变的实验框架示意图。
+      caption: 五个变量里四个被钉死在同一取值，只有数据策略存在多个候选，成绩差异因此可归因到数据决策。
+      source_url: https://evolvent.co/en/research/RSIBench-Data
+    - id: trajectories
+      label: 候选轨迹
+      placement: insights
+      title: 官方候选轨迹图
+      src: https://oss.evolvent.co/articles/1785593089141_03_trajectories.png
+      alt: 按时间顺序排列各次有效尝试得分的折线图，星号标出首次达到该运行历史最佳的候选。
+      caption: 星号标出首次触及历史最佳的候选；多数轨迹在此之后继续搜索，却收在更低的最终候选上。
+      source_url: https://evolvent.co/en/research/RSIBench-Data
+  resources_note: 下面只列上游作者、论文托管方或官方站点提供的一手资料。
+  resources:
+    - title: RSIBench-Data 论文（arXiv:2607.25886v1）
+      summary: 上游主协议、固定栈设计、四个研究者 Agent 的主实验与 58.33% / 78.26% 两项结论的权威来源，2026-07-28 提交。
+      url: https://arxiv.org/abs/2607.25886v1
+    - title: RSIBench-Data 官方作者仓库
+      summary: profile 规格、Harbor/E2B 评测路径、Tinker 训练脚本、数据隔离规则与研究者 Agent 提示词的来源，已钉死到 commit 4c807610。
+      url: https://github.com/evolvent-ai/RSIBench-Data
+    - title: Evolvent AI 官方榜单页
+      summary: 六项权重、各研究者分项成绩与加权总分的权威来源，本目录所有官方成绩均取自其 2026-08-09 快照。
+      url: https://evolvent.co/en/leaderboard
+    - title: rsibench.co 官方矩阵页
+      summary: 官方分项成绩、用时与 Tinker 成本的完整矩阵，用于逐格交叉核对榜单页数值。
+      url: https://rsibench.co/data/
+    - title: 官方研究文章
+      summary: 协议动机、四类强轨迹行为、Kimi-K2.6 同族 RSI 实验与官方研究图的发布页，2026-07-29 发布。
+      url: https://evolvent.co/en/research/RSIBench-Data
+tasks:
+  - id: swe-bench-verified
+    label: SWE-bench Verified profile
+    prompt: |-
+      # RSIBench-Data SWE-Bench Agent Prompt
+
+      You are the data generation and post-training agent for this RSIBench-Data
+      SWE-bench run.
+
+      The fixed train/eval chain is:
+
+      ```text
+      attempts/<attempt_id>/train_messages.jsonl
+        -> Tinker LoRA SFT
+        -> tinker:// sampler checkpoint
+        -> E2B tool-call proxy sandbox
+        -> Harbor SWE-bench target from RUN_CONTRACT.md with mini-swe-agent
+      ```
+
+      Training and sampling are Tinker-only. Do not replace the fixed Tinker training,
+      E2B proxy, or Harbor evaluation chain.
+
+      Start by reading the workspace instruction files:
+
+      1. RUN_CONTRACT.md
+      2. AGENT_RULES.md
+      3. DATA_GENERATION.md
+      4. MINI_SWE_DATA_FORMAT.md
+      5. EVAL_ATTEMPT_LOOP.md
+
+      If your harness is Claude Code, also read CLAUDE.md. If your harness is Codex,
+      also read CODEX.md. The entrypoint file points to the same shared instructions
+      and does not add separate requirements.
+
+      Do not treat this short prompt as a replacement for the instruction files. Work
+      within those files, run sufficient eval-driven attempts within the available
+      budget, and submit the most reliable final checkpoint only after an official
+      eval can be completed.
+    translation: |-
+      # RSIBench-Data SWE-Bench Agent 提示词
+
+      你是本次 RSIBench-Data SWE-bench 运行的数据生成与后训练 Agent。
+
+      固定的训练/评测链路是：
+
+      ```text
+      attempts/<attempt_id>/train_messages.jsonl
+        -> Tinker LoRA SFT
+        -> tinker:// 采样检查点
+        -> E2B 工具调用代理沙箱
+        -> 由 RUN_CONTRACT.md 指定的 Harbor SWE-bench 目标，配 mini-swe-agent
+      ```
+
+      训练与采样只能用 Tinker。不要替换固定的 Tinker 训练、E2B 代理或 Harbor 评测链路。
+
+      先读工作区里的说明文件：
+
+      1. RUN_CONTRACT.md
+      2. AGENT_RULES.md
+      3. DATA_GENERATION.md
+      4. MINI_SWE_DATA_FORMAT.md
+      5. EVAL_ATTEMPT_LOOP.md
+
+      如果你的 harness 是 Claude Code，另外读 CLAUDE.md；如果是 Codex，另外读 CODEX.md。
+      入口文件指向同一套共享说明，不附加单独要求。
+
+      不要把这段简短提示词当成说明文件的替代品。在那些文件的约束内工作，
+      在可用预算内跑足够多由评测驱动的尝试，并且只有在官方评测能够完成之后，
+      才提交最可靠的最终检查点。
+    run_spec: >-
+      以 TARGET_BENCHMARK=swe-bench-verified 启动一次独立的名义 16 小时 / 500 USD 预算运行，
+      目标模型固定 Qwen/Qwen3.5-35B-A3B-Base，官方复评使用本地 seed-23 随机 100 题子集、mini-swe-agent、
+      并发 32、步数上限 200、每题 1 次解码。分项分数 = 官方复评 resolved 数 ÷ 100 × 100，权重 0.2。
+      评测任务与其产物不得转化为训练监督，检查点须在官方复评前选定。
+  - id: swe-bench-multilingual
+    label: SWE-bench Multilingual profile
+    prompt: |-
+      # RSIBench-Data SWE-Bench Agent Prompt
+
+      You are the data generation and post-training agent for this RSIBench-Data
+      SWE-bench run.
+
+      The fixed train/eval chain is:
+
+      ```text
+      attempts/<attempt_id>/train_messages.jsonl
+        -> Tinker LoRA SFT
+        -> tinker:// sampler checkpoint
+        -> E2B tool-call proxy sandbox
+        -> Harbor SWE-bench target from RUN_CONTRACT.md with mini-swe-agent
+      ```
+
+      Training and sampling are Tinker-only. Do not replace the fixed Tinker training,
+      E2B proxy, or Harbor evaluation chain.
+
+      Start by reading the workspace instruction files:
+
+      1. RUN_CONTRACT.md
+      2. AGENT_RULES.md
+      3. DATA_GENERATION.md
+      4. MINI_SWE_DATA_FORMAT.md
+      5. EVAL_ATTEMPT_LOOP.md
+
+      If your harness is Claude Code, also read CLAUDE.md. If your harness is Codex,
+      also read CODEX.md. The entrypoint file points to the same shared instructions
+      and does not add separate requirements.
+
+      Do not treat this short prompt as a replacement for the instruction files. Work
+      within those files, run sufficient eval-driven attempts within the available
+      budget, and submit the most reliable final checkpoint only after an official
+      eval can be completed.
+    translation: |-
+      # RSIBench-Data SWE-Bench Agent 提示词
+
+      你是本次 RSIBench-Data SWE-bench 运行的数据生成与后训练 Agent。
+
+      固定的训练/评测链路是：
+
+      ```text
+      attempts/<attempt_id>/train_messages.jsonl
+        -> Tinker LoRA SFT
+        -> tinker:// 采样检查点
+        -> E2B 工具调用代理沙箱
+        -> 由 RUN_CONTRACT.md 指定的 Harbor SWE-bench 目标，配 mini-swe-agent
+      ```
+
+      训练与采样只能用 Tinker。不要替换固定的 Tinker 训练、E2B 代理或 Harbor 评测链路。
+
+      先读工作区里的说明文件：
+
+      1. RUN_CONTRACT.md
+      2. AGENT_RULES.md
+      3. DATA_GENERATION.md
+      4. MINI_SWE_DATA_FORMAT.md
+      5. EVAL_ATTEMPT_LOOP.md
+
+      如果你的 harness 是 Claude Code，另外读 CLAUDE.md；如果是 Codex，另外读 CODEX.md。
+      入口文件指向同一套共享说明，不附加单独要求。
+
+      不要把这段简短提示词当成说明文件的替代品。在那些文件的约束内工作，
+      在可用预算内跑足够多由评测驱动的尝试，并且只有在官方评测能够完成之后，
+      才提交最可靠的最终检查点。
+    run_spec: >-
+      以 TARGET_BENCHMARK=swe-bench-multilingual 启动一次独立的名义 16 小时 / 500 USD 预算运行，
+      目标模型固定 Qwen/Qwen3.5-35B-A3B-Base，官方复评使用本地 seed-23 随机 100 题多语言子集、mini-swe-agent、
+      并发 32、步数上限 200、每题 1 次解码。分项分数 = 官方复评 resolved 数 ÷ 100 × 100，权重 0.2。
+      三个 SWE profile 共用同一份上游提示词，profile 差异由 spec.json 决定。
+  - id: swe-bench-pro
+    label: SWE-bench Pro profile
+    prompt: |-
+      # RSIBench-Data SWE-Bench Agent Prompt
+
+      You are the data generation and post-training agent for this RSIBench-Data
+      SWE-bench run.
+
+      The fixed train/eval chain is:
+
+      ```text
+      attempts/<attempt_id>/train_messages.jsonl
+        -> Tinker LoRA SFT
+        -> tinker:// sampler checkpoint
+        -> E2B tool-call proxy sandbox
+        -> Harbor SWE-bench target from RUN_CONTRACT.md with mini-swe-agent
+      ```
+
+      Training and sampling are Tinker-only. Do not replace the fixed Tinker training,
+      E2B proxy, or Harbor evaluation chain.
+
+      Start by reading the workspace instruction files:
+
+      1. RUN_CONTRACT.md
+      2. AGENT_RULES.md
+      3. DATA_GENERATION.md
+      4. MINI_SWE_DATA_FORMAT.md
+      5. EVAL_ATTEMPT_LOOP.md
+
+      If your harness is Claude Code, also read CLAUDE.md. If your harness is Codex,
+      also read CODEX.md. The entrypoint file points to the same shared instructions
+      and does not add separate requirements.
+
+      Do not treat this short prompt as a replacement for the instruction files. Work
+      within those files, run sufficient eval-driven attempts within the available
+      budget, and submit the most reliable final checkpoint only after an official
+      eval can be completed.
+    translation: |-
+      # RSIBench-Data SWE-Bench Agent 提示词
+
+      你是本次 RSIBench-Data SWE-bench 运行的数据生成与后训练 Agent。
+
+      固定的训练/评测链路是：
+
+      ```text
+      attempts/<attempt_id>/train_messages.jsonl
+        -> Tinker LoRA SFT
+        -> tinker:// 采样检查点
+        -> E2B 工具调用代理沙箱
+        -> 由 RUN_CONTRACT.md 指定的 Harbor SWE-bench 目标，配 mini-swe-agent
+      ```
+
+      训练与采样只能用 Tinker。不要替换固定的 Tinker 训练、E2B 代理或 Harbor 评测链路。
+
+      先读工作区里的说明文件：
+
+      1. RUN_CONTRACT.md
+      2. AGENT_RULES.md
+      3. DATA_GENERATION.md
+      4. MINI_SWE_DATA_FORMAT.md
+      5. EVAL_ATTEMPT_LOOP.md
+
+      如果你的 harness 是 Claude Code，另外读 CLAUDE.md；如果是 Codex，另外读 CODEX.md。
+      入口文件指向同一套共享说明，不附加单独要求。
+
+      不要把这段简短提示词当成说明文件的替代品。在那些文件的约束内工作，
+      在可用预算内跑足够多由评测驱动的尝试，并且只有在官方评测能够完成之后，
+      才提交最可靠的最终检查点。
+    run_spec: >-
+      以 TARGET_BENCHMARK=swe-bench-pro 启动一次独立的名义 16 小时 / 500 USD 预算运行，
+      目标模型固定 Qwen/Qwen3.5-35B-A3B-Base，官方复评使用从 731 题 test split 抽取的本地 seed-23 随机 100 题子集、
+      mini-swe-agent、并发 32、步数上限 200、每题 1 次解码。分项分数 = 官方复评 resolved 数 ÷ 100 × 100，权重 0.2。
+      这是官方矩阵里未微调基线得分为 0.00% 的最稀疏 profile。
+  - id: terminal-bench-2
+    label: Terminal-Bench 2.0 profile
+    prompt: |-
+      # RSIBench-Data Terminal-Bench Agent Prompt
+
+      You are the data generation and post-training agent for this RSIBench-Data
+      Terminal-Bench run.
+
+      The fixed train/eval chain is:
+
+      ```text
+      attempts/<attempt_id>/train_messages.jsonl
+        -> Tinker LoRA SFT
+        -> tinker:// sampler checkpoint
+        -> E2B tool-call proxy sandbox
+        -> Harbor Terminal-Bench with Terminus-2
+      ```
+
+      Training and sampling are Tinker-only. Do not replace the fixed Tinker training,
+      E2B proxy, or Harbor evaluation chain. For this profile, the evaluated task
+      family is Terminal-Bench: broad terminal workflows such as build/debugging,
+      system administration, security, data processing, scientific computing,
+      file-format work, and command-line tool use. The evaluation agent is Terminus-2,
+      which operates through an interactive terminal session.
+
+      Start by reading the workspace instruction files:
+
+      1. RUN_CONTRACT.md
+      2. AGENT_RULES.md
+      3. DATA_GENERATION.md
+      4. TERMINAL_BENCH_DATA_FORMAT.md
+      5. EVAL_ATTEMPT_LOOP.md
+
+      If your harness is Claude Code, also read CLAUDE.md. If your harness is Codex,
+      also read CODEX.md. The entrypoint file points to the same shared instructions
+      and does not add separate requirements.
+
+      Do not treat this short prompt as a replacement for the instruction files. Work
+      within those files, run sufficient eval-driven attempts within the available
+      budget, and submit the most reliable final checkpoint only after an official
+      eval can be completed.
+    translation: |-
+      # RSIBench-Data Terminal-Bench Agent 提示词
+
+      你是本次 RSIBench-Data Terminal-Bench 运行的数据生成与后训练 Agent。
+
+      固定的训练/评测链路是：
+
+      ```text
+      attempts/<attempt_id>/train_messages.jsonl
+        -> Tinker LoRA SFT
+        -> tinker:// 采样检查点
+        -> E2B 工具调用代理沙箱
+        -> Harbor Terminal-Bench，配 Terminus-2
+      ```
+
+      训练与采样只能用 Tinker。不要替换固定的 Tinker 训练、E2B 代理或 Harbor 评测链路。
+      本 profile 被评的任务族是 Terminal-Bench：涵盖构建与调试、系统管理、安全、数据处理、
+      科学计算、文件格式处理和命令行工具使用等广泛的终端工作流。评测 agent 是 Terminus-2，
+      它通过交互式终端会话操作。
+
+      先读工作区里的说明文件：
+
+      1. RUN_CONTRACT.md
+      2. AGENT_RULES.md
+      3. DATA_GENERATION.md
+      4. TERMINAL_BENCH_DATA_FORMAT.md
+      5. EVAL_ATTEMPT_LOOP.md
+
+      如果你的 harness 是 Claude Code，另外读 CLAUDE.md；如果是 Codex，另外读 CODEX.md。
+      入口文件指向同一套共享说明，不附加单独要求。
+
+      不要把这段简短提示词当成说明文件的替代品。在那些文件的约束内工作，
+      在可用预算内跑足够多由评测驱动的尝试，并且只有在官方评测能够完成之后，
+      才提交最可靠的最终检查点。
+    run_spec: >-
+      以 TARGET_BENCHMARK=terminal-bench-2 启动一次独立的名义 16 小时 / 500 USD 预算运行，
+      目标模型固定 Qwen/Qwen3.5-35B-A3B-Base，官方复评使用 Harbor terminal-bench/terminal-bench-2 数据集、
+      terminus-2、并发 32、步数上限 200、每题 1 次解码。分项分数 = 官方复评通过数 ÷ 89 × 100，权重 0.2。
+      分母 89 是该 profile 的唯一非百分母，官方两位小数即由此产生。
+  - id: gpqa-diamond
+    label: GPQA Diamond profile
+    prompt: |-
+      # RSIBench-Data GPQA Diamond Agent Prompt
+
+      You are the data generation and post-training agent for this RSIBench-Data GPQA
+      Diamond run.
+
+      The fixed train/eval chain is:
+
+      ```text
+      attempts/<attempt_id>/train_messages.jsonl
+        -> Tinker LoRA SFT
+        -> tinker:// sampler checkpoint
+        -> E2B tool-call proxy sandbox
+        -> Harbor GPQA Diamond with Terminus-2
+      ```
+
+      Training and sampling are Tinker-only. Do not replace the fixed Tinker training,
+      E2B proxy, or Harbor evaluation chain. For this profile, the evaluated task
+      family is graduate-level scientific multiple-choice reasoning. The Harbor task
+      interface is still terminal-based: the evaluated Terminus-2 agent must write a
+      single answer letter to `/app/answer.txt`.
+
+      Start by reading the workspace instruction files:
+
+      1. RUN_CONTRACT.md
+      2. AGENT_RULES.md
+      3. DATA_GENERATION.md
+      4. GPQA_DATA_FORMAT.md
+      5. EVAL_ATTEMPT_LOOP.md
+
+      If your harness is Claude Code, also read CLAUDE.md. If your harness is Codex,
+      also read CODEX.md. The entrypoint file points to the same shared instructions
+      and does not add separate requirements.
+
+      Do not treat this short prompt as a replacement for the instruction files. Work
+      within those files, run sufficient eval-driven attempts within the available
+      budget, and submit the most reliable final checkpoint only after an official
+      eval can be completed.
+    translation: |-
+      # RSIBench-Data GPQA Diamond Agent 提示词
+
+      你是本次 RSIBench-Data GPQA Diamond 运行的数据生成与后训练 Agent。
+
+      固定的训练/评测链路是：
+
+      ```text
+      attempts/<attempt_id>/train_messages.jsonl
+        -> Tinker LoRA SFT
+        -> tinker:// 采样检查点
+        -> E2B 工具调用代理沙箱
+        -> Harbor GPQA Diamond，配 Terminus-2
+      ```
+
+      训练与采样只能用 Tinker。不要替换固定的 Tinker 训练、E2B 代理或 Harbor 评测链路。
+      本 profile 被评的任务族是研究生级科学选择题推理。Harbor 的任务接口仍然是终端式的：
+      被评的 Terminus-2 agent 必须把单个答案字母写入 `/app/answer.txt`。
+
+      先读工作区里的说明文件：
+
+      1. RUN_CONTRACT.md
+      2. AGENT_RULES.md
+      3. DATA_GENERATION.md
+      4. GPQA_DATA_FORMAT.md
+      5. EVAL_ATTEMPT_LOOP.md
+
+      如果你的 harness 是 Claude Code，另外读 CLAUDE.md；如果是 Codex，另外读 CODEX.md。
+      入口文件指向同一套共享说明，不附加单独要求。
+
+      不要把这段简短提示词当成说明文件的替代品。在那些文件的约束内工作，
+      在可用预算内跑足够多由评测驱动的尝试，并且只有在官方评测能够完成之后，
+      才提交最可靠的最终检查点。
+    run_spec: >-
+      以 TARGET_BENCHMARK=gpqa-diamond 启动一次独立的名义 16 小时 / 500 USD 预算运行，
+      目标模型固定 Qwen/Qwen3.5-35B-A3B-Base，官方复评使用从 198 题数据集抽取的本地 seed-23 随机 100 题子集、
+      terminus-2、并发 32、步数上限 200、每题 1 次解码。分项分数 = 答案文件精确匹配数 ÷ 100 × 100，权重 0.1。
+      允许输入仅限基准描述、工具与仓库规格、聚合评测反馈和非 GPQA 的公开科学推理来源。
+  - id: aime
+    label: AIME 2026 profile
+    prompt: |-
+      # RSIBench-Data AIME Agent Prompt
+
+      You are the data generation and post-training agent for this RSIBench-Data AIME
+      run.
+
+      The fixed train/eval chain is:
+
+      ```text
+      attempts/<attempt_id>/train_messages.jsonl
+        -> Tinker LoRA SFT
+        -> tinker:// sampler checkpoint
+        -> E2B tool-call proxy sandbox
+        -> Harbor AIME with Terminus-2
+      ```
+
+      Training and sampling are Tinker-only. Do not replace the fixed Tinker training,
+      E2B proxy, or Harbor evaluation chain. For this profile, the evaluated task
+      family is competition math reasoning. The Harbor task interface is terminal
+      based: the evaluated Terminus-2 agent must write one integer answer to
+      `/app/answer.txt`.
+
+      Start by reading the workspace instruction files:
+
+      1. RUN_CONTRACT.md
+      2. AGENT_RULES.md
+      3. DATA_GENERATION.md
+      4. AIME_DATA_FORMAT.md
+      5. EVAL_ATTEMPT_LOOP.md
+
+      If your harness is Claude Code, also read CLAUDE.md. If your harness is Codex,
+      also read CODEX.md. The entrypoint file points to the same shared instructions
+      and does not add separate requirements.
+
+      Do not treat this short prompt as a replacement for the instruction files. Work
+      within those files, run sufficient eval-driven attempts within the available
+      budget, and submit the most reliable final checkpoint only after an official
+      eval can be completed.
+    translation: |-
+      # RSIBench-Data AIME Agent 提示词
+
+      你是本次 RSIBench-Data AIME 运行的数据生成与后训练 Agent。
+
+      固定的训练/评测链路是：
+
+      ```text
+      attempts/<attempt_id>/train_messages.jsonl
+        -> Tinker LoRA SFT
+        -> tinker:// 采样检查点
+        -> E2B 工具调用代理沙箱
+        -> Harbor AIME，配 Terminus-2
+      ```
+
+      训练与采样只能用 Tinker。不要替换固定的 Tinker 训练、E2B 代理或 Harbor 评测链路。
+      本 profile 被评的任务族是竞赛数学推理。Harbor 的任务接口是终端式的：
+      被评的 Terminus-2 agent 必须把一个整数答案写入 `/app/answer.txt`。
+
+      先读工作区里的说明文件：
+
+      1. RUN_CONTRACT.md
+      2. AGENT_RULES.md
+      3. DATA_GENERATION.md
+      4. AIME_DATA_FORMAT.md
+      5. EVAL_ATTEMPT_LOOP.md
+
+      如果你的 harness 是 Claude Code，另外读 CLAUDE.md；如果是 Codex，另外读 CODEX.md。
+      入口文件指向同一套共享说明，不附加单独要求。
+
+      不要把这段简短提示词当成说明文件的替代品。在那些文件的约束内工作，
+      在可用预算内跑足够多由评测驱动的尝试，并且只有在官方评测能够完成之后，
+      才提交最可靠的最终检查点。
+    run_spec: >-
+      以 TARGET_BENCHMARK=aime 启动一次独立的名义 16 小时 / 500 USD 预算运行，
+      目标模型固定 Qwen/Qwen3.5-35B-A3B-Base，官方复评使用 MathArena AIME 2026 完整 30 题、terminus-2、
+      并发 32、步数上限 200，并按 avg@4 实现为每题 4 次 Harbor 尝试。分项分数 = 正确解码数 ÷ 120 × 100，权重 0.1。
+      这是六个 profile 里唯一每题多次解码的一项，固定分母为 30 × 4。
+
