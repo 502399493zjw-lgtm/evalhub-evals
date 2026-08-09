@@ -12,20 +12,6 @@ export const CONTENT_LIMITS = Object.freeze({
   maxDepth: 8,
 });
 
-const ALLOWED_EXTENSIONS = new Set([
-  ".cjs",
-  ".json",
-  ".jsonl",
-  ".js",
-  ".md",
-  ".mjs",
-  ".py",
-  ".sh",
-  ".svg",
-  ".txt",
-  ".ts",
-  ".yaml",
-]);
 const IMAGE_EXTENSIONS = new Set([".svg"]);
 const BIDI_OR_CONTROL = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f\u202a-\u202e\u2066-\u2069]/u;
 const LFS_POINTER = /^version https:\/\/git-lfs\.github\.com\/spec\/v1\s*$/mu;
@@ -240,10 +226,6 @@ export async function validateEvalContent({ evalDir, slug, parsedEval = null }) 
   for (const { filePath, relativePath, metadata } of files) {
     totalBytes += metadata.size;
     const extension = path.extname(relativePath).toLowerCase();
-    if (relativePath !== "AUTHORS" && !ALLOWED_EXTENSIONS.has(extension)) {
-      errors.push(problem(filePath, `file type ${extension || "<none>"} is not allowed`));
-      continue;
-    }
     const perFileLimit = IMAGE_EXTENSIONS.has(extension)
       ? CONTENT_LIMITS.maxImageBytes
       : CONTENT_LIMITS.maxTextBytes;

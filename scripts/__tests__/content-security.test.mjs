@@ -33,11 +33,13 @@ test("accepts the supported text-only eval package", async (t) => {
   );
 });
 
-test("rejects hidden files, unknown extensions, and symbolic links", async (t) => {
+test("rejects hidden files and symbolic links without imposing a source-language whitelist", async (t) => {
   const { evalDir, parsedEval } = await fixture(t);
   await Promise.all([
     writeFile(path.join(evalDir, ".env"), "SECRET=not-real\n"),
     writeFile(path.join(evalDir, "payload.zip"), "not really a zip\n"),
+    writeFile(path.join(evalDir, "runner.rb"), "puts 'user-side runner'\n"),
+    writeFile(path.join(evalDir, "runner.custom"), "text configuration\n"),
     symlink("README.md", path.join(evalDir, "linked.md")),
   ]);
 
@@ -45,9 +47,8 @@ test("rejects hidden files, unknown extensions, and symbolic links", async (t) =
     await validateEvalContent({ evalDir, slug: "sample-eval", parsedEval }),
   );
   assert.match(result, /hidden files and directories are not allowed/);
-  assert.match(result, /file type <none> is not allowed/);
-  assert.match(result, /file type \.zip is not allowed/);
   assert.match(result, /symbolic links are not allowed/);
+  assert.doesNotMatch(result, /file type/u);
 });
 
 test("rejects disguised executable, archive, and invalid UTF-8 content", async (t) => {
