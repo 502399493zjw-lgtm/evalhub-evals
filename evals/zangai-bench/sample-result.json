@@ -1,0 +1,48 @@
+{
+  "eval_id": "zangai-bench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "zangai-bench/pack-to-result@1.0.0",
+    "run_date": "2026-08-09"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "fixture/synthetic-coding-agent",
+        "harness": "Fixture Harness",
+        "harness_version": "1.0.0-structural-fixture"
+      },
+      "score": 55,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "55.00 分"
+      },
+      "detail": "固定 graph-engineering-v2 协议运行 10 轮：10 轮完成评分，0 轮失败、超时或无产物并按 0 计。OpenCode 1.17.9；Playwright 1.61.1；scorer 3.1。提交清单 sha256=f1fc5355a24bd82fc7b72fd11598c5e191ba7d3d659c31e1b1b4be555320b840。转换成功只代表结构和固定协议字段合规，成绩仍须作者核对原始证据。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "run-final-summary",
+          "label": "最终汇总",
+          "title": "本次运行的最终汇总结果",
+          "columns": [
+            "最终平均分",
+            "有效评分数",
+            "记零数",
+            "提交清单 sha256"
+          ],
+          "rows": [
+            {
+              "cells": [
+                55,
+                10,
+                0,
+                "f1fc5355a24bd82fc7b72fd11598c5e191ba7d3d659c31e1b1b4be555320b840"
+              ]
+            }
+          ],
+          "note": "只展示按固定协议聚合后的最终结果与整包摘要，不展示单轮分数或中间运行信息。辅助展示，不参与独立排名。"
+        }
+      ]
+    }
+  ]
+}

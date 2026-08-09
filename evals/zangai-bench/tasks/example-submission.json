@@ -1,0 +1,32 @@
+{
+  "manifest_version": 1,
+  "eval_id": "zangai-bench",
+  "protocol_revision": 1,
+  "protocol": {
+    "prompt_sha256": "cd7c9074d60e342fd877f70253444dc0fe278897fc6e20715800e67a336eef9c",
+    "graph_sha256": "f83313f6e50b2f1bb809c9c1fc0de2217c437e33b1fa417b571b6527b7df988e",
+    "scorer_sha256": "6f773714090a5a1da48d15fb493f0d7dd08aa6d5a6b8944988846cee3b115828",
+    "opencode_version": "1.17.9",
+    "playwright_version": "1.61.1",
+    "scorer_version": "3.1",
+    "trial_count": 10
+  },
+  "participant": {
+    "model": "fixture/synthetic-coding-agent",
+    "harness": "Fixture Harness",
+    "harness_version": "1.0.0-structural-fixture"
+  },
+  "run_date": "2026-08-09",
+  "trials": [
+    { "round": 1, "status": "scored", "score": 10, "evidence_sha256": "95ec79f0fafd8b4aec09ef039d04838ceb67bdb81dab04acf98ebae0b40ab46c" },
+    { "round": 2, "status": "scored", "score": 20, "evidence_sha256": "226723cf074bccc08a08a3fe2eeec3b80516b0e0fdb000d6b567049d966a6aaf" },
+    { "round": 3, "status": "scored", "score": 30, "evidence_sha256": "4479a30aa2c212c8bfd0e7bbf5a604f260fbd404f45202069b8980dad167b1f7" },
+    { "round": 4, "status": "scored", "score": 40, "evidence_sha256": "d1b4382cca10b002e813d62cf09f4e0084b69923191b978d466fd712c1460b62" },
+    { "round": 5, "status": "scored", "score": 50, "evidence_sha256": "fc994c915507667862716112973049235d3b51a9d849ebfd632f5aa31a6da4f5" },
+    { "round": 6, "status": "scored", "score": 60, "evidence_sha256": "b1413df8a10c9811266bb4bd6d8cb8879157b84c7b6adf099be03a2b988f2794" },
+    { "round": 7, "status": "scored", "score": 70, "evidence_sha256": "8a387f415f354d8c744bd1c3d66b6d25272eaf54c3717fffb30a20d9d767580b" },
+    { "round": 8, "status": "scored", "score": 80, "evidence_sha256": "01d49e860c9132a0a5e7ecffabf9541fedc037022323b14f40df176dedbfe462" },
+    { "round": 9, "status": "scored", "score": 90, "evidence_sha256": "d35fb6fb00f5ed9f7a61f5dda19b7891bbfe7fea09ed5b98e09fff41bc08854e" },
+    { "round": 10, "status": "scored", "score": 100, "evidence_sha256": "9029c61265a60def3e1940d0e3598b1507a7fd990baa904a23dccc90c4fa8acf" }
+  ]
+}

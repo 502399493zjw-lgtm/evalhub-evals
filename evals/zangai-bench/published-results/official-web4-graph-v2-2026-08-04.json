@@ -1,0 +1,3519 @@
+{
+  "eval_id": "zangai-bench",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "zangai-bench/funeralai-current-transcription@1.0.0",
+    "retrieved_on": "2026-08-09",
+    "source": {
+      "title": "葬AI Benchmark — web4-graph-v2-leaderboard-20260804-v2",
+      "url": "https://funeralai.cc/test/",
+      "snapshot_sha256": "957c69c46857f19325feecb51244e5fa16401d838e575510854adec93f1a388d"
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "openai/gpt-5.6-sol"
+      },
+      "score": 69.95,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "69.95 分"
+      },
+      "detail": "作者官网 release web4-graph-v2-leaderboard-20260804-v2 发布的 10 轮平均分；来源标签 openai-sol/gpt-5.6-sol（GPT-5.6 Sol），映射到 EvalHub 规范身份 openai/gpt-5.6-sol。失败、超时或无产物轮次按 0 计。这是作者来源转录，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-complete-leaderboard",
+          "label": "官方完整总榜",
+          "title": "作者发布的 16 模型完整总榜",
+          "columns": [
+            "名次",
+            "档位",
+            "模型",
+            "来源标识",
+            "均分",
+            "中位数",
+            "平均分钟",
+            "调用数",
+            "10 任务成本",
+            "性价比名次",
+            "性价比指数",
+            "EvalHub 身份"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "S",
+                "GPT-5.6 Sol",
+                "openai-sol/gpt-5.6-sol",
+                69.95,
+                82.71,
+                6.26,
+                175,
+                "估算 ¥86.500",
+                3,
+                8.23,
+                "openai/gpt-5.6-sol"
+              ]
+            },
+            {
+              "cells": [
+                2,
+                "S",
+                "Claude Fable 5",
+                "anthropic-fable/claude-fable-5",
+                62.39,
+                71.47,
+                8.58,
+                207,
+                "估算 ¥188.164",
+                6,
+                5.4,
+                "anthropic/claude-fable-5"
+              ]
+            },
+            {
+              "cells": [
+                3,
+                "A",
+                "Qwen 3.8 Max",
+                "dashscope/qwen3.8-max",
+                58.08,
+                51.61,
+                13.27,
+                180,
+                "¥38.218",
+                5,
+                5.9,
+                "alibaba/qwen3.8-max"
+              ]
+            },
+            {
+              "cells": [
+                4,
+                "A",
+                "Kimi K3",
+                "moonshotai/kimi-k3",
+                54.55,
+                62.38,
+                15.17,
+                248,
+                "¥42.737",
+                9,
+                4.47,
+                "moonshot/kimi-k3"
+              ]
+            },
+            {
+              "cells": [
+                5,
+                "A",
+                "Claude Opus 5",
+                "anthropic/claude-opus-5",
+                53.91,
+                50.29,
+                16.8,
+                478,
+                "估算 ¥273.123",
+                14,
+                3.37,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                6,
+                "B",
+                "DeepSeek V4 Pro",
+                "deepseek/deepseek-v4-pro",
+                45.07,
+                38.03,
+                7.65,
+                262,
+                "¥3.749",
+                7,
+                5.15,
+                "deepseek/deepseek-v4-pro"
+              ]
+            },
+            {
+              "cells": [
+                7,
+                "B",
+                "Grok 4.5",
+                "xai-openai/grok-4.5",
+                41.87,
+                41.5,
+                3.28,
+                64,
+                "估算 ¥11.893",
+                1,
+                12.31,
+                "xai/grok-4.5"
+              ]
+            },
+            {
+              "cells": [
+                8,
+                "B",
+                "DeepSeek V4 Flash",
+                "deepseek/deepseek-v4-flash",
+                41.25,
+                30.03,
+                6.94,
+                245,
+                "¥1.056",
+                4,
+                6.55,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                9,
+                "C",
+                "Qwen 3.7 Max",
+                "dashscope/qwen3.7-max",
+                37.97,
+                26.62,
+                6.85,
+                215,
+                "¥20.700",
+                10,
+                4.24,
+                "alibaba/qwen3.7-max"
+              ]
+            },
+            {
+              "cells": [
+                10,
+                "C",
+                "GPT-5.6 Luna",
+                "openai-sol/gpt-5.6-luna",
+                36.62,
+                46.79,
+                5.72,
+                130,
+                "估算 ¥5.003",
+                2,
+                9.77,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                11,
+                "C",
+                "GLM 5.2",
+                "zhipuai/glm-5.2",
+                36.44,
+                17.5,
+                11.24,
+                230,
+                "¥33.126",
+                11,
+                3.45,
+                "zai/glm-5.2"
+              ]
+            },
+            {
+              "cells": [
+                12,
+                "D",
+                "Step 3.7 Flash",
+                "stepfun/step-3.7-flash",
+                29.11,
+                20.8,
+                5.42,
+                289,
+                "¥6.875",
+                12,
+                3.53,
+                "stepfun/step-3.7-flash"
+              ]
+            },
+            {
+              "cells": [
+                13,
+                "D",
+                "Doubao Seed Evolving",
+                "volcengine-ark/doubao-seed-evolving",
+                28.7,
+                31.42,
+                5.44,
+                179,
+                "¥13.178",
+                8,
+                5.08,
+                "bytedance/doubao-seed-evolving"
+              ]
+            },
+            {
+              "cells": [
+                14,
+                "D",
+                "MiMo 2.5 Pro",
+                "mimo/mimo-v2.5-pro",
+                22.81,
+                22.29,
+                4.62,
+                206,
+                "¥6.011",
+                13,
+                4.11,
+                "xiaomi/mimo-v2.5-pro"
+              ]
+            },
+            {
+              "cells": [
+                15,
+                "D",
+                "LongCat 2.0",
+                "longcat/LongCat-2.0",
+                18.45,
+                10.25,
+                7.6,
+                226,
+                "¥3.255",
+                15,
+                2.64,
+                "meituan/longcat-2.0"
+              ]
+            },
+            {
+              "cells": [
+                16,
+                "E",
+                "ERNIE 5.1",
+                "qianfan/ernie-5.1",
+                2.23,
+                0,
+                11.4,
+                107,
+                "¥45.560",
+                16,
+                0.23,
+                "平台模型身份待收录"
+              ]
+            }
+          ],
+          "note": "逐行转录自 submission.source 快照。成本栏保留官网的“估算”标记；性价比只作当前 release 内的辅助比较，不参与主排名。四个当前无法被 EvalHub 模型注册表准确解析的模型仍完整保留在本表，未冒险映射到相近身份。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-fable-5"
+      },
+      "score": 62.39,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "62.39 分"
+      },
+      "detail": "作者官网 release web4-graph-v2-leaderboard-20260804-v2 发布的 10 轮平均分；来源标签 anthropic-fable/claude-fable-5（Claude Fable 5），映射到 EvalHub 规范身份 anthropic/claude-fable-5。失败、超时或无产物轮次按 0 计。这是作者来源转录，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-complete-leaderboard",
+          "label": "官方完整总榜",
+          "title": "作者发布的 16 模型完整总榜",
+          "columns": [
+            "名次",
+            "档位",
+            "模型",
+            "来源标识",
+            "均分",
+            "中位数",
+            "平均分钟",
+            "调用数",
+            "10 任务成本",
+            "性价比名次",
+            "性价比指数",
+            "EvalHub 身份"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "S",
+                "GPT-5.6 Sol",
+                "openai-sol/gpt-5.6-sol",
+                69.95,
+                82.71,
+                6.26,
+                175,
+                "估算 ¥86.500",
+                3,
+                8.23,
+                "openai/gpt-5.6-sol"
+              ]
+            },
+            {
+              "cells": [
+                2,
+                "S",
+                "Claude Fable 5",
+                "anthropic-fable/claude-fable-5",
+                62.39,
+                71.47,
+                8.58,
+                207,
+                "估算 ¥188.164",
+                6,
+                5.4,
+                "anthropic/claude-fable-5"
+              ]
+            },
+            {
+              "cells": [
+                3,
+                "A",
+                "Qwen 3.8 Max",
+                "dashscope/qwen3.8-max",
+                58.08,
+                51.61,
+                13.27,
+                180,
+                "¥38.218",
+                5,
+                5.9,
+                "alibaba/qwen3.8-max"
+              ]
+            },
+            {
+              "cells": [
+                4,
+                "A",
+                "Kimi K3",
+                "moonshotai/kimi-k3",
+                54.55,
+                62.38,
+                15.17,
+                248,
+                "¥42.737",
+                9,
+                4.47,
+                "moonshot/kimi-k3"
+              ]
+            },
+            {
+              "cells": [
+                5,
+                "A",
+                "Claude Opus 5",
+                "anthropic/claude-opus-5",
+                53.91,
+                50.29,
+                16.8,
+                478,
+                "估算 ¥273.123",
+                14,
+                3.37,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                6,
+                "B",
+                "DeepSeek V4 Pro",
+                "deepseek/deepseek-v4-pro",
+                45.07,
+                38.03,
+                7.65,
+                262,
+                "¥3.749",
+                7,
+                5.15,
+                "deepseek/deepseek-v4-pro"
+              ]
+            },
+            {
+              "cells": [
+                7,
+                "B",
+                "Grok 4.5",
+                "xai-openai/grok-4.5",
+                41.87,
+                41.5,
+                3.28,
+                64,
+                "估算 ¥11.893",
+                1,
+                12.31,
+                "xai/grok-4.5"
+              ]
+            },
+            {
+              "cells": [
+                8,
+                "B",
+                "DeepSeek V4 Flash",
+                "deepseek/deepseek-v4-flash",
+                41.25,
+                30.03,
+                6.94,
+                245,
+                "¥1.056",
+                4,
+                6.55,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                9,
+                "C",
+                "Qwen 3.7 Max",
+                "dashscope/qwen3.7-max",
+                37.97,
+                26.62,
+                6.85,
+                215,
+                "¥20.700",
+                10,
+                4.24,
+                "alibaba/qwen3.7-max"
+              ]
+            },
+            {
+              "cells": [
+                10,
+                "C",
+                "GPT-5.6 Luna",
+                "openai-sol/gpt-5.6-luna",
+                36.62,
+                46.79,
+                5.72,
+                130,
+                "估算 ¥5.003",
+                2,
+                9.77,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                11,
+                "C",
+                "GLM 5.2",
+                "zhipuai/glm-5.2",
+                36.44,
+                17.5,
+                11.24,
+                230,
+                "¥33.126",
+                11,
+                3.45,
+                "zai/glm-5.2"
+              ]
+            },
+            {
+              "cells": [
+                12,
+                "D",
+                "Step 3.7 Flash",
+                "stepfun/step-3.7-flash",
+                29.11,
+                20.8,
+                5.42,
+                289,
+                "¥6.875",
+                12,
+                3.53,
+                "stepfun/step-3.7-flash"
+              ]
+            },
+            {
+              "cells": [
+                13,
+                "D",
+                "Doubao Seed Evolving",
+                "volcengine-ark/doubao-seed-evolving",
+                28.7,
+                31.42,
+                5.44,
+                179,
+                "¥13.178",
+                8,
+                5.08,
+                "bytedance/doubao-seed-evolving"
+              ]
+            },
+            {
+              "cells": [
+                14,
+                "D",
+                "MiMo 2.5 Pro",
+                "mimo/mimo-v2.5-pro",
+                22.81,
+                22.29,
+                4.62,
+                206,
+                "¥6.011",
+                13,
+                4.11,
+                "xiaomi/mimo-v2.5-pro"
+              ]
+            },
+            {
+              "cells": [
+                15,
+                "D",
+                "LongCat 2.0",
+                "longcat/LongCat-2.0",
+                18.45,
+                10.25,
+                7.6,
+                226,
+                "¥3.255",
+                15,
+                2.64,
+                "meituan/longcat-2.0"
+              ]
+            },
+            {
+              "cells": [
+                16,
+                "E",
+                "ERNIE 5.1",
+                "qianfan/ernie-5.1",
+                2.23,
+                0,
+                11.4,
+                107,
+                "¥45.560",
+                16,
+                0.23,
+                "平台模型身份待收录"
+              ]
+            }
+          ],
+          "note": "逐行转录自 submission.source 快照。成本栏保留官网的“估算”标记；性价比只作当前 release 内的辅助比较，不参与主排名。四个当前无法被 EvalHub 模型注册表准确解析的模型仍完整保留在本表，未冒险映射到相近身份。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "alibaba/qwen3.8-max"
+      },
+      "score": 58.08,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "58.08 分"
+      },
+      "detail": "作者官网 release web4-graph-v2-leaderboard-20260804-v2 发布的 10 轮平均分；来源标签 dashscope/qwen3.8-max（Qwen 3.8 Max），映射到 EvalHub 规范身份 alibaba/qwen3.8-max。失败、超时或无产物轮次按 0 计。这是作者来源转录，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-complete-leaderboard",
+          "label": "官方完整总榜",
+          "title": "作者发布的 16 模型完整总榜",
+          "columns": [
+            "名次",
+            "档位",
+            "模型",
+            "来源标识",
+            "均分",
+            "中位数",
+            "平均分钟",
+            "调用数",
+            "10 任务成本",
+            "性价比名次",
+            "性价比指数",
+            "EvalHub 身份"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "S",
+                "GPT-5.6 Sol",
+                "openai-sol/gpt-5.6-sol",
+                69.95,
+                82.71,
+                6.26,
+                175,
+                "估算 ¥86.500",
+                3,
+                8.23,
+                "openai/gpt-5.6-sol"
+              ]
+            },
+            {
+              "cells": [
+                2,
+                "S",
+                "Claude Fable 5",
+                "anthropic-fable/claude-fable-5",
+                62.39,
+                71.47,
+                8.58,
+                207,
+                "估算 ¥188.164",
+                6,
+                5.4,
+                "anthropic/claude-fable-5"
+              ]
+            },
+            {
+              "cells": [
+                3,
+                "A",
+                "Qwen 3.8 Max",
+                "dashscope/qwen3.8-max",
+                58.08,
+                51.61,
+                13.27,
+                180,
+                "¥38.218",
+                5,
+                5.9,
+                "alibaba/qwen3.8-max"
+              ]
+            },
+            {
+              "cells": [
+                4,
+                "A",
+                "Kimi K3",
+                "moonshotai/kimi-k3",
+                54.55,
+                62.38,
+                15.17,
+                248,
+                "¥42.737",
+                9,
+                4.47,
+                "moonshot/kimi-k3"
+              ]
+            },
+            {
+              "cells": [
+                5,
+                "A",
+                "Claude Opus 5",
+                "anthropic/claude-opus-5",
+                53.91,
+                50.29,
+                16.8,
+                478,
+                "估算 ¥273.123",
+                14,
+                3.37,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                6,
+                "B",
+                "DeepSeek V4 Pro",
+                "deepseek/deepseek-v4-pro",
+                45.07,
+                38.03,
+                7.65,
+                262,
+                "¥3.749",
+                7,
+                5.15,
+                "deepseek/deepseek-v4-pro"
+              ]
+            },
+            {
+              "cells": [
+                7,
+                "B",
+                "Grok 4.5",
+                "xai-openai/grok-4.5",
+                41.87,
+                41.5,
+                3.28,
+                64,
+                "估算 ¥11.893",
+                1,
+                12.31,
+                "xai/grok-4.5"
+              ]
+            },
+            {
+              "cells": [
+                8,
+                "B",
+                "DeepSeek V4 Flash",
+                "deepseek/deepseek-v4-flash",
+                41.25,
+                30.03,
+                6.94,
+                245,
+                "¥1.056",
+                4,
+                6.55,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                9,
+                "C",
+                "Qwen 3.7 Max",
+                "dashscope/qwen3.7-max",
+                37.97,
+                26.62,
+                6.85,
+                215,
+                "¥20.700",
+                10,
+                4.24,
+                "alibaba/qwen3.7-max"
+              ]
+            },
+            {
+              "cells": [
+                10,
+                "C",
+                "GPT-5.6 Luna",
+                "openai-sol/gpt-5.6-luna",
+                36.62,
+                46.79,
+                5.72,
+                130,
+                "估算 ¥5.003",
+                2,
+                9.77,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                11,
+                "C",
+                "GLM 5.2",
+                "zhipuai/glm-5.2",
+                36.44,
+                17.5,
+                11.24,
+                230,
+                "¥33.126",
+                11,
+                3.45,
+                "zai/glm-5.2"
+              ]
+            },
+            {
+              "cells": [
+                12,
+                "D",
+                "Step 3.7 Flash",
+                "stepfun/step-3.7-flash",
+                29.11,
+                20.8,
+                5.42,
+                289,
+                "¥6.875",
+                12,
+                3.53,
+                "stepfun/step-3.7-flash"
+              ]
+            },
+            {
+              "cells": [
+                13,
+                "D",
+                "Doubao Seed Evolving",
+                "volcengine-ark/doubao-seed-evolving",
+                28.7,
+                31.42,
+                5.44,
+                179,
+                "¥13.178",
+                8,
+                5.08,
+                "bytedance/doubao-seed-evolving"
+              ]
+            },
+            {
+              "cells": [
+                14,
+                "D",
+                "MiMo 2.5 Pro",
+                "mimo/mimo-v2.5-pro",
+                22.81,
+                22.29,
+                4.62,
+                206,
+                "¥6.011",
+                13,
+                4.11,
+                "xiaomi/mimo-v2.5-pro"
+              ]
+            },
+            {
+              "cells": [
+                15,
+                "D",
+                "LongCat 2.0",
+                "longcat/LongCat-2.0",
+                18.45,
+                10.25,
+                7.6,
+                226,
+                "¥3.255",
+                15,
+                2.64,
+                "meituan/longcat-2.0"
+              ]
+            },
+            {
+              "cells": [
+                16,
+                "E",
+                "ERNIE 5.1",
+                "qianfan/ernie-5.1",
+                2.23,
+                0,
+                11.4,
+                107,
+                "¥45.560",
+                16,
+                0.23,
+                "平台模型身份待收录"
+              ]
+            }
+          ],
+          "note": "逐行转录自 submission.source 快照。成本栏保留官网的“估算”标记；性价比只作当前 release 内的辅助比较，不参与主排名。四个当前无法被 EvalHub 模型注册表准确解析的模型仍完整保留在本表，未冒险映射到相近身份。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "moonshot/kimi-k3"
+      },
+      "score": 54.55,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "54.55 分"
+      },
+      "detail": "作者官网 release web4-graph-v2-leaderboard-20260804-v2 发布的 10 轮平均分；来源标签 moonshotai/kimi-k3（Kimi K3），映射到 EvalHub 规范身份 moonshot/kimi-k3。失败、超时或无产物轮次按 0 计。这是作者来源转录，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-complete-leaderboard",
+          "label": "官方完整总榜",
+          "title": "作者发布的 16 模型完整总榜",
+          "columns": [
+            "名次",
+            "档位",
+            "模型",
+            "来源标识",
+            "均分",
+            "中位数",
+            "平均分钟",
+            "调用数",
+            "10 任务成本",
+            "性价比名次",
+            "性价比指数",
+            "EvalHub 身份"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "S",
+                "GPT-5.6 Sol",
+                "openai-sol/gpt-5.6-sol",
+                69.95,
+                82.71,
+                6.26,
+                175,
+                "估算 ¥86.500",
+                3,
+                8.23,
+                "openai/gpt-5.6-sol"
+              ]
+            },
+            {
+              "cells": [
+                2,
+                "S",
+                "Claude Fable 5",
+                "anthropic-fable/claude-fable-5",
+                62.39,
+                71.47,
+                8.58,
+                207,
+                "估算 ¥188.164",
+                6,
+                5.4,
+                "anthropic/claude-fable-5"
+              ]
+            },
+            {
+              "cells": [
+                3,
+                "A",
+                "Qwen 3.8 Max",
+                "dashscope/qwen3.8-max",
+                58.08,
+                51.61,
+                13.27,
+                180,
+                "¥38.218",
+                5,
+                5.9,
+                "alibaba/qwen3.8-max"
+              ]
+            },
+            {
+              "cells": [
+                4,
+                "A",
+                "Kimi K3",
+                "moonshotai/kimi-k3",
+                54.55,
+                62.38,
+                15.17,
+                248,
+                "¥42.737",
+                9,
+                4.47,
+                "moonshot/kimi-k3"
+              ]
+            },
+            {
+              "cells": [
+                5,
+                "A",
+                "Claude Opus 5",
+                "anthropic/claude-opus-5",
+                53.91,
+                50.29,
+                16.8,
+                478,
+                "估算 ¥273.123",
+                14,
+                3.37,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                6,
+                "B",
+                "DeepSeek V4 Pro",
+                "deepseek/deepseek-v4-pro",
+                45.07,
+                38.03,
+                7.65,
+                262,
+                "¥3.749",
+                7,
+                5.15,
+                "deepseek/deepseek-v4-pro"
+              ]
+            },
+            {
+              "cells": [
+                7,
+                "B",
+                "Grok 4.5",
+                "xai-openai/grok-4.5",
+                41.87,
+                41.5,
+                3.28,
+                64,
+                "估算 ¥11.893",
+                1,
+                12.31,
+                "xai/grok-4.5"
+              ]
+            },
+            {
+              "cells": [
+                8,
+                "B",
+                "DeepSeek V4 Flash",
+                "deepseek/deepseek-v4-flash",
+                41.25,
+                30.03,
+                6.94,
+                245,
+                "¥1.056",
+                4,
+                6.55,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                9,
+                "C",
+                "Qwen 3.7 Max",
+                "dashscope/qwen3.7-max",
+                37.97,
+                26.62,
+                6.85,
+                215,
+                "¥20.700",
+                10,
+                4.24,
+                "alibaba/qwen3.7-max"
+              ]
+            },
+            {
+              "cells": [
+                10,
+                "C",
+                "GPT-5.6 Luna",
+                "openai-sol/gpt-5.6-luna",
+                36.62,
+                46.79,
+                5.72,
+                130,
+                "估算 ¥5.003",
+                2,
+                9.77,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                11,
+                "C",
+                "GLM 5.2",
+                "zhipuai/glm-5.2",
+                36.44,
+                17.5,
+                11.24,
+                230,
+                "¥33.126",
+                11,
+                3.45,
+                "zai/glm-5.2"
+              ]
+            },
+            {
+              "cells": [
+                12,
+                "D",
+                "Step 3.7 Flash",
+                "stepfun/step-3.7-flash",
+                29.11,
+                20.8,
+                5.42,
+                289,
+                "¥6.875",
+                12,
+                3.53,
+                "stepfun/step-3.7-flash"
+              ]
+            },
+            {
+              "cells": [
+                13,
+                "D",
+                "Doubao Seed Evolving",
+                "volcengine-ark/doubao-seed-evolving",
+                28.7,
+                31.42,
+                5.44,
+                179,
+                "¥13.178",
+                8,
+                5.08,
+                "bytedance/doubao-seed-evolving"
+              ]
+            },
+            {
+              "cells": [
+                14,
+                "D",
+                "MiMo 2.5 Pro",
+                "mimo/mimo-v2.5-pro",
+                22.81,
+                22.29,
+                4.62,
+                206,
+                "¥6.011",
+                13,
+                4.11,
+                "xiaomi/mimo-v2.5-pro"
+              ]
+            },
+            {
+              "cells": [
+                15,
+                "D",
+                "LongCat 2.0",
+                "longcat/LongCat-2.0",
+                18.45,
+                10.25,
+                7.6,
+                226,
+                "¥3.255",
+                15,
+                2.64,
+                "meituan/longcat-2.0"
+              ]
+            },
+            {
+              "cells": [
+                16,
+                "E",
+                "ERNIE 5.1",
+                "qianfan/ernie-5.1",
+                2.23,
+                0,
+                11.4,
+                107,
+                "¥45.560",
+                16,
+                0.23,
+                "平台模型身份待收录"
+              ]
+            }
+          ],
+          "note": "逐行转录自 submission.source 快照。成本栏保留官网的“估算”标记；性价比只作当前 release 内的辅助比较，不参与主排名。四个当前无法被 EvalHub 模型注册表准确解析的模型仍完整保留在本表，未冒险映射到相近身份。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "deepseek/deepseek-v4-pro"
+      },
+      "score": 45.07,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "45.07 分"
+      },
+      "detail": "作者官网 release web4-graph-v2-leaderboard-20260804-v2 发布的 10 轮平均分；来源标签 deepseek/deepseek-v4-pro（DeepSeek V4 Pro），映射到 EvalHub 规范身份 deepseek/deepseek-v4-pro。失败、超时或无产物轮次按 0 计。这是作者来源转录，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-complete-leaderboard",
+          "label": "官方完整总榜",
+          "title": "作者发布的 16 模型完整总榜",
+          "columns": [
+            "名次",
+            "档位",
+            "模型",
+            "来源标识",
+            "均分",
+            "中位数",
+            "平均分钟",
+            "调用数",
+            "10 任务成本",
+            "性价比名次",
+            "性价比指数",
+            "EvalHub 身份"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "S",
+                "GPT-5.6 Sol",
+                "openai-sol/gpt-5.6-sol",
+                69.95,
+                82.71,
+                6.26,
+                175,
+                "估算 ¥86.500",
+                3,
+                8.23,
+                "openai/gpt-5.6-sol"
+              ]
+            },
+            {
+              "cells": [
+                2,
+                "S",
+                "Claude Fable 5",
+                "anthropic-fable/claude-fable-5",
+                62.39,
+                71.47,
+                8.58,
+                207,
+                "估算 ¥188.164",
+                6,
+                5.4,
+                "anthropic/claude-fable-5"
+              ]
+            },
+            {
+              "cells": [
+                3,
+                "A",
+                "Qwen 3.8 Max",
+                "dashscope/qwen3.8-max",
+                58.08,
+                51.61,
+                13.27,
+                180,
+                "¥38.218",
+                5,
+                5.9,
+                "alibaba/qwen3.8-max"
+              ]
+            },
+            {
+              "cells": [
+                4,
+                "A",
+                "Kimi K3",
+                "moonshotai/kimi-k3",
+                54.55,
+                62.38,
+                15.17,
+                248,
+                "¥42.737",
+                9,
+                4.47,
+                "moonshot/kimi-k3"
+              ]
+            },
+            {
+              "cells": [
+                5,
+                "A",
+                "Claude Opus 5",
+                "anthropic/claude-opus-5",
+                53.91,
+                50.29,
+                16.8,
+                478,
+                "估算 ¥273.123",
+                14,
+                3.37,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                6,
+                "B",
+                "DeepSeek V4 Pro",
+                "deepseek/deepseek-v4-pro",
+                45.07,
+                38.03,
+                7.65,
+                262,
+                "¥3.749",
+                7,
+                5.15,
+                "deepseek/deepseek-v4-pro"
+              ]
+            },
+            {
+              "cells": [
+                7,
+                "B",
+                "Grok 4.5",
+                "xai-openai/grok-4.5",
+                41.87,
+                41.5,
+                3.28,
+                64,
+                "估算 ¥11.893",
+                1,
+                12.31,
+                "xai/grok-4.5"
+              ]
+            },
+            {
+              "cells": [
+                8,
+                "B",
+                "DeepSeek V4 Flash",
+                "deepseek/deepseek-v4-flash",
+                41.25,
+                30.03,
+                6.94,
+                245,
+                "¥1.056",
+                4,
+                6.55,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                9,
+                "C",
+                "Qwen 3.7 Max",
+                "dashscope/qwen3.7-max",
+                37.97,
+                26.62,
+                6.85,
+                215,
+                "¥20.700",
+                10,
+                4.24,
+                "alibaba/qwen3.7-max"
+              ]
+            },
+            {
+              "cells": [
+                10,
+                "C",
+                "GPT-5.6 Luna",
+                "openai-sol/gpt-5.6-luna",
+                36.62,
+                46.79,
+                5.72,
+                130,
+                "估算 ¥5.003",
+                2,
+                9.77,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                11,
+                "C",
+                "GLM 5.2",
+                "zhipuai/glm-5.2",
+                36.44,
+                17.5,
+                11.24,
+                230,
+                "¥33.126",
+                11,
+                3.45,
+                "zai/glm-5.2"
+              ]
+            },
+            {
+              "cells": [
+                12,
+                "D",
+                "Step 3.7 Flash",
+                "stepfun/step-3.7-flash",
+                29.11,
+                20.8,
+                5.42,
+                289,
+                "¥6.875",
+                12,
+                3.53,
+                "stepfun/step-3.7-flash"
+              ]
+            },
+            {
+              "cells": [
+                13,
+                "D",
+                "Doubao Seed Evolving",
+                "volcengine-ark/doubao-seed-evolving",
+                28.7,
+                31.42,
+                5.44,
+                179,
+                "¥13.178",
+                8,
+                5.08,
+                "bytedance/doubao-seed-evolving"
+              ]
+            },
+            {
+              "cells": [
+                14,
+                "D",
+                "MiMo 2.5 Pro",
+                "mimo/mimo-v2.5-pro",
+                22.81,
+                22.29,
+                4.62,
+                206,
+                "¥6.011",
+                13,
+                4.11,
+                "xiaomi/mimo-v2.5-pro"
+              ]
+            },
+            {
+              "cells": [
+                15,
+                "D",
+                "LongCat 2.0",
+                "longcat/LongCat-2.0",
+                18.45,
+                10.25,
+                7.6,
+                226,
+                "¥3.255",
+                15,
+                2.64,
+                "meituan/longcat-2.0"
+              ]
+            },
+            {
+              "cells": [
+                16,
+                "E",
+                "ERNIE 5.1",
+                "qianfan/ernie-5.1",
+                2.23,
+                0,
+                11.4,
+                107,
+                "¥45.560",
+                16,
+                0.23,
+                "平台模型身份待收录"
+              ]
+            }
+          ],
+          "note": "逐行转录自 submission.source 快照。成本栏保留官网的“估算”标记；性价比只作当前 release 内的辅助比较，不参与主排名。四个当前无法被 EvalHub 模型注册表准确解析的模型仍完整保留在本表，未冒险映射到相近身份。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "xai/grok-4.5"
+      },
+      "score": 41.87,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "41.87 分"
+      },
+      "detail": "作者官网 release web4-graph-v2-leaderboard-20260804-v2 发布的 10 轮平均分；来源标签 xai-openai/grok-4.5（Grok 4.5），映射到 EvalHub 规范身份 xai/grok-4.5。失败、超时或无产物轮次按 0 计。这是作者来源转录，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-complete-leaderboard",
+          "label": "官方完整总榜",
+          "title": "作者发布的 16 模型完整总榜",
+          "columns": [
+            "名次",
+            "档位",
+            "模型",
+            "来源标识",
+            "均分",
+            "中位数",
+            "平均分钟",
+            "调用数",
+            "10 任务成本",
+            "性价比名次",
+            "性价比指数",
+            "EvalHub 身份"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "S",
+                "GPT-5.6 Sol",
+                "openai-sol/gpt-5.6-sol",
+                69.95,
+                82.71,
+                6.26,
+                175,
+                "估算 ¥86.500",
+                3,
+                8.23,
+                "openai/gpt-5.6-sol"
+              ]
+            },
+            {
+              "cells": [
+                2,
+                "S",
+                "Claude Fable 5",
+                "anthropic-fable/claude-fable-5",
+                62.39,
+                71.47,
+                8.58,
+                207,
+                "估算 ¥188.164",
+                6,
+                5.4,
+                "anthropic/claude-fable-5"
+              ]
+            },
+            {
+              "cells": [
+                3,
+                "A",
+                "Qwen 3.8 Max",
+                "dashscope/qwen3.8-max",
+                58.08,
+                51.61,
+                13.27,
+                180,
+                "¥38.218",
+                5,
+                5.9,
+                "alibaba/qwen3.8-max"
+              ]
+            },
+            {
+              "cells": [
+                4,
+                "A",
+                "Kimi K3",
+                "moonshotai/kimi-k3",
+                54.55,
+                62.38,
+                15.17,
+                248,
+                "¥42.737",
+                9,
+                4.47,
+                "moonshot/kimi-k3"
+              ]
+            },
+            {
+              "cells": [
+                5,
+                "A",
+                "Claude Opus 5",
+                "anthropic/claude-opus-5",
+                53.91,
+                50.29,
+                16.8,
+                478,
+                "估算 ¥273.123",
+                14,
+                3.37,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                6,
+                "B",
+                "DeepSeek V4 Pro",
+                "deepseek/deepseek-v4-pro",
+                45.07,
+                38.03,
+                7.65,
+                262,
+                "¥3.749",
+                7,
+                5.15,
+                "deepseek/deepseek-v4-pro"
+              ]
+            },
+            {
+              "cells": [
+                7,
+                "B",
+                "Grok 4.5",
+                "xai-openai/grok-4.5",
+                41.87,
+                41.5,
+                3.28,
+                64,
+                "估算 ¥11.893",
+                1,
+                12.31,
+                "xai/grok-4.5"
+              ]
+            },
+            {
+              "cells": [
+                8,
+                "B",
+                "DeepSeek V4 Flash",
+                "deepseek/deepseek-v4-flash",
+                41.25,
+                30.03,
+                6.94,
+                245,
+                "¥1.056",
+                4,
+                6.55,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                9,
+                "C",
+                "Qwen 3.7 Max",
+                "dashscope/qwen3.7-max",
+                37.97,
+                26.62,
+                6.85,
+                215,
+                "¥20.700",
+                10,
+                4.24,
+                "alibaba/qwen3.7-max"
+              ]
+            },
+            {
+              "cells": [
+                10,
+                "C",
+                "GPT-5.6 Luna",
+                "openai-sol/gpt-5.6-luna",
+                36.62,
+                46.79,
+                5.72,
+                130,
+                "估算 ¥5.003",
+                2,
+                9.77,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                11,
+                "C",
+                "GLM 5.2",
+                "zhipuai/glm-5.2",
+                36.44,
+                17.5,
+                11.24,
+                230,
+                "¥33.126",
+                11,
+                3.45,
+                "zai/glm-5.2"
+              ]
+            },
+            {
+              "cells": [
+                12,
+                "D",
+                "Step 3.7 Flash",
+                "stepfun/step-3.7-flash",
+                29.11,
+                20.8,
+                5.42,
+                289,
+                "¥6.875",
+                12,
+                3.53,
+                "stepfun/step-3.7-flash"
+              ]
+            },
+            {
+              "cells": [
+                13,
+                "D",
+                "Doubao Seed Evolving",
+                "volcengine-ark/doubao-seed-evolving",
+                28.7,
+                31.42,
+                5.44,
+                179,
+                "¥13.178",
+                8,
+                5.08,
+                "bytedance/doubao-seed-evolving"
+              ]
+            },
+            {
+              "cells": [
+                14,
+                "D",
+                "MiMo 2.5 Pro",
+                "mimo/mimo-v2.5-pro",
+                22.81,
+                22.29,
+                4.62,
+                206,
+                "¥6.011",
+                13,
+                4.11,
+                "xiaomi/mimo-v2.5-pro"
+              ]
+            },
+            {
+              "cells": [
+                15,
+                "D",
+                "LongCat 2.0",
+                "longcat/LongCat-2.0",
+                18.45,
+                10.25,
+                7.6,
+                226,
+                "¥3.255",
+                15,
+                2.64,
+                "meituan/longcat-2.0"
+              ]
+            },
+            {
+              "cells": [
+                16,
+                "E",
+                "ERNIE 5.1",
+                "qianfan/ernie-5.1",
+                2.23,
+                0,
+                11.4,
+                107,
+                "¥45.560",
+                16,
+                0.23,
+                "平台模型身份待收录"
+              ]
+            }
+          ],
+          "note": "逐行转录自 submission.source 快照。成本栏保留官网的“估算”标记；性价比只作当前 release 内的辅助比较，不参与主排名。四个当前无法被 EvalHub 模型注册表准确解析的模型仍完整保留在本表，未冒险映射到相近身份。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "alibaba/qwen3.7-max"
+      },
+      "score": 37.97,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "37.97 分"
+      },
+      "detail": "作者官网 release web4-graph-v2-leaderboard-20260804-v2 发布的 10 轮平均分；来源标签 dashscope/qwen3.7-max（Qwen 3.7 Max），映射到 EvalHub 规范身份 alibaba/qwen3.7-max。失败、超时或无产物轮次按 0 计。这是作者来源转录，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-complete-leaderboard",
+          "label": "官方完整总榜",
+          "title": "作者发布的 16 模型完整总榜",
+          "columns": [
+            "名次",
+            "档位",
+            "模型",
+            "来源标识",
+            "均分",
+            "中位数",
+            "平均分钟",
+            "调用数",
+            "10 任务成本",
+            "性价比名次",
+            "性价比指数",
+            "EvalHub 身份"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "S",
+                "GPT-5.6 Sol",
+                "openai-sol/gpt-5.6-sol",
+                69.95,
+                82.71,
+                6.26,
+                175,
+                "估算 ¥86.500",
+                3,
+                8.23,
+                "openai/gpt-5.6-sol"
+              ]
+            },
+            {
+              "cells": [
+                2,
+                "S",
+                "Claude Fable 5",
+                "anthropic-fable/claude-fable-5",
+                62.39,
+                71.47,
+                8.58,
+                207,
+                "估算 ¥188.164",
+                6,
+                5.4,
+                "anthropic/claude-fable-5"
+              ]
+            },
+            {
+              "cells": [
+                3,
+                "A",
+                "Qwen 3.8 Max",
+                "dashscope/qwen3.8-max",
+                58.08,
+                51.61,
+                13.27,
+                180,
+                "¥38.218",
+                5,
+                5.9,
+                "alibaba/qwen3.8-max"
+              ]
+            },
+            {
+              "cells": [
+                4,
+                "A",
+                "Kimi K3",
+                "moonshotai/kimi-k3",
+                54.55,
+                62.38,
+                15.17,
+                248,
+                "¥42.737",
+                9,
+                4.47,
+                "moonshot/kimi-k3"
+              ]
+            },
+            {
+              "cells": [
+                5,
+                "A",
+                "Claude Opus 5",
+                "anthropic/claude-opus-5",
+                53.91,
+                50.29,
+                16.8,
+                478,
+                "估算 ¥273.123",
+                14,
+                3.37,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                6,
+                "B",
+                "DeepSeek V4 Pro",
+                "deepseek/deepseek-v4-pro",
+                45.07,
+                38.03,
+                7.65,
+                262,
+                "¥3.749",
+                7,
+                5.15,
+                "deepseek/deepseek-v4-pro"
+              ]
+            },
+            {
+              "cells": [
+                7,
+                "B",
+                "Grok 4.5",
+                "xai-openai/grok-4.5",
+                41.87,
+                41.5,
+                3.28,
+                64,
+                "估算 ¥11.893",
+                1,
+                12.31,
+                "xai/grok-4.5"
+              ]
+            },
+            {
+              "cells": [
+                8,
+                "B",
+                "DeepSeek V4 Flash",
+                "deepseek/deepseek-v4-flash",
+                41.25,
+                30.03,
+                6.94,
+                245,
+                "¥1.056",
+                4,
+                6.55,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                9,
+                "C",
+                "Qwen 3.7 Max",
+                "dashscope/qwen3.7-max",
+                37.97,
+                26.62,
+                6.85,
+                215,
+                "¥20.700",
+                10,
+                4.24,
+                "alibaba/qwen3.7-max"
+              ]
+            },
+            {
+              "cells": [
+                10,
+                "C",
+                "GPT-5.6 Luna",
+                "openai-sol/gpt-5.6-luna",
+                36.62,
+                46.79,
+                5.72,
+                130,
+                "估算 ¥5.003",
+                2,
+                9.77,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                11,
+                "C",
+                "GLM 5.2",
+                "zhipuai/glm-5.2",
+                36.44,
+                17.5,
+                11.24,
+                230,
+                "¥33.126",
+                11,
+                3.45,
+                "zai/glm-5.2"
+              ]
+            },
+            {
+              "cells": [
+                12,
+                "D",
+                "Step 3.7 Flash",
+                "stepfun/step-3.7-flash",
+                29.11,
+                20.8,
+                5.42,
+                289,
+                "¥6.875",
+                12,
+                3.53,
+                "stepfun/step-3.7-flash"
+              ]
+            },
+            {
+              "cells": [
+                13,
+                "D",
+                "Doubao Seed Evolving",
+                "volcengine-ark/doubao-seed-evolving",
+                28.7,
+                31.42,
+                5.44,
+                179,
+                "¥13.178",
+                8,
+                5.08,
+                "bytedance/doubao-seed-evolving"
+              ]
+            },
+            {
+              "cells": [
+                14,
+                "D",
+                "MiMo 2.5 Pro",
+                "mimo/mimo-v2.5-pro",
+                22.81,
+                22.29,
+                4.62,
+                206,
+                "¥6.011",
+                13,
+                4.11,
+                "xiaomi/mimo-v2.5-pro"
+              ]
+            },
+            {
+              "cells": [
+                15,
+                "D",
+                "LongCat 2.0",
+                "longcat/LongCat-2.0",
+                18.45,
+                10.25,
+                7.6,
+                226,
+                "¥3.255",
+                15,
+                2.64,
+                "meituan/longcat-2.0"
+              ]
+            },
+            {
+              "cells": [
+                16,
+                "E",
+                "ERNIE 5.1",
+                "qianfan/ernie-5.1",
+                2.23,
+                0,
+                11.4,
+                107,
+                "¥45.560",
+                16,
+                0.23,
+                "平台模型身份待收录"
+              ]
+            }
+          ],
+          "note": "逐行转录自 submission.source 快照。成本栏保留官网的“估算”标记；性价比只作当前 release 内的辅助比较，不参与主排名。四个当前无法被 EvalHub 模型注册表准确解析的模型仍完整保留在本表，未冒险映射到相近身份。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "zai/glm-5.2"
+      },
+      "score": 36.44,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "36.44 分"
+      },
+      "detail": "作者官网 release web4-graph-v2-leaderboard-20260804-v2 发布的 10 轮平均分；来源标签 zhipuai/glm-5.2（GLM 5.2），映射到 EvalHub 规范身份 zai/glm-5.2。失败、超时或无产物轮次按 0 计。这是作者来源转录，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-complete-leaderboard",
+          "label": "官方完整总榜",
+          "title": "作者发布的 16 模型完整总榜",
+          "columns": [
+            "名次",
+            "档位",
+            "模型",
+            "来源标识",
+            "均分",
+            "中位数",
+            "平均分钟",
+            "调用数",
+            "10 任务成本",
+            "性价比名次",
+            "性价比指数",
+            "EvalHub 身份"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "S",
+                "GPT-5.6 Sol",
+                "openai-sol/gpt-5.6-sol",
+                69.95,
+                82.71,
+                6.26,
+                175,
+                "估算 ¥86.500",
+                3,
+                8.23,
+                "openai/gpt-5.6-sol"
+              ]
+            },
+            {
+              "cells": [
+                2,
+                "S",
+                "Claude Fable 5",
+                "anthropic-fable/claude-fable-5",
+                62.39,
+                71.47,
+                8.58,
+                207,
+                "估算 ¥188.164",
+                6,
+                5.4,
+                "anthropic/claude-fable-5"
+              ]
+            },
+            {
+              "cells": [
+                3,
+                "A",
+                "Qwen 3.8 Max",
+                "dashscope/qwen3.8-max",
+                58.08,
+                51.61,
+                13.27,
+                180,
+                "¥38.218",
+                5,
+                5.9,
+                "alibaba/qwen3.8-max"
+              ]
+            },
+            {
+              "cells": [
+                4,
+                "A",
+                "Kimi K3",
+                "moonshotai/kimi-k3",
+                54.55,
+                62.38,
+                15.17,
+                248,
+                "¥42.737",
+                9,
+                4.47,
+                "moonshot/kimi-k3"
+              ]
+            },
+            {
+              "cells": [
+                5,
+                "A",
+                "Claude Opus 5",
+                "anthropic/claude-opus-5",
+                53.91,
+                50.29,
+                16.8,
+                478,
+                "估算 ¥273.123",
+                14,
+                3.37,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                6,
+                "B",
+                "DeepSeek V4 Pro",
+                "deepseek/deepseek-v4-pro",
+                45.07,
+                38.03,
+                7.65,
+                262,
+                "¥3.749",
+                7,
+                5.15,
+                "deepseek/deepseek-v4-pro"
+              ]
+            },
+            {
+              "cells": [
+                7,
+                "B",
+                "Grok 4.5",
+                "xai-openai/grok-4.5",
+                41.87,
+                41.5,
+                3.28,
+                64,
+                "估算 ¥11.893",
+                1,
+                12.31,
+                "xai/grok-4.5"
+              ]
+            },
+            {
+              "cells": [
+                8,
+                "B",
+                "DeepSeek V4 Flash",
+                "deepseek/deepseek-v4-flash",
+                41.25,
+                30.03,
+                6.94,
+                245,
+                "¥1.056",
+                4,
+                6.55,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                9,
+                "C",
+                "Qwen 3.7 Max",
+                "dashscope/qwen3.7-max",
+                37.97,
+                26.62,
+                6.85,
+                215,
+                "¥20.700",
+                10,
+                4.24,
+                "alibaba/qwen3.7-max"
+              ]
+            },
+            {
+              "cells": [
+                10,
+                "C",
+                "GPT-5.6 Luna",
+                "openai-sol/gpt-5.6-luna",
+                36.62,
+                46.79,
+                5.72,
+                130,
+                "估算 ¥5.003",
+                2,
+                9.77,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                11,
+                "C",
+                "GLM 5.2",
+                "zhipuai/glm-5.2",
+                36.44,
+                17.5,
+                11.24,
+                230,
+                "¥33.126",
+                11,
+                3.45,
+                "zai/glm-5.2"
+              ]
+            },
+            {
+              "cells": [
+                12,
+                "D",
+                "Step 3.7 Flash",
+                "stepfun/step-3.7-flash",
+                29.11,
+                20.8,
+                5.42,
+                289,
+                "¥6.875",
+                12,
+                3.53,
+                "stepfun/step-3.7-flash"
+              ]
+            },
+            {
+              "cells": [
+                13,
+                "D",
+                "Doubao Seed Evolving",
+                "volcengine-ark/doubao-seed-evolving",
+                28.7,
+                31.42,
+                5.44,
+                179,
+                "¥13.178",
+                8,
+                5.08,
+                "bytedance/doubao-seed-evolving"
+              ]
+            },
+            {
+              "cells": [
+                14,
+                "D",
+                "MiMo 2.5 Pro",
+                "mimo/mimo-v2.5-pro",
+                22.81,
+                22.29,
+                4.62,
+                206,
+                "¥6.011",
+                13,
+                4.11,
+                "xiaomi/mimo-v2.5-pro"
+              ]
+            },
+            {
+              "cells": [
+                15,
+                "D",
+                "LongCat 2.0",
+                "longcat/LongCat-2.0",
+                18.45,
+                10.25,
+                7.6,
+                226,
+                "¥3.255",
+                15,
+                2.64,
+                "meituan/longcat-2.0"
+              ]
+            },
+            {
+              "cells": [
+                16,
+                "E",
+                "ERNIE 5.1",
+                "qianfan/ernie-5.1",
+                2.23,
+                0,
+                11.4,
+                107,
+                "¥45.560",
+                16,
+                0.23,
+                "平台模型身份待收录"
+              ]
+            }
+          ],
+          "note": "逐行转录自 submission.source 快照。成本栏保留官网的“估算”标记；性价比只作当前 release 内的辅助比较，不参与主排名。四个当前无法被 EvalHub 模型注册表准确解析的模型仍完整保留在本表，未冒险映射到相近身份。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "stepfun/step-3.7-flash"
+      },
+      "score": 29.11,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "29.11 分"
+      },
+      "detail": "作者官网 release web4-graph-v2-leaderboard-20260804-v2 发布的 10 轮平均分；来源标签 stepfun/step-3.7-flash（Step 3.7 Flash），映射到 EvalHub 规范身份 stepfun/step-3.7-flash。失败、超时或无产物轮次按 0 计。这是作者来源转录，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-complete-leaderboard",
+          "label": "官方完整总榜",
+          "title": "作者发布的 16 模型完整总榜",
+          "columns": [
+            "名次",
+            "档位",
+            "模型",
+            "来源标识",
+            "均分",
+            "中位数",
+            "平均分钟",
+            "调用数",
+            "10 任务成本",
+            "性价比名次",
+            "性价比指数",
+            "EvalHub 身份"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "S",
+                "GPT-5.6 Sol",
+                "openai-sol/gpt-5.6-sol",
+                69.95,
+                82.71,
+                6.26,
+                175,
+                "估算 ¥86.500",
+                3,
+                8.23,
+                "openai/gpt-5.6-sol"
+              ]
+            },
+            {
+              "cells": [
+                2,
+                "S",
+                "Claude Fable 5",
+                "anthropic-fable/claude-fable-5",
+                62.39,
+                71.47,
+                8.58,
+                207,
+                "估算 ¥188.164",
+                6,
+                5.4,
+                "anthropic/claude-fable-5"
+              ]
+            },
+            {
+              "cells": [
+                3,
+                "A",
+                "Qwen 3.8 Max",
+                "dashscope/qwen3.8-max",
+                58.08,
+                51.61,
+                13.27,
+                180,
+                "¥38.218",
+                5,
+                5.9,
+                "alibaba/qwen3.8-max"
+              ]
+            },
+            {
+              "cells": [
+                4,
+                "A",
+                "Kimi K3",
+                "moonshotai/kimi-k3",
+                54.55,
+                62.38,
+                15.17,
+                248,
+                "¥42.737",
+                9,
+                4.47,
+                "moonshot/kimi-k3"
+              ]
+            },
+            {
+              "cells": [
+                5,
+                "A",
+                "Claude Opus 5",
+                "anthropic/claude-opus-5",
+                53.91,
+                50.29,
+                16.8,
+                478,
+                "估算 ¥273.123",
+                14,
+                3.37,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                6,
+                "B",
+                "DeepSeek V4 Pro",
+                "deepseek/deepseek-v4-pro",
+                45.07,
+                38.03,
+                7.65,
+                262,
+                "¥3.749",
+                7,
+                5.15,
+                "deepseek/deepseek-v4-pro"
+              ]
+            },
+            {
+              "cells": [
+                7,
+                "B",
+                "Grok 4.5",
+                "xai-openai/grok-4.5",
+                41.87,
+                41.5,
+                3.28,
+                64,
+                "估算 ¥11.893",
+                1,
+                12.31,
+                "xai/grok-4.5"
+              ]
+            },
+            {
+              "cells": [
+                8,
+                "B",
+                "DeepSeek V4 Flash",
+                "deepseek/deepseek-v4-flash",
+                41.25,
+                30.03,
+                6.94,
+                245,
+                "¥1.056",
+                4,
+                6.55,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                9,
+                "C",
+                "Qwen 3.7 Max",
+                "dashscope/qwen3.7-max",
+                37.97,
+                26.62,
+                6.85,
+                215,
+                "¥20.700",
+                10,
+                4.24,
+                "alibaba/qwen3.7-max"
+              ]
+            },
+            {
+              "cells": [
+                10,
+                "C",
+                "GPT-5.6 Luna",
+                "openai-sol/gpt-5.6-luna",
+                36.62,
+                46.79,
+                5.72,
+                130,
+                "估算 ¥5.003",
+                2,
+                9.77,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                11,
+                "C",
+                "GLM 5.2",
+                "zhipuai/glm-5.2",
+                36.44,
+                17.5,
+                11.24,
+                230,
+                "¥33.126",
+                11,
+                3.45,
+                "zai/glm-5.2"
+              ]
+            },
+            {
+              "cells": [
+                12,
+                "D",
+                "Step 3.7 Flash",
+                "stepfun/step-3.7-flash",
+                29.11,
+                20.8,
+                5.42,
+                289,
+                "¥6.875",
+                12,
+                3.53,
+                "stepfun/step-3.7-flash"
+              ]
+            },
+            {
+              "cells": [
+                13,
+                "D",
+                "Doubao Seed Evolving",
+                "volcengine-ark/doubao-seed-evolving",
+                28.7,
+                31.42,
+                5.44,
+                179,
+                "¥13.178",
+                8,
+                5.08,
+                "bytedance/doubao-seed-evolving"
+              ]
+            },
+            {
+              "cells": [
+                14,
+                "D",
+                "MiMo 2.5 Pro",
+                "mimo/mimo-v2.5-pro",
+                22.81,
+                22.29,
+                4.62,
+                206,
+                "¥6.011",
+                13,
+                4.11,
+                "xiaomi/mimo-v2.5-pro"
+              ]
+            },
+            {
+              "cells": [
+                15,
+                "D",
+                "LongCat 2.0",
+                "longcat/LongCat-2.0",
+                18.45,
+                10.25,
+                7.6,
+                226,
+                "¥3.255",
+                15,
+                2.64,
+                "meituan/longcat-2.0"
+              ]
+            },
+            {
+              "cells": [
+                16,
+                "E",
+                "ERNIE 5.1",
+                "qianfan/ernie-5.1",
+                2.23,
+                0,
+                11.4,
+                107,
+                "¥45.560",
+                16,
+                0.23,
+                "平台模型身份待收录"
+              ]
+            }
+          ],
+          "note": "逐行转录自 submission.source 快照。成本栏保留官网的“估算”标记；性价比只作当前 release 内的辅助比较，不参与主排名。四个当前无法被 EvalHub 模型注册表准确解析的模型仍完整保留在本表，未冒险映射到相近身份。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "bytedance/doubao-seed-evolving"
+      },
+      "score": 28.7,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "28.70 分"
+      },
+      "detail": "作者官网 release web4-graph-v2-leaderboard-20260804-v2 发布的 10 轮平均分；来源标签 volcengine-ark/doubao-seed-evolving（Doubao Seed Evolving），映射到 EvalHub 规范身份 bytedance/doubao-seed-evolving。失败、超时或无产物轮次按 0 计。这是作者来源转录，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-complete-leaderboard",
+          "label": "官方完整总榜",
+          "title": "作者发布的 16 模型完整总榜",
+          "columns": [
+            "名次",
+            "档位",
+            "模型",
+            "来源标识",
+            "均分",
+            "中位数",
+            "平均分钟",
+            "调用数",
+            "10 任务成本",
+            "性价比名次",
+            "性价比指数",
+            "EvalHub 身份"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "S",
+                "GPT-5.6 Sol",
+                "openai-sol/gpt-5.6-sol",
+                69.95,
+                82.71,
+                6.26,
+                175,
+                "估算 ¥86.500",
+                3,
+                8.23,
+                "openai/gpt-5.6-sol"
+              ]
+            },
+            {
+              "cells": [
+                2,
+                "S",
+                "Claude Fable 5",
+                "anthropic-fable/claude-fable-5",
+                62.39,
+                71.47,
+                8.58,
+                207,
+                "估算 ¥188.164",
+                6,
+                5.4,
+                "anthropic/claude-fable-5"
+              ]
+            },
+            {
+              "cells": [
+                3,
+                "A",
+                "Qwen 3.8 Max",
+                "dashscope/qwen3.8-max",
+                58.08,
+                51.61,
+                13.27,
+                180,
+                "¥38.218",
+                5,
+                5.9,
+                "alibaba/qwen3.8-max"
+              ]
+            },
+            {
+              "cells": [
+                4,
+                "A",
+                "Kimi K3",
+                "moonshotai/kimi-k3",
+                54.55,
+                62.38,
+                15.17,
+                248,
+                "¥42.737",
+                9,
+                4.47,
+                "moonshot/kimi-k3"
+              ]
+            },
+            {
+              "cells": [
+                5,
+                "A",
+                "Claude Opus 5",
+                "anthropic/claude-opus-5",
+                53.91,
+                50.29,
+                16.8,
+                478,
+                "估算 ¥273.123",
+                14,
+                3.37,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                6,
+                "B",
+                "DeepSeek V4 Pro",
+                "deepseek/deepseek-v4-pro",
+                45.07,
+                38.03,
+                7.65,
+                262,
+                "¥3.749",
+                7,
+                5.15,
+                "deepseek/deepseek-v4-pro"
+              ]
+            },
+            {
+              "cells": [
+                7,
+                "B",
+                "Grok 4.5",
+                "xai-openai/grok-4.5",
+                41.87,
+                41.5,
+                3.28,
+                64,
+                "估算 ¥11.893",
+                1,
+                12.31,
+                "xai/grok-4.5"
+              ]
+            },
+            {
+              "cells": [
+                8,
+                "B",
+                "DeepSeek V4 Flash",
+                "deepseek/deepseek-v4-flash",
+                41.25,
+                30.03,
+                6.94,
+                245,
+                "¥1.056",
+                4,
+                6.55,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                9,
+                "C",
+                "Qwen 3.7 Max",
+                "dashscope/qwen3.7-max",
+                37.97,
+                26.62,
+                6.85,
+                215,
+                "¥20.700",
+                10,
+                4.24,
+                "alibaba/qwen3.7-max"
+              ]
+            },
+            {
+              "cells": [
+                10,
+                "C",
+                "GPT-5.6 Luna",
+                "openai-sol/gpt-5.6-luna",
+                36.62,
+                46.79,
+                5.72,
+                130,
+                "估算 ¥5.003",
+                2,
+                9.77,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                11,
+                "C",
+                "GLM 5.2",
+                "zhipuai/glm-5.2",
+                36.44,
+                17.5,
+                11.24,
+                230,
+                "¥33.126",
+                11,
+                3.45,
+                "zai/glm-5.2"
+              ]
+            },
+            {
+              "cells": [
+                12,
+                "D",
+                "Step 3.7 Flash",
+                "stepfun/step-3.7-flash",
+                29.11,
+                20.8,
+                5.42,
+                289,
+                "¥6.875",
+                12,
+                3.53,
+                "stepfun/step-3.7-flash"
+              ]
+            },
+            {
+              "cells": [
+                13,
+                "D",
+                "Doubao Seed Evolving",
+                "volcengine-ark/doubao-seed-evolving",
+                28.7,
+                31.42,
+                5.44,
+                179,
+                "¥13.178",
+                8,
+                5.08,
+                "bytedance/doubao-seed-evolving"
+              ]
+            },
+            {
+              "cells": [
+                14,
+                "D",
+                "MiMo 2.5 Pro",
+                "mimo/mimo-v2.5-pro",
+                22.81,
+                22.29,
+                4.62,
+                206,
+                "¥6.011",
+                13,
+                4.11,
+                "xiaomi/mimo-v2.5-pro"
+              ]
+            },
+            {
+              "cells": [
+                15,
+                "D",
+                "LongCat 2.0",
+                "longcat/LongCat-2.0",
+                18.45,
+                10.25,
+                7.6,
+                226,
+                "¥3.255",
+                15,
+                2.64,
+                "meituan/longcat-2.0"
+              ]
+            },
+            {
+              "cells": [
+                16,
+                "E",
+                "ERNIE 5.1",
+                "qianfan/ernie-5.1",
+                2.23,
+                0,
+                11.4,
+                107,
+                "¥45.560",
+                16,
+                0.23,
+                "平台模型身份待收录"
+              ]
+            }
+          ],
+          "note": "逐行转录自 submission.source 快照。成本栏保留官网的“估算”标记；性价比只作当前 release 内的辅助比较，不参与主排名。四个当前无法被 EvalHub 模型注册表准确解析的模型仍完整保留在本表，未冒险映射到相近身份。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "xiaomi/mimo-v2.5-pro"
+      },
+      "score": 22.81,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "22.81 分"
+      },
+      "detail": "作者官网 release web4-graph-v2-leaderboard-20260804-v2 发布的 10 轮平均分；来源标签 mimo/mimo-v2.5-pro（MiMo 2.5 Pro），映射到 EvalHub 规范身份 xiaomi/mimo-v2.5-pro。失败、超时或无产物轮次按 0 计。这是作者来源转录，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-complete-leaderboard",
+          "label": "官方完整总榜",
+          "title": "作者发布的 16 模型完整总榜",
+          "columns": [
+            "名次",
+            "档位",
+            "模型",
+            "来源标识",
+            "均分",
+            "中位数",
+            "平均分钟",
+            "调用数",
+            "10 任务成本",
+            "性价比名次",
+            "性价比指数",
+            "EvalHub 身份"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "S",
+                "GPT-5.6 Sol",
+                "openai-sol/gpt-5.6-sol",
+                69.95,
+                82.71,
+                6.26,
+                175,
+                "估算 ¥86.500",
+                3,
+                8.23,
+                "openai/gpt-5.6-sol"
+              ]
+            },
+            {
+              "cells": [
+                2,
+                "S",
+                "Claude Fable 5",
+                "anthropic-fable/claude-fable-5",
+                62.39,
+                71.47,
+                8.58,
+                207,
+                "估算 ¥188.164",
+                6,
+                5.4,
+                "anthropic/claude-fable-5"
+              ]
+            },
+            {
+              "cells": [
+                3,
+                "A",
+                "Qwen 3.8 Max",
+                "dashscope/qwen3.8-max",
+                58.08,
+                51.61,
+                13.27,
+                180,
+                "¥38.218",
+                5,
+                5.9,
+                "alibaba/qwen3.8-max"
+              ]
+            },
+            {
+              "cells": [
+                4,
+                "A",
+                "Kimi K3",
+                "moonshotai/kimi-k3",
+                54.55,
+                62.38,
+                15.17,
+                248,
+                "¥42.737",
+                9,
+                4.47,
+                "moonshot/kimi-k3"
+              ]
+            },
+            {
+              "cells": [
+                5,
+                "A",
+                "Claude Opus 5",
+                "anthropic/claude-opus-5",
+                53.91,
+                50.29,
+                16.8,
+                478,
+                "估算 ¥273.123",
+                14,
+                3.37,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                6,
+                "B",
+                "DeepSeek V4 Pro",
+                "deepseek/deepseek-v4-pro",
+                45.07,
+                38.03,
+                7.65,
+                262,
+                "¥3.749",
+                7,
+                5.15,
+                "deepseek/deepseek-v4-pro"
+              ]
+            },
+            {
+              "cells": [
+                7,
+                "B",
+                "Grok 4.5",
+                "xai-openai/grok-4.5",
+                41.87,
+                41.5,
+                3.28,
+                64,
+                "估算 ¥11.893",
+                1,
+                12.31,
+                "xai/grok-4.5"
+              ]
+            },
+            {
+              "cells": [
+                8,
+                "B",
+                "DeepSeek V4 Flash",
+                "deepseek/deepseek-v4-flash",
+                41.25,
+                30.03,
+                6.94,
+                245,
+                "¥1.056",
+                4,
+                6.55,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                9,
+                "C",
+                "Qwen 3.7 Max",
+                "dashscope/qwen3.7-max",
+                37.97,
+                26.62,
+                6.85,
+                215,
+                "¥20.700",
+                10,
+                4.24,
+                "alibaba/qwen3.7-max"
+              ]
+            },
+            {
+              "cells": [
+                10,
+                "C",
+                "GPT-5.6 Luna",
+                "openai-sol/gpt-5.6-luna",
+                36.62,
+                46.79,
+                5.72,
+                130,
+                "估算 ¥5.003",
+                2,
+                9.77,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                11,
+                "C",
+                "GLM 5.2",
+                "zhipuai/glm-5.2",
+                36.44,
+                17.5,
+                11.24,
+                230,
+                "¥33.126",
+                11,
+                3.45,
+                "zai/glm-5.2"
+              ]
+            },
+            {
+              "cells": [
+                12,
+                "D",
+                "Step 3.7 Flash",
+                "stepfun/step-3.7-flash",
+                29.11,
+                20.8,
+                5.42,
+                289,
+                "¥6.875",
+                12,
+                3.53,
+                "stepfun/step-3.7-flash"
+              ]
+            },
+            {
+              "cells": [
+                13,
+                "D",
+                "Doubao Seed Evolving",
+                "volcengine-ark/doubao-seed-evolving",
+                28.7,
+                31.42,
+                5.44,
+                179,
+                "¥13.178",
+                8,
+                5.08,
+                "bytedance/doubao-seed-evolving"
+              ]
+            },
+            {
+              "cells": [
+                14,
+                "D",
+                "MiMo 2.5 Pro",
+                "mimo/mimo-v2.5-pro",
+                22.81,
+                22.29,
+                4.62,
+                206,
+                "¥6.011",
+                13,
+                4.11,
+                "xiaomi/mimo-v2.5-pro"
+              ]
+            },
+            {
+              "cells": [
+                15,
+                "D",
+                "LongCat 2.0",
+                "longcat/LongCat-2.0",
+                18.45,
+                10.25,
+                7.6,
+                226,
+                "¥3.255",
+                15,
+                2.64,
+                "meituan/longcat-2.0"
+              ]
+            },
+            {
+              "cells": [
+                16,
+                "E",
+                "ERNIE 5.1",
+                "qianfan/ernie-5.1",
+                2.23,
+                0,
+                11.4,
+                107,
+                "¥45.560",
+                16,
+                0.23,
+                "平台模型身份待收录"
+              ]
+            }
+          ],
+          "note": "逐行转录自 submission.source 快照。成本栏保留官网的“估算”标记；性价比只作当前 release 内的辅助比较，不参与主排名。四个当前无法被 EvalHub 模型注册表准确解析的模型仍完整保留在本表，未冒险映射到相近身份。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "meituan/longcat-2.0"
+      },
+      "score": 18.45,
+      "raw_metric": {
+        "label": "10 轮平均分",
+        "value": "18.45 分"
+      },
+      "detail": "作者官网 release web4-graph-v2-leaderboard-20260804-v2 发布的 10 轮平均分；来源标签 longcat/LongCat-2.0（LongCat 2.0），映射到 EvalHub 规范身份 meituan/longcat-2.0。失败、超时或无产物轮次按 0 计。这是作者来源转录，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-complete-leaderboard",
+          "label": "官方完整总榜",
+          "title": "作者发布的 16 模型完整总榜",
+          "columns": [
+            "名次",
+            "档位",
+            "模型",
+            "来源标识",
+            "均分",
+            "中位数",
+            "平均分钟",
+            "调用数",
+            "10 任务成本",
+            "性价比名次",
+            "性价比指数",
+            "EvalHub 身份"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "S",
+                "GPT-5.6 Sol",
+                "openai-sol/gpt-5.6-sol",
+                69.95,
+                82.71,
+                6.26,
+                175,
+                "估算 ¥86.500",
+                3,
+                8.23,
+                "openai/gpt-5.6-sol"
+              ]
+            },
+            {
+              "cells": [
+                2,
+                "S",
+                "Claude Fable 5",
+                "anthropic-fable/claude-fable-5",
+                62.39,
+                71.47,
+                8.58,
+                207,
+                "估算 ¥188.164",
+                6,
+                5.4,
+                "anthropic/claude-fable-5"
+              ]
+            },
+            {
+              "cells": [
+                3,
+                "A",
+                "Qwen 3.8 Max",
+                "dashscope/qwen3.8-max",
+                58.08,
+                51.61,
+                13.27,
+                180,
+                "¥38.218",
+                5,
+                5.9,
+                "alibaba/qwen3.8-max"
+              ]
+            },
+            {
+              "cells": [
+                4,
+                "A",
+                "Kimi K3",
+                "moonshotai/kimi-k3",
+                54.55,
+                62.38,
+                15.17,
+                248,
+                "¥42.737",
+                9,
+                4.47,
+                "moonshot/kimi-k3"
+              ]
+            },
+            {
+              "cells": [
+                5,
+                "A",
+                "Claude Opus 5",
+                "anthropic/claude-opus-5",
+                53.91,
+                50.29,
+                16.8,
+                478,
+                "估算 ¥273.123",
+                14,
+                3.37,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                6,
+                "B",
+                "DeepSeek V4 Pro",
+                "deepseek/deepseek-v4-pro",
+                45.07,
+                38.03,
+                7.65,
+                262,
+                "¥3.749",
+                7,
+                5.15,
+                "deepseek/deepseek-v4-pro"
+              ]
+            },
+            {
+              "cells": [
+                7,
+                "B",
+                "Grok 4.5",
+                "xai-openai/grok-4.5",
+                41.87,
+                41.5,
+                3.28,
+                64,
+                "估算 ¥11.893",
+                1,
+                12.31,
+                "xai/grok-4.5"
+              ]
+            },
+            {
+              "cells": [
+                8,
+                "B",
+                "DeepSeek V4 Flash",
+                "deepseek/deepseek-v4-flash",
+                41.25,
+                30.03,
+                6.94,
+                245,
+                "¥1.056",
+                4,
+                6.55,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                9,
+                "C",
+                "Qwen 3.7 Max",
+                "dashscope/qwen3.7-max",
+                37.97,
+                26.62,
+                6.85,
+                215,
+                "¥20.700",
+                10,
+                4.24,
+                "alibaba/qwen3.7-max"
+              ]
+            },
+            {
+              "cells": [
+                10,
+                "C",
+                "GPT-5.6 Luna",
+                "openai-sol/gpt-5.6-luna",
+                36.62,
+                46.79,
+                5.72,
+                130,
+                "估算 ¥5.003",
+                2,
+                9.77,
+                "平台模型身份待收录"
+              ]
+            },
+            {
+              "cells": [
+                11,
+                "C",
+                "GLM 5.2",
+                "zhipuai/glm-5.2",
+                36.44,
+                17.5,
+                11.24,
+                230,
+                "¥33.126",
+                11,
+                3.45,
+                "zai/glm-5.2"
+              ]
+            },
+            {
+              "cells": [
+                12,
+                "D",
+                "Step 3.7 Flash",
+                "stepfun/step-3.7-flash",
+                29.11,
+                20.8,
+                5.42,
+                289,
+                "¥6.875",
+                12,
+                3.53,
+                "stepfun/step-3.7-flash"
+              ]
+            },
+            {
+              "cells": [
+                13,
+                "D",
+                "Doubao Seed Evolving",
+                "volcengine-ark/doubao-seed-evolving",
+                28.7,
+                31.42,
+                5.44,
+                179,
+                "¥13.178",
+                8,
+                5.08,
+                "bytedance/doubao-seed-evolving"
+              ]
+            },
+            {
+              "cells": [
+                14,
+                "D",
+                "MiMo 2.5 Pro",
+                "mimo/mimo-v2.5-pro",
+                22.81,
+                22.29,
+                4.62,
+                206,
+                "¥6.011",
+                13,
+                4.11,
+                "xiaomi/mimo-v2.5-pro"
+              ]
+            },
+            {
+              "cells": [
+                15,
+                "D",
+                "LongCat 2.0",
+                "longcat/LongCat-2.0",
+                18.45,
+                10.25,
+                7.6,
+                226,
+                "¥3.255",
+                15,
+                2.64,
+                "meituan/longcat-2.0"
+              ]
+            },
+            {
+              "cells": [
+                16,
+                "E",
+                "ERNIE 5.1",
+                "qianfan/ernie-5.1",
+                2.23,
+                0,
+                11.4,
+                107,
+                "¥45.560",
+                16,
+                0.23,
+                "平台模型身份待收录"
+              ]
+            }
+          ],
+          "note": "逐行转录自 submission.source 快照。成本栏保留官网的“估算”标记；性价比只作当前 release 内的辅助比较，不参与主排名。四个当前无法被 EvalHub 模型注册表准确解析的模型仍完整保留在本表，未冒险映射到相近身份。"
+        }
+      ]
+    }
+  ]
+}

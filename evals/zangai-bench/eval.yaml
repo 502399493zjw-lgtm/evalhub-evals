@@ -1,0 +1,227 @@
+id: zangai-bench
+protocol_revision: 1
+name: 葬 AI Bench
+category: useful
+description: >-
+  葬 AI Bench 考察编码 Agent 能否只用一份固定的 AI 行业知识图谱数据，在本地实现真正可探索的 Web 应用。
+  题目同时要求完整绘制 649 个节点与 1699 条关系，完成搜索、类型筛选、节点邻接详情、缩放拖拽与重置，
+  并正确处理最短路径和精确统计。真实浏览器评分器按 11 项百分制指标验收；同一模型独立运行 10 轮，失败、超时或无产物按 0 分，主分数取 10 轮算术平均。
+hook_title: 只给一份图数据，Agent 能做出真正可用的知识图谱吗
+references:
+  homepage: https://funeralai.cc/test/
+  repository: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/zangai-bench
+dimensions: [代码, 推理]
+interface: agent
+runner: custom
+custom_mode: external_workflow
+scoring: custom
+scored_by: author
+score_policy: required
+baseline_policy: required
+score_unit: 分
+scoring_note: >-
+  每个参赛模型用 OpenCode 1.17.9 在干净工作目录中独立完成同一题面，输入只有 tasks/graph.json；完成后由
+  Playwright 1.61.1 + Chromium 的作者评分器 3.1 在本地静态服务上确定性验收。11 项权重依次为：图数据身份 12、
+  关系渲染 14、空间可读性 11、搜索状态 9、节点详情与邻接 11、类型筛选 7、缩放拖拽重置 7、离线运行 5、
+  最短路径 10、统计准确性 6、视觉稳定性 8，总计 100。空白图、数据身份不符、关系缺失、外部网络依赖、主线程失去响应、
+  布局病态与不完整渲染会触发封顶或乘数惩罚。每个模型独立运行 10 轮；失败、超时或无产物的轮次保留并记 0，
+  主分数 = round(10 轮分数之和 ÷ 10, 2)。转换器只验证协议摘要、轮次、状态、分数与证据摘要并确定性封装结果；
+  scored_by=author 表示分数仍须由评测作者核对原始运行目录、浏览器评分报告和统一 harness 后才认可。
+command_template:
+  argv: [node, evals/zangai-bench/pack-to-result.mjs, "{input}", --out, "{output}"]
+  output: zangai-bench-result.json
+trials: 10
+detail_profile:
+  source_kind: evalhub_native
+  overview_note: >-
+    本条目以作者 2026-08-09 提供的 zangai-bench-v2 新版 graph-engineering-v2 为准；旧 GitHub 仓库不定义本次题面。
+    官网 release web4-graph-v2-leaderboard-20260804-v2 的 16 模型最终汇总成绩作为作者发布基线转录，
+    不展示逐轮或其他批次信息，也不是 EvalHub 独立复跑。
+  summary:
+    plain_language: >-
+      Agent 得到的不是一张已经画好的图，而是一份含 649 个实体和 1699 条关系的 JSON。它要从零交付一个离线可用的网页：
+      用户能看清不同类型的节点，搜索和筛选，点开节点检查邻居，缩放拖拽，还要查询两个节点之间的最短路径并核对完整统计。
+    why_it_matters: >-
+      这道题把数据理解、前端工程、图算法、交互状态和视觉布局压进同一个可运行产物。只会生成漂亮首屏而忽略数据完整性，
+      或只会写算法却做不出稳定交互，都会在真实浏览器验收里暴露出来。
+  method_steps:
+    - title: 冻结唯一输入与题面
+      description: >-
+        每轮只向 Agent 提供同一份 graph.json 和锁定题面；图数据固定为 649 节点、1699 条关系、4 类节点与 16 类关系，
+        不允许读取原项目或联网补数据。
+    - title: 在独立目录实现网页
+      description: >-
+        OpenCode 1.17.9 为每轮启动独立工作目录与状态目录。Agent 可以自由选择前端框架、图谱库、布局算法和 DOM 结构，
+        但最终产物必须能通过最简单的本地静态服务预览。
+    - title: 用真实浏览器验证交互
+      description: >-
+        Playwright 1.61.1 + Chromium 打开成品，核对完整图数据、关系渲染、搜索与筛选状态、节点邻接详情、缩放拖拽重置、
+        离线运行、最短路径边界和统计榜单；题面中的 data-bench 属性只为稳定自动验收。
+    - title: 应用封顶与稳定性惩罚
+      description: >-
+        评分器先按 11 项权重给分，再对入口不可用、空白图、身份不符、关系缺失、外网依赖、主线程卡死、图形不稳定、
+        布局严重退化或渲染不完整应用协议内封顶或乘数，避免表面交互掩盖核心失败。
+    - title: 十轮独立运行取平均
+      description: >-
+        同一模型跑 10 个独立轮次；失败、超时和无产物不删除，统一记 0。主榜分数是 10 个轮次分数的算术平均并四舍五入到两位小数，
+        中位数、用时、调用数、成本与性价比只作辅助展示。
+  score_interpretation: >-
+    主分数是百分制，越高越好，理论上限 100。它表示同一模型在固定 OpenCode、固定题面、固定数据、固定浏览器评分器下十次独立交付的平均质量，
+    同时包含功能正确性、数据忠实度、图布局与运行稳定性。比较模型时可结合最终均分与中位数判断整体质量和稳定性；
+    成本和性价比不参与主排名，单轮明细不在详情页展示。
+  key_facts:
+    - value: 649 个节点
+      label: 新版唯一输入的完整节点数
+      description: company 165、person 135、product 337、vc_firm 12；评分器检查实际加载身份，不接受缩小样本。
+      source_url: https://funeralai.cc/test/methodology/
+    - value: 1699 条关系
+      label: 覆盖 16 种关系类型
+      description: 包含 compares_to、competes_with、develops、integrates_with、invests_in 等 16 类，关系必须可见且计数准确。
+      source_url: https://funeralai.cc/test/methodology/
+    - value: 11 项 / 100 分
+      label: 功能、数据、布局与稳定性联合评分
+      description: 最高权重为关系渲染 14 分，其次是数据身份 12 分，完整权重见下表。
+      source_url: https://funeralai.cc/test/methodology/
+    - value: 10 轮
+      label: 每个模型独立重复运行
+      description: 失败、超时或无产物按 0 分保留，最终主分数取十轮平均。
+      source_url: https://funeralai.cc/test/
+    - value: 16 个模型
+      label: 当前作者发布榜单规模
+      description: release web4-graph-v2-leaderboard-20260804-v2 公开了 16 个模型的最终汇总成绩；本条目不展示逐轮数据。
+      source_url: https://funeralai.cc/test/
+  caveats:
+    - title: 只覆盖一类知识图谱前端工程任务
+      description: >-
+        评测能同时压测数据处理、图算法与交互工程，但只有一个固定 AI 行业图谱和一个网页任务，不能代表通用软件工程或所有可视化能力。
+    - title: 成绩绑定固定 harness 与浏览器版本
+      description: >-
+        当前协议锁定 OpenCode 1.17.9、Playwright 1.61.1 与 Chromium。更换 Agent harness、浏览器、机器性能或评分器版本后，
+        结果不应直接与本 release 混排。
+    - title: 浏览器图布局存在随机性
+      description: >-
+        即使题面、数据和评分器固定，力导向布局与前端运行时仍可能放大轮间差异，因此协议采用十轮平均；详情页只发布最终汇总，不展示单轮信息。
+    - title: 成本不是主分数，且来源口径混合
+      description: >-
+        官网成本栏混合直接日志、官方价格和估算值；性价比指数是当前 release 内的相对派生指标，不能当作跨批次的绝对能力分。
+    - title: 四个官网模型暂不能成为平台一等成绩身份
+      description: >-
+        当前 EvalHub 模型注册表尚不能解析 Claude Opus 5、DeepSeek V4 Flash、GPT-5.6 Luna 与 ERNIE 5.1。
+        为避免把模型错绑到相近身份，这四条不进入一等 results；完整 16 模型总榜仍逐行保留在每条已映射成绩的“官方完整总榜”辅助表中。
+    - title: 新版协议来自作者本地工作树
+      description: >-
+        作者明确要求以本地 zangai-bench-v2 新题为准；一个月前的公开 GitHub 仓库只是历史框架，不能证明本题的精确 prompt、数据或 scorer。
+        本目录因此直接携带新题数据与题面，并用 sha256 锁定未内嵌的作者评分器。
+  overview_tables:
+    - id: scoring-weights
+      label: 评分权重
+      title: 浏览器评分器 3.1 的 11 项权重
+      note: 权重来自作者新版 score-graph-engineering-v2.cjs；总和为 100。
+      caption: 最终先按这些维度计分，再应用协议内的封顶或乘数惩罚。
+      source_url: https://funeralai.cc/test/methodology/
+      columns:
+        - { id: dimension, label: 评分项 }
+        - { id: weight, label: 权重 }
+        - { id: focus, label: 主要检查 }
+      rows:
+        - id: loaded-graph-identity
+          cells:
+            - { column_id: dimension, value: 图数据身份 }
+            - { column_id: weight, value: "12" }
+            - { column_id: focus, value: 完整节点、关系与固定输入身份 }
+        - id: relationship-rendering
+          cells:
+            - { column_id: dimension, value: 关系渲染 }
+            - { column_id: weight, value: "14" }
+            - { column_id: focus, value: 关系可见、数量与端点正确 }
+        - id: spatial-readability
+          cells:
+            - { column_id: dimension, value: 空间可读性 }
+            - { column_id: weight, value: "11" }
+            - { column_id: focus, value: 节点分布、遮挡与布局质量 }
+        - id: search-state-transitions
+          cells:
+            - { column_id: dimension, value: 搜索状态 }
+            - { column_id: weight, value: "9" }
+            - { column_id: focus, value: 搜索、清空与状态切换 }
+        - id: node-detail-and-neighbors
+          cells:
+            - { column_id: dimension, value: 节点详情与邻接 }
+            - { column_id: weight, value: "11" }
+            - { column_id: focus, value: 点击节点后的信息与相邻关系 }
+        - id: type-filter
+          cells:
+            - { column_id: dimension, value: 类型筛选 }
+            - { column_id: weight, value: "7" }
+            - { column_id: focus, value: 四类节点的过滤与恢复 }
+        - id: zoom-pan-reset
+          cells:
+            - { column_id: dimension, value: 缩放、拖拽与重置 }
+            - { column_id: weight, value: "7" }
+            - { column_id: focus, value: 画布导航和恢复初始状态 }
+        - id: offline-runtime
+          cells:
+            - { column_id: dimension, value: 离线运行 }
+            - { column_id: weight, value: "5" }
+            - { column_id: focus, value: 本地服务且不依赖外部网络 }
+        - id: shortest-path-correctness
+          cells:
+            - { column_id: dimension, value: 最短路径 }
+            - { column_id: weight, value: "10" }
+            - { column_id: focus, value: 正常、同点、不可达与无效输入 }
+        - id: stats-accuracy
+          cells:
+            - { column_id: dimension, value: 统计准确性 }
+            - { column_id: weight, value: "6" }
+            - { column_id: focus, value: degree Top10、节点类型与关系类型计数 }
+        - id: visual-stability
+          cells:
+            - { column_id: dimension, value: 视觉稳定性 }
+            - { column_id: weight, value: "8" }
+            - { column_id: focus, value: 图形稳定、可见与主线程响应 }
+  figures:
+    - id: zangai-logo
+      placement: overview
+      label: 品牌标识
+      title: 葬AI
+      src: https://libtv.md/assets/logo-zangai-text.png
+      alt: 葬AI 的透明文字 Logo。
+      caption: 使用作者权威透明 Logo 的 logo-only 模式，不附加模型名、角标卡片、描边或发光。
+      source_url: https://libtv.md/
+  resources_note: 公开资料只用于展示作者发布的方法与成绩；精确新版协议以本目录携带的题面、数据和摘要为准。
+  resources:
+    - title: 葬AI Benchmark 当前榜单
+      summary: 当前 release 的 16 模型最终主榜、用时、调用、成本与性价比数据来源；本条目不展示逐轮数据。
+      url: https://funeralai.cc/test/
+    - title: 葬AI Benchmark 方法说明
+      summary: 新版知识图谱任务的 11 项权重、失败记零、十轮口径、稳定性和成本边界说明。
+      url: https://funeralai.cc/test/methodology/
+    - title: 历史公开框架仓库
+      summary: 作者早期公开的通用 Benchmark 框架；其代码早于本次新题，只用于项目历史与作者归属，不定义本次协议。
+      url: https://github.com/FrichXi/personal-work-benchmark
+tasks:
+  - id: graph-engineering-v2
+    label: 葬AI Web4 知识图谱探索器
+    prompt: |-
+      你是一名前端开发专家。请在当前工作目录实现一个「葬AI Web4」知识图谱探索器。
+
+      输入材料只有：`data/graph.json`。请完整使用其中的节点和关系数据，不要依赖网络，不要读取 benchmark-next 目录或其他原始项目目录。
+
+      要求：
+
+      1. 首屏就是可用的知识图谱探索器，不需要文章列表、文章详情、排行榜、主题切换或其他网站页面。
+      2. 图谱必须展示输入数据中的完整节点和关系，并且用户能够看出不同节点类型。
+      3. 用户可以搜索节点、按类型筛选、缩放/拖拽图谱、点击节点查看节点信息和相邻关系，并能清空搜索和恢复初始状态。
+      4. 交互应在本地静态服务下工作，不依赖网络请求；完成后提供最简单的本地预览方式。
+      5. 最短路径查询：提供两个节点输入与查询触发，输入接受节点 id；计算并显示两点间无向、无权的最短路径节点序列，并在图上高亮该路径。图不是全连通的：两点相同、两点不可达、输入不存在的节点这三种情况必须给出明确提示且不崩溃。
+      6. 统计榜单：展示按节点 degree 字段排序的度数 Top10 榜单（名称与 degree 值）、四类节点的数量、16 种关系类型（关系的 type 字段）各自的精确数量；点击榜单条目能在图上定位对应节点。
+      7. 为便于自动化验收，请给以下控件标注 data-bench 属性（仅此契约，其余结构完全自由）：
+         - 路径查询的两个输入框分别为 data-bench="path-source" 与 data-bench="path-target"，触发控件为 data-bench="path-run"，结果容器为 data-bench="path-result"；每次查询后在结果容器上设置属性 data-bench-path-status，取值 ok（找到路径）/ unreachable（不可达）/ same（两点相同）/ invalid（输入无效）；status 为 ok 时，结果容器内按路径顺序放置带 data-bench-path-node="<节点id>" 属性的元素（含起点和终点）。
+         - 度数榜单容器为 data-bench="stats-top"，其中每行带 data-bench-node-id 与 data-bench-degree 属性；节点类型计数容器为 data-bench="stats-types"，每项带 data-bench-type 与 data-bench-count 属性；关系类型计数容器为 data-bench="stats-relations"，每项带 data-bench-relation 与 data-bench-count 属性。
+
+      除第 7 条的标记契约外，不要指定或假设某个前端框架、图谱库、布局算法、路由结构或 DOM 结构。请把产物写入当前工作目录，并写一份简短的 README.md 说明预览命令。
+    run_spec: >-
+      每轮在干净工作目录创建 data/graph.json（sha256 f83313f6e50b2f1bb809c9c1fc0de2217c437e33b1fa417b571b6527b7df988e），
+      使用锁定题面（sha256 cd7c9074d60e342fd877f70253444dc0fe278897fc6e20715800e67a336eef9c）与 OpenCode 1.17.9。
+      Agent 完成后用 Playwright 1.61.1 + Chromium 和作者评分器 3.1（源码 sha256 6f773714090a5a1da48d15fb493f0d7dd08aa6d5a6b8944988846cee3b115828）验收。
+      同一模型独立运行 10 轮；失败、超时或无产物记 0，主分数为十轮平均并四舍五入到两位小数。
