@@ -178,10 +178,10 @@ detail_profile:
       placement: insights
       label: 真实示例 · 未核分
       title: 当前同题四模型代表帧
-      src: https://raw.githubusercontent.com/FrichXi/funeralai-web4/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/mg-four-model-overview.png
+      src: https://raw.githubusercontent.com/FrichXi/funeralai-web4/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809/mg-four-model-overview.png
       alt: GPT-5.6-Sol、Kimi-K3、Qwen3.8-Max 与 Doubao-Seed-Evolving 四支真实 MG 成片的代表帧并排总览
       caption: 当前题目的真实代表帧，不含榜单分数；画面保留任务要求的原始 model-badge，没有为投稿重复加 Logo 或改造成证据卡片。
-      source_url: https://github.com/FrichXi/funeralai-web4/blob/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/mg-four-model-overview.png
+      source_url: https://github.com/FrichXi/funeralai-web4/blob/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809/mg-four-model-overview.png
   resources_note: 以下链接包含第一方协议、转换器、真实未核分成片和 SHA-256 清单。人物输入不公开；EvalHub CLI 只负责 fetch/pack，不支持一键 run。
   resources:
     - title: 葬AI 单图 MG 视频 Bench 协议目录
@@ -189,19 +189,19 @@ detail_profile:
       url: https://github.com/502399493zjw-lgtm/evalhub-evals/tree/main/evals/mg-animation-replication
     - title: 下载并查看 GPT-5.6-Sol 真实成片
       summary: 当前同题 30 秒 MP4；链接下载原始文件，技术验收通过但尚未完成最终人工评分。
-      url: https://raw.githubusercontent.com/FrichXi/funeralai-web4/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/GPT-5.6-Sol.mp4
+      url: https://raw.githubusercontent.com/FrichXi/funeralai-web4/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809/GPT-5.6-Sol.mp4
     - title: 下载并查看 Kimi-K3 真实成片
       summary: 当前同题 30 秒 MP4；链接下载原始文件，技术验收通过但尚未完成最终人工评分。
-      url: https://raw.githubusercontent.com/FrichXi/funeralai-web4/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Kimi-K3.mp4
+      url: https://raw.githubusercontent.com/FrichXi/funeralai-web4/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809/Kimi-K3.mp4
     - title: 下载并查看 Qwen3.8-Max 真实成片
       summary: 当前同题 30 秒 MP4；链接下载原始文件，技术验收通过但尚未完成最终人工评分。
-      url: https://raw.githubusercontent.com/FrichXi/funeralai-web4/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Qwen3.8-Max.mp4
+      url: https://raw.githubusercontent.com/FrichXi/funeralai-web4/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809/Qwen3.8-Max.mp4
     - title: 下载并查看 Doubao-Seed-Evolving 真实成片
       summary: 当前同题 30 秒 MP4；链接下载原始文件，技术验收通过但尚未完成最终人工评分。
-      url: https://raw.githubusercontent.com/FrichXi/funeralai-web4/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809/Doubao-Seed-Evolving.mp4
+      url: https://raw.githubusercontent.com/FrichXi/funeralai-web4/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809/Doubao-Seed-Evolving.mp4
     - title: 真实未核分示例资产与 SHA-256 清单
       summary: 四支成片、代表帧、来源任务和证据边界；用于核验产物，不代表已发布排行榜成绩。
-      url: https://github.com/FrichXi/funeralai-web4/tree/agent/evalhub-example-artifacts-20260809/site/public/evalhub-artifacts/20260809
+      url: https://github.com/FrichXi/funeralai-web4/tree/61749cf5227353b37315b6b6ca889b309a7ae6e6/site/public/evalhub-artifacts/20260809
 tasks:
   - id: mg-animation-image-creative-v2-20260803
     label: 单图自由创作 30 秒 MG 动画
