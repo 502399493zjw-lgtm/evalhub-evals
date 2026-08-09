@@ -1,5 +1,7 @@
 # CivBench（文明 VI 长程战略 Agent）
 
+> **状态：暂无已验证成绩（不等于 0 分）。** 当前没有符合固定三场、固定存档、固定标准 Agent 和同一胜率公式的完整可核验结果；结构示例不会进入榜单。
+
 CivBench 把真实《文明 VI》变成一个长程 Agent 环境。模型不是回答一段静态题目，而是通过
 civ6-mcp 的文字状态和工具调用连续管理单位、城市、科技、市政、经济、外交与战争，直到赢得
 游戏、被对手击败、达到回合预算或运行失败。
@@ -45,6 +47,8 @@ score = round((victory_count / 3) * 100, 6)
 - Python 3.12+、uv、Inspect AI 与 civ6-mcp
 - 平台对应的游戏启动和存档加载环境
 - 每场最多 330 回合；上游默认墙钟保护上限为 48 小时
+
+EvalHub CLI 只负责下载协议与运行下面的确定性 pack 转换器；`evalhub run civ6-civbench` 明确不受支持。PR 合并前平台预览也不应给出会请求正式 slug 的 `evalhub fetch` 指令，而应禁用安装并标注“合并后可下载协议”。
 
 参赛者在自己的环境按 `run_spec` 跑完三场，保存 Inspect `.eval`、telemetry manifest、diary
 和 log，再按 `tasks/README.md` 写出提交清单。EvalHub 的锁定 runner 只执行：

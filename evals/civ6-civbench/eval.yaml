@@ -5,7 +5,7 @@ category: useful
 description: >-
   CivBench 让 Agent 通过 MCP 在《文明 VI》里连续经营、扩张、外交和作战，检验它能否在最多 330 回合的固定存档中持续读懂局势、
   修正战略并争取胜利。固定标准赛道使用同一份 AGENTS.md 战略手册、同一 React Agent 和 Ground Control、Snowflake、Cry Havoc
-  三个场景；懂模帝主分按三个场景的胜率计算。
+  三个场景；懂模帝主分按三个场景的胜率计算。当前暂无符合该固定协议的已验证成绩，这不表示评测失败或模型得 0 分。
 hook_title: AI 能在三局《文明 VI》中真正打赢，而不只是把回合走下去吗
 upstream:
   repo: lmwilki/civ6-mcp
@@ -35,8 +35,10 @@ trials: 1
 detail_profile:
   source_kind: upstream_publication
   overview_note: >-
-    协议说明来自 Liam Wilkinson 的 civ6-mcp 作者仓库与官方 CivBench 文档，并固定在 commit dd201905；本条目只整理标准赛道协议，
-    不搬运《文明 VI》存档、游戏素材或历史试玩局，也不把结构示例当成真实成绩。
+    当前暂无符合本条固定协议的已验证成绩；页面空榜不表示评测失败，更不表示参赛模型得 0 分。协议说明来自 Liam Wilkinson 的
+    civ6-mcp 作者仓库与官方 CivBench 文档，并固定在 commit dd201905；本条目只整理标准赛道协议，不搬运《文明 VI》存档、
+    游戏素材或历史试玩局，也不把结构示例当成真实成绩。这是外部工作流：EvalHub CLI 只能下载协议并封装外部运行清单，
+    `evalhub run civ6-civbench` 不受支持。
   summary:
     plain_language: >-
       被评 Agent 要从三个固定的《文明 VI》开局连续玩到胜负或回合上限。它只能通过 MCP 的文字状态与工具行动，需要管理城市和单位、
@@ -91,6 +93,10 @@ detail_profile:
       description: 作者 README 将工具覆盖概括为单位、城市、地图、研究、外交、贸易、政府、宗教、伟人、世界议会与胜利进度等。
       source_url: https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/README.md
   caveats:
+    - title: 暂无已验证成绩，不等于 0 分
+      description: >-
+        本版本没有可按固定三场、固定存档、固定标准 Agent 和同一胜率公式核验的完整模型结果，所以不创建 published-results。
+        页面应显示“暂无已验证成绩”，不能用“暂无成绩上榜”暗示运行失败，也不能把结构示例或缺失值渲染为 0 分。
     - title: 主分数是懂模帝适配值
       description: >-
         上游网页用完成对局池计算 ELO，而单份 EvalHub 结果必须有独立稳定的数值。这里采用三场胜率，不把它称作官方 CivBench 排名；
@@ -150,7 +156,7 @@ detail_profile:
             - { column_id: difficulty, value: Immortal }
             - { column_id: victory, value: 全部启用 }
             - { column_id: blind-spot, value: 难度情境 }
-  resources_note: 协议、场景和运行代码均链接到作者的一手来源；参赛前应以固定 commit 的文件为准。
+  resources_note: 协议、场景和运行代码均链接到作者的一手来源；参赛前应以固定 commit 的文件为准。完整游戏运行必须在外部作者环境完成，EvalHub CLI 只负责下载协议与 pack，不支持一键 run。
   resources:
     - title: civ6-mcp 作者仓库
       summary: MCP 服务、标准与开放赛道、场景、scorer、存档说明和 MIT 许可证的主要来源。
