@@ -1,5 +1,7 @@
 # 葬AI 3D 白模 Bench
 
+> **状态：有真实示例产物，暂无已验证总分。** 三张公开 3/4 渲染来自当前冻结题目的真实输出，但自动 60 分与人工 40 分尚未按最终口径全部复核，因此不进入榜单，也不等于 0 分。
+
 这套单题评测要求 Agent 从一张人物照片出发，真正交付可重建、可切片的 Q 版单件式白模，而不是写方案或只做渲染。
 
 主分满分 100：冻结 scorer 从原始产物检查字段重算自动 60 分，作者再对原图与未美化多视角预览做盲审，给出人工 40 分。转换器不读取 STL、PNG 或商业切片软件，也不调用模型；它只把外部完成的受控运行清单校验并封装为 EvalHub 结果。
@@ -21,6 +23,8 @@
 node evals/chibi-3d-print-bench/pack-to-result.mjs <submission.json> --out <result.json>
 ```
 
+这是 external workflow。EvalHub CLI 只下载协议并执行上面的 pack 转换器；`evalhub run chibi-3d-print-bench` 不受支持。PR 合并前平台预览应禁用正式安装指令，避免 `evalhub fetch` 请求尚不存在的正式 slug。
+
 完整字段见 `tasks/README.md`，`tasks/example-submission.json` 是刻意构造的结构示例；由它生成的 `sample-result.json` 不是任何模型的真实成绩。
 
 ## 来源、授权与隐私边界
@@ -32,6 +36,8 @@ node evals/chibi-3d-print-bench/pack-to-result.mjs <submission.json> --out <resu
 ## 当前基线状态
 
 当前没有完成自动 60 分复验与人工 40 分盲审的可发布数值基线。把部分检查值直接当作百分制总分会改变含义，所以本版本不建立 `published-results/`，也不制造逐题证据或模型排名。待盲审与证据核对完成后，可在不改协议的前提下另行提交真实结果信封。
+
+详情页可展示三张公开的真实 3/4 白模渲染，并链接到带 SHA-256 的资产清单。它们不含参考人物照片或阶段分数，只解决“读者能否直观看到真实产物”，不改变“暂无已验证总分”的榜单状态。
 
 Logo 不进入原始图表、参考图、模型预览、结果证据或详情页 figure；本包也不会用 Logo 替换平台占位封面。若平台需要封面，应由平台正式封面入口映射权威素材，不能通过错误字段冒充内容图。
 
