@@ -1,0 +1,1875 @@
+{
+  "eval_id": "terminal-bench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "terminal-bench/pack-to-result@2.0.0",
+    "run_date": "2026-08-10"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-terminal-agent",
+        "harness": "example-harness",
+        "harness_version": "0.0.0-example"
+      },
+      "score": 50,
+      "raw_metric": {
+        "label": "5×74 reward 平均分",
+        "value": "185/370"
+      },
+      "detail": "Harbor 0.20.0 job 2cf7907d-77d7-43ec-82f9-146c147e9df5; 370 trials with 370 unique IDs and names; 74/74 pinned task digests matched; 370 result.json/lock.json SHA-256 pairs recorded; evidence_sha256=fa805db127a0e2a43e2535423bb6392a8db88526c5ecef0ba631329df55a6b01; manifest_sha256=0edf6b4ebc37468965066c13ea2fec86b450f5e7118b5fdb97628e39f4dc5ce2.",
+      "task_results": [
+        {
+          "task_id": "atrx-vep-crispr",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=44544b0c-fe20-4a12-8d1b-b50e6e78eb9d trial_name=atrx-vep-crispr__FZKGUBC task_digest=sha256:3b8eb57602814aa63af12439e3eacb7ad5bee09efb6c6af023768994bf9220b4 result_sha256=a80bf6dc4fea3dde3071926fabbe0a0b3c525fe81bfedbb724bdd6b06c57875a lock_sha256=4decee19e624ba02910080e974d5264f71ba85d7313e6c8d0f83361513c28c4a"
+        },
+        {
+          "task_id": "atrx-vep-crispr",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=7852d7b0-08ed-4c5a-8521-3e2f5b74112d trial_name=atrx-vep-crispr__PvNBmNR task_digest=sha256:3b8eb57602814aa63af12439e3eacb7ad5bee09efb6c6af023768994bf9220b4 result_sha256=59b54746404bf566ae044a124da1bfcb8c763d07f2a929ca90801596af2606f4 lock_sha256=4decee19e624ba02910080e974d5264f71ba85d7313e6c8d0f83361513c28c4a"
+        },
+        {
+          "task_id": "atrx-vep-crispr",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=916732cc-7237-4d9a-9025-b1ca7d247ffa trial_name=atrx-vep-crispr__Rp8pKUn task_digest=sha256:3b8eb57602814aa63af12439e3eacb7ad5bee09efb6c6af023768994bf9220b4 result_sha256=a433a995d2b251c09ccdfb23c951c1b64c1503260ab77241fca54eee4a2d163b lock_sha256=4decee19e624ba02910080e974d5264f71ba85d7313e6c8d0f83361513c28c4a"
+        },
+        {
+          "task_id": "atrx-vep-crispr",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=a7fc59d0-ef6f-4341-9e39-f46133ad20e6 trial_name=atrx-vep-crispr__5CZhSpV task_digest=sha256:3b8eb57602814aa63af12439e3eacb7ad5bee09efb6c6af023768994bf9220b4 result_sha256=53ebc4965c199a5bc705db3310ab3c62f10d1fc83b9cdfa9c51ef22914ad70f7 lock_sha256=4decee19e624ba02910080e974d5264f71ba85d7313e6c8d0f83361513c28c4a"
+        },
+        {
+          "task_id": "atrx-vep-crispr",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=aad32c36-4f36-4388-9454-bc4795c26963 trial_name=atrx-vep-crispr__ZQPLAbv task_digest=sha256:3b8eb57602814aa63af12439e3eacb7ad5bee09efb6c6af023768994bf9220b4 result_sha256=508f6e2c2b4d50ce450d1cc1d930745cf7f524dab409508fa91d7021cf310a96 lock_sha256=4decee19e624ba02910080e974d5264f71ba85d7313e6c8d0f83361513c28c4a"
+        },
+        {
+          "task_id": "batched-eval-parity",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=35ccb4b7-240b-4608-b57a-0e9645fa8859 trial_name=batched-eval-parity__yW3heQA task_digest=sha256:7926394b6c448ba8debd1cdd5b0bae777a0e4cbe0f1af608b61a8707f5d957c5 result_sha256=9fc14020790f75c9a5c3c5dd099f1a8f18d88705ae90ecc13a30641b2dd9c1da lock_sha256=da345df812990d1217273b2f9e9b7af451a9e1ba5e77db7df60c25067025bc23"
+        },
+        {
+          "task_id": "batched-eval-parity",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=8800022a-c42a-43ca-bbb8-c486a5febbe8 trial_name=batched-eval-parity__P58vTcu task_digest=sha256:7926394b6c448ba8debd1cdd5b0bae777a0e4cbe0f1af608b61a8707f5d957c5 result_sha256=771b5eaa23aac2086b4831fafc6ac989140c2b247a7e8c29b0aede1204891edd lock_sha256=da345df812990d1217273b2f9e9b7af451a9e1ba5e77db7df60c25067025bc23"
+        },
+        {
+          "task_id": "batched-eval-parity",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=b809ad20-b425-4b38-9196-151b8bc969fa trial_name=batched-eval-parity__kMahLuW task_digest=sha256:7926394b6c448ba8debd1cdd5b0bae777a0e4cbe0f1af608b61a8707f5d957c5 result_sha256=45e1d1b41dd7d7d303d08fbdf5dc302a45c0517fbb447f9f16a4f205eac0ab54 lock_sha256=da345df812990d1217273b2f9e9b7af451a9e1ba5e77db7df60c25067025bc23"
+        },
+        {
+          "task_id": "batched-eval-parity",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=c4ac84f2-d7db-4e05-8a63-584212894af5 trial_name=batched-eval-parity__YJ5gX53 task_digest=sha256:7926394b6c448ba8debd1cdd5b0bae777a0e4cbe0f1af608b61a8707f5d957c5 result_sha256=de9dc8cf24a29d4030ad2cf2ea7d454af5e0896e640a4280c90174ea31c10ab7 lock_sha256=da345df812990d1217273b2f9e9b7af451a9e1ba5e77db7df60c25067025bc23"
+        },
+        {
+          "task_id": "batched-eval-parity",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=e84981e7-e38d-4513-a3c0-07314d8e3a37 trial_name=batched-eval-parity__6UM9KSq task_digest=sha256:7926394b6c448ba8debd1cdd5b0bae777a0e4cbe0f1af608b61a8707f5d957c5 result_sha256=2fb33d4e6d0ea1e64e382e1b30ff38fb620b3bb7af1974dbfd89ede61f2c5a88 lock_sha256=da345df812990d1217273b2f9e9b7af451a9e1ba5e77db7df60c25067025bc23"
+        },
+        {
+          "task_id": "biped-contact-dynamics",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=641a3d5d-34ff-4cb6-ac19-5ea5f8fddd6c trial_name=biped-contact-dynamics__cZdiAF2 task_digest=sha256:ae2cc175efc37461de142d15b01a02718c7fb7a16f87b2720d0dd666e694cf0a result_sha256=a2cfd7e06405b366b246deb196a14289c6dee77be5ea02183fc8941362ab916b lock_sha256=bb5c9ab774120e7be73ea6661279f2752171c4dfe41aa7e57dfad01634c29ba9"
+        },
+        {
+          "task_id": "biped-contact-dynamics",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=6dc84fd3-a304-4e1e-8c9e-2fc1626893a5 trial_name=biped-contact-dynamics__EeHzCyi task_digest=sha256:ae2cc175efc37461de142d15b01a02718c7fb7a16f87b2720d0dd666e694cf0a result_sha256=09c4ffe384518bc403ca5248b8891af1de8919b859e52df3e9acb6a202887cfa lock_sha256=bb5c9ab774120e7be73ea6661279f2752171c4dfe41aa7e57dfad01634c29ba9"
+        },
+        {
+          "task_id": "biped-contact-dynamics",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=7e7f7f06-4099-4822-918a-8e6ac9b8b72b trial_name=biped-contact-dynamics__mSejhcR task_digest=sha256:ae2cc175efc37461de142d15b01a02718c7fb7a16f87b2720d0dd666e694cf0a result_sha256=7c87ae43248a18d27224beae70965005befc8671294ce24b6aaa03d1790ad83f lock_sha256=bb5c9ab774120e7be73ea6661279f2752171c4dfe41aa7e57dfad01634c29ba9"
+        },
+        {
+          "task_id": "biped-contact-dynamics",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=b2d650c4-af37-48a2-b867-c8f0bbf9a991 trial_name=biped-contact-dynamics__JtauyJv task_digest=sha256:ae2cc175efc37461de142d15b01a02718c7fb7a16f87b2720d0dd666e694cf0a result_sha256=66db746764579ae730bcf98a335646530b8433110be4d2df5ca5cfe5b473b6d9 lock_sha256=bb5c9ab774120e7be73ea6661279f2752171c4dfe41aa7e57dfad01634c29ba9"
+        },
+        {
+          "task_id": "biped-contact-dynamics",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=d4e884f5-7cab-4c64-b789-b191d4829000 trial_name=biped-contact-dynamics__uG3CdSn task_digest=sha256:ae2cc175efc37461de142d15b01a02718c7fb7a16f87b2720d0dd666e694cf0a result_sha256=9a6999db9a93e98a51758e38bd709c575c3a1c62976d9887fd2ab231dda3bc30 lock_sha256=bb5c9ab774120e7be73ea6661279f2752171c4dfe41aa7e57dfad01634c29ba9"
+        },
+        {
+          "task_id": "bun-sourcemap-leak",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=1c57c505-c018-485b-8572-83aeee908788 trial_name=bun-sourcemap-leak__dDFSaHJ task_digest=sha256:ac0b0f77da4e8f6c3904133033ec6d8591eb0d3f18205ab28104ea3cf2a5a07f result_sha256=a012b66c8927e950d6c7b99401f740f9886374a1c452a72c6597358613c04680 lock_sha256=a13464f97a7aaba22c690c6cfe68ee1bef99e50cc4b8bc1efc2d336055175830"
+        },
+        {
+          "task_id": "bun-sourcemap-leak",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=3c7dfcea-7225-4e6c-b731-5e006cf11252 trial_name=bun-sourcemap-leak__r4MtjTa task_digest=sha256:ac0b0f77da4e8f6c3904133033ec6d8591eb0d3f18205ab28104ea3cf2a5a07f result_sha256=990d01319da39c41892c90546d45eab141421c04915cf3d115d5dd0a6b085c62 lock_sha256=a13464f97a7aaba22c690c6cfe68ee1bef99e50cc4b8bc1efc2d336055175830"
+        },
+        {
+          "task_id": "bun-sourcemap-leak",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=73b3068f-54f9-4ace-bb16-ff257ed2bfe5 trial_name=bun-sourcemap-leak__shkoAQJ task_digest=sha256:ac0b0f77da4e8f6c3904133033ec6d8591eb0d3f18205ab28104ea3cf2a5a07f result_sha256=3b87f2ffa39aeaf2912624419aeef669157a25769507863ff06e44cc4f7d27cc lock_sha256=a13464f97a7aaba22c690c6cfe68ee1bef99e50cc4b8bc1efc2d336055175830"
+        },
+        {
+          "task_id": "bun-sourcemap-leak",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=d424777b-7337-44b4-b940-3720e03f8c5f trial_name=bun-sourcemap-leak__Qhr3TGF task_digest=sha256:ac0b0f77da4e8f6c3904133033ec6d8591eb0d3f18205ab28104ea3cf2a5a07f result_sha256=90635639bac7e9de4313962bb0e379c516cee42a0eceecef9970ab1db1dc5b22 lock_sha256=a13464f97a7aaba22c690c6cfe68ee1bef99e50cc4b8bc1efc2d336055175830"
+        },
+        {
+          "task_id": "bun-sourcemap-leak",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=f20e8332-4e08-4989-96ef-0b7d443a7ea3 trial_name=bun-sourcemap-leak__3gHQdFV task_digest=sha256:ac0b0f77da4e8f6c3904133033ec6d8591eb0d3f18205ab28104ea3cf2a5a07f result_sha256=dcd60e49a39fdf53098eb9ca8e21f8b7140dbdbe2707984c6f0f765c67792eba lock_sha256=a13464f97a7aaba22c690c6cfe68ee1bef99e50cc4b8bc1efc2d336055175830"
+        },
+        {
+          "task_id": "cad-model",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=0dfa6b96-42f1-468b-951a-b6cac9eaaf70 trial_name=cad-model__fGN3t8C task_digest=sha256:55103abe25325dfa3717d08ef3d8e02dc8f8bc9adccaed92aab7e94a95b2049a result_sha256=1ca8bd91784f010ce434ecb3f06ab1953d4c548d72d37a389f9268c4c18f9fd2 lock_sha256=0eef5792c8fa9ecc88e41bba15cdea7cb0ab9dc488a2b02503b30657720e08bc"
+        },
+        {
+          "task_id": "cad-model",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=3eaee0d5-d5c1-4b56-8057-ba781263856e trial_name=cad-model__YugtRZT task_digest=sha256:55103abe25325dfa3717d08ef3d8e02dc8f8bc9adccaed92aab7e94a95b2049a result_sha256=eb773b9771475fe7c6c16c3863eea5f7c98dabcbf67a36908d195839b46ab134 lock_sha256=0eef5792c8fa9ecc88e41bba15cdea7cb0ab9dc488a2b02503b30657720e08bc"
+        },
+        {
+          "task_id": "cad-model",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=5e79d091-fc0b-41fa-a058-c43719c12456 trial_name=cad-model__TKa5NqC task_digest=sha256:55103abe25325dfa3717d08ef3d8e02dc8f8bc9adccaed92aab7e94a95b2049a result_sha256=03a23f2845f3d7902f78950f49c2d009afd204cb1a6724c1f3256bae3323b6bc lock_sha256=0eef5792c8fa9ecc88e41bba15cdea7cb0ab9dc488a2b02503b30657720e08bc"
+        },
+        {
+          "task_id": "cad-model",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=c86777b1-96e2-462d-aa9e-de6c6726b6f7 trial_name=cad-model__u8cfxHT task_digest=sha256:55103abe25325dfa3717d08ef3d8e02dc8f8bc9adccaed92aab7e94a95b2049a result_sha256=437941e8d0031babe9491920e2a30b1be786b4c7a266b3aefe1b7e6d6f90c7d4 lock_sha256=0eef5792c8fa9ecc88e41bba15cdea7cb0ab9dc488a2b02503b30657720e08bc"
+        },
+        {
+          "task_id": "cad-model",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=e2cfd18a-a1cd-43fa-9af1-c216f7c251a9 trial_name=cad-model__u4BBRqe task_digest=sha256:55103abe25325dfa3717d08ef3d8e02dc8f8bc9adccaed92aab7e94a95b2049a result_sha256=2a1ba4c275b764fe3ac234a47a2ff59f542689dab65003a9603f2654a05b7e9c lock_sha256=0eef5792c8fa9ecc88e41bba15cdea7cb0ab9dc488a2b02503b30657720e08bc"
+        },
+        {
+          "task_id": "cargo-flight-dispatch",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=30bf279b-beb7-4f7c-8d86-69f7cc8789d8 trial_name=cargo-flight-dispatch__YKmSRNi task_digest=sha256:2836dfe6eb2270fcbbfdb119c7cfae8495208a03a7fc691c2efff49bda5b3c61 result_sha256=918f3724eecab8a6fb9f0813f01dcc36cb1633fbafcb355a0bce0aaae2e201fa lock_sha256=812471f14042dd68c1553bdabcab0059150b2a9112afe8c4e1282d35809f40d3"
+        },
+        {
+          "task_id": "cargo-flight-dispatch",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=96a67b0d-2bde-4366-b566-acc3dfecba18 trial_name=cargo-flight-dispatch__3W6mLxa task_digest=sha256:2836dfe6eb2270fcbbfdb119c7cfae8495208a03a7fc691c2efff49bda5b3c61 result_sha256=9ac0bcf7bbd649d8e8392f9added510b63c4b4f81f9a603dfcf989e350bf798f lock_sha256=812471f14042dd68c1553bdabcab0059150b2a9112afe8c4e1282d35809f40d3"
+        },
+        {
+          "task_id": "cargo-flight-dispatch",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=ad6afa74-c05d-497b-b5c2-2e520ba1068a trial_name=cargo-flight-dispatch__qCJuFnK task_digest=sha256:2836dfe6eb2270fcbbfdb119c7cfae8495208a03a7fc691c2efff49bda5b3c61 result_sha256=510320b4abf4948db0c81efc56b23bcbf092a4317fec48f01bbc16481c9cf87a lock_sha256=812471f14042dd68c1553bdabcab0059150b2a9112afe8c4e1282d35809f40d3"
+        },
+        {
+          "task_id": "cargo-flight-dispatch",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=afd6089d-a308-4647-99a2-d49632b7b3c5 trial_name=cargo-flight-dispatch__QTg55ut task_digest=sha256:2836dfe6eb2270fcbbfdb119c7cfae8495208a03a7fc691c2efff49bda5b3c61 result_sha256=de93c892205b38b87408d6542fef62bc92730420152d5c6ffb6f72bded094196 lock_sha256=812471f14042dd68c1553bdabcab0059150b2a9112afe8c4e1282d35809f40d3"
+        },
+        {
+          "task_id": "cargo-flight-dispatch",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=ed5c56fc-a624-4989-a4b4-8470f98e1152 trial_name=cargo-flight-dispatch__2MrWomh task_digest=sha256:2836dfe6eb2270fcbbfdb119c7cfae8495208a03a7fc691c2efff49bda5b3c61 result_sha256=6ce03747802662fbda67bac78567317260126f0104dc7a77c80595c28d592109 lock_sha256=812471f14042dd68c1553bdabcab0059150b2a9112afe8c4e1282d35809f40d3"
+        },
+        {
+          "task_id": "cli-2ph-simplex",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=1fb9fdf4-538a-4e2d-a281-fa56c1499e68 trial_name=cli-2ph-simplex__7Gy4VdP task_digest=sha256:9f41a82565950c380501beb7f8ae33732e4ad526dc4c6ba9b3f37d66a7742a36 result_sha256=3994d9e6bca7b40ef3a2b12aee272d6f732e8fce812e6da6864dd02b3f9f11e0 lock_sha256=f34357fe8999ca32548f72952a532f2a9f0d5cd1529219d35b8af7ebee0e083c"
+        },
+        {
+          "task_id": "cli-2ph-simplex",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=2f7f7fcf-d347-464d-ad5c-23a39b59932c trial_name=cli-2ph-simplex__iNQCEza task_digest=sha256:9f41a82565950c380501beb7f8ae33732e4ad526dc4c6ba9b3f37d66a7742a36 result_sha256=cc673b5201b18d2e03e7860e68abb73c7f39398e6fbfbb1b9b57a2080dd0c329 lock_sha256=f34357fe8999ca32548f72952a532f2a9f0d5cd1529219d35b8af7ebee0e083c"
+        },
+        {
+          "task_id": "cli-2ph-simplex",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=781bf0f7-34e9-4c6e-8be1-b4d922dd811b trial_name=cli-2ph-simplex__JEpUqxP task_digest=sha256:9f41a82565950c380501beb7f8ae33732e4ad526dc4c6ba9b3f37d66a7742a36 result_sha256=8b2065990b840941ea2adc220ac127f11505b210b35e2aaf7cf5632e64f2b42d lock_sha256=f34357fe8999ca32548f72952a532f2a9f0d5cd1529219d35b8af7ebee0e083c"
+        },
+        {
+          "task_id": "cli-2ph-simplex",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=7fc9bfc0-d7e2-40c6-8487-a8645fda8b5f trial_name=cli-2ph-simplex__K653kmv task_digest=sha256:9f41a82565950c380501beb7f8ae33732e4ad526dc4c6ba9b3f37d66a7742a36 result_sha256=0e37b10216fc511926db6f86151279ed7143ddd30b9975ba636aea5f59c48970 lock_sha256=f34357fe8999ca32548f72952a532f2a9f0d5cd1529219d35b8af7ebee0e083c"
+        },
+        {
+          "task_id": "cli-2ph-simplex",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=8ad3d920-5e93-45df-aaed-aead658e4ba9 trial_name=cli-2ph-simplex__HvGWdSQ task_digest=sha256:9f41a82565950c380501beb7f8ae33732e4ad526dc4c6ba9b3f37d66a7742a36 result_sha256=0914c4a18b4383e7c5e8d45748b3baf2edcd677981e060f7aea9c807e5274639 lock_sha256=f34357fe8999ca32548f72952a532f2a9f0d5cd1529219d35b8af7ebee0e083c"
+        },
+        {
+          "task_id": "coq-block-bound",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=0bfa241e-fd41-4ef4-a974-134e8d0c097e trial_name=coq-block-bound__m93gbk4 task_digest=sha256:4841b523aada2a5d94bb3687b0c107765ad8feac52bdab9e92fe1b59694f6abf result_sha256=38132f80ac96eeb861f6789766066c71c69bb2ce512983afa855584c385cb2e3 lock_sha256=049e578a6f6f2c96a005b644e240fc8871183e7d278c7711e7c552dbd3ff4828"
+        },
+        {
+          "task_id": "coq-block-bound",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=1b2ee0e7-edd3-4cef-babf-16b6e2382779 trial_name=coq-block-bound__4T2GUWz task_digest=sha256:4841b523aada2a5d94bb3687b0c107765ad8feac52bdab9e92fe1b59694f6abf result_sha256=aa22738035e0610b895fdfa570084dc329cef9c1c6d02e251ee31d625e701c8e lock_sha256=049e578a6f6f2c96a005b644e240fc8871183e7d278c7711e7c552dbd3ff4828"
+        },
+        {
+          "task_id": "coq-block-bound",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=4ab6ac4b-4fd4-4a3e-a395-39ec4d7672e4 trial_name=coq-block-bound__kz8v2M9 task_digest=sha256:4841b523aada2a5d94bb3687b0c107765ad8feac52bdab9e92fe1b59694f6abf result_sha256=f090459d89152b29e605c86b442c7b76714346fa8064ed49761b2bd33abffb45 lock_sha256=049e578a6f6f2c96a005b644e240fc8871183e7d278c7711e7c552dbd3ff4828"
+        },
+        {
+          "task_id": "coq-block-bound",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=963098dc-eaf3-4822-9e42-06ec025431cc trial_name=coq-block-bound__j24Ag94 task_digest=sha256:4841b523aada2a5d94bb3687b0c107765ad8feac52bdab9e92fe1b59694f6abf result_sha256=15ffbfc8bf7d067a1ebc8d2ac3d953662ec31ffa3e5d128ab1ae5568472924cf lock_sha256=049e578a6f6f2c96a005b644e240fc8871183e7d278c7711e7c552dbd3ff4828"
+        },
+        {
+          "task_id": "coq-block-bound",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=eb81eb11-4283-465e-9780-0d528534d36c trial_name=coq-block-bound__ZhUGYVf task_digest=sha256:4841b523aada2a5d94bb3687b0c107765ad8feac52bdab9e92fe1b59694f6abf result_sha256=a32784c2fbe5a5813dc548ef5145639a6567674c224935fccec16f9aaf446c81 lock_sha256=049e578a6f6f2c96a005b644e240fc8871183e7d278c7711e7c552dbd3ff4828"
+        },
+        {
+          "task_id": "ctr-optimization",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=0689d464-ce19-4451-b3b9-ed4d5ac10323 trial_name=ctr-optimization__woNqtcp task_digest=sha256:9267570079b058061b7e6a87cdb30df4f04c5d5af3ce2c37c3da6be425e7c26d result_sha256=b35485af0b9d65b33f3fdb6396209e50855facb37a18f9992f2c223f40dcfb7d lock_sha256=e3ca0d08d111703f8182c704333273308ceddd104159e1fb942a0d6f44375934"
+        },
+        {
+          "task_id": "ctr-optimization",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=13e97494-61d2-4a37-953a-fada874fdefe trial_name=ctr-optimization__nSCQq2U task_digest=sha256:9267570079b058061b7e6a87cdb30df4f04c5d5af3ce2c37c3da6be425e7c26d result_sha256=f8ac9fcac7eccdb5d57701410fc607d5379d32e6a4b2b9aa38eaf3af42126da7 lock_sha256=e3ca0d08d111703f8182c704333273308ceddd104159e1fb942a0d6f44375934"
+        },
+        {
+          "task_id": "ctr-optimization",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=2d7694c4-1dfb-4eee-8a2a-63dd177fa84f trial_name=ctr-optimization__8Cg8wA7 task_digest=sha256:9267570079b058061b7e6a87cdb30df4f04c5d5af3ce2c37c3da6be425e7c26d result_sha256=d7b94865808679e3e805e2e77666f901aafd6111c28f5da57b1f7c0f996ab392 lock_sha256=e3ca0d08d111703f8182c704333273308ceddd104159e1fb942a0d6f44375934"
+        },
+        {
+          "task_id": "ctr-optimization",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=4772ec45-27e5-4972-bc3e-114011e97d36 trial_name=ctr-optimization__uF5Vgi8 task_digest=sha256:9267570079b058061b7e6a87cdb30df4f04c5d5af3ce2c37c3da6be425e7c26d result_sha256=60b9f80fb409b12bb567dd2f68e26463823ac0780d28f79a726661067bb05977 lock_sha256=e3ca0d08d111703f8182c704333273308ceddd104159e1fb942a0d6f44375934"
+        },
+        {
+          "task_id": "ctr-optimization",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=68998e1f-7755-403b-b3bb-2082b0ae5da9 trial_name=ctr-optimization__Fy87Egv task_digest=sha256:9267570079b058061b7e6a87cdb30df4f04c5d5af3ce2c37c3da6be425e7c26d result_sha256=95b77a278e0d6f6c727b80eafcffdfc95a63734f4243667bd106ffe66460e56e lock_sha256=e3ca0d08d111703f8182c704333273308ceddd104159e1fb942a0d6f44375934"
+        },
+        {
+          "task_id": "cumulative-layout-shift",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=20faaa35-9405-474c-81f6-036cf3fda636 trial_name=cumulative-layout-shift__gLZMGGz task_digest=sha256:834205d9965467c2ed6f4516032658b0393ea0cb29c2442cfa75decf7ce026ff result_sha256=984630e1a74238f22ae39da5c240f02b4eacd6b3811a4dcbe4fe57be2eed5d9a lock_sha256=4e1827e5fafcf85d67bcfabe6fbaee2a00485d7d00e58d614948f25ccfaaf2b6"
+        },
+        {
+          "task_id": "cumulative-layout-shift",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=22b041dd-6bd3-4665-88fe-53e35c2bd25f trial_name=cumulative-layout-shift__eWS2tXP task_digest=sha256:834205d9965467c2ed6f4516032658b0393ea0cb29c2442cfa75decf7ce026ff result_sha256=f0827ea1ff0181e29b0be1ecaff21195737cf66ae0ba47be97c3ef28c60eac6b lock_sha256=4e1827e5fafcf85d67bcfabe6fbaee2a00485d7d00e58d614948f25ccfaaf2b6"
+        },
+        {
+          "task_id": "cumulative-layout-shift",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=270b4f79-0a99-4943-b2ce-6db374586b44 trial_name=cumulative-layout-shift__L6fPZsP task_digest=sha256:834205d9965467c2ed6f4516032658b0393ea0cb29c2442cfa75decf7ce026ff result_sha256=5398c472b1db75017c31cd95b8155b4aec8e3f12ac1dc5d311533d388f302997 lock_sha256=4e1827e5fafcf85d67bcfabe6fbaee2a00485d7d00e58d614948f25ccfaaf2b6"
+        },
+        {
+          "task_id": "cumulative-layout-shift",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=48b254ff-3b66-4ac5-bb08-af058ef9963c trial_name=cumulative-layout-shift__Gwn453C task_digest=sha256:834205d9965467c2ed6f4516032658b0393ea0cb29c2442cfa75decf7ce026ff result_sha256=7c77efe25f156a86b0cea0ae89876ccbdf9db2eb96c968d531ee758ad4845e98 lock_sha256=4e1827e5fafcf85d67bcfabe6fbaee2a00485d7d00e58d614948f25ccfaaf2b6"
+        },
+        {
+          "task_id": "cumulative-layout-shift",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=884270af-004c-4693-95c2-1a05efde8328 trial_name=cumulative-layout-shift__62sCpdZ task_digest=sha256:834205d9965467c2ed6f4516032658b0393ea0cb29c2442cfa75decf7ce026ff result_sha256=f2864191e7e224050ac760b22256a3d99cfe5ad0ca36fd5c9fac5c49e0916b95 lock_sha256=4e1827e5fafcf85d67bcfabe6fbaee2a00485d7d00e58d614948f25ccfaaf2b6"
+        },
+        {
+          "task_id": "data-anonymization",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=49066302-bc61-46fa-a2fd-cd64a237ba55 trial_name=data-anonymization__gx5Xa8K task_digest=sha256:2d463025deb8bcc4c860f8a8e90c799435306e566e6c36af4b0df6d18e10a290 result_sha256=9699d30f5e664d9a5dfc201e3d1ef79cc34f4746925af174d08c44f4f11d230b lock_sha256=4cf69150ed6b24c0e5134f507a462c059e0eeed2a585565f906c31a392efebd2"
+        },
+        {
+          "task_id": "data-anonymization",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=a776ab3f-d849-41d9-83f4-c73c3caa6642 trial_name=data-anonymization__SM7HjxA task_digest=sha256:2d463025deb8bcc4c860f8a8e90c799435306e566e6c36af4b0df6d18e10a290 result_sha256=eab7e381735d595adf0194f7db936ee07c60b31da642a715172a3758120c3728 lock_sha256=4cf69150ed6b24c0e5134f507a462c059e0eeed2a585565f906c31a392efebd2"
+        },
+        {
+          "task_id": "data-anonymization",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=d0101030-ec10-4968-80d7-124f69c6d647 trial_name=data-anonymization__kFYjHwz task_digest=sha256:2d463025deb8bcc4c860f8a8e90c799435306e566e6c36af4b0df6d18e10a290 result_sha256=b31fd3ff83633764390dff94788f92b2c48761ce0fb705fcef95ef90dcf68234 lock_sha256=4cf69150ed6b24c0e5134f507a462c059e0eeed2a585565f906c31a392efebd2"
+        },
+        {
+          "task_id": "data-anonymization",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=e820f3ee-ea31-488b-9ebd-d456a6dcb791 trial_name=data-anonymization__f5bbUaA task_digest=sha256:2d463025deb8bcc4c860f8a8e90c799435306e566e6c36af4b0df6d18e10a290 result_sha256=8d87ebcefbff4c928cf1877e47043a832fdc3d61e77171dd96ee9f17d5e9061e lock_sha256=4cf69150ed6b24c0e5134f507a462c059e0eeed2a585565f906c31a392efebd2"
+        },
+        {
+          "task_id": "data-anonymization",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=ffbe1232-11e8-499d-b988-746326b0b904 trial_name=data-anonymization__ZWqbTwF task_digest=sha256:2d463025deb8bcc4c860f8a8e90c799435306e566e6c36af4b0df6d18e10a290 result_sha256=8ee1a809693b368f388977637de9c291e2f8ffddd20401235873eaa67f11397a lock_sha256=4cf69150ed6b24c0e5134f507a462c059e0eeed2a585565f906c31a392efebd2"
+        },
+        {
+          "task_id": "distributed-dedup",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=a4c63bcd-f627-4717-baa1-f998d33e141d trial_name=distributed-dedup__sTmFjt6 task_digest=sha256:f89d4536b2b884fe972215937f01397d9c6ebe5578499e4b192e67021c50310b result_sha256=a380d1a4b382fa05da0e9d80c996abbaa9b5cbf80db7366f7bf6576671fb2489 lock_sha256=5edff2af8b06ceb88d9edac96e504e29fa08de1b58a6c09c37fac73141d8dc81"
+        },
+        {
+          "task_id": "distributed-dedup",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=c29d494e-184a-4aa3-948a-5f167e913898 trial_name=distributed-dedup__pwytxiR task_digest=sha256:f89d4536b2b884fe972215937f01397d9c6ebe5578499e4b192e67021c50310b result_sha256=95a8e64e8de3c2dde921aa5c1a8049fd3691e266585f18bfc9f151b12bd6faf0 lock_sha256=5edff2af8b06ceb88d9edac96e504e29fa08de1b58a6c09c37fac73141d8dc81"
+        },
+        {
+          "task_id": "distributed-dedup",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=d2e6428a-b4c9-4eef-898b-b4f62c34e9a8 trial_name=distributed-dedup__47KfRdV task_digest=sha256:f89d4536b2b884fe972215937f01397d9c6ebe5578499e4b192e67021c50310b result_sha256=91680916b1bc9f5d9e498a6eec94f94b051ec28667ef75774cbf2893a6783767 lock_sha256=5edff2af8b06ceb88d9edac96e504e29fa08de1b58a6c09c37fac73141d8dc81"
+        },
+        {
+          "task_id": "distributed-dedup",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=e4923272-15bc-4dd6-be93-712f11913d44 trial_name=distributed-dedup__Em9ATJv task_digest=sha256:f89d4536b2b884fe972215937f01397d9c6ebe5578499e4b192e67021c50310b result_sha256=3607f474ba23be8877a07cfb85846b3a6a1f77463d51ee576dc03395f468ae76 lock_sha256=5edff2af8b06ceb88d9edac96e504e29fa08de1b58a6c09c37fac73141d8dc81"
+        },
+        {
+          "task_id": "distributed-dedup",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=e69621a5-2d4a-4983-8f50-6dc75cc18fff trial_name=distributed-dedup__jKd3qpd task_digest=sha256:f89d4536b2b884fe972215937f01397d9c6ebe5578499e4b192e67021c50310b result_sha256=baa08cef3e683db52b2a5363c06b4a5f65864b747409316351669d04840992c0 lock_sha256=5edff2af8b06ceb88d9edac96e504e29fa08de1b58a6c09c37fac73141d8dc81"
+        },
+        {
+          "task_id": "embedding-drift-monitor",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=34a09601-6701-473b-b1f0-9ab6c54c9801 trial_name=embedding-drift-monitor__c5cyU8Z task_digest=sha256:cc93452e15459e00dcd817867428f4c49cd5a8831213ba4590f1372929cb262e result_sha256=e31b07be58d1835f86482d1b969620a3b9d3309485aec3e9dc50ea8c4723aa14 lock_sha256=fd4f7a6bbced99833ad9215e7c8e66ce2156ff35d68d9ab341424e80c3c5bcb9"
+        },
+        {
+          "task_id": "embedding-drift-monitor",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=87aede8f-ad3d-47e2-b6c4-318567c8d679 trial_name=embedding-drift-monitor__PSGDP27 task_digest=sha256:cc93452e15459e00dcd817867428f4c49cd5a8831213ba4590f1372929cb262e result_sha256=477c6881c2b7f6dd7bfd6444b18dbc57bccff80d46217280ef563e9ff18a5df6 lock_sha256=fd4f7a6bbced99833ad9215e7c8e66ce2156ff35d68d9ab341424e80c3c5bcb9"
+        },
+        {
+          "task_id": "embedding-drift-monitor",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=a330e6da-7fa7-450d-a7a4-fb1365515c73 trial_name=embedding-drift-monitor__2RKhXY2 task_digest=sha256:cc93452e15459e00dcd817867428f4c49cd5a8831213ba4590f1372929cb262e result_sha256=3d3dfc69957922be0f16d870a62b699b5a9c0f37edbbaabdd14b91542209cce7 lock_sha256=fd4f7a6bbced99833ad9215e7c8e66ce2156ff35d68d9ab341424e80c3c5bcb9"
+        },
+        {
+          "task_id": "embedding-drift-monitor",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=a831597e-38e6-49d1-af6c-ebc3df1bd703 trial_name=embedding-drift-monitor__5SCYssN task_digest=sha256:cc93452e15459e00dcd817867428f4c49cd5a8831213ba4590f1372929cb262e result_sha256=ffca6e9f8643d72c676a1664c993220dfc52ac9d254759882dee7f5dd80e7bf9 lock_sha256=fd4f7a6bbced99833ad9215e7c8e66ce2156ff35d68d9ab341424e80c3c5bcb9"
+        },
+        {
+          "task_id": "embedding-drift-monitor",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=bca0b17c-6801-424e-a9ee-815f8f3fbcf7 trial_name=embedding-drift-monitor__3anAvCt task_digest=sha256:cc93452e15459e00dcd817867428f4c49cd5a8831213ba4590f1372929cb262e result_sha256=2d40d78320f2486d3c6d47b3842a84b6354f5524f6cf793264c813c557d4f35b lock_sha256=fd4f7a6bbced99833ad9215e7c8e66ce2156ff35d68d9ab341424e80c3c5bcb9"
+        },
+        {
+          "task_id": "erp-procurement-planning",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=2aef64d9-cf83-45b4-a280-2ba7bca4085e trial_name=erp-procurement-planning__iR4Jr4z task_digest=sha256:4be203d7f07954008fcca9869e2e6cc7b0fb6603bebc7e7d0ffe498e7fa2b843 result_sha256=a38671c2c5755f3dc7bb9154aedf92f6a74dc0400c699507ac51e65f095442de lock_sha256=aa5890b29062bf0ad14b061d869b2a9acc2fb053c7a4b93235c404d2c34e9a27"
+        },
+        {
+          "task_id": "erp-procurement-planning",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=35544f55-9628-42d2-bfd4-7252051e1501 trial_name=erp-procurement-planning__3r9oEF3 task_digest=sha256:4be203d7f07954008fcca9869e2e6cc7b0fb6603bebc7e7d0ffe498e7fa2b843 result_sha256=8176aa5f8d2a0e0b79f44bcfb344872d76917dbe02f4d7fd2c80e66d4716ad6d lock_sha256=aa5890b29062bf0ad14b061d869b2a9acc2fb053c7a4b93235c404d2c34e9a27"
+        },
+        {
+          "task_id": "erp-procurement-planning",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=8c17c60d-a282-43a2-b6c7-cbed799ead54 trial_name=erp-procurement-planning__XMoVKjg task_digest=sha256:4be203d7f07954008fcca9869e2e6cc7b0fb6603bebc7e7d0ffe498e7fa2b843 result_sha256=ad1ab9fa5994fa8ddb6c83df335f49555bae503f7648c08ec1ac2719d9ae9f96 lock_sha256=aa5890b29062bf0ad14b061d869b2a9acc2fb053c7a4b93235c404d2c34e9a27"
+        },
+        {
+          "task_id": "erp-procurement-planning",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=919f5534-e67d-44be-8fe5-23df72cdec63 trial_name=erp-procurement-planning__9Xxiw6X task_digest=sha256:4be203d7f07954008fcca9869e2e6cc7b0fb6603bebc7e7d0ffe498e7fa2b843 result_sha256=f73d7d3e8666ea6571cc00104412da3946a08e72bec31fd628301a5e4bfdeffd lock_sha256=aa5890b29062bf0ad14b061d869b2a9acc2fb053c7a4b93235c404d2c34e9a27"
+        },
+        {
+          "task_id": "erp-procurement-planning",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=95c00747-f604-4296-8214-397dbd220b91 trial_name=erp-procurement-planning__eP9NyRK task_digest=sha256:4be203d7f07954008fcca9869e2e6cc7b0fb6603bebc7e7d0ffe498e7fa2b843 result_sha256=bf637cad8cb82a4450ed398cced66358e4c0efe5c52b7b96a60045d91dc59a58 lock_sha256=aa5890b29062bf0ad14b061d869b2a9acc2fb053c7a4b93235c404d2c34e9a27"
+        },
+        {
+          "task_id": "exam-pdf-eval",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=30c113fe-caa2-44a3-b70e-4714daca3b90 trial_name=exam-pdf-eval__2yHe9hH task_digest=sha256:d4f58d8db8098e854bbd2d98b0bcfee6ac14a3a6c69b606db55a8eb1230ff7da result_sha256=69404bfe681f15772daa5ea36a7472abd940bb6f16963ef89f340b8cafe59e85 lock_sha256=e786c64d9bcca9929055b0822c4c78ae72a52b100eeaf9d102f2ed34a2713667"
+        },
+        {
+          "task_id": "exam-pdf-eval",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=33d3205d-cd74-4ba8-b089-754387fa3955 trial_name=exam-pdf-eval__v5uY5ZT task_digest=sha256:d4f58d8db8098e854bbd2d98b0bcfee6ac14a3a6c69b606db55a8eb1230ff7da result_sha256=c8e537ac7edc5904ed617e5ed8286fda46e15e06e44d81ae2cc8078c8e64c258 lock_sha256=e786c64d9bcca9929055b0822c4c78ae72a52b100eeaf9d102f2ed34a2713667"
+        },
+        {
+          "task_id": "exam-pdf-eval",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=801d69b8-97f1-4a55-9d80-8e3782edb90d trial_name=exam-pdf-eval__ZugJKhV task_digest=sha256:d4f58d8db8098e854bbd2d98b0bcfee6ac14a3a6c69b606db55a8eb1230ff7da result_sha256=08d2fc9171949373a33ff95ba5c4f6c84dbdd0e94ed0bb45c3cf0d1438646864 lock_sha256=e786c64d9bcca9929055b0822c4c78ae72a52b100eeaf9d102f2ed34a2713667"
+        },
+        {
+          "task_id": "exam-pdf-eval",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=a996fbd0-30e6-423e-a4c5-f29e3b031168 trial_name=exam-pdf-eval__KCU6kZo task_digest=sha256:d4f58d8db8098e854bbd2d98b0bcfee6ac14a3a6c69b606db55a8eb1230ff7da result_sha256=e9101eb10b891af8b0e9bdbb71a0efdb4ad67aa0f06e7fd652469a9cfb18cd07 lock_sha256=e786c64d9bcca9929055b0822c4c78ae72a52b100eeaf9d102f2ed34a2713667"
+        },
+        {
+          "task_id": "exam-pdf-eval",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=dea81869-dcf7-43f9-b097-32e37ce7817e trial_name=exam-pdf-eval__R36JHq2 task_digest=sha256:d4f58d8db8098e854bbd2d98b0bcfee6ac14a3a6c69b606db55a8eb1230ff7da result_sha256=fe3ec1431251d9c79957810744c1cd55463c1a8afbbf712085c1f361c3114ec5 lock_sha256=e786c64d9bcca9929055b0822c4c78ae72a52b100eeaf9d102f2ed34a2713667"
+        },
+        {
+          "task_id": "fin-saccr-rwa",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=2d89d0cd-4ccd-4767-b51e-837fea8c93db trial_name=fin-saccr-rwa__pqSZbkk task_digest=sha256:5b2103ac785d4a915207a2535fabf3815fea2c75cf4de01c79747a679facc2ad result_sha256=e65824e1a41df5ffc138bd7910fba93abb0a0a70a625a52dbf5d0d0c940e539b lock_sha256=89217b6d852ea24ea519ead8dbc787819296810c826180262538b0e6461c2684"
+        },
+        {
+          "task_id": "fin-saccr-rwa",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=3172b290-5388-46fa-a5ff-70014340459a trial_name=fin-saccr-rwa__vhiBeyK task_digest=sha256:5b2103ac785d4a915207a2535fabf3815fea2c75cf4de01c79747a679facc2ad result_sha256=0354518cadfd21444a48f000d62c38b54be98a4f2f9378a26b322e593d9b356a lock_sha256=89217b6d852ea24ea519ead8dbc787819296810c826180262538b0e6461c2684"
+        },
+        {
+          "task_id": "fin-saccr-rwa",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=3f8f8741-231d-406d-9d19-e0c6984a6b86 trial_name=fin-saccr-rwa__sEUmpmn task_digest=sha256:5b2103ac785d4a915207a2535fabf3815fea2c75cf4de01c79747a679facc2ad result_sha256=a603ce2685dae62ce214071f93178763bb45256c80c3bd4d0b03217489d93679 lock_sha256=89217b6d852ea24ea519ead8dbc787819296810c826180262538b0e6461c2684"
+        },
+        {
+          "task_id": "fin-saccr-rwa",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=adcd9a44-9007-4e1b-b60c-6562ff8e85d5 trial_name=fin-saccr-rwa__V4yFnfm task_digest=sha256:5b2103ac785d4a915207a2535fabf3815fea2c75cf4de01c79747a679facc2ad result_sha256=d1f734fb34a85a3bbbd5073043fab3b4d278234f18d87d835a9dc560093b434a lock_sha256=89217b6d852ea24ea519ead8dbc787819296810c826180262538b0e6461c2684"
+        },
+        {
+          "task_id": "fin-saccr-rwa",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=fdfd23b3-003f-4538-9cf6-4a23c579c274 trial_name=fin-saccr-rwa__mWgvzRm task_digest=sha256:5b2103ac785d4a915207a2535fabf3815fea2c75cf4de01c79747a679facc2ad result_sha256=94c1a55a031e0af5c49ce9d2b214f70093b6c2b046a0cfc261431044791f6ff6 lock_sha256=89217b6d852ea24ea519ead8dbc787819296810c826180262538b0e6461c2684"
+        },
+        {
+          "task_id": "fix-uautomizer-soundness",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=49ca1fb7-7e31-4db2-b9de-7ef54a027977 trial_name=fix-uautomizer-soundness__QSBxXqd task_digest=sha256:4a0ee1bf87f6d571214101881b0ac031c502fd20142bdf61f78755f58c4515e3 result_sha256=71ac11be579dc93f8c35a506b9eddd678e7ea9b33fd196e2f134f321e50f062a lock_sha256=57ca9b7369b2e08c470877c474b17516fafb08b9a29d39beea38e66fdbcb9559"
+        },
+        {
+          "task_id": "fix-uautomizer-soundness",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=ad65efb1-7ece-4ead-b510-3c3a2fc9f7ed trial_name=fix-uautomizer-soundness__EcBfZvJ task_digest=sha256:4a0ee1bf87f6d571214101881b0ac031c502fd20142bdf61f78755f58c4515e3 result_sha256=672fa5e69422665c27b6419e631da8a5a3583e827a62d2043311714de126b06d lock_sha256=57ca9b7369b2e08c470877c474b17516fafb08b9a29d39beea38e66fdbcb9559"
+        },
+        {
+          "task_id": "fix-uautomizer-soundness",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=d21dc81d-078c-4c77-94b6-60303404fe62 trial_name=fix-uautomizer-soundness__2xteX9H task_digest=sha256:4a0ee1bf87f6d571214101881b0ac031c502fd20142bdf61f78755f58c4515e3 result_sha256=d0d6f40f60564ae691ead1e65452b35ff97891d8f40faffe96be53c79f79d21b lock_sha256=57ca9b7369b2e08c470877c474b17516fafb08b9a29d39beea38e66fdbcb9559"
+        },
+        {
+          "task_id": "fix-uautomizer-soundness",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=d521824c-9b62-4452-aeef-14f9b2fb0bec trial_name=fix-uautomizer-soundness__2hxEUi7 task_digest=sha256:4a0ee1bf87f6d571214101881b0ac031c502fd20142bdf61f78755f58c4515e3 result_sha256=f12695176d86f8029cd24a256cd8dd908aee3bdd34acc3347fc115490d7f8a38 lock_sha256=57ca9b7369b2e08c470877c474b17516fafb08b9a29d39beea38e66fdbcb9559"
+        },
+        {
+          "task_id": "fix-uautomizer-soundness",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=f48fa19b-0c93-4364-a376-9ee63f916c75 trial_name=fix-uautomizer-soundness__SAMD4DC task_digest=sha256:4a0ee1bf87f6d571214101881b0ac031c502fd20142bdf61f78755f58c4515e3 result_sha256=53d0c4793992582f2e0d9ae056a84154d8c95ba3559ac9172a40b56b4e600a82 lock_sha256=57ca9b7369b2e08c470877c474b17516fafb08b9a29d39beea38e66fdbcb9559"
+        },
+        {
+          "task_id": "foodstuff-beta-activity",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=2b5b97ef-b1f5-4f10-af9a-9625a413f9b0 trial_name=foodstuff-beta-activity__QAnn5om task_digest=sha256:62f4c9e1d2c27c3ed174be4691d7d6c2df69f6466a51b266808c63cd111a9787 result_sha256=5905bd708ca46540d2b22dd550d5f0602555bc304e4e1d7426c5cb3c7353bd6e lock_sha256=a73b0fd0c688f0ddcc4d561af3d41f884f1fda0182013a52cdcdc5a4db254ba8"
+        },
+        {
+          "task_id": "foodstuff-beta-activity",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=4d722d0f-a643-419f-ae97-48ec521566be trial_name=foodstuff-beta-activity__LeySh4V task_digest=sha256:62f4c9e1d2c27c3ed174be4691d7d6c2df69f6466a51b266808c63cd111a9787 result_sha256=7982c834df427a02e9e5091980412bbb4e6780b2e369c1cbeadb7c62ec1790f0 lock_sha256=a73b0fd0c688f0ddcc4d561af3d41f884f1fda0182013a52cdcdc5a4db254ba8"
+        },
+        {
+          "task_id": "foodstuff-beta-activity",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=837cdf17-55d4-4bc6-9a74-0ff326b2ff2d trial_name=foodstuff-beta-activity__29vDGKk task_digest=sha256:62f4c9e1d2c27c3ed174be4691d7d6c2df69f6466a51b266808c63cd111a9787 result_sha256=ae61414ed95478af9b361b70362d7e2cc35ce4b3bdd29224143b846fc894a10a lock_sha256=a73b0fd0c688f0ddcc4d561af3d41f884f1fda0182013a52cdcdc5a4db254ba8"
+        },
+        {
+          "task_id": "foodstuff-beta-activity",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=a1be6f4e-d5c2-4b64-9633-06413af57b98 trial_name=foodstuff-beta-activity__A7QY4t5 task_digest=sha256:62f4c9e1d2c27c3ed174be4691d7d6c2df69f6466a51b266808c63cd111a9787 result_sha256=92c284195b81093a56d21dd70e7f8b4484a49df3bafd4df786f5b01b9c9e7afb lock_sha256=a73b0fd0c688f0ddcc4d561af3d41f884f1fda0182013a52cdcdc5a4db254ba8"
+        },
+        {
+          "task_id": "foodstuff-beta-activity",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=f5792a7f-caaf-4aba-b4ff-855609f0c345 trial_name=foodstuff-beta-activity__juuB4Fg task_digest=sha256:62f4c9e1d2c27c3ed174be4691d7d6c2df69f6466a51b266808c63cd111a9787 result_sha256=b6611e33ad933dad021617d6f3b3c01c101b6d021425039c91cba89f500fce48 lock_sha256=a73b0fd0c688f0ddcc4d561af3d41f884f1fda0182013a52cdcdc5a4db254ba8"
+        },
+        {
+          "task_id": "formal-crypto",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=2efbafba-82fd-455e-bbc8-88d2e29228ca trial_name=formal-crypto__89m47ZZ task_digest=sha256:3d1bf9aadd4846379f4c2de10ffd21431444d7647ddbc302bd3cb2283051b4c4 result_sha256=b726405455da9cd04940af50525e83952a389384018bd5df889fa4156466184f lock_sha256=9cde1cdde5edc64e9964170b14371f854ab06e43d359a1a42aae590fe4e49aac"
+        },
+        {
+          "task_id": "formal-crypto",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=6d4030bc-f7dd-42d3-8a1e-687d3c34b181 trial_name=formal-crypto__rW3i3SZ task_digest=sha256:3d1bf9aadd4846379f4c2de10ffd21431444d7647ddbc302bd3cb2283051b4c4 result_sha256=792a3ce8e2240f58655b0407058f5f7307fa4ce672c33c445f6d9ddec5a3d650 lock_sha256=9cde1cdde5edc64e9964170b14371f854ab06e43d359a1a42aae590fe4e49aac"
+        },
+        {
+          "task_id": "formal-crypto",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=8c857ce0-48e9-4b13-a646-3f95af23f78e trial_name=formal-crypto__ZGK8tCB task_digest=sha256:3d1bf9aadd4846379f4c2de10ffd21431444d7647ddbc302bd3cb2283051b4c4 result_sha256=09b7353a6e40b519561359ac45d24d8b1dfb73d83ceda12fa95787b92736daf3 lock_sha256=9cde1cdde5edc64e9964170b14371f854ab06e43d359a1a42aae590fe4e49aac"
+        },
+        {
+          "task_id": "formal-crypto",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=9f88526f-abad-4b41-b46b-c310bbdd4ff2 trial_name=formal-crypto__8kZFHqL task_digest=sha256:3d1bf9aadd4846379f4c2de10ffd21431444d7647ddbc302bd3cb2283051b4c4 result_sha256=21e87e905bf807d0f1d8ce2c5830499e1c95f27b7afb0061bdd7a6a4f4390395 lock_sha256=9cde1cdde5edc64e9964170b14371f854ab06e43d359a1a42aae590fe4e49aac"
+        },
+        {
+          "task_id": "formal-crypto",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=d086baa6-9995-452f-8060-7168ad9e9e18 trial_name=formal-crypto__p6F3snT task_digest=sha256:3d1bf9aadd4846379f4c2de10ffd21431444d7647ddbc302bd3cb2283051b4c4 result_sha256=a22d8fc191f6e206632e649f6b46f31448d7bd42ea2578a782eda0389089983b lock_sha256=9cde1cdde5edc64e9964170b14371f854ab06e43d359a1a42aae590fe4e49aac"
+        },
+        {
+          "task_id": "fp8-rmsnorm-gemm",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=2dc50e83-8991-4e61-a8b0-b88faeb01836 trial_name=fp8-rmsnorm-gemm__wGp2qE7 task_digest=sha256:b2578e66cf87dfa6b64517c69fc1590a1777fb19f7bdff287f4d985ceedec2bd result_sha256=38805e8c1e03c3d849f7fabdbc1d2a7f389860017291ef470c60fd6a6fb562cc lock_sha256=f80f339367119dc732b7052577b45218dad5f212e2b07d639ed921f71f59de15"
+        },
+        {
+          "task_id": "fp8-rmsnorm-gemm",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=325ae8b9-af35-47f2-9450-78e571848c95 trial_name=fp8-rmsnorm-gemm__hMCNr9k task_digest=sha256:b2578e66cf87dfa6b64517c69fc1590a1777fb19f7bdff287f4d985ceedec2bd result_sha256=58273a7e8b8d08778e5a842653ab2cd6aeb0bbd975531ffc728d5184a8a00940 lock_sha256=f80f339367119dc732b7052577b45218dad5f212e2b07d639ed921f71f59de15"
+        },
+        {
+          "task_id": "fp8-rmsnorm-gemm",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=64c634f9-d268-469f-80e8-522e7697df6c trial_name=fp8-rmsnorm-gemm__g4PeEaF task_digest=sha256:b2578e66cf87dfa6b64517c69fc1590a1777fb19f7bdff287f4d985ceedec2bd result_sha256=697e1b8d81ecee26dd5f5edb113f06f3ee8244a59bf46d4d3e6b8f40eeb29b9b lock_sha256=f80f339367119dc732b7052577b45218dad5f212e2b07d639ed921f71f59de15"
+        },
+        {
+          "task_id": "fp8-rmsnorm-gemm",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=a647f692-fb3c-4f19-9c28-8ffd60ce5729 trial_name=fp8-rmsnorm-gemm__2kCr6uD task_digest=sha256:b2578e66cf87dfa6b64517c69fc1590a1777fb19f7bdff287f4d985ceedec2bd result_sha256=adda40be25b6e589e59ce9fdd7f975a1aac598cf40ea06ab789eb5fa4c4e557c lock_sha256=f80f339367119dc732b7052577b45218dad5f212e2b07d639ed921f71f59de15"
+        },
+        {
+          "task_id": "fp8-rmsnorm-gemm",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=e647b37d-430d-4923-91eb-d275f88c813d trial_name=fp8-rmsnorm-gemm__HDP8fTb task_digest=sha256:b2578e66cf87dfa6b64517c69fc1590a1777fb19f7bdff287f4d985ceedec2bd result_sha256=63098d0e53c7145e3945500cac1810d09a8d257717892a1c220f5de0f592a0b2 lock_sha256=f80f339367119dc732b7052577b45218dad5f212e2b07d639ed921f71f59de15"
+        },
+        {
+          "task_id": "freecad-impeller",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=6204f872-2562-4435-85ce-cbc6f8047acb trial_name=freecad-impeller__pPN93q2 task_digest=sha256:f1e641af087bf8feb3107355e207654021504cf53f6ec9b5d19f0dd5e54d7f86 result_sha256=5cfd5e06607bf4e0469159fad0737ac3148caecf91837ec2a888ffc9aa0f0e4b lock_sha256=16863261ec999a640d4ea84c3f9c27b6c545c17b4a1f4fea2005dab81c51406b"
+        },
+        {
+          "task_id": "freecad-impeller",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=84d31415-1dac-4dfc-b783-d2bd30b14f76 trial_name=freecad-impeller__Pa6G8TL task_digest=sha256:f1e641af087bf8feb3107355e207654021504cf53f6ec9b5d19f0dd5e54d7f86 result_sha256=e12b5bfe0b008d005e983f46f90bafc72954abe47f46d33af6d0e5617988a8d9 lock_sha256=16863261ec999a640d4ea84c3f9c27b6c545c17b4a1f4fea2005dab81c51406b"
+        },
+        {
+          "task_id": "freecad-impeller",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=ac725383-9600-45f6-b8d6-4ab821462e3b trial_name=freecad-impeller__KF8UyFo task_digest=sha256:f1e641af087bf8feb3107355e207654021504cf53f6ec9b5d19f0dd5e54d7f86 result_sha256=39326c4519f529258d04dfeada1947f94073f3b54e33c823f3f760e5796f83ae lock_sha256=16863261ec999a640d4ea84c3f9c27b6c545c17b4a1f4fea2005dab81c51406b"
+        },
+        {
+          "task_id": "freecad-impeller",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=f1fc4a88-62f4-4f8e-8d4e-bc4264a32a35 trial_name=freecad-impeller__TJhdqX4 task_digest=sha256:f1e641af087bf8feb3107355e207654021504cf53f6ec9b5d19f0dd5e54d7f86 result_sha256=4183a58c9b91085c3d7c8622ee77f328bc6307c9cbdbb87da250659d36827e15 lock_sha256=16863261ec999a640d4ea84c3f9c27b6c545c17b4a1f4fea2005dab81c51406b"
+        },
+        {
+          "task_id": "freecad-impeller",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=fb3093dc-752c-4738-9cf2-1f295a184af4 trial_name=freecad-impeller__ErF48zD task_digest=sha256:f1e641af087bf8feb3107355e207654021504cf53f6ec9b5d19f0dd5e54d7f86 result_sha256=9c048cdb5a4f0dbb5edf91786c9197c5934a21851c1a17fb95028c5049b59d00 lock_sha256=16863261ec999a640d4ea84c3f9c27b6c545c17b4a1f4fea2005dab81c51406b"
+        },
+        {
+          "task_id": "freecad-platform-drawing",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=71eb3dcb-c16d-4015-a924-e6322a1dfe4d trial_name=freecad-platform-drawing__qWMN7Kd task_digest=sha256:70603e9566138b4e63165ebc4badcff5a83cbff187c397b78b0ff60073b8ffb4 result_sha256=0cd342c7ec8c9384ff65ee61977494036d9c9a539657ec4db56e25c2df95d500 lock_sha256=e105a0f95d0bf5445d3e18db75019548ffaedcba5cd75c2321b23fe7f6a154f5"
+        },
+        {
+          "task_id": "freecad-platform-drawing",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=959f07db-269d-42bb-a245-c19e4e98b93b trial_name=freecad-platform-drawing__UbWESp9 task_digest=sha256:70603e9566138b4e63165ebc4badcff5a83cbff187c397b78b0ff60073b8ffb4 result_sha256=0ca3d6db4a7372598be4a0d09535e2e5d2e7068c72aa5ee80f56f3de2d27980f lock_sha256=e105a0f95d0bf5445d3e18db75019548ffaedcba5cd75c2321b23fe7f6a154f5"
+        },
+        {
+          "task_id": "freecad-platform-drawing",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=d096b67a-0076-418a-b35d-98be27e825ad trial_name=freecad-platform-drawing__dcw8CWU task_digest=sha256:70603e9566138b4e63165ebc4badcff5a83cbff187c397b78b0ff60073b8ffb4 result_sha256=aecc7f4b50b0f0bf58539c6d228c148c72b1a6e8e5b5e4cd776298548cee8d15 lock_sha256=e105a0f95d0bf5445d3e18db75019548ffaedcba5cd75c2321b23fe7f6a154f5"
+        },
+        {
+          "task_id": "freecad-platform-drawing",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=f15c24c8-67e4-4308-83a8-9f0be54917dc trial_name=freecad-platform-drawing__Dcf23CS task_digest=sha256:70603e9566138b4e63165ebc4badcff5a83cbff187c397b78b0ff60073b8ffb4 result_sha256=37c25d8ecff20dfbdcae93659ecb2cccf45a42e7fe3ac463a73170a9bca503e5 lock_sha256=e105a0f95d0bf5445d3e18db75019548ffaedcba5cd75c2321b23fe7f6a154f5"
+        },
+        {
+          "task_id": "freecad-platform-drawing",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=f801382c-f735-4108-8def-fab278b5c1fd trial_name=freecad-platform-drawing__maZ6opb task_digest=sha256:70603e9566138b4e63165ebc4badcff5a83cbff187c397b78b0ff60073b8ffb4 result_sha256=c951f104cfb44104325827d5e9a014d3a030f918c35e1d71279a6da098fee28b lock_sha256=e105a0f95d0bf5445d3e18db75019548ffaedcba5cd75c2321b23fe7f6a154f5"
+        },
+        {
+          "task_id": "freecad-spring-clip",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=26368f19-302e-4529-98c4-8e59f78fd848 trial_name=freecad-spring-clip__dPRrPUe task_digest=sha256:4c823616ab5c8cccfc58d828a3d770122cb70b3dadc02a859bce53acf11a22b1 result_sha256=a523c66dce64918763c727dfac6ffef0d32b41f62832960241a5a2b0c11f1717 lock_sha256=f0c2bdf032038437d21443694b87de7998bfd0343d777918b2738c2ce7db4acd"
+        },
+        {
+          "task_id": "freecad-spring-clip",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=583b215d-e3a0-4972-aa28-795a122af603 trial_name=freecad-spring-clip__gu6a8M9 task_digest=sha256:4c823616ab5c8cccfc58d828a3d770122cb70b3dadc02a859bce53acf11a22b1 result_sha256=88d09c47f6cc03f23515478538dd32b103229bf4c985e6e25e6c994fc3f50970 lock_sha256=f0c2bdf032038437d21443694b87de7998bfd0343d777918b2738c2ce7db4acd"
+        },
+        {
+          "task_id": "freecad-spring-clip",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=6eca5d19-a46a-426c-941b-a5f446c72476 trial_name=freecad-spring-clip__ykDgj66 task_digest=sha256:4c823616ab5c8cccfc58d828a3d770122cb70b3dadc02a859bce53acf11a22b1 result_sha256=3410997fc4c1554e1bd241aaa9be65f98a36d593ed0a80444e85156a2d83bbc0 lock_sha256=f0c2bdf032038437d21443694b87de7998bfd0343d777918b2738c2ce7db4acd"
+        },
+        {
+          "task_id": "freecad-spring-clip",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=88433bd7-a2cd-4dd7-ab8f-8bf38a95d518 trial_name=freecad-spring-clip__zJ68QhG task_digest=sha256:4c823616ab5c8cccfc58d828a3d770122cb70b3dadc02a859bce53acf11a22b1 result_sha256=401a28002b90afa5d27f9fd5122f97ecf475563bd1fc2e8ee0cfb792513b57f5 lock_sha256=f0c2bdf032038437d21443694b87de7998bfd0343d777918b2738c2ce7db4acd"
+        },
+        {
+          "task_id": "freecad-spring-clip",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=b30f646b-4533-4aa0-964a-1b1abd272e4c trial_name=freecad-spring-clip__qcuAvEB task_digest=sha256:4c823616ab5c8cccfc58d828a3d770122cb70b3dadc02a859bce53acf11a22b1 result_sha256=d844e1ab8b9bc952b313a745d9b3b3712770db33d1a4c768a7afc7e958dd944b lock_sha256=f0c2bdf032038437d21443694b87de7998bfd0343d777918b2738c2ce7db4acd"
+        },
+        {
+          "task_id": "freight-dispatch-shift",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=121cfb01-4b54-4160-aec8-0abb7b3e6c00 trial_name=freight-dispatch-shift__6VNPCCE task_digest=sha256:b1bb32ad88e1892f33f8beea162cf1de283b3f5f0c6b8de65ce7646e94dc2bcd result_sha256=e14775c52652fe2adc2fa48616896b1529417acea240e2dba6fba7a547aecd57 lock_sha256=01ce5d8853f042399f1d4acade4af96fe4598226fe27b9ec988f55b1aea81c96"
+        },
+        {
+          "task_id": "freight-dispatch-shift",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=1f4701cc-7fe1-4e16-9d94-c17626fead4f trial_name=freight-dispatch-shift__rA8WAvM task_digest=sha256:b1bb32ad88e1892f33f8beea162cf1de283b3f5f0c6b8de65ce7646e94dc2bcd result_sha256=0b0ee23d27e211fb7ebf8b67e6c4fd70fce24ea6da77aa3b445cef56e69b55f6 lock_sha256=01ce5d8853f042399f1d4acade4af96fe4598226fe27b9ec988f55b1aea81c96"
+        },
+        {
+          "task_id": "freight-dispatch-shift",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=55d5eef7-b82c-4df6-8734-fbe7f871617a trial_name=freight-dispatch-shift__qHMvnjV task_digest=sha256:b1bb32ad88e1892f33f8beea162cf1de283b3f5f0c6b8de65ce7646e94dc2bcd result_sha256=6b4ee484bb0e1a26864887d572e40dcc37798bf89103618285e46c5f29ea7ca4 lock_sha256=01ce5d8853f042399f1d4acade4af96fe4598226fe27b9ec988f55b1aea81c96"
+        },
+        {
+          "task_id": "freight-dispatch-shift",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=ac896b10-492f-4cda-a1b9-35365f4fc367 trial_name=freight-dispatch-shift__mBjZ7YF task_digest=sha256:b1bb32ad88e1892f33f8beea162cf1de283b3f5f0c6b8de65ce7646e94dc2bcd result_sha256=b2515af3c8563ae0cee4221ce9b30b206f62ff4f605bec13204edcb7526c2177 lock_sha256=01ce5d8853f042399f1d4acade4af96fe4598226fe27b9ec988f55b1aea81c96"
+        },
+        {
+          "task_id": "freight-dispatch-shift",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=c4d9a336-ddb2-4e11-9e47-a63e0ac110c0 trial_name=freight-dispatch-shift__fu64bqj task_digest=sha256:b1bb32ad88e1892f33f8beea162cf1de283b3f5f0c6b8de65ce7646e94dc2bcd result_sha256=66fcbc7b56587863318d569ca33024d32174350e78408aa130f577ed7597fbff lock_sha256=01ce5d8853f042399f1d4acade4af96fe4598226fe27b9ec988f55b1aea81c96"
+        },
+        {
+          "task_id": "glycan-ms2-elucidation",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=5210c179-ebe0-43c3-b364-505dfddeedc0 trial_name=glycan-ms2-elucidation__GN24QN8 task_digest=sha256:6d4e3b6d5cf99e84d59b4292cd06f9faf00a2521760b56e3f5e8b5531298c088 result_sha256=856bfdfb52ba7f23c9f27b61f6112ae50e82af776289f99bddeed16ffc4a3b98 lock_sha256=425154fa3674d019f9aca512bb7f67fd07f6e45c95986bd26cdd9538f6688e6f"
+        },
+        {
+          "task_id": "glycan-ms2-elucidation",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=79b5a6ee-3614-4491-9fb6-474df30511d9 trial_name=glycan-ms2-elucidation__rzv6jex task_digest=sha256:6d4e3b6d5cf99e84d59b4292cd06f9faf00a2521760b56e3f5e8b5531298c088 result_sha256=93365a23fcbc34f42119675a66ef22bac7849ca72b466f4c37ff906921353b9c lock_sha256=425154fa3674d019f9aca512bb7f67fd07f6e45c95986bd26cdd9538f6688e6f"
+        },
+        {
+          "task_id": "glycan-ms2-elucidation",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=c79c5019-4d6e-4201-a344-1d7eb845abd5 trial_name=glycan-ms2-elucidation__c8oq7tG task_digest=sha256:6d4e3b6d5cf99e84d59b4292cd06f9faf00a2521760b56e3f5e8b5531298c088 result_sha256=1ff3bd094b3ba4504f23fc7ef40ae6d9d9c6915d9bfba50688ffda5e6d6efdb1 lock_sha256=425154fa3674d019f9aca512bb7f67fd07f6e45c95986bd26cdd9538f6688e6f"
+        },
+        {
+          "task_id": "glycan-ms2-elucidation",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=cfd8fe20-a7a4-4e44-8fd9-e155e0995f74 trial_name=glycan-ms2-elucidation__Wrzdv3A task_digest=sha256:6d4e3b6d5cf99e84d59b4292cd06f9faf00a2521760b56e3f5e8b5531298c088 result_sha256=6ad2afb6fe675e7d57c070f7c5de9a109faa09398915514228f9b2db4feef3a2 lock_sha256=425154fa3674d019f9aca512bb7f67fd07f6e45c95986bd26cdd9538f6688e6f"
+        },
+        {
+          "task_id": "glycan-ms2-elucidation",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=df94c622-a356-4ddf-afd4-7fd768b60500 trial_name=glycan-ms2-elucidation__j5uLoCe task_digest=sha256:6d4e3b6d5cf99e84d59b4292cd06f9faf00a2521760b56e3f5e8b5531298c088 result_sha256=2a57a11d3f99cd4bac4974d9e449cfaf671e81120ca0a6851fb04a76af9062fe lock_sha256=425154fa3674d019f9aca512bb7f67fd07f6e45c95986bd26cdd9538f6688e6f"
+        },
+        {
+          "task_id": "gpt2-codegolf",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=2cb3043c-b140-4a78-81d9-750f1cfe4ff0 trial_name=gpt2-codegolf__v2p4YHv task_digest=sha256:ea4f8bc8a4672f0c122fd0462381dea7151921b8fc37358d5b3370549a319c1f result_sha256=08e4c87ee1748bda6c373b022ce0ec53b5b050028d01530b69676803b8846b18 lock_sha256=f2dcc9bafa8f1c282914599f5d1c624414631ef94e8a57cc11766d0e00f70e56"
+        },
+        {
+          "task_id": "gpt2-codegolf",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=59d6c886-0e10-4450-b11b-4b81d27497b6 trial_name=gpt2-codegolf__XMo6g8G task_digest=sha256:ea4f8bc8a4672f0c122fd0462381dea7151921b8fc37358d5b3370549a319c1f result_sha256=b24ec69b6d71f557ff287c36782eb39176723a2dcf5a96fbc3ebfc87ecb28b34 lock_sha256=f2dcc9bafa8f1c282914599f5d1c624414631ef94e8a57cc11766d0e00f70e56"
+        },
+        {
+          "task_id": "gpt2-codegolf",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=82516350-db41-40f6-a8ec-1cf8149a2731 trial_name=gpt2-codegolf__aQZkx7F task_digest=sha256:ea4f8bc8a4672f0c122fd0462381dea7151921b8fc37358d5b3370549a319c1f result_sha256=f113e77ce0ba27f02d8fb4aa8f5c5b71049a1634d8aa528991b099ee232d27d2 lock_sha256=f2dcc9bafa8f1c282914599f5d1c624414631ef94e8a57cc11766d0e00f70e56"
+        },
+        {
+          "task_id": "gpt2-codegolf",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=b31b2e8f-ae44-41ec-b5b9-58ce67a54f3c trial_name=gpt2-codegolf__Zc2bDnT task_digest=sha256:ea4f8bc8a4672f0c122fd0462381dea7151921b8fc37358d5b3370549a319c1f result_sha256=e6f74e8513b670e90327d86ddd6bd151983aaf6674c562a68d1a30b0416275a1 lock_sha256=f2dcc9bafa8f1c282914599f5d1c624414631ef94e8a57cc11766d0e00f70e56"
+        },
+        {
+          "task_id": "gpt2-codegolf",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=ed7895ab-da7b-48fe-b0fd-40df62f97741 trial_name=gpt2-codegolf__RutRqag task_digest=sha256:ea4f8bc8a4672f0c122fd0462381dea7151921b8fc37358d5b3370549a319c1f result_sha256=82f245f3931dca5884d8e947d0b1d6e583c3ee4a2a64cd34a63804af8dea8a4a lock_sha256=f2dcc9bafa8f1c282914599f5d1c624414631ef94e8a57cc11766d0e00f70e56"
+        },
+        {
+          "task_id": "gsea-proteomics",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=32d47195-b8ed-424b-aeb2-eb3b1211620f trial_name=gsea-proteomics__wNQS3ae task_digest=sha256:5dfb0c258b674ee0fea20e16f9996771e082cd4db59ee9408272c31d9397cfa1 result_sha256=1121f3ddd4568a619edfd7f8d4be0cf0e1fa53099da0cecda787366a8b466017 lock_sha256=d16c0a505192fcc7e83ebf28dc6e79e74b8e18e665da6acff7f05c16619660ee"
+        },
+        {
+          "task_id": "gsea-proteomics",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=434db116-8dfa-4040-95a0-a53655279fac trial_name=gsea-proteomics__HjckkZ5 task_digest=sha256:5dfb0c258b674ee0fea20e16f9996771e082cd4db59ee9408272c31d9397cfa1 result_sha256=aa584aa9b0699a0288e997648107d1215d4a6389802f0829381a96051f7df8a3 lock_sha256=d16c0a505192fcc7e83ebf28dc6e79e74b8e18e665da6acff7f05c16619660ee"
+        },
+        {
+          "task_id": "gsea-proteomics",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=71dada60-13de-4945-a92d-e7868b6fd4a9 trial_name=gsea-proteomics__MygMKoc task_digest=sha256:5dfb0c258b674ee0fea20e16f9996771e082cd4db59ee9408272c31d9397cfa1 result_sha256=fbc11da03fb7a7cbd3f93b3baccb21a785997074f4e820b60b86fcf1533cbf8e lock_sha256=d16c0a505192fcc7e83ebf28dc6e79e74b8e18e665da6acff7f05c16619660ee"
+        },
+        {
+          "task_id": "gsea-proteomics",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=a77be000-f08c-4938-9368-60419103d9ca trial_name=gsea-proteomics__cUXMGKq task_digest=sha256:5dfb0c258b674ee0fea20e16f9996771e082cd4db59ee9408272c31d9397cfa1 result_sha256=d3e41ffd185ac089e0a77261b9b9428e34521885fc76bab3413da3a1bd941fa1 lock_sha256=d16c0a505192fcc7e83ebf28dc6e79e74b8e18e665da6acff7f05c16619660ee"
+        },
+        {
+          "task_id": "gsea-proteomics",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=bbb42b81-0998-4f69-823d-28272ed2156a trial_name=gsea-proteomics__zmW2swr task_digest=sha256:5dfb0c258b674ee0fea20e16f9996771e082cd4db59ee9408272c31d9397cfa1 result_sha256=c41e488e0fea581860e0ad6085e359f5112deade14fc89a480912c05cfd0b0b5 lock_sha256=d16c0a505192fcc7e83ebf28dc6e79e74b8e18e665da6acff7f05c16619660ee"
+        },
+        {
+          "task_id": "heat-pump-warranty",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=564236f1-7b0e-410a-b0bc-4b2aaf86aa69 trial_name=heat-pump-warranty__z2KVTMd task_digest=sha256:195e39da0c97ea45552d216f04b204d438ec397e1003300be3edc064aa9859b6 result_sha256=75530999167205327012cca6faf8a8c37a5821118018a6cb9419b230b82a541f lock_sha256=a7d8f704d3a2314eb54485c601e2aa4783182cd94ac5cf163f1471197e2bbfbe"
+        },
+        {
+          "task_id": "heat-pump-warranty",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=665f87e2-39eb-4100-bc84-9941dce84d15 trial_name=heat-pump-warranty__dUUt4V8 task_digest=sha256:195e39da0c97ea45552d216f04b204d438ec397e1003300be3edc064aa9859b6 result_sha256=12195fed1ede3b2a7b3aa8f0a37b0fcdba2a997a383ee8875ba95b54f4c9b11a lock_sha256=a7d8f704d3a2314eb54485c601e2aa4783182cd94ac5cf163f1471197e2bbfbe"
+        },
+        {
+          "task_id": "heat-pump-warranty",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=9ab52c6e-ddb9-4b85-8223-877d7952a2fb trial_name=heat-pump-warranty__V7m49Vc task_digest=sha256:195e39da0c97ea45552d216f04b204d438ec397e1003300be3edc064aa9859b6 result_sha256=c0f4818ad5bb62f4d57230e9e61bfb263280650084b593cabf346b22a0c0551c lock_sha256=a7d8f704d3a2314eb54485c601e2aa4783182cd94ac5cf163f1471197e2bbfbe"
+        },
+        {
+          "task_id": "heat-pump-warranty",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=cf5043f0-c6f6-41d4-b69a-88c516356762 trial_name=heat-pump-warranty__dA83tQS task_digest=sha256:195e39da0c97ea45552d216f04b204d438ec397e1003300be3edc064aa9859b6 result_sha256=08823d4a88e8a97a989ec4f4d9e810b16091e554c91d964ee90cf359638ed6d2 lock_sha256=a7d8f704d3a2314eb54485c601e2aa4783182cd94ac5cf163f1471197e2bbfbe"
+        },
+        {
+          "task_id": "heat-pump-warranty",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=d73fb1a9-4cb2-4aa8-bde8-806fc4c1fadb trial_name=heat-pump-warranty__fG2ZQhF task_digest=sha256:195e39da0c97ea45552d216f04b204d438ec397e1003300be3edc064aa9859b6 result_sha256=1f8dc858bfd0384bf53f63201ef19442658934f8b2e0aa537cd4c9e0021b8e70 lock_sha256=a7d8f704d3a2314eb54485c601e2aa4783182cd94ac5cf163f1471197e2bbfbe"
+        },
+        {
+          "task_id": "hof-topology-interpenetration",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=21b2fb7d-31ed-4b70-aced-37f038f30092 trial_name=hof-topology-interpenetration__MbeWuoz task_digest=sha256:f8307547a260e56572e02e1d876c0b94af44be980aa7028ff1512c787d65e95a result_sha256=8558b17e22a2960497963d0fabc0b8658b927411fd945db9ae16de86daa41793 lock_sha256=5c6345c94d1aa7ec7664e396bb66a2682f0f89b82c554f03096fc1651644fc09"
+        },
+        {
+          "task_id": "hof-topology-interpenetration",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=2de73a71-fd17-428e-8fca-1b224f813eac trial_name=hof-topology-interpenetration__zcJbDHG task_digest=sha256:f8307547a260e56572e02e1d876c0b94af44be980aa7028ff1512c787d65e95a result_sha256=aae715fbafb5779c10c0cf6a69365909aac8957d7f3dc80206dab879dc1332ca lock_sha256=5c6345c94d1aa7ec7664e396bb66a2682f0f89b82c554f03096fc1651644fc09"
+        },
+        {
+          "task_id": "hof-topology-interpenetration",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=5d071101-5781-47e5-b945-b8abedaf66d7 trial_name=hof-topology-interpenetration__2FjpBVv task_digest=sha256:f8307547a260e56572e02e1d876c0b94af44be980aa7028ff1512c787d65e95a result_sha256=f993660399e33e343cad8fde5c5e8957c04b39e0cc540fafb561a069a4124650 lock_sha256=5c6345c94d1aa7ec7664e396bb66a2682f0f89b82c554f03096fc1651644fc09"
+        },
+        {
+          "task_id": "hof-topology-interpenetration",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=6b139013-0503-4345-9b95-ca9c1630da7f trial_name=hof-topology-interpenetration__67LKNPY task_digest=sha256:f8307547a260e56572e02e1d876c0b94af44be980aa7028ff1512c787d65e95a result_sha256=286c8bfc10ef6e052219848714671c86c4641e9d7e214f0d5098c4d01ed31f6c lock_sha256=5c6345c94d1aa7ec7664e396bb66a2682f0f89b82c554f03096fc1651644fc09"
+        },
+        {
+          "task_id": "hof-topology-interpenetration",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=9408ccd2-b845-4475-be0a-2ac4a02cb5c9 trial_name=hof-topology-interpenetration__c5QDXH7 task_digest=sha256:f8307547a260e56572e02e1d876c0b94af44be980aa7028ff1512c787d65e95a result_sha256=96c56283bd91b076187a67ed3341c506c5b3aa8c4f3a60ca45dd64d5d2f4cdc9 lock_sha256=5c6345c94d1aa7ec7664e396bb66a2682f0f89b82c554f03096fc1651644fc09"
+        },
+        {
+          "task_id": "html-js-filter",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=3bb07963-2a0a-4f37-8a22-af50161b2e6a trial_name=html-js-filter__98tZwbg task_digest=sha256:832a5b309edca4f1a7c728da5f1ca530c2712f20a0b7f1db6d1bb6e3171a8866 result_sha256=ada776a29c6c46c3ba2acea3b6988fa015c257c3ed806ee563116b5071ad012e lock_sha256=4c6ab7ebc9186f3c8576c931b73f40e6aaedb37e3e3b1c5f9b6e5ce94b96de7c"
+        },
+        {
+          "task_id": "html-js-filter",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=5006a69c-2604-4ed6-9b9c-4c9f6e20795f trial_name=html-js-filter__WsgeCVK task_digest=sha256:832a5b309edca4f1a7c728da5f1ca530c2712f20a0b7f1db6d1bb6e3171a8866 result_sha256=dcc00a3302a65f733a26f6ff9e033de7c081ca50fcf07be0ddc181435c6128ed lock_sha256=4c6ab7ebc9186f3c8576c931b73f40e6aaedb37e3e3b1c5f9b6e5ce94b96de7c"
+        },
+        {
+          "task_id": "html-js-filter",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=62b8ce3e-1618-4974-a3b4-53fa9c92b8d8 trial_name=html-js-filter__CoCqXa7 task_digest=sha256:832a5b309edca4f1a7c728da5f1ca530c2712f20a0b7f1db6d1bb6e3171a8866 result_sha256=c7fcc4af55ed41fab154dcdd972fd16ecf4c1d03b7fdd3f094f6558554f68708 lock_sha256=4c6ab7ebc9186f3c8576c931b73f40e6aaedb37e3e3b1c5f9b6e5ce94b96de7c"
+        },
+        {
+          "task_id": "html-js-filter",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=ad37f4ce-4c41-4582-be4d-584dc30c7e79 trial_name=html-js-filter__2CVtiLo task_digest=sha256:832a5b309edca4f1a7c728da5f1ca530c2712f20a0b7f1db6d1bb6e3171a8866 result_sha256=a9a59579bb53ac17b1365e85a1482f3c42550d9d751d6c8a4e53afbcd4ddf85b lock_sha256=4c6ab7ebc9186f3c8576c931b73f40e6aaedb37e3e3b1c5f9b6e5ce94b96de7c"
+        },
+        {
+          "task_id": "html-js-filter",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=f1a5f3c4-a030-440e-9a6b-546189891adb trial_name=html-js-filter__GDG8aBF task_digest=sha256:832a5b309edca4f1a7c728da5f1ca530c2712f20a0b7f1db6d1bb6e3171a8866 result_sha256=5381d61eec798636b7ea7fefe428409cc7d5a2c2d7b7afccd8158dd0c49a2f6f lock_sha256=4c6ab7ebc9186f3c8576c931b73f40e6aaedb37e3e3b1c5f9b6e5ce94b96de7c"
+        },
+        {
+          "task_id": "ico-path-patch",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=1ae29bc7-3e12-480b-a156-1651be505dc7 trial_name=ico-path-patch__yXwavUr task_digest=sha256:0115a4136189b48da79070f9b3004dc4e0dfc1a60725c5acebdd7f380d037d14 result_sha256=e5f7400f70045bcbedd90c5228e10f2f142cbe474f06d6579601c5a791196de1 lock_sha256=2fc3907fd9077f7909bc0efdbcc2b794e335340aeb0753011c8f44f75ced8a4d"
+        },
+        {
+          "task_id": "ico-path-patch",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=1b2a36d8-9a36-4f95-9649-4cb92df76575 trial_name=ico-path-patch__Dq5hryw task_digest=sha256:0115a4136189b48da79070f9b3004dc4e0dfc1a60725c5acebdd7f380d037d14 result_sha256=e6bc9131ed123d328988eda5aee5458dfb6586e0de0f9372b1000da4e76886c5 lock_sha256=2fc3907fd9077f7909bc0efdbcc2b794e335340aeb0753011c8f44f75ced8a4d"
+        },
+        {
+          "task_id": "ico-path-patch",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=ad9a7db8-ede2-479d-9be0-e578636117a3 trial_name=ico-path-patch__wF4J9XV task_digest=sha256:0115a4136189b48da79070f9b3004dc4e0dfc1a60725c5acebdd7f380d037d14 result_sha256=edfe7f382fc0e91dfcb45aeea4c16f5155b0e4197b5e27332761b79c3cc2d946 lock_sha256=2fc3907fd9077f7909bc0efdbcc2b794e335340aeb0753011c8f44f75ced8a4d"
+        },
+        {
+          "task_id": "ico-path-patch",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=f8c875a4-83b1-48c5-8dae-f9df9a45d3ca trial_name=ico-path-patch__2Mv9yjy task_digest=sha256:0115a4136189b48da79070f9b3004dc4e0dfc1a60725c5acebdd7f380d037d14 result_sha256=f5d26c8b680c540ff7e8f3a636ea58c3ad7d2c4ac9748586715643d7d068ea78 lock_sha256=2fc3907fd9077f7909bc0efdbcc2b794e335340aeb0753011c8f44f75ced8a4d"
+        },
+        {
+          "task_id": "ico-path-patch",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=ff75af48-30af-4315-9e33-c23b6783e3a9 trial_name=ico-path-patch__RbGbB2S task_digest=sha256:0115a4136189b48da79070f9b3004dc4e0dfc1a60725c5acebdd7f380d037d14 result_sha256=b8f9f05bb07a2b30e94e1c5ccbbf82c899345df7b616ff4574b42b7e326904eb lock_sha256=2fc3907fd9077f7909bc0efdbcc2b794e335340aeb0753011c8f44f75ced8a4d"
+        },
+        {
+          "task_id": "interleaved-vigenere",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=4f35cf55-177a-44e2-8652-8524efbde333 trial_name=interleaved-vigenere__xx8S3kA task_digest=sha256:83a4f0074137ab36629d33f3f4045d62b63b0feb83295ff7cb6636cbedd31bc0 result_sha256=6a743ea3778f81653f031cd2427dd5b0a495c9e8bbb71f9b0a8b2b172a5fce87 lock_sha256=99249a28ae6e93a2ed98c1ba3dbbca775209cbb120f7001e3d7733b295b45b04"
+        },
+        {
+          "task_id": "interleaved-vigenere",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=57189e1e-1be2-4a71-adeb-eeaf3b4abf3a trial_name=interleaved-vigenere__RjsWqQK task_digest=sha256:83a4f0074137ab36629d33f3f4045d62b63b0feb83295ff7cb6636cbedd31bc0 result_sha256=3550bd4124339a9da6e6d8b188ebd4f1714bdb546aebf0d9707a1d38126fc7d0 lock_sha256=99249a28ae6e93a2ed98c1ba3dbbca775209cbb120f7001e3d7733b295b45b04"
+        },
+        {
+          "task_id": "interleaved-vigenere",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=8b5f2593-1153-4680-917e-7021030b80d4 trial_name=interleaved-vigenere__hg7UA6S task_digest=sha256:83a4f0074137ab36629d33f3f4045d62b63b0feb83295ff7cb6636cbedd31bc0 result_sha256=a29634b0f797c638836c699b5ea6ff4a3415a2503ef3ac8684e44fcf00b9e33b lock_sha256=99249a28ae6e93a2ed98c1ba3dbbca775209cbb120f7001e3d7733b295b45b04"
+        },
+        {
+          "task_id": "interleaved-vigenere",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=cbbbaab8-1100-4838-a536-3893ddaa8d6e trial_name=interleaved-vigenere__DuAWE6U task_digest=sha256:83a4f0074137ab36629d33f3f4045d62b63b0feb83295ff7cb6636cbedd31bc0 result_sha256=57f8c917c150d177a52a24b86612fc1434af3dec94019e83914305e67ea3c862 lock_sha256=99249a28ae6e93a2ed98c1ba3dbbca775209cbb120f7001e3d7733b295b45b04"
+        },
+        {
+          "task_id": "interleaved-vigenere",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=fe11f38c-3435-42b7-a59b-53fd40c107f3 trial_name=interleaved-vigenere__MPXCQ6Y task_digest=sha256:83a4f0074137ab36629d33f3f4045d62b63b0feb83295ff7cb6636cbedd31bc0 result_sha256=6739d769ac0ae2c3a3231122f03d30f14c920e9c97898a1bd41ddd2e571ea450 lock_sha256=99249a28ae6e93a2ed98c1ba3dbbca775209cbb120f7001e3d7733b295b45b04"
+        },
+        {
+          "task_id": "intrastat-meldung",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=566a62f0-6031-4fb2-bcb0-35d9e47b1ce2 trial_name=intrastat-meldung__LjAQDKu task_digest=sha256:3385f3ea74661cc01464f0cb1155ec1553b755238a6f9b6293475e124c6edbc8 result_sha256=085974c6eb4e69848485345b7f9f5b1259db7b993bbd394f35ccbaa40389639b lock_sha256=306d4251ae49b92a9459557b8852840e20fde041f1ac4d99fe0238dacf0dc1a9"
+        },
+        {
+          "task_id": "intrastat-meldung",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=5bb8d90f-8763-4c68-8c43-2684bdff60ed trial_name=intrastat-meldung__3C8YHk9 task_digest=sha256:3385f3ea74661cc01464f0cb1155ec1553b755238a6f9b6293475e124c6edbc8 result_sha256=62092c6779dd1eac78a3a225679b4d8bd96e3cba8fe66c0ba63f8cc0e7e25005 lock_sha256=306d4251ae49b92a9459557b8852840e20fde041f1ac4d99fe0238dacf0dc1a9"
+        },
+        {
+          "task_id": "intrastat-meldung",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=98dedada-7744-41f3-9eae-34c0d7ba5754 trial_name=intrastat-meldung__s9nCWar task_digest=sha256:3385f3ea74661cc01464f0cb1155ec1553b755238a6f9b6293475e124c6edbc8 result_sha256=e276884290a97d7f3fccedc1b4ab4a7350d251d09b004310d9651631843a396f lock_sha256=306d4251ae49b92a9459557b8852840e20fde041f1ac4d99fe0238dacf0dc1a9"
+        },
+        {
+          "task_id": "intrastat-meldung",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=d6f9e966-0f1e-4992-b2a1-6ed5cd6d8f12 trial_name=intrastat-meldung__cCiKSsr task_digest=sha256:3385f3ea74661cc01464f0cb1155ec1553b755238a6f9b6293475e124c6edbc8 result_sha256=87c4276060aa17b265eccc8e5169f3ccfa0e383e803688ef15126133aff2975c lock_sha256=306d4251ae49b92a9459557b8852840e20fde041f1ac4d99fe0238dacf0dc1a9"
+        },
+        {
+          "task_id": "intrastat-meldung",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=fae2a675-80fe-48e5-a1be-afa02cd49c0f trial_name=intrastat-meldung__iRYPbSw task_digest=sha256:3385f3ea74661cc01464f0cb1155ec1553b755238a6f9b6293475e124c6edbc8 result_sha256=462e627731871c38fd56d92a08e8153604e04666ba00f7b7f5fc29f1e35dad5c lock_sha256=306d4251ae49b92a9459557b8852840e20fde041f1ac4d99fe0238dacf0dc1a9"
+        },
+        {
+          "task_id": "jax-speedrun-gpu",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=02d1dcba-eddd-415f-b5bb-acc967390c7e trial_name=jax-speedrun-gpu__Y6AXEHS task_digest=sha256:c17111529f4eac64223dace5f734cbcb1f3ad542ec97e65cfdb6c0e7ffe9e98c result_sha256=bddb426890e24f76b1188d4afe8ade83aa0b5ba5bf0e65434a5161f017d7f45f lock_sha256=f53c5b14837c007b51bee94ea6640e8914c2bda0c223c75c0fc11ac649e33b0b"
+        },
+        {
+          "task_id": "jax-speedrun-gpu",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=245bee47-ec97-4932-837a-2d973f603131 trial_name=jax-speedrun-gpu__E2c7ZBG task_digest=sha256:c17111529f4eac64223dace5f734cbcb1f3ad542ec97e65cfdb6c0e7ffe9e98c result_sha256=43e2cdc69f70f156d3b8f06a9f3716212f1b32625f0f78ad84559c5ada2eeb84 lock_sha256=f53c5b14837c007b51bee94ea6640e8914c2bda0c223c75c0fc11ac649e33b0b"
+        },
+        {
+          "task_id": "jax-speedrun-gpu",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=48c43f1f-0129-4e0e-8098-ad45595f5252 trial_name=jax-speedrun-gpu__9QQKJLg task_digest=sha256:c17111529f4eac64223dace5f734cbcb1f3ad542ec97e65cfdb6c0e7ffe9e98c result_sha256=b4eef0ad9529a87e9ed9141f50b3c8244dfd4b2b5445eadaa02798d967631221 lock_sha256=f53c5b14837c007b51bee94ea6640e8914c2bda0c223c75c0fc11ac649e33b0b"
+        },
+        {
+          "task_id": "jax-speedrun-gpu",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=6d430110-890f-4102-8a5c-28e3ede01488 trial_name=jax-speedrun-gpu__g3Y7srw task_digest=sha256:c17111529f4eac64223dace5f734cbcb1f3ad542ec97e65cfdb6c0e7ffe9e98c result_sha256=9351d48d70208b9b000c11b9ef335481cb21c94bea249b9f28b4011e5e26d686 lock_sha256=f53c5b14837c007b51bee94ea6640e8914c2bda0c223c75c0fc11ac649e33b0b"
+        },
+        {
+          "task_id": "jax-speedrun-gpu",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=9ec0c1c7-a20a-4cc8-8866-cf7626a606ed trial_name=jax-speedrun-gpu__nrcprH7 task_digest=sha256:c17111529f4eac64223dace5f734cbcb1f3ad542ec97e65cfdb6c0e7ffe9e98c result_sha256=b420fa64c13bda1597ae33c417572c67628713a903f4a92f8fcbdb661bfb6b06 lock_sha256=f53c5b14837c007b51bee94ea6640e8914c2bda0c223c75c0fc11ac649e33b0b"
+        },
+        {
+          "task_id": "ks-solver-cpp",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=5758e446-cae4-4706-ab52-27dedb48028b trial_name=ks-solver-cpp__bWcy2U9 task_digest=sha256:d6e025f4f5b4bfbfb8ea9c1e661f9f2039b68eadf3fefd44ed31017cfd090952 result_sha256=2c9f8f0ecc1c05a598a20e72d15022a50764e7d7ec5073adcd579dcb03e713fb lock_sha256=90414d58bca1da41dbf12d0c3d9fc962f2436fe8c08b112e8face44263896015"
+        },
+        {
+          "task_id": "ks-solver-cpp",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=753b5722-9b3e-4a33-a960-c150145ce9b3 trial_name=ks-solver-cpp__tM2PSeu task_digest=sha256:d6e025f4f5b4bfbfb8ea9c1e661f9f2039b68eadf3fefd44ed31017cfd090952 result_sha256=ecb76836eb14934810674805c4793c58bb68a888480d8b384c31cb36958c7ad9 lock_sha256=90414d58bca1da41dbf12d0c3d9fc962f2436fe8c08b112e8face44263896015"
+        },
+        {
+          "task_id": "ks-solver-cpp",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=c84023f2-8b56-4770-959c-d313339d0040 trial_name=ks-solver-cpp__brWKYR6 task_digest=sha256:d6e025f4f5b4bfbfb8ea9c1e661f9f2039b68eadf3fefd44ed31017cfd090952 result_sha256=bff1b4bf01ace5cdc6f1e2f7291e9e1c6db6ea5a0835d6db42fac6f0316f9635 lock_sha256=90414d58bca1da41dbf12d0c3d9fc962f2436fe8c08b112e8face44263896015"
+        },
+        {
+          "task_id": "ks-solver-cpp",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=e2d18828-2161-4c45-8f15-928eb1609141 trial_name=ks-solver-cpp__tXYNnga task_digest=sha256:d6e025f4f5b4bfbfb8ea9c1e661f9f2039b68eadf3fefd44ed31017cfd090952 result_sha256=43e3ba1a9fc260e0bce8d26f88f35859d0675efaf4f675bd3bb6b2422fad1b93 lock_sha256=90414d58bca1da41dbf12d0c3d9fc962f2436fe8c08b112e8face44263896015"
+        },
+        {
+          "task_id": "ks-solver-cpp",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=fcdfc474-274b-452f-8f1e-310039867cd1 trial_name=ks-solver-cpp__s5pkk8x task_digest=sha256:d6e025f4f5b4bfbfb8ea9c1e661f9f2039b68eadf3fefd44ed31017cfd090952 result_sha256=b0a801d91a8c1846b2bd0454463057929e7da0f1420cbee348c986a359d01f52 lock_sha256=90414d58bca1da41dbf12d0c3d9fc962f2436fe8c08b112e8face44263896015"
+        },
+        {
+          "task_id": "kv-live-surgery",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=37d98da8-19b5-45b1-a3a9-1453ec5aaf4f trial_name=kv-live-surgery__jSgcPSF task_digest=sha256:bb58097aee168627e1eea82a50feaf1e021d502fe18e0c24b4d88e5a88a6f53f result_sha256=372cea4bc0c0b981fc5e4b38eccb89874b8710b056d8bf5e84ceb63bbfc06a37 lock_sha256=f7bc7b4bbbc48b1fad3bf36112c8624793cf96c573f2479848f91db2c5ed38bc"
+        },
+        {
+          "task_id": "kv-live-surgery",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=764344ef-76e5-4c13-8e50-c0f5fc784104 trial_name=kv-live-surgery__iLRTHSq task_digest=sha256:bb58097aee168627e1eea82a50feaf1e021d502fe18e0c24b4d88e5a88a6f53f result_sha256=0dfeff14ef77504871c7a0f29d4ec77555b4a5f9fe0fc88f16db6b69233ba06c lock_sha256=f7bc7b4bbbc48b1fad3bf36112c8624793cf96c573f2479848f91db2c5ed38bc"
+        },
+        {
+          "task_id": "kv-live-surgery",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=76e30e21-83a6-4590-904c-f43731863ab8 trial_name=kv-live-surgery__G5wZWMJ task_digest=sha256:bb58097aee168627e1eea82a50feaf1e021d502fe18e0c24b4d88e5a88a6f53f result_sha256=5136674ac015f7c33fc163fa7ccbec9bde834e8577032936b4f22a2e0a8bd2cb lock_sha256=f7bc7b4bbbc48b1fad3bf36112c8624793cf96c573f2479848f91db2c5ed38bc"
+        },
+        {
+          "task_id": "kv-live-surgery",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=9601f3ed-ca7b-48a2-a1d3-06b17b85094e trial_name=kv-live-surgery__igSPY6y task_digest=sha256:bb58097aee168627e1eea82a50feaf1e021d502fe18e0c24b4d88e5a88a6f53f result_sha256=d609d6dd25b545532f7ac4ce39d89bd09721a5771e6582a8bbd94416d71f2a34 lock_sha256=f7bc7b4bbbc48b1fad3bf36112c8624793cf96c573f2479848f91db2c5ed38bc"
+        },
+        {
+          "task_id": "kv-live-surgery",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=d39c0eaa-4c23-47b1-953f-00eba0b3c09c trial_name=kv-live-surgery__2nEVbiv task_digest=sha256:bb58097aee168627e1eea82a50feaf1e021d502fe18e0c24b4d88e5a88a6f53f result_sha256=65613d80346a383967ad05237f2d2baa0c43d6ca4b6bd71797240b69fa7599e3 lock_sha256=f7bc7b4bbbc48b1fad3bf36112c8624793cf96c573f2479848f91db2c5ed38bc"
+        },
+        {
+          "task_id": "lake-temp-glm",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=44e4712d-0b72-4174-a155-540519f735a2 trial_name=lake-temp-glm__4nfDASr task_digest=sha256:8ef0ba42c13ce6ed6454e40389907d8781a681605d07a1fdc48fb5913c46388d result_sha256=87cf6d1012e8062962647ec8d69aec91c63f889f8b7bc53e75a77aeca58cbed3 lock_sha256=262bb1796791246308ed852d3273f66f12093465fbb0ca03f06d30014a2ff028"
+        },
+        {
+          "task_id": "lake-temp-glm",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=9fb37fda-48c9-4323-beb4-9a97ea804522 trial_name=lake-temp-glm__eKEALgT task_digest=sha256:8ef0ba42c13ce6ed6454e40389907d8781a681605d07a1fdc48fb5913c46388d result_sha256=70cc199928a19558d7aff33faa41ed0f630badfb61ec82b94b7cac7121b5a48e lock_sha256=262bb1796791246308ed852d3273f66f12093465fbb0ca03f06d30014a2ff028"
+        },
+        {
+          "task_id": "lake-temp-glm",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=be7862ff-fa67-429c-bcc0-7fc61bf05423 trial_name=lake-temp-glm__FEJMSHV task_digest=sha256:8ef0ba42c13ce6ed6454e40389907d8781a681605d07a1fdc48fb5913c46388d result_sha256=03369fdbd42d6c6cf4cbe3c01eee679fba06458e63081a6cda99a4ca661f898e lock_sha256=262bb1796791246308ed852d3273f66f12093465fbb0ca03f06d30014a2ff028"
+        },
+        {
+          "task_id": "lake-temp-glm",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=dc8bd83b-ad4f-480a-a094-a8135d8eb73c trial_name=lake-temp-glm__eLLPBVs task_digest=sha256:8ef0ba42c13ce6ed6454e40389907d8781a681605d07a1fdc48fb5913c46388d result_sha256=081acb8f2b3b1fd031630def53542122642dc1611ae3c511be95e84804abfd43 lock_sha256=262bb1796791246308ed852d3273f66f12093465fbb0ca03f06d30014a2ff028"
+        },
+        {
+          "task_id": "lake-temp-glm",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=ebac1394-7793-4a6e-9003-f95d5c4c03ac trial_name=lake-temp-glm__xqG5gsN task_digest=sha256:8ef0ba42c13ce6ed6454e40389907d8781a681605d07a1fdc48fb5913c46388d result_sha256=9cdfe649de11446c862ab7ba0155e7904b00935827cbda588a3737e6cfa81cdf lock_sha256=262bb1796791246308ed852d3273f66f12093465fbb0ca03f06d30014a2ff028"
+        },
+        {
+          "task_id": "layout-config-recreation",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=098d1529-099d-42d4-a476-b81d71299c86 trial_name=layout-config-recreation__2xEtjWb task_digest=sha256:9beda5ee8b4e0f5605da4940f53525374e837346280e83852d3741df2eef26a8 result_sha256=00ba7f92506d9e1a85f72d596147695c62dcc9de6a5b319ed956962e36dddea1 lock_sha256=4f7aeb05759432b4acdf5f84f913892b0b3dc33b4e08ff67f04da1790b07d3c6"
+        },
+        {
+          "task_id": "layout-config-recreation",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=18129436-3b15-4b2e-8394-c2ecbb36f8e7 trial_name=layout-config-recreation__PQr7dTV task_digest=sha256:9beda5ee8b4e0f5605da4940f53525374e837346280e83852d3741df2eef26a8 result_sha256=893dfa3e7b0f3975e01a36b7f32e431238d06ec86925418af302ad7120d705fc lock_sha256=4f7aeb05759432b4acdf5f84f913892b0b3dc33b4e08ff67f04da1790b07d3c6"
+        },
+        {
+          "task_id": "layout-config-recreation",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=b489db28-94c7-4817-a4c6-cf44af67f549 trial_name=layout-config-recreation__HzgcemA task_digest=sha256:9beda5ee8b4e0f5605da4940f53525374e837346280e83852d3741df2eef26a8 result_sha256=24112f256bf89aa74e80a86f4fd30774dc6431205e9482219620f17b5a9904ea lock_sha256=4f7aeb05759432b4acdf5f84f913892b0b3dc33b4e08ff67f04da1790b07d3c6"
+        },
+        {
+          "task_id": "layout-config-recreation",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=d1922e6f-edb3-4b97-9c40-97b93a4263bb trial_name=layout-config-recreation__uoiwGwv task_digest=sha256:9beda5ee8b4e0f5605da4940f53525374e837346280e83852d3741df2eef26a8 result_sha256=6349505f419eb7c1efed1ed47dbbfd0945af7337bb6bea546729d90b0686a94e lock_sha256=4f7aeb05759432b4acdf5f84f913892b0b3dc33b4e08ff67f04da1790b07d3c6"
+        },
+        {
+          "task_id": "layout-config-recreation",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=f8282f37-8039-4313-ad22-a5c5122c5cca trial_name=layout-config-recreation__UaCnRHY task_digest=sha256:9beda5ee8b4e0f5605da4940f53525374e837346280e83852d3741df2eef26a8 result_sha256=8a3d16898b2256b7bf3c3af8213cb39ac0880dc0a7091dcfd9ce19d758906e72 lock_sha256=4f7aeb05759432b4acdf5f84f913892b0b3dc33b4e08ff67f04da1790b07d3c6"
+        },
+        {
+          "task_id": "layout-config-recreation2",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=30c72067-5c28-463b-8b1f-f3df257e2c83 trial_name=layout-config-recreation2__QSbMJo5 task_digest=sha256:7c2a2904969ad3a80b3199919c3c50bbf35001f70363e4f474153ceab6ce1d8e result_sha256=3121c537431c9f689e0194ee04b1d5d9f5f686bc4becd72689aebedc2dfd1460 lock_sha256=5a457977d1c8e562d94177237b65779e7d88fbb76f6030ab52a5e8291dab6e7d"
+        },
+        {
+          "task_id": "layout-config-recreation2",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=5244cd7e-48c4-4067-b62a-c705b3ceefc8 trial_name=layout-config-recreation2__RtFSxVD task_digest=sha256:7c2a2904969ad3a80b3199919c3c50bbf35001f70363e4f474153ceab6ce1d8e result_sha256=ebdd597b5c8491ff7e2a501368fe9df348b424d24aa0f4bf46a73e6cd9a625b9 lock_sha256=5a457977d1c8e562d94177237b65779e7d88fbb76f6030ab52a5e8291dab6e7d"
+        },
+        {
+          "task_id": "layout-config-recreation2",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=94aab1b5-63d4-4641-bea4-cd7e216a761c trial_name=layout-config-recreation2__DV5CnWG task_digest=sha256:7c2a2904969ad3a80b3199919c3c50bbf35001f70363e4f474153ceab6ce1d8e result_sha256=52bbed11940d90c71b039d1e4c473edeed0e601a1747b03eff186e965adfa172 lock_sha256=5a457977d1c8e562d94177237b65779e7d88fbb76f6030ab52a5e8291dab6e7d"
+        },
+        {
+          "task_id": "layout-config-recreation2",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=ed7f1320-1aec-4f2c-b47f-5498302abe53 trial_name=layout-config-recreation2__zjEKMMK task_digest=sha256:7c2a2904969ad3a80b3199919c3c50bbf35001f70363e4f474153ceab6ce1d8e result_sha256=41468d34a563462234793cd5616e55a2453311103e0791aefa318f0f502fbcfc lock_sha256=5a457977d1c8e562d94177237b65779e7d88fbb76f6030ab52a5e8291dab6e7d"
+        },
+        {
+          "task_id": "layout-config-recreation2",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=f1661bc7-df9b-4935-a969-8dd35dffa317 trial_name=layout-config-recreation2__eK2ZS9Z task_digest=sha256:7c2a2904969ad3a80b3199919c3c50bbf35001f70363e4f474153ceab6ce1d8e result_sha256=eee968f17ac31df1ea47bfef54e37a19d705a97e7dcfef1b4951292b22843648 lock_sha256=5a457977d1c8e562d94177237b65779e7d88fbb76f6030ab52a5e8291dab6e7d"
+        },
+        {
+          "task_id": "lean-midpoint-proof",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=0b7005d9-cdf2-4d14-9bbc-a9f169e0df71 trial_name=lean-midpoint-proof__mNLpZ9w task_digest=sha256:80fda7d0f87814d8d3f1e1f6ed485c2431614e3fb05ed2d6590c9061cf28ed19 result_sha256=14c537dac921ba677510816047348f79000f53ad086c20f1750dbdd8dfa8db14 lock_sha256=8576427f75296f7bb27410cf0346ddf02970fa93b6563ce128f7aa80a4893981"
+        },
+        {
+          "task_id": "lean-midpoint-proof",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=23640483-246e-4399-95f2-ebfbe4e04fe8 trial_name=lean-midpoint-proof__BqZsxdH task_digest=sha256:80fda7d0f87814d8d3f1e1f6ed485c2431614e3fb05ed2d6590c9061cf28ed19 result_sha256=c693bd2aca47b539750be4550d339136ea8cbf2084337d8cc6e46a1e6f44d308 lock_sha256=8576427f75296f7bb27410cf0346ddf02970fa93b6563ce128f7aa80a4893981"
+        },
+        {
+          "task_id": "lean-midpoint-proof",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=659d3c8d-e68c-46f7-b0cf-c6086b43fff3 trial_name=lean-midpoint-proof__QZjRgGC task_digest=sha256:80fda7d0f87814d8d3f1e1f6ed485c2431614e3fb05ed2d6590c9061cf28ed19 result_sha256=98d2d90f9b648558b0f4617f3805a3bd42a745d12f3d635cf4e41a2ace59b72e lock_sha256=8576427f75296f7bb27410cf0346ddf02970fa93b6563ce128f7aa80a4893981"
+        },
+        {
+          "task_id": "lean-midpoint-proof",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=6e39b3ef-9eea-4059-b2d3-c693f8f272c2 trial_name=lean-midpoint-proof__JK2LJwD task_digest=sha256:80fda7d0f87814d8d3f1e1f6ed485c2431614e3fb05ed2d6590c9061cf28ed19 result_sha256=eb2342ec630e7d5b71c4c33ddde2438b71d775c513b6c5d76e8adeaf275e9c83 lock_sha256=8576427f75296f7bb27410cf0346ddf02970fa93b6563ce128f7aa80a4893981"
+        },
+        {
+          "task_id": "lean-midpoint-proof",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=86a183ed-040d-40f9-9cc2-1a18bf328fa5 trial_name=lean-midpoint-proof__U6guqcU task_digest=sha256:80fda7d0f87814d8d3f1e1f6ed485c2431614e3fb05ed2d6590c9061cf28ed19 result_sha256=4743b5ebc4bc51f6fefa5a50ab6c86fe60f4b372634c06326371a0a401cf61a0 lock_sha256=8576427f75296f7bb27410cf0346ddf02970fa93b6563ce128f7aa80a4893981"
+        },
+        {
+          "task_id": "legacy-utility-triage",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=04800f7e-31d2-407e-8160-7b08b5f24f05 trial_name=legacy-utility-triage__doa53XY task_digest=sha256:bd30b99dfa7121a0931866d177092482554ab9d3835495c15d960d735c097bcf result_sha256=ee7b9666acaffd6189d1e63d6a340ed1815f8796436ab2fd2e6458e10082177c lock_sha256=d5cee35e890dc838c8686d6b458b229a474281c0b9c00b3fc8fa9ae854bbb0ce"
+        },
+        {
+          "task_id": "legacy-utility-triage",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=091ea3a5-a289-4fe2-8f06-22c1b8267f25 trial_name=legacy-utility-triage__gbL8HQ3 task_digest=sha256:bd30b99dfa7121a0931866d177092482554ab9d3835495c15d960d735c097bcf result_sha256=c47eccd42bfcb3b7f24aa51a1145f1a95a7718bc1c21e4ca431c99a917356d77 lock_sha256=d5cee35e890dc838c8686d6b458b229a474281c0b9c00b3fc8fa9ae854bbb0ce"
+        },
+        {
+          "task_id": "legacy-utility-triage",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=9c5a3b57-f0bc-4ce0-b4ee-0001632e844f trial_name=legacy-utility-triage__dk8zCW6 task_digest=sha256:bd30b99dfa7121a0931866d177092482554ab9d3835495c15d960d735c097bcf result_sha256=c733d344838fc1ad3d6828c5a98beb7cd1db6e2709e36945f3467917851d2183 lock_sha256=d5cee35e890dc838c8686d6b458b229a474281c0b9c00b3fc8fa9ae854bbb0ce"
+        },
+        {
+          "task_id": "legacy-utility-triage",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=9db272ba-fa06-4287-85bd-da86e1b9b0de trial_name=legacy-utility-triage__mxR8j3y task_digest=sha256:bd30b99dfa7121a0931866d177092482554ab9d3835495c15d960d735c097bcf result_sha256=6aa52c383d1895642c76c230d3bb756911e49c903ef3cd4600404af146f37345 lock_sha256=d5cee35e890dc838c8686d6b458b229a474281c0b9c00b3fc8fa9ae854bbb0ce"
+        },
+        {
+          "task_id": "legacy-utility-triage",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=e91c038c-a51c-47ea-b5e8-eab35136a330 trial_name=legacy-utility-triage__nJG5jLB task_digest=sha256:bd30b99dfa7121a0931866d177092482554ab9d3835495c15d960d735c097bcf result_sha256=36cac9d4a197e4737a7b3fcb8734688e85b3727d00e03893232a5b2eb1883da6 lock_sha256=d5cee35e890dc838c8686d6b458b229a474281c0b9c00b3fc8fa9ae854bbb0ce"
+        },
+        {
+          "task_id": "live-database-cutover",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=3177d0d1-14aa-4181-a57c-8b19f0c5d0b9 trial_name=live-database-cutover__LNcbNyV task_digest=sha256:dc994181a5c0343a7e7f8ef4cda6b814dca3e48caef8ac00f066646b0132d2fd result_sha256=7d8307b931730867c49c337b7fc94c0c951c674be1d944ced53832d86acaa2b5 lock_sha256=bc238683ac2c81a8fa53eb5eeed67514f00163c8960e0bd41147d850dfb2f33b"
+        },
+        {
+          "task_id": "live-database-cutover",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=b09284d5-e5c6-4595-a50a-a8d9c0c93bbe trial_name=live-database-cutover__qHE8E4C task_digest=sha256:dc994181a5c0343a7e7f8ef4cda6b814dca3e48caef8ac00f066646b0132d2fd result_sha256=b6243c864853fef56b7f468bff52ae41f07267c82f012068e9ef716c7fd2543c lock_sha256=bc238683ac2c81a8fa53eb5eeed67514f00163c8960e0bd41147d850dfb2f33b"
+        },
+        {
+          "task_id": "live-database-cutover",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=dd274d6f-ec3f-4d60-b5bd-4ce6f835e84b trial_name=live-database-cutover__rd8tPYe task_digest=sha256:dc994181a5c0343a7e7f8ef4cda6b814dca3e48caef8ac00f066646b0132d2fd result_sha256=dba1b91cf96992e3cd239dbd56271cc89825d377918e3ab638b90791a2920cbb lock_sha256=bc238683ac2c81a8fa53eb5eeed67514f00163c8960e0bd41147d850dfb2f33b"
+        },
+        {
+          "task_id": "live-database-cutover",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=e43dffdf-4f66-45a0-af7d-8177cac9f5a0 trial_name=live-database-cutover__J68RDtK task_digest=sha256:dc994181a5c0343a7e7f8ef4cda6b814dca3e48caef8ac00f066646b0132d2fd result_sha256=6708954c49755f7432be2c5bd298f8b7306e91a25838ccd9c15c6ba51ca16291 lock_sha256=bc238683ac2c81a8fa53eb5eeed67514f00163c8960e0bd41147d850dfb2f33b"
+        },
+        {
+          "task_id": "live-database-cutover",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=eba5dc1f-6c6b-4812-982a-7509a648703f trial_name=live-database-cutover__pgZbFJa task_digest=sha256:dc994181a5c0343a7e7f8ef4cda6b814dca3e48caef8ac00f066646b0132d2fd result_sha256=c5f33475f947b245d61254465675ae87bf74f445043ae01221425cc923b19885 lock_sha256=bc238683ac2c81a8fa53eb5eeed67514f00163c8960e0bd41147d850dfb2f33b"
+        },
+        {
+          "task_id": "math-eval-grader",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=0711983d-e615-4ebc-bef8-de1305f673dc trial_name=math-eval-grader__3bePkGK task_digest=sha256:25d9a4d042a2e4f05e78c7d8372040a6bc2a1ea5f323dfe67542690f2241e345 result_sha256=bd8f5367db8dbf571daf6519417b8b94592132e002286190e6ff46f539c7abcb lock_sha256=d0a448cc27e3f02a6461513bb42865148c42d82bcc7b008f069c9a0e7a3dcef3"
+        },
+        {
+          "task_id": "math-eval-grader",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=0902a5e4-d5d7-4f3e-a060-d6bd9a32ac98 trial_name=math-eval-grader__FyH7k3k task_digest=sha256:25d9a4d042a2e4f05e78c7d8372040a6bc2a1ea5f323dfe67542690f2241e345 result_sha256=e8be10b0f10116c8b916f90c64bfeafaf1a023e40be067df68c1b539d4670b7e lock_sha256=d0a448cc27e3f02a6461513bb42865148c42d82bcc7b008f069c9a0e7a3dcef3"
+        },
+        {
+          "task_id": "math-eval-grader",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=a03c6abc-fe74-4fef-a71f-7b706feb0be5 trial_name=math-eval-grader__XCVJ357 task_digest=sha256:25d9a4d042a2e4f05e78c7d8372040a6bc2a1ea5f323dfe67542690f2241e345 result_sha256=2ab17d7d4904ecae3c30abe816a612e32b0a731cc753c986becd5bab9953e318 lock_sha256=d0a448cc27e3f02a6461513bb42865148c42d82bcc7b008f069c9a0e7a3dcef3"
+        },
+        {
+          "task_id": "math-eval-grader",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=efb8330c-2a53-4f4b-92dd-4d3cab25dbe1 trial_name=math-eval-grader__AjuXaDp task_digest=sha256:25d9a4d042a2e4f05e78c7d8372040a6bc2a1ea5f323dfe67542690f2241e345 result_sha256=1b293124fdf01b4da450a65803b4920933583b4c43c69aac011214554ce368b5 lock_sha256=d0a448cc27e3f02a6461513bb42865148c42d82bcc7b008f069c9a0e7a3dcef3"
+        },
+        {
+          "task_id": "math-eval-grader",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=ffa6154f-cb74-42c0-90f6-9ca33674b333 trial_name=math-eval-grader__jHmxpr2 task_digest=sha256:25d9a4d042a2e4f05e78c7d8372040a6bc2a1ea5f323dfe67542690f2241e345 result_sha256=bfa591ca17a84ef02713bcd46a1771399646888f71245ee071e664b4fbf7b5e7 lock_sha256=d0a448cc27e3f02a6461513bb42865148c42d82bcc7b008f069c9a0e7a3dcef3"
+        },
+        {
+          "task_id": "medical-claims-processing",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=61dc2a61-1de4-4bd9-b98a-9f8cf58b33b1 trial_name=medical-claims-processing__dqff8X2 task_digest=sha256:21e9b716812f257927f94c1a5d53bd2565d035f7d538769affbae04fe5e4ba47 result_sha256=1ef9b08501503d1cfe3f94805c58fb0acfb1a6f355716e98517505766e1292f1 lock_sha256=e719961f831501f03c62341f5ba3f56d080cf8ac99bf913a6a8c8410d6d41d46"
+        },
+        {
+          "task_id": "medical-claims-processing",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=8a044690-b960-46c9-acf1-858198e02ae0 trial_name=medical-claims-processing__z73TD5L task_digest=sha256:21e9b716812f257927f94c1a5d53bd2565d035f7d538769affbae04fe5e4ba47 result_sha256=837f9495e0ef7964409fe3826ec856b84ef275db9957764eb9ec79ef45cb4e59 lock_sha256=e719961f831501f03c62341f5ba3f56d080cf8ac99bf913a6a8c8410d6d41d46"
+        },
+        {
+          "task_id": "medical-claims-processing",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=b8209cad-fbac-43e0-9c77-6094914d4d53 trial_name=medical-claims-processing__VjHbzAe task_digest=sha256:21e9b716812f257927f94c1a5d53bd2565d035f7d538769affbae04fe5e4ba47 result_sha256=8ea33da980735e7e1b85be7cd76ab53e78d9134659bda150667c2b6bfa5d49d3 lock_sha256=e719961f831501f03c62341f5ba3f56d080cf8ac99bf913a6a8c8410d6d41d46"
+        },
+        {
+          "task_id": "medical-claims-processing",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=c8c0c057-d55f-45f5-9c6c-ec233203abab trial_name=medical-claims-processing__kMBttZA task_digest=sha256:21e9b716812f257927f94c1a5d53bd2565d035f7d538769affbae04fe5e4ba47 result_sha256=82a14131cd75bb55cd212d9e4a5fa1c7dca543180998ae526fa70bffec65c9d4 lock_sha256=e719961f831501f03c62341f5ba3f56d080cf8ac99bf913a6a8c8410d6d41d46"
+        },
+        {
+          "task_id": "medical-claims-processing",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=d9be8a00-08e2-4fe4-b736-f938e33c230c trial_name=medical-claims-processing__A6JyuXL task_digest=sha256:21e9b716812f257927f94c1a5d53bd2565d035f7d538769affbae04fe5e4ba47 result_sha256=aebc60e8433b1ccf6b7c9a20d260aaf55ec53a28f9b2b1c32be7f235efd5a0fc lock_sha256=e719961f831501f03c62341f5ba3f56d080cf8ac99bf913a6a8c8410d6d41d46"
+        },
+        {
+          "task_id": "memcached-backdoor",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=1ef1825d-8c91-4e50-b6ee-68a464482ce3 trial_name=memcached-backdoor__F4SBQxc task_digest=sha256:b5b87182c9ac70c63d7c6afdaf7334a0262a03295ee9752f15f7ace424a72f6c result_sha256=c9510e5d136f72a71bb3e3241d661dca5dbb2986366bde965556c6d6adff4c6d lock_sha256=2ba925b1535236590299aa9ca00cd8000edaa180ad1a82cab76022206fd3758a"
+        },
+        {
+          "task_id": "memcached-backdoor",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=9199982d-c054-47f8-907c-28936c31d03b trial_name=memcached-backdoor__E9A4UVU task_digest=sha256:b5b87182c9ac70c63d7c6afdaf7334a0262a03295ee9752f15f7ace424a72f6c result_sha256=4e6133b0caa7722ee2cf6ff4b966168f62b9fc1961b704de18022039713dc2ca lock_sha256=2ba925b1535236590299aa9ca00cd8000edaa180ad1a82cab76022206fd3758a"
+        },
+        {
+          "task_id": "memcached-backdoor",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=a25de9ee-ad4f-454f-b521-d4908ef2806a trial_name=memcached-backdoor__QZCHiGB task_digest=sha256:b5b87182c9ac70c63d7c6afdaf7334a0262a03295ee9752f15f7ace424a72f6c result_sha256=59331daecf4bc2a1081ebf8bf55ff4a4a58a34d50322078d3c5c4dde9da96356 lock_sha256=2ba925b1535236590299aa9ca00cd8000edaa180ad1a82cab76022206fd3758a"
+        },
+        {
+          "task_id": "memcached-backdoor",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=cee398f8-c209-4879-986c-1f1a29f9ffe7 trial_name=memcached-backdoor__FvWcnVW task_digest=sha256:b5b87182c9ac70c63d7c6afdaf7334a0262a03295ee9752f15f7ace424a72f6c result_sha256=50c848b58c5a8befa0c58885abeb370062631c6e79233631f3e7af318a54e0fe lock_sha256=2ba925b1535236590299aa9ca00cd8000edaa180ad1a82cab76022206fd3758a"
+        },
+        {
+          "task_id": "memcached-backdoor",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=f82f2e4f-f17c-4107-b149-5487a8f1c4d1 trial_name=memcached-backdoor__XDQZqm6 task_digest=sha256:b5b87182c9ac70c63d7c6afdaf7334a0262a03295ee9752f15f7ace424a72f6c result_sha256=801a073eb9085c2ae95278c7b838d061fb906df108e6cb3e372cf2a47747eee1 lock_sha256=2ba925b1535236590299aa9ca00cd8000edaa180ad1a82cab76022206fd3758a"
+        },
+        {
+          "task_id": "mp-checkpoint-consolidation",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=221af62a-06d4-4e14-b1d2-d9af28c9daf8 trial_name=mp-checkpoint-consolidation__4qFJU8D task_digest=sha256:e7710fddd852c1ae62e0d0c89acaee3d774a30c3c60658b1be2b0946dbd94d04 result_sha256=de35bd2e9440025b7dadf4e4f2f3a5e31763b724dc8624aa741bf2b38fd2202c lock_sha256=003d11eb02a81ad5cd06f28bec4f01852d1aa99c28d68edb83803e791ff56d6b"
+        },
+        {
+          "task_id": "mp-checkpoint-consolidation",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=2dc6739c-8d39-4162-9baa-743800fb2a4a trial_name=mp-checkpoint-consolidation__jGd7Nfv task_digest=sha256:e7710fddd852c1ae62e0d0c89acaee3d774a30c3c60658b1be2b0946dbd94d04 result_sha256=968a12aa51eacd0d4e6ad72be84342d9eb7e4897b3296fdf369b3cedf3ecfb95 lock_sha256=003d11eb02a81ad5cd06f28bec4f01852d1aa99c28d68edb83803e791ff56d6b"
+        },
+        {
+          "task_id": "mp-checkpoint-consolidation",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=c202a8a3-81d3-46f0-a6cb-f5d32dd5ef32 trial_name=mp-checkpoint-consolidation__ZbNdeVy task_digest=sha256:e7710fddd852c1ae62e0d0c89acaee3d774a30c3c60658b1be2b0946dbd94d04 result_sha256=f27f9c02531f52e4a84bff5cd55504ff7815b28c6de2571cd50294fec01150ae lock_sha256=003d11eb02a81ad5cd06f28bec4f01852d1aa99c28d68edb83803e791ff56d6b"
+        },
+        {
+          "task_id": "mp-checkpoint-consolidation",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=d4aae1ef-6166-4e99-81ab-eaa19eb210e5 trial_name=mp-checkpoint-consolidation__b5Xu382 task_digest=sha256:e7710fddd852c1ae62e0d0c89acaee3d774a30c3c60658b1be2b0946dbd94d04 result_sha256=2c46869723c40741f9517a704f75982f591bca1c8d7c0905d16a6c3d84042d8e lock_sha256=003d11eb02a81ad5cd06f28bec4f01852d1aa99c28d68edb83803e791ff56d6b"
+        },
+        {
+          "task_id": "mp-checkpoint-consolidation",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=f5e21ca1-5a6a-436d-83d8-be55ac6ffe03 trial_name=mp-checkpoint-consolidation__DspBbFD task_digest=sha256:e7710fddd852c1ae62e0d0c89acaee3d774a30c3c60658b1be2b0946dbd94d04 result_sha256=72c8075695d3da073d9e2303fb18027b547b0396230e31c52a39b2fa4b65b57c lock_sha256=003d11eb02a81ad5cd06f28bec4f01852d1aa99c28d68edb83803e791ff56d6b"
+        },
+        {
+          "task_id": "music-harmony",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=323275fc-ac06-40c9-a439-cd592533efce trial_name=music-harmony__oHEQskH task_digest=sha256:f5ba5ef9140c164e1c3654425caea7dc0f74423c9632f5e0c9a6dc9001d38f00 result_sha256=d98bd29ec98c91f83c5da9a5bd28b2cf38f749668f7edb316d7bfb9c2519a9aa lock_sha256=511fe5c342c022455fa98d266bb7f6f23fba47505a1fea01af0a386611cef39d"
+        },
+        {
+          "task_id": "music-harmony",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=7b04c1e9-2563-4acc-af49-47ffacb38dc9 trial_name=music-harmony__S8AAbsp task_digest=sha256:f5ba5ef9140c164e1c3654425caea7dc0f74423c9632f5e0c9a6dc9001d38f00 result_sha256=cf1777c5b38450f3ebe5b1c916a738ef2a0d7dce0118cda09632a7bd0be5a07a lock_sha256=511fe5c342c022455fa98d266bb7f6f23fba47505a1fea01af0a386611cef39d"
+        },
+        {
+          "task_id": "music-harmony",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=88ebc098-7759-4775-94c7-e11996e40c19 trial_name=music-harmony__sAYVPKQ task_digest=sha256:f5ba5ef9140c164e1c3654425caea7dc0f74423c9632f5e0c9a6dc9001d38f00 result_sha256=c8adb13b9d580029b830e1c07a8478d018927b4d170ad6ba21a24169f7162c67 lock_sha256=511fe5c342c022455fa98d266bb7f6f23fba47505a1fea01af0a386611cef39d"
+        },
+        {
+          "task_id": "music-harmony",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=a17cad07-51ea-4cd9-91d3-802e4b8062e8 trial_name=music-harmony__SBjLH9u task_digest=sha256:f5ba5ef9140c164e1c3654425caea7dc0f74423c9632f5e0c9a6dc9001d38f00 result_sha256=46ab43e676ee89589eecadf7a0f7bd3e472fce77225a72301b16375fda1040b4 lock_sha256=511fe5c342c022455fa98d266bb7f6f23fba47505a1fea01af0a386611cef39d"
+        },
+        {
+          "task_id": "music-harmony",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=fc590842-5b05-4d11-8c6f-5c9497c90f26 trial_name=music-harmony__uGemCHC task_digest=sha256:f5ba5ef9140c164e1c3654425caea7dc0f74423c9632f5e0c9a6dc9001d38f00 result_sha256=145e6a7d5079afeb3a6cee02c9f76bc742b7628388a272fe5b848eb3265969ae lock_sha256=511fe5c342c022455fa98d266bb7f6f23fba47505a1fea01af0a386611cef39d"
+        },
+        {
+          "task_id": "mvcc-lsm-compaction",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=0cf48d74-0aaa-44df-adcb-0402f0abcf04 trial_name=mvcc-lsm-compaction__GdXZG6d task_digest=sha256:fdf29c5e7778739cefa3f7a85f4b06acbfdfba329f332512c731b5d879ed446d result_sha256=4dbc8e3b24727b2c18a74c82ab4a29bcceb6efe3e77b524a6e4b1d10cbc259a9 lock_sha256=3d7845ce82f5ecd4bd4e5a78cf44a4fa4358f960dbdb98a9cd90d0c2f9ef48a5"
+        },
+        {
+          "task_id": "mvcc-lsm-compaction",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=4a313d8d-3b90-4e8d-8111-4a128f88622c trial_name=mvcc-lsm-compaction__sVvSFsp task_digest=sha256:fdf29c5e7778739cefa3f7a85f4b06acbfdfba329f332512c731b5d879ed446d result_sha256=10a61a28a1d83546f8119447053884f2ac8b0bd21ab9971877c426b37fa91684 lock_sha256=3d7845ce82f5ecd4bd4e5a78cf44a4fa4358f960dbdb98a9cd90d0c2f9ef48a5"
+        },
+        {
+          "task_id": "mvcc-lsm-compaction",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=4c948283-1366-4f97-838d-da117b4ea96f trial_name=mvcc-lsm-compaction__XGC2qrU task_digest=sha256:fdf29c5e7778739cefa3f7a85f4b06acbfdfba329f332512c731b5d879ed446d result_sha256=795d3ba9ef9618a8fdb0b76e28f6343d1a2ce614cdc4825283adfe5921f7775c lock_sha256=3d7845ce82f5ecd4bd4e5a78cf44a4fa4358f960dbdb98a9cd90d0c2f9ef48a5"
+        },
+        {
+          "task_id": "mvcc-lsm-compaction",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=5231b144-5ed0-443e-936b-6668817cff86 trial_name=mvcc-lsm-compaction__nEqNLqZ task_digest=sha256:fdf29c5e7778739cefa3f7a85f4b06acbfdfba329f332512c731b5d879ed446d result_sha256=d0af59d303e0fb35c65c62c8550b7893067c64cc7ea3f2664e335e0010e14516 lock_sha256=3d7845ce82f5ecd4bd4e5a78cf44a4fa4358f960dbdb98a9cd90d0c2f9ef48a5"
+        },
+        {
+          "task_id": "mvcc-lsm-compaction",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=6d0072b3-d8f4-41cf-a603-74b8333e1552 trial_name=mvcc-lsm-compaction__LrDe7Mu task_digest=sha256:fdf29c5e7778739cefa3f7a85f4b06acbfdfba329f332512c731b5d879ed446d result_sha256=a240f383604c5e34be6771ac3a73464173f7dad2b64614beb9dc6750c7e84c8c lock_sha256=3d7845ce82f5ecd4bd4e5a78cf44a4fa4358f960dbdb98a9cd90d0c2f9ef48a5"
+        },
+        {
+          "task_id": "nextjs-performance",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=30aaff2b-693b-4e15-8c81-20042c66dec0 trial_name=nextjs-performance__EPQKM9W task_digest=sha256:8dd4222253b1cac21c139e5c11362ad748e3d7d1a1aa423839d18b7133d70db4 result_sha256=7e999c02ee2fbce37087af3168a64331884ae59357c0fe510252a1417f25fdc9 lock_sha256=04c23068ca7f71d1ca1bed4caecf1d8aa95e8904d9648ef88d7794088afd7822"
+        },
+        {
+          "task_id": "nextjs-performance",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=5d866db7-e45f-4d82-adc2-4fac5ca1b8a8 trial_name=nextjs-performance__UAwJhtg task_digest=sha256:8dd4222253b1cac21c139e5c11362ad748e3d7d1a1aa423839d18b7133d70db4 result_sha256=a235d2b453bd2d6539de64a244d8efd19cb035bcdf3cf3fc87a81839060d86a1 lock_sha256=04c23068ca7f71d1ca1bed4caecf1d8aa95e8904d9648ef88d7794088afd7822"
+        },
+        {
+          "task_id": "nextjs-performance",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=8b94f8d6-a01f-477e-a429-69494ef59b50 trial_name=nextjs-performance__EeCRqMP task_digest=sha256:8dd4222253b1cac21c139e5c11362ad748e3d7d1a1aa423839d18b7133d70db4 result_sha256=ad2715fb918ece7cefb7a2c1e8c19188a75a45b91ffcd7fabb2d04b50b8931bb lock_sha256=04c23068ca7f71d1ca1bed4caecf1d8aa95e8904d9648ef88d7794088afd7822"
+        },
+        {
+          "task_id": "nextjs-performance",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=aea532f6-e061-480d-8f63-49f5b1eb081c trial_name=nextjs-performance__vTJePnS task_digest=sha256:8dd4222253b1cac21c139e5c11362ad748e3d7d1a1aa423839d18b7133d70db4 result_sha256=efb57f306f657401a0f2fa4dea2e68bd465fc44e9ce2d19b8df21317eb3b6e5f lock_sha256=04c23068ca7f71d1ca1bed4caecf1d8aa95e8904d9648ef88d7794088afd7822"
+        },
+        {
+          "task_id": "nextjs-performance",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=d543e01e-8824-41a3-b4cf-06ff88727b5a trial_name=nextjs-performance__QVcS8p4 task_digest=sha256:8dd4222253b1cac21c139e5c11362ad748e3d7d1a1aa423839d18b7133d70db4 result_sha256=93bd6b8aa34eac28b62d272cf004669c0eec4385a4d6e0f7b57832b30c5ebc50 lock_sha256=04c23068ca7f71d1ca1bed4caecf1d8aa95e8904d9648ef88d7794088afd7822"
+        },
+        {
+          "task_id": "ontology-kg-querying",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=944b064a-962c-4e70-a817-188b2c4a9355 trial_name=ontology-kg-querying__M98EDbo task_digest=sha256:75a12b63f861150a038f095fc2ea06b7cf45ee04b5042413d4c4f20d3da944ad result_sha256=1238c4e9b9675007668a7070479238130749bf74c04dd98eece2c1775c1b797f lock_sha256=1d6ca83111dacd1116f481b4ba56fecd8a85c6dc78b78d69e6ff759bd1727b17"
+        },
+        {
+          "task_id": "ontology-kg-querying",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=980004be-8321-4f62-bfcf-aadfd9fd5abd trial_name=ontology-kg-querying__3JDYYDy task_digest=sha256:75a12b63f861150a038f095fc2ea06b7cf45ee04b5042413d4c4f20d3da944ad result_sha256=19033a3d71c57983385938485fa91486ff300912ac31e2a8eaf9c1a7a0a3708f lock_sha256=1d6ca83111dacd1116f481b4ba56fecd8a85c6dc78b78d69e6ff759bd1727b17"
+        },
+        {
+          "task_id": "ontology-kg-querying",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=9ec3f2bb-c399-4e7d-b84f-f5108a303070 trial_name=ontology-kg-querying__yMRPi5D task_digest=sha256:75a12b63f861150a038f095fc2ea06b7cf45ee04b5042413d4c4f20d3da944ad result_sha256=f52b7f7e4dd8422614010d46f9311641ef28db9f67e9385b93abc89cf7288a8a lock_sha256=1d6ca83111dacd1116f481b4ba56fecd8a85c6dc78b78d69e6ff759bd1727b17"
+        },
+        {
+          "task_id": "ontology-kg-querying",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=fb4c6930-0df0-4160-a955-895dd36eeff0 trial_name=ontology-kg-querying__7XVkN4F task_digest=sha256:75a12b63f861150a038f095fc2ea06b7cf45ee04b5042413d4c4f20d3da944ad result_sha256=3bf58886de0b71cb59aa0e3ed8b21bd4b4a95e0b3d1c34489efd0661754ef8e4 lock_sha256=1d6ca83111dacd1116f481b4ba56fecd8a85c6dc78b78d69e6ff759bd1727b17"
+        },
+        {
+          "task_id": "ontology-kg-querying",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=fcf588db-d151-43ae-adfb-1c6f4bca499c trial_name=ontology-kg-querying__9JnKLW8 task_digest=sha256:75a12b63f861150a038f095fc2ea06b7cf45ee04b5042413d4c4f20d3da944ad result_sha256=b4b6a728ac4a892480038bd75f77690976a04c50cdba2872835493dcd589af3e lock_sha256=1d6ca83111dacd1116f481b4ba56fecd8a85c6dc78b78d69e6ff759bd1727b17"
+        },
+        {
+          "task_id": "payments-pipeline-fix",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=12f25b0a-77f2-4dc1-8db5-d501cd768838 trial_name=payments-pipeline-fix__3afpz35 task_digest=sha256:05cbd702e9efc41264e495e6afda5faa34f7672fa4f6faaeaf66106f03af8c6c result_sha256=f85109517aaba6078510b36139f72a3121d888835abfd0ecd5b48fba1d8c19ef lock_sha256=ae95746397cdb294552e3721d13296c78969f3eaf5acb381c0d57235b5f8dcfb"
+        },
+        {
+          "task_id": "payments-pipeline-fix",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=12fb9952-17cd-4b4b-8567-8cb402d90d73 trial_name=payments-pipeline-fix__cry9k3X task_digest=sha256:05cbd702e9efc41264e495e6afda5faa34f7672fa4f6faaeaf66106f03af8c6c result_sha256=48ec8afbe335c282d8ce8d8126e6e539dba25a4ba14227e5e919a9003a9db3dd lock_sha256=ae95746397cdb294552e3721d13296c78969f3eaf5acb381c0d57235b5f8dcfb"
+        },
+        {
+          "task_id": "payments-pipeline-fix",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=5cc47f1d-6959-4870-9e27-eb5eee2ad5fc trial_name=payments-pipeline-fix__5Z9WgSL task_digest=sha256:05cbd702e9efc41264e495e6afda5faa34f7672fa4f6faaeaf66106f03af8c6c result_sha256=d03539363ce99e2c289c3eaf11387c6ea8e529b7ab13b6d093bf11c039645a83 lock_sha256=ae95746397cdb294552e3721d13296c78969f3eaf5acb381c0d57235b5f8dcfb"
+        },
+        {
+          "task_id": "payments-pipeline-fix",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=c5af629a-e66d-4f26-9154-db7ce20220c5 trial_name=payments-pipeline-fix__R3axUCK task_digest=sha256:05cbd702e9efc41264e495e6afda5faa34f7672fa4f6faaeaf66106f03af8c6c result_sha256=a15949ebfd069a68beef6177982c72be2c351be8d97192464bbbabc96e5871b9 lock_sha256=ae95746397cdb294552e3721d13296c78969f3eaf5acb381c0d57235b5f8dcfb"
+        },
+        {
+          "task_id": "payments-pipeline-fix",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=c709d25a-6a86-4c06-826b-e6cc5bf17ebd trial_name=payments-pipeline-fix__JfQA83P task_digest=sha256:05cbd702e9efc41264e495e6afda5faa34f7672fa4f6faaeaf66106f03af8c6c result_sha256=d129a9e55a5db43e2c61aee98b679d230f18a656c12dc95c1579504fe7d44fbd lock_sha256=ae95746397cdb294552e3721d13296c78969f3eaf5acb381c0d57235b5f8dcfb"
+        },
+        {
+          "task_id": "photonic-waveguide-routing",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=2e04348b-a73d-47af-9b6d-3b72b8d912eb trial_name=photonic-waveguide-routing__Sy3mHvT task_digest=sha256:3fd44f4fbc5b862bc1a0b098d3c1295387134edd238ed6f12f2c98ec13e2dccc result_sha256=e2335302aa441129daef351abb25fc1150c9b44fc820ccb83b64d1ccf2e87be5 lock_sha256=1c04a8e9e3e371bf56ba8a1cfb52ac103db9f1282c77dffa89f6ccfe4ade6076"
+        },
+        {
+          "task_id": "photonic-waveguide-routing",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=35b34936-429e-4e0b-8d17-6da47831e395 trial_name=photonic-waveguide-routing__fMHLtMY task_digest=sha256:3fd44f4fbc5b862bc1a0b098d3c1295387134edd238ed6f12f2c98ec13e2dccc result_sha256=6100b743ff414fbb3ef69d67456798692769f2ff37d4de8a046b5423ddf4905e lock_sha256=1c04a8e9e3e371bf56ba8a1cfb52ac103db9f1282c77dffa89f6ccfe4ade6076"
+        },
+        {
+          "task_id": "photonic-waveguide-routing",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=45ac5c28-020e-4086-9035-6bbcb80206a8 trial_name=photonic-waveguide-routing__oBtwN89 task_digest=sha256:3fd44f4fbc5b862bc1a0b098d3c1295387134edd238ed6f12f2c98ec13e2dccc result_sha256=75a5a76e7fa705b3872e36de174c704cc291dd2f8f3e251ed6d8a573d0e15d75 lock_sha256=1c04a8e9e3e371bf56ba8a1cfb52ac103db9f1282c77dffa89f6ccfe4ade6076"
+        },
+        {
+          "task_id": "photonic-waveguide-routing",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=59947766-609f-481b-91a3-d0805e87efa2 trial_name=photonic-waveguide-routing__BwuuNmt task_digest=sha256:3fd44f4fbc5b862bc1a0b098d3c1295387134edd238ed6f12f2c98ec13e2dccc result_sha256=907594197ca7be2f060cdbaa7dd6e4321dc76cad4747e6622ec6d1489c570443 lock_sha256=1c04a8e9e3e371bf56ba8a1cfb52ac103db9f1282c77dffa89f6ccfe4ade6076"
+        },
+        {
+          "task_id": "photonic-waveguide-routing",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=8062412e-bf61-48c0-9708-8d4428c30e59 trial_name=photonic-waveguide-routing__NLJeZRM task_digest=sha256:3fd44f4fbc5b862bc1a0b098d3c1295387134edd238ed6f12f2c98ec13e2dccc result_sha256=1c032eedd79f440facb3a5d4dce80d05a316b3b668f06ca64d3eb8a7c7013066 lock_sha256=1c04a8e9e3e371bf56ba8a1cfb52ac103db9f1282c77dffa89f6ccfe4ade6076"
+        },
+        {
+          "task_id": "pretrain-shard-corruption",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=18553e26-9859-487b-bb7d-87d57976f176 trial_name=pretrain-shard-corruption__rbbbTxx task_digest=sha256:898642139464d351ccea81a5666dd1d572ed0501df2b40feb7a251841bbd0a4c result_sha256=0924bfcf25d6ac539ef0fd47cb104d0517444465df61dcbb96e68e0b9e28ba31 lock_sha256=c86d0afe782b72c5ec72b225c35c6754ee6eaeb72db904f11a28138996372249"
+        },
+        {
+          "task_id": "pretrain-shard-corruption",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=4337a630-9b2b-4f44-8117-8ab2cfe96ccc trial_name=pretrain-shard-corruption__UoicLVc task_digest=sha256:898642139464d351ccea81a5666dd1d572ed0501df2b40feb7a251841bbd0a4c result_sha256=32c97666a3c201e605607a418ef54032871a47d59476b0de069d3869a3312c19 lock_sha256=c86d0afe782b72c5ec72b225c35c6754ee6eaeb72db904f11a28138996372249"
+        },
+        {
+          "task_id": "pretrain-shard-corruption",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=7dbad72e-0df4-4fa0-a881-d80f50328752 trial_name=pretrain-shard-corruption__JqTQVsq task_digest=sha256:898642139464d351ccea81a5666dd1d572ed0501df2b40feb7a251841bbd0a4c result_sha256=2dcc06fb5c145756df1523bcbe0c255878f36b12cc4c4488b19ddb5af79f7cd9 lock_sha256=c86d0afe782b72c5ec72b225c35c6754ee6eaeb72db904f11a28138996372249"
+        },
+        {
+          "task_id": "pretrain-shard-corruption",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=82829531-dcca-4173-ba2b-8491a6e0bd7d trial_name=pretrain-shard-corruption__rcktHUx task_digest=sha256:898642139464d351ccea81a5666dd1d572ed0501df2b40feb7a251841bbd0a4c result_sha256=9780f03667ea9e6969fd1fdce862791ea831a7032dc371df464ed670aa2151c0 lock_sha256=c86d0afe782b72c5ec72b225c35c6754ee6eaeb72db904f11a28138996372249"
+        },
+        {
+          "task_id": "pretrain-shard-corruption",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=d2ae4771-d6d9-4270-b48d-2890a6ca8ae6 trial_name=pretrain-shard-corruption__sJRvaU3 task_digest=sha256:898642139464d351ccea81a5666dd1d572ed0501df2b40feb7a251841bbd0a4c result_sha256=0bcf9c3393ba0aa5530f06147f224d2b887670b1569c1f240627efbb7babf50d lock_sha256=c86d0afe782b72c5ec72b225c35c6754ee6eaeb72db904f11a28138996372249"
+        },
+        {
+          "task_id": "production-planning",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=12e7241c-5444-49aa-9b11-bda8294e344d trial_name=production-planning__C7GdZ5N task_digest=sha256:3207b248738c9e6d497559b90a2a85d43dddde1caea12a5e17e4871e985fe7de result_sha256=4a42f3d1fa3303f033110e759560cc9c694d2b79549dc0b3f5faf12524af71d2 lock_sha256=b3a1c397ebc583f477ad534d0b80c0879e71b31a9393e8d20537932b66614d7d"
+        },
+        {
+          "task_id": "production-planning",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=51fd8421-f728-49c9-8941-06cae591cfc3 trial_name=production-planning__RfcMZts task_digest=sha256:3207b248738c9e6d497559b90a2a85d43dddde1caea12a5e17e4871e985fe7de result_sha256=10e1fe4eda7eb7a9d96acb73fc016152584fbd2a963f4c4faa7955bae7a4ed55 lock_sha256=b3a1c397ebc583f477ad534d0b80c0879e71b31a9393e8d20537932b66614d7d"
+        },
+        {
+          "task_id": "production-planning",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=6a645834-1f30-4b85-99d0-6676e6f20d61 trial_name=production-planning__DMZuLSa task_digest=sha256:3207b248738c9e6d497559b90a2a85d43dddde1caea12a5e17e4871e985fe7de result_sha256=bc15502c286a22e2f4d170a63f7d0cb7d26ba025c05f697d5615e4f11659914d lock_sha256=b3a1c397ebc583f477ad534d0b80c0879e71b31a9393e8d20537932b66614d7d"
+        },
+        {
+          "task_id": "production-planning",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=6c190c26-7048-47f4-ad59-a7aa702d27c2 trial_name=production-planning__PZKGBqT task_digest=sha256:3207b248738c9e6d497559b90a2a85d43dddde1caea12a5e17e4871e985fe7de result_sha256=afc3ac5d4238cf9a15d79f3d0699e793b4fb997c48a7d6b33bdb09005829861c lock_sha256=b3a1c397ebc583f477ad534d0b80c0879e71b31a9393e8d20537932b66614d7d"
+        },
+        {
+          "task_id": "production-planning",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=7a0b6197-ae71-45c1-992a-74b3af0c2863 trial_name=production-planning__U2JZotN task_digest=sha256:3207b248738c9e6d497559b90a2a85d43dddde1caea12a5e17e4871e985fe7de result_sha256=2600e88c329bce161175dd02a99aa042b10f0055a877d7d499061cfdbb1cf874 lock_sha256=b3a1c397ebc583f477ad534d0b80c0879e71b31a9393e8d20537932b66614d7d"
+        },
+        {
+          "task_id": "protein-autointerp-disulfide",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=29097a09-4f02-4ead-be61-4994f5196a48 trial_name=protein-autointerp-disulfide__tgwPThC task_digest=sha256:49ed2bef4e2e3f987740d8e5fd0d236078089517a0c3f0e39d59612821287916 result_sha256=0c766b2da965a2c354f7e07713569a9d6c8634a7a1502acdd8aa786f617ebfbc lock_sha256=9afa46ed50ecf87a9f64bd8b1537e14ccfe1dd3423554913ae4ca9f905c441c5"
+        },
+        {
+          "task_id": "protein-autointerp-disulfide",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=32ec6ead-4edb-4178-bec9-5d0aaffbe7ea trial_name=protein-autointerp-disulfide__wstcM4n task_digest=sha256:49ed2bef4e2e3f987740d8e5fd0d236078089517a0c3f0e39d59612821287916 result_sha256=a1d86e82715f9aedbe569dd7f8c104ff6344bade6c6d4f177e7686423a4f7f7f lock_sha256=9afa46ed50ecf87a9f64bd8b1537e14ccfe1dd3423554913ae4ca9f905c441c5"
+        },
+        {
+          "task_id": "protein-autointerp-disulfide",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=b31c9db1-72c2-49d4-bc53-42855be28546 trial_name=protein-autointerp-disulfide__dhpVELN task_digest=sha256:49ed2bef4e2e3f987740d8e5fd0d236078089517a0c3f0e39d59612821287916 result_sha256=4476bebc3281d0c43cd33efeea5b0694f5f90a0035e80ddce7027e3d324a708e lock_sha256=9afa46ed50ecf87a9f64bd8b1537e14ccfe1dd3423554913ae4ca9f905c441c5"
+        },
+        {
+          "task_id": "protein-autointerp-disulfide",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=b36f42d5-614c-4986-b956-20491904d5e6 trial_name=protein-autointerp-disulfide__A3yYsiR task_digest=sha256:49ed2bef4e2e3f987740d8e5fd0d236078089517a0c3f0e39d59612821287916 result_sha256=6eac4fefa6846fe95edad732dbac9ca3ded707724a514dd4135e9c4e9c55ea22 lock_sha256=9afa46ed50ecf87a9f64bd8b1537e14ccfe1dd3423554913ae4ca9f905c441c5"
+        },
+        {
+          "task_id": "protein-autointerp-disulfide",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=ccfd1f05-42e9-4cb2-bf6e-05e130d007c4 trial_name=protein-autointerp-disulfide__WwLPw95 task_digest=sha256:49ed2bef4e2e3f987740d8e5fd0d236078089517a0c3f0e39d59612821287916 result_sha256=1dd13401ce1df306aad4475546a6e863e6aba183d6831d5490c7cf31e28a8d53 lock_sha256=9afa46ed50ecf87a9f64bd8b1537e14ccfe1dd3423554913ae4ca9f905c441c5"
+        },
+        {
+          "task_id": "react-lead-form",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=4bfd3a70-8327-4933-892c-d6c998b8b301 trial_name=react-lead-form__cFRq2jK task_digest=sha256:6164416e310fb06ba55f5a574f5c4128f36dc7f0ae54cef6d81b47fede74a09c result_sha256=d64fdb24506e342d2fabd6a83d8e6776fae6bb3de32aecc02684920039950ba8 lock_sha256=9186006d71e59b1dabfc0cb147d45b1b71d11e8846215e84027937bdfbb70d86"
+        },
+        {
+          "task_id": "react-lead-form",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=56f98f71-28bc-4f5d-9634-459caa7e7bc2 trial_name=react-lead-form__hEUtKJc task_digest=sha256:6164416e310fb06ba55f5a574f5c4128f36dc7f0ae54cef6d81b47fede74a09c result_sha256=555df26d250a3852c89ac2b271e3a3786375c70549fcb3681f3c10588992b779 lock_sha256=9186006d71e59b1dabfc0cb147d45b1b71d11e8846215e84027937bdfbb70d86"
+        },
+        {
+          "task_id": "react-lead-form",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=7c71987b-973b-4bd0-ace5-fe1a5413be6e trial_name=react-lead-form__Jr6LFjZ task_digest=sha256:6164416e310fb06ba55f5a574f5c4128f36dc7f0ae54cef6d81b47fede74a09c result_sha256=f54eb86761eb80802ae5bae890dad0d5de81610cee7573adc281bbc852f5fb18 lock_sha256=9186006d71e59b1dabfc0cb147d45b1b71d11e8846215e84027937bdfbb70d86"
+        },
+        {
+          "task_id": "react-lead-form",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=89cb671a-d28e-4bc2-a43d-580ac0c0ee32 trial_name=react-lead-form__LQ2X3Fx task_digest=sha256:6164416e310fb06ba55f5a574f5c4128f36dc7f0ae54cef6d81b47fede74a09c result_sha256=e042112a33dce6ef7d806260c2abf5fbc2972febcb8f02166f83dab55a13cef2 lock_sha256=9186006d71e59b1dabfc0cb147d45b1b71d11e8846215e84027937bdfbb70d86"
+        },
+        {
+          "task_id": "react-lead-form",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=be03d011-855a-488e-9802-3981c4b2d024 trial_name=react-lead-form__KNvoJxT task_digest=sha256:6164416e310fb06ba55f5a574f5c4128f36dc7f0ae54cef6d81b47fede74a09c result_sha256=c53ab0732e17b30a258dc330166a8ae3bf5d38c83157b5f2d7cc0400b6beb30d lock_sha256=9186006d71e59b1dabfc0cb147d45b1b71d11e8846215e84027937bdfbb70d86"
+        },
+        {
+          "task_id": "retro-console-soc",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=86426045-4dac-4e97-a0a6-e768427a7511 trial_name=retro-console-soc__ERip3dD task_digest=sha256:5707df6b5c777e156896f1edd5137775f297a88c7f191545e83c7b7909889d96 result_sha256=72a5c57aab352caa12cff1b3921827fda2d46ef9fa02f25ad148d8fc7bfa204f lock_sha256=57c6fa7e5d8fe9fee2e84a5a73e2e744e40f69d9f3d0ff9ac6ba43670229f6ec"
+        },
+        {
+          "task_id": "retro-console-soc",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=a61fbc09-baf3-4a1d-ae91-3e063ab1723c trial_name=retro-console-soc__Q64De6w task_digest=sha256:5707df6b5c777e156896f1edd5137775f297a88c7f191545e83c7b7909889d96 result_sha256=d3d389ce50dff1c8c0afa6eac83ad13f4571419da8b0e69c4996fa0c849ccabe lock_sha256=57c6fa7e5d8fe9fee2e84a5a73e2e744e40f69d9f3d0ff9ac6ba43670229f6ec"
+        },
+        {
+          "task_id": "retro-console-soc",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=bf996bf0-ddb1-4beb-9936-aeac3b7261f5 trial_name=retro-console-soc__GyJyAaA task_digest=sha256:5707df6b5c777e156896f1edd5137775f297a88c7f191545e83c7b7909889d96 result_sha256=7a8453be550b1a991be3297c9fb3bc259752c2a10d65eb757eb82ddd0d8b897a lock_sha256=57c6fa7e5d8fe9fee2e84a5a73e2e744e40f69d9f3d0ff9ac6ba43670229f6ec"
+        },
+        {
+          "task_id": "retro-console-soc",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=c34ddef1-8a4a-4fa4-b54a-f76b33efd1be trial_name=retro-console-soc__G4SPCqC task_digest=sha256:5707df6b5c777e156896f1edd5137775f297a88c7f191545e83c7b7909889d96 result_sha256=bcb909ebe85c0a6830cdc8bfe48a2530e9b8fbace9dea507e88b959ffd94c564 lock_sha256=57c6fa7e5d8fe9fee2e84a5a73e2e744e40f69d9f3d0ff9ac6ba43670229f6ec"
+        },
+        {
+          "task_id": "retro-console-soc",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=de96c3b2-d57f-47ec-b861-ad2ff42abafa trial_name=retro-console-soc__Ji7wDX5 task_digest=sha256:5707df6b5c777e156896f1edd5137775f297a88c7f191545e83c7b7909889d96 result_sha256=46ab55aefa2f7bbceff9f5e8aa8a03f97c2c3dd6e9e9c34e514d91f1298161fa lock_sha256=57c6fa7e5d8fe9fee2e84a5a73e2e744e40f69d9f3d0ff9ac6ba43670229f6ec"
+        },
+        {
+          "task_id": "risk-scorer-replay",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=4b4fb2bf-3223-4980-bc40-6c99ba4fca6a trial_name=risk-scorer-replay__hEDQLuR task_digest=sha256:81eda6d9247bd5642feaccabb8eaef055cca8c3e4dab00bceb89aee56645454f result_sha256=eecd3e6eecfa667665c7e5e352b3f3b1ba1ea63df20f1ba9acbe494ad214edd3 lock_sha256=b1085a7d4cfaf559e7059e2d735ef0074d5a99ed77a19c069cf1db1274fab24c"
+        },
+        {
+          "task_id": "risk-scorer-replay",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=616932d4-3a25-4045-ae0b-2a5691abe63e trial_name=risk-scorer-replay__3J8vtPe task_digest=sha256:81eda6d9247bd5642feaccabb8eaef055cca8c3e4dab00bceb89aee56645454f result_sha256=f0e5caad019d5589ad029dd8342a0c93cbfdeb752146a02b492a1101507d4396 lock_sha256=b1085a7d4cfaf559e7059e2d735ef0074d5a99ed77a19c069cf1db1274fab24c"
+        },
+        {
+          "task_id": "risk-scorer-replay",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=8cc159d8-f0f8-4375-8e73-64882d314237 trial_name=risk-scorer-replay__xRCxXEB task_digest=sha256:81eda6d9247bd5642feaccabb8eaef055cca8c3e4dab00bceb89aee56645454f result_sha256=fc1c733bf56a912fdef967e626c09c3603c6aeb1ccb80e35d9200b91aa43be88 lock_sha256=b1085a7d4cfaf559e7059e2d735ef0074d5a99ed77a19c069cf1db1274fab24c"
+        },
+        {
+          "task_id": "risk-scorer-replay",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=ba2e1fee-eccf-4923-9365-7477b35bafac trial_name=risk-scorer-replay__DmJ8ewQ task_digest=sha256:81eda6d9247bd5642feaccabb8eaef055cca8c3e4dab00bceb89aee56645454f result_sha256=88db0f2a89d4c947554346e890a5540334ecb165b9d55fbdd57fff2b7857db7e lock_sha256=b1085a7d4cfaf559e7059e2d735ef0074d5a99ed77a19c069cf1db1274fab24c"
+        },
+        {
+          "task_id": "risk-scorer-replay",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=ccd4fd3d-1885-4075-8097-433a4452e501 trial_name=risk-scorer-replay__zgg86EJ task_digest=sha256:81eda6d9247bd5642feaccabb8eaef055cca8c3e4dab00bceb89aee56645454f result_sha256=0c41c55ef7705d22f76d1ba2d812eefb5fd9f8dc8451663d2951b00084fcaaaf lock_sha256=b1085a7d4cfaf559e7059e2d735ef0074d5a99ed77a19c069cf1db1274fab24c"
+        },
+        {
+          "task_id": "roy-polymorph-cn",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=0e072eac-b6ec-4862-b341-b5aabf332e44 trial_name=roy-polymorph-cn__GS8uVWe task_digest=sha256:b481c32720d39a7673a469b12cbea6e318fed750c8928bc5f5d7cbf9874610a1 result_sha256=9ecbffcca553dfd49e398cf10cfbc4979522d89b6e4c2e0934d84b06625ca850 lock_sha256=7ba91393b79cb4d0196160f1deb962d0c588fa74b7435de9bab44e9f4f8f85fc"
+        },
+        {
+          "task_id": "roy-polymorph-cn",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=43a4ca3f-95fe-45f2-9f88-d2e132d09c2d trial_name=roy-polymorph-cn__bHktBRY task_digest=sha256:b481c32720d39a7673a469b12cbea6e318fed750c8928bc5f5d7cbf9874610a1 result_sha256=626fb4ba29abc771eae64c0b3dc7b36b6e9a8b874aa8c06c14427103b4c173fb lock_sha256=7ba91393b79cb4d0196160f1deb962d0c588fa74b7435de9bab44e9f4f8f85fc"
+        },
+        {
+          "task_id": "roy-polymorph-cn",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=bb9a00b9-8b1f-4439-9b70-8eb7cc3ad05b trial_name=roy-polymorph-cn__EmCPQuV task_digest=sha256:b481c32720d39a7673a469b12cbea6e318fed750c8928bc5f5d7cbf9874610a1 result_sha256=e6b96cffa2ed4716ddf56e6153573948fb902a0f34c95ccc502c5a59007acd93 lock_sha256=7ba91393b79cb4d0196160f1deb962d0c588fa74b7435de9bab44e9f4f8f85fc"
+        },
+        {
+          "task_id": "roy-polymorph-cn",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=c830d81a-ca4b-4c28-bc06-d184b7a02982 trial_name=roy-polymorph-cn__zyhNmxZ task_digest=sha256:b481c32720d39a7673a469b12cbea6e318fed750c8928bc5f5d7cbf9874610a1 result_sha256=e98eafd5de3ffe9a1a6c979db62016137b4273d8ecede17a1bb659aed98bdeb8 lock_sha256=7ba91393b79cb4d0196160f1deb962d0c588fa74b7435de9bab44e9f4f8f85fc"
+        },
+        {
+          "task_id": "roy-polymorph-cn",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=ef7d167d-ea5b-4b70-af4a-7f0111dfd519 trial_name=roy-polymorph-cn__MchS5vp task_digest=sha256:b481c32720d39a7673a469b12cbea6e318fed750c8928bc5f5d7cbf9874610a1 result_sha256=8875b128382110ac5999287b6c9b099f0272c9f8e769073e0e63d2295d071a28 lock_sha256=7ba91393b79cb4d0196160f1deb962d0c588fa74b7435de9bab44e9f4f8f85fc"
+        },
+        {
+          "task_id": "rs-archive-clone",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=22e62e3c-251d-4cbc-b0b1-facc4a3a94a3 trial_name=rs-archive-clone__anrfRas task_digest=sha256:54a2627f15e22ea58082d6d06cad9ab5c5e0e80c3a93ded915d76db3031384b4 result_sha256=5ba08635acae19052c63381d7309c00ab635326faafc32f5c92c17018c2d8acd lock_sha256=6e6cad60b735ee0ffc5ae5aed3b0295f7f3a77b387be34a8374f5a229427eff8"
+        },
+        {
+          "task_id": "rs-archive-clone",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=5c243cc7-758e-4a5a-8a81-885f74e19d4e trial_name=rs-archive-clone__5jPgsrX task_digest=sha256:54a2627f15e22ea58082d6d06cad9ab5c5e0e80c3a93ded915d76db3031384b4 result_sha256=91d4febd805a42cc1fcba97a8ec6cfe430e8085a85825be5dd6307b587bdcf10 lock_sha256=6e6cad60b735ee0ffc5ae5aed3b0295f7f3a77b387be34a8374f5a229427eff8"
+        },
+        {
+          "task_id": "rs-archive-clone",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=78f6e6ce-4333-40f2-baf9-c1089c98cb79 trial_name=rs-archive-clone__jV5FkvV task_digest=sha256:54a2627f15e22ea58082d6d06cad9ab5c5e0e80c3a93ded915d76db3031384b4 result_sha256=6a502f086793f8cf13bfdbc4e08413cfa2658beadf246e7dfa431a12e91693f5 lock_sha256=6e6cad60b735ee0ffc5ae5aed3b0295f7f3a77b387be34a8374f5a229427eff8"
+        },
+        {
+          "task_id": "rs-archive-clone",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=7ea0943d-6612-4c61-a4eb-8bfded7ad61c trial_name=rs-archive-clone__BzVYXBU task_digest=sha256:54a2627f15e22ea58082d6d06cad9ab5c5e0e80c3a93ded915d76db3031384b4 result_sha256=3966088ba3e1917b488d890bee6643ead2c85324e996f4c5d1279f9e7f22c002 lock_sha256=6e6cad60b735ee0ffc5ae5aed3b0295f7f3a77b387be34a8374f5a229427eff8"
+        },
+        {
+          "task_id": "rs-archive-clone",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=a8082d32-c263-4318-b3dc-04b126ce9ea6 trial_name=rs-archive-clone__sgZva4f task_digest=sha256:54a2627f15e22ea58082d6d06cad9ab5c5e0e80c3a93ded915d76db3031384b4 result_sha256=e44308ab584165555bb5d014545ea3eee165698312761adbe23eaf4ab27831ae lock_sha256=6e6cad60b735ee0ffc5ae5aed3b0295f7f3a77b387be34a8374f5a229427eff8"
+        },
+        {
+          "task_id": "satb-audio-transcription",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=0970db4b-3c25-41f1-b9e4-4f92a445d1b3 trial_name=satb-audio-transcription__GR2BUPa task_digest=sha256:6c1491daac95ec0dc9e3968668933bef309ff2c5968b385636abf796afa7654d result_sha256=e9a6978c278614248831b177640434cb3954eddeb15dd9d25cd9dd1e9c52dc63 lock_sha256=7b5e7cea735065a4ded7fd0746ce52b370ee046516df811d930781e8f10a88d6"
+        },
+        {
+          "task_id": "satb-audio-transcription",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=52095101-3390-40af-8d03-567fe95b2c2f trial_name=satb-audio-transcription__K5jhDwG task_digest=sha256:6c1491daac95ec0dc9e3968668933bef309ff2c5968b385636abf796afa7654d result_sha256=19192da75242430008111028c794102d5ab9ea1006f0f239343e6ff1291ebc61 lock_sha256=7b5e7cea735065a4ded7fd0746ce52b370ee046516df811d930781e8f10a88d6"
+        },
+        {
+          "task_id": "satb-audio-transcription",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=8857f750-1a58-47a7-82ed-37d8df031d7a trial_name=satb-audio-transcription__VRGpQJy task_digest=sha256:6c1491daac95ec0dc9e3968668933bef309ff2c5968b385636abf796afa7654d result_sha256=351ef9c4e872c1d302a83577e45917059e8b4f2743657afcab8327b1480157a3 lock_sha256=7b5e7cea735065a4ded7fd0746ce52b370ee046516df811d930781e8f10a88d6"
+        },
+        {
+          "task_id": "satb-audio-transcription",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=b02f170e-98a2-4ae0-b63e-a5179b6c0745 trial_name=satb-audio-transcription__9NhuGKg task_digest=sha256:6c1491daac95ec0dc9e3968668933bef309ff2c5968b385636abf796afa7654d result_sha256=cbd70a83c607c779eab5d41e8764ec9316bb8d0e01c56aea81d72bc1215fcc08 lock_sha256=7b5e7cea735065a4ded7fd0746ce52b370ee046516df811d930781e8f10a88d6"
+        },
+        {
+          "task_id": "satb-audio-transcription",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=c3f8915a-7a91-4781-9224-a66d4abd5d0e trial_name=satb-audio-transcription__QRHy6S9 task_digest=sha256:6c1491daac95ec0dc9e3968668933bef309ff2c5968b385636abf796afa7654d result_sha256=3338a30b36834e24b96552a65cffc9a4f34b3691bc980f5b389563626a492be2 lock_sha256=7b5e7cea735065a4ded7fd0746ce52b370ee046516df811d930781e8f10a88d6"
+        },
+        {
+          "task_id": "session-window-debug",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=56cb7c21-9502-4ea3-b75c-d55817d2949d trial_name=session-window-debug__AVSsgrL task_digest=sha256:638c00fd438a0289ba75f6bc536861831f4a8eab2b85064064038e1bcc91cfbb result_sha256=4b1ac9b0b88a7c8d8a5bd4e8cf3bfb52e5b26306f246e7ed6a2784b92b2bc639 lock_sha256=7749e99362d7c4e8ca0d33f2cd28b2a833b7794e1389e2c8584525931296b515"
+        },
+        {
+          "task_id": "session-window-debug",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=79ca080b-d0d2-4285-b142-81ed90cebb29 trial_name=session-window-debug__CwhgLFe task_digest=sha256:638c00fd438a0289ba75f6bc536861831f4a8eab2b85064064038e1bcc91cfbb result_sha256=6a56e15d2b04325b479431127ad805e830ef67e32e859509467c66f806369541 lock_sha256=7749e99362d7c4e8ca0d33f2cd28b2a833b7794e1389e2c8584525931296b515"
+        },
+        {
+          "task_id": "session-window-debug",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=8df45fb9-8539-4654-84b3-ca7d51658f3c trial_name=session-window-debug__YTomtVe task_digest=sha256:638c00fd438a0289ba75f6bc536861831f4a8eab2b85064064038e1bcc91cfbb result_sha256=292d2c80a0083d7050eb475dda75b4b218cb5dd75cacbbb288448bdbb9d8e05f lock_sha256=7749e99362d7c4e8ca0d33f2cd28b2a833b7794e1389e2c8584525931296b515"
+        },
+        {
+          "task_id": "session-window-debug",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=9fb9b0ca-4a4a-41e1-9da6-e0dc7d0e4d74 trial_name=session-window-debug__2E9Rudw task_digest=sha256:638c00fd438a0289ba75f6bc536861831f4a8eab2b85064064038e1bcc91cfbb result_sha256=9c49920fc2821eca2502d8e734ab19a3eb06a7645b3ec50b48a074ee0c8efd4f lock_sha256=7749e99362d7c4e8ca0d33f2cd28b2a833b7794e1389e2c8584525931296b515"
+        },
+        {
+          "task_id": "session-window-debug",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=bf870830-7323-4417-9ab0-d4be5b4948af trial_name=session-window-debug__AXB8KDd task_digest=sha256:638c00fd438a0289ba75f6bc536861831f4a8eab2b85064064038e1bcc91cfbb result_sha256=27affec773a2aa1214a8e783e819e71b05e9ab69617f16f8d9f863ca594f5e91 lock_sha256=7749e99362d7c4e8ca0d33f2cd28b2a833b7794e1389e2c8584525931296b515"
+        },
+        {
+          "task_id": "sglang-qwen-burst",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=0329f3c9-3182-4b27-91d5-6d52860e07ce trial_name=sglang-qwen-burst__86Yjvty task_digest=sha256:405b3837c4b9186e60351db3d376aabd355c5f0a8c60db494ee53ee8a49b7fc8 result_sha256=9614da7df59a4b66d2f6e263cc74bae5f20c5adaaa82a9a927393ef6f0eb6b43 lock_sha256=f034d76e6162f2e1f14558d8b6ac3bc5fbc0d1c6fa0ca4e155079424d0c2076c"
+        },
+        {
+          "task_id": "sglang-qwen-burst",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=0d6b1348-c23a-4521-88c0-cc542964543c trial_name=sglang-qwen-burst__T9BqNdp task_digest=sha256:405b3837c4b9186e60351db3d376aabd355c5f0a8c60db494ee53ee8a49b7fc8 result_sha256=a61a348222fbcb3295da07c411581cedadf675036aad02749537cd46f5933d7b lock_sha256=f034d76e6162f2e1f14558d8b6ac3bc5fbc0d1c6fa0ca4e155079424d0c2076c"
+        },
+        {
+          "task_id": "sglang-qwen-burst",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=774d8fb5-b48a-4d00-8120-72d60c401156 trial_name=sglang-qwen-burst__EF22vTL task_digest=sha256:405b3837c4b9186e60351db3d376aabd355c5f0a8c60db494ee53ee8a49b7fc8 result_sha256=a0a9f5ffdcfde69006b5e012d99b42657f5cfcff129b8b908af849bfcb73e541 lock_sha256=f034d76e6162f2e1f14558d8b6ac3bc5fbc0d1c6fa0ca4e155079424d0c2076c"
+        },
+        {
+          "task_id": "sglang-qwen-burst",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=8aa81462-1850-4146-a48c-7820e568a5e9 trial_name=sglang-qwen-burst__BbN3xTn task_digest=sha256:405b3837c4b9186e60351db3d376aabd355c5f0a8c60db494ee53ee8a49b7fc8 result_sha256=225c9080b07f1e4bf4c4276968e063c1c6b130897bcb693c0aa3fa66a78140ac lock_sha256=f034d76e6162f2e1f14558d8b6ac3bc5fbc0d1c6fa0ca4e155079424d0c2076c"
+        },
+        {
+          "task_id": "sglang-qwen-burst",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=bf442f63-54bd-4ce0-b055-d455a1c45959 trial_name=sglang-qwen-burst__D98LDv9 task_digest=sha256:405b3837c4b9186e60351db3d376aabd355c5f0a8c60db494ee53ee8a49b7fc8 result_sha256=8fbf07a672ccb49d448709a4c95714f6fbde5826eb9653aba10df00cadb7f700 lock_sha256=f034d76e6162f2e1f14558d8b6ac3bc5fbc0d1c6fa0ca4e155079424d0c2076c"
+        },
+        {
+          "task_id": "shadow-relay",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=557bc89c-86bb-4116-ae19-2b9fd9ed22f3 trial_name=shadow-relay__RFvdsDL task_digest=sha256:a677da5665a8276811f95752ac917de653d970cf2293c8345322b6101768eca0 result_sha256=8d4889e2355d9bdbf2eea02842df6945ce4c3cb70c2d2ffdf1cd4489a93c7f2f lock_sha256=28847e00d535b2ae239aa41eb232bec51a62e2b0375c7986623f26168baab75e"
+        },
+        {
+          "task_id": "shadow-relay",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=9a4f1567-2556-4590-b377-26c14371163c trial_name=shadow-relay__Sri2g8j task_digest=sha256:a677da5665a8276811f95752ac917de653d970cf2293c8345322b6101768eca0 result_sha256=3c037400543670226f9010e2643f24366f8eb2f3e35aceff1e65ebc998ef4909 lock_sha256=28847e00d535b2ae239aa41eb232bec51a62e2b0375c7986623f26168baab75e"
+        },
+        {
+          "task_id": "shadow-relay",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=aec507b0-6996-4365-8266-c03466c62301 trial_name=shadow-relay__hpTTJYw task_digest=sha256:a677da5665a8276811f95752ac917de653d970cf2293c8345322b6101768eca0 result_sha256=a29e1bad659cd019756257861c4a011b2eeb4b49ed821e5593252ca511ac12c7 lock_sha256=28847e00d535b2ae239aa41eb232bec51a62e2b0375c7986623f26168baab75e"
+        },
+        {
+          "task_id": "shadow-relay",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=f09ae881-3cac-4594-a1ef-d4df9cebf058 trial_name=shadow-relay__CxHidFB task_digest=sha256:a677da5665a8276811f95752ac917de653d970cf2293c8345322b6101768eca0 result_sha256=1f780a69f5322aa02eac2a872e009bfa9196ce773223a337d72e9f33609f129b lock_sha256=28847e00d535b2ae239aa41eb232bec51a62e2b0375c7986623f26168baab75e"
+        },
+        {
+          "task_id": "shadow-relay",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=f9fb1082-f393-4c9a-a660-09cb1e5d92d8 trial_name=shadow-relay__vfJ5Tak task_digest=sha256:a677da5665a8276811f95752ac917de653d970cf2293c8345322b6101768eca0 result_sha256=819ef240ca56535865d9c88935b0b7258a4a7d8d8f2edc4b0addc3555ed0804f lock_sha256=28847e00d535b2ae239aa41eb232bec51a62e2b0375c7986623f26168baab75e"
+        },
+        {
+          "task_id": "sound-change-cascade",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=a00b25a6-a494-486e-81f4-22ce56aef803 trial_name=sound-change-cascade__FPGJj9L task_digest=sha256:0dbc8345e012bc341060bbd5ef896a3b90ecbb302d99d5a54b047f5e3a7ce8cd result_sha256=8f1927dd722e75f06910885cc479b027444aef9ac596cfea5122266cf3c7cced lock_sha256=00d52af87facd310a0a46110319bd0c338918c9f14e5cb06b85a887ef34b8b95"
+        },
+        {
+          "task_id": "sound-change-cascade",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=c283c96f-ef83-48bf-94f9-c223f1933351 trial_name=sound-change-cascade__TvH5kc2 task_digest=sha256:0dbc8345e012bc341060bbd5ef896a3b90ecbb302d99d5a54b047f5e3a7ce8cd result_sha256=c4e4ff2e787dbc13c7f3250cd8cccca66c73e6fc90e433d77bcc21c3c274c1e6 lock_sha256=00d52af87facd310a0a46110319bd0c338918c9f14e5cb06b85a887ef34b8b95"
+        },
+        {
+          "task_id": "sound-change-cascade",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=c42d2ed4-f517-4af8-a98d-e2135c77d5ef trial_name=sound-change-cascade__zrHG8dz task_digest=sha256:0dbc8345e012bc341060bbd5ef896a3b90ecbb302d99d5a54b047f5e3a7ce8cd result_sha256=4a85277601160d83b761ed9ee0ac4c1f155d51992b7e620bcd199a8fcaba2f1d lock_sha256=00d52af87facd310a0a46110319bd0c338918c9f14e5cb06b85a887ef34b8b95"
+        },
+        {
+          "task_id": "sound-change-cascade",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=daf0e016-3aca-42b2-ae84-27a06d82fd16 trial_name=sound-change-cascade__BrdHusA task_digest=sha256:0dbc8345e012bc341060bbd5ef896a3b90ecbb302d99d5a54b047f5e3a7ce8cd result_sha256=ab985c6b09fba3388c8edcf94281db1210ead03a8ccd5b2899a37b2610a85d81 lock_sha256=00d52af87facd310a0a46110319bd0c338918c9f14e5cb06b85a887ef34b8b95"
+        },
+        {
+          "task_id": "sound-change-cascade",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=f86721bf-16fa-4a9e-ad14-808f4c3b1d14 trial_name=sound-change-cascade__jZV88S9 task_digest=sha256:0dbc8345e012bc341060bbd5ef896a3b90ecbb302d99d5a54b047f5e3a7ce8cd result_sha256=f325bb5c74eeed0bf38342e0c603ca24dbed16558b868f4e034a95da2bccf47b lock_sha256=00d52af87facd310a0a46110319bd0c338918c9f14e5cb06b85a887ef34b8b95"
+        },
+        {
+          "task_id": "takens-embedding-lean",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=685da394-a798-4640-b8fc-9b567b391fe7 trial_name=takens-embedding-lean__QPETBMA task_digest=sha256:056774ee95c4d4b6ae1c2ede0a22aa30ecfbb56dcc8837b8d15c27f6f79d4b69 result_sha256=84f269fbc1a8d2a2f10f7ce37026a62a41b03953f8ed87f1b44db53fcb0f3f6c lock_sha256=cee7e51b2d7c6a8b2899c84437b2d15d5c20d4dc60bf2f099cbcfc08a4198b0e"
+        },
+        {
+          "task_id": "takens-embedding-lean",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=7581cc9d-1054-4d61-9186-b5fa3753263a trial_name=takens-embedding-lean__378GR2x task_digest=sha256:056774ee95c4d4b6ae1c2ede0a22aa30ecfbb56dcc8837b8d15c27f6f79d4b69 result_sha256=94952ba2467b08755b8bdeabccf065515b7c5f3347328e90d3196cfa60509e0a lock_sha256=cee7e51b2d7c6a8b2899c84437b2d15d5c20d4dc60bf2f099cbcfc08a4198b0e"
+        },
+        {
+          "task_id": "takens-embedding-lean",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=7f2f90b5-badf-4972-bac0-21a1cace9b94 trial_name=takens-embedding-lean__spELSkk task_digest=sha256:056774ee95c4d4b6ae1c2ede0a22aa30ecfbb56dcc8837b8d15c27f6f79d4b69 result_sha256=e054bfd16d27cfdb717db96c3f416a33d00008b5a08f796febf88e6e032feee9 lock_sha256=cee7e51b2d7c6a8b2899c84437b2d15d5c20d4dc60bf2f099cbcfc08a4198b0e"
+        },
+        {
+          "task_id": "takens-embedding-lean",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=cb74aeef-8fdc-4b59-bc5f-9b5249fdfc0c trial_name=takens-embedding-lean__bX5exE8 task_digest=sha256:056774ee95c4d4b6ae1c2ede0a22aa30ecfbb56dcc8837b8d15c27f6f79d4b69 result_sha256=c25da58a94d94b16c78dab307e6bcb4c529be263c4aa387e77727fbac0d9405e lock_sha256=cee7e51b2d7c6a8b2899c84437b2d15d5c20d4dc60bf2f099cbcfc08a4198b0e"
+        },
+        {
+          "task_id": "takens-embedding-lean",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=e802f8ba-bbbe-4b99-8ec1-2d8e2c9ffbca trial_name=takens-embedding-lean__yW38pqJ task_digest=sha256:056774ee95c4d4b6ae1c2ede0a22aa30ecfbb56dcc8837b8d15c27f6f79d4b69 result_sha256=048345b66d3f6f5964a22e316717d58d68c88e220e4ad93e1ed348b826b1e3dd lock_sha256=cee7e51b2d7c6a8b2899c84437b2d15d5c20d4dc60bf2f099cbcfc08a4198b0e"
+        },
+        {
+          "task_id": "telecom-entity-resolution",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=178b8e24-8185-4f09-945d-452f19fe225f trial_name=telecom-entity-resolution__MCXKtYf task_digest=sha256:4d15d983b4a44e15e933dd3b50b9116c27d5a66ff09ece221a7ea4554c24613a result_sha256=218e047f06990c46783c7fe41b726eaa35d1cbf7272259ff0adc160c37ca65a6 lock_sha256=24cc6cf9ef075e03da8097d1db68bdc27cdecd1fea7414e12f7f839a78cc0a7c"
+        },
+        {
+          "task_id": "telecom-entity-resolution",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=238b532c-9c57-42b2-a412-aa7f03f7c95c trial_name=telecom-entity-resolution__F9xGjRV task_digest=sha256:4d15d983b4a44e15e933dd3b50b9116c27d5a66ff09ece221a7ea4554c24613a result_sha256=8aefc4d0c35e209e079bc08389a1671b6c02d8551c22f0473486cc75eab7fa7a lock_sha256=24cc6cf9ef075e03da8097d1db68bdc27cdecd1fea7414e12f7f839a78cc0a7c"
+        },
+        {
+          "task_id": "telecom-entity-resolution",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=2fcfbf2c-7513-4201-89d2-906e5d71b26d trial_name=telecom-entity-resolution__9hwwKxT task_digest=sha256:4d15d983b4a44e15e933dd3b50b9116c27d5a66ff09ece221a7ea4554c24613a result_sha256=c1936694e5d779f64ce6611b1c22646062bb743529684042ccad71f28c48b7d9 lock_sha256=24cc6cf9ef075e03da8097d1db68bdc27cdecd1fea7414e12f7f839a78cc0a7c"
+        },
+        {
+          "task_id": "telecom-entity-resolution",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=3ab877f5-5e18-4e58-8625-4dc59c522cfe trial_name=telecom-entity-resolution__vFRdPLs task_digest=sha256:4d15d983b4a44e15e933dd3b50b9116c27d5a66ff09ece221a7ea4554c24613a result_sha256=2a80beb29e581efb4270f2763b3284cabd17198b5c8e6052055523f89a38d88c lock_sha256=24cc6cf9ef075e03da8097d1db68bdc27cdecd1fea7414e12f7f839a78cc0a7c"
+        },
+        {
+          "task_id": "telecom-entity-resolution",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=9219ed12-7340-4d73-aba1-0f15a83d6d0d trial_name=telecom-entity-resolution__n4aJTT9 task_digest=sha256:4d15d983b4a44e15e933dd3b50b9116c27d5a66ff09ece221a7ea4554c24613a result_sha256=380ca6166fe8388d80dfd240835443cb1cf135876bb2b52e238874eae2322d62 lock_sha256=24cc6cf9ef075e03da8097d1db68bdc27cdecd1fea7414e12f7f839a78cc0a7c"
+        },
+        {
+          "task_id": "uefi-bootkit",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=164125d4-6fef-475e-a548-a2529b4807a5 trial_name=uefi-bootkit__52rMFxT task_digest=sha256:97b0d08a63ee8e0115300ee797ae4eb89e9651d37ca93d2b39910c95bdbcddfc result_sha256=a078923e9a2ae63d6a6448ed9b52a2a68865a8bf1573ce7036a117ff4cc4ec1b lock_sha256=c6f5086ec6b3780046d7051cd2c84f1be1f586bf50d0bac632e9a1e6e8bd17ad"
+        },
+        {
+          "task_id": "uefi-bootkit",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=2d91ffce-4f02-4b90-85ec-bb97b640e216 trial_name=uefi-bootkit__idAeErS task_digest=sha256:97b0d08a63ee8e0115300ee797ae4eb89e9651d37ca93d2b39910c95bdbcddfc result_sha256=632887cc36e906cee01ed592a53f70213410e4de98b01134a2f0f9c2b540bf0b lock_sha256=c6f5086ec6b3780046d7051cd2c84f1be1f586bf50d0bac632e9a1e6e8bd17ad"
+        },
+        {
+          "task_id": "uefi-bootkit",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=7391f36a-5892-4872-a67e-c1b4fdeba593 trial_name=uefi-bootkit__kSVaNJa task_digest=sha256:97b0d08a63ee8e0115300ee797ae4eb89e9651d37ca93d2b39910c95bdbcddfc result_sha256=9276878eb7d2275ffaefab5e1ab069464e1ce3ce3378ce20252ddb75dd5d12e6 lock_sha256=c6f5086ec6b3780046d7051cd2c84f1be1f586bf50d0bac632e9a1e6e8bd17ad"
+        },
+        {
+          "task_id": "uefi-bootkit",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=c00d2e02-6078-489a-806f-0b2b464ba37e trial_name=uefi-bootkit__XzhQcWd task_digest=sha256:97b0d08a63ee8e0115300ee797ae4eb89e9651d37ca93d2b39910c95bdbcddfc result_sha256=1ce6a78c24aa16661ecd603b6e43ac7338089ded41309642ec7d1c94f03eb0b7 lock_sha256=c6f5086ec6b3780046d7051cd2c84f1be1f586bf50d0bac632e9a1e6e8bd17ad"
+        },
+        {
+          "task_id": "uefi-bootkit",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=f57caad1-e88b-4f0b-ac8f-23787e4290b3 trial_name=uefi-bootkit__gU89ygU task_digest=sha256:97b0d08a63ee8e0115300ee797ae4eb89e9651d37ca93d2b39910c95bdbcddfc result_sha256=d83e71817769ad8d8d41c2936adf50dd1dd2538bf1c74a6359e92ff2a314ea3a lock_sha256=c6f5086ec6b3780046d7051cd2c84f1be1f586bf50d0bac632e9a1e6e8bd17ad"
+        },
+        {
+          "task_id": "vba-userform-port",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=41f20bc8-fe91-4913-924d-b90c3478e038 trial_name=vba-userform-port__NPpu9eB task_digest=sha256:a75593b08997cf054b3a46163664051513e9c95fbb71249ab0c8512d7b7dc58d result_sha256=c14943119822dfe6dbe7f422558d6c7d0ea80825070c69232a7be9056d83e538 lock_sha256=d3a3de50aa9ea9d285de32402c618e28776f487d435d3767e4a4e1cc7d154f57"
+        },
+        {
+          "task_id": "vba-userform-port",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=42f57512-076d-4769-915d-25fb77fc97d7 trial_name=vba-userform-port__FQB5jkx task_digest=sha256:a75593b08997cf054b3a46163664051513e9c95fbb71249ab0c8512d7b7dc58d result_sha256=dcecdec4c8bdbba7952a558eb64c6a8b8646e91f287f3a2a56017c5112368c7c lock_sha256=d3a3de50aa9ea9d285de32402c618e28776f487d435d3767e4a4e1cc7d154f57"
+        },
+        {
+          "task_id": "vba-userform-port",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=669516b3-7f60-478f-9d61-261f1d730fdd trial_name=vba-userform-port__X4WP5WL task_digest=sha256:a75593b08997cf054b3a46163664051513e9c95fbb71249ab0c8512d7b7dc58d result_sha256=67839068e2eb2492602bb136a231980574fae5c823d667440c9e87cbf585e230 lock_sha256=d3a3de50aa9ea9d285de32402c618e28776f487d435d3767e4a4e1cc7d154f57"
+        },
+        {
+          "task_id": "vba-userform-port",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=6dcdc709-8156-4a46-a097-c16cf2aaa819 trial_name=vba-userform-port__K6QKaG4 task_digest=sha256:a75593b08997cf054b3a46163664051513e9c95fbb71249ab0c8512d7b7dc58d result_sha256=87628a401d83d82d41918adffe7ca087715bf88093521429b07560a7e0ac86f4 lock_sha256=d3a3de50aa9ea9d285de32402c618e28776f487d435d3767e4a4e1cc7d154f57"
+        },
+        {
+          "task_id": "vba-userform-port",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=6fe17927-2572-4627-940e-a6338e4ee053 trial_name=vba-userform-port__AVQvqUQ task_digest=sha256:a75593b08997cf054b3a46163664051513e9c95fbb71249ab0c8512d7b7dc58d result_sha256=2ca69c00c0dc6646ae7088e9ff0c0cc46733c6bc38174c062cee5106c3a43bf2 lock_sha256=d3a3de50aa9ea9d285de32402c618e28776f487d435d3767e4a4e1cc7d154f57"
+        },
+        {
+          "task_id": "vf2-speedup-networkx",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=3d43c8d1-4d13-4369-82e7-4ee5cb63eda3 trial_name=vf2-speedup-networkx__Vi5Kzyd task_digest=sha256:ac62ee7aef9d3bdd6b05ac109e145ea85ebde0eb36b85eccb80dc2128625912f result_sha256=0f865ed596421fb7fbc2356a1a8a79ca57afac7fde55fcd19c938c74b4ce5d1f lock_sha256=8e5ec39eecdeabbcdacb526448f9f1a0b77d683e963a29e14907eea7d6225553"
+        },
+        {
+          "task_id": "vf2-speedup-networkx",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=66ae8754-a9a6-4bfe-b3d8-a18cfe8c6efd trial_name=vf2-speedup-networkx__bkeXHM8 task_digest=sha256:ac62ee7aef9d3bdd6b05ac109e145ea85ebde0eb36b85eccb80dc2128625912f result_sha256=d8b443511aa9adecb31146618bb7c97e0480828de888b65dc23c1132aebc220b lock_sha256=8e5ec39eecdeabbcdacb526448f9f1a0b77d683e963a29e14907eea7d6225553"
+        },
+        {
+          "task_id": "vf2-speedup-networkx",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=87b8379d-42af-439c-9b4e-97dc49d5a3fa trial_name=vf2-speedup-networkx__7TeL5zh task_digest=sha256:ac62ee7aef9d3bdd6b05ac109e145ea85ebde0eb36b85eccb80dc2128625912f result_sha256=becfbd85889b074df8c8ff5a6dca0a075660b28ccc51013b6dab675087daf6b5 lock_sha256=8e5ec39eecdeabbcdacb526448f9f1a0b77d683e963a29e14907eea7d6225553"
+        },
+        {
+          "task_id": "vf2-speedup-networkx",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=af155369-c20d-4b68-86ad-82d602136d8c trial_name=vf2-speedup-networkx__sPqWVCo task_digest=sha256:ac62ee7aef9d3bdd6b05ac109e145ea85ebde0eb36b85eccb80dc2128625912f result_sha256=b78b88c1847b93fcdeb980cb24ad7ef94e5693ae15db1947e48971f042621e7a lock_sha256=8e5ec39eecdeabbcdacb526448f9f1a0b77d683e963a29e14907eea7d6225553"
+        },
+        {
+          "task_id": "vf2-speedup-networkx",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=b02d2e2f-85ec-4a25-b689-ae8f8e3829a8 trial_name=vf2-speedup-networkx__KcnRrk5 task_digest=sha256:ac62ee7aef9d3bdd6b05ac109e145ea85ebde0eb36b85eccb80dc2128625912f result_sha256=93ff18558b8443f0984c9cbe8d312d140b9411a2551db3fe00dd252354957986 lock_sha256=8e5ec39eecdeabbcdacb526448f9f1a0b77d683e963a29e14907eea7d6225553"
+        },
+        {
+          "task_id": "vllm-deepseek-streaming",
+          "score": 0,
+          "raw": "trial=1 reward=0 trial_id=233ed9cb-cd71-4312-8897-3453d14a314d trial_name=vllm-deepseek-streaming__JBvYyhJ task_digest=sha256:0efffc771f0b2207b6c5193e780fab3d70b2a910b462903a698450ce7a02db5a result_sha256=2ca517ca97cda9b8d92506f05daa905636bae0500bc2fb366994265a3df15e89 lock_sha256=5100edf789e2eea1445ca6f1e3f3faa3f2d8aac5d666f11637bdffa4d3f8cda1"
+        },
+        {
+          "task_id": "vllm-deepseek-streaming",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=616e3df8-a1e7-4a16-be27-9bdcc54bdcaa trial_name=vllm-deepseek-streaming__NMVBMG7 task_digest=sha256:0efffc771f0b2207b6c5193e780fab3d70b2a910b462903a698450ce7a02db5a result_sha256=c2a08f17c1aab6ef8c38ab167e3bfbf070865744f7a444fd7e0532252821fc71 lock_sha256=5100edf789e2eea1445ca6f1e3f3faa3f2d8aac5d666f11637bdffa4d3f8cda1"
+        },
+        {
+          "task_id": "vllm-deepseek-streaming",
+          "score": 100,
+          "raw": "trial=3 reward=1 trial_id=7b7b223f-466a-467b-8d55-8714309300a9 trial_name=vllm-deepseek-streaming__BPEKprF task_digest=sha256:0efffc771f0b2207b6c5193e780fab3d70b2a910b462903a698450ce7a02db5a result_sha256=f9ee2c5a983d9d95a4562a0b8b0a69b663d08ee73c52d656c8e387d65f641f9b lock_sha256=5100edf789e2eea1445ca6f1e3f3faa3f2d8aac5d666f11637bdffa4d3f8cda1"
+        },
+        {
+          "task_id": "vllm-deepseek-streaming",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=bb214f31-25f3-4c4b-a4d7-24f739cab34c trial_name=vllm-deepseek-streaming__KyxAfne task_digest=sha256:0efffc771f0b2207b6c5193e780fab3d70b2a910b462903a698450ce7a02db5a result_sha256=c3f7034a39b044eb99861e7569a7ab789b940937fde3557671dd2a8fa634bf44 lock_sha256=5100edf789e2eea1445ca6f1e3f3faa3f2d8aac5d666f11637bdffa4d3f8cda1"
+        },
+        {
+          "task_id": "vllm-deepseek-streaming",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=cb0fd7dd-dbbc-480b-a587-768db1ff6ebf trial_name=vllm-deepseek-streaming__cbotm52 task_digest=sha256:0efffc771f0b2207b6c5193e780fab3d70b2a910b462903a698450ce7a02db5a result_sha256=4deb93d19804261f84a145fb937491a92ed8a10f27d03dcdfe5242f64d34580b lock_sha256=5100edf789e2eea1445ca6f1e3f3faa3f2d8aac5d666f11637bdffa4d3f8cda1"
+        },
+        {
+          "task_id": "vpp-loss-divergence",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=29b482b6-b5f0-4383-b79b-541acf48bc76 trial_name=vpp-loss-divergence__9QDFCXj task_digest=sha256:8d020c581371bffe38aff2c0ff9816d0dd61e35a9baba4cbe1eb14c7e738ce78 result_sha256=920e0abac175c84dea866fb1022267c02234697e8c20d0fe0f792eb8dc9f2cbc lock_sha256=546083081091807f39ed998dcc33fab6ec2c4895c2eda64d2f577b1fd008085a"
+        },
+        {
+          "task_id": "vpp-loss-divergence",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=3588775e-7919-46d6-8bad-3e689191fc4b trial_name=vpp-loss-divergence__GB3STNL task_digest=sha256:8d020c581371bffe38aff2c0ff9816d0dd61e35a9baba4cbe1eb14c7e738ce78 result_sha256=fae8b6e4da5945087cf08aea924792fb429e796c8dbca662ded353a46ff11fed lock_sha256=546083081091807f39ed998dcc33fab6ec2c4895c2eda64d2f577b1fd008085a"
+        },
+        {
+          "task_id": "vpp-loss-divergence",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=ad2e5b03-e4b6-4c98-a705-39aab55b4203 trial_name=vpp-loss-divergence__q4BZv4S task_digest=sha256:8d020c581371bffe38aff2c0ff9816d0dd61e35a9baba4cbe1eb14c7e738ce78 result_sha256=4b6d75a84af3446ba5b76ca2f9399d03e9a79c0317200e727644584d58b2cb6c lock_sha256=546083081091807f39ed998dcc33fab6ec2c4895c2eda64d2f577b1fd008085a"
+        },
+        {
+          "task_id": "vpp-loss-divergence",
+          "score": 100,
+          "raw": "trial=4 reward=1 trial_id=b54817d2-d6e7-4f5c-ab18-dd8c519c3730 trial_name=vpp-loss-divergence__Z9FxGAM task_digest=sha256:8d020c581371bffe38aff2c0ff9816d0dd61e35a9baba4cbe1eb14c7e738ce78 result_sha256=30612828d8ac23ca1da2f76a8a5b19d9406f6968c76e6b544dda347002aac5fe lock_sha256=546083081091807f39ed998dcc33fab6ec2c4895c2eda64d2f577b1fd008085a"
+        },
+        {
+          "task_id": "vpp-loss-divergence",
+          "score": 0,
+          "raw": "trial=5 reward=0 trial_id=c46ac3b7-feeb-4e23-b2d0-7a039cc348a4 trial_name=vpp-loss-divergence__w6t7fKW task_digest=sha256:8d020c581371bffe38aff2c0ff9816d0dd61e35a9baba4cbe1eb14c7e738ce78 result_sha256=b9ade2a24bc1cea1a8b3305f3c0852114a1aa5cb6fe316011cb531dd5c41069e lock_sha256=546083081091807f39ed998dcc33fab6ec2c4895c2eda64d2f577b1fd008085a"
+        },
+        {
+          "task_id": "wal-recovery-ordering",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=0a8cef4e-aa5e-42c8-a580-57a8aea8c7c8 trial_name=wal-recovery-ordering__8jVvWtJ task_digest=sha256:7d8d20971c4db6fef99952aefbae0655b977c8ce55c3ac91ad656bd022c69543 result_sha256=adcb9854083ac6bcf7ebbf1b3ae36be87a84dc7f1242559f6f98ed4fe8528f8e lock_sha256=26abea1a645c4e8ff8dcbebb4f37fc59696da4ace3d7018081335eb8b1b0ef70"
+        },
+        {
+          "task_id": "wal-recovery-ordering",
+          "score": 0,
+          "raw": "trial=2 reward=0 trial_id=8242a0be-13b9-4164-8873-d923901c9c57 trial_name=wal-recovery-ordering__a25bNnq task_digest=sha256:7d8d20971c4db6fef99952aefbae0655b977c8ce55c3ac91ad656bd022c69543 result_sha256=39ce8afe7eb9ff5f9c09d6a525a2dc0c15e082145ac14ef4697efd6d9443ad7d lock_sha256=26abea1a645c4e8ff8dcbebb4f37fc59696da4ace3d7018081335eb8b1b0ef70"
+        },
+        {
+          "task_id": "wal-recovery-ordering",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=cbe727b0-d4e6-4db6-b1d0-20928f4b71fd trial_name=wal-recovery-ordering__3zV9egX task_digest=sha256:7d8d20971c4db6fef99952aefbae0655b977c8ce55c3ac91ad656bd022c69543 result_sha256=de7d208cde3386e61caa092525ff67c120a6d5ae640a722f5b546ccca08b1792 lock_sha256=26abea1a645c4e8ff8dcbebb4f37fc59696da4ace3d7018081335eb8b1b0ef70"
+        },
+        {
+          "task_id": "wal-recovery-ordering",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=d2dfd488-15ad-4848-965c-6201f08f019f trial_name=wal-recovery-ordering__gJouko5 task_digest=sha256:7d8d20971c4db6fef99952aefbae0655b977c8ce55c3ac91ad656bd022c69543 result_sha256=8b6096fbe4140e60335c385f69a6d9ee18b2f191a166ff8c28a0578ec88fc832 lock_sha256=26abea1a645c4e8ff8dcbebb4f37fc59696da4ace3d7018081335eb8b1b0ef70"
+        },
+        {
+          "task_id": "wal-recovery-ordering",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=d76ed670-1746-417b-bb14-c3f4d32f27bf trial_name=wal-recovery-ordering__2BKURyg task_digest=sha256:7d8d20971c4db6fef99952aefbae0655b977c8ce55c3ac91ad656bd022c69543 result_sha256=8e2c38ea731c670580c78f8139debb39b8ac3735cc12996d415510cd5daa2498 lock_sha256=26abea1a645c4e8ff8dcbebb4f37fc59696da4ace3d7018081335eb8b1b0ef70"
+        },
+        {
+          "task_id": "wdm-design",
+          "score": 100,
+          "raw": "trial=1 reward=1 trial_id=2c6c9b99-5697-4d6c-9e5c-6fa8c719d130 trial_name=wdm-design__ofNz93Z task_digest=sha256:c83f63de3c3c604b8d6ee8a46ff2e47c0be1d3b9f409d00dc52013f23df31394 result_sha256=3f5d3b121f820ebc45d9753858a6adc67e35a7657bf2d7f7c2c48c1b711afae2 lock_sha256=dcf783cefcda12a6c4ddaf0c40b53205678a1993f96ff5288c53c3695968897f"
+        },
+        {
+          "task_id": "wdm-design",
+          "score": 100,
+          "raw": "trial=2 reward=1 trial_id=70044da8-d0e1-4664-baaf-32f50ed53b2b trial_name=wdm-design__x4zzq6k task_digest=sha256:c83f63de3c3c604b8d6ee8a46ff2e47c0be1d3b9f409d00dc52013f23df31394 result_sha256=58d2be3407a79fbb3c5e4ebb528e9ccb0753a074116ba3852835c256c4df0fdb lock_sha256=dcf783cefcda12a6c4ddaf0c40b53205678a1993f96ff5288c53c3695968897f"
+        },
+        {
+          "task_id": "wdm-design",
+          "score": 0,
+          "raw": "trial=3 reward=0 trial_id=7610c0d4-ad12-47ec-8e49-8def8399e313 trial_name=wdm-design__TeUBi4V task_digest=sha256:c83f63de3c3c604b8d6ee8a46ff2e47c0be1d3b9f409d00dc52013f23df31394 result_sha256=19af47ae409b19d411b00b392dce0dd75068d7ca0e857896c4a6ab288c18ac95 lock_sha256=dcf783cefcda12a6c4ddaf0c40b53205678a1993f96ff5288c53c3695968897f"
+        },
+        {
+          "task_id": "wdm-design",
+          "score": 0,
+          "raw": "trial=4 reward=0 trial_id=ec0d945a-10eb-46ef-b1b1-043a2aa8eaa4 trial_name=wdm-design__jkFvLDF task_digest=sha256:c83f63de3c3c604b8d6ee8a46ff2e47c0be1d3b9f409d00dc52013f23df31394 result_sha256=9e6ba5b173636583cbe85ebb3311ab360443c21a7154256341e3e1764d137723 lock_sha256=dcf783cefcda12a6c4ddaf0c40b53205678a1993f96ff5288c53c3695968897f"
+        },
+        {
+          "task_id": "wdm-design",
+          "score": 100,
+          "raw": "trial=5 reward=1 trial_id=fd4a1e38-f711-4144-ae53-c3cde8dd08e4 trial_name=wdm-design__PusaEoD task_digest=sha256:c83f63de3c3c604b8d6ee8a46ff2e47c0be1d3b9f409d00dc52013f23df31394 result_sha256=0c1caa8473b77630d95cc30ad8d062e34bb2810b8898e913c2826df4b44d308a lock_sha256=dcf783cefcda12a6c4ddaf0c40b53205678a1993f96ff5288c53c3695968897f"
+        }
+      ]
+    }
+  ]
+}
