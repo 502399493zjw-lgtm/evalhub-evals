@@ -1,0 +1,204 @@
+{
+  "eval_id": "gamecraft-bench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "gamecraft-bench/pack-to-result@1.1.0",
+    "run_date": "2026-08-10"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-game-agent",
+        "harness": "example-harness",
+        "harness_version": "0.0.0-structural-example"
+      },
+      "score": 34.62,
+      "raw_metric": {
+        "label": "140 题等权平均总分",
+        "value": "34.62 分",
+        "tiebreak_value": 34.62
+      },
+      "detail": "这是供文档与 CI 使用的合成结构夹具，不是任何模型的成绩、官方基线或真实复跑。清单以 synthetic_fixture=true 标识；显示的 140 题 reward、闸门与 demo 数只用于演示转换器。转换器未执行或审计上游验分器；示例总分 34.62 分仅由夹具数值按等权平均 × 100 算出。夹具清单 sha256=3e8932d5fafcc9cf2c1f1001f1fa930a4fc751dee71990629159b819abd16ad2。转换器仅校验题目集合、reward 值域、闸门与 reward 的一致性、demo 上限和裁判身份。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "run-family-breakdown",
+          "label": "清单分家族",
+          "title": "按清单汇总的分家族成绩",
+          "columns": [
+            "游戏族",
+            "题数",
+            "平均分",
+            "启动闸门通过"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Platformer",
+                19,
+                25.67,
+                "17/19"
+              ]
+            },
+            {
+              "cells": [
+                "Strategy",
+                17,
+                35.55,
+                "16/17"
+              ]
+            },
+            {
+              "cells": [
+                "Tycoon",
+                16,
+                42.71,
+                "16/16"
+              ]
+            },
+            {
+              "cells": [
+                "Open-world",
+                15,
+                35.93,
+                "15/15"
+              ]
+            },
+            {
+              "cells": [
+                "Roguelike",
+                14,
+                36.12,
+                "14/14"
+              ]
+            },
+            {
+              "cells": [
+                "Visual novel",
+                11,
+                39.1,
+                "11/11"
+              ]
+            },
+            {
+              "cells": [
+                "Puzzle",
+                8,
+                32.26,
+                "8/8"
+              ]
+            },
+            {
+              "cells": [
+                "Shooter",
+                7,
+                43.26,
+                "7/7"
+              ]
+            },
+            {
+              "cells": [
+                "Simulation",
+                6,
+                25.19,
+                "6/6"
+              ]
+            },
+            {
+              "cells": [
+                "Card game",
+                5,
+                33.46,
+                "5/5"
+              ]
+            },
+            {
+              "cells": [
+                "Horror",
+                5,
+                29.47,
+                "5/5"
+              ]
+            },
+            {
+              "cells": [
+                "Rhythm",
+                5,
+                34.59,
+                "4/5"
+              ]
+            },
+            {
+              "cells": [
+                "Idle",
+                4,
+                49.79,
+                "4/4"
+              ]
+            },
+            {
+              "cells": [
+                "Racing",
+                4,
+                11.44,
+                "3/4"
+              ]
+            },
+            {
+              "cells": [
+                "Sports",
+                4,
+                38.07,
+                "3/4"
+              ]
+            }
+          ],
+          "note": "各族平均分 = 该族题目 reward 的等权平均 × 100，由转换器按提交的逐题 reward 确定性算出，仅解释主分数，不参与排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "run-gate-summary",
+          "label": "清单闸门与取证",
+          "title": "按清单汇总的闸门与取证摘要",
+          "columns": [
+            "项目",
+            "数值"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "题目总数",
+                140
+              ]
+            },
+            {
+              "cells": [
+                "启动闸门通过题数",
+                134
+              ]
+            },
+            {
+              "cells": [
+                "记 0 分题数",
+                6
+              ]
+            },
+            {
+              "cells": [
+                "被判分的 demo 总数",
+                705
+              ]
+            },
+            {
+              "cells": [
+                "裁判后端 / 模型",
+                "openai / gpt-5.5"
+              ]
+            }
+          ],
+          "note": "闸门命令为 `godot --headless --path /workspace/game --quit-after 5`，失败即该题记 0 分；单题至多 10 个 demo 参与判分。辅助展示，不参与排名。"
+        }
+      ]
+    }
+  ]
+}
