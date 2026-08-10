@@ -1,0 +1,1139 @@
+{
+  "manifest_version": 1,
+  "synthetic_fixture": true,
+  "eval_id": "gamecraft-bench",
+  "protocol_revision": 1,
+  "upstream_commit": "7385d326fb25ba9af8b353615987bf680a25b657",
+  "judge": {
+    "backend": "openai",
+    "model": "gpt-5.5"
+  },
+  "participant": {
+    "model": "example/synthetic-game-agent",
+    "harness": "example-harness",
+    "harness_version": "0.0.0-structural-example"
+  },
+  "run_date": "2026-08-10",
+  "tasks": [
+    {
+      "task_id": "cardgame-autobattler",
+      "run_id": "example-cardgame-autobattler",
+      "build_ok": true,
+      "reward": 0.093,
+      "scored_demos": 3,
+      "evidence_sha256": "48c451fb1f7675bffa63310b5278355e251082a2225ef24d2fe719550cc545fc"
+    },
+    {
+      "task_id": "cardgame-gwent-war",
+      "run_id": "example-cardgame-gwent-war",
+      "build_ok": true,
+      "reward": 0.1153,
+      "scored_demos": 6,
+      "evidence_sha256": "d1f88ee53db650d92ba98eaa361f0e07f9b2c5ec24b0d9033c2b3c88b0906b5f"
+    },
+    {
+      "task_id": "cardgame-inscription-dark",
+      "run_id": "example-cardgame-inscription-dark",
+      "build_ok": true,
+      "reward": 0.5854,
+      "scored_demos": 8,
+      "evidence_sha256": "21f5e48cb40ba64da7a2a574201645fb2b248352e867bb529f91ed0483913a7b"
+    },
+    {
+      "task_id": "cardgame-poker-roguelike",
+      "run_id": "example-cardgame-poker-roguelike",
+      "build_ok": true,
+      "reward": 0.5114,
+      "scored_demos": 4,
+      "evidence_sha256": "8b84bd6a7dc2e0c36c7bc2aae9715adf5f018695ff788bacb9f481cffa1e18b6"
+    },
+    {
+      "task_id": "cardgame-spire-descent",
+      "run_id": "example-cardgame-spire-descent",
+      "build_ok": true,
+      "reward": 0.3678,
+      "scored_demos": 4,
+      "evidence_sha256": "c45c3f2cb365fe3a42cff73c0d9a8e3014b5041b614d8f696d8a2ac42cc882b0"
+    },
+    {
+      "task_id": "horror-dollhouse",
+      "run_id": "example-horror-dollhouse",
+      "build_ok": true,
+      "reward": 0.4414,
+      "scored_demos": 3,
+      "evidence_sha256": "e7fa5d43c221ebcf3415e47ac91b8a077d922e6e18ffcd369aa70d6145aa64f7"
+    },
+    {
+      "task_id": "horror-floor-13",
+      "run_id": "example-horror-floor-13",
+      "build_ok": true,
+      "reward": 0.6849,
+      "scored_demos": 8,
+      "evidence_sha256": "a77aa96015ba341b7693bc9ceb59231d41ff31666eedee46172f28ed9914e909"
+    },
+    {
+      "task_id": "horror-lighthouse",
+      "run_id": "example-horror-lighthouse",
+      "build_ok": true,
+      "reward": 0.2146,
+      "scored_demos": 10,
+      "evidence_sha256": "a8298cdb69571135097fa97859ee9c3bc94232fb1c2a7af57068a510e9428d9d"
+    },
+    {
+      "task_id": "horror-signal-lost",
+      "run_id": "example-horror-signal-lost",
+      "build_ok": true,
+      "reward": 0.0242,
+      "scored_demos": 3,
+      "evidence_sha256": "62f6acf939dbb6fd9257ea7634b9df0a9bc6f7fe71f5263130819b1820e5a867"
+    },
+    {
+      "task_id": "horror-tape-archive",
+      "run_id": "example-horror-tape-archive",
+      "build_ok": true,
+      "reward": 0.1082,
+      "scored_demos": 8,
+      "evidence_sha256": "124664616fd6b48c219496439fe58948bfe324b38fab713f88d40e3f40c91da3"
+    },
+    {
+      "task_id": "idle-ant-empire",
+      "run_id": "example-idle-ant-empire",
+      "build_ok": true,
+      "reward": 0.6733,
+      "scored_demos": 2,
+      "evidence_sha256": "a5af6aad6f9fea2e9fdcff2a547f9c7135fa4c0e5e2ff05301efa056b36e75fb"
+    },
+    {
+      "task_id": "idle-dungeon-guild",
+      "run_id": "example-idle-dungeon-guild",
+      "build_ok": true,
+      "reward": 0.0501,
+      "scored_demos": 7,
+      "evidence_sha256": "2ed9c3f32333fd463f4b5f2b8fe754571d40e0e1ac328a5c097751116b372182"
+    },
+    {
+      "task_id": "idle-factory-planet",
+      "run_id": "example-idle-factory-planet",
+      "build_ok": true,
+      "reward": 0.4953,
+      "scored_demos": 9,
+      "evidence_sha256": "93c5cf9211f10593d5bce03369d78803d005e88704ff5d21b98c1fe514a73ea8"
+    },
+    {
+      "task_id": "idle-spell-tower",
+      "run_id": "example-idle-spell-tower",
+      "build_ok": true,
+      "reward": 0.773,
+      "scored_demos": 7,
+      "evidence_sha256": "168eb30a6719982f589bca56ba2bcc723957703617c1093ffe70502a5c799b52"
+    },
+    {
+      "task_id": "openworld-airship-trader",
+      "run_id": "example-openworld-airship-trader",
+      "build_ok": true,
+      "reward": 0.6465,
+      "scored_demos": 5,
+      "evidence_sha256": "75d9e2908e49dd00ac1fa23a230f7c4262351b83009f4c6fdd1ac6bb5e56a8f0"
+    },
+    {
+      "task_id": "openworld-archaeology",
+      "run_id": "example-openworld-archaeology",
+      "build_ok": true,
+      "reward": 0.386,
+      "scored_demos": 7,
+      "evidence_sha256": "f109e95cd2ff97f420f0bde5fb9aee53a4a3114873ba225420b9fb88625e2463"
+    },
+    {
+      "task_id": "openworld-beast-tamer",
+      "run_id": "example-openworld-beast-tamer",
+      "build_ok": true,
+      "reward": 0.0715,
+      "scored_demos": 7,
+      "evidence_sha256": "4fbb11f0e1eb6caf39e15fa5500c1119e5d315edd21fbcafa13eb568516160e4"
+    },
+    {
+      "task_id": "openworld-bounty",
+      "run_id": "example-openworld-bounty",
+      "build_ok": true,
+      "reward": 0.3695,
+      "scored_demos": 1,
+      "evidence_sha256": "cc248ec4a61e23dea10f5240ed807e1278960a2ddafdfe56846e5c1b09e748a0"
+    },
+    {
+      "task_id": "openworld-cartographer",
+      "run_id": "example-openworld-cartographer",
+      "build_ok": true,
+      "reward": 0.0774,
+      "scored_demos": 3,
+      "evidence_sha256": "498953a09f0456f8358952e2a947e2407eadcaa03375962d83692848448daa53"
+    },
+    {
+      "task_id": "openworld-fishing",
+      "run_id": "example-openworld-fishing",
+      "build_ok": true,
+      "reward": 0.2152,
+      "scored_demos": 1,
+      "evidence_sha256": "af763ca2723779a8ac50d5ebbe7ebb12be72429f4cbc8f44078794a89b5694aa"
+    },
+    {
+      "task_id": "openworld-ghost",
+      "run_id": "example-openworld-ghost",
+      "build_ok": true,
+      "reward": 0.7176,
+      "scored_demos": 10,
+      "evidence_sha256": "316806d9178016f423528e7f2675366114334979032316d05e4f4910d57b5254"
+    },
+    {
+      "task_id": "openworld-necromancer",
+      "run_id": "example-openworld-necromancer",
+      "build_ok": true,
+      "reward": 0.7225,
+      "scored_demos": 8,
+      "evidence_sha256": "c6d7ad09484e7c13b0d53f1ed175b5f21fe1a8d4d9014c96482f97b115d4ddf7"
+    },
+    {
+      "task_id": "openworld-pokemon",
+      "run_id": "example-openworld-pokemon",
+      "build_ok": true,
+      "reward": 0.0488,
+      "scored_demos": 4,
+      "evidence_sha256": "80c04f7ad6235d63bfe42a52decebb70fc730f9d570caef51032f32b3e6be41e"
+    },
+    {
+      "task_id": "openworld-racing",
+      "run_id": "example-openworld-racing",
+      "build_ok": true,
+      "reward": 0.5514,
+      "scored_demos": 7,
+      "evidence_sha256": "4753f1253c2ebf6f6ff80d3513ce01c67cebdb078b386a84a9c26aa44daa4311"
+    },
+    {
+      "task_id": "openworld-seasons-witch",
+      "run_id": "example-openworld-seasons-witch",
+      "build_ok": true,
+      "reward": 0.3618,
+      "scored_demos": 6,
+      "evidence_sha256": "0dde479ec1e2b85df7c268cf59565690fac553258ded66d895ef768d79f33c34"
+    },
+    {
+      "task_id": "openworld-sky-islands",
+      "run_id": "example-openworld-sky-islands",
+      "build_ok": true,
+      "reward": 0.5576,
+      "scored_demos": 6,
+      "evidence_sha256": "e7d139daf114a8e6c54685c6d11ad05e30376c615ba9832a840195949cd06d31"
+    },
+    {
+      "task_id": "openworld-submarine",
+      "run_id": "example-openworld-submarine",
+      "build_ok": true,
+      "reward": 0.4133,
+      "scored_demos": 3,
+      "evidence_sha256": "daaaa0842d5bc5edea0886f2f9b0c5b837949ddeaf6d898fc0af7bbcab10403d"
+    },
+    {
+      "task_id": "openworld-survival",
+      "run_id": "example-openworld-survival",
+      "build_ok": true,
+      "reward": 0.0141,
+      "scored_demos": 6,
+      "evidence_sha256": "8f17475cdad4ada62cb9694e7944d36847b696fff574529a3a20a45fd0778f42"
+    },
+    {
+      "task_id": "openworld-time-travel",
+      "run_id": "example-openworld-time-travel",
+      "build_ok": true,
+      "reward": 0.2359,
+      "scored_demos": 4,
+      "evidence_sha256": "ae5f7543724cf551dbaa06b1007901f2d1da2ff064ce28af5189dd9a61893bbb"
+    },
+    {
+      "task_id": "platformer-arcborne",
+      "run_id": "example-platformer-arcborne",
+      "build_ok": true,
+      "reward": 0.0566,
+      "scored_demos": 8,
+      "evidence_sha256": "eddf037e6cba0c5939d335a2bb14083c0582d2d4e7c152530f6cf5d9b4374b73"
+    },
+    {
+      "task_id": "platformer-cozy-harbor-delivery",
+      "run_id": "example-platformer-cozy-harbor-delivery",
+      "build_ok": true,
+      "reward": 0.3069,
+      "scored_demos": 6,
+      "evidence_sha256": "0cbd6ac6d1516b6d3ab416796036e49947507f7fe1b3b0b7e1f662ffbc2a15f9"
+    },
+    {
+      "task_id": "platformer-dig-descent",
+      "run_id": "example-platformer-dig-descent",
+      "build_ok": true,
+      "reward": 0.5082,
+      "scored_demos": 1,
+      "evidence_sha256": "3e9aa1856aaebb5cf69c8709722a4edff3ec7a349c35d6cfc8c2d98f9b1a53bd"
+    },
+    {
+      "task_id": "platformer-dread-wings",
+      "run_id": "example-platformer-dread-wings",
+      "build_ok": true,
+      "reward": 0.2152,
+      "scored_demos": 2,
+      "evidence_sha256": "a20f2a6442b2c43505e34f71fd84a028064420974dd246279b764e8570269d8c"
+    },
+    {
+      "task_id": "platformer-echo-climb",
+      "run_id": "example-platformer-echo-climb",
+      "build_ok": false,
+      "reward": 0.0,
+      "scored_demos": 0,
+      "evidence_sha256": "1bb71b647e9ee98b838c431f3cd664ba9e41090ae14ec8c2297804db06d52153"
+    },
+    {
+      "task_id": "platformer-ink-trail",
+      "run_id": "example-platformer-ink-trail",
+      "build_ok": true,
+      "reward": 0.236,
+      "scored_demos": 10,
+      "evidence_sha256": "7b2400c6d124ea34293880bfdcb225d88672f474796c18428c34dab1e196991f"
+    },
+    {
+      "task_id": "platformer-iron-vanguard",
+      "run_id": "example-platformer-iron-vanguard",
+      "build_ok": true,
+      "reward": 0.3616,
+      "scored_demos": 9,
+      "evidence_sha256": "7d4e6daa707e8b20ad8413a60d501898e50297c664f8e87d18fcd72a315bd9b0"
+    },
+    {
+      "task_id": "platformer-ivory-beats",
+      "run_id": "example-platformer-ivory-beats",
+      "build_ok": true,
+      "reward": 0.0171,
+      "scored_demos": 1,
+      "evidence_sha256": "93e9c732cd152743bb18401e5e4484ae8f0b545c5ebb2ecf9b7e9732ac96e2cf"
+    },
+    {
+      "task_id": "platformer-knight-quest",
+      "run_id": "example-platformer-knight-quest",
+      "build_ok": true,
+      "reward": 0.1309,
+      "scored_demos": 10,
+      "evidence_sha256": "ae88e9f16800621573999d3ea3c7a06036f2f177ca297783404d30d921177877"
+    },
+    {
+      "task_id": "platformer-magnet-dash",
+      "run_id": "example-platformer-magnet-dash",
+      "build_ok": true,
+      "reward": 0.0388,
+      "scored_demos": 7,
+      "evidence_sha256": "f36ac98c7f20561a1e317985ec3fe9ec10d9b2dd2e559f777a606132cfd0f0f6"
+    },
+    {
+      "task_id": "platformer-meat-gauntlet",
+      "run_id": "example-platformer-meat-gauntlet",
+      "build_ok": true,
+      "reward": 0.8434,
+      "scored_demos": 8,
+      "evidence_sha256": "41c4fdee0061aa374e36694e137b29537d805e4a30ed35e1c5dd209b173d9c0d"
+    },
+    {
+      "task_id": "platformer-momentum-lab",
+      "run_id": "example-platformer-momentum-lab",
+      "build_ok": true,
+      "reward": 0.5499,
+      "scored_demos": 9,
+      "evidence_sha256": "924eb6447012c779ed3f1721ccc9acfaffbd33daf5621ec420eefe6850b84cb6"
+    },
+    {
+      "task_id": "platformer-orbital-salvage",
+      "run_id": "example-platformer-orbital-salvage",
+      "build_ok": true,
+      "reward": 0.0516,
+      "scored_demos": 8,
+      "evidence_sha256": "9952622f289e55dafdf0f03b35e01695bf34fe46d1bf52be676dbcd7c35b6dc6"
+    },
+    {
+      "task_id": "platformer-shape-shift",
+      "run_id": "example-platformer-shape-shift",
+      "build_ok": true,
+      "reward": 0.6193,
+      "scored_demos": 7,
+      "evidence_sha256": "3e49f54f8d2d5aeb304900fbf2f3cc2c3543454ea55f982db9f0c674fe2b7d92"
+    },
+    {
+      "task_id": "platformer-stealth-shadow-courier",
+      "run_id": "example-platformer-stealth-shadow-courier",
+      "build_ok": true,
+      "reward": 0.2903,
+      "scored_demos": 2,
+      "evidence_sha256": "b2f8e93e80d7ecbaf004aad753de742bf3f3a41a8964080db3a75357876fb417"
+    },
+    {
+      "task_id": "platformer-thunder-valkyrie",
+      "run_id": "example-platformer-thunder-valkyrie",
+      "build_ok": true,
+      "reward": 0.2445,
+      "scored_demos": 2,
+      "evidence_sha256": "3da0a357881ca38928bd42a1a587be021b3791329abd008a9b718b191638785f"
+    },
+    {
+      "task_id": "platformer-time-loop",
+      "run_id": "example-platformer-time-loop",
+      "build_ok": false,
+      "reward": 0.0,
+      "scored_demos": 0,
+      "evidence_sha256": "c1fadfb9aaa48cd71e6b7f954403521b4a3c509d213dcdf5d39cfd5c5c7ec525"
+    },
+    {
+      "task_id": "platformer-vessel-of-hallownest",
+      "run_id": "example-platformer-vessel-of-hallownest",
+      "build_ok": true,
+      "reward": 0.0708,
+      "scored_demos": 5,
+      "evidence_sha256": "5ef77423bb463be783471fabf22df7986658ca9b2ff678d383742b92ffe2741d"
+    },
+    {
+      "task_id": "platformer-wall-dancer",
+      "run_id": "example-platformer-wall-dancer",
+      "build_ok": true,
+      "reward": 0.336,
+      "scored_demos": 1,
+      "evidence_sha256": "ed08fee206d6e3ba9adba7972e52fc2536dd881dc3a8b15d3276b68507f8e949"
+    },
+    {
+      "task_id": "puzzle-circuit-wizard",
+      "run_id": "example-puzzle-circuit-wizard",
+      "build_ok": true,
+      "reward": 0.144,
+      "scored_demos": 8,
+      "evidence_sha256": "559560e0da3b03cbaf3e923aa0157bb3a2366853c0b01350328519f16bf89b28"
+    },
+    {
+      "task_id": "puzzle-goo-architect",
+      "run_id": "example-puzzle-goo-architect",
+      "build_ok": true,
+      "reward": 0.261,
+      "scored_demos": 2,
+      "evidence_sha256": "6ca334f0f3117fd9c997e7015626d4a23531df5a53eacb943aa607f1ad21b026"
+    },
+    {
+      "task_id": "puzzle-gravity-shift",
+      "run_id": "example-puzzle-gravity-shift",
+      "build_ok": true,
+      "reward": 0.6946,
+      "scored_demos": 1,
+      "evidence_sha256": "e3aafa0d3e54443c7769b038b660443dd6b548e8f5923440ac2656ddb1c9bda1"
+    },
+    {
+      "task_id": "puzzle-lemming-factory",
+      "run_id": "example-puzzle-lemming-factory",
+      "build_ok": true,
+      "reward": 0.3241,
+      "scored_demos": 5,
+      "evidence_sha256": "5c7e0fe24ccd4e59ea98936cb26e53f960a96f428b183d2c37f70e404a9a2aca"
+    },
+    {
+      "task_id": "puzzle-pipe-crisis",
+      "run_id": "example-puzzle-pipe-crisis",
+      "build_ok": true,
+      "reward": 0.1467,
+      "scored_demos": 2,
+      "evidence_sha256": "6d85168b19ffbfd56a66b6363d10a48cc01abf2cfc282d3bc1d29b23355158e1"
+    },
+    {
+      "task_id": "puzzle-portal-lab",
+      "run_id": "example-puzzle-portal-lab",
+      "build_ok": true,
+      "reward": 0.4533,
+      "scored_demos": 6,
+      "evidence_sha256": "846f89b3ab9e74b995af747a3e8682e702f991d755bd08a0e92d0ed1ded59c22"
+    },
+    {
+      "task_id": "puzzle-rule-rewrite",
+      "run_id": "example-puzzle-rule-rewrite",
+      "build_ok": true,
+      "reward": 0.0063,
+      "scored_demos": 10,
+      "evidence_sha256": "fd77577eef56dd9d09d9b2dc7deee0d2c22976956ea4793a95816bb081b14846"
+    },
+    {
+      "task_id": "puzzle-sokoban-dungeon",
+      "run_id": "example-puzzle-sokoban-dungeon",
+      "build_ok": true,
+      "reward": 0.551,
+      "scored_demos": 9,
+      "evidence_sha256": "3515705aee0f29e6d8658bb6d771e3dc3f89f0a5819b7cb9a6ad828bfb098d95"
+    },
+    {
+      "task_id": "racing-drift-circuit",
+      "run_id": "example-racing-drift-circuit",
+      "build_ok": true,
+      "reward": 0.2981,
+      "scored_demos": 4,
+      "evidence_sha256": "75a1e53feb5d9728e33be35b8218e39b6638b24bf55d2db3088f12faeb56a22b"
+    },
+    {
+      "task_id": "racing-rocket-trials",
+      "run_id": "example-racing-rocket-trials",
+      "build_ok": true,
+      "reward": 0.0348,
+      "scored_demos": 2,
+      "evidence_sha256": "3656db9f29aa48c82fec94609ade74bd2fd2dc9492b45b72e757a6faa8b8b5b7"
+    },
+    {
+      "task_id": "racing-terrain-climb",
+      "run_id": "example-racing-terrain-climb",
+      "build_ok": true,
+      "reward": 0.1248,
+      "scored_demos": 4,
+      "evidence_sha256": "408931535104b5343efd429c548a16ca87adae76f77de020e6f18eb620ae7864"
+    },
+    {
+      "task_id": "racing-trick-runner",
+      "run_id": "example-racing-trick-runner",
+      "build_ok": false,
+      "reward": 0.0,
+      "scored_demos": 0,
+      "evidence_sha256": "1675e0465b6ea98a62d43a7f74f26d14f5e5df3bc0326ab82e08f5abe9b11f61"
+    },
+    {
+      "task_id": "rhythm-beat-dungeon",
+      "run_id": "example-rhythm-beat-dungeon",
+      "build_ok": false,
+      "reward": 0.0,
+      "scored_demos": 0,
+      "evidence_sha256": "432138a5281c83ae16a0d4e25593699fa2efe29f93faea3130a26e374ed96ba3"
+    },
+    {
+      "task_id": "rhythm-conductor",
+      "run_id": "example-rhythm-conductor",
+      "build_ok": true,
+      "reward": 0.5336,
+      "scored_demos": 10,
+      "evidence_sha256": "d0a3003d92361c8eae9d6ccb18c09b1219c28a3c5317365f8590526c48edfd24"
+    },
+    {
+      "task_id": "rhythm-dj-arena",
+      "run_id": "example-rhythm-dj-arena",
+      "build_ok": true,
+      "reward": 0.1885,
+      "scored_demos": 7,
+      "evidence_sha256": "fba409664a44b96e3f4bbc4840b7947516ea2b12897a80142a5c60fbec153c0e"
+    },
+    {
+      "task_id": "rhythm-garden",
+      "run_id": "example-rhythm-garden",
+      "build_ok": true,
+      "reward": 0.5548,
+      "scored_demos": 3,
+      "evidence_sha256": "90f129b7d3c0669b5bf122af77680b72667a53937bbfd0c9dd4cfd6202a614ad"
+    },
+    {
+      "task_id": "rhythm-note-highway",
+      "run_id": "example-rhythm-note-highway",
+      "build_ok": true,
+      "reward": 0.4528,
+      "scored_demos": 5,
+      "evidence_sha256": "df2293619031b2173738769af8e9f57ff40fb1bbc340b9052ce0cf59b0618cc8"
+    },
+    {
+      "task_id": "roguelike-action-void-harvest",
+      "run_id": "example-roguelike-action-void-harvest",
+      "build_ok": true,
+      "reward": 0.1953,
+      "scored_demos": 1,
+      "evidence_sha256": "4bb95c51ffb964d840c786dd9e34a2391a2cc3fc80ec07f64d8135ca8edcf6da"
+    },
+    {
+      "task_id": "roguelike-breach-tactics",
+      "run_id": "example-roguelike-breach-tactics",
+      "build_ok": true,
+      "reward": 0.3296,
+      "scored_demos": 2,
+      "evidence_sha256": "a583af40d3cbf639ef674f2d3f4404e28dca2d2b92fd9f3809615337ef1e27b3"
+    },
+    {
+      "task_id": "roguelike-dice-throne",
+      "run_id": "example-roguelike-dice-throne",
+      "build_ok": true,
+      "reward": 0.6243,
+      "scored_demos": 5,
+      "evidence_sha256": "ca3939e9978c80dd07d85e3dd3611b369575948418c4a904ae7beaec9d92ec13"
+    },
+    {
+      "task_id": "roguelike-dungeon-shop",
+      "run_id": "example-roguelike-dungeon-shop",
+      "build_ok": true,
+      "reward": 0.1506,
+      "scored_demos": 8,
+      "evidence_sha256": "e2af67745aadd80470e3a5c9b7289fc17bb41718723b8c3ff39d38f2239278cc"
+    },
+    {
+      "task_id": "roguelike-ftl-voyage",
+      "run_id": "example-roguelike-ftl-voyage",
+      "build_ok": true,
+      "reward": 0.0646,
+      "scored_demos": 5,
+      "evidence_sha256": "c2b24123ee9645b97f27b872fe1d9c718966b4f232479c3429a737758b16ec88"
+    },
+    {
+      "task_id": "roguelike-garden-crawl",
+      "run_id": "example-roguelike-garden-crawl",
+      "build_ok": true,
+      "reward": 0.3993,
+      "scored_demos": 6,
+      "evidence_sha256": "c492b331f09f91ab0aa2f95f610e6b22da50a04130a2fbeec12d4e246d1b0e82"
+    },
+    {
+      "task_id": "roguelike-potion-craft",
+      "run_id": "example-roguelike-potion-craft",
+      "build_ok": true,
+      "reward": 0.5228,
+      "scored_demos": 2,
+      "evidence_sha256": "4b86a9988fe0501a126d4a8a2a5382cddec1fc94b2a2217345ff79920ae087fe"
+    },
+    {
+      "task_id": "roguelike-relic-pinball",
+      "run_id": "example-roguelike-relic-pinball",
+      "build_ok": true,
+      "reward": 0.8054,
+      "scored_demos": 10,
+      "evidence_sha256": "640a551efa1e8d99d8bd81cd47b71ca74d5c3cc0331da12fa61aa0db33908e1b"
+    },
+    {
+      "task_id": "roguelike-rulescape",
+      "run_id": "example-roguelike-rulescape",
+      "build_ok": true,
+      "reward": 0.7962,
+      "scored_demos": 6,
+      "evidence_sha256": "5937f50f5e1933485cee3e3c79e002fc99632989f3e07c2c1504d149ee3709db"
+    },
+    {
+      "task_id": "roguelike-slot-fortune",
+      "run_id": "example-roguelike-slot-fortune",
+      "build_ok": true,
+      "reward": 0.2483,
+      "scored_demos": 7,
+      "evidence_sha256": "226caed249815bff39c9891d8807e4d0352926dcafe93dfc8bcfde074063def2"
+    },
+    {
+      "task_id": "roguelike-spelunk-depths",
+      "run_id": "example-roguelike-spelunk-depths",
+      "build_ok": true,
+      "reward": 0.1833,
+      "scored_demos": 7,
+      "evidence_sha256": "bb2a8148418e25e6462c47457d1f4113540f3f07369c23e962ed9f03b046e4ad"
+    },
+    {
+      "task_id": "roguelike-train-heist",
+      "run_id": "example-roguelike-train-heist",
+      "build_ok": true,
+      "reward": 0.1313,
+      "scored_demos": 3,
+      "evidence_sha256": "06a7da7419351e95c933a26b4293d79b84fb70d9518d88d08cb567bfaa6fdc54"
+    },
+    {
+      "task_id": "roguelike-wildwood",
+      "run_id": "example-roguelike-wildwood",
+      "build_ok": true,
+      "reward": 0.5717,
+      "scored_demos": 6,
+      "evidence_sha256": "14c48f57ab1ae7aeaa7a66f12316ae138426cc2bade8a7fd064905919be24451"
+    },
+    {
+      "task_id": "roguelike-word-spell",
+      "run_id": "example-roguelike-word-spell",
+      "build_ok": true,
+      "reward": 0.0338,
+      "scored_demos": 8,
+      "evidence_sha256": "565c61d74418188618dfa217330dc1d9214ec7407826f5f58f2746b715ba91d3"
+    },
+    {
+      "task_id": "shooter-bullet-cathedral",
+      "run_id": "example-shooter-bullet-cathedral",
+      "build_ok": true,
+      "reward": 0.1012,
+      "scored_demos": 7,
+      "evidence_sha256": "03d86646bb52a1e0b6bf14a9f25986e5795631586856e500b19577a3e32c3533"
+    },
+    {
+      "task_id": "shooter-hotline-heist",
+      "run_id": "example-shooter-hotline-heist",
+      "build_ok": true,
+      "reward": 0.5901,
+      "scored_demos": 9,
+      "evidence_sha256": "eed77096160965274a545d21b7283129a8332f974d36b2d1c3df52d708420343"
+    },
+    {
+      "task_id": "shooter-mech-sortie",
+      "run_id": "example-shooter-mech-sortie",
+      "build_ok": true,
+      "reward": 0.2904,
+      "scored_demos": 1,
+      "evidence_sha256": "35b16695efc2caf38b3523e151b6f9e79796eaab308a0501ed47530da1f5878f"
+    },
+    {
+      "task_id": "shooter-neon-arena",
+      "run_id": "example-shooter-neon-arena",
+      "build_ok": true,
+      "reward": 0.7571,
+      "scored_demos": 7,
+      "evidence_sha256": "dbb6045fcf040e694d602efdea47111cf473a4709a9d34c7aa754a8bc8bdb62f"
+    },
+    {
+      "task_id": "shooter-sky-duel",
+      "run_id": "example-shooter-sky-duel",
+      "build_ok": true,
+      "reward": 0.2109,
+      "scored_demos": 5,
+      "evidence_sha256": "f82a8f518318c2d0ab40b6688ae25573b0e09e438ef1383dd5471203a656beed"
+    },
+    {
+      "task_id": "shooter-void-patrol",
+      "run_id": "example-shooter-void-patrol",
+      "build_ok": true,
+      "reward": 0.8254,
+      "scored_demos": 3,
+      "evidence_sha256": "f622b224c7a2554e2793e57a258029cec7c724a89e11124855288024a87e6d35"
+    },
+    {
+      "task_id": "shooter-wave-commander",
+      "run_id": "example-shooter-wave-commander",
+      "build_ok": true,
+      "reward": 0.253,
+      "scored_demos": 8,
+      "evidence_sha256": "e0ed5ff83dd7972ce167f91b4027716f32322eed48368e052f2a67a2c5242d62"
+    },
+    {
+      "task_id": "simulation-air-control",
+      "run_id": "example-simulation-air-control",
+      "build_ok": true,
+      "reward": 0.0626,
+      "scored_demos": 7,
+      "evidence_sha256": "64d217aa39ea8b029481b7f435b8651652ff9a33759b138fdbf4f7fac6b0c6ba"
+    },
+    {
+      "task_id": "simulation-border-check",
+      "run_id": "example-simulation-border-check",
+      "build_ok": true,
+      "reward": 0.0404,
+      "scored_demos": 9,
+      "evidence_sha256": "73a392b59a4860fe071deeb2e1ead01c8ccf3325c4717b798ca01199cfedbf1b"
+    },
+    {
+      "task_id": "simulation-kitchen-rush",
+      "run_id": "example-simulation-kitchen-rush",
+      "build_ok": true,
+      "reward": 0.5009,
+      "scored_demos": 7,
+      "evidence_sha256": "c2a1e6fe0f7bc960e4794caeea8c54cb971844c2a0f0dcd3bc16afb40c330a36"
+    },
+    {
+      "task_id": "simulation-news-editor",
+      "run_id": "example-simulation-news-editor",
+      "build_ok": true,
+      "reward": 0.2186,
+      "scored_demos": 6,
+      "evidence_sha256": "36f6997ff4867ddd62f820c525ad582bbfd06c0c2f15c8baa89609c36367b79e"
+    },
+    {
+      "task_id": "simulation-space-station",
+      "run_id": "example-simulation-space-station",
+      "build_ok": true,
+      "reward": 0.4177,
+      "scored_demos": 2,
+      "evidence_sha256": "e0d537cdddbdad7885858c43061ef2e1eefa4e126ac30b1496e744500630c011"
+    },
+    {
+      "task_id": "simulation-transit-web",
+      "run_id": "example-simulation-transit-web",
+      "build_ok": true,
+      "reward": 0.271,
+      "scored_demos": 2,
+      "evidence_sha256": "4be89748ddef26e6d2f958aa4bb9822e6e68ebc1ae79b5adc2e0b4b178307f28"
+    },
+    {
+      "task_id": "sports-archery-quest",
+      "run_id": "example-sports-archery-quest",
+      "build_ok": true,
+      "reward": 0.1748,
+      "scored_demos": 8,
+      "evidence_sha256": "7a437bb7bd0503192f044215895c0fb873f43fbb3c652ce3894f10e2aba0d6fe"
+    },
+    {
+      "task_id": "sports-boxing-gym",
+      "run_id": "example-sports-boxing-gym",
+      "build_ok": true,
+      "reward": 0.8499,
+      "scored_demos": 5,
+      "evidence_sha256": "e10e859fc9fb10e99ac4dbf641685f107b691c291e1e0bb2be71ebdad230ba6f"
+    },
+    {
+      "task_id": "sports-fishing-tournament",
+      "run_id": "example-sports-fishing-tournament",
+      "build_ok": true,
+      "reward": 0.4983,
+      "scored_demos": 7,
+      "evidence_sha256": "2a6f472fd9c9bc1794c8d5c1cae1b8ad2fee658278c8dcad3af63e28ea5a32f7"
+    },
+    {
+      "task_id": "sports-skateboard-park",
+      "run_id": "example-sports-skateboard-park",
+      "build_ok": false,
+      "reward": 0.0,
+      "scored_demos": 0,
+      "evidence_sha256": "22bdfffb7a72e2c3ce64b486e621fbf2cf5bf1955f7d4ba08fb59fd539762fbc"
+    },
+    {
+      "task_id": "strategy-ant-colony",
+      "run_id": "example-strategy-ant-colony",
+      "build_ok": false,
+      "reward": 0.0,
+      "scored_demos": 0,
+      "evidence_sha256": "f7708cd3fb4bd8c411feba1a82969c96ec40848812b1be1b98cb2cf6455de84a"
+    },
+    {
+      "task_id": "strategy-ashen-spire",
+      "run_id": "example-strategy-ashen-spire",
+      "build_ok": true,
+      "reward": 0.4587,
+      "scored_demos": 1,
+      "evidence_sha256": "f4cfc16bf03b0fb0400f8805b7b3b6e8afd61a56bc4a756a8bdda0d5a7697a31"
+    },
+    {
+      "task_id": "strategy-auto-chess",
+      "run_id": "example-strategy-auto-chess",
+      "build_ok": true,
+      "reward": 0.1544,
+      "scored_demos": 7,
+      "evidence_sha256": "9314a0e12832af8d0c100c155ed4ef8c40ac3429f913e913e9a1612a76577d9d"
+    },
+    {
+      "task_id": "strategy-beastclash",
+      "run_id": "example-strategy-beastclash",
+      "build_ok": true,
+      "reward": 0.1376,
+      "scored_demos": 5,
+      "evidence_sha256": "913fb81e020e6a738fa465310995d5cbf3db82734a9cd5fb82ec217889d5f2d2"
+    },
+    {
+      "task_id": "strategy-chess-variant",
+      "run_id": "example-strategy-chess-variant",
+      "build_ok": true,
+      "reward": 0.4131,
+      "scored_demos": 5,
+      "evidence_sha256": "758c4b1d2ac7d2bf7f79aab233ca78f14397767fc3c7c0240e50a42d76ddc37d"
+    },
+    {
+      "task_id": "strategy-hex-conquest",
+      "run_id": "example-strategy-hex-conquest",
+      "build_ok": true,
+      "reward": 0.0277,
+      "scored_demos": 6,
+      "evidence_sha256": "a0f97e58ae67c2070b788c2bc13be9736de45a0689c8349535ac2c69558ade16"
+    },
+    {
+      "task_id": "strategy-kingdom-cards",
+      "run_id": "example-strategy-kingdom-cards",
+      "build_ok": true,
+      "reward": 0.7579,
+      "scored_demos": 1,
+      "evidence_sha256": "d556f64d0a356b120eec44a5c2796ec0aedb6c260f77f74a2709a24c64023305"
+    },
+    {
+      "task_id": "strategy-pirate-fleet",
+      "run_id": "example-strategy-pirate-fleet",
+      "build_ok": true,
+      "reward": 0.21,
+      "scored_demos": 1,
+      "evidence_sha256": "1645322ba89128dd1047ddfa60dbdf038fde23143374c504668830963b2afa69"
+    },
+    {
+      "task_id": "strategy-plant-defense",
+      "run_id": "example-strategy-plant-defense",
+      "build_ok": true,
+      "reward": 0.5719,
+      "scored_demos": 4,
+      "evidence_sha256": "852d7bf4136757ad74682c78c0590d7db6ac98d3a30c4885131e2ca088bad4a9"
+    },
+    {
+      "task_id": "strategy-puzzle-magnet-lab",
+      "run_id": "example-strategy-puzzle-magnet-lab",
+      "build_ok": true,
+      "reward": 0.0843,
+      "scored_demos": 2,
+      "evidence_sha256": "bf56a5ceb7dc3e3c1c9a27a7267589257312c5b1015b6a8ba5419f4063a42797"
+    },
+    {
+      "task_id": "strategy-robot-factory",
+      "run_id": "example-strategy-robot-factory",
+      "build_ok": true,
+      "reward": 0.158,
+      "scored_demos": 4,
+      "evidence_sha256": "89a1832a3f38cc9be05ba35c35d3bbf85d83278e50e4fd97a003e39bbd6eeddc"
+    },
+    {
+      "task_id": "strategy-rogue-joker-poker",
+      "run_id": "example-strategy-rogue-joker-poker",
+      "build_ok": true,
+      "reward": 0.7308,
+      "scored_demos": 8,
+      "evidence_sha256": "9e1dec46bebf2ac7bda5f311600068e65f1bd2e97c64179064f00b03ceeebc5d"
+    },
+    {
+      "task_id": "strategy-siege-engineer",
+      "run_id": "example-strategy-siege-engineer",
+      "build_ok": true,
+      "reward": 0.8067,
+      "scored_demos": 1,
+      "evidence_sha256": "b30c594edef50d39e8a8dfd0860246cd55bfa848e0bea714a231a245d820cd6c"
+    },
+    {
+      "task_id": "strategy-signal-rail-dispatcher",
+      "run_id": "example-strategy-signal-rail-dispatcher",
+      "build_ok": true,
+      "reward": 0.2233,
+      "scored_demos": 2,
+      "evidence_sha256": "54490a29f5a5b824b882b81d86ccc071481aac5ff3b9f613991fc16b057fe5ef"
+    },
+    {
+      "task_id": "strategy-skirmish",
+      "run_id": "example-strategy-skirmish",
+      "build_ok": true,
+      "reward": 0.8171,
+      "scored_demos": 7,
+      "evidence_sha256": "16cb0fc948f8b542dd19f5b444d23da93c6e272f74edf4bebe47402102ec6fc4"
+    },
+    {
+      "task_id": "strategy-spell-tactics",
+      "run_id": "example-strategy-spell-tactics",
+      "build_ok": true,
+      "reward": 0.0411,
+      "scored_demos": 1,
+      "evidence_sha256": "a52675fc8433c20154f67fc5f83d73e92d533a87fe10178658b7c20ac12df7c0"
+    },
+    {
+      "task_id": "strategy-towerdefense",
+      "run_id": "example-strategy-towerdefense",
+      "build_ok": true,
+      "reward": 0.4515,
+      "scored_demos": 1,
+      "evidence_sha256": "a9a8b6881d5125d8db1180099d3884519847476e1987a49547e3cd99d7e29eec"
+    },
+    {
+      "task_id": "tycoon-creature-clinic-triage",
+      "run_id": "example-tycoon-creature-clinic-triage",
+      "build_ok": true,
+      "reward": 0.0946,
+      "scored_demos": 6,
+      "evidence_sha256": "361bea90d2805597407a820345ae22380e256af88b961ebfc61198cebcee74ab"
+    },
+    {
+      "task_id": "tycoon-dungeon-master",
+      "run_id": "example-tycoon-dungeon-master",
+      "build_ok": true,
+      "reward": 0.358,
+      "scored_demos": 4,
+      "evidence_sha256": "713753e3ae04760100672c062a031949f267d1531d2da9d9e0340336d041af6f"
+    },
+    {
+      "task_id": "tycoon-farm",
+      "run_id": "example-tycoon-farm",
+      "build_ok": true,
+      "reward": 0.5845,
+      "scored_demos": 2,
+      "evidence_sha256": "65552d942e5bd9ac44b790f3583ea974b6d1898994be7a1582ce21627335c91e"
+    },
+    {
+      "task_id": "tycoon-funfair",
+      "run_id": "example-tycoon-funfair",
+      "build_ok": true,
+      "reward": 0.5561,
+      "scored_demos": 8,
+      "evidence_sha256": "8aaaeb68d3011221c4d6fed6dbec9abbd5003db993d468f06aabd607dacb69f8"
+    },
+    {
+      "task_id": "tycoon-garden-ecosystem-keeper",
+      "run_id": "example-tycoon-garden-ecosystem-keeper",
+      "build_ok": true,
+      "reward": 0.5623,
+      "scored_demos": 6,
+      "evidence_sha256": "61442dfeb013fe4ccaac710c2274ccff36271036829fe81b3465d9e802a099bb"
+    },
+    {
+      "task_id": "tycoon-gladiator-arena",
+      "run_id": "example-tycoon-gladiator-arena",
+      "build_ok": true,
+      "reward": 0.5049,
+      "scored_demos": 7,
+      "evidence_sha256": "5f817efa0d53e2557b274c447e2deb270adb6683a61e2966c99ed93b14ac5c41"
+    },
+    {
+      "task_id": "tycoon-music-label",
+      "run_id": "example-tycoon-music-label",
+      "build_ok": true,
+      "reward": 0.7046,
+      "scored_demos": 10,
+      "evidence_sha256": "0ee665e1c7bf9d8fa6e5a75309158d7d4d0ffca758df3cee40bd6e8aa0307cf6"
+    },
+    {
+      "task_id": "tycoon-pirate-port",
+      "run_id": "example-tycoon-pirate-port",
+      "build_ok": true,
+      "reward": 0.0234,
+      "scored_demos": 2,
+      "evidence_sha256": "82613002fb567e6d8c3fc8d4565293e61276cc37b5896bc60e9d9c375553ed7c"
+    },
+    {
+      "task_id": "tycoon-potion-shop",
+      "run_id": "example-tycoon-potion-shop",
+      "build_ok": true,
+      "reward": 0.591,
+      "scored_demos": 1,
+      "evidence_sha256": "c04a6097b024e5f1b28be92e5d8f50327f613ad2ca581b1a543d65c4daae95c3"
+    },
+    {
+      "task_id": "tycoon-railroad-baron",
+      "run_id": "example-tycoon-railroad-baron",
+      "build_ok": true,
+      "reward": 0.641,
+      "scored_demos": 10,
+      "evidence_sha256": "ee9cacf7c3ba36c5a21cdbb87ed1a0d9ddf92b88aa25e24390bc6c43bb6f52e6"
+    },
+    {
+      "task_id": "tycoon-space-colony",
+      "run_id": "example-tycoon-space-colony",
+      "build_ok": true,
+      "reward": 0.7958,
+      "scored_demos": 5,
+      "evidence_sha256": "80199fb21b326a440192dc0828edb3f633df7f090b106bf7930fedd19f563bbc"
+    },
+    {
+      "task_id": "tycoon-submarine-pressure-rescue",
+      "run_id": "example-tycoon-submarine-pressure-rescue",
+      "build_ok": true,
+      "reward": 0.2399,
+      "scored_demos": 2,
+      "evidence_sha256": "e073310d543ec4892c9f5b3326ba6244f3b84cc9fbfeb1f605f13bf7de88d194"
+    },
+    {
+      "task_id": "tycoon-tiny-factory-foreman",
+      "run_id": "example-tycoon-tiny-factory-foreman",
+      "build_ok": true,
+      "reward": 0.6951,
+      "scored_demos": 9,
+      "evidence_sha256": "68716cba9107dbea5db1ca1748b420a9f91d133fe0afa3a1eb0b274737fb660e"
+    },
+    {
+      "task_id": "tycoon-trading-caravan-tycoon",
+      "run_id": "example-tycoon-trading-caravan-tycoon",
+      "build_ok": true,
+      "reward": 0.3104,
+      "scored_demos": 5,
+      "evidence_sha256": "f01f6af870f368b137e6c23130a2487d9a33ae94c2934de746ee5b59fcb64358"
+    },
+    {
+      "task_id": "tycoon-wildhaven",
+      "run_id": "example-tycoon-wildhaven",
+      "build_ok": true,
+      "reward": 0.1127,
+      "scored_demos": 1,
+      "evidence_sha256": "78663ff130a4bc55352d6aae3fe2b74ce16212977099a180caba7ddd125e8b9e"
+    },
+    {
+      "task_id": "tycoon-zoo-keeper",
+      "run_id": "example-tycoon-zoo-keeper",
+      "build_ok": true,
+      "reward": 0.0598,
+      "scored_demos": 10,
+      "evidence_sha256": "86d590395418b00582daeacf3b5ecb768270deba2476b10a907ba75c3e4dec4c"
+    },
+    {
+      "task_id": "visualnovel-arcaneacademy",
+      "run_id": "example-visualnovel-arcaneacademy",
+      "build_ok": true,
+      "reward": 0.121,
+      "scored_demos": 2,
+      "evidence_sha256": "a2e909c9ef28d37a775818a88451243ba1b8b1576fd5ddc5069d1f0083dad8b4"
+    },
+    {
+      "task_id": "visualnovel-courtroom-clue-trial",
+      "run_id": "example-visualnovel-courtroom-clue-trial",
+      "build_ok": true,
+      "reward": 0.4084,
+      "scored_demos": 8,
+      "evidence_sha256": "e31567d5c24d0b2d4d63244f9567324a3b3b9eed9c706d081f2f64c60e663535"
+    },
+    {
+      "task_id": "visualnovel-debate-club",
+      "run_id": "example-visualnovel-debate-club",
+      "build_ok": true,
+      "reward": 0.7583,
+      "scored_demos": 9,
+      "evidence_sha256": "9584d325add5db5fbcf5d51956ca286a40760575a1c26fff227643e58bebe8e2"
+    },
+    {
+      "task_id": "visualnovel-detective-noir",
+      "run_id": "example-visualnovel-detective-noir",
+      "build_ok": true,
+      "reward": 0.3688,
+      "scored_demos": 7,
+      "evidence_sha256": "38858cacad9deb6de3dbd987959558019844f2a5d37b7d4b87f4b74690f14a89"
+    },
+    {
+      "task_id": "visualnovel-escape-room",
+      "run_id": "example-visualnovel-escape-room",
+      "build_ok": true,
+      "reward": 0.2263,
+      "scored_demos": 3,
+      "evidence_sha256": "a2b6da250bb9259424779210570eaf35a616dad44ad62b5bedc603b095e8c9a4"
+    },
+    {
+      "task_id": "visualnovel-grimfable",
+      "run_id": "example-visualnovel-grimfable",
+      "build_ok": true,
+      "reward": 0.3381,
+      "scored_demos": 3,
+      "evidence_sha256": "ee4e82e1f5242369785f006f0769213e14f6d66bf97e6edc41b879d8ca0c74bb"
+    },
+    {
+      "task_id": "visualnovel-keepsake",
+      "run_id": "example-visualnovel-keepsake",
+      "build_ok": true,
+      "reward": 0.4787,
+      "scored_demos": 7,
+      "evidence_sha256": "f3a1cb83024a2f987e3148343ed7526eac4624338614d9a91f6f166dc544c072"
+    },
+    {
+      "task_id": "visualnovel-lastsignal",
+      "run_id": "example-visualnovel-lastsignal",
+      "build_ok": true,
+      "reward": 0.1348,
+      "scored_demos": 1,
+      "evidence_sha256": "55221d68b6d8132373930cf7b0aef1dc4e0074788beb95994b3ae0e55c0bbd56"
+    },
+    {
+      "task_id": "visualnovel-pactbound",
+      "run_id": "example-visualnovel-pactbound",
+      "build_ok": true,
+      "reward": 0.1328,
+      "scored_demos": 2,
+      "evidence_sha256": "01d05ef0101b082c06d87394fc1f3ece2290ac3cb7d6f4af89fa2d7d694c4df7"
+    },
+    {
+      "task_id": "visualnovel-spy-handler",
+      "run_id": "example-visualnovel-spy-handler",
+      "build_ok": true,
+      "reward": 0.6416,
+      "scored_demos": 10,
+      "evidence_sha256": "db16c04df556d8f3f5a81e21ee6f50b6fe30efe98dd29a5b5d9c43b7a16e25c2"
+    },
+    {
+      "task_id": "visualnovel-time-paradox",
+      "run_id": "example-visualnovel-time-paradox",
+      "build_ok": true,
+      "reward": 0.6925,
+      "scored_demos": 6,
+      "evidence_sha256": "960618ade69e0612ef67dd128c7b183e0a8acbfa604b6fe57765d80b36974251"
+    }
+  ]
+}
