@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 
 import { appendFile, readFile } from "node:fs/promises";
-import { pathToFileURL } from "node:url";
+import { execFile as execFileCallback } from "node:child_process";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { promisify } from "node:util";
 
 export const MAINTAINER_LOGIN = "502399493zjw-lgtm";
 const MAX_CHANGED_FILES = 3_000;
@@ -28,6 +31,10 @@ const SUBMISSION_MARKER_PATTERN =
 // 所以"像 marker 但解析不出来"必须和"完全没贴"区分开报错。
 const SUBMISSION_MARKER_ATTEMPT_PATTERN = /<!--\s*evalhub-submission\b/gu;
 const MAX_POLICY_BODY_BYTES = 262_144;
+const MAX_GIT_OUTPUT_BYTES = 8 * 1024 * 1024;
+const FULL_SHA_PATTERN = /^[0-9a-f]{40}$/u;
+
+const execFile = promisify(execFileCallback);
 
 export class PullRequestPolicyError extends Error {
   constructor(code, message) {
@@ -452,10 +459,313 @@ async function requiredText(readText, repository, sha, pathname, source) {
   return contents;
 }
 
+function rejectOwnershipHistory(message, cause) {
+  const detail =
+    cause instanceof Error && typeof cause.message === "string"
+      ? `: ${cause.message}`
+      : "";
+  reject("ownership_history_unavailable", `${message}${detail}`);
+}
+
+function decodeGitText(value, source, maxBytes = MAX_GIT_OUTPUT_BYTES) {
+  const bytes = Buffer.isBuffer(value) ? value : Buffer.from(value);
+  if (bytes.length > maxBytes || bytes.includes(0)) {
+    reject(
+      "ownership_history_invalid",
+      `${source} is not bounded non-NUL text`,
+    );
+  }
+  try {
+    return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+  } catch {
+    reject("ownership_history_invalid", `${source} is not valid UTF-8`);
+  }
+}
+
+async function defaultRunGit(repoRoot, args) {
+  try {
+    const { stdout } = await execFile("git", ["-C", repoRoot, ...args], {
+      encoding: "buffer",
+      maxBuffer: MAX_GIT_OUTPUT_BYTES,
+    });
+    return stdout;
+  } catch (error) {
+    rejectOwnershipHistory(`unable to run git ${args[0] ?? "command"}`, error);
+  }
+}
+
+function parseHistoricalActiveSnapshot(slug, snapshot) {
+  if (
+    !snapshot ||
+    typeof snapshot.commit !== "string" ||
+    !FULL_SHA_PATTERN.test(snapshot.commit)
+  ) {
+    reject(
+      "ownership_history_invalid",
+      "ownership history contains an invalid commit identity",
+    );
+  }
+  const hasEval = typeof snapshot.evalYaml === "string";
+  const hasAuthors = typeof snapshot.authors === "string";
+  if (
+    (snapshot.evalYaml !== null && !hasEval) ||
+    (snapshot.authors !== null && !hasAuthors) ||
+    hasEval !== hasAuthors
+  ) {
+    reject(
+      "ownership_history_invalid",
+      `ownership history at ${snapshot.commit} has an incomplete eval state for ${slug}`,
+    );
+  }
+  if (!hasEval) return null;
+
+  let id;
+  let owner;
+  try {
+    id = parseEvalId(
+      snapshot.evalYaml,
+      `history:${snapshot.commit}:evals/${slug}/eval.yaml`,
+    );
+    owner = parseAuthors(
+      snapshot.authors,
+      `history:${snapshot.commit}:evals/${slug}/AUTHORS`,
+    );
+  } catch (error) {
+    if (error instanceof PullRequestPolicyError) {
+      reject(
+        "ownership_history_invalid",
+        `cannot parse ownership history at ${snapshot.commit}: ${error.message}`,
+      );
+    }
+    throw error;
+  }
+  if (id !== slug) {
+    reject(
+      "ownership_history_invalid",
+      `ownership history at ${snapshot.commit} has eval id ${JSON.stringify(id)} instead of ${JSON.stringify(slug)}`,
+    );
+  }
+  return owner;
+}
+
+// Reduce trusted main's first-parent snapshots into a canonical owner. Deletion
+// deliberately preserves the canonical owner. A bad historical restore is
+// recorded but cannot replace it; only an AUTHORS change while the eval is
+// continuously active is an ownership transfer.
+export function reduceOwnershipHistory(slug, snapshots) {
+  validateSlug(slug);
+  if (!Array.isArray(snapshots)) {
+    reject("ownership_history_invalid", "ownership history must be an array");
+  }
+
+  let active = false;
+  let activeOwner = null;
+  let canonicalOwner = null;
+  const violations = [];
+  const commits = new Set();
+
+  for (const snapshot of snapshots) {
+    const owner = parseHistoricalActiveSnapshot(slug, snapshot);
+    if (commits.has(snapshot.commit)) {
+      reject(
+        "ownership_history_invalid",
+        `ownership history repeats commit ${snapshot.commit}`,
+      );
+    }
+    commits.add(snapshot.commit);
+
+    if (owner === null) {
+      active = false;
+      activeOwner = null;
+      continue;
+    }
+
+    if (!active) {
+      if (canonicalOwner === null) {
+        canonicalOwner = owner;
+      } else if (!sameLogin(owner, canonicalOwner)) {
+        violations.push({
+          actualOwner: owner,
+          commit: snapshot.commit,
+          expectedOwner: canonicalOwner,
+          type: "restore_owner_mismatch",
+        });
+      }
+    } else if (!sameLogin(owner, activeOwner)) {
+      canonicalOwner = owner;
+    }
+    active = true;
+    activeOwner = owner;
+  }
+
+  if (snapshots.length > 0 && canonicalOwner === null) {
+    reject(
+      "ownership_history_invalid",
+      `ownership history for ${slug} contains path changes but no resolvable active state`,
+    );
+  }
+
+  return {
+    active,
+    activeOwner,
+    canonicalOwner,
+    seen: canonicalOwner !== null,
+    violations,
+  };
+}
+
+function validateOwnershipHistoryState(slug, history) {
+  if (
+    !history ||
+    typeof history.seen !== "boolean" ||
+    typeof history.active !== "boolean" ||
+    !Array.isArray(history.violations) ||
+    (history.seen && typeof history.canonicalOwner !== "string") ||
+    (!history.seen && history.canonicalOwner !== null) ||
+    (typeof history.canonicalOwner === "string" &&
+      !AUTHORS_HANDLE_PATTERN.test(`@${history.canonicalOwner}`)) ||
+    (history.active && typeof history.activeOwner !== "string") ||
+    (!history.active && history.activeOwner !== null) ||
+    (typeof history.activeOwner === "string" &&
+      !AUTHORS_HANDLE_PATTERN.test(`@${history.activeOwner}`))
+  ) {
+    reject(
+      "ownership_history_invalid",
+      `ownership history reader returned an invalid state for ${slug}`,
+    );
+  }
+  return history;
+}
+
+function isStandaloneAuthorsChange(changed, changedFiles, authorsPath) {
+  return (
+    changed.authorsChanged &&
+    changedFiles.length === 1 &&
+    changedFiles[0].filename === authorsPath &&
+    (typeof changedFiles[0].previous_filename !== "string" ||
+      changedFiles[0].previous_filename === authorsPath)
+  );
+}
+
+async function readHistoricalGitFile({
+  repoRoot,
+  commit,
+  pathname,
+  runGit,
+}) {
+  const listing = decodeGitText(
+    await runGit(repoRoot, [
+      "ls-tree",
+      "--name-only",
+      commit,
+      "--",
+      pathname,
+    ]),
+    `git ls-tree for ${commit}:${pathname}`,
+  );
+  if (listing.length === 0) return null;
+  if (listing !== `${pathname}\n`) {
+    reject(
+      "ownership_history_invalid",
+      `git returned an ambiguous tree entry for ${commit}:${pathname}`,
+    );
+  }
+  return decodeGitText(
+    await runGit(repoRoot, [
+      "show",
+      "--no-ext-diff",
+      "--no-textconv",
+      `${commit}:${pathname}`,
+    ]),
+    `git show for ${commit}:${pathname}`,
+    MAX_POLICY_FILE_BYTES,
+  );
+}
+
+export async function readOwnershipHistoryFromGit({
+  repoRoot,
+  baseSha,
+  slug,
+  runGit = defaultRunGit,
+}) {
+  validateSlug(slug);
+  if (
+    typeof repoRoot !== "string" ||
+    repoRoot.length === 0 ||
+    typeof baseSha !== "string" ||
+    !FULL_SHA_PATTERN.test(baseSha) ||
+    typeof runGit !== "function"
+  ) {
+    reject(
+      "ownership_history_unavailable",
+      "ownership history reader configuration is invalid",
+    );
+  }
+
+  const shallow = decodeGitText(
+    await runGit(repoRoot, ["rev-parse", "--is-shallow-repository"]),
+    "git shallow-repository status",
+  ).trim();
+  if (shallow !== "false") {
+    reject(
+      "ownership_history_shallow",
+      "trusted checkout must contain complete history (fetch-depth: 0)",
+    );
+  }
+
+  const [resolvedBase, checkedOutHead] = await Promise.all([
+    runGit(repoRoot, ["rev-parse", "--verify", `${baseSha}^{commit}`]),
+    runGit(repoRoot, ["rev-parse", "HEAD"]),
+  ]);
+  const verifiedBase = decodeGitText(resolvedBase, "resolved base commit").trim();
+  const verifiedHead = decodeGitText(checkedOutHead, "trusted checkout HEAD").trim();
+  if (verifiedBase !== baseSha || verifiedHead !== baseSha) {
+    reject(
+      "ownership_history_unavailable",
+      "trusted checkout HEAD does not match the pull request base SHA",
+    );
+  }
+
+  const evalYamlPath = `evals/${slug}/eval.yaml`;
+  const authorsPath = `evals/${slug}/AUTHORS`;
+  const historyOutput = decodeGitText(
+    await runGit(repoRoot, [
+      "rev-list",
+      "--first-parent",
+      "--reverse",
+      baseSha,
+      "--",
+      evalYamlPath,
+      authorsPath,
+    ]),
+    `first-parent history for ${slug}`,
+  );
+  const commits = historyOutput.trim().length === 0
+    ? []
+    : historyOutput.trim().split("\n");
+  if (commits.some((commit) => !FULL_SHA_PATTERN.test(commit))) {
+    reject(
+      "ownership_history_invalid",
+      `git returned an invalid first-parent commit for ${slug}`,
+    );
+  }
+
+  const snapshots = [];
+  for (const commit of commits) {
+    const [evalYaml, authors] = await Promise.all([
+      readHistoricalGitFile({ repoRoot, commit, pathname: evalYamlPath, runGit }),
+      readHistoricalGitFile({ repoRoot, commit, pathname: authorsPath, runGit }),
+    ]);
+    snapshots.push({ authors, commit, evalYaml });
+  }
+  return reduceOwnershipHistory(slug, snapshots);
+}
+
 export async function evaluatePullRequestPolicy({
   event,
   listChangedFiles,
   readText,
+  readOwnershipHistory,
 }) {
   const pullRequest = event?.pull_request;
   if (!pullRequest) {
@@ -520,16 +830,127 @@ export async function evaluatePullRequestPolicy({
   validateSlug(slug);
   const evalYamlPath = `evals/${slug}/eval.yaml`;
   const authorsPath = `evals/${slug}/AUTHORS`;
-  const [baseEvalYaml, headEvalYaml] = await Promise.all([
+  if (typeof readOwnershipHistory !== "function") {
+    reject(
+      "ownership_history_unavailable",
+      "the trusted first-parent ownership history reader is required",
+    );
+  }
+  const [baseEvalYaml, headEvalYaml, rawHistory] = await Promise.all([
     readText(baseRepository, baseSha, evalYamlPath),
     readText(headRepository, headSha, evalYamlPath),
+    readOwnershipHistory(baseRepository, baseSha, slug),
   ]);
+  const history = validateOwnershipHistoryState(slug, rawHistory);
+
+  let baseOwner = null;
+  if (baseEvalYaml === null) {
+    if (history.active) {
+      reject(
+        "ownership_history_invalid",
+        `ownership history says ${slug} is active even though it is absent at the base SHA`,
+      );
+    }
+  } else {
+    const baseId = parseEvalId(baseEvalYaml, `base:${evalYamlPath}`);
+    if (baseId !== slug) {
+      reject(
+        "base_eval_id_mismatch",
+        `base eval id ${JSON.stringify(baseId)} does not equal slug ${JSON.stringify(slug)}`,
+      );
+    }
+    const baseAuthors = await requiredText(
+      readText,
+      baseRepository,
+      baseSha,
+      authorsPath,
+      `base:${authorsPath}`,
+    );
+    baseOwner = parseAuthors(baseAuthors, `base:${authorsPath}`);
+    if (!history.seen || !history.active) {
+      reject(
+        "ownership_history_invalid",
+        `ownership history says ${slug} is not active even though it exists at the base SHA`,
+      );
+    }
+    if (!sameLogin(history.activeOwner, baseOwner)) {
+      reject(
+        "ownership_history_invalid",
+        `ownership history active owner @${history.activeOwner} does not match base AUTHORS @${baseOwner} for ${slug}`,
+      );
+    }
+
+    // A bad restore may leave trusted main active under an owner that never
+    // became canonical. Freeze every operation until a maintainer restores the
+    // canonical owner in a standalone, marker-free AUTHORS repair.
+    if (!sameLogin(baseOwner, history.canonicalOwner)) {
+      const standaloneRepair = isStandaloneAuthorsChange(
+        changed,
+        changedFiles,
+        authorsPath,
+      );
+      if (!sameLogin(actor, MAINTAINER_LOGIN) || !standaloneRepair) {
+        reject(
+          "ownership_repair_required",
+          `active eval ${slug} has base owner @${baseOwner} but canonical owner @${history.canonicalOwner}; only @${MAINTAINER_LOGIN} may repair it in a standalone ${authorsPath} change before any other update or deletion`,
+        );
+      }
+      if (headEvalYaml === null) {
+        reject(
+          "ownership_repair_required",
+          `ownership repair for ${slug} must keep eval.yaml and change only ${authorsPath}`,
+        );
+      }
+      const repairHeadId = parseEvalId(headEvalYaml, `head:${evalYamlPath}`);
+      if (repairHeadId !== slug) {
+        reject(
+          "eval_id_mismatch",
+          `head eval id ${JSON.stringify(repairHeadId)} must equal directory slug ${JSON.stringify(slug)}`,
+        );
+      }
+      const headAuthors = await requiredText(
+        readText,
+        headRepository,
+        headSha,
+        authorsPath,
+        `head:${authorsPath}`,
+      );
+      const repairedOwner = parseAuthors(headAuthors, `head:${authorsPath}`);
+      if (!sameLogin(repairedOwner, history.canonicalOwner)) {
+        reject(
+          "ownership_repair_required",
+          `ownership repair for ${slug} must set ${authorsPath} to canonical owner @${history.canonicalOwner}, not @${repairedOwner}`,
+        );
+      }
+      enforceSubmissionMarker(markerScan, { actor, slug, expectedKind: null });
+      return {
+        ...audit,
+        historicalOwnershipViolations: history.violations.length,
+        mode: sameLogin(repairedOwner, MAINTAINER_LOGIN)
+          ? "official-eval-update"
+          : "community-eval-update",
+        owner: repairedOwner,
+        slug,
+        submissionTask: null,
+      };
+    }
+  }
 
   if (baseEvalYaml !== null && headEvalYaml === null) {
-    reject(
-      "eval_delete_forbidden",
-      `eval deletion is not supported for ${slug}`,
-    );
+    if (!sameLogin(actor, MAINTAINER_LOGIN)) {
+      reject(
+        "eval_delete_forbidden",
+        `only @${MAINTAINER_LOGIN} may delete eval ${slug}`,
+      );
+    }
+    enforceSubmissionMarker(markerScan, { actor, slug, expectedKind: null });
+    return {
+      ...audit,
+      mode: "maintainer-eval-delete",
+      owner: baseOwner,
+      slug,
+      submissionTask: null,
+    };
   }
   if (headEvalYaml === null) {
     reject("required_file_missing", `${evalYamlPath} is missing from the PR head`);
@@ -544,7 +965,6 @@ export async function evaluatePullRequestPolicy({
   }
 
   if (baseEvalYaml === null) {
-    validateNewEvalDefinition(headEvalYaml, `head:${evalYamlPath}`);
     const headAuthors = await requiredText(
       readText,
       headRepository,
@@ -553,66 +973,88 @@ export async function evaluatePullRequestPolicy({
       `head:${authorsPath}`,
     );
     const owner = parseAuthors(headAuthors, `head:${authorsPath}`);
-    if (!sameLogin(actor, owner)) {
+    const restoring = history.seen;
+    if (!restoring) {
+      validateNewEvalDefinition(headEvalYaml, `head:${evalYamlPath}`);
+    }
+    if (restoring && !sameLogin(owner, history.canonicalOwner)) {
+      reject(
+        "restore_owner_mismatch",
+        `restored eval ${slug} must preserve canonical owner @${history.canonicalOwner}; restore it first, then use a separate active-to-active maintainer PR for any ownership transfer`,
+      );
+    }
+    if (!sameLogin(actor, owner) && !sameLogin(actor, MAINTAINER_LOGIN)) {
       reject(
         "author_mismatch",
-        `new eval owner @${owner} must match PR creator @${actor}`,
+        `${restoring ? "restored" : "new"} eval owner @${owner} must match PR creator @${actor}, unless the PR is opened by @${MAINTAINER_LOGIN}`,
       );
     }
     const submissionTask = enforceSubmissionMarker(markerScan, {
       actor,
       slug,
-      expectedKind: "new",
+      expectedKind: restoring ? "update" : "new",
     });
     return {
       ...audit,
+      historicalOwnershipViolations: history.violations.length,
       mode: sameLogin(owner, MAINTAINER_LOGIN)
-        ? "official-eval-create"
-        : "community-eval-create",
+        ? restoring
+          ? "official-eval-restore"
+          : "official-eval-create"
+        : restoring
+          ? "community-eval-restore"
+          : "community-eval-create",
       owner,
       slug,
       submissionTask,
     };
   }
 
-  if (changed.authorsChanged) {
+  if (changed.authorsChanged && !sameLogin(actor, MAINTAINER_LOGIN)) {
     reject(
       "author_change_forbidden",
-      `AUTHORS is immutable for existing eval ${slug}`,
+      `AUTHORS is immutable for existing eval ${slug} unless changed by @${MAINTAINER_LOGIN}`,
     );
   }
-  const baseId = parseEvalId(baseEvalYaml, `base:${evalYamlPath}`);
-  if (baseId !== slug) {
+  if (
+    changed.authorsChanged &&
+    !isStandaloneAuthorsChange(changed, changedFiles, authorsPath)
+  ) {
     reject(
-      "base_eval_id_mismatch",
-      `base eval id ${JSON.stringify(baseId)} does not equal slug ${JSON.stringify(slug)}`,
+      "ownership_transfer_mixed_with_content",
+      `ownership transfer for active eval ${slug} must be a standalone maintainer PR that changes only ${authorsPath}`,
     );
   }
-  const baseAuthors = await requiredText(
-    readText,
-    baseRepository,
-    baseSha,
-    authorsPath,
-    `base:${authorsPath}`,
-  );
-  const baseOwner = parseAuthors(baseAuthors, `base:${authorsPath}`);
-  if (!sameLogin(actor, baseOwner)) {
+  if (!sameLogin(actor, baseOwner) && !sameLogin(actor, MAINTAINER_LOGIN)) {
     reject(
       "third_party_update_forbidden",
       `@${actor} cannot update eval ${slug}, which belongs to @${baseOwner}`,
     );
   }
+  // 权限判定始终以 base 归属为准（谁现在拥有它）；审计摘要的 owner 则报合入后的归属，
+  // 这样 maintainer 用 admin 例外迁移 AUTHORS 时，摘要不会把迁移记成旧 owner 拥有。
+  let owner = baseOwner;
+  if (changed.authorsChanged) {
+    const headAuthors = await requiredText(
+      readText,
+      headRepository,
+      headSha,
+      authorsPath,
+      `head:${authorsPath}`,
+    );
+    owner = parseAuthors(headAuthors, `head:${authorsPath}`);
+  }
   const submissionTask = enforceSubmissionMarker(markerScan, {
     actor,
     slug,
-    expectedKind: "update",
+    expectedKind: changed.authorsChanged ? null : "update",
   });
   return {
     ...audit,
-    mode: sameLogin(baseOwner, MAINTAINER_LOGIN)
+    mode: sameLogin(owner, MAINTAINER_LOGIN)
       ? "official-eval-update"
       : "community-eval-update",
-    owner: baseOwner,
+    owner,
     slug,
     submissionTask,
   };
@@ -708,10 +1150,24 @@ async function main() {
     reject("invalid_event", "pull request repository or number is missing");
   }
   const client = githubClient(token);
+  const trustedRepoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
   const result = await evaluatePullRequestPolicy({
     event,
     listChangedFiles: () => client.listChangedFiles(repository, pullNumber),
     readText: client.readText,
+    readOwnershipHistory: (historyRepository, historyBaseSha, slug) => {
+      if (historyRepository !== repository) {
+        reject(
+          "ownership_history_unavailable",
+          "ownership history repository does not match the trusted base repository",
+        );
+      }
+      return readOwnershipHistoryFromGit({
+        repoRoot: trustedRepoRoot,
+        baseSha: historyBaseSha,
+        slug,
+      });
+    },
   });
   const summary = [
     "## EvalHub PR policy",
@@ -722,6 +1178,11 @@ async function main() {
     ...(result.slug ? [`- Slug: \`${result.slug}\``, `- Owner: \`@${result.owner}\``] : []),
     ...(result.submissionTask
       ? [`- Submission task: \`${result.submissionTask}\``]
+      : []),
+    ...(Number.isInteger(result.historicalOwnershipViolations)
+      ? [
+          `- Historical restore violations ignored for canonical ownership: \`${result.historicalOwnershipViolations}\``,
+        ]
       : []),
     `- Head SHA: \`${result.headSha}\``,
     "",
