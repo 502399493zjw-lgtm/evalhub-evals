@@ -17,7 +17,7 @@
         "harness": "Codex"
       },
       "score": 34.59,
-      "detail": "Terminal-Bench 3.0 官方榜单第 2 名；官网显示 **34.6%** ± 1.6%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：4ce39786-946e-447b-bf36-9650ff7749ac。",
+      "detail": "Terminal-Bench 3.0 官方榜单第 2 名；官网显示 34.6% ± 1.6%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：4ce39786-946e-447b-bf36-9650ff7749ac。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -36,7 +36,7 @@
             {
               "cells": [
                 2,
-                "**34.6%** ± 1.6%",
+                "34.6% ± 1.6%",
                 1.58,
                 "2026-07-09",
                 5779656478,
@@ -54,7 +54,7 @@
         "harness": "Claude Code"
       },
       "score": 34.05,
-      "detail": "Terminal-Bench 3.0 官方榜单第 3 名；官网显示 **34.1%** ± 1.7%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：fd93299a-0c43-4ec3-8aee-421fdbef4b8d。",
+      "detail": "Terminal-Bench 3.0 官方榜单第 3 名；官网显示 34.1% ± 1.7%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：fd93299a-0c43-4ec3-8aee-421fdbef4b8d。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -73,7 +73,7 @@
             {
               "cells": [
                 3,
-                "**34.1%** ± 1.7%",
+                "34.1% ± 1.7%",
                 1.71,
                 "2026-06-09",
                 3583230945,
@@ -91,7 +91,7 @@
         "harness": "Claude Code"
       },
       "score": 21.08,
-      "detail": "Terminal-Bench 3.0 官方榜单第 4 名；官网显示 **21.1%** ± 1.6%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：46eaaf38-415f-443a-a68b-f81c46e49be6。",
+      "detail": "Terminal-Bench 3.0 官方榜单第 4 名；官网显示 21.1% ± 1.6%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：46eaaf38-415f-443a-a68b-f81c46e49be6。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -110,7 +110,7 @@
             {
               "cells": [
                 4,
-                "**21.1%** ± 1.6%",
+                "21.1% ± 1.6%",
                 1.55,
                 "2026-05-28",
                 5208776503,
@@ -128,7 +128,7 @@
         "harness": "Codex"
       },
       "score": 20.81,
-      "detail": "Terminal-Bench 3.0 官方榜单第 5 名；官网显示 **20.8%** ± 1.4%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：8519e479-95e6-44a4-a108-1834df711b28。",
+      "detail": "Terminal-Bench 3.0 官方榜单第 5 名；官网显示 20.8% ± 1.4%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：8519e479-95e6-44a4-a108-1834df711b28。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -147,7 +147,7 @@
             {
               "cells": [
                 5,
-                "**20.8%** ± 1.4%",
+                "20.8% ± 1.4%",
                 1.4,
                 "2026-07-09",
                 7024607919,
@@ -165,7 +165,7 @@
         "harness": "Cursor CLI"
       },
       "score": 15.68,
-      "detail": "Terminal-Bench 3.0 官方榜单第 6 名；官网显示 **15.7%** ± 1.5%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：2ccf029d-62fe-4756-a624-b2d376895a32。",
+      "detail": "Terminal-Bench 3.0 官方榜单第 6 名；官网显示 15.7% ± 1.5%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：2ccf029d-62fe-4756-a624-b2d376895a32。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -184,7 +184,7 @@
             {
               "cells": [
                 6,
-                "**15.7%** ± 1.5%",
+                "15.7% ± 1.5%",
                 1.47,
                 "2026-07-08",
                 1238993118,
@@ -202,7 +202,7 @@
         "harness": "Claude Code"
       },
       "score": 14.59,
-      "detail": "Terminal-Bench 3.0 官方榜单第 7 名；官网显示 **14.6%** ± 1.5%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：95ef728a-41bc-4882-adfa-0d30ce50671c。",
+      "detail": "Terminal-Bench 3.0 官方榜单第 7 名；官网显示 14.6% ± 1.5%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：95ef728a-41bc-4882-adfa-0d30ce50671c。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -221,7 +221,7 @@
             {
               "cells": [
                 7,
-                "**14.6%** ± 1.5%",
+                "14.6% ± 1.5%",
                 1.5,
                 "2026-06-30",
                 17948790860,
@@ -239,7 +239,7 @@
         "harness": "Claude Code"
       },
       "score": 4.59,
-      "detail": "Terminal-Bench 3.0 官方榜单第 9 名；官网显示 **4.6%** ± 1.0%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：95e83401-73ec-4317-8e4b-d0d579fcfb71。",
+      "detail": "Terminal-Bench 3.0 官方榜单第 9 名；官网显示 4.6% ± 1.0%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：95e83401-73ec-4317-8e4b-d0d579fcfb71。",
       "supplementary_views": [
         {
           "type": "metric_table",
@@ -258,7 +258,7 @@
             {
               "cells": [
                 9,
-                "**4.6%** ± 1.0%",
+                "4.6% ± 1.0%",
                 0.97,
                 "2026-06-13",
                 3276045131,
