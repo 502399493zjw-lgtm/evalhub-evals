@@ -26,7 +26,7 @@ custom_mode: external_workflow
 scoring: custom
 scored_by: author
 score_policy: required
-baseline_policy: optional
+baseline_policy: required
 score_unit: 分
 leaderboard: latest_session
 scoring_note: 在固定的 74 个任务上，每个 Agent 每题运行 5 次，共产生 370 个上游 reward。每个 reward 必须是 0–1（含端点）的有限 JSON number；保留上游连续 reward，不得二值化。超时、执行失败、环境失败和缺失/None reward 必须显式记 0。主成绩 = 370 个 reward 的算术平均 × 100，范围 0–100，越高越好。提交方不能覆盖 aggregate、分母或评分规则，也不能用 pass@k 代替主分。pack-to-result.mjs 只打包已经由 Harbor 产生的结果，不运行 Agent 或容器；scored_by=author 表示评测作者仍须核对 Harbor job、日志与 evidence_sha256 后才认可成绩。
@@ -81,8 +81,8 @@ detail_profile:
       description: commit 459ff6ec99417589b7f679d14ddf3b3f0ae4f1dc。
       source_url: https://github.com/harbor-framework/harbor/tree/459ff6ec99417589b7f679d14ddf3b3f0ae4f1dc
   caveats:
-    - title: 没有与固定 5×74 协议完全匹配的公开基线
-      description: 本目录不附带 published-results。公开可见的 Terminal-Bench 2.1 榜单使用不同任务集；可见的 Frontier-Bench 74×5 汇总无法逐 trial 绑定到本协议固定 task digest、Harbor v0.20.0 与原始 reward，且相关二值矩阵不能复算公告展示的主分。为了避免把证据链不完整或计算口径不一致的成绩当成可比基线，本投稿不转录、插值或合成模型分数。
+    - title: 官方榜单成绩与 EvalHub 独立复跑分开
+      description: 本目录收录了 2026-08-10 从 Frontier-Bench 官方榜单快照转录的 7 条可识别 Terminal-Bench 3.0 汇总成绩。它们属于上游作者发表的数据，不是 EvalHub 独立复跑，也不包含逐题 Harbor evidence；官方榜单中的 anthropic/claude-opus-5 与 openai/gpt-5.6-luna 因尚未进入平台模型注册表，待平台正式收录后再补回对应记录。
     - title: 协议版本与许可来源来自两个固定 commit
       description: 运行协议与任务身份固定到 v3.0.0；本目录转录的题面字节同时存在于后续 commit 6dac399a3ebd34efbc675c03eb9f88ccf5dae047 的 Apache-2.0 许可树中，且 74 个 instruction.md 与 v3.0.0 逐字节相同。本目录附带该许可证全文和任务级第三方通知。
     - title: 运行成本和环境要求因任务而异

@@ -104,14 +104,18 @@ node evals/terminal-bench/pack-to-result.mjs <submission.json> --out <result.jso
 
 ## 公开成绩状态
 
-本评测使用 `baseline_policy: optional`，不创建 `published-results/`。截至本目录制作时，没有找到同时满足以下条件的可信公开成绩：
+本评测使用 `baseline_policy: required`，并在
+[`published-results/official-leaderboard-2026-08-10.json`](published-results/official-leaderboard-2026-08-10.json)
+中收录了 2026 年 8 月 10 日从 [Frontier-Bench 官方榜单](https://www.frontierbench.ai/)
+快照转录的 7 条可识别 Terminal-Bench 3.0 成绩。`score` 使用来源页面的原始 accuracy
+（百分制），`supplementary_views` 保留了官方展示成绩、标准误、发布日、总 token、成本和榜单行
+标识，方便读者核对来源。
 
-- 完整匹配固定的 74 个任务及其内容 digest；
-- 每题运行 5 次；
-- 失败、超时和缺失 reward 均按 0 计入固定 370 分母；
-- 使用本目录钉死的执行与聚合语义。
-
-公开的 Terminal-Bench 2.1 榜单使用不同的 89 题协议。可见的 Frontier-Bench 公告和材料虽展示 74 题、每个 participant 运行 5 次的汇总，但没有提供足以把每条 trial 绑定到本协议固定 task digest、Harbor v0.20.0 和原始 reward 的公开证据；相关二值矩阵也不能复算出公告展示的主分。为避免错误可比性，本目录不搬运、插值或合成这些模型成绩。
+这些记录属于上游作者发表的汇总成绩，不是 EvalHub 独立复跑；由于来源没有公开逐题 Harbor
+证据，结果文件不会伪造 `task_results`、`usage` 或模型输出。官方榜单中的
+`anthropic/claude-opus-5` 与 `openai/gpt-5.6-luna` 暂未进入平台模型注册表，因此当前不写入
+结果文件；待平台正式收录准确模型身份后再补回对应官方记录。官方 Terminal-Bench 2.1 榜单
+使用不同的 89 题协议，也不会与本目录的 3.0 结果混用。
 
 ## 许可与再分发边界
 
