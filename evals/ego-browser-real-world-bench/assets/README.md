@@ -1,6 +1,5 @@
-# Assets
+# 素材
 
-This evaluation intentionally ships no display assets. The upstream task dataset has an
-attachment-backed task, but attachments, screenshots, sessions, and other execution artifacts
-are not copied into this package. The detail page relies on structured task text, provenance,
-and source-backed metrics instead of substitute imagery.
+本评测有意不附带展示素材。上游任务数据集中有一道任务依赖附件，但附件、截图、会话和其他执行
+产物均未复制到本包中。详情页以结构化任务文本、来源溯源和有来源支撑的指标呈现信息，不以替代
+图片冒充运行证据。
