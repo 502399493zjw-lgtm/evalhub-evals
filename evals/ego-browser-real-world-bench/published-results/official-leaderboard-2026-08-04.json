@@ -1,0 +1,2342 @@
+{
+  "eval_id": "ego-browser-real-world-bench",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "ego-browser-real-world-bench/official-report-transcription@1.0.0",
+    "retrieved_on": "2026-08-10",
+    "source": {
+      "title": "Ego Browser Benchmark Model Metrics - 2026-08-04",
+      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/reports/ego-benchmark-model-metrics-2026-08-04.md",
+      "snapshot_sha256": "9d302fb27762c0885f6efa8292888e555babe3c71c9ed1e71247a982888cb611"
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "openai/gpt-5.6-sol"
+      },
+      "score": 87.1,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "27/31 tasks (87.1%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: GPT-5.6-sol. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "87.1%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "27 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.9699"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "149 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$88.97"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$2.8701"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "268,977"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "29.8"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "629.1"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "10.48"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$20.27"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$24.3724"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$15.0493"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$49.5508"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$0.0000"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$88.9726"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Verified"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-fable-5"
+      },
+      "score": 83.9,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "26/31 tasks (83.9%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: Claude Fable 5. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "83.9%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "26 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.9570"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "147 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$88.73"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$2.8622"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "396,558"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "23.5"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "605.3"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "10.09"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$16.21"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$0.0143"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$36.0080"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$32.2778"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$20.4291"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$88.7293"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Verified"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "alibaba/qwen3.8-max-preview"
+      },
+      "score": 74.2,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "23/31 tasks (74.2%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: Qwen 3.8 Max Preview. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "74.2%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "23 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.9226"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "140 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$21.98"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$0.7091"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "392,921"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "32.3"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "819.1"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "13.65"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$18.04"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$11.5308"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$3.6148"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$6.8364"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$0.0000"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$21.9820"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Estimated at qwen-3.8-max rates"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "alibaba/qwen3.8-max"
+      },
+      "score": 67.7,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "21/31 tasks (67.7%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: Qwen 3.8 Max. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "67.7%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "21 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.8667"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "131 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$31.80"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$1.0258"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "453,284"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "37.4"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "880.0"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "14.67"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$16.17"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$18.5536"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$4.0522"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$9.1942"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$0.0000"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$31.8000"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Provider-reported line items match total"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "bytedance/doubao-seed-evolving"
+      },
+      "score": 64.5,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "20/31 tasks (64.5%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: Doubao Seed Evolving. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "64.5%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "20 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.8247"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "125 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$14.56"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$0.4695"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "194,926"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "30.5"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "689.5"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "11.49"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$19.94"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$2.5665"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$2.4571"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$9.5314"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$0.0000"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$14.5550"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Recomputed at undiscounted list price"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "moonshot/kimi-k3"
+      },
+      "score": 64.5,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "20/31 tasks (64.5%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: Kimi K3. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "64.5%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "20 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.8043"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "119 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$11.43"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$0.3687"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "132,194"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "20.3"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "534.4"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "8.91"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$14.07"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$3.2897"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$4.1591"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$3.9822"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$0.0000"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$11.4309"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Verified"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "zai/glm-5.2"
+      },
+      "score": 61.3,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "19/31 tasks (61.3%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: GLM-5.2. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "61.3%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "19 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.8366"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "126 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$25.09"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$0.8094"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "1,043,308"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "29.4"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "1281.0"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "21.35"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$19.47"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$5.5908"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$5.5958"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$13.9061"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$0.0000"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$25.0927"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Recomputed at published rate card"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "tencent/hy3"
+      },
+      "score": 51.6,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "16/31 tasks (51.6%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: Tencent HY3. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "51.6%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "16 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.7554"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "114 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$3.18"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$0.1025"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "564,185"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "39.3"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "789.6"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "13.16"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$19.80"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$0.6801"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$0.5383"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$1.9576"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$0.0000"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$3.1761"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Recomputed at undiscounted list price"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "minimax/minimax-m3"
+      },
+      "score": 45.2,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "14/31 tasks (45.2%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: MiniMax M3. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "45.2%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "14 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.7220"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "107 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$5.11"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$0.1649"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "150,463"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "48.6"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "597.9"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "9.97"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$19.83"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$0.6409"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$0.6377"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$3.8328"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$0.0000"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$5.1114"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Recomputed at undiscounted list price"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "deepseek/deepseek-v4-pro"
+      },
+      "score": 35.5,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "11/31 tasks (35.5%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: DeepSeek V4 Pro. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "35.5%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "11 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.7204"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "109 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$1.57"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$0.0508"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "227,068"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "35.5"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "475.5"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "7.93"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$20.94"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$0.8050"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$0.5449"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$0.2248"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$0.0000"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$1.5748"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Recomputed at official API price"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "stepfun/step-3.7-flash"
+      },
+      "score": 35.5,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "11/31 tasks (35.5%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: Step 3.7 Flash. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "35.5%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "11 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.6011"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "87 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$5.98"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$0.1930"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "0"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "45.8"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "748.0"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "12.47"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$22.55"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$0.9384"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$0.8752"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$4.1703"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$0.0000"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$5.9839"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Recomputed at undiscounted list price"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "meituan/longcat-2.0"
+      },
+      "score": 29,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "9/31 tasks (29.0%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: LongCat 2.0. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "29.0%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "9 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.4855"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "69 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$2.22"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$0.0716"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "146,487"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "21.3"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "395.2"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "6.59"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$16.02"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$1.0436"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$0.9259"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$0.2501"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$0.0000"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$2.2196"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Recomputed at undiscounted list price"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "xiaomi/mimo-v2.5-pro"
+      },
+      "score": 12.9,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "4/31 tasks (12.9%)"
+      },
+      "detail": "Direct transcription from the pinned official report. Source display name: MiMo V2.5 Pro. This rankable record is one of the 13 source-backed identities resolvable by the current EvalHub registry; it is not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-performance",
+          "label": "Official performance",
+          "title": "Official performance metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Perfect rate",
+                "12.9%"
+              ]
+            },
+            {
+              "cells": [
+                "All-rubrics-passed tasks",
+                "4 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Rubric average score",
+                "0.2737"
+              ]
+            },
+            {
+              "cells": [
+                "Rubrics passed",
+                "36 / 154"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; auxiliary metrics do not define an independent EvalHub ranking."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-execution",
+          "label": "Official execution",
+          "title": "Official execution metrics",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Execution cost (USD)",
+                "$1.11"
+              ]
+            },
+            {
+              "cells": [
+                "Cost per task (USD)",
+                "$0.0358"
+              ]
+            },
+            {
+              "cells": [
+                "Reasoning tokens",
+                "34,241"
+              ]
+            },
+            {
+              "cells": [
+                "Average turns",
+                "8.5"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (seconds)",
+                "118.8"
+              ]
+            },
+            {
+              "cells": [
+                "Average duration (minutes)",
+                "1.98"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Execution cost excludes judge cost in the source report."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-judge-cost",
+          "label": "Official judging",
+          "title": "Official judging and judge cost",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Judged tasks",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge artifacts",
+                "31 / 31"
+              ]
+            },
+            {
+              "cells": [
+                "Judge cost (USD)",
+                "$11.69"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report; this is source-published judge metadata, not EvalHub run evidence."
+        },
+        {
+          "type": "metric_table",
+          "id": "official-pricing-verification",
+          "label": "Official pricing",
+          "title": "Official pricing verification",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Uncached input (USD)",
+                "$1.0281"
+              ]
+            },
+            {
+              "cells": [
+                "Output (USD)",
+                "$0.0711"
+              ]
+            },
+            {
+              "cells": [
+                "Cache read (USD)",
+                "$0.0118"
+              ]
+            },
+            {
+              "cells": [
+                "Cache write (USD)",
+                "$0.0000"
+              ]
+            },
+            {
+              "cells": [
+                "Recomputed total (USD)",
+                "$1.1110"
+              ]
+            },
+            {
+              "cells": [
+                "Verification",
+                "Recomputed at undiscounted list price"
+              ]
+            }
+          ],
+          "note": "Direct transcription of the pinned official report. Pricing verification text is preserved from the source."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,381 @@
+{
+  "eval_id": "ego-browser-real-world-bench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "ego-browser-real-world-bench/pack-to-result@1.0.0",
+    "run_date": "2026-08-10"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-browser-agent",
+        "harness": "example-harness",
+        "harness_version": "0.0.0-structural-example"
+      },
+      "score": 0,
+      "raw_metric": {
+        "label": "Perfect rate",
+        "value": "0/31 tasks (0.000000%)"
+      },
+      "detail": "Packed from a 31-task upstream verdict manifest. Perfect rate = all-rubrics-passed tasks / 31 x 100. Manifest SHA-256=58d34035d8ed051859fbeffe2748530a31c16a9d70fc5b67277e3c42783c40b8. The external run evidence remains subject to author review.",
+      "task_results": [
+        {
+          "task_id": "rwb-x-openai-7d-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-openai-careers-apply-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-redfin-mortgage-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-expedia-flight-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-hn-top10-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-imdb-scifi-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-calcnet-mortgage-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-cars-payment-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-yahoo-stocks-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-yelp-opentable-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-reddit-greenhouse-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-reddit-pf-indexfund-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-github-trending-py-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-bankrate-compound-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-metacritic-actionrpg-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-stockanalysis-tech-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-zillow-greatschools-austin-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-xe-irs-reimbursement-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-youtube-finance-channel-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-amazon-bottle-leaks-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-houzz-homedepot-backsplash-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-google-flights-booking-miami-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-courtlistener-sec-helix-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-scratch-apple-dash-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-2048-reach-256-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-song-maker-mirror-loop-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-census-sba-qcew-naics541511-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-webflow-squarespace-wix-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-nist-cisa-nvd-readiness-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-bls-census-retail-metros-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        },
+        {
+          "task_id": "rwb-lumen-ticket-rush-01",
+          "score": 0,
+          "raw": "all_rubrics_passed=false"
+        }
+      ],
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "task-perfect-outcomes",
+          "label": "Task verdicts",
+          "title": "All-rubrics-passed verdict by task",
+          "columns": [
+            "Metric",
+            "Value"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "rwb-x-openai-7d-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-openai-careers-apply-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-redfin-mortgage-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-expedia-flight-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-hn-top10-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-imdb-scifi-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-calcnet-mortgage-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-cars-payment-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-yahoo-stocks-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-yelp-opentable-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-reddit-greenhouse-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-reddit-pf-indexfund-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-github-trending-py-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-bankrate-compound-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-metacritic-actionrpg-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-stockanalysis-tech-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-zillow-greatschools-austin-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-xe-irs-reimbursement-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-youtube-finance-channel-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-amazon-bottle-leaks-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-houzz-homedepot-backsplash-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-google-flights-booking-miami-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-courtlistener-sec-helix-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-scratch-apple-dash-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-2048-reach-256-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-song-maker-mirror-loop-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-census-sba-qcew-naics541511-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-webflow-squarespace-wix-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-nist-cisa-nvd-readiness-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-bls-census-retail-metros-01",
+                "false"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-lumen-ticket-rush-01",
+                "false"
+              ]
+            }
+          ],
+          "note": "Values are submitted manifest records used to calculate the primary score; this table does not independently rejudge the upstream run."
+        }
+      ]
+    }
+  ]
+}
