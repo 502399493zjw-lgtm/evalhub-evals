@@ -1,28 +1,28 @@
-"id": "ego-browser-real-world-bench"
-"protocol_revision": 1
-"name": "Ego Browser Benchmark: Real-World Bench"
-"category": "useful"
-"description": "Real-World Bench evaluates browser agents on 31 real-world web tasks that require research, navigation, form interaction, and tool use. A task is perfect only when every binary rubric passes."
-"hook_title": "Can an agent complete multi-step web tasks without missing any rubric?"
-"upstream":
+id: ego-browser-real-world-bench
+protocol_revision: 1
+name: "Ego Browser Benchmark: Real-World Bench"
+category: "useful"
+description: "Real-World Bench evaluates browser agents on 31 real-world web tasks that require research, navigation, form interaction, and tool use. A task is perfect only when every binary rubric passes."
+hook_title: "Can an agent complete multi-step web tasks without missing any rubric?"
+upstream:
   "repo": "citrolabs/ego-browser-benchmark-framework"
   "commit": "f566ac293e4e6bd80c4e9b062b5699f04eac41f4"
-"references":
+references:
   "homepage": "https://github.com/citrolabs/ego-browser-benchmark-framework"
   "repository": "https://github.com/citrolabs/ego-browser-benchmark-framework"
-"dimensions":
+dimensions:
   - "推理"
   - "代码"
-"interface": "agent"
-"runner": "custom"
-"custom_mode": "external_workflow"
-"scoring": "custom"
-"scored_by": "author"
-"score_policy": "required"
-"baseline_policy": "required"
-"score_unit": "%"
-"scoring_note": "A submission must contain the binary all-rubrics-passed verdict for every one of the 31 fixed source tasks. The packer rejects missing, duplicate, unknown, or non-boolean verdicts, then computes Perfect rate = passed tasks / 31 x 100. It does not execute models, browser actions, websites, or judging. scored_by=author means the evaluation author must review the submitted upstream run evidence before recognizing a packed score."
-"command_template":
+interface: "agent"
+runner: "custom"
+custom_mode: "external_workflow"
+scoring: "custom"
+scored_by: "author"
+score_policy: "required"
+baseline_policy: "required"
+score_unit: "%"
+scoring_note: "A submission must contain the binary all-rubrics-passed verdict for every one of the 31 fixed source tasks. The packer rejects missing, duplicate, unknown, or non-boolean verdicts, then computes Perfect rate = passed tasks / 31 x 100. It does not execute models, browser actions, websites, or judging. scored_by=author means the evaluation author must review the submitted upstream run evidence before recognizing a packed score."
+command_template:
   "argv":
     - "node"
     - "evals/ego-browser-real-world-bench/pack-to-result.mjs"
@@ -30,8 +30,8 @@
     - "--out"
     - "{output}"
   "output": "ego-browser-real-world-bench-result.json"
-"trials": 1
-"detail_profile":
+trials: 1
+detail_profile:
   "source_kind": "upstream_publication"
   "overview_note": "This package fixes the upstream task dataset and report to one reviewed commit. The official result artifact is a source-backed 13-model subset because three reported model identities cannot be resolved by the current EvalHub registry."
   "summary":
@@ -90,7 +90,7 @@
     - "title": "Pinned upstream MIT license"
       "summary": "License and attribution boundary for the source repository and copied task prompts."
       "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/LICENSE"
-"tasks":
+tasks:
   - "id": "rwb-x-openai-7d-01"
     "label": "X/OpenAI weekly engagement"
     "prompt": "I'm reviewing OpenAI's social media performance over the past week and want to see which posts received the most attention and engagement. Collect the main posts from the X account https://x.com/OpenAI from the past 7 days (excluding pinned posts, pure reposts, and posts labeled \"Replying to @\"), and list the top 5 by Views, including the date, Views, Replies, Likes, and engagement rate. At the end, provide the average Views and average engagement rate across all main posts."
