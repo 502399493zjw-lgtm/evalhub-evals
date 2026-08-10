@@ -526,35 +526,10 @@ export async function evaluatePullRequestPolicy({
   ]);
 
   if (baseEvalYaml !== null && headEvalYaml === null) {
-    if (!sameLogin(actor, MAINTAINER_LOGIN)) {
-      reject(
-        "eval_delete_forbidden",
-        `only @${MAINTAINER_LOGIN} may delete eval ${slug}`,
-      );
-    }
-    const baseId = parseEvalId(baseEvalYaml, `base:${evalYamlPath}`);
-    if (baseId !== slug) {
-      reject(
-        "base_eval_id_mismatch",
-        `base eval id ${JSON.stringify(baseId)} does not equal slug ${JSON.stringify(slug)}`,
-      );
-    }
-    const baseAuthors = await requiredText(
-      readText,
-      baseRepository,
-      baseSha,
-      authorsPath,
-      `base:${authorsPath}`,
+    reject(
+      "eval_delete_forbidden",
+      `eval deletion is not supported for ${slug}`,
     );
-    const owner = parseAuthors(baseAuthors, `base:${authorsPath}`);
-    enforceSubmissionMarker(markerScan, { actor, slug, expectedKind: null });
-    return {
-      ...audit,
-      mode: "maintainer-eval-delete",
-      owner,
-      slug,
-      submissionTask: null,
-    };
   }
   if (headEvalYaml === null) {
     reject("required_file_missing", `${evalYamlPath} is missing from the PR head`);
@@ -578,10 +553,10 @@ export async function evaluatePullRequestPolicy({
       `head:${authorsPath}`,
     );
     const owner = parseAuthors(headAuthors, `head:${authorsPath}`);
-    if (!sameLogin(actor, owner) && !sameLogin(actor, MAINTAINER_LOGIN)) {
+    if (!sameLogin(actor, owner)) {
       reject(
         "author_mismatch",
-        `new eval owner @${owner} must match PR creator @${actor}, unless the PR is opened by @${MAINTAINER_LOGIN}`,
+        `new eval owner @${owner} must match PR creator @${actor}`,
       );
     }
     const submissionTask = enforceSubmissionMarker(markerScan, {
@@ -600,10 +575,10 @@ export async function evaluatePullRequestPolicy({
     };
   }
 
-  if (changed.authorsChanged && !sameLogin(actor, MAINTAINER_LOGIN)) {
+  if (changed.authorsChanged) {
     reject(
       "author_change_forbidden",
-      `AUTHORS is immutable for existing eval ${slug} unless changed by @${MAINTAINER_LOGIN}`,
+      `AUTHORS is immutable for existing eval ${slug}`,
     );
   }
   const baseId = parseEvalId(baseEvalYaml, `base:${evalYamlPath}`);
@@ -621,24 +596,11 @@ export async function evaluatePullRequestPolicy({
     `base:${authorsPath}`,
   );
   const baseOwner = parseAuthors(baseAuthors, `base:${authorsPath}`);
-  if (!sameLogin(actor, baseOwner) && !sameLogin(actor, MAINTAINER_LOGIN)) {
+  if (!sameLogin(actor, baseOwner)) {
     reject(
       "third_party_update_forbidden",
       `@${actor} cannot update eval ${slug}, which belongs to @${baseOwner}`,
     );
-  }
-  // 权限判定始终以 base 归属为准（谁现在拥有它）；审计摘要的 owner 则报合入后的归属，
-  // 这样 maintainer 用 admin 例外迁移 AUTHORS 时，摘要不会把迁移记成旧 owner 拥有。
-  let owner = baseOwner;
-  if (changed.authorsChanged) {
-    const headAuthors = await requiredText(
-      readText,
-      headRepository,
-      headSha,
-      authorsPath,
-      `head:${authorsPath}`,
-    );
-    owner = parseAuthors(headAuthors, `head:${authorsPath}`);
   }
   const submissionTask = enforceSubmissionMarker(markerScan, {
     actor,
@@ -647,10 +609,10 @@ export async function evaluatePullRequestPolicy({
   });
   return {
     ...audit,
-    mode: sameLogin(owner, MAINTAINER_LOGIN)
+    mode: sameLogin(baseOwner, MAINTAINER_LOGIN)
       ? "official-eval-update"
       : "community-eval-update",
-    owner,
+    owner: baseOwner,
     slug,
     submissionTask,
   };

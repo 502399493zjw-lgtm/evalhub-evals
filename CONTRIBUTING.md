@@ -17,7 +17,7 @@ From this monorepo, the equivalent command is:
 ../packages/cli/node_modules/.bin/tsx ../packages/cli/src/index.ts init my-eval
 ```
 
-Complete `eval.yaml`, `README.md`, `AUTHORS`, `sample-result.json`, `tasks/README.md`, and `assets/README.md`. Put useful deterministic fixtures in `tasks/`; put only reviewable static display resources in `assets/`. Every new custom eval must explicitly set top-level `custom_mode: executable` or `custom_mode: external_workflow`, and must have a literal-argv `command_template` with exactly one standalone `{output}` token and a safe slug-specific output filename. A formal command must never hard-code `tasks/example-*`; those paths are synthetic fixtures, not participant submissions. An external-workflow custom runner instead uses one standalone `{input}` token and keeps a deterministic synthetic fixture at `tasks/example-submission.json`; the locked CI sandbox injects that fixture only to test the converter, while real `evalhub pack` calls still require the participant's explicit `--input` file. The shared schema continues to resolve an omitted mode on historical definitions for compatibility, but the new-eval PR gate requires the explicit declaration.
+Complete `eval.yaml`, `README.md`, `AUTHORS`, `sample-result.json`, `tasks/README.md`, and `assets/README.md`. Put useful deterministic fixtures in `tasks/`; put only reviewable static display resources in `assets/`. Every new custom eval must explicitly set top-level `custom_mode: executable` or `custom_mode: external_workflow` and use a literal-argv `command_template`. An executable custom runner uses exactly one standalone `{output}` token and a safe slug-specific output filename. An external-workflow custom runner instead uses exactly one standalone `{input}` token. A formal command must never hard-code `tasks/example-*`; those paths are synthetic fixtures, not participant submissions. Keep a deterministic external-workflow fixture at `tasks/example-submission.json`. That fixture is documentation and sample data, not something EvalHub CI, preview services, or platform servers execute. Real `evalhub pack` calls still require the participant's explicit `--input` file. The shared schema continues to resolve an omitted mode on historical definitions for compatibility, but the new-eval PR gate requires the explicit declaration.
 
 Declare a positive integer `protocol_revision` (start at `1`). Increase it when tasks, execution, the primary score, tiebreaks, or participant identity semantics change comparability. Do not increase it for copy, README, references, or official baseline-data maintenance. The platform binds accepted scores to the commit that first introduced the current revision while tracking the latest source commit separately, so maintenance-only changes do not clear a leaderboard and a real protocol change cannot inherit stale scores.
 
@@ -35,20 +35,24 @@ An eval PR opened for an EvalHub submission task must carry the submission marke
 
 That marker is how the platform binds this PR to your submission and publishes it after merge; without it the submission can never leave `agent_working`, so `pr-policy` fails the PR. Exactly one marker is allowed, its `slug` must be the eval this PR changes, and `kind` must be `new` for a new eval or `update` for an existing one. Repository-maintenance and eval-deletion PRs are not submissions and must not carry a marker.
 
-Run the standalone gates before opening a PR:
+Run the required standalone content gate before opening a PR:
 
 ```bash
-npm ci
-npm test
+npm ci --ignore-scripts
 npm run validate
-npm run validate:runner
 ```
 
-The content gate allows only bounded, reviewable text/code/data and static SVG files. It rejects hidden files, symlinks, submodules, executable modes, archives, Git LFS pointers, invalid structured data, active SVG content, recognizable credentials, and unsafe custom-runner capabilities. A single eval is limited to 150 files and 25 MiB total; text/code/data files are limited to 2 MiB each and SVG files to 8 MiB each.
+The content gate allows only bounded, reviewable text/code/data and static SVG files. It rejects hidden files, symlinks, submodules, binary executables, archives, Git LFS pointers, invalid structured data, active SVG content, recognizable credentials, path escape in checked-in repository references, and invalid UTF-8. A single eval is limited to 150 files and 25 MiB total; text/code/data files are limited to 2 MiB each and SVG files to 8 MiB each. It also checks eval and result schemas, task and supplementary-view references, score and baseline policies, participant identity, source metadata, and basic custom-runner metadata and path integrity. Absolute tool or resource paths and external resource URIs are user-environment requirements, not repository references; document them accurately instead of treating their presence as a runtime safety finding. A text runner may carry an executable mode bit; that mode is not a runtime or safety endorsement.
 
-`npm run validate:runner` requires Docker. Every custom runner executes without network access, as a non-root user, with a read-only filesystem, no Linux capabilities, bounded CPU/memory/processes, read-only access to only its own eval directory and dependencies, and a separate writable output directory.
+An ordinary eval contribution runs only the two commands above; it does not run a maintenance suite or a runner-validation command. Use `npm run test:maintenance` only when maintaining validators, schemas, vendored contracts, CI, or another repository-level contract. Neither local submission validation nor PR or `main` CI requires Docker or executes third-party runner code.
 
-GitHub runs three required checks: `pr-policy`, `content-validate`, and `runner-sandbox`. Community PRs require maintainer approval. The maintainer's own official or repository-maintenance PR still runs the full PR chain and is merged only through the explicitly allowed administrator bypass; direct pushes to `main` are not part of the workflow.
+GitHub runs PR-policy and lightweight content-validation checks. Community PRs require maintainer approval. The maintainer's own official or repository-maintenance PR still runs the applicable PR chain and is merged only through the explicitly allowed administrator bypass; direct pushes to `main` are not part of the workflow.
+
+## Post-merge integrity and import contract
+
+The `main` integrity boundary is limited to content-schema validation, repository-file safety, and downstream import compatibility. A schema or other global contract change may validate all checked-in content, but no `main` workflow may execute a submitted runner, and an ordinary eval-content change must not trigger the infrastructure maintenance test suite.
+
+This repository does not contain the downstream importer, so the following is a publication contract rather than a claim about an implementation here: an importer **MUST** fully validate a candidate repository snapshot before making it visible and **MUST** switch versions transactionally. If candidate validation or import fails, it **MUST** retain the previously published version instead of exposing a partial or invalid snapshot.
 
 ## Run and submit a built-in eval
 
@@ -78,15 +82,26 @@ evalhub submit cold-jokes-result.json --platform-url "https://evalhub.example.co
 
 ## Run a custom eval
 
-Use the exact runner documented by the eval rather than the built-in CLI scoring path:
+EvalHub-hosted services and repository automation do not execute third-party runners, and EvalHub does not audit or guarantee them. Runners are downloaded and executed only in users' own environments, either directly or through a local tool after explicit confirmation. Users should review the source and code before running one and decide whether to use a container, virtual machine, or other isolation measures. Repository checks cover metadata syntax, referenced paths, schemas, and repository-file safety only; passing them does not establish that a runner is safe, compatible, or runnable.
+
+Before choosing to run one, check that its documentation records:
+
+1. its upstream repository or source URL;
+2. a pinned commit, tag, or release;
+3. installation and invocation instructions;
+4. input and output conventions;
+5. required network access, tools, compute, and permissions;
+6. known limitations.
+
+After that review, use the exact runner documented by the eval rather than the built-in CLI scoring path. The current repository includes this optional manual example:
 
 ```bash
-node evals/code-er/run.mjs evals/code-er/tasks/example-answers.json --out code-er-result.json
-node evals/werewolf-night/run.mjs evals/werewolf-night/tasks/example-participants.json --out werewolf-night-result.json
-node evals/mc-build/run.mjs evals/mc-build/tasks/example-submission.json --out mc-build-result.json
+node evals/rsibench-data/pack-to-result.mjs evals/rsibench-data/tasks/example-submission.json --out rsibench-data-result.json
 ```
 
-Each runner rejects malformed input and duplicate or unknown flags, validates the final envelope with the shared schema, and atomically replaces the requested output. `--eval-commit` is optional and must be a 7–40 digit lowercase hexadecimal Git commit; omit it when the real eval commit is unknown.
+The runner's own documentation, not EvalHub, describes its failure behavior and any runtime checks it performs. EvalHub checks the resulting envelope's format and its references but does not establish that the runner works in a particular environment. Do not describe an unexecuted runner as tested, runnable, safe, or security-reviewed. If a user runs it, report only the exact environment and observed result; that observation is not an EvalHub guarantee.
+
+Any EvalHub CLI feature that can launch a third-party runner must display the runner's source and this risk boundary before the first run, require explicit user confirmation, and must not silently execute it or display a claim such as "security verified."
 
 ## Choose interface and scorer independently
 

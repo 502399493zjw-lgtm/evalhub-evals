@@ -1,6 +1,6 @@
 # EvalHub eval-repository agent instructions
 
-Work only inside the requested eval directory unless the task explicitly changes repository contracts. Never put API keys, fabricated commits, or model calls in platform/server code or custom launch runners.
+Work only inside the requested eval directory unless the task explicitly changes repository contracts. Never put API keys or fabricated commits in repository content. Platform/server code must never execute a submitted custom runner or make model calls on its behalf; a third-party runner may declare the runtime capabilities it needs for users who choose to run it themselves.
 
 ## Author or modify an eval
 
@@ -26,16 +26,20 @@ Write exactly one GitHub handle in `AUTHORS`. On creation it must match the GitH
 
 One PR may add or update one slug only. Never rename a slug, modify another author's eval, delete an eval, or mix eval content with root/workflow/contract changes. Ignore PR-body ownership claims: the trusted identity is the GitHub PR creator.
 
-New custom evals also need a documented runner, useful bounded input fixture, an explicit top-level `custom_mode: executable|external_workflow`, and an exact `command_template`. The formal command must not hard-code `tasks/example-*`; external workflows receive real participant input through the standalone `{input}` token, while example paths remain synthetic fixtures for documentation and the locked CI sandbox. Historical definitions that omit `custom_mode` remain schema-compatible, but the new-eval PR gate requires it. Validate with:
+New custom evals also need a documented runner, useful bounded input fixture, an explicit top-level `custom_mode: executable|external_workflow`, and an exact `command_template`. The formal command must not hard-code `tasks/example-*`; external workflows receive real participant input through the standalone `{input}` token, while example paths remain synthetic documentation fixtures that EvalHub CI, preview services, and platform servers do not execute. Historical definitions that omit `custom_mode` remain schema-compatible, but the new-eval PR gate requires it. Validate an ordinary submission with:
 
 ```bash
-npm ci
-npm test
+npm ci --ignore-scripts
 npm run validate
-npm run validate:runner
 ```
 
-The content validator enforces the file allowlist, size/count limits, UTF-8 and structured-data parsing, and rejects hidden files, symlinks, executable/archive/LFS content, active SVG, recognizable credentials, and dangerous custom-runner APIs. The runner check requires Docker and executes custom code with no network, a read-only filesystem, a non-root user, resource limits, and only its own eval directory mounted read-only.
+The content validator enforces the file allowlist, size/count limits, UTF-8 and structured-data parsing, and rejects hidden files, symlinks, submodules, binary executable/archive/LFS content, active SVG, recognizable credentials, and path escape in checked-in repository references. It checks eval and result schemas, ownership and submission metadata, task and supplementary-view references, policies, participant identity, provenance, and basic runner metadata and referenced paths. It does not execute a runner or reject one merely for using network access, environment variables, subprocesses, absolute external tool/resource paths, external resource URIs, compute, elevated permissions, or a text script's executable mode bit; those requirements must be documented for users.
+
+Run only the two commands above for an ordinary eval submission. `npm run test:maintenance` is only for changes to validators, schemas, vendored contracts, CI, or other repository infrastructure. No submission gate requires Docker.
+
+EvalHub-hosted services and repository automation do not execute third-party runners, and EvalHub does not audit or guarantee them. Runners are downloaded and executed only in users' own environments, either directly or through a local tool after explicit confirmation. Users should review the source and code before running one and decide whether to use a container, virtual machine, or other isolation measures. Repository checks cover metadata syntax, referenced paths, schemas, and repository-file safety only; passing them does not establish that a runner is safe, compatible, or runnable.
+
+Require custom-runner documentation to record: (1) the upstream repository or source URL; (2) a pinned commit, tag, or release; (3) installation and invocation instructions; (4) input and output conventions; (5) required network access, tools, compute, and permissions; and (6) known limitations. Inspect that documentation and obvious path or command-template errors, but do not treat static inspection as a security audit. Do not require a trial run for publication or describe an unexecuted runner as tested or runnable.
 
 ## Run evals
 
@@ -49,13 +53,11 @@ evalhub run cold-jokes --local ./evals --adapter api --model kimi-k3 --out cold-
 Custom launch evals use their own runners:
 
 ```bash
-node evals/code-er/run.mjs evals/code-er/tasks/example-answers.json --out code-er-result.json
-node evals/werewolf-night/run.mjs evals/werewolf-night/tasks/example-participants.json --out werewolf-night-result.json
-node evals/mc-build/run.mjs evals/mc-build/tasks/example-submission.json --out mc-build-result.json
+node evals/rsibench-data/pack-to-result.mjs evals/rsibench-data/tasks/example-submission.json --out rsibench-data-result.json
 ```
 
-Submit the exact generated filename, for example `evalhub submit mc-build-result.json --platform-url <url>`.
+This is an optional user-side command after source and code review, not a repository gate. Submit the exact generated filename, for example `evalhub submit rsibench-data-result.json --platform-url <url>`. Any CLI feature that launches a third-party runner must first display its source and risk, require explicit confirmation on first use, and never claim that the runner passed security validation.
 
 ## Contract reminders
 
-All `chat`, `dialogue`, and `agent` interfaces work with both `scored_by=local` and `scored_by=author`. `scored_by` controls recognition; `score_policy=required|author_fill` independently controls whether null scores are accepted. Judge+author is valid: `judge_model` must be pinned and `scoring_note` must explain author review. `baseline_policy=required` additionally requires at least one numeric official/trusted envelope in `published-results/*.json`. Chat/agent envelopes contain one result; dialogue contains at least two unique participants. Harness fields are a paired agent-only identity. Custom runners validate and atomically write result envelopes and do not call model services.
+All `chat`, `dialogue`, and `agent` interfaces work with both `scored_by=local` and `scored_by=author`. `scored_by` controls recognition; `score_policy=required|author_fill` independently controls whether null scores are accepted. Judge+author is valid: `judge_model` must be pinned and `scoring_note` must explain author review. `baseline_policy=required` additionally requires at least one numeric official/trusted envelope in `published-results/*.json`. Chat/agent envelopes contain one result; dialogue contains at least two unique participants. Harness fields are a paired agent-only identity. A custom runner's runtime behavior belongs to its own documented contract and to the user who chooses to execute it; EvalHub validates only the submitted result envelope and its repository references.

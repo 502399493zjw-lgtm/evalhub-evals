@@ -127,7 +127,7 @@ test("仓库里所有 published-results 的 participant.model 都能被平台解
   const evalsDir = path.join(repositoryRoot, "evals");
   const entries = [];
   // evals/ 下允许存在非目录条目（例如说明文件），只有目录才是 slug；
-  // validate.mjs 与 runner-sandbox.mjs 同样只认目录。
+  // validate.mjs 只认目录。
   const evalSlugs = (await readdir(evalsDir, { withFileTypes: true }))
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name);
