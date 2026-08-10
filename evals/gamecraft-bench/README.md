@@ -22,7 +22,7 @@ EvalHub 也未获得上游认证或背书。
 | 官方项目页 | <https://tongxuluo.github.io/gamecraft-bench-website/> |
 | 官方 README 快照 | `README.md` 于固定 commit 的内容为 13,446 字节，sha256 `79a8602b951820509d1613fb7d468a80317d1f4f312e51fcd1695aad94432bfa` |
 | 官网快照 | 2026-08-10 取回，77,123 字节，sha256 `c4b823a7440574a7eae53746742dc5119dd4f2493809982a490de89f913cf168` |
-| 论文快照 | `https://arxiv.org/html/2606.17861v1`，2026-08-10 取回，sha256 见 `published-results/paper-table6-2026-06-16.json` |
+| 论文参考资料 | `https://arxiv.org/html/2606.17861v1`，2026-08-10 取回；用于任务、评分与来源说明，不另作为平台可排序成绩发布，以免与官网榜单重复 |
 
 上游仓库没有 tag 也没有 release，因此唯一可靠的版本锚点是上面的 commit SHA。
 
@@ -94,8 +94,10 @@ rubric 条目或权重字面量），属于隐藏评分细则。
 
 ## 官方成绩
 
-`published-results/` 下两份信封，来源刻意分开，均为 `upstream_author_publication`，
-不含 `usage` / `task_results` / `showcases`：
+`published-results/` 仅保留一份最新官网榜单信封，类型为
+`upstream_author_publication`，不含 `usage` / `task_results` / `showcases`。
+论文仍作为可核验的资料来源保留在上方表格与参考文献中，但不重复发布与官网榜单重合的
+可排序模型成绩；这样详情页只呈现一组官方主榜与其真实分项。
 
 ### `official-leaderboard-2026-08-10.json`
 
@@ -135,12 +137,6 @@ rubric 条目或权重字面量），属于隐藏评分细则。
 它们都在本目录收录的 9 行里（Claude Opus 4.7、GPT-5.5、Kimi K2.6、DeepSeek V4 Pro）；
 余下 5 行（Claude Fable 5、GPT-5.6 Sol、Kimi K3、MiMo V2.5 Pro、GLM-5.1）的六个格子全部留空，
 不做任何推算或补齐。
-
-### `paper-table6-2026-06-16.json`
-
-论文 Table 4 与 Table 6，收录 7 个论文配置中身份可解析的 6 个（`MiniMax-M2.7` 同样无法解析）。
-Table 6 的价值在于它发表了官网榜单没有的**15 个游戏族 × 5 个指标**完整分家族成绩，
-逐格转录进 `paper-family-breakdown` 视图。论文的 5 个总表数值与官网同一配置逐格一致。
 
 ## 运行与提交
 
