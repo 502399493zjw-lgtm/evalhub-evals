@@ -42,6 +42,14 @@ EvalHub 也未获得上游认证或背书。
 **逐字符原文转录**（已用程序逐题比对，140/140 与来源逐字节一致），未做任何摘要或截断。
 EvalHub 自己补充的运行约定放在不渲染的 `run_spec` 里。
 
+上游只发布英文题面，因此 `translation` 只在有可靠中文译文时才填。当前为 5 道代表题提供了
+完整中文译文（`platformer-cozy-harbor-delivery`、`roguelike-dice-throne`、`visualnovel-keepsake`、
+`shooter-void-patrol`、`idle-spell-tower`）：逐节对照英文原文翻译，保留全部 Markdown 结构与代码块，
+路径、命令、字段名与 keycode 一律不译，并经独立复核确认无缺节、无截断、无自行添加的内容。
+其余 135 道题的 `translation` 留空，详情页显示真实空态——不用机翻或概括冒充译文。
+译文数量还受一个硬约束：`pr-policy` 必须通过 GitHub Contents API 读到 `eval.yaml` 全文，
+而该 API 对超过 1 MiB 的文件返回空内容，本文件已达 1,026,490 字节。
+
 任务族分布（不含 `example` 模板题；仓库实有 141 个任务目录，减去 `example` 恰为 140，
 与 README 家族表、论文 Table 3 及官网 Task Suite 逐族一致，官网明写 "Counts exclude the example task"）：
 

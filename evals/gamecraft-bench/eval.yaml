@@ -528,7 +528,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Card game；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Card game；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: cardgame-gwent-war
    label: "卡牌 · Cardgame Gwent War"
    prompt: |
@@ -685,7 +685,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Card game；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Card game；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: cardgame-inscription-dark
    label: "卡牌 · Cardgame Inscription Dark"
    prompt: |
@@ -840,7 +840,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Card game；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Card game；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: cardgame-poker-roguelike
    label: "卡牌 · Cardgame Poker Roguelike"
    prompt: |
@@ -992,7 +992,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Card game；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Card game；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: cardgame-spire-descent
    label: "卡牌 · Cardgame Spire Descent"
    prompt: |
@@ -1144,7 +1144,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Card game；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Card game；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: horror-dollhouse
    label: "恐怖 · Horror Dollhouse"
    prompt: |
@@ -1294,7 +1294,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Horror；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Horror；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: horror-floor-13
    label: "恐怖 · Horror Floor 13"
    prompt: |
@@ -1444,7 +1444,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Horror；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Horror；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: horror-lighthouse
    label: "恐怖 · Horror Lighthouse"
    prompt: |
@@ -1595,7 +1595,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Horror；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Horror；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: horror-signal-lost
    label: "恐怖 · Horror Signal Lost"
    prompt: |
@@ -1744,7 +1744,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Horror；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Horror；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: horror-tape-archive
    label: "恐怖 · Horror Tape Archive"
    prompt: |
@@ -1895,7 +1895,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Horror；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Horror；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: idle-ant-empire
    label: "放置 · Idle Ant Empire"
    prompt: |
@@ -2043,7 +2043,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Idle；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Idle；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: idle-dungeon-guild
    label: "放置 · Idle Dungeon Guild"
    prompt: |
@@ -2193,7 +2193,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Idle；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Idle；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: idle-factory-planet
    label: "放置 · Idle Factory Planet"
    prompt: |
@@ -2343,7 +2343,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Idle；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Idle；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: idle-spell-tower
    label: "放置 · Idle Spell Tower"
    prompt: |
@@ -2494,6 +2494,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
+   translation: "# Idle Spell Tower\n\n在 Godot 4 中于 `/workspace/game/` 构建一款 **Idle Spell Tower**（放置法术塔）游戏。\n这不是原型。它是一款**完整、可交付的微型游戏**，能够以打磨完成的垂直切片形态放在 itch.io 页面或 Steam 上。\n\n## Core Vision\n\n玩家建造一座被动产出魔力（mana）的巫师塔，研究法术，并将施法自动化以获取不断增长的力量。其幻想内核是奥术积累：看着魔力在水晶之间流动，法术自动射向目标，塔身随着每一轮转生（prestige）循环而越来越高。放置循环持续产出魔力；玩家的决策决定研究哪些法术，以及如何在进攻、防御与成长之间分配魔力。转生会让塔倒塌，并以更好的地基将其重建得更高。\n\n## What the Player Experiences\n\n1. **标题界面（Title Screen）** —— 星空下的一座高耸巫师塔，魔法粒子向上流动，游戏名以奥术字体呈现，开始按钮闪耀着魔力光芒。\n2. **塔视图（Tower View）** —— 展示各层楼的塔身垂直剖面图。每一层都有其功能：魔力生成器、法术实验室、水晶储藏、自动施法器。随着楼层的添加，塔不断增高。\n3. **魔力生成（Mana Generation）** —— 基础魔力自动累加。各层楼的魔力生成器提升产出速率。玩家可以点击水晶手动产生爆发式产出。一个大号魔力计数器主导整个 UI。\n4. **法术研究（Spell Research）** —— 研究树展示可用法术。每个法术需要消耗魔力和时间来研究。已研究的法术可以指派给自动施法器，或手动施放以获得即时效果。\n5. **自动施法（Automated Casting）** —— 自动施法层无需玩家输入即可向目标（逼近塔基的怪物）发射法术。每个施法器都有各自的施法速率和法术指派。击败怪物会掉落魔力水晶。\n6. **塔的成长（Tower Growth）** —— 消耗魔力建造新楼层，每层具备特定功能。更高的楼层产出更多魔力，但成本呈指数级上升。塔在视觉上不断增高。\n7. **转生（Prestige）** —— 当塔达到最大高度时，玩家可以令其倒塌（转生）。塔重置为一层，但获得永久的高度倍率、更快的魔力产出，以及更高阶法术的使用权。每一次重建都能更快地达到更高的高度。\n\n## Assets\n\n2D 素材以只读方式挂载于：\n\n- `/workspace/assets/library/` —— Kenney CC0 素材包（sprites、tiles、UI、fonts）。\n- `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录的 `LICENSE.txt`。\n\n浏览素材库并挑选素材包。\n把你需要的内容复制到你项目的 `assets/` 目录中。\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    ← your input traces (1–10 files)\n  scripts/  scenes/  assets/\n```\n\n构建产物必须能通过以下命令干净启动：\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nGodot CLI 参数的参考文档位于 `/workspace/tools/godot_command_line.md`。\n**诸如 `--headless` 和 `--quit-after N` 之类的引擎参数必须放在 `--` 之前** —— `--` 之后的任何内容都会作为用户参数转发给项目，并被引擎静默忽略。正确的形式为：\n`godot --headless --quit-after 5 --path . -- --scenario near_victory`。\n\n截图辅助工具位于 `/workspace/tools/screenshot.sh`。用它来实际查看你的 UI / 战场 / 结算界面长什么样。\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\n要为特定 scenario 截图，请在 `--` 之后追加 `--scenario <id>`。该辅助工具只消费 `--out` / `--frames` / `--scene`；其余参数会保留在 `OS.get_cmdline_user_args()` 中供你的游戏代码读取。示例：\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/battle_debug.png --frames 120 --scenario battle\n```\n\n## Demos\n\n在 `/workspace/game/demo_outputs/` 下交付 **1–10 个输入轨迹（input-trace）文件**，每个 demo 一个，均命名为 `*.json`。评测程序为每条轨迹启动一次全新的游戏，以 1280×720 分辨率将你的轨迹回放为合成的鼠标与键盘输入，并录制屏幕。仅按文件名排序的前 10 条轨迹会被评测；超过 20 s 的录制会从随机的 20 s 窗口中采样。\n\n### Scenarios\n\n常规玩法应从标题界面开始，并展示该任务的核心游戏循环。\nDemo 回放必须是确定性的。对于需要特定状态的 demo（特定关卡、战斗状态、升级界面、结算状态或后期布局），请定义具名 scenario，使你的游戏在以下方式启动时加载它们：\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\n当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态（为任何 RNG 设定种子），并立即开始接受输入。\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` —— 可选；若为从标题界面开始的常规游戏启动则省略。\n- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 s）**。\n- `events` —— 按时间排序的输入。坐标为 1280×720 视口内的像素值。支持的类型：\n  - `mouse_click`：`{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`：`{frame, type, button: \"left\"|\"right\", x, y}` —— 用它们实现拖拽交互：在起点发出 `mouse_down`，沿途发出一个或多个 `mouse_move` 事件，并在终点发出 `mouse_up`。一次 `mouse_click` 相当于在同一点上紧密相继的 `mouse_down` + `mouse_up`。\n  - `mouse_move`：`{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 取值：`A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。\n  - `wait`：`{frame, type}` —— 锚定帧，无输入。\n\n回放必须是确定性的：相同的轨迹、全新的启动，每次都得到相同的结果。"
    run_spec: "上游族 Idle；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
  - id: openworld-airship-trader
    label: "开放世界 · Open-World Airship Trader"
@@ -2642,7 +2643,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-archaeology
    label: "开放世界 · Open-World Archaeology"
    prompt: |
@@ -2821,7 +2822,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-beast-tamer
    label: "开放世界 · Open-World Beast Tamer"
    prompt: |
@@ -2968,7 +2969,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-bounty
    label: "开放世界 · Open-World Bounty"
    prompt: |
@@ -3126,7 +3127,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 16 条（M4/D5/V3/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 16 条（M4/D5/V3/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-cartographer
    label: "开放世界 · Open-World Cartographer"
    prompt: |
@@ -3273,7 +3274,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-fishing
    label: "开放世界 · Open-World Fishing"
    prompt: |
@@ -3420,7 +3421,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-ghost
    label: "开放世界 · Open-World Ghost Hunting"
    prompt: |
@@ -3581,7 +3582,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 19 条（M6/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 19 条（M6/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-necromancer
    label: "开放世界 · Open-World Necromancer"
    prompt: |
@@ -3730,7 +3731,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-pokemon
    label: "开放世界 · Open World: WildRealm"
    prompt: |
@@ -3889,7 +3890,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 16 条（M4/D5/V3/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 16 条（M4/D5/V3/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-racing
    label: "开放世界 · Open-World Racing"
    prompt: |
@@ -4039,7 +4040,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 15 条（M3/D5/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 15 条（M3/D5/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-seasons-witch
    label: "开放世界 · Open-World Seasons Witch"
    prompt: |
@@ -4190,7 +4191,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-sky-islands
    label: "开放世界 · Open-World Sky Islands"
    prompt: |
@@ -4338,7 +4339,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-submarine
    label: "开放世界 · Open-World Submarine"
    prompt: |
@@ -4486,7 +4487,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-survival
    label: "开放世界 · Open-World Survival"
    prompt: |
@@ -4648,7 +4649,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 15 条（M3/D5/V3/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 15 条（M3/D5/V3/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: openworld-time-travel
    label: "开放世界 · Open-World Time Travel"
    prompt: |
@@ -4805,7 +4806,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Open-world；隐藏 rubric 15 条（M3/D5/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Open-world；rubric 15 条（M3/D5/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-arcborne
    label: "平台跳跃 · Arcborne"
    prompt: |
@@ -4976,7 +4977,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 19 条（M6/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 19 条（M6/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-cozy-harbor-delivery
    label: "平台跳跃 · Cozy Harbor Delivery"
    prompt: |
@@ -5129,6 +5130,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
+   translation: "# Cozy Harbor Delivery\n\n在 `/workspace/game/` 用 Godot 4 构建 **Cozy Harbor Delivery**，一款 2D 俯视视角的送货路线规划小游戏。这不是原型。它必须是一款**完整、可发布的微型游戏**，其打磨程度足以作为一个垂直切片放在 itch.io 页面或 Steam 上。\n\n## Core Vision\n\n一艘小小的快递船在阳光斑驳的港湾中缓缓穿行，在岛屿与浮标之间穿梭，把包裹从取货货箱运送到码头上等待的顾客手中。张力来自路线规划（routing）：多个订单同时倒计时，每个订单的目的地和紧急程度都不相同，而港湾的地形恰好错综复杂到让玩家无法沿一条直线服务所有人。先去取哪个包裹、让哪位顾客失望、以及何时冒险从停泊的船体之间抄一条狭窄的近道——这就是全部的决策空间。在每个班次（shift）之间，玩家把收入重新投入到速度、货舱容量或路线提示上，从而塑造下一个班次的手感。整体调性表面上温暖而不慌不忙，底下却在悄然施压——一个被水彩码头与摇曳小船包裹起来的舒缓（cozy）物流谜题。\n\n## What the Player Experiences\n\n一个经过美术设计的标题画面确立整体氛围：游戏名称、一张港湾地图插画，以及一个快递船身份，在玩家按下 Start 之前迎接他们。\n\n班次从一张俯视港湾地图开始，地图上有航道、木质码头、岩石岛屿、彩绘浮标和等待中的顾客，一派生机。玩家平滑地操纵小船在水中航行，能感受到它在靠近障碍物时减速、并在岛屿边缘发生弹开。拾取一个货箱会改变小船的轮廓或 HUD 上的载货显示，从而确认船上装了什么、要送到哪里。\n\n订单在屏幕上不断堆积——每个订单都带有一个目的地标记和一个倒计时。有些订单不紧不慢，有些则闪烁着紧急提示。玩家串联路线，把包裹投递给匹配的顾客，并看着金币或声望随每次成功送达而上涨。错过一次计时，顾客就会皱着眉离开。一个日间计时器或班次进度条为本回合倒计时，随着未完成订单堆积而不断加码压力。\n\n班次结束时，结算画面统计送达数量、收入和一项表现评级。在班次之间，一个升级或规划画面提供若干会改变下一轮体验的选项——更快的引擎、更大的货舱、更好的路线提示。这个循环让人想再来一个班次，然后再来一个。\n\n## Assets\n\n2D 素材以只读方式挂载在：\n\n- `/workspace/assets/library/` —— Kenney CC0 素材包（精灵图、图块、UI、字体）。\n- `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录中的 `LICENSE.txt`。\n\n浏览素材库并选择素材包。把你需要的内容复制到你项目的 `assets/` 文件夹中。\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    ← your input traces (1–10 files)\n  scripts/  scenes/  assets/\n```\n\n构建必须能通过以下命令干净启动：\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nGodot CLI 参数的参考文档位于 `/workspace/tools/godot_command_line.md`。**像 `--headless` 和 `--quit-after N` 这样的引擎参数必须放在 `--` 之前**——`--` 之后的任何内容都会作为用户参数转发给项目，并被引擎静默忽略。正确写法：\n`godot --headless --quit-after 5 --path . -- --scenario near_victory`。\n\n`/workspace/tools/screenshot.sh` 提供了一个截图辅助工具。用它来实际查看你的 UI / 战场 / 结算画面长什么样。\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\n若要对某个特定 scenario 截图，在 `--` 之后追加 `--scenario <id>`。该辅助工具只消费 `--out` / `--frames` / `--scene`；其余参数会保留在 `OS.get_cmdline_user_args()` 中，供你的游戏代码读取。示例：\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/battle_debug.png --frames 120 --scenario battle\n```\n\n## Demos\n\n在 `/workspace/game/demo_outputs/` 下提交 **1–10 个输入轨迹（input-trace）文件**，每个 demo 一个，均命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，以 1280×720 分辨率将你的轨迹回放为合成的鼠标与键盘输入，并录制屏幕。只有按文件名排序的前 10 条轨迹会被评测；长度超过 20 s 的录像会从一个随机的 20 s 窗口中采样。\n\n### Scenarios\n\n常规游玩应从标题画面开始，并演示该任务的核心游戏循环。\nDemo 回放必须是确定性的。对于需要特定状态的 demo（某个特定关卡、战斗状态、升级画面、结算状态或后期游戏配置），请定义具名 scenario，使你的游戏在通过下列方式启动时加载它们：\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\n当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态（为所有 RNG 设定种子），并立即开始接受输入。\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` —— 可选；从标题画面进行常规启动时省略。\n- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 s）**。\n- `events` —— 按时间排序的输入。坐标是 1280×720 视口中的像素值。支持的类型：\n  - `mouse_click`：`{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`：`{frame, type, button: \"left\"|\"right\", x, y}` —— 用它们来实现拖拽交互：在起点发出 `mouse_down`，沿途发出一个或多个 `mouse_move` 事件，并在终点发出 `mouse_up`。一次 `mouse_click` 相当于在同一点上紧接连续发生的 `mouse_down` + `mouse_up`。\n  - `mouse_move`：`{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 取值：`A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。\n  - `wait`：`{frame, type}` —— 锚点帧，不产生输入。\n\n回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同结果。"
    run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
  - id: platformer-dig-descent
    label: "平台跳跃 · Dig Descent"
@@ -5274,7 +5276,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-dread-wings
    label: "平台跳跃 · Dread Wings"
    prompt: |
@@ -5419,7 +5421,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 16 条（M4/D4/V4/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 16 条（M4/D4/V4/A4，mean 7），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-echo-climb
    label: "平台跳跃 · Echo Climb"
    prompt: |
@@ -5564,7 +5566,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-ink-trail
    label: "平台跳跃 · Ink Trail"
    prompt: |
@@ -5712,7 +5714,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-iron-vanguard
    label: "平台跳跃 · Iron Vanguard"
    prompt: |
@@ -5868,7 +5870,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 7），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-ivory-beats
    label: "平台跳跃 · Ivory Beats"
    prompt: |
@@ -6023,7 +6025,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 7），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-knight-quest
    label: "平台跳跃 · Knight Quest"
    prompt: |
@@ -6168,7 +6170,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-magnet-dash
    label: "平台跳跃 · Magnet Dash"
    prompt: |
@@ -6315,7 +6317,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-meat-gauntlet
    label: "平台跳跃 · Meat Gauntlet"
    prompt: |
@@ -6460,7 +6462,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-momentum-lab
    label: "平台跳跃 · Momentum Lab"
    prompt: |
@@ -6604,7 +6606,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-orbital-salvage
    label: "平台跳跃 · Orbital Salvage"
    prompt: |
@@ -6757,7 +6759,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-shape-shift
    label: "平台跳跃 · Shape Shift"
    prompt: |
@@ -6901,7 +6903,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-stealth-shadow-courier
    label: "平台跳跃 · Stealth: Shadow Courier"
    prompt: |
@@ -7062,7 +7064,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-thunder-valkyrie
    label: "平台跳跃 · Thunder Valkyrie"
    prompt: |
@@ -7216,7 +7218,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 7），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-time-loop
    label: "平台跳跃 · Time Loop"
    prompt: |
@@ -7362,7 +7364,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-vessel-of-hallownest
    label: "平台跳跃 · Vessel of Hallownest"
    prompt: |
@@ -7522,7 +7524,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 19 条（M5/D5/V4/A5，8 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 19 条（M5/D5/V4/A5，mean 8），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: platformer-wall-dancer
    label: "平台跳跃 · Wall Dancer"
    prompt: |
@@ -7668,7 +7670,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Platformer；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: puzzle-circuit-wizard
    label: "解谜 · Circuit Wizard"
    prompt: |
@@ -7820,7 +7822,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Puzzle；隐藏 rubric 14 条（M4/D4/V3/A3，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Puzzle；rubric 14 条（M4/D4/V3/A3，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: puzzle-goo-architect
    label: "解谜 · Goo Architect"
    prompt: |
@@ -7974,7 +7976,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Puzzle；隐藏 rubric 14 条（M4/D4/V3/A3，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Puzzle；rubric 14 条（M4/D4/V3/A3，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: puzzle-gravity-shift
    label: "解谜 · Gravity Shift"
    prompt: |
@@ -8127,7 +8129,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Puzzle；隐藏 rubric 14 条（M4/D4/V3/A3，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Puzzle；rubric 14 条（M4/D4/V3/A3，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: puzzle-lemming-factory
    label: "解谜 · Lemming Factory"
    prompt: |
@@ -8281,7 +8283,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Puzzle；隐藏 rubric 14 条（M4/D4/V3/A3，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Puzzle；rubric 14 条（M4/D4/V3/A3，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: puzzle-pipe-crisis
    label: "解谜 · Pipe Crisis"
    prompt: |
@@ -8433,7 +8435,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Puzzle；隐藏 rubric 14 条（M4/D4/V3/A3，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Puzzle；rubric 14 条（M4/D4/V3/A3，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: puzzle-portal-lab
    label: "解谜 · Portal Lab"
    prompt: |
@@ -8586,7 +8588,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Puzzle；隐藏 rubric 14 条（M4/D4/V3/A3，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Puzzle；rubric 14 条（M4/D4/V3/A3，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: puzzle-rule-rewrite
    label: "解谜 · Rule Rewrite"
    prompt: |
@@ -8738,7 +8740,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Puzzle；隐藏 rubric 14 条（M4/D4/V3/A3，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Puzzle；rubric 14 条（M4/D4/V3/A3，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: puzzle-sokoban-dungeon
    label: "解谜 · Sokoban Dungeon"
    prompt: |
@@ -8892,7 +8894,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Puzzle；隐藏 rubric 14 条（M4/D4/V3/A3，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Puzzle；rubric 14 条（M4/D4/V3/A3，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: racing-drift-circuit
    label: "竞速 · Racing Drift Circuit"
    prompt: |
@@ -9044,7 +9046,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Racing；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Racing；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: racing-rocket-trials
    label: "竞速 · Racing Rocket Trials"
    prompt: |
@@ -9197,7 +9199,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Racing；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Racing；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: racing-terrain-climb
    label: "竞速 · Racing Terrain Climb"
    prompt: |
@@ -9350,7 +9352,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Racing；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Racing；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: racing-trick-runner
    label: "竞速 · Racing Trick Runner"
    prompt: |
@@ -9502,7 +9504,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Racing；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Racing；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: rhythm-beat-dungeon
    label: "音乐节奏 · Rhythm Beat Dungeon"
    prompt: |
@@ -9652,7 +9654,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Rhythm；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Rhythm；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: rhythm-conductor
    label: "音乐节奏 · Rhythm Conductor"
    prompt: |
@@ -9804,7 +9806,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Rhythm；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Rhythm；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: rhythm-dj-arena
    label: "音乐节奏 · Rhythm DJ Arena"
    prompt: |
@@ -9954,7 +9956,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Rhythm；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Rhythm；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: rhythm-garden
    label: "音乐节奏 · Rhythm Garden"
    prompt: |
@@ -10110,7 +10112,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Rhythm；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Rhythm；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: rhythm-note-highway
    label: "音乐节奏 · Rhythm Note Highway"
    prompt: |
@@ -10258,7 +10260,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Rhythm；隐藏 rubric 14 条（M3/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Rhythm；rubric 14 条（M3/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-action-void-harvest
    label: "Roguelike · Action: Void Harvest"
    prompt: |
@@ -10409,7 +10411,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 18 条（M6/D5/V4/A3，7 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 18 条（M6/D5/V4/A3，mean 7），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-breach-tactics
    label: "Roguelike · Breach Tactics"
    prompt: |
@@ -10556,7 +10558,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-dice-throne
    label: "Roguelike · Dice Throne"
    prompt: |
@@ -10703,6 +10705,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
+   translation: "# Dice Throne\n\n在 Godot 4 中于 `/workspace/game/` 构建 **Dice Throne**——一款带重掷（reroll）机制、并且装备会修改骰面的骰子 Roguelike 游戏。这不是一个原型，而是一款**完整、可发布的微型游戏**，其打磨程度足以作为纵向切片放在 itch.io 页面或 Steam 上。\n\n## Core Vision\n\n一名战士以骰子作为战斗系统闯荡地牢。每个回合玩家投掷一组骰子，然后选择保留哪些、重掷哪些（最多两次重掷）。骰面对应各种能力：剑造成伤害，盾进行格挡，心恢复生命，骷髅触发特殊攻击。精妙之处在于：在地牢中找到的装备会实际修改骰面——火焰剑把一个剑面替换为造成双倍伤害的火剑面，附魔护甲则为某个骰子增加一个盾面。敌人也会投掷可见的骰子，形成一场双方都能看到接下来会发生什么的透明较量。构筑一组骰面彼此协同的骰子，就是每一轮游戏（run）内部的元进程（meta-progression）。\n\n## What the Player Experiences\n\n标题界面展示滚动的骰子和发光的骰面图标。开始一轮游戏后，玩家获得 5 个标准骰子（每个骰子的骰面为：剑、剑、盾、心、骷髅、空白）。\n\n在战斗中，玩家同时投出所有骰子，伴随令人满足的翻滚动画。结果朝上落定。玩家选择要保留的骰子（它们会锁定在原位），并重掷其余骰子——每回合最多两次重掷。确认后，骰面生效：剑对敌人造成伤害，盾减少受到的伤害，心恢复生命，骷髅触发一项特殊能力。随后敌人投掷自己的可见骰子，并以同样方式结算。\n\n在两场遭遇战之间，战利品界面提供可修改骰面的装备——替换、升级或添加骰面。地图显示带有战斗、精英、商店和休息节点的分支路径。商店出售骰面改造和新骰子。这一轮游戏在一个拥有强力自定义骰子的 Boss 处结束。死亡时显示抵达的层数、最佳一次投掷，以及已收集的装备。\n\n## Assets\n\n2D 素材以只读方式挂载在：\n\n- `/workspace/assets/library/` — Kenney CC0 素材包（sprites、tiles、UI、字体）。\n- `/workspace/assets/library-oga/` — OpenGameArt 条目；请遵守各子目录中的 `LICENSE.txt`。\n\n浏览素材库并选择素材包。把需要的文件复制到你项目的 `assets/` 目录中。\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    <- your input traces (1-10 files)\n  scripts/  scenes/  assets/\n```\n\n构建产物必须能通过以下命令干净启动：\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nGodot CLI 参数的参考文档位于 `/workspace/tools/godot_command_line.md`。**诸如 `--headless` 和 `--quit-after N` 之类的引擎参数必须放在 `--` 之前**——`--` 之后的任何内容都会作为用户参数转发给项目，并被引擎静默忽略。正确形式：\n`godot --headless --quit-after 5 --path . -- --scenario near_victory`。\n\n`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的 UI／战场／结算界面到底是什么样子。\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\n要对特定场景（scenario）截图，请在 `--` 之后追加 `--scenario <id>`。该辅助工具只消费 `--out` / `--frames` / `--scene`；其余参数会留在 `OS.get_cmdline_user_args()` 中供你的游戏代码读取。示例：\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/battle_debug.png --frames 120 --scenario battle\n```\n\n## Demos\n\n在 `/workspace/game/demo_outputs/` 下提交 **1-10 个输入轨迹（input-trace）文件**，每个演示一个，均命名为 `*.json`。评测器为每个轨迹启动一个全新的游戏实例，以 1280x720 分辨率将你的轨迹重放为合成的鼠标与键盘输入，并录制屏幕。仅按文件名排序的前 10 个轨迹会被评测；长度超过 20 s 的录制将从一个随机的 20 s 窗口中采样。\n\n### Scenarios\n\n常规玩法应从标题界面开始，并展示该任务的核心游戏循环。\n演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、升级界面、结算状态或后期布局），请定义具名场景，使你的游戏在以下方式启动时加载它们：\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\n当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态（为任何 RNG 设定种子），并立即开始接受输入。\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` — 可选；从标题界面进行常规游戏启动时省略此项。\n- `duration_frames` — 以 30 fps 录制的总帧数；上限为 **600（20 s）**。\n- `events` — 按时间排序的输入。坐标为 1280x720 视口中的像素值。支持的类型：\n  - `mouse_click`：`{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`：`{frame, type, button: \"left\"|\"right\", x, y}` —— 用于拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个 `mouse_move` 事件，并在终点发出 `mouse_up`。一次 `mouse_click` 相当于在同一点上紧接连续发出的 `mouse_down` + `mouse_up`。\n  - `mouse_move`：`{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 取值：`A`-`Z`、`0`-`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。\n  - `wait`：`{frame, type}` —— 锚定帧，不产生输入。\n\n回放必须是确定性的：相同的轨迹、全新的启动，每次都得到相同的结果。"
    run_spec: "上游族 Roguelike；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
  - id: roguelike-dungeon-shop
    label: "Roguelike · Dungeon Shop"
@@ -10850,7 +10853,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-ftl-voyage
    label: "Roguelike · FTL Voyage"
    prompt: |
@@ -10996,7 +10999,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 19 条（M6/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 19 条（M6/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-garden-crawl
    label: "Roguelike · Garden Crawl"
    prompt: |
@@ -11143,7 +11146,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-potion-craft
    label: "Roguelike · Potion Craft"
    prompt: |
@@ -11289,7 +11292,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-relic-pinball
    label: "Roguelike · Roguelike: Relic Pinball"
    prompt: |
@@ -11447,7 +11450,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 21 条（M5/D7/V5/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 21 条（M5/D7/V5/A4，mean 7），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-rulescape
    label: "Roguelike · Roguelike: Rulescape"
    prompt: |
@@ -11587,7 +11590,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 20 条（M7/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 20 条（M7/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-slot-fortune
    label: "Roguelike · Slot Fortune"
    prompt: |
@@ -11732,7 +11735,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-spelunk-depths
    label: "Roguelike · Spelunk Depths"
    prompt: |
@@ -11878,7 +11881,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-train-heist
    label: "Roguelike · Train Heist"
    prompt: |
@@ -12025,7 +12028,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-wildwood
    label: "Roguelike · Roguelike: Wildwood"
    prompt: |
@@ -12184,7 +12187,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 21 条（M6/D6/V4/A5，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 21 条（M6/D6/V4/A5，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: roguelike-word-spell
    label: "Roguelike · Word Spell"
    prompt: |
@@ -12330,7 +12333,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Roguelike；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Roguelike；rubric 18 条（M5/D5/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: shooter-bullet-cathedral
    label: "射击 · Bullet Cathedral"
    prompt: |
@@ -12475,7 +12478,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Shooter；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Shooter；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: shooter-hotline-heist
    label: "射击 · Hotline Heist"
    prompt: |
@@ -12617,7 +12620,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Shooter；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Shooter；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: shooter-mech-sortie
    label: "射击 · Mech Sortie"
    prompt: |
@@ -12759,7 +12762,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Shooter；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Shooter；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: shooter-neon-arena
    label: "射击 · Neon Arena"
    prompt: |
@@ -12902,7 +12905,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Shooter；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Shooter；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: shooter-sky-duel
    label: "射击 · Sky Duel"
    prompt: |
@@ -13045,7 +13048,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Shooter；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Shooter；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: shooter-void-patrol
    label: "射击 · Void Patrol"
    prompt: |
@@ -13190,6 +13193,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
+   translation: "# Void Patrol\n\n在 `/workspace/game/` 用 Godot 4 构建 **Void Patrol**，一款横版卷轴射击游戏（side-scrolling shoot-em-up）。\n这不是原型。它是一款**完整、可交付的微型游戏**，能够作为打磨完善的垂直切片放到 itch.io 页面或 Steam 上。\n\n## Core Vision\n\n游戏所营造的幻想是：驾驶一架孤身作战的拦截机穿越充满敌意的深空走廊，\n在敌方弹幕的帷幕之间穿梭腾挪，同时把拾取到的强化道具（power-up）串联成\n不断升级的武器配置。有趣的张力在于贪婪与安全之间的取舍：\n每次拾取强化道具都会延长当前的武器连锁，但能量球会漂移到危险的位置，\n诱使玩家为了下一个层级而飞入弹幕之中。死亡会重置连锁，而在生命有限的情况下，\n玩家必须判断何时求稳、何时冒险去追求毁灭性的满连锁光束。关卡\n无情地持续滚动，每一关都以一个多阶段 Boss 收尾，其弹幕模式要求玩家\n精通飞船狭窄的判定框（hitbox）与清屏炸弹（bomb）储备的运用。\n\n## What the Player Experiences\n\n玩家进入标题画面，画面中飞船的轮廓映衬在滚动的星空背景之上，\n随后选择 Start 进入 Stage 1。视口自动向右滚动；敌人编队按照编排好的\n波次从画面边缘扫入，投下子弹，并偶尔释放发光的强化能量球。\n玩家可在屏幕边界内自由移动，按住按键即可发射主武器，\n并可触发数量有限的炸弹以清除屏幕上的全部弹幕。\n\n在不死亡的前提下连续拾取强化道具，会让武器沿着可见的层级升级——\n单发、散射、激光、追踪导弹——每一级都有各自鲜明的\n视觉表现。死亡会让连锁跌回基础等级。关卡之间会有一段简短的\n过场画面，显示分数和剩余生命数。Boss 战会以一个巨大的多部件敌人\n填满屏幕右侧，随着血量下降，它的各个部位会闪烁并崩解脱落，\n并在几种不同的攻击阶段之间循环。通过五个关卡后，\n游戏会显示胜利结算；耗尽所有生命则会触发续关画面，续关次数有限，用完后即为游戏结束。\n\n## Assets\n\n2D 素材以只读方式挂载于：\n\n- `/workspace/assets/library/` — Kenney CC0 素材包（精灵图、图块、UI、字体）。\n- `/workspace/assets/library-oga/` — OpenGameArt 条目；请遵守各子目录中的\n  `LICENSE.txt`。\n\n浏览素材库并选择素材包。\n把你需要的内容复制到你项目的 `assets/` 目录中。\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    <- your input traces (1-10 files)\n  scripts/  scenes/  assets/\n```\n\n构建产物必须能通过以下命令干净启动：\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nGodot CLI 参数的参考文档位于 `/workspace/tools/godot_command_line.md`。\n**诸如 `--headless` 和 `--quit-after N` 这类引擎参数必须放在 `--` 之前**——\n`--` 之后的任何内容都会作为用户参数转发给项目，并被引擎静默忽略。正确的形式是：\n`godot --headless --quit-after 5 --path . -- --scenario near_victory`。\n\n`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的 UI / 战场 /\n结算画面到底长什么样。\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\n要对特定场景（scenario）截图，请在 `--` 之后追加 `--scenario <id>`。该\n辅助工具只消费 `--out` / `--frames` / `--scene`；其余参数会保留在\n`OS.get_cmdline_user_args()` 中供你的游戏代码读取。示例：\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/battle_debug.png --frames 120 --scenario battle\n```\n\n## Demos\n\n在 `/workspace/game/demo_outputs/` 下交付 **1-10 个输入轨迹（input-trace）文件**，\n每个 demo 一个，均命名为 `*.json`。评测程序会为每个轨迹启动一个全新的游戏实例，\n在 1280x720 分辨率下把你的轨迹回放为合成的鼠标与键盘输入，\n并录制屏幕。仅按文件名排序的前 10 个轨迹会被评测；\n超过 20 s 的录制会从随机的 20 s 窗口中采样。\n\n### Scenarios\n\n常规玩法应当从标题画面开始，并展示该任务的\n核心游戏循环。\nDemo 回放必须是确定性的。对于需要特定状态的 demo\n（特定关卡、战斗状态、升级界面、结算状态或后期\n布局），请定义具名场景，使游戏在以下方式启动时加载它们：\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\n当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名\n状态（为任何 RNG 设定种子），并立即开始接受输入。\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` — 可选；若为从标题画面开始的常规游戏启动，则省略该字段。\n- `duration_frames` — 以 30 fps 录制的总帧数；上限为 **600（20 s）**。\n- `events` — 按时间排序的输入。坐标是 1280x720 视口内的像素值。\n  支持的类型：\n  - `mouse_click`：`{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`：`{frame, type, button: \"left\"|\"right\", x, y}` ——\n    用它们来实现拖拽交互：在起始点发出 `mouse_down`，\n    沿途发出一个或多个 `mouse_move` 事件，并在终点发出 `mouse_up`。\n    一次 `mouse_click` 等价于在同一点上紧接连续发生的\n    `mouse_down` + `mouse_up`。\n  - `mouse_move`：`{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 取值：\n    `A`-`Z`、`0`-`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、\n    `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。\n  - `wait`：`{frame, type}` —— 锚定帧，不产生输入。\n\n回放必须是确定性的：同一个轨迹、全新启动，每次都得到相同的结果。"
    run_spec: "上游族 Shooter；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
  - id: shooter-wave-commander
    label: "射击 · Wave Commander"
@@ -13334,7 +13338,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Shooter；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Shooter；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: simulation-air-control
    label: "模拟 · Air Control"
    prompt: |
@@ -13480,7 +13484,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Simulation；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Simulation；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: simulation-border-check
    label: "模拟 · Border Check"
    prompt: |
@@ -13625,7 +13629,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Simulation；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Simulation；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: simulation-kitchen-rush
    label: "模拟 · Kitchen Rush"
    prompt: |
@@ -13768,7 +13772,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Simulation；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Simulation；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: simulation-news-editor
    label: "模拟 · News Editor"
    prompt: |
@@ -13914,7 +13918,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Simulation；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Simulation；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: simulation-space-station
    label: "模拟 · Space Station"
    prompt: |
@@ -14060,7 +14064,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Simulation；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Simulation；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: simulation-transit-web
    label: "模拟 · Transit Web"
    prompt: |
@@ -14205,7 +14209,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Simulation；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Simulation；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: sports-archery-quest
    label: "体育 · Sports Archery Quest"
    prompt: |
@@ -14354,7 +14358,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Sports；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Sports；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: sports-boxing-gym
    label: "体育 · Sports Boxing Gym"
    prompt: |
@@ -14501,7 +14505,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Sports；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Sports；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: sports-fishing-tournament
    label: "体育 · Sports Fishing Tournament"
    prompt: |
@@ -14648,7 +14652,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Sports；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Sports；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: sports-skateboard-park
    label: "体育 · Sports Skateboard Park"
    prompt: |
@@ -14796,7 +14800,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Sports；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Sports；rubric 13 条（M3/D4/V2/A4，mean 3），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-ant-colony
    label: "策略 · Ant Colony"
    prompt: |
@@ -14949,7 +14953,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-ashen-spire
    label: "策略 · Strategy: Ashen Spire"
    prompt: |
@@ -15104,7 +15108,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 19 条（M5/D5/V5/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 19 条（M5/D5/V5/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-auto-chess
    label: "策略 · Auto Chess"
    prompt: |
@@ -15257,7 +15261,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-beastclash
    label: "策略 · Strategy: Beast Clash"
    prompt: |
@@ -15414,7 +15418,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 17 条（M5/D4/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 17 条（M5/D4/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-chess-variant
    label: "策略 · Chess Variant"
    prompt: |
@@ -15564,7 +15568,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-hex-conquest
    label: "策略 · Hex Conquest"
    prompt: |
@@ -15712,7 +15716,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-kingdom-cards
    label: "策略 · Kingdom Cards"
    prompt: |
@@ -15862,7 +15866,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-pirate-fleet
    label: "策略 · Pirate Fleet"
    prompt: |
@@ -16011,7 +16015,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-plant-defense
    label: "策略 · Plant Defense"
    prompt: |
@@ -16161,7 +16165,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-puzzle-magnet-lab
    label: "策略 · Puzzle Magnet Lab"
    prompt: |
@@ -16313,7 +16317,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 12 条（M4/D3/V3/A2，2 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 12 条（M4/D3/V3/A2，mean 2），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-robot-factory
    label: "策略 · Robot Factory"
    prompt: |
@@ -16463,7 +16467,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-rogue-joker-poker
    label: "策略 · Rogue Joker Poker"
    prompt: |
@@ -16625,7 +16629,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 19 条（M5/D6/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 19 条（M5/D6/V4/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-siege-engineer
    label: "策略 · Siege Engineer"
    prompt: |
@@ -16778,7 +16782,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-signal-rail-dispatcher
    label: "策略 · Signal Rail Dispatcher"
    prompt: |
@@ -16929,7 +16933,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 15 条（M4/D4/V3/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 15 条（M4/D4/V3/A4，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-skirmish
    label: "策略 · Strategy: Skirmish"
    prompt: |
@@ -17085,7 +17089,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 16 条（M4/D4/V4/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 16 条（M4/D4/V4/A4，mean 7），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-spell-tactics
    label: "策略 · Spell Tactics"
    prompt: |
@@ -17234,7 +17238,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: strategy-towerdefense
    label: "策略 · Strategy: Tower-Defense"
    prompt: |
@@ -17394,7 +17398,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Strategy；隐藏 rubric 16 条（M4/D4/V4/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Strategy；rubric 16 条（M4/D4/V4/A4，mean 7），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-creature-clinic-triage
    label: "经营模拟 · Creature Clinic Triage"
    prompt: |
@@ -17543,7 +17547,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 16 条（M4/D4/V4/A4，8 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 16 条（M4/D4/V4/A4，mean 8），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-dungeon-master
    label: "经营模拟 · Dungeon Master"
    prompt: |
@@ -17694,7 +17698,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-farm
    label: "经营模拟 · Tycoon: Village Farm"
    prompt: |
@@ -17846,7 +17850,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 17 条（M5/D4/V4/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 17 条（M5/D4/V4/A4，mean 7），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-funfair
    label: "经营模拟 · Tycoon: Funfair"
    prompt: |
@@ -18002,7 +18006,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 20 条（M5/D6/V4/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 20 条（M5/D6/V4/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-garden-ecosystem-keeper
    label: "经营模拟 · Garden Ecosystem Keeper"
    prompt: |
@@ -18158,7 +18162,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 16 条（M4/D4/V4/A4，8 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 16 条（M4/D4/V4/A4，mean 8），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-gladiator-arena
    label: "经营模拟 · Gladiator Arena"
    prompt: |
@@ -18312,7 +18316,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-music-label
    label: "经营模拟 · Music Label"
    prompt: |
@@ -18464,7 +18468,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-pirate-port
    label: "经营模拟 · Pirate Port"
    prompt: |
@@ -18615,7 +18619,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-potion-shop
    label: "经营模拟 · Potion Shop"
    prompt: |
@@ -18767,7 +18771,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-railroad-baron
    label: "经营模拟 · Railroad Baron"
    prompt: |
@@ -18920,7 +18924,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-space-colony
    label: "经营模拟 · Space Colony"
    prompt: |
@@ -19073,7 +19077,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-submarine-pressure-rescue
    label: "经营模拟 · Submarine Pressure Rescue"
    prompt: |
@@ -19227,7 +19231,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 16 条（M4/D4/V4/A4，8 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 16 条（M4/D4/V4/A4，mean 8），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-tiny-factory-foreman
    label: "经营模拟 · Tiny Factory Foreman"
    prompt: |
@@ -19378,7 +19382,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-trading-caravan-tycoon
    label: "经营模拟 · Tycoon: Trading Caravan"
    prompt: |
@@ -19534,7 +19538,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 19 条（M5/D5/V4/A5，8 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 19 条（M5/D5/V4/A5，mean 8），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-wildhaven
    label: "经营模拟 · Tycoon: Wildhaven"
    prompt: |
@@ -19682,7 +19686,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 19 条（M5/D6/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 19 条（M5/D6/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: tycoon-zoo-keeper
    label: "经营模拟 · Zoo Keeper"
    prompt: |
@@ -19835,7 +19839,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Tycoon；隐藏 rubric 18 条（M5/D5/V3/A5，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Tycoon；rubric 18 条（M5/D5/V3/A5，mean 5），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: visualnovel-arcaneacademy
    label: "视觉小说 · Arcane Academy"
    prompt: |
@@ -19996,7 +20000,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Visual novel；隐藏 rubric 17 条（M5/D5/V3/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.2 / 0.3 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Visual novel；rubric 17 条（M5/D5/V3/A4，mean 7），权重 0.2 / 0.3 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: visualnovel-courtroom-clue-trial
    label: "视觉小说 · Courtroom Clue Trial"
    prompt: |
@@ -20140,7 +20144,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Visual novel；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Visual novel；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: visualnovel-debate-club
    label: "视觉小说 · Debate Club"
    prompt: |
@@ -20291,7 +20295,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Visual novel；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Visual novel；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: visualnovel-detective-noir
    label: "视觉小说 · Detective Noir"
    prompt: |
@@ -20442,7 +20446,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Visual novel；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Visual novel；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: visualnovel-escape-room
    label: "视觉小说 · Escape Room"
    prompt: |
@@ -20595,7 +20599,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Visual novel；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Visual novel；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: visualnovel-grimfable
    label: "视觉小说 · Grim Fable"
    prompt: |
@@ -20768,7 +20772,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Visual novel；隐藏 rubric 18 条（M5/D6/V3/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.2 / 0.3 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Visual novel；rubric 18 条（M5/D6/V3/A4，mean 7），权重 0.2 / 0.3 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: visualnovel-keepsake
    label: "视觉小说 · Keepsake"
    prompt: |
@@ -20932,6 +20936,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
+   translation: "# Keepsake\n\n在 Godot 4 中于 `/workspace/game/` 构建 **Keepsake**——一部关于整理逝者遗物的静默记忆重构视觉小说（visual novel）。这不是原型，而是一款**完整、可发布的微型游戏**，其打磨程度足以作为垂直切片放上 itch.io 页面或 Steam。\n\n## Core Vision\n\n有人去世了，你被托付去整理他们留下的东西。一张褪色的照片、一封折叠的信、一枚磨损的戒指、一本被撕去一页的日记——每件物品都承载着一生的某个碎片，而它们并不按顺序交出自己的含义。Keepsake 是一部**以选择驱动的重构视觉小说**：玩家检视一位陌生人的遗物，一件一件、不按次序地拼出这个人究竟是谁——以及被时间一同埋葬的那个静默秘密。\n\n其幻想内核是**从遗留之物中拼凑出一生**。循环的核心是**检视、回忆、连接、理解**——翻转一件遗物，聆听它唤起的记忆，并将它与你已发现的内容对照，直到一个隐藏的形状浮现出来。玩家选择的顺序，以及他们如何解读逝者做出的某个含义暧昧的决定，共同塑造他们最终抵达的理解。它应当给人一种缓慢、温柔、忧郁的质感，具备真实的情感重量，并且对一段人生存在不止一种理解方式，而不是一篇从头读到尾的单线讣告。\n\n## What the Player Experiences\n\n1. **一段作者化的开场（An Authored Opening）** —— 从一个风格化的标题画面开始，玩家被交予任务：一间房、一只箱子、一生分量的物品需要整理；这一切以一个静默的插画场景建立起来，配以设定氛围与其核心之缺席的旁白。\n2. **检视遗物（Examining the Keepsakes）** —— 玩家自行选择拿起哪件物品，顺序完全自由，每件遗物都作为一件插画物品被检视，并揭示它所带出的记忆或往事碎片。这间堆满遗物的房间是玩家按自己的节奏逐步处理的对象，而不是一套固定的幻灯片。\n3. **相互连接的碎片（Fragments That Connect）** —— 每件被检视的遗物都会向玩家的已知内容中添加一个回忆碎片，而碎片之间彼此契合：一封信上的日期解释了一张照片，一件物品的缺失回答了先前的疑问。玩家会感受到一段人生正以非线性的方式装配起来，而他们已经发现的内容会为下一块碎片的解读染上色彩。\n4. **理解的选择（A Choice of Understanding）** —— 随着图景逐渐成形，玩家会抵达若干诠释时刻——如何解读逝者做出的一个含义暧昧的决定、关于某个秘密该相信什么、是评判还是宽恕。这些选择是有意为之且会被记住的，而玩家已经揭开的内容决定了哪些理解方式才会被提供。\n5. **记忆的多种方式（More Than One Way to Remember）** —— 作品会收束为数个真正不同的结尾理解之一——一段被救赎的人生、一个出于善意被守住的秘密、一场静默的悲伤、一个重塑一切的真相——每一种都通过玩家找到了哪些碎片、以及他们选择如何解读这些碎片而抵达，并以作者化、风格化的结论呈现，点名他们所抵达的那种理解。玩家可以重新开始，并抵达别处。\n\n## Assets\n\n2D 素材以只读方式挂载于：\n\n- `/workspace/assets/library/` —— Kenney CC0 素材包（sprites、tiles、UI、字体）。\n- `/workspace/assets/library-oga/` —— OpenGameArt 条目；须遵守各子目录中的 `LICENSE.txt`。\n\n浏览素材库并挑选素材包。把你需要的内容复制到项目的 `assets/` 目录下。\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    ← your input traces (1–10 files)\n  scripts/  scenes/  assets/\n```\n\n构建产物必须能通过以下命令干净启动：\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nGodot CLI 参数的参考文档位于 `/workspace/tools/godot_command_line.md`。**诸如 `--headless` 和 `--quit-after N` 这类引擎参数必须放在 `--` 之前**——`--` 之后的任何内容都会作为用户参数转发给项目，并被引擎静默忽略。正确形式：\n`godot --headless --quit-after 5 --path . -- --scenario ending_forgive`。\n\n`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的标题 / 房间 / 遗物 / 结尾画面长什么样。\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\n要为特定场景（scenario）截图，请在 `--` 之后追加 `--scenario <id>`。该辅助工具只消费 `--out` / `--frames` / `--scene`；其余参数保留在 `OS.get_cmdline_user_args()` 中供你的游戏代码读取。示例：\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/memory_debug.png --frames 120 --scenario ending_forgive\n```\n\n## Demos\n\n在 `/workspace/game/demo_outputs/` 下交付 **1–10 个输入轨迹（input-trace）文件**，每个 demo 一个，均命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，以 1280×720 分辨率将你的轨迹重放为合成的鼠标与键盘输入，并录制屏幕。仅按文件名排序的前 10 条轨迹会被评测；超过 20 s 的录制会从一个随机的 20 s 窗口中采样。\n\n### Scenarios\n\n常规游玩应从标题画面开始，并演示该任务的核心游玩循环。\nDemo 回放必须是确定性的。对于需要特定状态的 demo（某件具体的遗物、某个记忆板状态、某个诠释选择，或某个结尾理解），请定义具名 scenario，让你的游戏在以下方式启动时加载它：\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\n当 `--scenario <id>` 存在时，游戏必须跳过菜单、确定性地建立该具名状态（为任何 RNG 设定种子），并立即开始接受输入。\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` —— 可选；从标题画面开始的常规游戏启动请省略此项。\n- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 s）**。\n- `events` —— 按时间排序的输入。坐标为 1280×720 视口中的像素值。支持的类型：\n  - `mouse_click`：`{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`：`{frame, type, button: \"left\"|\"right\", x, y}` —— 用于拖拽交互：在起点发出 `mouse_down`，沿途发出一个或多个 `mouse_move` 事件，并在终点发出 `mouse_up`。一次 `mouse_click` 相当于在同一点上紧邻连续发生的 `mouse_down` + `mouse_up`。\n  - `mouse_move`：`{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 取值：`A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。\n  - `wait`：`{frame, type}` —— 锚定帧，无输入。\n\n回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同结果。"
    run_spec: "上游族 Visual novel；隐藏 rubric 17 条（M5/D5/V3/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.2 / 0.3 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
  - id: visualnovel-lastsignal
    label: "视觉小说 · Last Signal"
@@ -21096,7 +21101,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Visual novel；隐藏 rubric 17 条（M5/D5/V3/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.2 / 0.3 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Visual novel；rubric 17 条（M5/D5/V3/A4，mean 7），权重 0.2 / 0.3 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: visualnovel-pactbound
    label: "视觉小说 · Pactbound"
    prompt: |
@@ -21258,7 +21263,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Visual novel；隐藏 rubric 17 条（M5/D5/V3/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.2 / 0.3 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Visual novel；rubric 17 条（M5/D5/V3/A4，mean 7），权重 0.2 / 0.3 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: visualnovel-spy-handler
    label: "视觉小说 · Spy Handler"
    prompt: |
@@ -21413,7 +21418,7 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Visual novel；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Visual novel；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
  - id: visualnovel-time-paradox
    label: "视觉小说 · Time Paradox"
    prompt: |
@@ -21565,4 +21570,4 @@ tasks:
       - `wait`: `{frame, type}` — anchor frame, no input.
 
     Replay must be deterministic: same trace, fresh launch, same outcome every time.
-   run_spec: "上游族 Visual novel；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
+   run_spec: "上游族 Visual novel；rubric 18 条（M5/D5/V4/A4，mean 6），权重 0.15 / 0.35 / 0.15 / 0.35，得分 ∈ [0,1]。判分与证据留存口径见 README。"
