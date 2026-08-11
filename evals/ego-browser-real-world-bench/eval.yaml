@@ -33,7 +33,7 @@ command_template:
 trials: 1
 detail_profile:
   "source_kind": "upstream_publication"
-  "overview_note": "本评测包将上游任务数据集和报告固定至一个已审阅的提交。由于三项报告中的模型身份无法在当前 EvalHub 注册表中解析，官方成绩文件仅收录有上游来源依据的 13 个模型子集。"
+  "overview_note": "本评测包将上游任务数据集和报告固定至一个已审阅的提交。结构化官方成绩文件仅收录有上游来源依据的 13 个模型子集；官方分项结果另保留用户指定的全量 16 模型价值地图，用于展示报告中的成本与评分项微通过率关系，不改变结构化榜单参与者集合。"
   "summary":
     "plain_language": "智能体使用浏览器完成 31 个实用网页任务，覆盖信息研究、比较、导航及表单操作等流程。每道题有多项二元评分项，只有所有评分项均通过才计为完成。"
     "why_it_matters": "浏览器智能体在只完成部分步骤时也可能看似能力很强。要求所有评分项均通过，能够把真正完成任务与仅在不断变化的真实网页环境中走出看似合理但不完整的路径区分开来。"
@@ -66,7 +66,7 @@ detail_profile:
       "source_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/reports/ego-benchmark-model-metrics-2026-08-04.md"
   "caveats":
     - "title": "注册表限制下的成绩子集"
-      "description": "官方报告包含 16 个模型身份。Claude Opus 5、DeepSeek V4 Flash 与 ERNIE 5.1 没有可在当前 EvalHub 注册表中核验的标准身份，因此被完全排除：不会为它们创建近似映射、排名、分数、任务结果、展示案例或补充分项。EvalHub 排名因此只覆盖已纳入的 13 个身份，并非官方 16 个模型的完整排序。"
+      "description": "官方报告包含 16 个模型身份。Claude Opus 5、DeepSeek V4 Flash 与 ERNIE 5.1 没有可在当前 EvalHub 注册表中核验的标准身份，因此不会创建近似映射、结构化排名、成绩、任务结果或题目案例；结构化 EvalHub 排名只覆盖已纳入的 13 个身份。用户指定的全量价值地图仍在官方分项结果中原样展示这 16 个报告点，但不改变上述身份边界。"
     - "title": "官方发布，非 EvalHub 独立复跑"
       "description": "已发布分数与补充指标均转录自上游作者的报告，并非 EvalHub 的独立执行，也不包含逐题输出或运行轨迹。"
     - "title": "真实环境敏感性"
@@ -90,6 +90,15 @@ detail_profile:
     - "title": "固定版本的上游 MIT 许可证"
       "summary": "来源仓库及所复制任务提示词的许可证与署名边界。"
       "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/LICENSE"
+  "figures":
+    - "id": "ego-browser-value-map-2026-08-04"
+      "placement": "insights"
+      "label": "全量价值地图"
+      "title": "评分项微通过率与 Stage A 执行成本（全量 16 个模型）"
+      "src": "https://github.com/502399493zjw-lgtm/evalhub-evals/releases/download/ego-browser-value-map-2026-08-04/codex-clipboard-23633f2c-be88-48ee-9b5f-7b987667458a.png"
+      "alt": "散点图：横轴为 31 项任务的 Stage A 执行成本（美元，对数刻度），纵轴为评分项微通过率（通过评分项除以 154），蓝点表示 2026 年 8 月 4 日报告中的 16 个模型，虚线表示全量模型的成本与微通过率中位数。"
+      "caption": "用户提供的原图，按 citrolabs 2026-08-04 模型指标报告的全量 16 模型口径展示评分项微通过率（通过评分项 ÷ 154）与 Stage A 执行成本；图中包含当前结构化 EvalHub 榜单未纳入的 Claude Opus 5、DeepSeek V4 Flash、ERNIE 5.1。成本沿用报告中的估算或价卡重算口径；图像仅作官方分项结果的视觉展示，不构成 EvalHub 独立复跑，也不为上述三项身份建立注册表映射。"
+      "source_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/reports/ego-benchmark-model-metrics-2026-08-04.md"
 tasks:
   - "id": "rwb-x-openai-7d-01"
     "label": "OpenAI X 近 7 天互动表现"
