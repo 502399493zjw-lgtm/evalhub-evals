@@ -43,13 +43,18 @@ EvalHub 也未获得上游认证或背书。
 **逐字符原文转录**（已用程序逐题比对，140/140 与来源逐字节一致），未做任何摘要或截断。
 EvalHub 自己补充的运行约定放在不渲染的 `run_spec` 里。
 
-上游只发布英文题面，因此 `translation` 只在有可靠中文译文时才填。当前为 5 道代表题提供了
-完整中文译文（`platformer-cozy-harbor-delivery`、`roguelike-dice-throne`、`visualnovel-keepsake`、
-`shooter-void-patrol`、`idle-spell-tower`）：逐节对照英文原文翻译，保留全部 Markdown 结构与代码块，
-路径、命令、字段名与 keycode 一律不译，并经独立复核确认无缺节、无截断、无自行添加的内容。
-其余 135 道题的 `translation` 留空，详情页显示真实空态——不用机翻或概括冒充译文。
+上游只发布英文题面，因此 `translation` 只在有完整中文译文时才填。当前为详情页会展示的
+10 道题提供了完整中文译文：`cardgame-autobattler`、`platformer-iron-vanguard`、
+`roguelike-garden-crawl`、`strategy-plant-defense`、`visualnovel-time-paradox`、
+`platformer-cozy-harbor-delivery`、`roguelike-dice-throne`、`visualnovel-keepsake`、
+`shooter-void-patrol`、`idle-spell-tower`。译文逐节对照英文原文，保留全部 Markdown
+结构与代码块；路径、命令、字段名与 keycode 一律不译，并经复核确认无缺节、无截断、
+无自行添加的内容。其余 130 道题的 `translation` 留空，详情页显示真实空态。
+
 译文数量还受一个硬约束：`pr-policy` 必须通过 GitHub Contents API 读到 `eval.yaml` 全文，
-而该 API 对超过 1 MiB 的文件返回空内容，本文件已达 1,026,490 字节。
+而该 API 对超过 1 MiB 的文件返回空内容。为容纳这 10 份译文，140 个英文 `prompt`
+由 YAML 多行块改为等价的转义字符串表示；YAML 解析后的 140 个字符串已逐题与修改前基线比较，
+内容没有任何字符变化。当前文件为 1,021,781 字节，仍在 1,048,576 字节边界内。
 
 任务族分布（不含 `example` 模板题；仓库实有 141 个任务目录，减去 `example` 恰为 140，
 与 README 家族表、论文 Table 3 及官网 Task Suite 逐族一致，官网明写 "Counts exclude the example task"）：
@@ -122,8 +127,8 @@ rubric 条目或权重字面量），属于隐藏评分细则。
 `Deepseek-V4-Flash-0731` 与 `MiniMax-M2.7` 在 EvalHub 平台模型注册表中都没有对应条目
 （注册表里 MiniMax 只有 M3），
 写进成绩文件会被 `scripts/model-contract.mjs` 判为未知模型而使 CI 失败；
-把它们改映射到别的模型属于事实篡改。完整 12 行如上表保留在此，并在每条收录成绩的
-`official-full-leaderboard` 共享辅助视图中逐格转录。
+把它们改映射到别的模型属于事实篡改。完整 12 行如上表保留在此，并在第一条收录成绩的
+`official-full-leaderboard` 辅助视图中逐格转录。
 
 收录的 9 行里，上游把推理档位写进了模型字符串（`Fable 5 high`、`GPT-5.6-sol high`、
 `GPT-5.5 high`、`Opus-4.7 high`）。平台注册表只认不含档位的 canonical 名，
@@ -131,12 +136,12 @@ rubric 条目或权重字面量），属于隐藏评分细则。
 `Claude Opus 4.7`，并在每条成绩的 `detail` 里原样保留上游字符串与 high 档位。
 这是身份规范化，不改动任何分数。
 
-每行附三个共享视图：`official-full-leaderboard`（完整 12 行官方总榜）、
-`official-category-scores`（总分与四类分项）与
-`official-token-usage`（README「Token usage」表）。上游只对 4 个配置发布了 token 用量，
-它们都在本目录收录的 9 行里（Claude Opus 4.7、GPT-5.5、Kimi K2.6、DeepSeek V4 Pro）；
-余下 5 行（Claude Fable 5、GPT-5.6 Sol、Kimi K3、MiMo V2.5 Pro、GLM-5.1）的六个格子全部留空，
-不做任何推算或补齐。
+为避免平台把同构辅助表自动转置成大量分项 Tab，9 条可排序成绩中只有第一条挂载一个
+`official-full-leaderboard` 综合表。该表共 12 行、18 列，一次保留完整官方总榜、
+四类分项、README「Token usage」表的评测题数与 token 用量，以及模型映射状态；
+其余 8 条成绩不再重复附表。上游只对 4 个配置发布了 token 用量，它们都在本目录收录的
+9 行里（Claude Opus 4.7、GPT-5.5、Kimi K2.6、DeepSeek V4 Pro）；没有发布的数据保持空值，
+不做任何推算或补齐。这个综合表只用于解释来源数据，不参与独立排序。
 
 ## 运行与提交
 
