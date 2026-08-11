@@ -49,6 +49,56 @@ RomanceEQ-Bench（中文名：两性情感情商评测集）是一套面向中�
 
 模型可以使用自己的系统提示，但参赛方应在结果中记录额外提示或工具；禁止把评分量表、关键失误清单或本 README 直接塞进用户消息中作为“提示答案”。
 
+## Agent 接入与完整打分链路
+
+这套题目可以接到别的 Agent 或任意模型提供商，但“能接入”有一个明确的技术含义：Agent 需要有一个很薄的适配器，能够接收固定的聊天消息并只返回一段模型文本。它不是要求 Agent 使用某个特定框架，也不承诺没有适配器的任意现成产品会自动兼容。
+
+本目录提供了一个可在**用户自己环境**运行的参考链路：
+
+```text
+12 个固定题面 + 固定追问
+        ↓
+符合协议的 Agent / 模型适配器（每题独立会话、两次调用）
+        ↓
+完整 transcript 证据文件（每题可复算 SHA-256）
+        ↓
+人工评审或独立 judge 填写五维 scorecard
+        ↓
+submission.json → pack-to-result.mjs → EvalHub 结果信封与总分
+```
+
+相关文件都在 `tasks/` 内：
+
+- `agent-protocol.md`：语言和框架无关的 stdin/stdout 接口、隐私边界与失败约定；
+- `run-agent-pipeline.mjs`：把 12 × 2 次模型回应、transcript 与 scorecard 合成为正式提交清单的本地参考 harness；
+- `openai-compatible-agent.mjs`：通过 `OPENAI_BASE_URL`、`OPENAI_API_KEY` 和标准 `/chat/completions` 接口调用模型的可选适配器；
+- `mock-agent.mjs` 与 `example-scorecard.json`：不调用网络的结构性端到端测试夹具，绝不代表模型成绩。
+
+以符合 OpenAI 兼容接口的模型为例，先审阅这三个脚本，再在仓库根目录运行：
+
+```bash
+export OPENAI_BASE_URL="https://your-provider.example/v1"
+export OPENAI_API_KEY="<keep-this-out-of-files>"
+
+node evals/romanceeq-bench/tasks/run-agent-pipeline.mjs \
+  --agent node \
+  --agent-arg evals/romanceeq-bench/tasks/openai-compatible-agent.mjs \
+  --agent-label openai-compatible-agent@1.0.0 \
+  --model "your-concrete-model-id" \
+  --run-date 2026-08-11 \
+  --scorecard /absolute/path/to/reviewed-scorecard.json \
+  --evidence-out /absolute/path/to/romanceeq-evidence.json \
+  --out /absolute/path/to/romanceeq-submission.json
+
+node evals/romanceeq-bench/pack-to-result.mjs \
+  /absolute/path/to/romanceeq-submission.json \
+  --out /absolute/path/to/romanceeq-result.json
+```
+
+若 Agent 不是 OpenAI 兼容 API，只要用任意语言做一个遵守 `agent-protocol.md` 的包装命令，就可以替换 `--agent` 和重复的 `--agent-arg`；harness 本身不联网，也不绑定模型厂商。它会拒绝已存在的输出路径，避免无意覆盖文件。
+
+这里的自动化止于“稳定运行、保存证据、锁定任务和确定性算分”。现行协议是 `scored_by=author`：人工评审（或另行配置、记录版本的独立 judge）必须根据两轮 transcript 填写 scorecard，不能让被测模型给自己打分，也不能把示例 scorecard 当作真实成绩。参考 harness 会在用户选定本地命令后启动该命令；EvalHub 托管服务、仓库校验和预览均不会运行它，也不会审计它的安全性或兼容性。请不要把密钥写入命令行、scorecard、transcript 或 Git。
+
 ## 提交清单与打包器
 
 提交清单是 JSON，格式示例在 `tasks/example-submission.json`。正式运行时，评测者需要替换示例 participant、run_date、每题分数和 transcript 摘要：
@@ -104,6 +154,11 @@ evals/romanceeq-bench/
 ├── assets/README.md
 └── tasks/
     ├── README.md
+    ├── agent-protocol.md
+    ├── run-agent-pipeline.mjs
+    ├── openai-compatible-agent.mjs
+    ├── mock-agent.mjs
+    ├── example-scorecard.json
     ├── example-submission.json
     └── scenarios.json
 ```
