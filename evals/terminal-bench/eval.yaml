@@ -144,15 +144,6 @@ detail_profile:
               value: 按 0 分计入
       caption: 主成绩是 370 次尝试的平均完成度，再换算为百分制。
       source_url: https://github.com/harbor-framework/terminal-bench/blob/2b0442c3c583b710ca8da14c8e601b99f2f1f244/README.md
-  figures:
-    - id: terminal-bench-cover
-      placement: overview
-      label: 封面
-      title: Terminal-Bench 3.0
-      src: https://raw.githubusercontent.com/502399493zjw-lgtm/evalhub-evals/add-terminal-bench/evals/terminal-bench/assets/terminal-bench-cover.svg
-      alt: 黑色和米白色高对比信息图，中央是带黄色光标的终端窗口，旁边有任务卡片，写着 Terminal-Bench 3.0、74 个真实任务和 370 次尝试。
-      caption: AI 能不能独立完成真实电脑工作？Terminal-Bench 3.0 用 74 个任务、370 次尝试检验稳定完成能力。
-      source_url: https://github.com/502399493zjw-lgtm/evalhub-evals/blob/add-terminal-bench/evals/terminal-bench/assets/terminal-bench-cover.svg
   resources_note: 这里列出评测规则、官方榜单和项目原始资料。榜单成绩来自上游公开发布，不是 EvalHub 重新运行；技术细节只保留理解成绩所必需的部分。
   resources:
     - title: Terminal-Bench 3.0 官方发布页
