@@ -1,0 +1,138 @@
+{
+  "manifest_version": 1,
+  "eval_id": "ego-browser-real-world-bench",
+  "protocol_revision": 1,
+  "upstream_commit": "f566ac293e4e6bd80c4e9b062b5699f04eac41f4",
+  "participant": {
+    "model": "example/synthetic-browser-agent",
+    "harness": "example-harness",
+    "harness_version": "0.0.0-structural-example"
+  },
+  "run_date": "2026-08-10",
+  "tasks": [
+    {
+      "task_id": "rwb-x-openai-7d-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-openai-careers-apply-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-redfin-mortgage-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-expedia-flight-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-hn-top10-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-imdb-scifi-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-calcnet-mortgage-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-cars-payment-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-yahoo-stocks-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-yelp-opentable-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-reddit-greenhouse-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-reddit-pf-indexfund-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-github-trending-py-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-bankrate-compound-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-metacritic-actionrpg-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-stockanalysis-tech-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-zillow-greatschools-austin-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-xe-irs-reimbursement-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-youtube-finance-channel-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-amazon-bottle-leaks-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-houzz-homedepot-backsplash-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-google-flights-booking-miami-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-courtlistener-sec-helix-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-scratch-apple-dash-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-2048-reach-256-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-song-maker-mirror-loop-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-census-sba-qcew-naics541511-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-webflow-squarespace-wix-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-nist-cisa-nvd-readiness-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-bls-census-retail-metros-01",
+      "all_rubrics_passed": false
+    },
+    {
+      "task_id": "rwb-lumen-ticket-rush-01",
+      "all_rubrics_passed": false
+    }
+  ]
+}

@@ -1,0 +1,381 @@
+{
+  "eval_id": "ego-browser-real-world-bench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "ego-browser-real-world-bench/pack-to-result@1.0.0",
+    "run_date": "2026-08-10"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-browser-agent",
+        "harness": "example-harness",
+        "harness_version": "0.0.0-structural-example"
+      },
+      "score": 0,
+      "raw_metric": {
+        "label": "完美完成率",
+        "value": "0/31 项任务（0.000000%）"
+      },
+      "detail": "根据包含 31 项任务判定的上游清单打包。完美完成率 = 所有评分项均通过的任务数 / 31 × 100。清单 SHA-256=58d34035d8ed051859fbeffe2748530a31c16a9d70fc5b67277e3c42783c40b8。外部运行证据仍须经评测作者审核。",
+      "task_results": [
+        {
+          "task_id": "rwb-x-openai-7d-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-openai-careers-apply-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-redfin-mortgage-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-expedia-flight-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-hn-top10-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-imdb-scifi-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-calcnet-mortgage-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-cars-payment-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-yahoo-stocks-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-yelp-opentable-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-reddit-greenhouse-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-reddit-pf-indexfund-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-github-trending-py-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-bankrate-compound-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-metacritic-actionrpg-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-stockanalysis-tech-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-zillow-greatschools-austin-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-xe-irs-reimbursement-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-youtube-finance-channel-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-amazon-bottle-leaks-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-houzz-homedepot-backsplash-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-google-flights-booking-miami-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-courtlistener-sec-helix-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-scratch-apple-dash-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-2048-reach-256-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-song-maker-mirror-loop-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-census-sba-qcew-naics541511-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-webflow-squarespace-wix-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-nist-cisa-nvd-readiness-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-bls-census-retail-metros-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        },
+        {
+          "task_id": "rwb-lumen-ticket-rush-01",
+          "score": 0,
+          "raw": "所有评分项均通过：否"
+        }
+      ],
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "task-perfect-outcomes",
+          "label": "任务判定",
+          "title": "各任务的所有评分项通过判定",
+          "columns": [
+            "任务 ID",
+            "所有评分项均通过"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "rwb-x-openai-7d-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-openai-careers-apply-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-redfin-mortgage-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-expedia-flight-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-hn-top10-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-imdb-scifi-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-calcnet-mortgage-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-cars-payment-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-yahoo-stocks-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-yelp-opentable-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-reddit-greenhouse-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-reddit-pf-indexfund-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-github-trending-py-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-bankrate-compound-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-metacritic-actionrpg-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-stockanalysis-tech-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-zillow-greatschools-austin-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-xe-irs-reimbursement-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-youtube-finance-channel-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-amazon-bottle-leaks-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-houzz-homedepot-backsplash-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-google-flights-booking-miami-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-courtlistener-sec-helix-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-scratch-apple-dash-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-2048-reach-256-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-song-maker-mirror-loop-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-census-sba-qcew-naics541511-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-webflow-squarespace-wix-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-nist-cisa-nvd-readiness-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-bls-census-retail-metros-01",
+                "否"
+              ]
+            },
+            {
+              "cells": [
+                "rwb-lumen-ticket-rush-01",
+                "否"
+              ]
+            }
+          ],
+          "note": "这些值来自用于计算主分数的提交清单记录；本表不会独立重新判定上游运行。"
+        }
+      ]
+    }
+  ]
+}
