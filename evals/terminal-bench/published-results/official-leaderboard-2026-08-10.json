@@ -1,0 +1,274 @@
+{
+  "eval_id": "terminal-bench",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "terminal-bench/official-leaderboard-transcription@1.0.0",
+    "retrieved_on": "2026-08-10",
+    "source": {
+      "title": "Terminal-Bench 3.0 官方榜单（Frontier-Bench）",
+      "url": "https://www.frontierbench.ai/",
+      "snapshot_sha256": "bdbcd87b7eb207333ed3a4c93fe54b162615723d571376d8322ce68332adbbba"
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "openai/gpt-5.6-sol",
+        "harness": "Codex"
+      },
+      "score": 34.59,
+      "detail": "Terminal-Bench 3.0 官方榜单第 2 名；官网显示 34.6% ± 1.6%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：4ce39786-946e-447b-bf36-9650ff7749ac。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 3.0 官方榜单行",
+          "columns": [
+            "官方名次",
+            "官网显示成绩",
+            "标准误（百分点）",
+            "发布日",
+            "总 token",
+            "官方成本（USD）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                2,
+                "34.6% ± 1.6%",
+                1.58,
+                "2026-07-09",
+                5779656478,
+                3963.86
+              ]
+            }
+          ],
+          "note": "逐格转录自 source 快照的官方榜单行；辅助展示，不参与 EvalHub 主成绩计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-fable-5",
+        "harness": "Claude Code"
+      },
+      "score": 34.05,
+      "detail": "Terminal-Bench 3.0 官方榜单第 3 名；官网显示 34.1% ± 1.7%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：fd93299a-0c43-4ec3-8aee-421fdbef4b8d。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 3.0 官方榜单行",
+          "columns": [
+            "官方名次",
+            "官网显示成绩",
+            "标准误（百分点）",
+            "发布日",
+            "总 token",
+            "官方成本（USD）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                3,
+                "34.1% ± 1.7%",
+                1.71,
+                "2026-06-09",
+                3583230945,
+                7062.39
+              ]
+            }
+          ],
+          "note": "逐格转录自 source 快照的官方榜单行；辅助展示，不参与 EvalHub 主成绩计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-opus-4-8",
+        "harness": "Claude Code"
+      },
+      "score": 21.08,
+      "detail": "Terminal-Bench 3.0 官方榜单第 4 名；官网显示 21.1% ± 1.6%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：46eaaf38-415f-443a-a68b-f81c46e49be6。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 3.0 官方榜单行",
+          "columns": [
+            "官方名次",
+            "官网显示成绩",
+            "标准误（百分点）",
+            "发布日",
+            "总 token",
+            "官方成本（USD）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                4,
+                "21.1% ± 1.6%",
+                1.55,
+                "2026-05-28",
+                5208776503,
+                5701.74
+              ]
+            }
+          ],
+          "note": "逐格转录自 source 快照的官方榜单行；辅助展示，不参与 EvalHub 主成绩计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "openai/gpt-5.6-terra",
+        "harness": "Codex"
+      },
+      "score": 20.81,
+      "detail": "Terminal-Bench 3.0 官方榜单第 5 名；官网显示 20.8% ± 1.4%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：8519e479-95e6-44a4-a108-1834df711b28。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 3.0 官方榜单行",
+          "columns": [
+            "官方名次",
+            "官网显示成绩",
+            "标准误（百分点）",
+            "发布日",
+            "总 token",
+            "官方成本（USD）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                5,
+                "20.8% ± 1.4%",
+                1.4,
+                "2026-07-09",
+                7024607919,
+                2484.52
+              ]
+            }
+          ],
+          "note": "逐格转录自 source 快照的官方榜单行；辅助展示，不参与 EvalHub 主成绩计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "xai/grok-4.5",
+        "harness": "Cursor CLI"
+      },
+      "score": 15.68,
+      "detail": "Terminal-Bench 3.0 官方榜单第 6 名；官网显示 15.7% ± 1.5%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：2ccf029d-62fe-4756-a624-b2d376895a32。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 3.0 官方榜单行",
+          "columns": [
+            "官方名次",
+            "官网显示成绩",
+            "标准误（百分点）",
+            "发布日",
+            "总 token",
+            "官方成本（USD）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                6,
+                "15.7% ± 1.5%",
+                1.47,
+                "2026-07-08",
+                1238993118,
+                960.04
+              ]
+            }
+          ],
+          "note": "逐格转录自 source 快照的官方榜单行；辅助展示，不参与 EvalHub 主成绩计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-sonnet-5",
+        "harness": "Claude Code"
+      },
+      "score": 14.59,
+      "detail": "Terminal-Bench 3.0 官方榜单第 7 名；官网显示 14.6% ± 1.5%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：95ef728a-41bc-4882-adfa-0d30ce50671c。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 3.0 官方榜单行",
+          "columns": [
+            "官方名次",
+            "官网显示成绩",
+            "标准误（百分点）",
+            "发布日",
+            "总 token",
+            "官方成本（USD）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                7,
+                "14.6% ± 1.5%",
+                1.5,
+                "2026-06-30",
+                17948790860,
+                7944.04
+              ]
+            }
+          ],
+          "note": "逐格转录自 source 快照的官方榜单行；辅助展示，不参与 EvalHub 主成绩计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "zai/glm-5.2",
+        "harness": "Claude Code"
+      },
+      "score": 4.59,
+      "detail": "Terminal-Bench 3.0 官方榜单第 9 名；官网显示 4.6% ± 1.0%。这是上游作者发表的 resolution rate，不是 EvalHub 独立复跑。榜单行 ID：95e83401-73ec-4317-8e4b-d0d579fcfb71。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 3.0 官方榜单行",
+          "columns": [
+            "官方名次",
+            "官网显示成绩",
+            "标准误（百分点）",
+            "发布日",
+            "总 token",
+            "官方成本（USD）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                9,
+                "4.6% ± 1.0%",
+                0.97,
+                "2026-06-13",
+                3276045131,
+                3766.5
+              ]
+            }
+          ],
+          "note": "逐格转录自 source 快照的官方榜单行；辅助展示，不参与 EvalHub 主成绩计算。"
+        }
+      ]
+    }
+  ]
+}
