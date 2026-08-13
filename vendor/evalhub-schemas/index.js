@@ -1,5 +1,6 @@
 export { CommandInputOverrideSchema, CommandOutputOverrideSchema, CommandTemplateSchema, CustomRunnerModeSchema, EvalIdSchema, EvalDefSchema, EvalDetailProfileSchema, EvalReferencesSchema, EvalTaskMediaSchema, EvalTiebreakSchema, MAX_TASK_MEDIA_ITEMS, resolveScorePolicy, resolveCustomRunnerMode, StoredEvalDefSchema, UpstreamSourceSchema, } from "./eval-def.js";
-export { EVAL_AUTHORS_HANDLE_PATTERN, EVAL_AUTHORS_PLACEHOLDER, parseEvalAuthorsText, } from "./authors.js";
+export { EVAL_AUTHORS_HANDLE_PATTERN, EVAL_AUTHORS_PLACEHOLDER, EVAL_MAINTAINER_HANDLE_PATTERN, EVAL_MAINTAINER_PLACEHOLDER, parseEvalAuthorsText, parseEvalMaintainerText, } from "./authors.js";
+export { githubOwnerFromRepositoryIdentity, githubOwnerFromRepositoryUrl, resolveEvalSourceOwnerHandle, } from "./source-owner.js";
 export { buildAgentBrief } from "./agent-brief.js";
 export { buildRunEvalBrief, RunEvalBriefInputError } from "./run-eval-brief.js";
 export { HEAD_TO_HEAD_MAX_GAMES_PER_MATCHUP, ParticipantAdapterSchema, ParticipantConfigSchema, ParticipantModelSchema, RESULT_ENTRY_MAX_SHOWCASES, RESULT_ENTRY_MAX_SUPPLEMENTARY_VIEWS, RESULT_ENTRY_MAX_TASK_RESULTS, RESULT_FILE_MAX_RESULTS, SHOWCASE_TASK_ID_MAX_LENGTH, HeadToHeadShowcaseSchema, TeamGamesShowcaseSchema, ResultEntrySchema, ResultFileSchema, ResultSubmissionSchema, RunSubmissionSchema, isUpstreamAuthorPublicationSubmission, ShowcaseSchema, SupplementaryViewSchema, UpstreamAuthorPublicationSubmissionSchema, } from "./result.js";

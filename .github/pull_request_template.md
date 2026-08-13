@@ -1,8 +1,8 @@
 ## Eval submission checklist
 
-- [ ] This PR creates, restores, or updates exactly one `evals/SLUG/` directory, or it is a maintainer-only repository maintenance/ownership PR.
-- [ ] I checked the slug's complete first-parent `main` history: a never-seen creation uses my GitHub handle (or a maintainer-verified organization), while a restoration preserves the canonical historical `AUTHORS` owner.
-- [ ] The active base owner matches the canonical historical owner; otherwise this PR is the standalone maintainer `AUTHORS`-only repair, with no content/deletion/transfer or submission marker. For a normal active update, I am the owner or maintainer proxy and did not change `AUTHORS` or the slug.
+- [ ] This PR creates or updates exactly one `evals/SLUG/` directory, or it is a maintainer-only repository maintenance PR.
+- [ ] For a new eval, `AUTHORS` contains the GitHub handle that opened this PR. For an update, `AUTHORS` is unchanged from the base branch.
+- [ ] For an update, I am either the public GitHub source owner resolved from `upstream.repo` / `references.repository` or the maintainer recorded in `AUTHORS`. Organization members do not automatically receive update access.
 - [ ] The eval PR does not change `CODEOWNERS`, workflows, validators, dependencies, root documentation, or another slug.
 - [ ] I ran `npm ci --ignore-scripts` and `npm run validate` locally.
 - [ ] For repository-infrastructure changes only, I also ran `npm run test:maintenance` (not applicable to ordinary eval submissions).
