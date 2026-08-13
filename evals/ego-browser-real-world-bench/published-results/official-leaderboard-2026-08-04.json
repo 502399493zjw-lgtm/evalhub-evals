@@ -7,7 +7,22 @@
     "source": {
       "title": "Ego Browser Benchmark 模型指标报告（2026-08-04）",
       "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/reports/ego-benchmark-model-metrics-2026-08-04.md",
-      "snapshot_sha256": "9d302fb27762c0885f6efa8292888e555babe3c71c9ed1e71247a982888cb611"
+      "snapshot_sha256": "9d302fb27762c0885f6efa8292888e555babe3c71c9ed1e71247a982888cb611",
+      "official_result_count": 16,
+      "omitted_models": [
+        {
+          "model": "Claude Opus 5",
+          "reason": "unregistered"
+        },
+        {
+          "model": "DeepSeek V4 Flash",
+          "reason": "unregistered"
+        },
+        {
+          "model": "ERNIE 5.1",
+          "reason": "unregistered"
+        }
+      ]
     }
   },
   "results": [
