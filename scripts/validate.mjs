@@ -695,6 +695,7 @@ async function validatePublishedResults(
   }
 
   const supplementaryContracts = new Map();
+  const officialSources = new Map();
   for (const name of files.sort()) {
     const filePath = path.join(directory, name);
     try {
@@ -720,13 +721,39 @@ async function validatePublishedResults(
           ),
         );
       }
+      const officialSource = generic.data.submission.source;
+      if (officialSource !== undefined) {
+        const sourceKey = JSON.stringify([
+          officialSource.url,
+          officialSource.snapshot_sha256,
+        ]);
+        const firstFile = officialSources.get(sourceKey);
+        if (firstFile === undefined) {
+          officialSources.set(sourceKey, filePath);
+        } else {
+          errors.push(
+            fileError(
+              directory,
+              `published-results cannot contain the same official source in multiple JSON files: ${firstFile} and ${filePath} share source.url + snapshot_sha256`,
+            ),
+          );
+        }
+      }
       validatePublishedSupplementaryContracts(
         generic.data,
         filePath,
         supplementaryContracts,
         errors,
       );
-      const contextual = validateResultForEval(parsedEval, generic.data);
+      const source = generic.data.submission.source;
+      const hasCoverageMetadata =
+        source?.official_result_count !== undefined ||
+        source?.omitted_models !== undefined;
+      const contextual = validateResultForEval(
+        parsedEval,
+        generic.data,
+        { requireOfficialResultCount: hasCoverageMetadata },
+      );
       if (!contextual.success) {
         errors.push(fileError(filePath, formatIssues(contextual.error)));
       }

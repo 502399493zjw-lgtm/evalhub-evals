@@ -24,6 +24,26 @@ function resolveOutput(defaultOutput, override) {
         ? CommandOutputSchema.parse(defaultOutput)
         : CommandOutputOverrideSchema.parse(override);
 }
+export function buildResultAdapterPlan(commandTemplate, options) {
+    const input = CommandInputOverrideSchema.parse(options.input);
+    const output = resolveOutput(commandTemplate.output, options.output);
+    return {
+        argv: commandTemplate.argv.map((argument) => argument === "{input}"
+            ? input
+            : argument === "{output}"
+                ? output
+                : argument),
+        input,
+        output,
+    };
+}
+/**
+ * @deprecated Platform/history compatibility only.
+ *
+ * This renderer still describes the historical run/submit lifecycle for
+ * callers that have not migrated. The CLI must not execute this plan; use
+ * `buildResultAdapterPlan` for source-first `evalhub pack`.
+ */
 export function buildEvalCommandPlan(evalDef, options = {}) {
     if (evalDef.runner === "custom") {
         if (!evalDef.command_template) {

@@ -1916,18 +1916,57 @@ export declare const UpstreamAuthorPublicationSubmissionSchema: z.ZodObject<{
     kind: z.ZodOptional<z.ZodLiteral<"upstream_author_publication">>;
     importer_version: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
     retrieved_on: z.ZodEffects<z.ZodString, string, string>;
-    source: z.ZodObject<{
+    source: z.ZodEffects<z.ZodObject<{
         title: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
         url: z.ZodEffects<z.ZodString, string, string>;
         snapshot_sha256: z.ZodString;
+        official_result_count: z.ZodOptional<z.ZodNumber>;
+        omitted_models: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            model: z.ZodEffects<z.ZodString, string, string>;
+            reason: z.ZodLiteral<"unregistered">;
+        }, "strict", z.ZodTypeAny, {
+            reason: "unregistered";
+            model: string;
+        }, {
+            reason: "unregistered";
+            model: string;
+        }>, "many">>;
     }, "strict", z.ZodTypeAny, {
         url: string;
         snapshot_sha256: string;
         title?: string | undefined;
+        official_result_count?: number | undefined;
+        omitted_models?: {
+            reason: "unregistered";
+            model: string;
+        }[] | undefined;
     }, {
         url: string;
         snapshot_sha256: string;
         title?: string | undefined;
+        official_result_count?: number | undefined;
+        omitted_models?: {
+            reason: "unregistered";
+            model: string;
+        }[] | undefined;
+    }>, {
+        url: string;
+        snapshot_sha256: string;
+        title?: string | undefined;
+        official_result_count?: number | undefined;
+        omitted_models?: {
+            reason: "unregistered";
+            model: string;
+        }[] | undefined;
+    }, {
+        url: string;
+        snapshot_sha256: string;
+        title?: string | undefined;
+        official_result_count?: number | undefined;
+        omitted_models?: {
+            reason: "unregistered";
+            model: string;
+        }[] | undefined;
     }>;
 }, "strict", z.ZodTypeAny, {
     importer_version: string;
@@ -1936,6 +1975,11 @@ export declare const UpstreamAuthorPublicationSubmissionSchema: z.ZodObject<{
         url: string;
         snapshot_sha256: string;
         title?: string | undefined;
+        official_result_count?: number | undefined;
+        omitted_models?: {
+            reason: "unregistered";
+            model: string;
+        }[] | undefined;
     };
     kind?: "upstream_author_publication" | undefined;
 }, {
@@ -1945,6 +1989,11 @@ export declare const UpstreamAuthorPublicationSubmissionSchema: z.ZodObject<{
         url: string;
         snapshot_sha256: string;
         title?: string | undefined;
+        official_result_count?: number | undefined;
+        omitted_models?: {
+            reason: "unregistered";
+            model: string;
+        }[] | undefined;
     };
     kind?: "upstream_author_publication" | undefined;
 }>;
@@ -1952,18 +2001,57 @@ export declare const ResultSubmissionSchema: z.ZodUnion<[z.ZodObject<{
     kind: z.ZodOptional<z.ZodLiteral<"upstream_author_publication">>;
     importer_version: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
     retrieved_on: z.ZodEffects<z.ZodString, string, string>;
-    source: z.ZodObject<{
+    source: z.ZodEffects<z.ZodObject<{
         title: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
         url: z.ZodEffects<z.ZodString, string, string>;
         snapshot_sha256: z.ZodString;
+        official_result_count: z.ZodOptional<z.ZodNumber>;
+        omitted_models: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            model: z.ZodEffects<z.ZodString, string, string>;
+            reason: z.ZodLiteral<"unregistered">;
+        }, "strict", z.ZodTypeAny, {
+            reason: "unregistered";
+            model: string;
+        }, {
+            reason: "unregistered";
+            model: string;
+        }>, "many">>;
     }, "strict", z.ZodTypeAny, {
         url: string;
         snapshot_sha256: string;
         title?: string | undefined;
+        official_result_count?: number | undefined;
+        omitted_models?: {
+            reason: "unregistered";
+            model: string;
+        }[] | undefined;
     }, {
         url: string;
         snapshot_sha256: string;
         title?: string | undefined;
+        official_result_count?: number | undefined;
+        omitted_models?: {
+            reason: "unregistered";
+            model: string;
+        }[] | undefined;
+    }>, {
+        url: string;
+        snapshot_sha256: string;
+        title?: string | undefined;
+        official_result_count?: number | undefined;
+        omitted_models?: {
+            reason: "unregistered";
+            model: string;
+        }[] | undefined;
+    }, {
+        url: string;
+        snapshot_sha256: string;
+        title?: string | undefined;
+        official_result_count?: number | undefined;
+        omitted_models?: {
+            reason: "unregistered";
+            model: string;
+        }[] | undefined;
     }>;
 }, "strict", z.ZodTypeAny, {
     importer_version: string;
@@ -1972,6 +2060,11 @@ export declare const ResultSubmissionSchema: z.ZodUnion<[z.ZodObject<{
         url: string;
         snapshot_sha256: string;
         title?: string | undefined;
+        official_result_count?: number | undefined;
+        omitted_models?: {
+            reason: "unregistered";
+            model: string;
+        }[] | undefined;
     };
     kind?: "upstream_author_publication" | undefined;
 }, {
@@ -1981,6 +2074,11 @@ export declare const ResultSubmissionSchema: z.ZodUnion<[z.ZodObject<{
         url: string;
         snapshot_sha256: string;
         title?: string | undefined;
+        official_result_count?: number | undefined;
+        omitted_models?: {
+            reason: "unregistered";
+            model: string;
+        }[] | undefined;
     };
     kind?: "upstream_author_publication" | undefined;
 }>, z.ZodObject<{
@@ -2019,18 +2117,57 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
         kind: z.ZodOptional<z.ZodLiteral<"upstream_author_publication">>;
         importer_version: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
         retrieved_on: z.ZodEffects<z.ZodString, string, string>;
-        source: z.ZodObject<{
+        source: z.ZodEffects<z.ZodObject<{
             title: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
             url: z.ZodEffects<z.ZodString, string, string>;
             snapshot_sha256: z.ZodString;
+            official_result_count: z.ZodOptional<z.ZodNumber>;
+            omitted_models: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                model: z.ZodEffects<z.ZodString, string, string>;
+                reason: z.ZodLiteral<"unregistered">;
+            }, "strict", z.ZodTypeAny, {
+                reason: "unregistered";
+                model: string;
+            }, {
+                reason: "unregistered";
+                model: string;
+            }>, "many">>;
         }, "strict", z.ZodTypeAny, {
             url: string;
             snapshot_sha256: string;
             title?: string | undefined;
+            official_result_count?: number | undefined;
+            omitted_models?: {
+                reason: "unregistered";
+                model: string;
+            }[] | undefined;
         }, {
             url: string;
             snapshot_sha256: string;
             title?: string | undefined;
+            official_result_count?: number | undefined;
+            omitted_models?: {
+                reason: "unregistered";
+                model: string;
+            }[] | undefined;
+        }>, {
+            url: string;
+            snapshot_sha256: string;
+            title?: string | undefined;
+            official_result_count?: number | undefined;
+            omitted_models?: {
+                reason: "unregistered";
+                model: string;
+            }[] | undefined;
+        }, {
+            url: string;
+            snapshot_sha256: string;
+            title?: string | undefined;
+            official_result_count?: number | undefined;
+            omitted_models?: {
+                reason: "unregistered";
+                model: string;
+            }[] | undefined;
         }>;
     }, "strict", z.ZodTypeAny, {
         importer_version: string;
@@ -2039,6 +2176,11 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             url: string;
             snapshot_sha256: string;
             title?: string | undefined;
+            official_result_count?: number | undefined;
+            omitted_models?: {
+                reason: "unregistered";
+                model: string;
+            }[] | undefined;
         };
         kind?: "upstream_author_publication" | undefined;
     }, {
@@ -2048,6 +2190,11 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             url: string;
             snapshot_sha256: string;
             title?: string | undefined;
+            official_result_count?: number | undefined;
+            omitted_models?: {
+                reason: "unregistered";
+                model: string;
+            }[] | undefined;
         };
         kind?: "upstream_author_publication" | undefined;
     }>, z.ZodObject<{
@@ -3135,6 +3282,11 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             url: string;
             snapshot_sha256: string;
             title?: string | undefined;
+            official_result_count?: number | undefined;
+            omitted_models?: {
+                reason: "unregistered";
+                model: string;
+            }[] | undefined;
         };
         kind?: "upstream_author_publication" | undefined;
     };
@@ -3267,6 +3419,11 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             url: string;
             snapshot_sha256: string;
             title?: string | undefined;
+            official_result_count?: number | undefined;
+            omitted_models?: {
+                reason: "unregistered";
+                model: string;
+            }[] | undefined;
         };
         kind?: "upstream_author_publication" | undefined;
     };
@@ -3399,6 +3556,11 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             url: string;
             snapshot_sha256: string;
             title?: string | undefined;
+            official_result_count?: number | undefined;
+            omitted_models?: {
+                reason: "unregistered";
+                model: string;
+            }[] | undefined;
         };
         kind?: "upstream_author_publication" | undefined;
     };
@@ -3531,6 +3693,11 @@ export declare const ResultFileSchema: z.ZodEffects<z.ZodObject<{
             url: string;
             snapshot_sha256: string;
             title?: string | undefined;
+            official_result_count?: number | undefined;
+            omitted_models?: {
+                reason: "unregistered";
+                model: string;
+            }[] | undefined;
         };
         kind?: "upstream_author_publication" | undefined;
     };

@@ -80,6 +80,7 @@ tasks:
 
 function makePublishedResult(
   sourceUrl = "https://example.com/official-results",
+  sourceMetadata = {},
 ) {
   return {
     eval_id: "sample-eval",
@@ -90,6 +91,7 @@ function makePublishedResult(
       source: {
         url: sourceUrl,
         snapshot_sha256: "a".repeat(64),
+        ...sourceMetadata,
       },
     },
     results: [
@@ -101,7 +103,12 @@ function makePublishedResult(
   };
 }
 
-function makeSharedViewResult(model, view) {
+function makeSharedViewResult(
+  model,
+  view,
+  sourceUrl = "https://example.com/official-results",
+  snapshotSha256 = "a".repeat(64),
+) {
   return {
     eval_id: "sample-eval",
     submission: {
@@ -109,8 +116,8 @@ function makeSharedViewResult(model, view) {
       importer_version: "1.0.0",
       retrieved_on: "2026-08-01",
       source: {
-        url: "https://example.com/official-results",
-        snapshot_sha256: "a".repeat(64),
+        url: sourceUrl,
+        snapshot_sha256: snapshotSha256,
       },
     },
     results: [
@@ -184,20 +191,17 @@ test("exports a repository validator without running the CLI", async () => {
   assert.equal(typeof module.validateRepository, "function");
 });
 
-test("vendored schemas expose a loadable agent brief builder", () => {
+test("vendored schemas expose an unavailable brief for evals without a pinned GitHub upstream", () => {
   const definition = EvalDefSchema.parse(validEval);
   const brief = buildAgentBrief(definition, {
     siteOrigin: "https://evalhub.example",
     cliPackageSpec: "@evalhub/cli",
   });
 
-  assert.match(brief, /^---\nschema: evalhub-brief\/v1/m);
-  // 无 taskId（公开 ?format=brief 端点）分支：可以直接下载并本地运行；
-  // 只有用户决定正式提交成绩时才领取任务卡，见
-  // packages/schemas/src/agent-brief.ts 的 taskId === null 分支。
-  assert.match(brief, /下载和本地运行不需要创建提交任务/);
-  assert.match(brief, /点击「提交成绩」领取任务卡/);
-  assert.doesNotMatch(brief, /evalhub connect/);
+  assert.match(brief, /^---\nschema: evalhub-run-brief\/unavailable\/v1/m);
+  assert.match(brief, /当前无法生成运行评测 Brief/);
+  assert.match(brief, /一个公开的 GitHub upstream 仓库/);
+  assert.match(brief, /不会安装、运行、转换或处理结果/);
 });
 
 test("validates a complete repository with the shared contracts", async (t) => {
@@ -304,16 +308,9 @@ test("accepts a reviewed published baseline with structured component metrics", 
   await writeFile(
     path.join(directory, "official.json"),
     `${JSON.stringify({
-      eval_id: "sample-eval",
-      submission: {
-        kind: "upstream_author_publication",
-        importer_version: "1.0.0",
-        retrieved_on: "2026-08-01",
-        source: {
-          url: "https://example.com/official-results",
-          snapshot_sha256: "a".repeat(64),
-        },
-      },
+      ...makePublishedResult("https://example.com/official-results", {
+        official_result_count: 1,
+      }),
       results: [
         {
           participant: { model: KNOWN_MODEL_A },
@@ -395,6 +392,7 @@ test("accepts a shared supplementary view id whose rows differ per participant",
     ["a-official.json", KNOWN_MODEL_A, 88],
     ["b-official.json", KNOWN_MODEL_B, 74],
   ]) {
+    const sourceUrl = `https://example.com/official-results/${name}`;
     await writeFile(
       path.join(directory, name),
       `${JSON.stringify(
@@ -405,7 +403,7 @@ test("accepts a shared supplementary view id whose rows differ per participant",
           title: "Components",
           columns: ["Component", "Score"],
           rows: [{ cells: ["Language", value] }],
-        }),
+        }, sourceUrl),
         null,
         2,
       )}\n`,
@@ -416,6 +414,110 @@ test("accepts a shared supplementary view id whose rows differ per participant",
     evalCount: 1,
     evalIds: ["sample-eval"],
   });
+});
+
+test("accepts a legacy published result without coverage metadata during migration", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  await writeFile(
+    path.join(directory, "legacy.json"),
+    `${JSON.stringify(makePublishedResult(), null, 2)}\n`,
+  );
+
+  assert.deepEqual(await validateRepository(root), {
+    evalCount: 1,
+    evalIds: ["sample-eval"],
+  });
+});
+
+test("accepts official result coverage with omitted unregistered models", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  await writeFile(
+    path.join(directory, "official.json"),
+    `${JSON.stringify(
+      makePublishedResult("https://example.com/official-results", {
+        official_result_count: 3,
+        omitted_models: [
+          { model: "vendor/unregistered-model-a", reason: "unregistered" },
+          { model: "vendor/unregistered-model-b", reason: "unregistered" },
+        ],
+      }),
+      null,
+      2,
+    )}\n`,
+  );
+
+  assert.deepEqual(await validateRepository(root), {
+    evalCount: 1,
+    evalIds: ["sample-eval"],
+  });
+});
+
+test("rejects an official result coverage count that does not match the envelope", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  await writeFile(
+    path.join(directory, "official.json"),
+    `${JSON.stringify(
+      makePublishedResult("https://example.com/official-results", {
+        official_result_count: 2,
+      }),
+      null,
+      2,
+    )}\n`,
+  );
+
+  await expectInvalid(
+    root,
+    /source\.official_result_count must equal results\.length \+ omitted_models\.length/,
+  );
+});
+
+test("rejects an omitted model that is also present in results", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  await writeFile(
+    path.join(directory, "official.json"),
+    `${JSON.stringify(
+      makePublishedResult("https://example.com/official-results", {
+        official_result_count: 2,
+        omitted_models: [
+          { model: KNOWN_MODEL_A, reason: "unregistered" },
+        ],
+      }),
+      null,
+      2,
+    )}\n`,
+  );
+
+  await expectInvalid(
+    root,
+    /omitted_models cannot include a model present in results/,
+  );
+});
+
+test("rejects splitting one official source snapshot across result files", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  const directory = path.join(evalDir, "published-results");
+  await mkdir(directory);
+  await Promise.all(
+    ["a-official.json", "b-official.json"].map((name) =>
+      writeFile(
+        path.join(directory, name),
+        `${JSON.stringify(makePublishedResult(), null, 2)}\n`,
+      ),
+    ),
+  );
+
+  await expectInvalid(
+    root,
+    /published-results cannot contain the same official source in multiple JSON files/,
+  );
 });
 
 test("rejects credentials embedded in a published result source URL", async (t) => {

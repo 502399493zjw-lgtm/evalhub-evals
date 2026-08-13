@@ -17,15 +17,35 @@ function runParticipantKey(participant) {
         participant.harness_version ?? null,
     ]);
 }
-export function validateResultForEval(context, resultFile) {
+export function validateResultForEval(context, resultFile, options = {}) {
     const issues = [];
     let teamGamesShowcaseCount = 0;
     // Derived from the provenance block, not the optional kind tag -- a file that
     // omits the tag is still an upstream publication, and origin gates the
     // run-only cardinality, identity and score rules below.
-    const origin = isUpstreamAuthorPublicationSubmission(resultFile.submission)
+    const upstreamSubmission = isUpstreamAuthorPublicationSubmission(resultFile.submission)
+        ? resultFile.submission
+        : null;
+    const origin = upstreamSubmission
         ? "upstream_author_publication"
         : "run";
+    if (upstreamSubmission && options.requireOfficialResultCount) {
+        const source = upstreamSubmission.source;
+        const omittedModels = source.omitted_models ?? [];
+        const resultModels = new Set(resultFile.results.map((result) => result.participant.model));
+        if (source.official_result_count === undefined) {
+            issues.push(customIssue(["submission", "source", "official_result_count"], "upstream_author_publication requires source.official_result_count when requireOfficialResultCount is enabled"));
+        }
+        else if (source.official_result_count !==
+            resultFile.results.length + omittedModels.length) {
+            issues.push(customIssue(["submission", "source", "official_result_count"], "source.official_result_count must equal results.length + omitted_models.length"));
+        }
+        for (const [index, omitted] of omittedModels.entries()) {
+            if (resultModels.has(omitted.model)) {
+                issues.push(customIssue(["submission", "source", "omitted_models", index, "model"], "omitted_models cannot include a model present in results"));
+            }
+        }
+    }
     if (resultFile.eval_id !== context.id) {
         issues.push(customIssue(["eval_id"], `result eval_id must match eval.id "${context.id}"`));
     }
