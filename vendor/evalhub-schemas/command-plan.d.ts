@@ -27,4 +27,29 @@ export type UnavailableEvalCommandPlan = {
     reason: "custom_runner_command_unavailable" | "custom_runner_input_required";
 };
 export type EvalCommandPlan = AvailableEvalCommandPlan | UnavailableEvalCommandPlan;
+/**
+ * The only command EvalHub is allowed to execute in the source-first workflow:
+ * a declared result adapter over a real upstream result.
+ *
+ * This intentionally has no `submitArgv` or rendered shell pipeline. The
+ * broader `EvalCommandPlan` below remains exported for platform/history
+ * compatibility while its builtin `evalhub run` shape is migrated away.
+ */
+export type ResultAdapterPlanOptions = {
+    input: string;
+    output?: string | undefined;
+};
+export type ResultAdapterPlan = {
+    argv: string[];
+    input: string;
+    output: string;
+};
+export declare function buildResultAdapterPlan(commandTemplate: CommandTemplate, options: ResultAdapterPlanOptions): ResultAdapterPlan;
+/**
+ * @deprecated Platform/history compatibility only.
+ *
+ * This renderer still describes the historical run/submit lifecycle for
+ * callers that have not migrated. The CLI must not execute this plan; use
+ * `buildResultAdapterPlan` for source-first `evalhub pack`.
+ */
 export declare function buildEvalCommandPlan(evalDef: EvalCommandDefinition, options?: EvalCommandPlanOptions): EvalCommandPlan;

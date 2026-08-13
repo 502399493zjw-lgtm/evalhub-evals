@@ -646,6 +646,12 @@ const UpstreamPublicationTitleSchema = z
     .refine((value) => !CONTROL_CHARACTERS.test(value), {
     message: "must not contain control characters",
 });
+const OfficialResultOmittedModelSchema = z
+    .object({
+    model: ParticipantModelSchema,
+    reason: z.literal("unregistered"),
+})
+    .strict();
 export const UpstreamAuthorPublicationSubmissionSchema = z
     .object({
     // Optional for the same reason RunSubmissionSchema's kind is: the tag is
@@ -681,8 +687,30 @@ export const UpstreamAuthorPublicationSubmissionSchema = z
         snapshot_sha256: z
             .string()
             .regex(/^[0-9a-f]{64}$/, "source.snapshot_sha256 must be 64 lowercase hexadecimal characters"),
+        // The upstream source may publish more model rows than EvalHub can
+        // map into its canonical registry. These fields are optional at the
+        // base envelope layer so legacy publications and completed runs remain
+        // readable; the repository publication gate opts into requiring the
+        // count and checking its relationship to results.
+        official_result_count: z.number().int().positive().safe().optional(),
+        omitted_models: z.array(OfficialResultOmittedModelSchema).optional(),
     })
-        .strict(),
+        .strict()
+        .superRefine((source, ctx) => {
+        const seen = new Set();
+        for (const [index, omitted] of (source.omitted_models ?? []).entries()) {
+            if (seen.has(omitted.model)) {
+                ctx.addIssue({
+                    code: "custom",
+                    path: ["omitted_models", index, "model"],
+                    message: "omitted_models model names must be unique",
+                });
+            }
+            else {
+                seen.add(omitted.model);
+            }
+        }
+    }),
 })
     .strict();
 export const ResultSubmissionSchema = z.union([

@@ -1,13 +1,17 @@
 {
-  "schemaContractVersion": "0.1.8",
-  "sourceSha256": "357c06b34fc7725e8dc95754ee9184bbfbb93c7863ec81c28d0d2b6aa815b72d",
+  "schemaContractVersion": "0.1.9",
+  "sourceSha256": "d240d2ea5cd9f9be92053ff7f5889c461cf17f3a4884aa2436ca4c8db8dd6e8e",
   "sourceFiles": [
     "agent-brief.ts",
+    "authors.ts",
+    "cli-package.ts",
     "command-plan.ts",
     "eval-def.ts",
     "index.ts",
     "participant-for-eval.ts",
+    "reader-copy.ts",
     "result-for-eval.ts",
-    "result.ts"
+    "result.ts",
+    "run-eval-brief.ts"
   ]
 }

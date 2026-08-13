@@ -544,6 +544,38 @@ export declare const EvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
     resources_note?: string | undefined;
 }>;
 export type EvalDetailProfile = z.infer<typeof EvalDetailProfileSchema>;
+/** 每道题最多挂的演示媒体条数：示例区是说明位，不是相册。 */
+export declare const MAX_TASK_MEDIA_ITEMS = 4;
+/**
+ * 题目示例的演示媒体（图片/视频）：视频、3D 白模类评测在详情页示例区展示
+ * 上游发布的演示素材（用户拍板 2026-08-10）。
+ *
+ * 校验口径整体镜像 detail_profile.figures：src/source_url 走同一条
+ * EvalReferenceUrlSchema（无凭证 HTTPS、同一长度上限），alt 是 a11y 硬要求
+ * （同 figures[].alt 的 240 上限），caption 上限同 figures[].caption。
+ * 与 figures 的差异：caption 与 source_url 可选——示例媒体是题面的随行说明，
+ * 不是独立的成绩证据模块；但声明了 source_url 时详情页会如实标注来源。
+ */
+export declare const EvalTaskMediaSchema: z.ZodObject<{
+    type: z.ZodEnum<["image", "video"]>;
+    src: z.ZodEffects<z.ZodString, string, string>;
+    alt: z.ZodEffects<z.ZodString, string, string>;
+    caption: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+    source_url: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+}, "strict", z.ZodTypeAny, {
+    type: "image" | "video";
+    src: string;
+    alt: string;
+    source_url?: string | undefined;
+    caption?: string | undefined;
+}, {
+    type: "image" | "video";
+    src: string;
+    alt: string;
+    source_url?: string | undefined;
+    caption?: string | undefined;
+}>;
+export type EvalTaskMedia = z.infer<typeof EvalTaskMediaSchema>;
 type EvalDefRefinementValue = {
     scoring: "exact" | "judge" | "custom";
     scored_by: "local" | "author";
@@ -583,6 +615,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     id: z.ZodString;
     hackathon_id: z.ZodOptional<z.ZodString>;
     protocol_revision: z.ZodDefault<z.ZodNumber>;
+    protocol_note: z.ZodOptional<z.ZodString>;
     name: z.ZodString;
     category: z.ZodEnum<["fun", "useful"]>;
     description: z.ZodString;
@@ -1100,6 +1133,25 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         run_spec: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         translation: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         expected: z.ZodOptional<z.ZodString>;
+        media: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            type: z.ZodEnum<["image", "video"]>;
+            src: z.ZodEffects<z.ZodString, string, string>;
+            alt: z.ZodEffects<z.ZodString, string, string>;
+            caption: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+            source_url: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+        }, "strict", z.ZodTypeAny, {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }, {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }>, "many">>;
     }, "strip", z.ZodTypeAny, {
         prompt: string;
         expected?: string | undefined;
@@ -1107,6 +1159,13 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }, {
         prompt: string;
         expected?: string | undefined;
@@ -1114,6 +1173,13 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
     description: string;
@@ -1137,6 +1203,13 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }[];
     score_policy?: "required" | "author_fill" | undefined;
     command_template?: {
@@ -1145,6 +1218,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     } | undefined;
     custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
+    protocol_note?: string | undefined;
     hook_title?: string | undefined;
     references?: {
         homepage?: string | undefined;
@@ -1241,6 +1315,13 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
     baseline_policy?: "required" | "optional" | undefined;
@@ -1252,6 +1333,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     protocol_revision?: number | undefined;
+    protocol_note?: string | undefined;
     hook_title?: string | undefined;
     references?: {
         homepage?: string | undefined;
@@ -1355,6 +1437,13 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }[];
     score_policy?: "required" | "author_fill" | undefined;
     command_template?: {
@@ -1363,6 +1452,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     } | undefined;
     custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
+    protocol_note?: string | undefined;
     hook_title?: string | undefined;
     references?: {
         homepage?: string | undefined;
@@ -1459,6 +1549,13 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
     baseline_policy?: "required" | "optional" | undefined;
@@ -1470,6 +1567,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     protocol_revision?: number | undefined;
+    protocol_note?: string | undefined;
     hook_title?: string | undefined;
     references?: {
         homepage?: string | undefined;
@@ -1574,6 +1672,13 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }[];
     command_template?: {
         argv: string[];
@@ -1581,6 +1686,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     } | undefined;
     custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
+    protocol_note?: string | undefined;
     hook_title?: string | undefined;
     references?: {
         homepage?: string | undefined;
@@ -1677,6 +1783,13 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
     baseline_policy?: "required" | "optional" | undefined;
@@ -1688,6 +1801,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     protocol_revision?: number | undefined;
+    protocol_note?: string | undefined;
     hook_title?: string | undefined;
     references?: {
         homepage?: string | undefined;
@@ -1797,6 +1911,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     id: z.ZodString;
     hackathon_id: z.ZodOptional<z.ZodString>;
     protocol_revision: z.ZodDefault<z.ZodNumber>;
+    protocol_note: z.ZodOptional<z.ZodString>;
     name: z.ZodString;
     category: z.ZodEnum<["fun", "useful"]>;
     description: z.ZodString;
@@ -2314,6 +2429,25 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         run_spec: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         translation: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         expected: z.ZodOptional<z.ZodString>;
+        media: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            type: z.ZodEnum<["image", "video"]>;
+            src: z.ZodEffects<z.ZodString, string, string>;
+            alt: z.ZodEffects<z.ZodString, string, string>;
+            caption: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+            source_url: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+        }, "strict", z.ZodTypeAny, {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }, {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }>, "many">>;
     }, "strip", z.ZodTypeAny, {
         prompt: string;
         expected?: string | undefined;
@@ -2321,6 +2455,13 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }, {
         prompt: string;
         expected?: string | undefined;
@@ -2328,6 +2469,13 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
     description: string;
@@ -2351,6 +2499,13 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }[];
     score_policy?: "required" | "author_fill" | undefined;
     command_template?: {
@@ -2359,6 +2514,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     } | null | undefined;
     custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
+    protocol_note?: string | undefined;
     hook_title?: string | undefined;
     references?: {
         homepage?: string | undefined;
@@ -2455,6 +2611,13 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
     baseline_policy?: "required" | "optional" | undefined;
@@ -2466,6 +2629,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     protocol_revision?: number | undefined;
+    protocol_note?: string | undefined;
     hook_title?: string | undefined;
     references?: {
         homepage?: string | undefined;
@@ -2569,6 +2733,13 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }[];
     score_policy?: "required" | "author_fill" | undefined;
     command_template?: {
@@ -2577,6 +2748,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     } | null | undefined;
     custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
+    protocol_note?: string | undefined;
     hook_title?: string | undefined;
     references?: {
         homepage?: string | undefined;
@@ -2673,6 +2845,13 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
     baseline_policy?: "required" | "optional" | undefined;
@@ -2684,6 +2863,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     protocol_revision?: number | undefined;
+    protocol_note?: string | undefined;
     hook_title?: string | undefined;
     references?: {
         homepage?: string | undefined;
@@ -2788,6 +2968,13 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }[];
     command_template?: {
         argv: string[];
@@ -2795,6 +2982,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     } | null | undefined;
     custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
+    protocol_note?: string | undefined;
     hook_title?: string | undefined;
     references?: {
         homepage?: string | undefined;
@@ -2891,6 +3079,13 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         id?: string | undefined;
         run_spec?: string | undefined;
         translation?: string | undefined;
+        media?: {
+            type: "image" | "video";
+            src: string;
+            alt: string;
+            source_url?: string | undefined;
+            caption?: string | undefined;
+        }[] | undefined;
     }[];
     leaderboard?: "latest_session" | "rating" | undefined;
     baseline_policy?: "required" | "optional" | undefined;
@@ -2902,6 +3097,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     custom_mode?: "executable" | "external_workflow" | undefined;
     hackathon_id?: string | undefined;
     protocol_revision?: number | undefined;
+    protocol_note?: string | undefined;
     hook_title?: string | undefined;
     references?: {
         homepage?: string | undefined;

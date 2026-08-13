@@ -444,12 +444,37 @@ export const EvalDetailProfileSchema = z
         }
     }
 });
+/** 每道题最多挂的演示媒体条数：示例区是说明位，不是相册。 */
+export const MAX_TASK_MEDIA_ITEMS = 4;
+/**
+ * 题目示例的演示媒体（图片/视频）：视频、3D 白模类评测在详情页示例区展示
+ * 上游发布的演示素材（用户拍板 2026-08-10）。
+ *
+ * 校验口径整体镜像 detail_profile.figures：src/source_url 走同一条
+ * EvalReferenceUrlSchema（无凭证 HTTPS、同一长度上限），alt 是 a11y 硬要求
+ * （同 figures[].alt 的 240 上限），caption 上限同 figures[].caption。
+ * 与 figures 的差异：caption 与 source_url 可选——示例媒体是题面的随行说明，
+ * 不是独立的成绩证据模块；但声明了 source_url 时详情页会如实标注来源。
+ */
+export const EvalTaskMediaSchema = z
+    .object({
+    type: z.enum(["image", "video"]),
+    src: EvalReferenceUrlSchema,
+    alt: requiredDetailProfileText(240, "tasks[].media[].alt"),
+    caption: requiredDetailProfileText(500, "tasks[].media[].caption").optional(),
+    source_url: EvalReferenceUrlSchema.optional(),
+})
+    .strict();
 const evalDefShape = {
     id: EvalIdSchema,
     hackathon_id: EvalIdSchema.optional(),
     // 单调递增的计分协议版本。展示文案、README、引用链接或官方基线更新不应升版；
     // 任务、运行方式、主分数、同分规则等可比性语义变化时必须递增。
     protocol_revision: z.number().int().positive().default(1),
+    // 平台按可比性字段子集计算 protocol_hash 推进成绩锚点；此字段作为作者显式
+    // 宣告协议的逃生舱（例如 custom runner 的计分代码在目录里不在 yaml 里），
+    // 取值变化即视为协议变更。省略不影响哈希。
+    protocol_note: z.string().max(512).optional(),
     name: z.string().min(1),
     category: z.enum(["fun", "useful"]),
     description: z.string().min(1),
@@ -526,6 +551,11 @@ const evalDefShape = {
         })
             .optional(),
         expected: z.string().optional(),
+        // 演示媒体（图片/视频）。缺省 = 无媒体：详情页什么都不渲染，不摆占位。
+        media: z
+            .array(EvalTaskMediaSchema)
+            .max(MAX_TASK_MEDIA_ITEMS, `tasks[].media 最多 ${MAX_TASK_MEDIA_ITEMS} 条`)
+            .optional(),
     }))
         .min(1),
 };
@@ -563,6 +593,7 @@ function refineEvalDef(value, ctx, requireCustomCommandTemplate) {
     }
     if (requireCustomCommandTemplate &&
         v.runner === "custom" &&
+        v.custom_mode !== "external_workflow" &&
         !v.command_template) {
         ctx.addIssue({
             code: "custom",
@@ -580,6 +611,8 @@ function refineEvalDef(value, ctx, requireCustomCommandTemplate) {
     const inputPlaceholders = v.command_template?.argv.filter((arg) => arg === "{input}").length ?? 0;
     if (v.runner === "custom" &&
         v.custom_mode === "external_workflow" &&
+        v.command_template !== undefined &&
+        v.command_template !== null &&
         inputPlaceholders !== 1) {
         ctx.addIssue({
             code: "custom",
