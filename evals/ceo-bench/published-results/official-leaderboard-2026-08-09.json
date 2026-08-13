@@ -7,7 +7,8 @@
     "source": {
       "title": "CEO-Bench 官方榜单",
       "url": "https://ceobench.com",
-      "snapshot_sha256": "97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292"
+      "snapshot_sha256": "97475ea055b55a7b83d7917cc6b8defaab82f3fdeaf216b16ef8c54e8f31b292",
+      "official_result_count": 18
     }
   },
   "results": [
