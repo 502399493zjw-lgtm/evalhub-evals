@@ -7,7 +7,8 @@
     "source": {
       "title": "Leaderboard - Evolvent AI（RSIBench-Data 条目）",
       "url": "https://evolvent.co/en/leaderboard",
-      "snapshot_sha256": "23eedd5ea35981a0830573c4beea2b8d1f20e9841481238f35bda95cfa006789"
+      "snapshot_sha256": "23eedd5ea35981a0830573c4beea2b8d1f20e9841481238f35bda95cfa006789",
+      "official_result_count": 5
     }
   },
   "results": [
