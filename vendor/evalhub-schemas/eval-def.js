@@ -404,6 +404,7 @@ const DetailProfileResourceSchema = z
 export const EvalDetailProfileSchema = z
     .object({
     source_kind: z.enum(["evalhub_native", "upstream_publication"]),
+    markdown: z.string().max(100_000).optional(),
     overview_note: requiredDetailProfilePlainText(600, "detail_profile.overview_note").optional(),
     summary: DetailProfileSummarySchema,
     method_steps: z.array(DetailProfileMethodStepSchema).min(2).max(6),

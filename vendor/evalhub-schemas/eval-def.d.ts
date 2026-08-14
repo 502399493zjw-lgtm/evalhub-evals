@@ -104,6 +104,7 @@ export type UpstreamSource = z.infer<typeof UpstreamSourceSchema>;
  */
 export declare const EvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
     source_kind: z.ZodEnum<["evalhub_native", "upstream_publication"]>;
+    markdown: z.ZodOptional<z.ZodString>;
     overview_note: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
     summary: z.ZodObject<{
         plain_language: z.ZodEffects<z.ZodString, string, string>;
@@ -320,6 +321,7 @@ export declare const EvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
         why_it_matters: string;
     };
     source_kind: "evalhub_native" | "upstream_publication";
+    markdown?: string | undefined;
     method_steps: {
         title: string;
         description: string;
