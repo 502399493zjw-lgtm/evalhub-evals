@@ -720,14 +720,10 @@ async function validatePublishedResults(
         supplementaryContracts,
         errors,
       );
-      const source = generic.data.submission.source;
-      const hasCoverageMetadata =
-        source?.official_result_count !== undefined ||
-        source?.omitted_models !== undefined;
       const contextual = validateResultForEval(
         parsedEval,
         generic.data,
-        { requireOfficialResultCount: hasCoverageMetadata },
+        { requireOfficialResultCount: true },
       );
       if (!contextual.success) {
         errors.push(fileError(filePath, formatIssues(contextual.error)));
