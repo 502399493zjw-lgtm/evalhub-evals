@@ -42,285 +42,132 @@ trials: 1
 detail_profile:
   source_kind: upstream_publication
   markdown: |-
-    ---
-    summary: 把失败证据变成真正管用的训练数据
-    summaryDetail: 这套评测看的不是模型会不会答题，而是研究者 Agent 能不能根据失败证据设计数据、训练检查点，再用固定协议把最可靠的结果交付出来。
-    ---
+    **RSIBench-Data** 是一个数据中心型后训练研究评测：它不只看模型能不能答对题，而是看研究者 Agent 能不能从失败证据出发，合成训练数据、训练出检查点、读取评测反馈，并在固定预算内选出最可靠的候选。
 
-    ## 这套评测在看什么
+    > 这是上游作者公开结果的整理页。本文中的官方成绩、成本和图片均标注了来源口径；EvalHub 没有独立复跑，也不代表上游作者对 EvalHub 的认证或背书。
 
-    RSIBench-Data 把一次后训练研究压缩成一条可核验的实验链路：目标模型、训练后端、检查点服务、评测沙箱和预算都固定，研究者 Agent 只能修改新合成的数据与白名单训练配置。
+    ## 评测目标
 
-    :::callout
-    训练数据必须来自非评测的公开来源。评测任务、补丁、测试、轨迹和标签都不能被复制、过滤或蒸馏进训练集。
-    :::
+    目标模型固定为 `Qwen/Qwen3.5-35B-A3B-Base`。训练后端、检查点服务、E2B 工具调用代理、Harbor 评测环境、任务子集和预算边界都固定，研究者 Agent 能改变的主要是新合成训练数据与白名单训练配置。
+
+    训练数据必须来自非评测的公开来源。评测任务、补丁、测试、轨迹和标签不得被复制、过滤、改写或蒸馏进训练集；训练前需要完成污染审计。
+
+    ## 固定运行协议
+
+    每个 profile 都是一次独立的名义 **16 小时墙钟 / 500 USD Tinker** 预算运行。Agent 通过 Tinker LoRA SFT 训练检查点，再接入 E2B 与 Harbor 做选择性评测，预算用尽前锁定最终检查点，之后由官方在全新环境中完成复评。
+
+    | Profile | 数据集或子集 | Agent | 分母 | 解码次数 | 权重 |
+    | --- | --- | --- | ---: | ---: | ---: |
+    | swe-bench-verified | seed-23 随机 100 题 SWE-bench Verified | mini-swe-agent | 100 | 1 | 0.2 |
+    | swe-bench-multilingual | seed-23 随机 100 题 SWE-bench Multilingual | mini-swe-agent | 100 | 1 | 0.2 |
+    | swe-bench-pro | seed-23 随机 100 题 SWE-bench Pro | mini-swe-agent | 100 | 1 | 0.2 |
+    | terminal-bench-2 | terminal-bench 2.0 | terminus-2 | 89 | 1 | 0.2 |
+    | gpqa-diamond | seed-23 随机 100 题 GPQA Diamond | terminus-2 | 100 | 1 | 0.1 |
+    | aime | MathArena AIME 2026 完整 30 题 | terminus-2 | 120（30 × 4） | 4 | 0.1 |
+
+    六个 profile 的分项分数按官方权重加权：SWE-bench Verified、SWE-bench Multilingual、SWE-bench Pro、Terminal-Bench 2.0 各占 0.2，GPQA Diamond 与 AIME 2026 各占 0.1。
 
     ## 一次运行怎么走
 
-    1. **锁定协议** 固定目标模型、六个 benchmark profile、Harbor 评测 agent、任务子集、并发数、步数上限和预算边界。
-    2. **诊断失败** 阅读允许查看的基线材料，提出关于失败模式的假设，并完成训练前污染审计。
-    3. **合成与训练** 新建训练数据，经 Tinker LoRA SFT 生成检查点，再接入 E2B 与 Harbor 做选择性复评。
-    4. **根据反馈迭代** 比较不同任务类型、校验策略和失败模式覆盖的变化，而不是只更换随机种子。
-    5. **选定检查点** 在预算用尽前锁定最终候选，之后由官方在全新环境按同一 profile 复评。
+    1. **锁定协议**：固定目标模型、profile、数据子集、Harbor agent、并发数、步数上限、解码次数和预算。
+    2. **诊断失败**：阅读允许查看的基线材料，提出失败模式假设，完成训练前污染审计。
+    3. **合成与训练**：新建 `train_messages.jsonl`，通过 Tinker LoRA SFT 生成 `tinker://` 检查点。
+    4. **读取反馈**：用 E2B 工具调用代理接入 Harbor，比较不同任务类型、校验策略和失败模式覆盖的变化。
+    5. **选择候选**：在预算用尽前选定最终检查点，不能在官方复评之后改选。
+    6. **官方复评**：官方按同一 profile 的固定数据、并发、步数与判定器复跑，得到可公开核验的分项成绩。
 
-    ## 成绩怎么读
+    ## 官方榜单结果
 
-    六个 profile 的官方分项成绩按榜单权重合成为百分制总分。SWE-bench Verified、SWE-bench Multilingual、SWE-bench Pro 与 Terminal-Bench 2.0 各占 0.2，GPQA Diamond 与 AIME 2026 各占 0.1；总分越高越好。
+    下表是 2026-08-09 官方榜单快照。前三个总分由官方榜单直接显示；`Opus-4.8` 和 `gpt-5.6-terra` 的总分是 EvalHub 按同一官方公式对公开六项成绩计算出的派生值。
 
-    详情页下方的配置表、结果表和资源索引仍来自同一份 `eval.yaml`，方便从叙述直接追到固定分母、来源链接和原始图表。
+    | 排名 | 编排模型 | Harness | 总分 | 口径 |
+    | ---: | --- | --- | ---: | --- |
+    | 1 | Kimi K3 | Kimi Code | 27.317 | 官方榜单直接显示 |
+    | 2 | gpt-5.6-sol | Codex | 27.277 | 官方榜单直接显示 |
+    | 3 | Sonnet-5 | Claude Code | 23.441 | 官方榜单直接显示 |
+    | 4 | Opus-4.8 | Claude Code | 22.305 | 按官方公式派生 |
+    | 5 | gpt-5.6-terra | Codex | 22.005 | 按官方公式派生 |
 
-    参考：[论文](https://arxiv.org/abs/2607.25886v1) · [官方榜单](https://evolvent.co/en/leaderboard) · [项目仓库](https://github.com/evolvent-ai/RSIBench-Data)
-  overview_note: >-
-    下面的协议说明来自 RSIBench-Data 论文（arXiv:2607.25886v1，2026-07-28）、官方研究文章（2026-07-29）与钉死在
-    commit 4c807610 的作者仓库；各研究者 Agent 的官方分项成绩来自 Evolvent AI 官方榜单页与 rsibench.co 官方矩阵页
-    2026-08-09 的快照。两个页面重叠的 Base model 与论文四个研究者 Agent 共 5×6=30 个分项分数逐格一致；
-    Kimi K3 + Kimi Code 的六项成绩只见于后续 Evolvent AI 榜单。
-  summary:
-    plain_language: >-
-      被评的不是模型答题，而是一个研究者 Agent 的实验能力：它先看目标模型 Qwen/Qwen3.5-35B-A3B-Base 在某个基准上错在哪，
-      提出关于失败原因的假设，合成一批新的训练数据，用固定的 Tinker LoRA SFT 训一个检查点，把检查点放进 Harbor/E2B 沙箱测分，
-      再根据反馈修改下一轮数据策略。训练后端、服务链路、评测器和预算都被锁死，Agent 唯一能改的就是数据与白名单训练配置。
-    why_it_matters: >-
-      后训练里最依赖人工经验、最难自动化的一环就是"拿到失败证据之后该造什么数据"。把训练、部署、评测都做成固定服务之后，
-      研究者之间的主要差异就落在数据策略与白名单训练配置上，而不会混入各自重写部署或评测栈的影响。
-      这一步能不能自动化，直接决定模型自我改进的循环能不能真的闭上。
-  method_steps:
-    - title: 锁死基础设施与评测边界
-      description: >-
-        每个 profile 固定目标模型、LoRA SFT 训练后端与可调配置边界、检查点服务路径、Harbor 评测 agent、任务子集、
-        评测指标与复评协议，以及名义 16 小时墙钟和 500 USD Tinker 预算。Agent 不能重写官方评测器、替换服务栈，
-        也不能通过基础设施改动绕开评测目标。
-    - title: 给出诊断材料和隔离红线
-      description: >-
-        Agent 拿到公开种子任务、工具与环境规格、目标模型的基线诊断产物和明确的预算合同。它可以查阅这些材料理解失败模式，
-        但不得复制、改写、过滤或蒸馏评测任务与其产物；训练数据必须新合成于非评测的公开来源，训练前还要跑一次污染审计。
-    - title: 合成数据并真实训练
-      description: >-
-        每次尝试写出 train_messages.jsonl，经 Tinker LoRA SFT 得到一个 tinker:// 采样检查点，再由 E2B 工具调用代理
-        接入 Harbor，用该 profile 锁定的评测 agent（SWE 三项用 mini-swe-agent，其余用 terminus-2）跑分。
-    - title: 读反馈再改策略
-      description: >-
-        每轮拿到选择性评测分数和允许查看的轨迹证据后，Agent 需要判断哪类任务变好、哪类变差、是否有上下文溢出或提交失败，
-        并据此调整任务类型配比、校验强度、失败模式覆盖与真实代码接地，而不是只换随机种子或堆同质数据。
-    - title: 先选检查点再官方复评
-      description: >-
-        预算用尽前必须选定一个最可靠的检查点提交，之后官方复评在全新环境里按该 profile 固定的数据集顺序、并发数与步数复跑，
-        得到该 profile 的官方分项分数；没有官方复评结果的运行不算完成。
-    - title: 六项加权成一个总分
-      description: >-
-        六个 profile 各自独立跑一次，分项分数按官方榜单公布的权重加权：SWE-bench Verified、SWE-bench Multilingual、
-        SWE-bench Pro、Terminal-Bench 2.0 各 0.2，GPQA Diamond 与 AIME 2026 各 0.1。
-  score_interpretation: >-
-    分数是百分制加权总分，越高越好，单位是分，理论上限 100。它衡量的是研究者 Agent 选定检查点在六个基准上的绝对官方复评表现，
-    而不是相对基线的增益，也不是研究者 Agent 自己的答题水平。比较边界：同一个来源 commit、同一个目标模型 Qwen/Qwen3.5-35B-A3B-Base、
-    同一套 Harbor/E2B 复评协议、同一组固定分母，以及每项名义 16 小时与 500 USD 的预算。用官网权重对未微调 Base model
-    六项分数计算得到的派生参照分是 13.124 分：低于它说明这一轮数据与白名单配置反而拖累了模型。
-  key_facts:
-    - value: 6 个基准
-      label: 覆盖软件工程、终端操作、科学问答与竞赛数学
-      description: SWE-bench Verified / Multilingual / Pro、Terminal-Bench 2.0、GPQA Diamond、AIME 2026，各自独立跑一次预算运行。
-      source_url: https://rsibench.co/data/
-    - value: Qwen/Qwen3.5-35B-A3B-Base
-      label: 所有研究者共用的固定目标模型
-      description: 通过共享 Tinker 服务做 LoRA SFT，训练后端与服务链路对所有参赛者一致。
-      source_url: https://arxiv.org/abs/2607.25886v1
-    - value: 16 小时 / 500 USD
-      label: 每次运行的名义墙钟与 Tinker 预算
-      description: 预算对所有研究者相同，用尽前必须选定并提交最终检查点。
-      source_url: https://arxiv.org/abs/2607.25886v1
-    - value: 58.33%
-      label: 能在反馈后找到更好候选的设定占比
-      description: 24 个 Agent×基准设定里有 14 个出现了优于首个有效尝试的后续候选。
-      source_url: https://arxiv.org/abs/2607.25886v1
-    - value: 78.26%
-      label: 冲过最佳分后反而收在更差候选的搜索占比
-      description: 23 条越过历史最佳后仍继续搜索的轨迹里，18 条最终尝试低于历史最佳，其余只是打平，没有一条超越。
-      source_url: https://arxiv.org/abs/2607.25886v1
-    - value: 13.124 分（派生）
-      label: 未微调目标模型的加权参照分
-      description: 用官网同一套权重对官方矩阵里的 Base model 六项分数加权得到；官网计算代码不把 Base 列入参赛排名。
-      source_url: https://evolvent.co/en/leaderboard
-  caveats:
-    - title: 总分权重来自官方榜单，不是论文指标
-      description: >-
-        六项权重（SWE 三项与 Terminal-Bench 2.0 各 0.2，GPQA Diamond 与 AIME 2026 各 0.1）与由此得到的加权总分，
-        由 Evolvent AI 官方榜单页公布并显示到小数点后三位；论文与 rsibench.co 矩阵页只给分项成绩，明确指出没有一个研究者
-        在六项上全面领先。跨基准比较请以分项为主，总分是官方排序口径而非能力总量。
-    - title: 每项只有一次预设代表性运行
-      description: >-
-        官方复评对每个 Agent×基准只报告一个预先指定的代表性设定（AIME 内部为每题 4 次解码取平均）。它检验的是协议下的
-        可复现性，而不是留出集泛化，也不含跨运行方差。单格分数的随机波动无法从公开数据估计。
-    - title: 榜单第五位缺少资源数据，且不在论文主实验内
-      description: >-
-        论文主实验是 4 个研究者 Agent；官方榜单额外列出 Kimi K3 + Kimi Code 的六项分项成绩，但没有给它的用时与 Tinker 成本。
-        因此官方分项表的资源列只为论文里的 4 个 Agent 填入来源原值；Kimi 对应单元格保持空值并显示为“—”，不表示 0，
-        也没有用其他 Agent 的数字补齐。
-    - title: 两个官方页面的两格成本数字不一致
-      description: >-
-        两页重叠的 Base model 与论文四个研究者 Agent 共 30 个分项分数逐格一致，但资源数据有两格不同：
-        Claude Code · Sonnet-5 的 Terminal-Bench 2.0 成本为 156.93 与 157.85，Codex · gpt-5.6-sol 的
-        AIME 2026 成本为 63.65 与 63.87。本目录统一采用榜单页数值并在视图注释里标出差异，不做平均或取舍推断。
-    - title: 复现成本高，且依赖付费第三方服务
-      description: >-
-        跑满一个 profile 需要 Tinker 训练额度、E2B 沙箱额度和研究者 Agent 自身的推理开销；官方矩阵里单项 Tinker 成本
-        最高到 363.77 USD、单项用时最长到 14.91 小时。这不是能在本地免费复跑的评测。
-    - title: 上游仓库的许可边界仅见 README 徽章
-      description: >-
-        作者仓库 README 徽章指向 CC BY-NC 4.0，但固定 commit 内没有 LICENSE 文件，GitHub API 也未识别出许可证；
-        官方文章页及其托管图片没有另列许可，论文 v1 则标注 CC BY 4.0，因此本页三张图只引用 arXiv 论文版本。
-        本目录只转录公开数值与必要协议描述，不搬运上游数据集、轨迹或产物。官方分项和前三名总分是来源转录，
-        另外两个总分明确标为派生；均不是 EvalHub 独立复跑，EvalHub 也未获得上游认证或背书。
-  overview_tables:
-    - id: benchmark-profiles
-      label: Profile 配置
-      title: 六个 profile 锁定的评测配置
-      note: 逐格转录自 commit 4c807610 的 benchmarks/<key>/spec.json 与仓库 README 的 Benchmark Profiles 表。
-      caption: 这些配置对所有研究者 Agent 相同，Agent 不能修改其中任何一项。
-      source_url: https://github.com/evolvent-ai/RSIBench-Data/blob/4c807610243e7b481d382c5ed360c71c79a22f61/README.md
-      columns:
-        - { id: profile, label: TARGET_BENCHMARK }
-        - { id: dataset, label: 官方数据集 }
-        - { id: agent, label: Harbor 评测 agent }
-        - { id: tasks, label: 任务数 }
-        - { id: attempts, label: 每题解码次数 }
-        - { id: factories, label: 种子工厂白名单 }
-      rows:
-        - id: swe-bench-verified
-          cells:
-            - { column_id: profile, value: swe-bench-verified }
-            - { column_id: dataset, value: 本地 seed-23 随机 100 题 SWE-bench Verified 子集 }
-            - { column_id: agent, value: mini-swe-agent }
-            - { column_id: tasks, value: "100" }
-            - { column_id: attempts, value: "1" }
-            - { column_id: factories, value: SWE-smith、SWE-Gym、swe-factory }
-        - id: swe-bench-multilingual
-          cells:
-            - { column_id: profile, value: swe-bench-multilingual }
-            - { column_id: dataset, value: 本地 seed-23 随机 100 题 SWE-bench Multilingual 子集 }
-            - { column_id: agent, value: mini-swe-agent }
-            - { column_id: tasks, value: "100" }
-            - { column_id: attempts, value: "1" }
-            - { column_id: factories, value: SWE-smith、SWE-Gym、swe-factory }
-        - id: swe-bench-pro
-          cells:
-            - { column_id: profile, value: swe-bench-pro }
-            - { column_id: dataset, value: 本地 seed-23 随机 100 题 SWE-bench Pro 子集（取自 731 题 test split） }
-            - { column_id: agent, value: mini-swe-agent }
-            - { column_id: tasks, value: "100" }
-            - { column_id: attempts, value: "1" }
-            - { column_id: factories, value: SWE-smith、SWE-Gym、swe-factory }
-        - id: terminal-bench-2
-          cells:
-            - { column_id: profile, value: terminal-bench-2 }
-            - { column_id: dataset, value: terminal-bench/terminal-bench-2 }
-            - { column_id: agent, value: terminus-2 }
-            - { column_id: tasks, value: "89" }
-            - { column_id: attempts, value: "1" }
-            - { column_id: factories, value: endless-terminals、tmax }
-        - id: gpqa-diamond
-          cells:
-            - { column_id: profile, value: gpqa-diamond }
-            - { column_id: dataset, value: 本地 seed-23 随机 100 题 GPQA Diamond 子集（取自 198 题数据集） }
-            - { column_id: agent, value: terminus-2 }
-            - { column_id: tasks, value: "100" }
-            - { column_id: attempts, value: "1" }
-            - { column_id: factories, value: synthetic-data-kit }
-        - id: aime
-          cells:
-            - { column_id: profile, value: aime }
-            - { column_id: dataset, value: MathArena AIME 2026 完整 30 题 }
-            - { column_id: agent, value: terminus-2 }
-            - { column_id: tasks, value: "30" }
-            - { column_id: attempts, value: "4" }
-            - { column_id: factories, value: synthetic-data-kit }
-    - id: score-weights
-      label: 权重与分母
-      title: 总分权重、固定分母与分项指标口径
-      note: 权重与总分口径转录自官方榜单页 2026-08-09 快照；固定分母与指标口径转录自 commit 4c807610 的 spec.json。
-      caption: 权重之和为 1，加权结果即官方榜单显示的总分。
-      source_url: https://evolvent.co/en/leaderboard
-      columns:
-        - { id: benchmark, label: 分项 }
-        - { id: weight, label: 权重 }
-        - { id: denominator, label: 固定分母 }
-        - { id: metric, label: 指标口径 }
-      rows:
-        - id: swe-bench-verified
-          cells:
-            - { column_id: benchmark, value: SWE-bench Verified }
-            - { column_id: weight, value: "0.2" }
-            - { column_id: denominator, value: "100" }
-            - { column_id: metric, value: issue 专属测试判定的 resolved rate }
-        - id: swe-bench-multilingual
-          cells:
-            - { column_id: benchmark, value: SWE-bench Multilingual }
-            - { column_id: weight, value: "0.2" }
-            - { column_id: denominator, value: "100" }
-            - { column_id: metric, value: 各语言专属测试判定的 resolved rate }
-        - id: swe-bench-pro
-          cells:
-            - { column_id: benchmark, value: SWE-bench Pro }
-            - { column_id: weight, value: "0.2" }
-            - { column_id: denominator, value: "100" }
-            - { column_id: metric, value: issue 专属测试判定的 resolved rate }
-        - id: terminal-bench-2
-          cells:
-            - { column_id: benchmark, value: Terminal-Bench 2.0 }
-            - { column_id: weight, value: "0.2" }
-            - { column_id: denominator, value: "89" }
-            - { column_id: metric, value: terminal-bench 任务校验器判定的通过率 }
-        - id: gpqa-diamond
-          cells:
-            - { column_id: benchmark, value: GPQA Diamond }
-            - { column_id: weight, value: "0.1" }
-            - { column_id: denominator, value: "100" }
-            - { column_id: metric, value: 答案文件精确匹配的 accuracy }
-        - id: aime
-          cells:
-            - { column_id: benchmark, value: AIME 2026 }
-            - { column_id: weight, value: "0.1" }
-            - { column_id: denominator, value: 120（30 题 × 4 次解码） }
-            - { column_id: metric, value: 整数答案精确匹配的 avg@4 accuracy }
-  figures:
-    - id: motivation
-      label: 研究动机
-      title: RSIBench-Data 的动机图
-      src: https://arxiv.org/html/2607.25886v1/x1.png
-      alt: 对比多项后训练选择彼此混杂的现有评测，与隔离数据中心型研究能力的 RSIBench-Data 设计。
-      caption: 论文图 1：固定外围栈后，评测聚焦于研究者 Agent 通过受限接口开展数据中心型后训练研究的能力。
-      source_url: https://arxiv.org/html/2607.25886v1
-    - id: framework
-      label: 框架
-      title: RSIBench-Data 的框架图
-      src: https://arxiv.org/html/2607.25886v1/x2.png
-      alt: 展示研究者 Agent 在共享训练、服务、评测与预算控制下迭代训练数据策略并选择检查点的实验框架。
-      caption: 论文图 2：目标模型、外围服务和官方评测固定，Agent 通过受限训练接口迭代数据策略与白名单配置。
-      source_url: https://arxiv.org/html/2607.25886v1
-    - id: trajectories
-      label: 候选轨迹
-      placement: insights
-      title: 官方候选轨迹图
-      src: https://arxiv.org/html/2607.25886v1/x3.png
-      alt: 按时间顺序排列各次有效尝试得分的折线图，星号标出首次达到该运行历史最佳的候选。
-      caption: 论文图 3：星号标出首次触及历史最佳选择分的候选，折线保留各次有效尝试的原始顺序。
-      source_url: https://arxiv.org/html/2607.25886v1
-  resources_note: 下面只列上游作者、论文托管方或官方站点提供的一手资料。
-  resources:
-    - title: RSIBench-Data 论文（arXiv:2607.25886v1）
-      summary: 上游主协议、固定栈设计、四个研究者 Agent 的主实验与 58.33% / 78.26% 两项结论的权威来源，2026-07-28 提交。
-      url: https://arxiv.org/abs/2607.25886v1
-    - title: RSIBench-Data 官方作者仓库
-      summary: profile 规格、Harbor/E2B 评测路径、Tinker 训练脚本、数据隔离规则与研究者 Agent 提示词的来源，已钉死到 commit 4c807610。
-      url: https://github.com/evolvent-ai/RSIBench-Data
-    - title: Evolvent AI 官方榜单页
-      summary: 六项权重、各研究者分项成绩与加权总分的权威来源，本目录所有官方成绩均取自其 2026-08-09 快照。
-      url: https://evolvent.co/en/leaderboard
-    - title: rsibench.co 官方矩阵页
-      summary: 官方分项成绩、用时与 Tinker 成本的完整矩阵，用于逐格交叉核对榜单页数值。
-      url: https://rsibench.co/data/
-    - title: 官方研究文章
-      summary: 协议动机、四类强轨迹行为、Kimi-K2.6 同族 RSI 实验与官方研究图的发布页，2026-07-29 发布。
-      url: https://evolvent.co/en/research/RSIBench-Data
+    ## 六项分项成绩
+
+    分项成绩是官方复评通过率或精确匹配准确率，统一以百分比展示。Base model 一行只用于参照，不属于参赛排名。
+
+    | 编排模型 | SWE Verified | SWE Multilingual | SWE Pro | Terminal-Bench 2.0 | GPQA Diamond | AIME 2026 |
+    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+    | Kimi K3 | 50.00% | 11.00% | 17.00% | 9.00% | 55.00% | 44.17% |
+    | gpt-5.6-sol | 33.00% | 15.00% | 9.00% | 20.22% | 65.00% | 53.33% |
+    | Sonnet-5 | 35.00% | 22.00% | 4.00% | 5.62% | 52.00% | 49.17% |
+    | Opus-4.8 | 46.00% | 5.00% | 2.00% | 10.11% | 56.00% | 40.83% |
+    | gpt-5.6-terra | 42.00% | 6.00% | 1.00% | 12.36% | 64.00% | 33.33% |
+
+    计算方式为：
+
+    ```text
+    total = 0.2 × SWE Verified
+          + 0.2 × SWE Multilingual
+          + 0.2 × SWE Pro
+          + 0.2 × Terminal-Bench 2.0
+          + 0.1 × GPQA Diamond
+          + 0.1 × AIME 2026
+    ```
+
+    用同一组权重对官方矩阵中的未微调 Base model 六项成绩计算，得到 **13.124 分**的派生参照分。它不是参赛结果；低于它只能说明该候选在这套固定协议下没有超过未微调参照。
+
+    ## 资源与运行成本
+
+    资源数据只做展示，不进入评分。数值来自官方榜单快照，对每个模型的六个 profile 求和；Kimi K3 没有公开资源数据，因此用 `—` 表示缺失，不表示 0。
+
+    | 编排模型 | 六项合计小时 | 六项合计 Tinker USD |
+    | --- | ---: | ---: |
+    | Kimi K3 | — | — |
+    | gpt-5.6-sol | 42.89 | 577.83 |
+    | Sonnet-5 | 63.24 | 885.27 |
+    | Opus-4.8 | 44.94 | 674.05 |
+    | gpt-5.6-terra | 21.49 | 351.31 |
+
+    两个官方页面有两处成本差异：Sonnet-5 的 Terminal-Bench 2.0 为 `156.93` USD（榜单）对 `157.85` USD（rsibench.co 矩阵），gpt-5.6-sol 的 AIME 2026 为 `63.65` USD（榜单）对 `63.87` USD（矩阵）。本文统一采用官方榜单快照中的数值，不做平均或推算。
+
+    ## 任务案例与研究观察
+
+    评测任务不是单一问答题，而是围绕失败证据组织的研究循环：
+
+    - **软件工程案例**：在 SWE-bench Verified、Multilingual 和 Pro 中，Agent 需要让训练后的检查点完成真实代码仓库中的 issue，并通过专属测试。
+    - **终端操作案例**：在 Terminal-Bench 2.0 中，Agent 需要通过 `terminus-2` 完成终端环境里的工具与系统任务。
+    - **科学问答案例**：在 GPQA Diamond 中，Agent 面对研究生级科学问题，按答案文件精确匹配计分。
+    - **竞赛数学案例**：在 AIME 2026 中，每题进行 4 次解码，按整数答案精确匹配计算 `avg@4`。
+    - **反馈驱动迭代**：Agent 应根据选择性评测反馈调整数据构成、验证策略和失败模式覆盖，而不是只更换随机种子或堆叠同质样本。
+
+    论文报告了两个值得注意的搜索行为：24 个 Agent × 基准设定中有 14 个在反馈后找到过优于首个有效尝试的候选，即 **58.33%**；23 条曾越过历史最佳后继续搜索的轨迹中有 18 条最终收在更差候选，其余打平，没有一条再创新高，即 **78.26%**。这些观察描述的是公开研究轨迹，不是本地复跑统计。
+
+    ## 图片与研究框架
+
+    ![RSIBench-Data 的研究动机图](https://arxiv.org/html/2607.25886v1/x1.png)
+
+    论文图 1：固定外围训练、服务和评测栈后，把评测焦点放在研究者 Agent 的数据中心型后训练能力上。
+
+    ![RSIBench-Data 的实验框架图](https://arxiv.org/html/2607.25886v1/x2.png)
+
+    论文图 2：目标模型、共享服务、Harbor 评测和预算控制保持一致，Agent 通过受限接口迭代数据策略并选择检查点。
+
+    ![官方候选轨迹图](https://arxiv.org/html/2607.25886v1/x3.png)
+
+    论文图 3：按时间顺序展示有效尝试得分，星号标记首次达到该运行历史最佳的候选。
+
+    ## 证据边界与局限
+
+    - 这是上游作者发布结果的转录，不是 EvalHub 独立复跑；所有比较都应限定在相同来源 commit、目标模型和复评协议内。
+    - 每个 Agent × 基准只公开一个预设代表性运行，AIME 在每题内部使用 4 次解码；公开数据无法估计跨运行方差，也不是留出集泛化测试。
+    - 榜单额外列出的 Kimi K3 不在论文四个研究者 Agent 的主实验内，且没有公开用时和 Tinker 成本。
+    - 跑满一个 profile 需要 Tinker、E2B 和 Agent 推理额度，公开矩阵中的单项成本最高达到 363.77 USD、单项用时最长达到 14.91 小时，不能视为本地免费评测。
+    - 上游仓库 README 的许可证徽章指向 CC BY-NC 4.0，但固定 commit 没有 LICENSE 文件；本文只引用论文托管的图片，不搬运上游数据集、轨迹或产物。
+
+    ## 一手资料
+
+    - [RSIBench-Data 论文（arXiv:2607.25886v1）](https://arxiv.org/abs/2607.25886v1)：主协议、固定栈设计和研究观察。
+    - [RSIBench-Data 作者仓库](https://github.com/evolvent-ai/RSIBench-Data)：profile 规格、Harbor/E2B 路径、Tinker 训练脚本和数据隔离规则，固定 commit `4c807610243e7b481d382c5ed360c71c79a22f61`。
+    - [Evolvent AI 官方榜单](https://evolvent.co/en/leaderboard)：六项权重、分项成绩与官方总分快照（2026-08-09）。
+    - [rsibench.co 官方矩阵](https://rsibench.co/data/)：分项成绩、用时与 Tinker 成本的交叉核对来源。
+    - [官方研究文章](https://evolvent.co/en/research/RSIBench-Data)：协议动机和研究图的发布页。
 tasks:
   - id: swe-bench-verified
     label: SWE-bench Verified profile
