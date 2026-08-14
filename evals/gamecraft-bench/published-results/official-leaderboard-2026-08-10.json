@@ -7,7 +7,22 @@
     "source": {
       "title": "GameCraft-Bench 官方项目页 Leaderboard（12 条官方记录：Overall 与四类分项，140 题全量；2026-08-10 快照）",
       "url": "https://tongxuluo.github.io/gamecraft-bench-website/",
-      "snapshot_sha256": "c4b823a7440574a7eae53746742dc5119dd4f2493809982a490de89f913cf168"
+      "snapshot_sha256": "c4b823a7440574a7eae53746742dc5119dd4f2493809982a490de89f913cf168",
+      "official_result_count": 12,
+      "omitted_models": [
+        {
+          "model": "Seele02-pro",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Deepseek-V4-Flash-0731",
+          "reason": "unregistered"
+        },
+        {
+          "model": "MiniMax-M2.7",
+          "reason": "unregistered"
+        }
+      ]
     }
   },
   "results": [
