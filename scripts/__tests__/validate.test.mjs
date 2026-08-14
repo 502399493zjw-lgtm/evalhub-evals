@@ -221,8 +221,42 @@ test("vendored schemas keep source owner and maintainer semantics explicit", () 
   });
 });
 
+test("vendored schemas accept only safe repository-owned raster cover paths", () => {
+  assert.equal(
+    EvalDefSchema.parse({ ...validEval, cover: "assets/cover.webp" }).cover,
+    "assets/cover.webp",
+  );
+  for (const cover of [
+    "../cover.webp",
+    "/cover.webp",
+    "assets\\cover.webp",
+    "assets/cover.svg",
+  ]) {
+    assert.throws(() => EvalDefSchema.parse({ ...validEval, cover }));
+  }
+});
+
 test("validates a complete repository with the shared contracts", async (t) => {
   const { root } = await makeFixture(t);
+
+  assert.deepEqual(await validateRepository(root), {
+    evalCount: 1,
+    evalIds: ["sample-eval"],
+  });
+});
+
+test("validates a complete repository with a declared raster cover", async (t) => {
+  const { root, evalDir } = await makeFixture(t);
+  await Promise.all([
+    writeFile(
+      path.join(evalDir, "eval.yaml"),
+      `${validEvalYaml}cover: assets/cover.webp\n`,
+    ),
+    writeFile(
+      path.join(evalDir, "assets", "cover.webp"),
+      Buffer.from("524946460000000057454250", "hex"),
+    ),
+  ]);
 
   assert.deepEqual(await validateRepository(root), {
     evalCount: 1,

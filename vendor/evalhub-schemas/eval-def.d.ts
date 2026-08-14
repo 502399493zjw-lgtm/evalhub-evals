@@ -1,5 +1,6 @@
 import { z } from "zod";
 export declare const EvalIdSchema: z.ZodString;
+export declare const EvalCoverPathSchema: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
 export declare const CommandOutputSchema: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
 export declare const CommandOutputOverrideSchema: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
 export declare const CommandInputOverrideSchema: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
@@ -620,6 +621,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     category: z.ZodEnum<["fun", "useful"]>;
     description: z.ZodString;
     hook_title: z.ZodOptional<z.ZodString>;
+    cover: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
     references: z.ZodOptional<z.ZodEffects<z.ZodObject<{
         homepage: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         paper: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
@@ -1220,6 +1222,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -1335,6 +1338,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     protocol_revision?: number | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -1454,6 +1458,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -1569,6 +1574,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     protocol_revision?: number | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -1688,6 +1694,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -1803,6 +1810,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     protocol_revision?: number | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -1916,6 +1924,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     category: z.ZodEnum<["fun", "useful"]>;
     description: z.ZodString;
     hook_title: z.ZodOptional<z.ZodString>;
+    cover: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
     references: z.ZodOptional<z.ZodEffects<z.ZodObject<{
         homepage: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         paper: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
@@ -2516,6 +2525,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     hackathon_id?: string | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -2631,6 +2641,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     protocol_revision?: number | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -2750,6 +2761,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     hackathon_id?: string | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -2865,6 +2877,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     protocol_revision?: number | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -2984,6 +2997,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     hackathon_id?: string | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -3099,6 +3113,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     protocol_revision?: number | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;

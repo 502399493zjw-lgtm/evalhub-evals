@@ -4,7 +4,14 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import { validateEvalContent } from "../content-security.mjs";
+import { CONTENT_LIMITS, validateEvalContent } from "../content-security.mjs";
+
+const RASTER_FIXTURES = Object.freeze({
+  avif: Buffer.from("00000010667479706176696600000000", "hex"),
+  jpg: Buffer.from("ffd8ff", "hex"),
+  png: Buffer.from("89504e470d0a1a0a", "hex"),
+  webp: Buffer.from("524946460000000057454250", "hex"),
+});
 
 async function fixture(t, parsedEval = { runner: "builtin" }) {
   const root = await mkdtemp(path.join(os.tmpdir(), "evalhub-content-"));
@@ -30,6 +37,115 @@ test("accepts the supported text-only eval package", async (t) => {
   assert.deepEqual(
     await validateEvalContent({ evalDir, slug: "sample-eval", parsedEval }),
     [],
+  );
+});
+
+test("accepts each supported raster format only when it is the declared cover", async (t) => {
+  for (const [extension, bytes] of Object.entries(RASTER_FIXTURES)) {
+    await t.test(extension, async () => {
+      const cover = `assets/cover.${extension}`;
+      const { evalDir } = await fixture(t, { runner: "builtin", cover });
+      await writeFile(path.join(evalDir, cover), bytes);
+
+      assert.deepEqual(
+        await validateEvalContent({
+          evalDir,
+          slug: "sample-eval",
+          parsedEval: { runner: "builtin", cover },
+        }),
+        [],
+      );
+    });
+  }
+});
+
+test("rejects missing, unsupported, mismatched, oversized, and undeclared covers", async (t) => {
+  const missing = await fixture(t, {
+    runner: "builtin",
+    cover: "assets/missing.webp",
+  });
+  assert.match(
+    messages(
+      await validateEvalContent({
+        evalDir: missing.evalDir,
+        slug: "sample-eval",
+        parsedEval: missing.parsedEval,
+      }),
+    ),
+    /cover must reference an existing regular file/u,
+  );
+
+  const unsupported = await fixture(t, {
+    runner: "builtin",
+    cover: "assets/cover.svg",
+  });
+  await writeFile(path.join(unsupported.evalDir, "assets", "cover.svg"), "<svg/>\n");
+  assert.match(
+    messages(
+      await validateEvalContent({
+        evalDir: unsupported.evalDir,
+        slug: "sample-eval",
+        parsedEval: unsupported.parsedEval,
+      }),
+    ),
+    /cover must use avif, jpeg, png, or webp/u,
+  );
+
+  const mismatched = await fixture(t, {
+    runner: "builtin",
+    cover: "assets/cover.webp",
+  });
+  await writeFile(
+    path.join(mismatched.evalDir, "assets", "cover.webp"),
+    RASTER_FIXTURES.png,
+  );
+  assert.match(
+    messages(
+      await validateEvalContent({
+        evalDir: mismatched.evalDir,
+        slug: "sample-eval",
+        parsedEval: mismatched.parsedEval,
+      }),
+    ),
+    /cover bytes do not match the declared image format/u,
+  );
+
+  const oversized = await fixture(t, {
+    runner: "builtin",
+    cover: "assets/cover.png",
+  });
+  await writeFile(
+    path.join(oversized.evalDir, "assets", "cover.png"),
+    Buffer.concat([
+      RASTER_FIXTURES.png,
+      Buffer.alloc(CONTENT_LIMITS.maxCoverBytes + 1 - RASTER_FIXTURES.png.length),
+    ]),
+  );
+  assert.match(
+    messages(
+      await validateEvalContent({
+        evalDir: oversized.evalDir,
+        slug: "sample-eval",
+        parsedEval: oversized.parsedEval,
+      }),
+    ),
+    new RegExp(`file exceeds ${CONTENT_LIMITS.maxCoverBytes} bytes`, "u"),
+  );
+
+  const undeclared = await fixture(t);
+  await writeFile(
+    path.join(undeclared.evalDir, "assets", "cover.png"),
+    RASTER_FIXTURES.png,
+  );
+  assert.match(
+    messages(
+      await validateEvalContent({
+        evalDir: undeclared.evalDir,
+        slug: "sample-eval",
+        parsedEval: undeclared.parsedEval,
+      }),
+    ),
+    /file must be valid UTF-8 text/u,
   );
 });
 

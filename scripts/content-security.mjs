@@ -7,12 +7,14 @@ export const CONTENT_LIMITS = Object.freeze({
   maxFiles: 150,
   maxTotalBytes: 25 * 1024 * 1024,
   maxTextBytes: 2 * 1024 * 1024,
+  maxCoverBytes: 2 * 1024 * 1024,
   maxImageBytes: 8 * 1024 * 1024,
   maxPathBytes: 240,
   maxDepth: 8,
 });
 
 const IMAGE_EXTENSIONS = new Set([".svg"]);
+const RASTER_COVER_EXTENSIONS = new Set([".avif", ".jpeg", ".jpg", ".png", ".webp"]);
 const BIDI_OR_CONTROL = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f\u202a-\u202e\u2066-\u2069]/u;
 const LFS_POINTER = /^version https:\/\/git-lfs\.github\.com\/spec\/v1\s*$/mu;
 const SECRET_PATTERNS = [
@@ -45,6 +47,55 @@ function hasExecutableOrArchiveMagic(bytes) {
 
 function decodeUtf8(bytes) {
   return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+}
+
+function isSafeRelativeCoverPath(value) {
+  if (
+    typeof value !== "string" ||
+    value.length === 0 ||
+    value.includes("\\") ||
+    value.startsWith("/") ||
+    value.startsWith("./") ||
+    /^[A-Za-z]:/u.test(value)
+  ) {
+    return false;
+  }
+  return value
+    .split("/")
+    .every((segment) => segment.length > 0 && segment !== "." && segment !== "..");
+}
+
+function matchesRasterCoverSignature(bytes, extension) {
+  if (extension === ".png") {
+    return bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
+  }
+  if (extension === ".jpg" || extension === ".jpeg") {
+    return bytes.length >= 3 && bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
+  }
+  if (extension === ".webp") {
+    return (
+      bytes.length >= 12 &&
+      bytes.subarray(0, 4).toString("ascii") === "RIFF" &&
+      bytes.subarray(8, 12).toString("ascii") === "WEBP"
+    );
+  }
+  if (
+    bytes.length < 16 ||
+    bytes.subarray(4, 8).toString("ascii") !== "ftyp"
+  ) {
+    return false;
+  }
+  const boxSize = bytes.readUInt32BE(0);
+  if (boxSize < 16 || boxSize > bytes.length) return false;
+  if (["avif", "avis"].includes(bytes.subarray(8, 12).toString("ascii"))) {
+    return true;
+  }
+  for (let offset = 16; offset + 4 <= boxSize; offset += 4) {
+    if (["avif", "avis"].includes(bytes.subarray(offset, offset + 4).toString("ascii"))) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function validateStructuredText(filePath, extension, source, errors) {
@@ -223,12 +274,30 @@ export async function validateEvalContent({ evalDir, slug, parsedEval = null }) 
     errors.push(problem(evalDir, `contains ${files.length} files; limit is ${CONTENT_LIMITS.maxFiles}`));
   }
 
+  const declaredCover = parsedEval?.cover;
+  let validatedCoverPath = null;
+  if (declaredCover !== undefined) {
+    const yamlPath = path.join(evalDir, "eval.yaml");
+    if (!isSafeRelativeCoverPath(declaredCover)) {
+      errors.push(problem(yamlPath, "cover must be a safe relative path inside the eval directory"));
+    } else if (!RASTER_COVER_EXTENSIONS.has(path.extname(declaredCover).toLowerCase())) {
+      errors.push(problem(yamlPath, "cover must use avif, jpeg, png, or webp"));
+    } else if (!files.some(({ relativePath }) => relativePath === declaredCover)) {
+      errors.push(problem(yamlPath, "cover must reference an existing regular file"));
+    } else {
+      validatedCoverPath = declaredCover;
+    }
+  }
+
   for (const { filePath, relativePath, metadata } of files) {
     totalBytes += metadata.size;
     const extension = path.extname(relativePath).toLowerCase();
-    const perFileLimit = IMAGE_EXTENSIONS.has(extension)
-      ? CONTENT_LIMITS.maxImageBytes
-      : CONTENT_LIMITS.maxTextBytes;
+    const isDeclaredCover = relativePath === validatedCoverPath;
+    const perFileLimit = isDeclaredCover
+      ? CONTENT_LIMITS.maxCoverBytes
+      : IMAGE_EXTENSIONS.has(extension)
+        ? CONTENT_LIMITS.maxImageBytes
+        : CONTENT_LIMITS.maxTextBytes;
     if (metadata.size > perFileLimit) {
       errors.push(problem(filePath, `file exceeds ${perFileLimit} bytes`));
       continue;
@@ -244,6 +313,10 @@ export async function validateEvalContent({ evalDir, slug, parsedEval = null }) 
     if (hasExecutableOrArchiveMagic(bytes)) {
       errors.push(problem(filePath, "executable, archive, or WebAssembly content is not allowed"));
       continue;
+    }
+    if (isDeclaredCover) {
+      if (matchesRasterCoverSignature(bytes, extension)) continue;
+      errors.push(problem(filePath, "cover bytes do not match the declared image format"));
     }
     let source;
     try {
