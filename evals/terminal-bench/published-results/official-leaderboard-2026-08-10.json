@@ -7,7 +7,18 @@
     "source": {
       "title": "Terminal-Bench 3.0 官方榜单（Frontier-Bench）",
       "url": "https://www.frontierbench.ai/",
-      "snapshot_sha256": "bdbcd87b7eb207333ed3a4c93fe54b162615723d571376d8322ce68332adbbba"
+      "snapshot_sha256": "bdbcd87b7eb207333ed3a4c93fe54b162615723d571376d8322ce68332adbbba",
+      "official_result_count": 9,
+      "omitted_models": [
+        {
+          "model": "anthropic/claude-opus-5",
+          "reason": "unregistered"
+        },
+        {
+          "model": "openai/gpt-5.6-luna",
+          "reason": "unregistered"
+        }
+      ]
     }
   },
   "results": [
