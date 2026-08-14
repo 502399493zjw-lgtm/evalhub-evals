@@ -42,6 +42,35 @@ command_template:
 trials: 1
 detail_profile:
   source_kind: upstream_publication
+  markdown: |-
+    ---
+    summary: 把失败证据变成真正管用的训练数据
+    summaryDetail: 这套评测看的不是模型会不会答题，而是研究者 Agent 能不能根据失败证据设计数据、训练检查点，再用固定协议把最可靠的结果交付出来。
+    ---
+
+    ## 这套评测在看什么
+
+    RSIBench-Data 把一次后训练研究压缩成一条可核验的实验链路：目标模型、训练后端、检查点服务、评测沙箱和预算都固定，研究者 Agent 只能修改新合成的数据与白名单训练配置。
+
+    :::callout
+    训练数据必须来自非评测的公开来源。评测任务、补丁、测试、轨迹和标签都不能被复制、过滤或蒸馏进训练集。
+    :::
+
+    ## 一次运行怎么走
+
+    1. **锁定协议** 固定目标模型、六个 benchmark profile、Harbor 评测 agent、任务子集、并发数、步数上限和预算边界。
+    2. **诊断失败** 阅读允许查看的基线材料，提出关于失败模式的假设，并完成训练前污染审计。
+    3. **合成与训练** 新建训练数据，经 Tinker LoRA SFT 生成检查点，再接入 E2B 与 Harbor 做选择性复评。
+    4. **根据反馈迭代** 比较不同任务类型、校验策略和失败模式覆盖的变化，而不是只更换随机种子。
+    5. **选定检查点** 在预算用尽前锁定最终候选，之后由官方在全新环境按同一 profile 复评。
+
+    ## 成绩怎么读
+
+    六个 profile 的官方分项成绩按榜单权重合成为百分制总分。SWE-bench Verified、SWE-bench Multilingual、SWE-bench Pro 与 Terminal-Bench 2.0 各占 0.2，GPQA Diamond 与 AIME 2026 各占 0.1；总分越高越好。
+
+    详情页下方的配置表、结果表和资源索引仍来自同一份 `eval.yaml`，方便从叙述直接追到固定分母、来源链接和原始图表。
+
+    参考：[论文](https://arxiv.org/abs/2607.25886v1) · [官方榜单](https://evolvent.co/en/leaderboard) · [项目仓库](https://github.com/evolvent-ai/RSIBench-Data)
   overview_note: >-
     下面的协议说明来自 RSIBench-Data 论文（arXiv:2607.25886v1，2026-07-28）、官方研究文章（2026-07-29）与钉死在
     commit 4c807610 的作者仓库；各研究者 Agent 的官方分项成绩来自 Evolvent AI 官方榜单页与 rsibench.co 官方矩阵页
