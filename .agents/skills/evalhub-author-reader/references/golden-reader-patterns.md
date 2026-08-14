@@ -49,7 +49,7 @@ Use this when each participant has one final ranking score plus a source-publish
 }
 ```
 
-If the source only publishes the final score and summary, omit `official-cash-process`. The platform renders the remaining modules and their empty states; an author must not manufacture a process curve to make the page look complete.
+If the source only publishes the final score and summary, omit `official-cash-process`. The Markdown document should present only the supported result; an author must not manufacture a process curve to make the page look complete.
 
 ## Pattern B: multi-benchmark aggregate (RSI-style)
 
@@ -93,7 +93,7 @@ Task examples are independent of aggregate published results:
 - `run_spec` holds EvalHub's own run procedure and is never rendered, so nothing a reader needs may live only there.
 - `translation` is complete when present.
 - Real `task_results` or task-linked showcases may provide model tabs. Never convert leaderboard aggregates, paper prose, or a design mock into fake task outputs or execution traces.
-- Do not add author-supplied “view prompt source” or “view official score source” buttons. Global sources belong in `detail_profile.resources` and result provenance belongs in `submission.source`.
+- Do not add author-supplied “view prompt source” or “view official score source” buttons. Put global first-party links in the Markdown source section and keep result provenance in `submission.source`.
 
 ## Shared-view preflight
 

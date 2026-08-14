@@ -4,87 +4,29 @@ Use this reference while authoring every new or updated evaluation. It is intent
 
 ## Detail-page layers and order
 
-The platform composes three data layers:
+The reader page has two visible layers:
 
-1. Protocol explanation from `eval.yaml > detail_profile`.
-2. Ranked and supplementary published results from reviewed result envelopes.
-3. Execution evidence from real result `task_results` and `showcases`.
+1. the platform-owned standard Hero, produced from evaluation metadata;
+2. one author-owned Markdown document from `eval.yaml > detail_profile.markdown`.
 
-The platform controls a fixed order and fixed reader module names: hero/source; `榜单`; `官方分项结果`; `关于这套评测` (optional `overview_note`, `summary`, `method_steps`, `score_interpretation`, optional `key_facts`, `caveats`, optional `overview_tables`, optional `figures`); `题目案例`; `资料与分析` (optional `resources_note`); footer. Authors provide data, not layout code.
+Reviewed `published-results/*.json`, real-run `task_results`, and `showcases` remain evidence inputs and machine-readable records. When their facts are discussed in the reader document, preserve their provenance and never imply that an upstream publication was an EvalHub run.
 
-The five reader modules remain visible in that order even when their data is absent; the platform renders an explicit empty state inside the missing module. Missing `detail_profile` is tolerated only for already-synced historical records; the evals repository rejects new submissions without it. Invalid historical JSON must degrade by dropping the invalid content and rendering the relevant empty state instead of breaking the page.
+The Markdown outline is adaptive. A result-rich benchmark normally leads with its primary result and breakdowns; a benchmark without comparable results may lead with its goal and protocol. Completeness means that every useful supported fact has a clear place, not that every possible section exists. Never invent a chart, task output, trace, table row, image, or empty module.
 
-Reader completeness means every supported source fact is mapped to the correct module, not that every optional field is populated. Never invent a chart, task output, trace, table row, or image to avoid an empty state.
-
-## `detail_profile` field contract
+## `detail_profile` contract
 
 ```yaml
 detail_profile:
   source_kind: evalhub_native # or upstream_publication
-  overview_note: This explanation is based on the checked-in protocol and primary sources.
-  summary:
-    plain_language: What the model actually has to do.
-    why_it_matters: Why this capability is worth comparing.
-  method_steps:
-    - title: Prepare input
-      description: Where tasks, samples, or the environment come from.
-    - title: Run and score
-      description: How the model responds and how the primary score is produced.
-  score_interpretation: Direction, unit, aggregation, and comparison boundary.
-  key_facts:
-    - value: "100"
-      label: Published task count
-      description: Optional supporting context.
-      source_url: https://official.example.org/source
-  caveats:
-    - title: Result boundary
-      description: Sampling, environment, variance, judging, or extrapolation limit.
-  overview_tables:
-    - id: official-action-space
-      label: Paper table 1
-      title: Agent action space
-      note: Source-published protocol table; no missing cells were inferred.
-      columns:
-        - id: category
-          label: Category
-        - id: action
-          label: Available action
-      rows:
-        - id: database-query
-          cells:
-            - column_id: category
-              value: Database query
-            - column_id: action
-              value: Query business data
-      caption: Structured transcription of the paper table.
-      source_url: https://official.example.org/publication
-  figures:
-    - id: official-overview
-      label: Official figure
-      title: Result figure from the original publication
-      src: https://official.example.org/figure.png
-      alt: Accessible description of axes, series, and supported conclusion.
-      caption: Source-published figure; not an independent EvalHub rerun.
-      source_url: https://official.example.org/publication
-  resources_note: Continue with the official project, paper, and implementation.
-  resources:
-    - title: Official project
-      summary: Method, data, and version details.
-      url: https://official.example.org/project
+  markdown: |-
+    ## Results
+
+    Source-backed reader content starts here.
 ```
 
-Limits:
+`markdown` is a non-empty complete document body below the Hero. It starts at `##`, does not repeat the evaluation name, and uses ordinary Markdown. A Markdown profile is strict and must not contain legacy structured detail fields. Do not add module IDs, HTML, MDX, React, CSS, or layout instructions.
 
-- `plain_language`, `why_it_matters`, and `score_interpretation`: 1–600 characters each.
-- `method_steps`: 2–6; title 1–80, description 1–500.
-- `key_facts`: optional, at most 6; value 1–80, label 1–120, description at most 300, optional source URL.
-- `caveats`: 1–6; title 1–100, description 1–500.
-- `overview_note` and `resources_note`: optional, 1–600 characters each.
-- `overview_tables`: optional, at most 3. Each strict table has a unique stable ID, label at most 40, title at most 120, note at most 500, optional caption at most 500, and a credential-free HTTPS `source_url`. It has 2–8 uniquely identified columns (label at most 80) and 1–30 uniquely identified rows. Each row contains exactly one cell for every declared column, addressed by `column_id`; a cell is non-empty text of at most 500 characters or a finite number.
-- `figures`: optional, at most 3; stable ID matching `^[a-z0-9][a-z0-9-]{0,63}$`; label at most 40, title at most 120, alt at most 240, caption at most 500.
-- `resources`: 1–6; title at most 120, summary at most 300.
-
-All values are bounded plain text and all detail objects reject unknown fields. URLs and image sources must be credential-free HTTPS. Use `overview_tables` only for fixed, source-backed protocol, environment, or action-space tables; model scores and trends belong in result `supplementary_views`. Do not leave `TODO`, `待补`, literal `placeholder`, or `example.com` scaffold values. Figures render directly without an “open original” action; use caption and resources for provenance.
+Use `references/detail-markdown-authoring.md` for the adaptive outline, image placement, table rules, score-display precision, and preview checklist. Credential-free HTTPS sources and images are allowed. Omit unsupported optional content, `TODO`, `待补`, literal `placeholder`, and `example.com` scaffold values.
 
 ## Task identity contract
 
@@ -226,7 +168,7 @@ There is no dedicated `derived` or `formula` property. If the primary `score` is
 ## Acceptance checklist
 
 - Source kind and protocol version are explicit.
-- Summary, method, score meaning, caveats, and resources meet the minimums.
+- The Markdown body starts at `##`, does not duplicate the Hero, and explains the supported result, protocol, score meaning, caveats, and sources needed by this evaluation.
 - Every fact, figure, and official result maps to the source ledger.
 - No `TODO`, `待补`, literal `placeholder`, `example.com`, repeated example digest, credential-bearing URL, fabricated chart, or implied endorsement remains.
 - Every authored run uses a real `YYYY-MM-DD` calendar date.
@@ -239,4 +181,4 @@ There is no dedicated `derived` or `formula` property. If the primary `score` is
 - The same logical cross-participant line chart reuses an exact `id`, `title`, `label`, `x_label`, and `y_label`; participant-specific series and points remain source-backed.
 - Derived primary scores disclose their formula in `detail`; derived supplementary values disclose it in `note`.
 - Unsupported optional content is omitted rather than filled with guesses.
-- Every overview table has a primary-source URL, complete rows, and stable unique table, column, and row IDs; result metrics are not placed there.
+- Reader-facing scores and percentages use at most one meaningful decimal; stored source artifacts and calculations retain the precision required by their data contract.
