@@ -99,11 +99,479 @@ export declare const UpstreamSourceSchema: z.ZodObject<{
 }>;
 export type UpstreamSource = z.infer<typeof UpstreamSourceSchema>;
 /**
- * 评测详情页的统一编辑型信息结构。该字段只负责解释评测本身；各模型的
- * 官方分项成绩与趋势仍由 result.supplementary_views 承载。
+ * 旧版结构化详情契约。它继续保留，保证已经入库的评测不会因为详情页改成
+ * Markdown 文档而失效。
  */
-export declare const EvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
+declare const LegacyEvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
     source_kind: z.ZodEnum<["evalhub_native", "upstream_publication"]>;
+    overview_note: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
+    summary: z.ZodObject<{
+        plain_language: z.ZodEffects<z.ZodString, string, string>;
+        why_it_matters: z.ZodEffects<z.ZodString, string, string>;
+    }, "strict", z.ZodTypeAny, {
+        plain_language: string;
+        why_it_matters: string;
+    }, {
+        plain_language: string;
+        why_it_matters: string;
+    }>;
+    method_steps: z.ZodArray<z.ZodObject<{
+        title: z.ZodEffects<z.ZodString, string, string>;
+        description: z.ZodEffects<z.ZodString, string, string>;
+    }, "strict", z.ZodTypeAny, {
+        title: string;
+        description: string;
+    }, {
+        title: string;
+        description: string;
+    }>, "many">;
+    score_interpretation: z.ZodEffects<z.ZodString, string, string>;
+    key_facts: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        value: z.ZodEffects<z.ZodString, string, string>;
+        label: z.ZodEffects<z.ZodString, string, string>;
+        description: z.ZodOptional<z.ZodString>;
+        source_url: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
+    }, "strict", z.ZodTypeAny, {
+        value: string;
+        label: string;
+        description?: string | undefined;
+        source_url?: string | undefined;
+    }, {
+        value: string;
+        label: string;
+        description?: string | undefined;
+        source_url?: string | undefined;
+    }>, "many">>;
+    caveats: z.ZodArray<z.ZodObject<{
+        title: z.ZodEffects<z.ZodString, string, string>;
+        description: z.ZodEffects<z.ZodString, string, string>;
+    }, "strict", z.ZodTypeAny, {
+        title: string;
+        description: string;
+    }, {
+        title: string;
+        description: string;
+    }>, "many">;
+    overview_tables: z.ZodOptional<z.ZodArray<z.ZodEffects<z.ZodObject<{
+        id: z.ZodString;
+        label: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
+        title: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
+        note: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
+        columns: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            label: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
+        }, "strict", z.ZodTypeAny, {
+            label: string;
+            id: string;
+        }, {
+            label: string;
+            id: string;
+        }>, "many">;
+        rows: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            cells: z.ZodArray<z.ZodObject<{
+                column_id: z.ZodString;
+                value: z.ZodUnion<[z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, z.ZodNumber]>;
+            }, "strict", z.ZodTypeAny, {
+                value: string | number;
+                column_id: string;
+            }, {
+                value: string | number;
+                column_id: string;
+            }>, "many">;
+        }, "strict", z.ZodTypeAny, {
+            id: string;
+            cells: {
+                value: string | number;
+                column_id: string;
+            }[];
+        }, {
+            id: string;
+            cells: {
+                value: string | number;
+                column_id: string;
+            }[];
+        }>, "many">;
+        caption: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
+        source_url: z.ZodEffects<z.ZodString, string, string>;
+    }, "strict", z.ZodTypeAny, {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        note: string;
+        columns: {
+            label: string;
+            id: string;
+        }[];
+        rows: {
+            id: string;
+            cells: {
+                value: string | number;
+                column_id: string;
+            }[];
+        }[];
+        caption?: string | undefined;
+    }, {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        note: string;
+        columns: {
+            label: string;
+            id: string;
+        }[];
+        rows: {
+            id: string;
+            cells: {
+                value: string | number;
+                column_id: string;
+            }[];
+        }[];
+        caption?: string | undefined;
+    }>, {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        note: string;
+        columns: {
+            label: string;
+            id: string;
+        }[];
+        rows: {
+            id: string;
+            cells: {
+                value: string | number;
+                column_id: string;
+            }[];
+        }[];
+        caption?: string | undefined;
+    }, {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        note: string;
+        columns: {
+            label: string;
+            id: string;
+        }[];
+        rows: {
+            id: string;
+            cells: {
+                value: string | number;
+                column_id: string;
+            }[];
+        }[];
+        caption?: string | undefined;
+    }>, "many">>;
+    figures: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        placement: z.ZodOptional<z.ZodEnum<["overview", "insights"]>>;
+        label: z.ZodEffects<z.ZodString, string, string>;
+        title: z.ZodEffects<z.ZodString, string, string>;
+        src: z.ZodEffects<z.ZodString, string, string>;
+        alt: z.ZodEffects<z.ZodString, string, string>;
+        caption: z.ZodEffects<z.ZodString, string, string>;
+        source_url: z.ZodEffects<z.ZodString, string, string>;
+    }, "strict", z.ZodTypeAny, {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        src: string;
+        alt: string;
+        caption: string;
+        placement?: "overview" | "insights" | undefined;
+    }, {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        src: string;
+        alt: string;
+        caption: string;
+        placement?: "overview" | "insights" | undefined;
+    }>, "many">>;
+    resources_note: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
+    resources: z.ZodArray<z.ZodObject<{
+        title: z.ZodEffects<z.ZodString, string, string>;
+        summary: z.ZodEffects<z.ZodString, string, string>;
+        url: z.ZodEffects<z.ZodString, string, string>;
+    }, "strict", z.ZodTypeAny, {
+        title: string;
+        summary: string;
+        url: string;
+    }, {
+        title: string;
+        summary: string;
+        url: string;
+    }>, "many">;
+}, "strict", z.ZodTypeAny, {
+    summary: {
+        plain_language: string;
+        why_it_matters: string;
+    };
+    source_kind: "evalhub_native" | "upstream_publication";
+    method_steps: {
+        title: string;
+        description: string;
+    }[];
+    score_interpretation: string;
+    caveats: {
+        title: string;
+        description: string;
+    }[];
+    resources: {
+        title: string;
+        summary: string;
+        url: string;
+    }[];
+    markdown?: string | undefined;
+    overview_note?: string | undefined;
+    key_facts?: {
+        value: string;
+        label: string;
+        description?: string | undefined;
+        source_url?: string | undefined;
+    }[] | undefined;
+    overview_tables?: {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        note: string;
+        columns: {
+            label: string;
+            id: string;
+        }[];
+        rows: {
+            id: string;
+            cells: {
+                value: string | number;
+                column_id: string;
+            }[];
+        }[];
+        caption?: string | undefined;
+    }[] | undefined;
+    figures?: {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        src: string;
+        alt: string;
+        caption: string;
+        placement?: "overview" | "insights" | undefined;
+    }[] | undefined;
+    resources_note?: string | undefined;
+}, {
+    summary: {
+        plain_language: string;
+        why_it_matters: string;
+    };
+    source_kind: "evalhub_native" | "upstream_publication";
+    method_steps: {
+        title: string;
+        description: string;
+    }[];
+    score_interpretation: string;
+    caveats: {
+        title: string;
+        description: string;
+    }[];
+    resources: {
+        title: string;
+        summary: string;
+        url: string;
+    }[];
+    markdown?: string | undefined;
+    overview_note?: string | undefined;
+    key_facts?: {
+        value: string;
+        label: string;
+        description?: string | undefined;
+        source_url?: string | undefined;
+    }[] | undefined;
+    overview_tables?: {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        note: string;
+        columns: {
+            label: string;
+            id: string;
+        }[];
+        rows: {
+            id: string;
+            cells: {
+                value: string | number;
+                column_id: string;
+            }[];
+        }[];
+        caption?: string | undefined;
+    }[] | undefined;
+    figures?: {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        src: string;
+        alt: string;
+        caption: string;
+        placement?: "overview" | "insights" | undefined;
+    }[] | undefined;
+    resources_note?: string | undefined;
+}>, {
+    summary: {
+        plain_language: string;
+        why_it_matters: string;
+    };
+    source_kind: "evalhub_native" | "upstream_publication";
+    method_steps: {
+        title: string;
+        description: string;
+    }[];
+    score_interpretation: string;
+    caveats: {
+        title: string;
+        description: string;
+    }[];
+    resources: {
+        title: string;
+        summary: string;
+        url: string;
+    }[];
+    markdown?: string | undefined;
+    overview_note?: string | undefined;
+    key_facts?: {
+        value: string;
+        label: string;
+        description?: string | undefined;
+        source_url?: string | undefined;
+    }[] | undefined;
+    overview_tables?: {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        note: string;
+        columns: {
+            label: string;
+            id: string;
+        }[];
+        rows: {
+            id: string;
+            cells: {
+                value: string | number;
+                column_id: string;
+            }[];
+        }[];
+        caption?: string | undefined;
+    }[] | undefined;
+    figures?: {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        src: string;
+        alt: string;
+        caption: string;
+        placement?: "overview" | "insights" | undefined;
+    }[] | undefined;
+    resources_note?: string | undefined;
+}, {
+    summary: {
+        plain_language: string;
+        why_it_matters: string;
+    };
+    source_kind: "evalhub_native" | "upstream_publication";
+    method_steps: {
+        title: string;
+        description: string;
+    }[];
+    score_interpretation: string;
+    caveats: {
+        title: string;
+        description: string;
+    }[];
+    resources: {
+        title: string;
+        summary: string;
+        url: string;
+    }[];
+    markdown?: string | undefined;
+    overview_note?: string | undefined;
+    key_facts?: {
+        value: string;
+        label: string;
+        description?: string | undefined;
+        source_url?: string | undefined;
+    }[] | undefined;
+    overview_tables?: {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        note: string;
+        columns: {
+            label: string;
+            id: string;
+        }[];
+        rows: {
+            id: string;
+            cells: {
+                value: string | number;
+                column_id: string;
+            }[];
+        }[];
+        caption?: string | undefined;
+    }[] | undefined;
+    figures?: {
+        label: string;
+        title: string;
+        source_url: string;
+        id: string;
+        src: string;
+        alt: string;
+        caption: string;
+        placement?: "overview" | "insights" | undefined;
+    }[] | undefined;
+    resources_note?: string | undefined;
+}>;
+/**
+ * 新版详情契约：平台继续从评测元信息渲染标准 Hero，markdown 是 Hero 下方的
+ * 完整正文。页面不再要求作者把榜单、结果、案例和资源拆成稳定模块；
+ * 这些内容由作者 Skill 按文档结构直接写入 markdown，并由前端统一渲染。
+ */
+declare const MarkdownOnlyDetailProfileSchema: z.ZodObject<{
+    source_kind: z.ZodEnum<["evalhub_native", "upstream_publication"]>;
+    markdown: z.ZodEffects<z.ZodString, string, string>;
+}, "strict", z.ZodTypeAny, {
+    source_kind: "evalhub_native" | "upstream_publication";
+    markdown: string;
+}, {
+    source_kind: "evalhub_native" | "upstream_publication";
+    markdown: string;
+}>;
+export declare const EvalDetailProfileSchema: z.ZodUnion<[z.ZodObject<{
+    source_kind: z.ZodEnum<["evalhub_native", "upstream_publication"]>;
+    markdown: z.ZodEffects<z.ZodString, string, string>;
+}, "strict", z.ZodTypeAny, {
+    source_kind: "evalhub_native" | "upstream_publication";
+    markdown: string;
+}, {
+    source_kind: "evalhub_native" | "upstream_publication";
+    markdown: string;
+}>, z.ZodEffects<z.ZodObject<{
+    source_kind: z.ZodEnum<["evalhub_native", "upstream_publication"]>;
+    /**
+     * 可选的 Markdown 正文。存在时详情页按 Markdown 渲染；结构化字段仍保留，
+     * 作为历史评测和没有迁移正文的兼容回退。
+     */
     markdown: z.ZodOptional<z.ZodString>;
     overview_note: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
     summary: z.ZodObject<{
@@ -270,11 +738,6 @@ export declare const EvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
     }>, "many">>;
     figures: z.ZodOptional<z.ZodArray<z.ZodObject<{
         id: z.ZodString;
-        /**
-         * Figures default to the explanatory "关于这套评测" module. Source figures
-         * that are themselves an official result artifact can opt into the fixed
-         * "官方分项结果" module without requiring eval-specific React code.
-         */
         placement: z.ZodOptional<z.ZodEnum<["overview", "insights"]>>;
         label: z.ZodEffects<z.ZodString, string, string>;
         title: z.ZodEffects<z.ZodString, string, string>;
@@ -321,7 +784,6 @@ export declare const EvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
         why_it_matters: string;
     };
     source_kind: "evalhub_native" | "upstream_publication";
-    markdown?: string | undefined;
     method_steps: {
         title: string;
         description: string;
@@ -336,6 +798,7 @@ export declare const EvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
         summary: string;
         url: string;
     }[];
+    markdown?: string | undefined;
     overview_note?: string | undefined;
     key_facts?: {
         value: string;
@@ -393,6 +856,7 @@ export declare const EvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
         summary: string;
         url: string;
     }[];
+    markdown?: string | undefined;
     overview_note?: string | undefined;
     key_facts?: {
         value: string;
@@ -450,6 +914,7 @@ export declare const EvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
         summary: string;
         url: string;
     }[];
+    markdown?: string | undefined;
     overview_note?: string | undefined;
     key_facts?: {
         value: string;
@@ -507,6 +972,7 @@ export declare const EvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
         summary: string;
         url: string;
     }[];
+    markdown?: string | undefined;
     overview_note?: string | undefined;
     key_facts?: {
         value: string;
@@ -544,7 +1010,9 @@ export declare const EvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
         placement?: "overview" | "insights" | undefined;
     }[] | undefined;
     resources_note?: string | undefined;
-}>;
+}>]>;
+export type LegacyEvalDetailProfile = z.infer<typeof LegacyEvalDetailProfileSchema>;
+export type MarkdownOnlyDetailProfile = z.infer<typeof MarkdownOnlyDetailProfileSchema>;
 export type EvalDetailProfile = z.infer<typeof EvalDetailProfileSchema>;
 /** 每道题最多挂的演示媒体条数：示例区是说明位，不是相册。 */
 export declare const MAX_TASK_MEDIA_ITEMS = 4;
