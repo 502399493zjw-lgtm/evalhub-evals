@@ -82,7 +82,7 @@ tasks:
 
 function makePublishedResult(
   sourceUrl = "https://example.com/official-results",
-  sourceMetadata = {},
+  sourceMetadata = { official_result_count: 1 },
 ) {
   return {
     eval_id: "sample-eval",
@@ -110,6 +110,7 @@ function makeSharedViewResult(
   view,
   sourceUrl = "https://example.com/official-results",
   snapshotSha256 = "a".repeat(64),
+  sourceMetadata = { official_result_count: 1 },
 ) {
   return {
     eval_id: "sample-eval",
@@ -120,6 +121,7 @@ function makeSharedViewResult(
       source: {
         url: sourceUrl,
         snapshot_sha256: snapshotSha256,
+        ...sourceMetadata,
       },
     },
     results: [
@@ -431,19 +433,21 @@ test("accepts a shared supplementary view id whose rows differ per participant",
   });
 });
 
-test("accepts a legacy published result without coverage metadata during migration", async (t) => {
+test("rejects a published result without coverage metadata", async (t) => {
   const { root, evalDir } = await makeFixture(t);
   const directory = path.join(evalDir, "published-results");
   await mkdir(directory);
+  const result = makePublishedResult();
+  delete result.submission.source.official_result_count;
   await writeFile(
     path.join(directory, "legacy.json"),
-    `${JSON.stringify(makePublishedResult(), null, 2)}\n`,
+    `${JSON.stringify(result, null, 2)}\n`,
   );
 
-  assert.deepEqual(await validateRepository(root), {
-    evalCount: 1,
-    evalIds: ["sample-eval"],
-  });
+  await assert.rejects(
+    validateRepository(root),
+    /source\.official_result_count: upstream_author_publication requires source\.official_result_count/u,
+  );
 });
 
 test("accepts official result coverage with omitted unregistered models", async (t) => {

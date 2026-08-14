@@ -107,8 +107,6 @@ function updateOptions({
   baseAuthor = "maintainer",
   headAuthor = baseAuthor,
   changedFiles = [file("evals/sample-eval/README.md")],
-  baseFiles = {},
-  headFiles = {},
 } = {}) {
   return {
     actor,
@@ -117,33 +115,12 @@ function updateOptions({
     base: {
       "evals/sample-eval/AUTHORS": authors(baseAuthor),
       "evals/sample-eval/eval.yaml": baseYaml,
-      ...baseFiles,
     },
     head: {
       "evals/sample-eval/AUTHORS": authors(headAuthor),
       "evals/sample-eval/eval.yaml": headYaml,
-      ...headFiles,
     },
   };
-}
-
-function officialResult({ count, omittedModels, score = 0.75 } = {}) {
-  return `${JSON.stringify({
-    eval_id: "sample-eval",
-    submission: {
-      kind: "upstream_author_publication",
-      importer_version: "sample-eval/importer@1.0.0",
-      retrieved_on: "2026-08-14",
-      source: {
-        title: "Official leaderboard",
-        url: "https://example.com/leaderboard",
-        snapshot_sha256: "a".repeat(64),
-        ...(count === undefined ? {} : { official_result_count: count }),
-        ...(omittedModels === undefined ? {} : { omitted_models: omittedModels }),
-      },
-    },
-    results: [{ participant: { model: "sample-model" }, score }],
-  }, null, 2)}\n`;
 }
 
 test("PR policy reruns when the editable submission marker changes", () => {
@@ -226,46 +203,6 @@ test("organization members are not automatically public-authorized", async () =>
   await expectPolicyError(updateOptions({
     actor: "org-member",
     baseYaml: evalYaml({ upstream: "source-org/source" }),
-  }), "third_party_update_forbidden");
-});
-
-test("allows the repository maintainer to add one-time official coverage metadata", async () => {
-  const resultPath = "evals/sample-eval/published-results/official.json";
-  const result = await evaluate(updateOptions({
-    actor: "502399493zjw-lgtm",
-    body: "",
-    changedFiles: [file(resultPath)],
-    baseFiles: { [resultPath]: officialResult() },
-    headFiles: {
-      [resultPath]: officialResult({
-        count: 2,
-        omittedModels: [{ model: "unregistered-model", reason: "unregistered" }],
-      }),
-    },
-  }));
-  assert.equal(result.mode, "maintainer-official-coverage-migration");
-  assert.equal(result.submissionTask, null);
-});
-
-test("does not let the coverage migration exception modify result data", async () => {
-  const resultPath = "evals/sample-eval/published-results/official.json";
-  await expectPolicyError(updateOptions({
-    actor: "502399493zjw-lgtm",
-    body: "",
-    changedFiles: [file(resultPath)],
-    baseFiles: { [resultPath]: officialResult() },
-    headFiles: { [resultPath]: officialResult({ count: 1, score: 0.9 }) },
-  }), "third_party_update_forbidden");
-});
-
-test("does not let the repository maintainer rewrite existing coverage metadata", async () => {
-  const resultPath = "evals/sample-eval/published-results/official.json";
-  await expectPolicyError(updateOptions({
-    actor: "502399493zjw-lgtm",
-    body: "",
-    changedFiles: [file(resultPath)],
-    baseFiles: { [resultPath]: officialResult({ count: 1 }) },
-    headFiles: { [resultPath]: officialResult({ count: 2 }) },
   }), "third_party_update_forbidden");
 });
 
