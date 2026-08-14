@@ -16,6 +16,8 @@ import { fileURLToPath } from "node:url";
 import {
   buildAgentBrief,
   EvalDefSchema,
+  parseEvalMaintainerText,
+  resolveEvalSourceOwnerHandle,
 } from "@evalhub/schemas";
 import { loadModelRegistry } from "../model-contract.mjs";
 import { validateRepository } from "../validate.mjs";
@@ -202,6 +204,19 @@ test("vendored schemas expose an unavailable brief for evals without a pinned Gi
   assert.match(brief, /当前无法生成运行评测 Brief/);
   assert.match(brief, /一个公开的 GitHub upstream 仓库/);
   assert.match(brief, /不会安装、运行、转换或处理结果/);
+});
+
+test("vendored schemas keep source owner and maintainer semantics explicit", () => {
+  assert.equal(
+    resolveEvalSourceOwnerHandle({
+      upstreamRepository: "zlab-princeton/ceobench-src",
+    }),
+    "zlab-princeton",
+  );
+  assert.deepEqual(parseEvalMaintainerText("@maintainer\n"), {
+    success: true,
+    handle: "maintainer",
+  });
 });
 
 test("validates a complete repository with the shared contracts", async (t) => {

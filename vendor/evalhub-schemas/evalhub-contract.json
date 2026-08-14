@@ -1,6 +1,6 @@
 {
-  "schemaContractVersion": "0.1.9",
-  "sourceSha256": "d240d2ea5cd9f9be92053ff7f5889c461cf17f3a4884aa2436ca4c8db8dd6e8e",
+  "schemaContractVersion": "0.1.10",
+  "sourceSha256": "cd081a6fa376536d959daa85066dda9433770419ae598498168a4e33c0f799ea",
   "sourceFiles": [
     "agent-brief.ts",
     "authors.ts",
@@ -12,6 +12,7 @@
     "reader-copy.ts",
     "result-for-eval.ts",
     "result.ts",
-    "run-eval-brief.ts"
+    "run-eval-brief.ts",
+    "source-owner.ts"
   ]
 }

@@ -3,6 +3,7 @@
 import {
   EvalDefSchema,
   ResultFileSchema,
+  parseEvalMaintainerText,
   validateResultForEval,
 } from "@evalhub/schemas";
 import { lstat, readdir, readFile, realpath } from "node:fs/promises";
@@ -31,9 +32,6 @@ const REQUIRED_FILES = [
   "sample-result.json",
 ];
 const REQUIRED_DIRECTORIES = ["tasks", "assets"];
-const AUTHORS_PLACEHOLDER = "@TODO-github-handle";
-const AUTHORS_HANDLE_PATTERN =
-  /^@[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$/u;
 const MAINTAINER_HANDLE = "@502399493zjw-lgtm";
 const PUBLISHED_RESULT_FILE_MAX_BYTES = 1_048_576;
 const PUBLISHED_RESULTS_TOTAL_MAX_BYTES = 8_388_608;
@@ -360,41 +358,18 @@ async function readAuthorHandle(evalDir, authorsAvailable, errors) {
     return null;
   }
 
-  const meaningfulLines = source
-    .split(/\r?\n/u)
-    .map((line) => line.trim())
-    .filter((line) => line.length > 0 && !line.startsWith("#"));
-  if (meaningfulLines.length !== 1) {
+  const parsed = parseEvalMaintainerText(source);
+  if (!parsed.success) {
     errors.push(
       fileError(
         authorsPath,
-        `AUTHORS: expected exactly one meaningful GitHub handle line; found ${meaningfulLines.length}`,
+        `AUTHORS: ${parsed.message}`,
       ),
     );
     return null;
   }
 
-  const handle = meaningfulLines[0];
-  if (handle === AUTHORS_PLACEHOLDER) {
-    errors.push(
-      fileError(
-        authorsPath,
-        `AUTHORS: ${AUTHORS_PLACEHOLDER} is a scaffold placeholder`,
-      ),
-    );
-    return null;
-  }
-  if (!AUTHORS_HANDLE_PATTERN.test(handle)) {
-    errors.push(
-      fileError(
-        authorsPath,
-        "AUTHORS: meaningful line must be one GitHub handle matching /^@[A-Za-z0-9](?:[A-Za-z0-9]|-(?=[A-Za-z0-9])){0,38}$/",
-      ),
-    );
-    return null;
-  }
-
-  return handle;
+  return `@${parsed.handle}`;
 }
 
 function validateCodeownerForEval(

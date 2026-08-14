@@ -1,7 +1,9 @@
 export { CommandInputOverrideSchema, CommandOutputOverrideSchema, CommandTemplateSchema, CustomRunnerModeSchema, EvalIdSchema, EvalDefSchema, EvalDetailProfileSchema, EvalReferencesSchema, EvalTaskMediaSchema, EvalTiebreakSchema, MAX_TASK_MEDIA_ITEMS, resolveScorePolicy, resolveCustomRunnerMode, StoredEvalDefSchema, UpstreamSourceSchema, } from "./eval-def.js";
 export type { CommandTemplate, CustomRunnerMode, EvalDef, EvalDetailProfile, EvalReferences, EvalTaskMedia, EvalTiebreak, StoredEvalDef, UpstreamSource, } from "./eval-def.js";
-export { EVAL_AUTHORS_HANDLE_PATTERN, EVAL_AUTHORS_PLACEHOLDER, parseEvalAuthorsText, } from "./authors.js";
-export type { EvalAuthorsParseErrorCode, EvalAuthorsParseResult, } from "./authors.js";
+export { EVAL_AUTHORS_HANDLE_PATTERN, EVAL_AUTHORS_PLACEHOLDER, EVAL_MAINTAINER_HANDLE_PATTERN, EVAL_MAINTAINER_PLACEHOLDER, parseEvalAuthorsText, parseEvalMaintainerText, } from "./authors.js";
+export type { EvalAuthorsParseErrorCode, EvalAuthorsParseResult, EvalMaintainerParseErrorCode, EvalMaintainerParseResult, } from "./authors.js";
+export { githubOwnerFromRepositoryIdentity, githubOwnerFromRepositoryUrl, resolveEvalSourceOwnerHandle, } from "./source-owner.js";
+export type { EvalSourceOwnerInput } from "./source-owner.js";
 export { buildAgentBrief } from "./agent-brief.js";
 export type { AgentBriefOptions } from "./agent-brief.js";
 export { buildRunEvalBrief, RunEvalBriefInputError } from "./run-eval-brief.js";
