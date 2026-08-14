@@ -452,6 +452,114 @@ async function requiredText(readText, repository, sha, pathname, source) {
   return contents;
 }
 
+function parseJsonObject(contents, source) {
+  let parsed;
+  try {
+    parsed = JSON.parse(contents);
+  } catch {
+    return null;
+  }
+  if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
+    return null;
+  }
+  return parsed;
+}
+
+function withoutOfficialCoverageMetadata(document) {
+  const source = document?.submission?.source;
+  if (source === null || typeof source !== "object" || Array.isArray(source)) {
+    return null;
+  }
+  const clone = JSON.parse(JSON.stringify(document));
+  delete clone.submission.source.official_result_count;
+  delete clone.submission.source.omitted_models;
+  return clone;
+}
+
+function isOneTimeOfficialCoverageChange(baseContents, headContents, source) {
+  const base = parseJsonObject(baseContents, `base:${source}`);
+  const head = parseJsonObject(headContents, `head:${source}`);
+  if (base === null || head === null) return false;
+
+  const baseSource = base?.submission?.source;
+  const headSource = head?.submission?.source;
+  if (
+    baseSource === null ||
+    typeof baseSource !== "object" ||
+    Array.isArray(baseSource) ||
+    headSource === null ||
+    typeof headSource !== "object" ||
+    Array.isArray(headSource) ||
+    Object.hasOwn(baseSource, "official_result_count") ||
+    Object.hasOwn(baseSource, "omitted_models") ||
+    !Object.hasOwn(headSource, "official_result_count")
+  ) {
+    return false;
+  }
+
+  const omittedModels = headSource.omitted_models ?? [];
+  const results = head.results;
+  if (
+    !Number.isInteger(headSource.official_result_count) ||
+    headSource.official_result_count < 0 ||
+    !Array.isArray(omittedModels) ||
+    !Array.isArray(results) ||
+    headSource.official_result_count !== results.length + omittedModels.length
+  ) {
+    return false;
+  }
+
+  const baseWithoutCoverage = withoutOfficialCoverageMetadata(base);
+  const headWithoutCoverage = withoutOfficialCoverageMetadata(head);
+  return (
+    baseWithoutCoverage !== null &&
+    headWithoutCoverage !== null &&
+    JSON.stringify(baseWithoutCoverage) === JSON.stringify(headWithoutCoverage)
+  );
+}
+
+async function isMaintainerOfficialCoverageMigration({
+  actor,
+  slug,
+  changedFiles,
+  readText,
+  baseRepository,
+  baseSha,
+  headRepository,
+  headSha,
+}) {
+  if (!sameLogin(actor, MAINTAINER_LOGIN)) return false;
+
+  const prefix = `evals/${slug}/published-results/`;
+  if (
+    changedFiles.length === 0 ||
+    changedFiles.some((file) =>
+      file.status !== "modified" ||
+      typeof file.filename !== "string" ||
+      !file.filename.startsWith(prefix) ||
+      !file.filename.endsWith(".json") ||
+      typeof file.previous_filename === "string"
+    )
+  ) {
+    return false;
+  }
+
+  for (const file of changedFiles) {
+    const [baseContents, headContents] = await Promise.all([
+      readText(baseRepository, baseSha, file.filename),
+      readText(headRepository, headSha, file.filename),
+    ]);
+    if (
+      baseContents === null ||
+      headContents === null ||
+      !isOneTimeOfficialCoverageChange(baseContents, headContents, file.filename)
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+
 const GITHUB_OWNER_PATTERN =
   /^[A-Za-z0-9](?:[A-Za-z0-9_.-]{0,38})$/u;
 const GITHUB_REPOSITORY_PATTERN =
@@ -740,7 +848,21 @@ export async function evaluatePullRequestPolicy({
     nativeRepository: baseRepository,
     source: `head:${evalYamlPath}`,
   });
-  if (!sameLogin(actor, baseSourceOwner) && !sameLogin(actor, baseMaintainer)) {
+  const authorizedCommunityUpdate =
+    sameLogin(actor, baseSourceOwner) || sameLogin(actor, baseMaintainer);
+  const maintainerCoverageMigration = authorizedCommunityUpdate
+    ? false
+    : await isMaintainerOfficialCoverageMigration({
+        actor,
+        slug,
+        changedFiles,
+        readText,
+        baseRepository,
+        baseSha,
+        headRepository,
+        headSha,
+      });
+  if (!authorizedCommunityUpdate && !maintainerCoverageMigration) {
     reject(
       "third_party_update_forbidden",
       `@${actor} cannot update eval ${slug}; update access belongs to public author @${baseSourceOwner} or maintainer @${baseMaintainer}`,
@@ -753,7 +875,9 @@ export async function evaluatePullRequestPolicy({
   });
   return {
     ...audit,
-    mode: "community-eval-update",
+    mode: maintainerCoverageMigration
+      ? "maintainer-official-coverage-migration"
+      : "community-eval-update",
     owner: headSourceOwner,
     baseOwner: baseSourceOwner,
     maintainer: baseMaintainer,
