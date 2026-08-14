@@ -6,9 +6,32 @@ const MAX_COMMAND_ARGV_TOKEN_LENGTH = 4096;
 const MAX_COMMAND_OUTPUT_LENGTH = 1024;
 const MAX_COMMAND_INPUT_LENGTH = 4096;
 const MAX_EVAL_REFERENCE_URL_LENGTH = 2048;
+const MAX_EVAL_COVER_PATH_LENGTH = 256;
 const MAX_TASK_LABEL_LENGTH = 80;
 const MAX_TASK_TRANSLATION_LENGTH = 30000;
 export const EvalIdSchema = z.string().regex(/^[a-z0-9][a-z0-9-]{1,63}$/);
+export const EvalCoverPathSchema = z
+    .string()
+    .min(1, "cover 不能为空")
+    .max(MAX_EVAL_COVER_PATH_LENGTH, `cover 最长 ${MAX_EVAL_COVER_PATH_LENGTH} 字符`)
+    .refine((value) => {
+    if (value.includes("\\") ||
+        value.startsWith("/") ||
+        value.startsWith("./") ||
+        /^[A-Za-z]:/u.test(value)) {
+        return false;
+    }
+    const segments = value.split("/");
+    return segments.every((segment) => segment.length > 0 &&
+        segment !== "." &&
+        segment !== ".." &&
+        !CONTROL_CHARACTERS.test(segment));
+}, {
+    message: "cover 必须是评测目录内的安全相对路径",
+})
+    .refine((value) => /\.(?:avif|jpe?g|png|webp)$/iu.test(value), {
+    message: "cover 只支持 avif、jpeg、png 或 webp 图片",
+});
 const CommandArgvTokenSchema = z
     .string()
     .min(1, "command_template.argv token 不能为空")
@@ -479,6 +502,9 @@ const evalDefShape = {
     category: z.enum(["fun", "useful"]),
     description: z.string().min(1),
     hook_title: z.string().optional(),
+    // 封面与 eval.yaml、AUTHORS、published-results 放在同一个 eval 目录，
+    // 随同一内容提交发布；不再走独立封面 PR。
+    cover: EvalCoverPathSchema.optional(),
     references: EvalReferencesSchema.optional(),
     upstream: UpstreamSourceSchema.optional(),
     // 可选以兼容历史评测集；新提交的完整性由 evals 仓库 authoring gate 约束。
