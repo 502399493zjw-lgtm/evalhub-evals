@@ -153,7 +153,7 @@ detail_profile:
     - 跑满一个 profile 需要 Tinker、E2B 和 Agent 推理额度，公开矩阵中的单项成本最高达到 363.77 USD、单项用时最长达到 14.91 小时，不能视为本地免费评测。
     - 上游仓库 README 的许可证徽章指向 CC BY-NC 4.0，但固定 commit 没有 LICENSE 文件；本文只引用论文托管的图片，不搬运上游数据集、轨迹或产物。
 
-    ### 一手资料
+    ## 一手资料
 
     - [RSIBench-Data 论文（arXiv:2607.25886v1）](https://arxiv.org/abs/2607.25886v1)：主协议、固定栈设计和研究观察。
     - [RSIBench-Data 作者仓库](https://github.com/evolvent-ai/RSIBench-Data)：profile 规格、Harbor/E2B 路径、Tinker 训练脚本和数据隔离规则，固定 commit `4c807610243e7b481d382c5ed360c71c79a22f61`。
