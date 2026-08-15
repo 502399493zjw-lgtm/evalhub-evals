@@ -154,6 +154,48 @@ detail_profile:
     - 跑满一个 profile 需要 Tinker、E2B 和 Agent 推理额度，公开矩阵中的单项成本最高达到 363.77 USD、单项用时最长达到 14.91 小时，不能视为本地免费评测。
     - 上游仓库 README 的许可证徽章指向 CC BY-NC 4.0，但固定 commit 没有 LICENSE 文件；本文只引用论文托管的图片，不搬运上游数据集、轨迹或产物。
 
+    ## 题目案例
+
+    RSIBench-Data 的“题目”不是一道直接问答，而是一份固定 profile 的后训练研究任务。下面选取四类公开代表任务，说明 Agent 实际接到的目标、不可变的运行链路和对应的官方结果口径。三个 SWE-bench profile 共用同一套上游提示词，差异由各自的 `spec.json` 固定。
+
+    ### SWE-bench：用失败证据改进代码修复能力
+
+    **覆盖 profile：** SWE-bench Verified、SWE-bench Multilingual、SWE-bench Pro。
+
+    研究者 Agent 需要先阅读 `RUN_CONTRACT.md`、`AGENT_RULES.md`、`DATA_GENERATION.md`、`MINI_SWE_DATA_FORMAT.md` 和 `EVAL_ATTEMPT_LOOP.md`，从允许使用的非评测公开来源合成训练消息，训练 LoRA 检查点，再用固定的 mini-swe-agent 评测链路挑选最终候选。
+
+    ```text
+    attempts/<attempt_id>/train_messages.jsonl
+      -> Tinker LoRA SFT
+      -> tinker:// sampler checkpoint
+      -> E2B tool-call proxy sandbox
+      -> Harbor SWE-bench target with mini-swe-agent
+    ```
+
+    **公开结果证据：** 三个 profile 都在 seed-23 固定的 100 题子集上复评。Kimi K3 的 Verified / Multilingual / Pro 通过率分别为 **50% / 11% / 17%**；gpt-5.6-sol 为 **33% / 15% / 9%**。这些是整套 profile 的通过率，不是单道题结果或 EvalHub 独立复跑。
+
+    ### Terminal-Bench 2.0：改进真实终端工作流
+
+    Agent 面向构建与调试、系统管理、安全、数据处理、科学计算和文件格式处理等终端任务合成训练数据。训练后的检查点通过 E2B 工具调用代理接入 Harbor，由固定的 Terminus-2 在交互式终端中执行任务；官方以 89 道任务中的通过数计分。
+
+    ```text
+    train_messages.jsonl -> Tinker LoRA SFT -> E2B -> Harbor Terminal-Bench -> Terminus-2
+    ```
+
+    **公开结果证据：** gpt-5.6-sol 的官方复评通过率为 **20.2%**，Kimi K3 为 **9%**。由于分母是 89，来源中的小数由通过数换算产生；失败和超时都保留为失败。
+
+    ### GPQA Diamond：研究生级科学选择题
+
+    该 profile 固定使用 seed-23 抽取的 100 道 GPQA Diamond 题。被评的 Terminus-2 通过终端完成推理，并把一个答案字母写入 `/app/answer.txt`；答案文件精确匹配才算通过。研究者只能使用非 GPQA 的公开科学推理来源合成训练数据。
+
+    **公开结果证据：** gpt-5.6-sol 为 **65%**，gpt-5.6-terra 为 **64%**，Kimi K3 为 **55%**。这些数值是 100 题 profile 的准确率，不公开单题模型输出。
+
+    ### AIME 2026：竞赛数学多次解码
+
+    该 profile 使用 MathArena AIME 2026 的完整 30 题。Terminus-2 必须把单个整数答案写入 `/app/answer.txt`；每题固定解码 4 次，共 120 次判定，最终报告 avg@4 准确率。
+
+    **公开结果证据：** gpt-5.6-sol 为 **53.3%**，Sonnet-5 为 **49.2%**，Kimi K3 为 **44.2%**。这里展示的是 profile 汇总准确率，不是补造的逐题结果。
+
     ## 一手资料
 
     - [RSIBench-Data 论文（arXiv:2607.25886v1）](https://arxiv.org/abs/2607.25886v1)：主协议、固定栈设计和研究观察。
