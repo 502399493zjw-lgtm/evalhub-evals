@@ -1,5 +1,6 @@
 id: gamecraft-bench
 protocol_revision: 1
+cover: assets/cover.webp
 name: GameCraft-Bench（真实引擎里的端到端做游戏）
 category: useful
 description: >-
