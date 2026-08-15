@@ -87,12 +87,13 @@ detail_profile:
     ...
 ```
 
-The platform owns the standard Hero. The Markdown is the complete body below it:
+The platform owns the standard Hero and the interactive task-case browser. The Markdown is the complete editorial body between them:
 
 - start at `##`; never repeat the evaluation name as an H1 or rebuild Hero metadata, links, statistics, or actions;
 - choose sections from the evidence instead of forcing a fixed benchmark-specific outline;
 - when comparable results exist, place the leaderboard or primary result near the top, followed by breakdowns and score semantics;
-- keep task cases, protocol, figures, limitations, resources, and first-party links in the same coherent document;
+- keep protocol, figures, research observations, limitations, resources, and first-party links in one coherent document, but do not copy `tasks[]` into static Markdown case panels;
+- preserve the full leaderboard table in Markdown; when a ranking table has more than 10 rows, the platform paginates it automatically at 10 rows per page;
 - use ordinary Markdown only; do not mix legacy structured `detail_profile` fields into a Markdown profile and do not add module IDs, HTML, MDX, React, or layout instructions;
 - render reader-facing scores, rates, percentages, and derived comparison values with at most one decimal place, without padding `.0`; retain source precision in result artifacts and use unrounded values for calculation and ranking;
 - explicitly label official, transcribed, derived, and real-run evidence. A rounded display tie never changes a source-defined rank.
@@ -161,10 +162,11 @@ These automated gates validate structure and repository authoring invariants onl
 
 Do not make a custom-runner trial run a publication condition. The runner's actual execution, compatibility, and safety belong to the user who downloads it. If the user independently runs it or explicitly asks for help in their own environment, validate the observed result envelope with the same schema, record the exact environment and scope of that observation, and do not call it EvalHub-verified or security-reviewed. Check that:
 
-- `detail_profile.markdown` starts at `##`, is the complete body below the Hero, and is free of `TODO`, `待补`, literal `placeholder`, `example.com`, and example digests;
+- `detail_profile.markdown` starts at `##`, is the complete editorial body between the Hero and task-case browser, and is free of `TODO`, `待补`, literal `placeholder`, `example.com`, and example digests;
 - every authored `submission.run_date` is a real `YYYY-MM-DD` calendar date;
 - displayed claims are traceable to the source ledger;
 - every Markdown table is complete, readable without hidden layout metadata, and traceable to a primary source;
+- Markdown does not duplicate the platform-owned task-case browser; complete task text, translation, task-level model evidence, and replay linkage come from `tasks[]` and real/source-matched result records;
 - reader-facing scores and percentages use at most one decimal while calculations and stored source artifacts retain their needed precision;
 - official aggregate data is not presented as an EvalHub rerun;
 - sample data is not presented as evidence;
@@ -180,10 +182,10 @@ Complete this reader-readiness matrix from the final files before handoff. A sec
 | Primary result | Ranking/result, unit, direction, participant identity, rounding, and provenance agree. |
 | Breakdowns | Every supported source table or figure is preserved and its comparison boundary is stated. |
 | Protocol | The reader can understand input, run, judging, aggregation, and material limitations without reading the source first. |
-| Task cases | Stable task ID; complete `prompt` where applicable; no aggregate result disguised as a task run. |
+| Task cases | Stable task ID and complete `prompt`; platform task tabs, prompt folding, model-result tabs, empty-result handling, and other replays render from structured evidence rather than duplicated Markdown. |
 | Sources | Figures, resources, claims, and derived values link back to first-party evidence. |
 
-Do not reduce the stored official leaderboard to three or four participants merely to imitate a compact task-case control. The platform may show up to four real model results inside a task case; only real `task_results` or task-linked showcases qualify, and an upstream aggregate never does.
+Do not reduce the stored official leaderboard to three or four participants merely to imitate a compact task-case control. The platform may show up to four reliably source-matched official participant rows or real task-linked results inside a task case; this compact projection never turns an upstream aggregate into a real task execution.
 
 If a local platform preview is available, inspect the generic `/e/<slug>` rendering for content order and missing-data fallbacks. Do not change platform styling as part of an eval submission; use the repository's visual-design workflow separately when visual implementation is explicitly requested.
 

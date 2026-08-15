@@ -4,10 +4,11 @@ Use this reference while authoring every new or updated evaluation. It is intent
 
 ## Detail-page layers and order
 
-The reader page has two visible layers:
+The reader page has three visible layers:
 
 1. the platform-owned standard Hero, produced from evaluation metadata;
-2. one author-owned Markdown document from `eval.yaml > detail_profile.markdown`.
+2. one author-owned Markdown editorial document from `eval.yaml > detail_profile.markdown`;
+3. the platform-owned interactive task-case browser, produced from `tasks[]`, real/source-matched task evidence, and other replays.
 
 Reviewed `published-results/*.json`, real-run `task_results`, and `showcases` remain evidence inputs and machine-readable records. When their facts are discussed in the reader document, preserve their provenance and never imply that an upstream publication was an EvalHub run.
 
@@ -24,7 +25,7 @@ detail_profile:
     Source-backed reader content starts here.
 ```
 
-`markdown` is a non-empty complete document body below the Hero. It starts at `##`, does not repeat the evaluation name, and uses ordinary Markdown. A Markdown profile is strict and must not contain legacy structured detail fields. Do not add module IDs, HTML, MDX, React, CSS, or layout instructions.
+`markdown` is a non-empty complete editorial document below the Hero and before the task-case browser. It starts at `##`, does not repeat the evaluation name or statically duplicate task panels, and uses ordinary Markdown. A Markdown profile is strict and must not contain legacy structured detail fields. Do not add module IDs, HTML, MDX, React, CSS, or layout instructions.
 
 Use `references/detail-markdown-authoring.md` for the adaptive outline, image placement, table rules, score-display precision, and preview checklist. Credential-free HTTPS sources and images are allowed. Omit unsupported optional content, `TODO`, `待补`, literal `placeholder`, and `example.com` scaffold values.
 
@@ -33,6 +34,8 @@ Use `references/detail-markdown-authoring.md` for the adaptive outline, image pl
 Every `eval.yaml > tasks[]` entry in a repository submission must declare a non-empty `id` matching `^[a-z0-9][a-z0-9-]{0,63}$`. IDs must be unique within the eval. Treat each ID as a durable reference: keep it unchanged when revising the wording or fixture for the same logical task, and use a new ID only when the task identity changes. Compatibility schemas may accept an omitted historical task ID, but the standalone repository authoring validator rejects missing, whitespace-only, malformed, and duplicate IDs.
 
 `prompt` is the one task-statement field: the executable task text and the exact text the detail page renders. There is no display fallback, so an abridged `prompt` reads as an abridged question on the page. For `evalhub_native` it is the checked-in executable protocol; for `upstream_publication` it is the complete source-published original transcribed character-for-character from the pinned `upstream.commit`, including any unreplaced upstream template placeholders. Never replace it with a summary, excerpt, `[…]`, `[...]`, or a link-only description. It has no length cap and, once parsed from YAML, is preserved character-for-character by schema and sync; do not trim it. EvalHub's own reproduction procedure — fixed run configuration, evidence packaging, redaction rules, the concrete values behind upstream placeholders — belongs in the optional `run_spec`, which reaches whoever runs the eval through this repository and is never rendered on the detail page; keep reader-facing task content out of it. Add a concise `label` (1–80 characters) for the task tab and, when a faithful Chinese rendering is available, the complete translation in `translation` (1–30,000 characters). Long display prompts remain complete in HTML/DOM and are only visually collapsed by the platform with an expand/collapse control. The task panel does not render dedicated “view prompt source” or “view official result source” actions; keep provenance in the page source areas, supplementary-view declarations, captions, and resources.
+
+The platform, not Markdown, owns the task tabs, original/translation grouping, long-prompt expansion, per-task model-result tabs, honest omission of empty result areas, and the separate other-replays fold. Markdown may explain task families or source-backed research observations, but it must not restate each prompt as a static “题目案例 / 任务案例 / Task cases” section.
 
 When an upstream publication provides a task/scenario row that reliably matches the task ID or label, the platform may summarize at most four participants from the public leaderboard inside that task panel. Authors must preserve the real row in `supplementary_views`; they must not manufacture upstream `task_results`, per-task output, or traces. If no row matches reliably, leave the task result area empty.
 

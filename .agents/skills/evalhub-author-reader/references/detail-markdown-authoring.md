@@ -4,7 +4,7 @@ Use this reference for every new or updated `detail_profile.markdown`. It define
 
 ## Page boundary
 
-The platform renders the standard Hero from evaluation metadata. The author owns one complete Markdown document below it.
+The platform renders the standard Hero from evaluation metadata and the interactive task-case browser from structured task evidence. The author owns one complete Markdown editorial document between them.
 
 ```yaml
 detail_profile:
@@ -17,6 +17,7 @@ detail_profile:
 - Start the first visible section at `##`.
 - Do not repeat the evaluation name as an H1.
 - Do not recreate the Hero's description, author, source links, tags, counts, or actions.
+- Do not recreate task tabs, prompt/translation panels, model-result tabs, empty task-result states, or replay lists in Markdown; keep complete cases in `tasks[]` and their linked evidence.
 - Do not mix `markdown` with legacy structured detail fields.
 - Do not add stable module IDs, HTML, MDX, components, CSS classes, or layout instructions.
 - Use headings, paragraphs, lists, blockquotes, pipe tables, fenced code, links, images, and horizontal rules that remain useful as plain Markdown.
@@ -44,7 +45,7 @@ When comparable results exist, prefer this information order:
 3. score meaning and formula;
 4. what is evaluated and why it matters;
 5. fixed protocol or run flow;
-6. representative tasks or cases;
+6. task-family context or source-backed research observations, when useful;
 7. resources, limitations, and first-party sources.
 
 For an evaluation without a public leaderboard, begin with the goal and protocol, then show available baselines or examples. For a qualitative, human-reviewed, safety, multimodal, or environment benchmark, rename or omit sections so the document describes the actual evidence shape. Do not create a leaderboard merely because the template supports tables.
@@ -62,7 +63,7 @@ Useful generic headings include:
 ### Fixed protocol
 ### Run flow
 
-## Tasks and observations
+## Research observations
 
 ## Resources and sources
 ### Evidence boundary and limitations
@@ -105,6 +106,7 @@ This display rule does not reduce necessary precision for dates, versions, proto
 - State the source boundary and snapshot date near official result tables.
 - Label derived rows or columns in prose; never call a derived value official.
 - Keep large tables complete when the source supports them. Horizontal scrolling is a renderer concern, not a reason to delete evidence.
+- Do not manually split, truncate, or label “page 1” in a leaderboard. Ranking tables longer than 10 rows are paginated by the renderer at 10 rows per page; shorter tables remain unpaginated.
 
 ## Protocol, tasks, and sources
 
@@ -115,7 +117,7 @@ Explain enough for a new reader to answer:
 - Who or what judges the output?
 - How are per-task values aggregated into the primary score?
 - Which version, dataset, environment, budget, and comparison boundary apply?
-- What is one representative task or interaction?
+- What task families or interactions does the structured task browser represent?
 - What important limitation prevents overgeneralization?
 
 Use a short numbered list for a genuine sequence. Use a table for repeated field comparisons. Use prose for caveats and interpretation.
@@ -138,5 +140,7 @@ Then preview `/e/<slug>` when the platform is available and verify:
 - the primary result is easy to find;
 - score and percentage displays use at most one decimal;
 - tables remain readable at desktop and mobile widths;
+- a leaderboard with more than 10 rows exposes working 10-row pagination without losing rows;
+- task tabs switch complete prompts, long prompts expand, task-level model tabs appear only when evidence exists, and other replays remain separate;
 - images load, have useful alt text, and sit beside relevant content;
 - links work and no unsupported placeholder content remains.

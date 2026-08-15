@@ -89,10 +89,12 @@ If one participant is missing a source-published row or uses a genuinely differe
 
 Task examples are independent of aggregate published results:
 
+- The platform owns the full task-case interaction below the Markdown body. Do not duplicate these cases under a Markdown `题目案例`, `任务案例`, or `Task cases` heading.
 - `prompt` is the one task statement: what runs and what the page shows. For an upstream task it is the complete source-published original, verbatim from the pinned commit. Long text is intentionally stored in full; the platform owns default folding and expansion.
 - `run_spec` holds EvalHub's own run procedure and is never rendered, so nothing a reader needs may live only there.
 - `translation` is complete when present.
 - Real `task_results` or task-linked showcases may provide model tabs. Never convert leaderboard aggregates, paper prose, or a design mock into fake task outputs or execution traces.
+- A reliably matched upstream supplementary row may provide a compact official participant comparison inside a task, but it remains source-published aggregate evidence rather than a real task execution.
 - Do not add author-supplied “view prompt source” or “view official score source” buttons. Put global first-party links in the Markdown source section and keep result provenance in `submission.source`.
 
 ## Shared-view preflight

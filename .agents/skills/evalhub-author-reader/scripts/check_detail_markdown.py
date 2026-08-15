@@ -69,6 +69,10 @@ SCORE_UNIT_DECIMAL = re.compile(
     re.IGNORECASE,
 )
 TABLE_SEPARATOR_CELL = re.compile(r"^:?-{3,}:?$")
+TASK_CASE_HEADING = re.compile(
+    r"^(?:(?:题目案例|任务案例)(?:\s|与|和|及|/|&|$)|task cases?(?:\s|/|&|$))",
+    re.IGNORECASE,
+)
 
 
 @dataclass(frozen=True)
@@ -166,7 +170,7 @@ def bad_fraction(fraction: str) -> bool:
     return len(fraction) > 1 or fraction == "0"
 
 
-def lint(markdown: list[SourceLine]) -> list[Problem]:
+def lint(markdown: list[SourceLine], *, has_structured_tasks: bool = False) -> list[Problem]:
     problems: list[Problem] = []
     first = next((line for line in markdown if line.text.strip()), None)
     if first is None:
@@ -194,6 +198,18 @@ def lint(markdown: list[SourceLine]) -> list[Problem]:
         visible.append(line)
         if re.match(r"^#\s+\S", line.text):
             problems.append(Problem(line.number, "do not add an H1 below the standard Hero"))
+        heading_match = re.match(r"^#{2,6}\s+(.+?)\s*#*\s*$", line.text)
+        if (
+            has_structured_tasks
+            and heading_match
+            and TASK_CASE_HEADING.match(heading_match.group(1).strip())
+        ):
+            problems.append(
+                Problem(
+                    line.number,
+                    "do not duplicate structured tasks in Markdown; the platform owns the interactive task-case browser",
+                )
+            )
 
         without_urls = re.sub(r"https?://\S+", "", line.text)
         for match in PERCENT_DECIMAL.finditer(without_urls):
@@ -269,7 +285,12 @@ def main() -> int:
             failed = True
             continue
 
-        problems = lint(markdown)
+        has_structured_tasks = bool(
+            raw_path != "-"
+            and Path(raw_path).suffix.lower() not in {".md", ".markdown"}
+            and re.search(r"(?m)^tasks:\s*(?:#.*)?$", text)
+        )
+        problems = lint(markdown, has_structured_tasks=has_structured_tasks)
         if problems:
             failed = True
             for problem in problems:
