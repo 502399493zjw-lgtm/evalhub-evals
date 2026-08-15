@@ -1,5 +1,6 @@
 id: rsibench-data
 protocol_revision: 6
+cover: assets/cover.webp
 name: RSIBench-Data（数据中心型后训练研究）
 category: useful
 description: >-
