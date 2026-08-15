@@ -1,5 +1,6 @@
 id: ceo-bench
 protocol_revision: 1
+cover: assets/cover.webp
 name: CEO-Bench（500 天 SaaS 经营长跑）
 category: useful
 description: >-
@@ -746,4 +747,3 @@ tasks:
       最终数据库导出）打成一个证据包，计算其 sha256 填进 evidence_sha256。证据包自行留存供评测作者索取，
       不要提交进本仓库，也不要在清单里附带任何数据库密钥、API key 或访问凭证。
       随后用 evals/ceo-bench/pack-to-result.mjs 把清单转换成结果文件；转换器只做校验与出分，不调用任何模型服务。
-
