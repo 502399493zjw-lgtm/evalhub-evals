@@ -199,6 +199,44 @@ test("requires AUTHORS to remain byte-for-byte identical on update", async () =>
   }), "author_change_forbidden");
 });
 
+test("allows the repository maintainer to change only AUTHORS without a submission marker", async () => {
+  const result = await evaluate(updateOptions({
+    actor: "502399493zjw-lgtm",
+    body: "",
+    baseAuthor: "old-maintainer",
+    headAuthor: "new-maintainer",
+    changedFiles: [file("evals/sample-eval/AUTHORS")],
+  }));
+  assert.equal(result.mode, "maintenance-authors");
+  assert.equal(result.baseOwner, "old-maintainer");
+  assert.equal(result.owner, "new-maintainer");
+  assert.equal(result.maintainer, "new-maintainer");
+  assert.equal(result.submissionTask, null);
+});
+
+test("rejects a submission marker on standalone AUTHORS maintenance", async () => {
+  await expectPolicyError(updateOptions({
+    actor: "502399493zjw-lgtm",
+    body: marker("update", "sample-eval"),
+    baseAuthor: "old-maintainer",
+    headAuthor: "new-maintainer",
+    changedFiles: [file("evals/sample-eval/AUTHORS")],
+  }), "submission_marker_unexpected");
+});
+
+test("does not let the repository maintainer mix an AUTHORS change into content", async () => {
+  await expectPolicyError(updateOptions({
+    actor: "502399493zjw-lgtm",
+    body: "",
+    baseAuthor: "old-maintainer",
+    headAuthor: "new-maintainer",
+    changedFiles: [
+      file("evals/sample-eval/AUTHORS"),
+      file("evals/sample-eval/README.md"),
+    ],
+  }), "author_change_forbidden");
+});
+
 test("organization members are not automatically public-authorized", async () => {
   await expectPolicyError(updateOptions({
     actor: "org-member",
