@@ -54,444 +54,327 @@ command_template:
 trials: 1
 detail_profile:
   source_kind: upstream_publication
-  markdown: |
-    ## 这套评测测什么
-
-    GameCraft-Bench 检验编码智能体能否只根据自然语言需求，在 Godot 4 中交付一款可构建、可运行、可交互的完整 2D 微型游戏。它不只看一张截图或一段代码，而是同时检查玩法机制、内容深度、功能可视化和整体呈现。
-
-    固定版本包含 **140 道任务、15 个游戏家族和 2,305 条逐项 rubric**。题型从平台跳跃、策略、经营、开放世界、Roguelike 到视觉小说、解谜、射击等，目标是把“会写游戏代码”推进到“能交付并演示一个小而完整的游戏”。
-
-    本页的协议与题目追溯到上游仓库 commit [`7385d326fb25ba9af8b353615987bf680a25b657`](https://github.com/FreedomIntelligence/GameCraft-Bench/tree/7385d326fb25ba9af8b353615987bf680a25b657)，研究结论追溯到论文 v1；榜单则是 EvalHub 条目已经核验并冻结的 **2026-08-10 官方快照**，不与官网之后新增的结果混算。
-
-    | 固定事实 | 数值 / 配置 |
-    | --- | --- |
-    | 任务 | 140 |
-    | 游戏家族 | 15 |
-    | Rubric 要求 | 2,305 |
-    | 引擎 | Godot 4.6.2-stable |
-    | 默认多模态裁判 | openai / gpt-5.5 |
-    | 单题交付 | 完整 Godot 项目 + 1–10 条确定性输入轨迹 |
-
-    ## 评测方法
-
-    1. **接收题面与素材。** Agent 得到自然语言游戏需求、Godot 工作区和只读素材库，但拿不到 `/tests/rubric.json` 中的隐藏评分细则；单题 Agent 名义预算为 7,200 秒。
-    2. **交付完整项目。** 输出必须位于 `/workspace/game/`，包含能启动的 `project.godot`、场景、脚本、素材，以及 `demo_outputs/` 下 1–10 个 JSON 输入轨迹。
-    3. **先过构建门槛。** 上游先以 Godot headless 方式检查项目；构建或启动失败时该题为 0。题面给出的基准命令是 `godot --headless --path /workspace/game --quit-after 5`。
-    4. **重放真实交互。** 每条轨迹都在全新游戏进程中以 1280×720 合成鼠标和键盘输入。链路使用 Xvfb、xdotool 和 ffmpeg 录屏，再缩放为 854×480，并每 0.5 秒抽帧、压缩成视觉证据。超过 20 秒的录像按上游实现取一个 20 秒窗口；同一 trace 必须能确定性重放。
-    5. **逐项判分。** 多模态裁判基于题面、rubric 与录像证据判断每条要求是否满足。裁判失败最多重试 5 次；全部失败时该 demo 记 0。每条要求跨 demo 取最高命中，再在类别内求均值。
-    6. **合成单题与总分。** 普通任务的 Mechanics / Depth / Visuals / Art 权重为 0.15 / 0.35 / 0.15 / 0.35；5 道特殊视觉小说任务为 0.20 / 0.30 / 0.15 / 0.35。单题分数落在 `[0,1]`，140 题等权平均后乘 100 得到总分。
-
-    ## 主分数怎么读
-
-    主分数是 **Overall Score（0–100，越高越好）**：先按该题适用的四类权重合成单题分，再对 140 题等权平均并乘 100。它表示在这套固定 Godot 任务、取证链路和默认 gpt-5.5 裁判下，Agent 的可见交付满足了多少 rubric 要求；它不是代码质量、运行效率、主观“好玩程度”或跨引擎能力的直接测量。
-
-    下面是上游官方发布值，不是 EvalHub 本地重跑。若改变裁判模型、Godot 版本、任务集、证据采样或权重，就不应与本榜直接同列。
-
-    ## 官方榜单
-
-    以下完整保留 EvalHub 条目核验的 **2026-08-10 官方榜单快照**（官网快照 SHA-256：`c4b823a7440574a7eae53746742dc5119dd4f2493809982a490de89f913cf168`；上游 README 快照 SHA-256：`79a8602b951820509d1613fb7d468a80317d1f4f312e51fcd1695aad94432bfa`）。官网之后可能继续追加成绩，因此时间点是比较边界。
-
-    | 排名 | Agent | 模型 | 类型 | 日期 | Overall |
-    | ---: | --- | --- | --- | --- | ---: |
-    | 1 | Claude Code | Fable 5 high | Vision | 2026-07-20 | 65.72 |
-    | 2 | Codex | GPT-5.6-sol high | Vision | 2026-07-17 | 60.50 |
-    | 3 | Kimi Code | Kimi-K3 | Vision | 2026-08-05 | 56.96 |
-    | 4 | SeeleAgent | Seele02-pro | Vision | 2026-07-15 | 50.70 |
-    | 5 | Claude Code | Opus-4.7 high | Vision | 2026-06-16 | 41.46 |
-    | 6 | Codex | GPT-5.5 high | Vision | 2026-06-16 | 39.49 |
-    | 7 | Claude Code | Deepseek-V4-Flash-0731 | Text | 2026-08-10 | 30.66 |
-    | 8 | Kimi Code | Kimi-K2.6 | Vision | 2026-06-16 | 30.65 |
-    | 9 | Claude Code | MiMo-V2.5-Pro | Text | 2026-06-16 | 24.10 |
-    | 10 | Code Buddy | GLM-5.1 | Text | 2026-06-16 | 18.29 |
-    | 11 | Code Buddy | MiniMax-M2.7 | Text | 2026-06-16 | 10.95 |
-    | 12 | Codex | DeepSeek-V4-Pro | Text | 2026-06-16 | 2.15 |
-
-    上游 README 的一处叙述文字把榜首写成 65.70，但同一份官方表格与网站快照均为 **65.72**；本页采用表格值并显式保留这一不一致。Seele02-pro、Deepseek-V4-Flash-0731 和 MiniMax-M2.7 尚未映射成 EvalHub 发布结果身份，但不会因此从官方表中删掉。
-
-    ## 官方分项结果
-
-    Mechanics 对应核心玩法是否真正工作；Depth 看进度、内容量和状态变化；Visuals 看必要状态与反馈是否可读；Art 看视觉风格、构图和呈现是否完整。以下逐行对应同一份 2026-08-10 官方快照。
-
-    | Agent / 模型 | Mechanics | Depth | Visuals | Art |
-    | --- | ---: | ---: | ---: | ---: |
-    | Claude Code / Fable 5 high | 76.52 | 58.61 | 66.93 | 67.68 |
-    | Codex / GPT-5.6-sol high | 74.50 | 56.10 | 64.80 | 57.00 |
-    | Kimi Code / Kimi-K3 | 73.03 | 53.38 | 56.90 | 53.59 |
-    | SeeleAgent / Seele02-pro | 68.42 | 48.76 | 52.74 | 44.17 |
-    | Claude Code / Opus-4.7 high | 55.34 | 39.48 | 42.78 | 36.86 |
-    | Codex / GPT-5.5 high | 54.36 | 38.61 | 41.84 | 32.94 |
-    | Claude Code / Deepseek-V4-Flash-0731 | 40.55 | 27.56 | 32.21 | 28.81 |
-    | Kimi Code / Kimi-K2.6 | 39.76 | 28.07 | 33.66 | 27.99 |
-    | Claude Code / MiMo-V2.5-Pro | 32.33 | 22.59 | 27.45 | 20.65 |
-    | Code Buddy / GLM-5.1 | 25.23 | 17.80 | 21.14 | 14.59 |
-    | Code Buddy / MiniMax-M2.7 | 14.27 | 9.92 | 14.92 | 8.85 |
-    | Codex / DeepSeek-V4-Pro | 2.25 | 1.69 | 1.97 | 2.63 |
-
-    上游只为下列 4 个配置发布了完整 token 统计；未发布的配置保持缺省，不做估算或插值。
-
-    | 模型 | 任务数 | Input tokens | Cache tokens | Output tokens | 平均 Input / 题 | 平均 Output / 题 |
-    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-    | Kimi-K2.6 | 140 | 2.24B | 2.22B | 10.9M | 16.0M | 77.7K |
-    | Claude Opus-4.7 | 140 | 1.58B | 1.50B | 9.4M | 11.3M | 67.0K |
-    | DeepSeek-V4-Pro | 140 | 232.6M | 58.0M | 7.8M | 1.7M | 55.4K |
-    | GPT-5.5 (Codex) | 140 | 148.5M | 130.3M | 2.8M | 1.1M | 20.0K |
-
-    四类 rubric 的固定规模如下；普通任务与 5 道特殊视觉小说任务使用不同的前两项权重。
-
-    | 类别 | 记号 | 要求数 | 普通权重 | 特殊视觉小说权重 | 关注点 |
-    | --- | --- | ---: | ---: | ---: | --- |
-    | Core Mechanics | M | 613 | 0.15 | 0.20 | 机制是否工作 |
-    | Content Depth | D | 653 | 0.35 | 0.30 | 进度、内容与状态 |
-    | Functional Visuals | V | 466 | 0.15 | 0.15 | 状态与反馈是否可读 |
-    | Presentation & Art | A | 573 | 0.35 | 0.35 | 风格与呈现是否完整 |
-
-    ## 任务覆盖
-
-    140 题按上游任务家族完整分布如下。
-
-    | 游戏家族 | 任务数 |
-    | --- | ---: |
-    | Platformer | 19 |
-    | Strategy | 17 |
-    | Tycoon | 16 |
-    | Open-world | 15 |
-    | Roguelike | 14 |
-    | Visual novel | 11 |
-    | Puzzle | 8 |
-    | Shooter | 7 |
-    | Simulation | 6 |
-    | Card game | 5 |
-    | Horror | 5 |
-    | Rhythm | 5 |
-    | Idle | 4 |
-    | Racing | 4 |
-    | Sports | 4 |
-
-    论文还用以下口径说明它与先前游戏开发基准的差异：是否要求完整游戏，以及是否通过交互证据评测。
-
-    | Benchmark | 平台 | 完整游戏 | 交互评测 |
-    | --- | --- | --- | --- |
-    | GameDevBench | Godot | 否 | 否 |
-    | OpenGame-Bench | Web | 是 | 否 |
-    | WebGameBench | Web | 是 | 是 |
-    | GameCraft-Bench | Godot | 是 | 是 |
-
-    ## 官方图与分析
-
-    ![GameCraft-Bench 总览：从任务构建、Agent 生成项目，到交互取证与多模态 rubric 评分。](https://arxiv.org/html/2606.17861v1/x1.png)
-
-    *论文 Figure 2：基准总览。*
-
-    ![GameCraft-Bench 验证流水线：构建、重放轨迹、录屏抽帧与逐项裁判。](https://arxiv.org/html/2606.17861v1/x4.png)
-
-    *论文 Figure 5：交互取证与评分流水线。*
-
-    ![固定游戏证据上重复十次 gpt-5.5 裁判的平均结果与波动。](https://arxiv.org/html/2606.17861v1/x8.png)
-
-    *论文 Figure 9：同一证据重复 10 次裁判，用于观察多模态判断的稳定性；它不等于固定温度或随机种子的确定性保证。*
-
-    ## 运行与复现
-
-    EvalHub 将该条目标为 `custom_external_workflow`：仓库保存协议、140 道题面、官方结果和结果打包器，但不在 EvalHub CI 内启动 Godot、执行 Harbor 或调用付费裁判。已有官方 submission 可用下列命令规范化为结果 JSON：
-
-    ```bash
-    node evals/gamecraft-bench/pack-to-result.mjs <submission.json> --out gamecraft-bench-result.json
-    ```
-
-    结果仍需满足 `submission.metadata.source = official_upstream`、固定 judge 为 `openai` / `gpt-5.5`、任务覆盖和分项字段等约束。单题名义预算还包括 1,800 秒验分；多数任务声明 1 CPU / 2,048 MB，7 道开放世界题为 4,096 MB，少数 `task.toml` 省略部分环境字段。完整链路依赖 Ubuntu、Godot `4.6.2.stable.official.71f334935`、Xvfb、xdotool、ffmpeg、网络访问以及多模态裁判额度。
-
-    ## 已知限制
-
-    - **时间点不可混用。** 论文于 2026-06-16 提交，论文中的最强配置是 41.46；本页榜单是 2026-08-10 的 12 配置快照，榜首为 65.72。上游没有声明这两个时间点使用完全相同的 verifier / judge 运行环境，官网后续更新也不应反向覆盖本快照。
-    - **裁判存在随机波动。** 论文在固定证据上重复裁判 10 次展示方差，但上游没有固定 temperature 或 seed；单次运行仍可能波动，连续 5 次裁判失败还会让对应 demo 记 0。
-    - **只看可见行为。** 评分来自构建结果与 demo 录像，不能完整评价代码架构、性能、安全性、维护性，也不直接回答游戏是否“好玩”。
-    - **范围有限。** 当前任务集中在 Godot 2D 单机微型游戏，不覆盖 Unity、Unreal、复杂 3D、网络多人、主机发布或大型长期内容生产。
-    - **成本很高。** 140 题各有 7,200 秒 Agent 与 1,800 秒验分预算，还要为 demo 录制和多模态裁判付出计算与调用成本；这不是轻量本地 smoke test。
-    - **结果映射不等于官方表。** EvalHub 已发布结果只覆盖官方榜单中的部分身份；未映射的 3 行仍是官方快照的一部分，不能删掉或以空值替代。
-    - **许可需分层理解。** 上游代码仓库为 Apache-2.0，论文为 CC BY 4.0，Harbor 为 Apache-2.0，Godot 为 MIT；项目站点注明模板改自 Nerfies（CC BY-SA），但未单独声明站点内容许可。本条目不分发 Kenney / OpenGameArt 素材，实际运行时仍须遵守各素材目录的许可文件。
-
-    ## 题目案例
-
-    下面完整展示任务 `cardgame-autobattler` 的英文题面和条目中已有的中文翻译。它同时体现“完整可发布微型游戏”、确定性场景、交互 trace 和构建门槛；其余 139 道原始题面以及另外 9 份已有中文翻译仍原样保存在本评测的 `tasks` 数据中，没有改写或删减。
-
-    ### Cardgame Autobattler
-
-    #### 题面原文
-
-    ````text
-    # Cardgame Autobattler
-
-    Build a Cardgame Autobattler in Godot 4 at `/workspace/game/`.
-    This is not a prototype. It is a **complete, shippable micro-game** that could
-    sit on an itch.io page or Steam as a polished vertical slice.
-
-    ## Core Vision
-
-    A draft-and-watch autobattler where the player recruits creatures from a shared
-    shop each round, arranges them on a board, and watches them fight automatically
-    against an opponent's team. Strategy lives entirely in the draft phase: which
-    creatures to buy, when to level up for stronger units, and how to build
-    synergies between tribal tags. Creatures of the same tribe buff each other —
-    stack enough Beasts and they gain attack; fill a row with Undead and they
-    resurrect once. An 8-player elimination format (simulated against AI) creates
-    escalating pressure as the field narrows. The fantasy is assembling a dream
-    team from random offerings and watching your synergy engine demolish the
-    opposition.
-
-    ## What the Player Experiences
-
-    1. **Title Screen** — A tavern interior with the game name on a wooden sign
-       above the bar, creature silhouettes seated at tables, and a "Find Match"
-       button styled as a tavern door. No plain Godot grey.
-    2. **Shop Phase** — Each round, a shop displays 3-5 random creatures for
-       purchase. The player buys creatures (spending gold), places them on a
-       bench or directly onto the board (limited slots). Selling creatures
-       refunds partial gold. A timer counts down to the fight phase.
-    3. **Board Arrangement** — The player's board has a front row and back row.
-       Positioning matters: front-row creatures are attacked first; back-row
-       creatures with ranged attacks stay safe longer. Drag-and-drop placement.
-    4. **Auto Combat** — When the timer expires, the player's board fights an
-       opponent's board automatically. Creatures attack in order, targeting the
-       nearest enemy. Abilities trigger based on conditions (on-attack, on-death,
-       start-of-combat). The fight plays out with attack animations and health
-       bars depleting.
-    5. **Tribal Synergies** — At least 5 tribes (Beast, Undead, Mech, Dragon,
-       Elemental). Having 2/4/6 of a tribe activates escalating bonuses shown in
-       a synergy tracker panel. Synergies are the primary strategic axis.
-    6. **Economy** — Gold income increases each round. Winning streaks and losing
-       streaks both grant bonus gold. Interest accrues on saved gold (1 gold per
-       10 saved). Levelling up costs gold but increases shop quality and board
-       size.
-    7. **Elimination** — The player starts with a health pool. Losing a round
-       costs health proportional to surviving enemy creatures. Last player
-       standing wins. A placement screen shows final ranking.
-
-    ## Assets
-
-    2D assets are mounted read-only at:
-
-    - `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
-    - `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
-      subdir's `LICENSE.txt`.
-
-    Browse the library and choose packs.
-    Copy what you need into your project's `assets/` folder.
-
-    ## Project layout
-
-    ```
-    /workspace/game/
-      project.godot
-      Main.tscn
-      demo_outputs/    ← your input traces (1–10 files)
-      scripts/  scenes/  assets/
-    ```
-
-    The build must launch cleanly with:
-
-    ```
-    godot --headless --path /workspace/game --quit-after 5
-    ```
-
-    A reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.
-    **Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —
-    anything after `--` is forwarded to the project as user args and silently
-    ignored by the engine. Correct shape:
-    `godot --headless --quit-after 5 --path . -- --scenario near_victory`.
-
-    A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
-    result screens look like.
-
-    ```
-    /workspace/tools/screenshot.sh --path /workspace/game \
-          -- --out /workspace/frame.png --frames 60
-    ```
-
-    To screenshot a specific scenario, append `--scenario <id>` after `--`. The
-    helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
-    `OS.get_cmdline_user_args()` for your game code to read. Example:
-
-    ```
-    /workspace/tools/screenshot.sh --path /workspace/game \
-          -- --out /workspace/battle_debug.png --frames 120 --scenario battle
-    ```
-
-    ## Demos
-
-    Ship **1–10 input-trace files** under `/workspace/game/demo_outputs/`, one per
-    demo, each named `*.json`. The evaluator launches a fresh game per trace,
-    replays your trace as synthetic mouse and keyboard input at 1280×720, and
-    records the screen. Only the first 10 traces by filename are evaluated;
-    recordings longer than 20 s are sampled from a random 20 s window.
-
-    ### Scenarios
-
-    Normal play should start from the title screen and demonstrate the task's
-    core gameplay loop.
-    Demo playback must be deterministic. For demos that need a specific state
-    (a specific level, combat state, upgrade screen, result state, or late-game
-    setup), define named scenarios your game loads when launched with:
-
-    ```
-    godot --path /workspace/game -- --scenario <id>
-    ```
-
-    When `--scenario <id>` is present the game must skip menus, set up the named
-    state deterministically (seed any RNG), and begin accepting input immediately.
-
-    ### Trace file format
-
-    ```json
-    {
-      "scenario": "title_flow",
-      "duration_frames": 360,
-      "events": [
-        {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
-        {"frame": 90,  "type": "key_press",   "keycode": "1"},
-        {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
-        {"frame": 300, "type": "wait"}
-      ]
-    }
-    ```
-
-    - `scenario` — optional; omit for a normal game launch from the title screen.
-    - `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
-    - `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
-      viewport. Supported types:
-      - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
-      - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
-        use these for drag interactions: emit `mouse_down` at the start point,
-        one or more `mouse_move` events along the way, and `mouse_up` at the end.
-        A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
-        succession.
-      - `mouse_move`: `{frame, type, x, y}`
-      - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
-        `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
-        `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
-      - `wait`: `{frame, type}` — anchor frame, no input.
-
-    Replay must be deterministic: same trace, fresh launch, same outcome every time.
-
-    ````
-
-    #### 中文翻译
-
-    ````text
-    # Cardgame Autobattler
-
-    在 Godot 4 中于 `/workspace/game/` 构建一款卡牌自动战斗游戏（Cardgame Autobattler）。
-    这不是原型。它是一款**完整、可交付的微型游戏**，能够以打磨完成的垂直切片形态放在 itch.io 页面或 Steam 上。
-
-    ## Core Vision
-
-    这是一款“选秀并观战”的自动战斗游戏：玩家每回合从共享商店招募生物，将它们布置到棋盘上，然后观看它们与对手队伍自动交战。所有策略都发生在选秀阶段：购买哪些生物、何时升级以获得更强单位，以及如何围绕种族标签构筑协同。相同种族的生物会彼此强化——凑够足够多的 Beast 会获得攻击力；用 Undead 填满一排，它们就能复活一次。八名玩家的淘汰赛制（由 AI 模拟对手）会随着参赛者不断减少而持续加压。其幻想内核是从随机出现的选项中组建梦之队，并看着自己的协同引擎摧毁对手。
-
-    ## What the Player Experiences
-
-    1. **标题界面（Title Screen）** —— 酒馆内部场景，游戏名写在吧台上方的木牌上，生物剪影坐在桌旁，一个样式如酒馆门的“Find Match”按钮用于开始匹配。不能使用朴素的 Godot 灰色默认界面。
-    2. **商店阶段（Shop Phase）** —— 每回合商店展示 3–5 个随机生物供玩家购买。玩家花费金币购买生物，并把它们放到备战区或直接放上棋盘（格位有限）。出售生物会返还部分金币。倒计时结束后进入战斗阶段。
-    3. **棋盘布阵（Board Arrangement）** —— 玩家的棋盘分为前排与后排。站位会影响战斗：前排生物优先承受攻击；后排的远程生物能更久地保持安全。布置采用拖放操作。
-    4. **自动战斗（Auto Combat）** —— 倒计时结束时，玩家棋盘上的队伍会自动与对手棋盘交战。生物按顺序攻击并以最近的敌人为目标。技能会依据条件触发（攻击时、死亡时、战斗开始时）。战斗过程需要播放攻击动画，并让生命条随伤害逐步减少。
-    5. **种族协同（Tribal Synergies）** —— 至少提供 5 个种族（Beast、Undead、Mech、Dragon、Elemental）。同一种族达到 2/4/6 个时，会激活逐级增强的奖励，并显示在协同追踪面板中。种族协同是主要的策略轴。
-    6. **经济系统（Economy）** —— 金币收入随回合增加。连胜和连败都会提供额外金币。存下的金币会产生利息（每存 10 金币获得 1 金币）。升级需要花费金币，但会提升商店品质并扩大棋盘容量。
-    7. **淘汰（Elimination）** —— 玩家以一池生命值开局。输掉回合时，会按照敌方存活生物的数量损失生命。最后存活的玩家获胜。最终名次会显示在排名结算界面中。
-
-    ## Assets
-
-    2D 素材以只读方式挂载于：
-
-    - `/workspace/assets/library/` —— Kenney CC0 素材包（sprites、tiles、UI、fonts）。
-    - `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录的 `LICENSE.txt`。
-
-    浏览素材库并挑选素材包。
-    把你需要的内容复制到你项目的 `assets/` 目录中。
-
-    ## Project layout
-
-    ```
-    /workspace/game/
-      project.godot
-      Main.tscn
-      demo_outputs/    ← your input traces (1–10 files)
-      scripts/  scenes/  assets/
-    ```
-
-    构建产物必须能通过以下命令干净启动：
-
-    ```
-    godot --headless --path /workspace/game --quit-after 5
-    ```
-
-    Godot CLI 参数的参考文档位于 `/workspace/tools/godot_command_line.md`。
-    **诸如 `--headless` 和 `--quit-after N` 之类的引擎参数必须放在 `--` 之前** —— `--` 之后的任何内容都会作为用户参数转发给项目，并被引擎静默忽略。正确的形式为：
-    `godot --headless --quit-after 5 --path . -- --scenario near_victory`。
-
-    截图辅助工具位于 `/workspace/tools/screenshot.sh`。用它来实际查看你的 UI / 战场 / 结算界面长什么样。
-
-    ```
-    /workspace/tools/screenshot.sh --path /workspace/game \
-          -- --out /workspace/frame.png --frames 60
-    ```
-
-    要为特定 scenario 截图，请在 `--` 之后追加 `--scenario <id>`。该辅助工具只消费 `--out` / `--frames` / `--scene`；其余参数会保留在 `OS.get_cmdline_user_args()` 中供你的游戏代码读取。示例：
-
-    ```
-    /workspace/tools/screenshot.sh --path /workspace/game \
-          -- --out /workspace/battle_debug.png --frames 120 --scenario battle
-    ```
-
-    ## Demos
-
-    在 `/workspace/game/demo_outputs/` 下交付 **1–10 个输入轨迹（input-trace）文件**，每个 demo 一个，均命名为 `*.json`。评测程序为每条轨迹启动一次全新的游戏，以 1280×720 分辨率将你的轨迹回放为合成的鼠标与键盘输入，并录制屏幕。仅按文件名排序的前 10 条轨迹会被评测；超过 20 s 的录制会从随机的 20 s 窗口中采样。
-
-    ### Scenarios
-
-    常规玩法应从标题界面开始，并展示该任务的核心游戏循环。
-    Demo 回放必须是确定性的。对于需要特定状态的 demo（特定关卡、战斗状态、升级界面、结算状态或后期布局），请定义具名 scenario，使你的游戏在以下方式启动时加载它们：
-
-    ```
-    godot --path /workspace/game -- --scenario <id>
-    ```
-
-    当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态（为任何 RNG 设定种子），并立即开始接受输入。
-
-    ### Trace file format
-
-    ```json
-    {
-      "scenario": "title_flow",
-      "duration_frames": 360,
-      "events": [
-        {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
-        {"frame": 90,  "type": "key_press",   "keycode": "1"},
-        {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
-        {"frame": 300, "type": "wait"}
-      ]
-    }
-    ```
-
-    - `scenario` —— 可选；若为从标题界面开始的常规游戏启动则省略。
-    - `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 s）**。
-    - `events` —— 按时间排序的输入。坐标为 1280×720 视口内的像素值。支持的类型：
-      - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
-      - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` —— 用它们实现拖拽交互：在起点发出 `mouse_down`，沿途发出一个或多个 `mouse_move` 事件，并在终点发出 `mouse_up`。一次 `mouse_click` 相当于在同一点上紧密相继的 `mouse_down` + `mouse_up`。
-      - `mouse_move`：`{frame, type, x, y}`
-      - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 取值：`A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
-      - `wait`：`{frame, type}` —— 锚定帧，无输入。
-
-    回放必须是确定性的：相同的轨迹、全新的启动，每次都得到相同的结果。
-    ````
-
-    ## 一手资料
-
-    以下链接分别覆盖论文、固定代码快照、官方榜单页、计分实现、rubric 实例与外部运行框架。
-
-    - [GameCraft-Bench 论文](https://arxiv.org/abs/2606.17861)：方法、实验、图表与局限。
-    - [固定上游仓库快照](https://github.com/FreedomIntelligence/GameCraft-Bench/tree/7385d326fb25ba9af8b353615987bf680a25b657)：任务、验证器与官方 README。
-    - [官方项目与榜单页](https://tongxuluo.github.io/gamecraft-bench-website/)：公开榜单入口；页面会继续更新，本页成绩以 2026-08-10 快照为准。
-    - [固定版本计分实现](https://github.com/FreedomIntelligence/GameCraft-Bench/blob/7385d326fb25ba9af8b353615987bf680a25b657/gamecraft_bench/score.py)：类别聚合与总分逻辑。
-    - [固定版本 rubric 示例](https://raw.githubusercontent.com/FreedomIntelligence/GameCraft-Bench/7385d326fb25ba9af8b353615987bf680a25b657/tasks/cardgame-autobattler/tests/rubric.json)：逐项要求的数据形态。
-    - [Harbor](https://github.com/harbor-framework/harbor)：上游使用的外部任务运行框架。
+  overview_note: >-
+    下面的协议说明来自钉死在 commit 7385d326 的官方作者仓库（140 份任务题面、隐藏 rubric 与验分器源码）、
+    论文 arXiv:2606.17861v1（2026-06-16 提交，CC BY 4.0）与官方项目页 2026-08-10 快照；
+    判分细节以仓库里真正被执行的代码为准，逐条与论文表述交叉核对过。
+  summary:
+    plain_language: >-
+      Agent 拿到的是一段散文式的游戏需求（世界观、玩家会经历什么、要有哪些系统），要交出两样东西：
+      一个放在 /workspace/game/ 的完整 Godot 4 工程，和 1–10 个自己写的输入轨迹 JSON——
+      轨迹里逐帧写明什么时候点哪个坐标、按哪个键，用来向验分器演示这游戏真的能玩。
+      验分器不读代码，而是照着轨迹把游戏重新启动、真的操作一遍、录下屏幕，再让多模态裁判看录像和抽帧，
+      判断需求里的每一条到底有没有在画面上被演示出来。工程启动不了，这题直接 0 分。
+    why_it_matters: >-
+      做游戏是少有的"必须让脚本、场景、资源、渲染、运行时配置和玩家交互同时成立"的任务：
+      单独看每个文件都对，合起来跑不起来或者玩不动，就等于没做完。
+      传统代码评测大多只验单元测试或片段正确性，测不出这种整体可运行性；
+      这套评测把判分放在"真实引擎里被操作时屏幕上发生了什么"，逼着 Agent 交出可交付的成品而不是能过测的片段。
+  method_steps:
+    - title: 发题与工作区
+      description: >-
+        每题给出一份 instruction.md 散文需求（核心愿景、玩家体验，以及交付格式、轨迹格式的统一说明），
+        一个 Godot 工作区，以及两个只读挂载的 2D 资产库（Kenney 与 OpenGameArt，后者每个子目录带自己的 LICENSE.txt）。
+        评分细则放在 /tests/rubric.json，Agent 阶段拿不到内容，属于隐藏 rubric。单题给 Agent 的名义预算是 7200 秒。
+    - title: 交付工程与输入轨迹
+      description: >-
+        Agent 要在 /workspace/game/ 交出完整工程，并在 demo_outputs/ 下放 1–10 个确定性轨迹 JSON，
+        每个含 duration_frames（≤600，即 30 fps 下 20 秒）与按帧排序的事件序列，
+        支持 mouse_click/mouse_down/mouse_up/mouse_move/key_press/key_down/key_up/wait，坐标按 1280×720 视口。
+        需要特定局面的演示要实现 `-- --scenario <id>` 入口：跳过菜单、确定性地构造该状态并立即接受输入。
+    - title: 启动闸门
+      description: >-
+        验分器先在 shell 里跑 `godot --headless --path /workspace/game --quit-after 5`，
+        退出码 0 才算 BUILD=1。BUILD=0 时直接跳过回放与判分，该题记 0 分——工程能不能起来是硬前提。
+    - title: 回放录屏取证
+      description: >-
+        BUILD=1 后按文件名取前 10 个轨迹，逐个在 Xvfb 虚拟屏上重启游戏，用 xdotool 注入合成鼠标键盘事件回放，
+        ffmpeg 录制 1280×720 画面并压到 854×480，每 0.5 秒抽一帧。
+        录像超过 20 秒时按 demo_id 确定性随机取一个 20 秒连续窗口，保证复跑抽到同样的帧。
+    - title: 多模态裁判按隐藏细则打分
+      description: >-
+        每个 demo 调用裁判一次，一次性对该题全部 requirement 给 0–1 分（0 未演示、0.5 部分演示、1 清晰演示）；
+        裁判最多尝试 5 次（首次加 4 次重试），仍失败则该 demo 全部 requirement 记 0。每题 12–21 条 requirement，全库共 2305 条。
+    - title: 合成本题分与总分
+      description: >-
+        每条 requirement 先跨 demo 聚合（agg=max 取最大值，agg=mean 取均值），
+        再按 score_formula 合成：BUILD ×（四类各自 requirement 等权均值，按类权重加权），裁剪到 [0,1]。
+        140 题得分等权平均 ×100 即榜单总分。
+  score_interpretation: >-
+    分数是百分制总分，越高越好，单位是分，理论上限 100，等于 140 题各自 [0,1] 得分的等权平均再乘 100。
+    它衡量的是"隐藏评分细则里的各项要求，有多大比例真的在可操作的游戏画面里被演示出来"，
+    而不是代码风格或单元测试通过率。因为每题都乘以启动闸门，一个起不来的工程无论代码多完整都记 0 分。
+    四个分项 Mechanics/Depth/Visuals/Art 对应 Core Mechanics、Content Depth、Functional Visuals、
+    Presentation & Art 四类，只作解释用，不参与排序。比较边界：同一个来源 commit 7385d326 的 140 道题与隐藏 rubric、
+    同一套 Godot 4.6.2-stable 与 Xvfb/xdotool/ffmpeg 取证链路、同一个多模态裁判 gpt-5.5、
+    每题至多 10 个 demo 与 20 秒取证窗口。换裁判模型、改闸门命令或放宽 demo 上限都会破坏可比性。
+  key_facts:
+    - value: 140 题 / 15 个游戏族
+      label: 任务规模（不含 example 模板题）
+      description: 平台跳跃 19、策略 17、经营 16、开放世界 15、Roguelike 14、视觉小说 11、解谜 8、射击 7、模拟 6、卡牌 5、恐怖 5、音乐节奏 5、放置 4、竞速 4、体育 4。
+      source_url: https://github.com/FreedomIntelligence/gamecraft-bench/tree/7385d326fb25ba9af8b353615987bf680a25b657/tasks
+    - value: 2305 条
+      label: 隐藏评分细则的 requirement 总数
+      description: 逐份统计 140 份 tests/rubric.json 的 requirements 得到；每题 12–21 条，按 Core Mechanics / Content Depth / Functional Visuals / Presentation & Art 四类归组。
+      source_url: https://github.com/FreedomIntelligence/gamecraft-bench/tree/7385d326fb25ba9af8b353615987bf680a25b657/tasks
+    - value: "65.72"
+      label: 官方榜单当前最高总分
+      description: Claude Code 编排、上游标识为 Fable 5 high 的配置，2026-07-20；同一榜单最低为 2.15。
+      source_url: https://tongxuluo.github.io/gamecraft-bench-website/
+    - value: "41.46"
+      label: 论文期最强配置的总分
+      description: 论文 v1（2026-06-16）主表 7 个配置中的最高分，由 Claude Code + Opus-4.7 high 取得。
+      source_url: https://arxiv.org/abs/2606.17861
+    - value: 10 个 / 20 秒
+      label: 单题取证上限
+      description: 每题最多回放 10 个轨迹，单个录像最多取 20 秒窗口，每 0.5 秒抽一帧交裁判。140 份 rubric 全部一致。
+      source_url: https://github.com/FreedomIntelligence/gamecraft-bench/blob/7385d326fb25ba9af8b353615987bf680a25b657/gamecraft_bench/verifier/cli.py
+    - value: gpt-5.5
+      label: 上游默认多模态裁判
+      description: 默认后端 openai 的默认模型；仓库另注册了 claude、opus、kimi、gemini 与 stub 五个可选后端。
+      source_url: https://github.com/FreedomIntelligence/gamecraft-bench/blob/7385d326fb25ba9af8b353615987bf680a25b657/gamecraft_bench/verifier/judges/openai_gpt.py
+  caveats:
+    - title: 榜单跨越两个时间点，论文只覆盖其中 7 个配置
+      description: >-
+        论文 v1（2026-06-16）主表是 7 个配置、最高 41.46；官方榜单到 2026-08-10 已扩到 12 个配置、最高 65.72，
+        新增的 Fable 5 high、GPT-5.6-sol high、Kimi-K3、Seele02-pro 与 Deepseek-V4-Flash-0731 都不在论文里。
+        上游没有声明这几次新测与论文用的是否为同一版验分器、同一裁判模型，仓库也没有 tag 或 release 可区分版本。
+        跨这两个时间点比较请谨慎。另外仓库 README 正文写最强配置为 65.70%，但同一页表格与官方项目页都写 65.72；
+        本目录采用逐格数据 65.72，并如实记录这处来源自身的差异，不做平均或推断。
+    - title: 本目录只收录 9 个可解析身份的配置，3 行如实略去
+      description: >-
+        官方榜单 12 行里，SeeleAgent · Seele02-pro（50.70）、Claude Code · Deepseek-V4-Flash-0731（30.66）
+        与 Code Buddy · MiniMax-M2.7（10.95）
+        在 EvalHub 平台模型注册表中没有对应条目，写进成绩文件会被身份校验判为未知模型；
+        把它们改映射到别的模型属于事实篡改，因此这三行不进入成绩文件。完整 12 行官方榜单见 README、
+        `official-full-leaderboard` 辅助视图与官方项目页。
+        另外上游把推理档位写进模型字符串（Fable 5 high、GPT-5.6-sol high、GPT-5.5 high、Opus-4.7 high），
+        平台注册表只认不含档位的 canonical 名，因此成绩文件用 Claude Fable 5 / GPT-5.6 Sol / GPT-5.5 /
+        Claude Opus 4.7，并在每条成绩的 detail 里原样保留上游字符串与 high 档位；这是身份规范化，不改动任何分数。
+    - title: 裁判是打分链路里最主要的不确定来源
+      description: >-
+        分数由多模态裁判看录像抽帧给出，仓库没有钉死裁判的采样温度或随机种子；
+        论文用固定证据重复 10 次裁判来展示稳定性，但这属于经验证据而非固定解码配置。
+        裁判连续失败 5 次会让该 demo 全部条目记 0，因此裁判侧的可用性问题会直接压低分数。
+    - title: 覆盖面与不评项
+      description: >-
+        只覆盖 Godot 引擎里的 2D 游戏生成，不含 Unity/Unreal、3D、多人联机、大规模物理与长周期生产流程；
+        判分只看可见的游戏行为，音频相关要求通过画面上的可见反馈间接体现；
+        评测衡量的是"有没有按需求实现出可运行的机制、内容、视觉状态与表现"，不试图衡量游戏是否好玩。
+    - title: 复现成本高，且依赖付费裁判与特定 Linux 取证栈
+      description: >-
+        单题名义预算是 Agent 7200 秒 + 验分 1800 秒（140/140 一致），多数题目为 1 CPU / 2048 MB，其中 7 道开放世界题为 4096 MB，另有少数 task.toml 省略了部分环境字段；跑满 140 题还要叠加每个 demo 一次的多模态裁判调用；
+        取证链路需要 Ubuntu 环境下的 Godot 4.6.2-stable、Xvfb、xdotool 与 ffmpeg。
+        这不是能在本地免费快速复跑的评测，被评 Agent 在解题阶段还允许联网。
+  overview_tables:
+    - id: task-families
+      label: 任务族
+      title: 15 个游戏族的题量分布
+      note: 逐格转录自 commit 7385d326 的 README 任务族表与论文 Table 3，并与仓库 tasks/ 目录前缀实际计数逐族核对一致（合计 140，不含 example 模板题）。
+      caption: 论文 Table 3 标题明确写"Counts exclude the example task"，仓库实有 141 个任务目录，减去 example 恰为 140。
+      source_url: https://arxiv.org/abs/2606.17861
+      columns:
+        - { id: family, label: 游戏族 }
+        - { id: dir-prefix, label: 目录前缀 }
+        - { id: tasks, label: 题量 }
+      rows:
+        - id: platformer
+          cells:
+            - { column_id: family, value: Platformer 平台跳跃 }
+            - { column_id: dir-prefix, value: platformer- }
+            - { column_id: tasks, value: 19 }
+        - id: strategy
+          cells:
+            - { column_id: family, value: Strategy 策略 }
+            - { column_id: dir-prefix, value: strategy- }
+            - { column_id: tasks, value: 17 }
+        - id: tycoon
+          cells:
+            - { column_id: family, value: Tycoon 经营模拟 }
+            - { column_id: dir-prefix, value: tycoon- }
+            - { column_id: tasks, value: 16 }
+        - id: openworld
+          cells:
+            - { column_id: family, value: Open-world 开放世界 }
+            - { column_id: dir-prefix, value: openworld- }
+            - { column_id: tasks, value: 15 }
+        - id: roguelike
+          cells:
+            - { column_id: family, value: Roguelike }
+            - { column_id: dir-prefix, value: roguelike- }
+            - { column_id: tasks, value: 14 }
+        - id: visualnovel
+          cells:
+            - { column_id: family, value: Visual novel 视觉小说 }
+            - { column_id: dir-prefix, value: visualnovel- }
+            - { column_id: tasks, value: 11 }
+        - id: puzzle
+          cells:
+            - { column_id: family, value: Puzzle 解谜 }
+            - { column_id: dir-prefix, value: puzzle- }
+            - { column_id: tasks, value: 8 }
+        - id: shooter
+          cells:
+            - { column_id: family, value: Shooter 射击 }
+            - { column_id: dir-prefix, value: shooter- }
+            - { column_id: tasks, value: 7 }
+        - id: simulation
+          cells:
+            - { column_id: family, value: Simulation 模拟 }
+            - { column_id: dir-prefix, value: simulation- }
+            - { column_id: tasks, value: 6 }
+        - id: cardgame
+          cells:
+            - { column_id: family, value: Card game 卡牌 }
+            - { column_id: dir-prefix, value: cardgame- }
+            - { column_id: tasks, value: 5 }
+        - id: horror
+          cells:
+            - { column_id: family, value: Horror 恐怖 }
+            - { column_id: dir-prefix, value: horror- }
+            - { column_id: tasks, value: 5 }
+        - id: rhythm
+          cells:
+            - { column_id: family, value: Rhythm 音乐节奏 }
+            - { column_id: dir-prefix, value: rhythm- }
+            - { column_id: tasks, value: 5 }
+        - id: idle
+          cells:
+            - { column_id: family, value: Idle 放置 }
+            - { column_id: dir-prefix, value: idle- }
+            - { column_id: tasks, value: 4 }
+        - id: racing
+          cells:
+            - { column_id: family, value: Racing 竞速 }
+            - { column_id: dir-prefix, value: racing- }
+            - { column_id: tasks, value: 4 }
+        - id: sports
+          cells:
+            - { column_id: family, value: Sports 体育 }
+            - { column_id: dir-prefix, value: sports- }
+            - { column_id: tasks, value: 4 }
+    - id: rubric-categories
+      label: 评分四类
+      title: 隐藏评分细则的四个类别与权重
+      note: 类别名与条目前缀取自 commit 7385d326 的 tasks/*/tests/rubric.json 与验分器 dashboard 代码；条目数为 140 份 rubric 的实际计数；权重由逐份 score_formula 解析求得。
+      caption: 权重之和恒为 1。论文把第四类的展示名写作 Art and Presentation，rubric 与代码里的键名是 Presentation & Art。
+      source_url: https://github.com/FreedomIntelligence/gamecraft-bench/blob/7385d326fb25ba9af8b353615987bf680a25b657/gamecraft_bench/verifier/score.py
+      columns:
+        - { id: category, label: 类别（代码键名） }
+        - { id: prefix, label: 条目前缀 }
+        - { id: n-items, label: 全库条目数 }
+        - { id: weight, label: 权重（135 题标准等价 / 5 道视觉小说题） }
+        - { id: question, label: 判的是什么 }
+      rows:
+        - id: core-mechanics
+          cells:
+            - { column_id: category, value: Core Mechanics }
+            - { column_id: prefix, value: M }
+            - { column_id: n-items, value: 613 }
+            - { column_id: weight, value: 0.15 / 0.20 }
+            - { column_id: question, value: 需求里的核心玩法机制有没有真的能玩起来 }
+        - id: content-depth
+          cells:
+            - { column_id: category, value: Content Depth }
+            - { column_id: prefix, value: D }
+            - { column_id: n-items, value: 653 }
+            - { column_id: weight, value: 0.35 / 0.30 }
+            - { column_id: question, value: 进程、内容量与状态变化是否足够，而不是只有一个原型 }
+        - id: functional-visuals
+          cells:
+            - { column_id: category, value: Functional Visuals }
+            - { column_id: prefix, value: V }
+            - { column_id: n-items, value: 466 }
+            - { column_id: weight, value: 0.15 / 0.15 }
+            - { column_id: question, value: 玩家能否从画面读出状态、反馈、转场与结果 }
+        - id: presentation-art
+          cells:
+            - { column_id: category, value: Presentation & Art }
+            - { column_id: prefix, value: A }
+            - { column_id: n-items, value: 573 }
+            - { column_id: weight, value: 0.35 / 0.35 }
+            - { column_id: question, value: 观感是否统一、美术与呈现是否达到该类型的基本水准 }
+    - id: benchmark-comparison
+      label: 同类对比
+      title: 官方与同类游戏生成评测的三条准则对比
+      note: 逐格转录自官方项目页 2026-08-10 快照的 Comparison 表与论文 Table 1。
+      caption: >-
+        官方脚注原文："WebGameBench is concurrent with our work: it evaluates delivered Web games,
+        while GameCraft-Bench targets complete projects in a dedicated game engine."
+      source_url: https://tongxuluo.github.io/gamecraft-bench-website/
+      columns:
+        - { id: benchmark, label: 评测 }
+        - { id: engine, label: Engine Grounding }
+        - { id: artifact, label: Artifact Completeness }
+        - { id: verification, label: Interactive Verification }
+      rows:
+        - id: gamedevbench
+          cells:
+            - { column_id: benchmark, value: GameDevBench }
+            - { column_id: engine, value: Godot }
+            - { column_id: artifact, value: 未覆盖 }
+            - { column_id: verification, value: 未覆盖 }
+        - id: opengame-bench
+          cells:
+            - { column_id: benchmark, value: OpenGame-Bench }
+            - { column_id: engine, value: Web }
+            - { column_id: artifact, value: 覆盖 }
+            - { column_id: verification, value: 未覆盖 }
+        - id: webgamebench
+          cells:
+            - { column_id: benchmark, value: WebGameBench（与本工作同期） }
+            - { column_id: engine, value: Web }
+            - { column_id: artifact, value: 覆盖 }
+            - { column_id: verification, value: 覆盖 }
+        - id: gamecraft-bench
+          cells:
+            - { column_id: benchmark, value: GameCraft-Bench }
+            - { column_id: engine, value: Godot }
+            - { column_id: artifact, value: 覆盖 }
+            - { column_id: verification, value: 覆盖 }
+  figures:
+    - id: official-overview
+      label: 总览
+      title: GameCraft-Bench 总览图
+      src: https://arxiv.org/html/2606.17861v1/x1.png
+      alt: 展示 Agent 把自然语言游戏需求转成完整 Godot 工程、验分器回放提交的交互轨迹、再由细则引导判分的整体流程示意图。
+      caption: 论文 Figure 2，来源方发表图，非 EvalHub 独立复跑。
+      source_url: https://arxiv.org/abs/2606.17861
+    - id: official-pipeline
+      label: 判分链路
+      title: 端到端判分链路图
+      src: https://arxiv.org/html/2606.17861v1/x4.png
+      alt: 展示一道题如何打包游戏需求、Godot 环境与隐藏评分细则，以及验分器如何验证可启动性、回放轨迹取证并合成分数的流程图。
+      caption: 论文 Figure 5，来源方发表图，非 EvalHub 独立复跑。
+      source_url: https://arxiv.org/abs/2606.17861
+    - id: official-judge-stability
+      label: 裁判稳定性
+      placement: insights
+      title: 固定证据下的裁判稳定性
+      src: https://arxiv.org/html/2606.17861v1/x8.png
+      alt: 柱状图给出同一份固定游戏证据上重复 10 次 gpt-5.5 裁判的平均分，误差棒表示重复之间的波动。
+      caption: 论文 Figure 9：在固定证据上重复 10 次裁判以展示打分稳定性；这是经验证据，仓库并未钉死裁判的采样参数。
+      source_url: https://arxiv.org/abs/2606.17861
+  resources_note: 下面只列上游作者仓库、论文托管方与官方项目页提供的一手资料。
+  resources:
+    - title: GameCraft-Bench 论文（arXiv:2606.17861v1）
+      summary: 三条设计准则、140 题构成、BUILD 门控与四类评分的权威定义，含分家族结果表与裁判稳定性实验，2026-06-16 提交，CC BY 4.0。
+      url: https://arxiv.org/abs/2606.17861
+    - title: 官方作者仓库（钉死 commit 7385d326）
+      summary: 140 份任务题面、隐藏 rubric、回放取证与判分实现，以及官方榜单与 token 用量表的来源。
+      url: https://github.com/FreedomIntelligence/gamecraft-bench
+    - title: 官方项目页
+      summary: 官方榜单 12 行成绩、同类评测对比表与各配置的游戏录像 demo，本目录官方成绩取自其 2026-08-10 快照。
+      url: https://tongxuluo.github.io/gamecraft-bench-website/
+    - title: 判分实现 score.py
+      summary: 启动闸门短路、跨 demo 的 max/mean 聚合、score_formula 受限 AST 求值与 [0,1] 裁剪的一手代码。
+      url: https://github.com/FreedomIntelligence/gamecraft-bench/blob/7385d326fb25ba9af8b353615987bf680a25b657/gamecraft_bench/verifier/score.py
+    - title: 任务 rubric 样例 cardgame-poker-roguelike
+      summary: 四类类别命名、0.15/0.35/0.15/0.35 权重、闸门命令与单条 requirement 的原始判分口径。
+      url: https://raw.githubusercontent.com/FreedomIntelligence/gamecraft-bench/7385d326fb25ba9af8b353615987bf680a25b657/tasks/cardgame-poker-roguelike/tests/rubric.json
+    - title: Harbor 运行框架
+      summary: GameCraft-Bench 依赖的上游 Agent 执行与评测 harness，Apache-2.0。
+      url: https://github.com/harbor-framework/harbor
 tasks:
  - id: cardgame-autobattler
    label: "卡牌 · Cardgame Autobattler"
