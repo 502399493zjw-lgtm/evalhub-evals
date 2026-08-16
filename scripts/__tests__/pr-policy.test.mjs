@@ -175,6 +175,20 @@ test("allows the AUTHORS maintainer to update an existing eval", async () => {
   assert.equal(result.mode, "community-eval-update");
 });
 
+test("allows the repository maintainer to proxy an organization-owned eval update", async () => {
+  const result = await evaluate(updateOptions({
+    actor: "502399493zjw-lgtm",
+    baseYaml: evalYaml({ upstream: "source-org/source" }),
+    baseAuthor: "source-org",
+    body: marker("update", "sample-eval"),
+  }));
+  assert.equal(result.mode, "community-eval-update");
+  assert.equal(result.owner, "source-org");
+  assert.equal(result.baseOwner, "source-org");
+  assert.equal(result.maintainer, "source-org");
+  assert.equal(result.submissionTask, taskId);
+});
+
 test("keeps the public author based on head source metadata after an authorized update", async () => {
   const result = await evaluate(updateOptions({
     actor: "source-owner",

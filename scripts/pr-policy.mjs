@@ -769,10 +769,14 @@ export async function evaluatePullRequestPolicy({
     nativeRepository: baseRepository,
     source: `head:${evalYamlPath}`,
   });
-  if (!sameLogin(actor, baseSourceOwner) && !sameLogin(actor, baseMaintainer)) {
+  if (
+    !sameLogin(actor, baseSourceOwner) &&
+    !sameLogin(actor, baseMaintainer) &&
+    !sameLogin(actor, MAINTAINER_LOGIN)
+  ) {
     reject(
       "third_party_update_forbidden",
-      `@${actor} cannot update eval ${slug}; update access belongs to public author @${baseSourceOwner} or maintainer @${baseMaintainer}`,
+      `@${actor} cannot update eval ${slug}; update access belongs to public author @${baseSourceOwner}, maintainer @${baseMaintainer}, or repository maintainer @${MAINTAINER_LOGIN}`,
     );
   }
   const submissionTask = enforceSubmissionMarker(markerScan, {
