@@ -446,15 +446,41 @@ const LegacyEvalDetailProfileSchema = z
 });
 /**
  * 新版详情契约：平台继续从评测元信息渲染标准 Hero，markdown 是 Hero 下方的
- * 完整正文。页面不再要求作者把榜单、结果、案例和资源拆成稳定模块；
- * 这些内容由作者 Skill 按文档结构直接写入 markdown，并由前端统一渲染。
+ * 完整正文。榜单、结果、案例、资源和局限等内容直接写进同一份 Markdown。
  */
+function hasDocumentH1(markdown) {
+    let closingFence = null;
+    for (const line of markdown.split(/\r?\n/u)) {
+        if (closingFence !== null) {
+            if (closingFence.test(line))
+                closingFence = null;
+            continue;
+        }
+        const fence = line.match(/^\s*(`{3,})[^`]*$/u);
+        if (fence) {
+            closingFence = new RegExp(`^\\s*${fence[1]}\\s*$`, "u");
+            continue;
+        }
+        if (/^\s{0,3}#(?!#)\s+/u.test(line))
+            return true;
+    }
+    return false;
+}
 const MarkdownOnlyDetailProfileSchema = z
     .object({
     source_kind: z.enum(["evalhub_native", "upstream_publication"]),
     markdown: requiredDetailProfileText(100_000, "detail_profile.markdown"),
 })
-    .strict();
+    .strict()
+    .superRefine((profile, ctx) => {
+    if (hasDocumentH1(profile.markdown)) {
+        ctx.addIssue({
+            code: "custom",
+            path: ["markdown"],
+            message: "detail_profile.markdown 由 Hero 之后开始，不能重复 H1",
+        });
+    }
+});
 export const EvalDetailProfileSchema = z.union([
     MarkdownOnlyDetailProfileSchema,
     LegacyEvalDetailProfileSchema,
