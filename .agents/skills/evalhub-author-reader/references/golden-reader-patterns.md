@@ -85,6 +85,15 @@ Use this when one primary score aggregates several stable benchmark or scenario 
 
 If one participant is missing a source-published row or uses a genuinely different protocol, do not pad it. Record the boundary and keep the source-faithful view; the platform must fall back to the original per-participant tables instead of deriving a misleading comparison.
 
+For the Markdown reader body, present a comparable multi-model breakdown under
+one exact `## 官方分项结果`. Put the shared scoring formula, provenance, and
+comparison caveats before the first model heading. Then use one non-empty
+`### <short model label>` block per model; each of these H3 blocks becomes a
+clickable model tab. Use H4 or ordinary Markdown for model-local metrics and
+resources so they do not become tabs. Do not add a tab for an unpublished model,
+pad a missing row, or move values across incompatible source or protocol
+boundaries.
+
 ## Task-case pattern
 
 Task examples are independent of aggregate published results:
@@ -92,7 +101,9 @@ Task examples are independent of aggregate published results:
 - `prompt` is the one task statement: what runs and what the page shows. For an upstream task it is the complete source-published original, verbatim from the pinned commit. Long text is intentionally stored in full; the platform owns default folding and expansion.
 - `run_spec` holds EvalHub's own run procedure and is never rendered, so nothing a reader needs may live only there.
 - `translation` is complete when present.
-- Real `task_results` or task-linked showcases may provide model tabs. Never convert leaderboard aggregates, paper prose, or a design mock into fake task outputs or execution traces.
+- Real `task_results` or task-linked showcases may provide model tabs. A source-published aggregate for the strictly corresponding fixed profile may also be shown in the Markdown case result area, but it must be labeled as a profile aggregate rather than a single-task output.
+- Put shared result provenance and aggregation limits directly under `#### 公开结果`, followed by one non-empty `##### <short model label>` block per comparable model. These H5 blocks become the established nested model tabs; use H6 or ordinary Markdown for model-local structure.
+- Never convert leaderboard aggregates, paper prose, or a design mock into fake task outputs or execution traces, and never create a model tab without source-backed evidence.
 - Do not add author-supplied “view prompt source” or “view official score source” buttons. Global sources belong in `detail_profile.resources` and result provenance belongs in `submission.source`.
 
 ## Shared-view preflight

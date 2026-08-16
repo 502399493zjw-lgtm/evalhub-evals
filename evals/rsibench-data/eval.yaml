@@ -56,19 +56,7 @@ detail_profile:
 
     ## 官方分项结果
 
-    ### 六项分项成绩
-
-    分项成绩是官方复评通过率或精确匹配准确率，统一以百分比展示。Base model 一行只用于参照，不属于参赛排名。
-
-    | 编排模型 | SWE Verified | SWE Multilingual | SWE Pro | Terminal-Bench 2.0 | GPQA Diamond | AIME 2026 |
-    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-    | Kimi K3 | 50% | 11% | 17% | 9% | 55% | 44.2% |
-    | gpt-5.6-sol | 33% | 15% | 9% | 20.2% | 65% | 53.3% |
-    | Sonnet-5 | 35% | 22% | 4% | 5.6% | 52% | 49.2% |
-    | Opus-4.8 | 46% | 5% | 2% | 10.1% | 56% | 40.8% |
-    | gpt-5.6-terra | 42% | 6% | 1% | 12.4% | 64% | 33.3% |
-
-    计算方式为：
+    选择模型查看它在六个固定 profile 上的官方复评成绩。分项成绩是通过率或精确匹配准确率，统一以百分比展示；每个模型的总分都按下面同一组权重计算：
 
     ```text
     total = 0.2 × SWE Verified
@@ -81,19 +69,72 @@ detail_profile:
 
     用同一组权重对官方矩阵中的未微调 Base model 六项成绩计算，得到 **13.1 分**的派生参照分。它不是参赛结果；低于它只能说明该候选在这套固定协议下没有超过未微调参照。
 
-    ### 资源与运行成本
+    资源数据只做展示，不进入评分。合计值来自 2026-08-09 官方榜单快照；Kimi K3 没有公开资源数据，缺失不表示 0。两个官方页面有两处成本差异：Sonnet-5 的 Terminal-Bench 2.0 为 `156.93` USD（榜单）对 `157.85` USD（rsibench.co 矩阵），gpt-5.6-sol 的 AIME 2026 为 `63.65` USD（榜单）对 `63.87` USD（矩阵）。本文统一采用官方榜单快照中的数值，不做平均或推算。
 
-    资源数据只做展示，不进入评分。数值来自官方榜单快照，对每个模型的六个 profile 求和；Kimi K3 没有公开资源数据，因此用 `—` 表示缺失，不表示 0。
+    ### Kimi K3
 
-    | 编排模型 | 六项合计小时 | 六项合计 Tinker USD |
-    | --- | ---: | ---: |
-    | Kimi K3 | — | — |
-    | gpt-5.6-sol | 42.89 | 577.83 |
-    | Sonnet-5 | 63.24 | 885.27 |
-    | Opus-4.8 | 44.94 | 674.05 |
-    | gpt-5.6-terra | 21.49 | 351.31 |
+    Harness：`Kimi Code` · 总分：**27.3 分** · 六项合计资源：未公开
 
-    两个官方页面有两处成本差异：Sonnet-5 的 Terminal-Bench 2.0 为 `156.93` USD（榜单）对 `157.85` USD（rsibench.co 矩阵），gpt-5.6-sol 的 AIME 2026 为 `63.65` USD（榜单）对 `63.87` USD（矩阵）。本文统一采用官方榜单快照中的数值，不做平均或推算。
+    | 分项 | 官方成绩 |
+    | --- | ---: |
+    | SWE Verified | 50% |
+    | SWE Multilingual | 11% |
+    | SWE Pro | 17% |
+    | Terminal-Bench 2.0 | 9% |
+    | GPQA Diamond | 55% |
+    | AIME 2026 | 44.2% |
+
+    ### gpt-5.6-sol
+
+    Harness：`Codex` · 总分：**27.3 分** · 六项合计：42.89 小时 / 577.83 Tinker USD
+
+    | 分项 | 官方成绩 |
+    | --- | ---: |
+    | SWE Verified | 33% |
+    | SWE Multilingual | 15% |
+    | SWE Pro | 9% |
+    | Terminal-Bench 2.0 | 20.2% |
+    | GPQA Diamond | 65% |
+    | AIME 2026 | 53.3% |
+
+    ### Sonnet-5
+
+    Harness：`Claude Code` · 总分：**23.4 分** · 六项合计：63.24 小时 / 885.27 Tinker USD
+
+    | 分项 | 官方成绩 |
+    | --- | ---: |
+    | SWE Verified | 35% |
+    | SWE Multilingual | 22% |
+    | SWE Pro | 4% |
+    | Terminal-Bench 2.0 | 5.6% |
+    | GPQA Diamond | 52% |
+    | AIME 2026 | 49.2% |
+
+    ### Opus-4.8
+
+    Harness：`Claude Code` · 总分：**22.3 分**（按官方公式派生）· 六项合计：44.94 小时 / 674.05 Tinker USD
+
+    | 分项 | 官方成绩 |
+    | --- | ---: |
+    | SWE Verified | 46% |
+    | SWE Multilingual | 5% |
+    | SWE Pro | 2% |
+    | Terminal-Bench 2.0 | 10.1% |
+    | GPQA Diamond | 56% |
+    | AIME 2026 | 40.8% |
+
+    ### gpt-5.6-terra
+
+    Harness：`Codex` · 总分：**22 分**（按官方公式派生）· 六项合计：21.49 小时 / 351.31 Tinker USD
+
+    | 分项 | 官方成绩 |
+    | --- | ---: |
+    | SWE Verified | 42% |
+    | SWE Multilingual | 6% |
+    | SWE Pro | 1% |
+    | Terminal-Bench 2.0 | 12.4% |
+    | GPQA Diamond | 64% |
+    | AIME 2026 | 33.3% |
 
     ## 关于此评测
 
@@ -235,7 +276,47 @@ detail_profile:
 
     #### 公开结果
 
-    三个 profile 都在 seed-23 固定的 100 题子集上复评。Kimi K3 的 Verified / Multilingual / Pro 通过率分别为 **50% / 11% / 17%**；gpt-5.6-sol 为 **33% / 15% / 9%**。这些是整套 profile 的通过率，不是单道题结果或 EvalHub 独立复跑。
+    以下模型都在 seed-23 固定的 100 题子集上复评。这里展示的是三个 SWE-bench profile 的汇总通过率，不是单道题模型输出，也不是 EvalHub 独立复跑。
+
+    ##### Kimi K3
+
+    | 固定 profile | 官方通过率 |
+    | --- | ---: |
+    | SWE Verified | 50% |
+    | SWE Multilingual | 11% |
+    | SWE Pro | 17% |
+
+    ##### gpt-5.6-sol
+
+    | 固定 profile | 官方通过率 |
+    | --- | ---: |
+    | SWE Verified | 33% |
+    | SWE Multilingual | 15% |
+    | SWE Pro | 9% |
+
+    ##### Sonnet-5
+
+    | 固定 profile | 官方通过率 |
+    | --- | ---: |
+    | SWE Verified | 35% |
+    | SWE Multilingual | 22% |
+    | SWE Pro | 4% |
+
+    ##### Opus-4.8
+
+    | 固定 profile | 官方通过率 |
+    | --- | ---: |
+    | SWE Verified | 46% |
+    | SWE Multilingual | 5% |
+    | SWE Pro | 2% |
+
+    ##### gpt-5.6-terra
+
+    | 固定 profile | 官方通过率 |
+    | --- | ---: |
+    | SWE Verified | 42% |
+    | SWE Multilingual | 6% |
+    | SWE Pro | 1% |
 
     ### Terminal-Bench 2.0：改进真实终端工作流
 
@@ -322,7 +403,27 @@ detail_profile:
 
     #### 公开结果
 
-    gpt-5.6-sol 的官方复评通过率为 **20.2%**，Kimi K3 为 **9%**。由于分母是 89，来源中的小数由通过数换算产生；失败和超时都保留为失败。
+    以下是固定 89 题 Terminal-Bench 2.0 profile 的汇总通过率，不是单道题模型输出。来源中的小数由通过数换算产生；失败和超时都保留为失败。
+
+    ##### Kimi K3
+
+    官方复评通过率为 **9%**。
+
+    ##### gpt-5.6-sol
+
+    官方复评通过率为 **20.2%**。
+
+    ##### Sonnet-5
+
+    官方复评通过率为 **5.6%**。
+
+    ##### Opus-4.8
+
+    官方复评通过率为 **10.1%**。
+
+    ##### gpt-5.6-terra
+
+    官方复评通过率为 **12.4%**。
 
     ### GPQA Diamond：研究生级科学选择题
 
@@ -407,7 +508,27 @@ detail_profile:
 
     #### 公开结果
 
-    gpt-5.6-sol 为 **65%**，gpt-5.6-terra 为 **64%**，Kimi K3 为 **55%**。这些数值是 100 题 profile 的准确率，不公开单题模型输出。
+    以下是固定 100 题 GPQA Diamond profile 的汇总准确率，不是单道题模型输出；来源没有公开逐题模型输出。
+
+    ##### Kimi K3
+
+    官方复评准确率为 **55%**。
+
+    ##### gpt-5.6-sol
+
+    官方复评准确率为 **65%**。
+
+    ##### Sonnet-5
+
+    官方复评准确率为 **52%**。
+
+    ##### Opus-4.8
+
+    官方复评准确率为 **56%**。
+
+    ##### gpt-5.6-terra
+
+    官方复评准确率为 **64%**。
 
     ### AIME 2026：竞赛数学多次解码
 
@@ -492,7 +613,27 @@ detail_profile:
 
     #### 公开结果
 
-    gpt-5.6-sol 为 **53.3%**，Sonnet-5 为 **49.2%**，Kimi K3 为 **44.2%**。这里展示的是 profile 汇总准确率，不是补造的逐题结果。
+    以下是固定 AIME 2026 profile 的汇总准确率，不是单道题模型输出；来源没有公开逐题模型输出。
+
+    ##### Kimi K3
+
+    官方复评准确率为 **44.2%**。
+
+    ##### gpt-5.6-sol
+
+    官方复评准确率为 **53.3%**。
+
+    ##### Sonnet-5
+
+    官方复评准确率为 **49.2%**。
+
+    ##### Opus-4.8
+
+    官方复评准确率为 **40.8%**。
+
+    ##### gpt-5.6-terra
+
+    官方复评准确率为 **33.3%**。
 
     ## 一手资料
 

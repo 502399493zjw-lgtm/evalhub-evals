@@ -103,9 +103,35 @@ interpretation, leaderboard/result tables, task cases, caveats, figures,
 resources, and source links in one coherent Markdown body. Use ordinary Markdown
 headings, paragraphs, lists, tables, fenced code, blockquotes, and HTTPS links;
 do not invent module IDs, JSON blocks, React/MDX, or layout instructions to make
-the document resemble the old detail page. Below the Hero, the platform renders
-this body without the legacy leaderboard, result tabs, task tabs, resource
-modules, or detail-page footer module.
+the document resemble the old detail page.
+
+When one official breakdown contains two or more comparable models, use exactly
+one `## 官方分项结果` section. Put shared methodology, formula, provenance, and
+caveats before the first H3, then put each model in one non-empty
+`### <short model label>` block. The renderer turns every H3 in that section into
+a clickable model tab. Inside a model block, use ordinary Markdown or H4 and
+below; never use H3 for metrics, formulas, resources, or other subsections. Keep
+all tabs within the same source and comparability boundary, preserve missing
+values as missing, and never invent a model, score, row, chart, or resource value
+to complete the control.
+
+Include exactly one `## 题目案例` before the final `## 一手资料`. Every
+`### <short case label>` becomes an outer task tab and must contain, in order,
+`#### 题目原文` and `#### 中文翻译`, each with exactly one fenced text block.
+The original must be a complete verbatim transcription from the pinned public
+source and the translation must cover it completely. An optional final
+`#### 公开结果` is allowed only for source-published case evidence or a strictly
+corresponding fixed-profile aggregate. When it contains two or more comparable
+models, write shared provenance and aggregation limits before the first H5, then
+one non-empty `##### <short model label>` block per model. Every H5 becomes a
+nested model tab; use H6 or ordinary Markdown inside model blocks. Label profile
+aggregates explicitly as aggregates rather than single-task outputs, and never
+fabricate per-task outputs, traces, models, or values.
+
+Below the Hero, the platform renders this body without composing legacy
+leaderboard, result, task, resource, or detail-footer content into the Markdown.
+It may derive established result and task interactions from the documented
+heading grammar without injecting facts that are absent from the document.
 
 The legacy structured `detail_profile` fields remain accepted for historical
 evals. Do not add new structured fields merely to feed the old page layout. If
@@ -191,7 +217,7 @@ Complete this reader-readiness matrix from the final files before handoff. “Em
 | `题目案例` | Stable task ID; complete `prompt` (verbatim upstream original for an `upstream_publication`); translation and real model evidence when available; no `run_spec` content. |
 | `资料与分析` | Source-backed resources and figures only; unsupported optional blocks are omitted. |
 
-Do not reduce the stored official leaderboard to three or four participants merely to imitate a compact task-case control. The platform may show up to four real model results inside a task case; only real `task_results` or task-linked showcases qualify, and an upstream aggregate never does.
+Do not reduce the stored official leaderboard merely to imitate a compact task-case control. Real `task_results` or task-linked showcases may provide task outputs. A source-published aggregate for the strictly corresponding fixed profile may be shown in Markdown task results only when it is explicitly identified as a profile aggregate rather than a single-task output; it never becomes execution evidence.
 
 If a local platform preview is available, inspect the generic `/e/<slug>` rendering for content order and missing-data fallbacks. Do not change platform styling as part of an eval submission; use the repository's visual-design workflow separately when visual implementation is explicitly requested.
 
