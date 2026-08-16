@@ -444,6 +444,15 @@ function classifyChangedPaths(changedFiles) {
   };
 }
 
+function isStandaloneAuthorsChange(changedFiles, authorsPath) {
+  return (
+    changedFiles.length === 1 &&
+    changedFiles[0]?.filename === authorsPath &&
+    changedFiles[0]?.status === "modified" &&
+    changedFiles[0]?.previous_filename === undefined
+  );
+}
+
 async function requiredText(readText, repository, sha, pathname, source) {
   const contents = await readText(repository, sha, pathname);
   if (contents === null) {
@@ -709,9 +718,29 @@ export async function evaluatePullRequestPolicy({
   ]);
   const baseMaintainer = parseAuthors(baseAuthors, `base:${authorsPath}`);
   if (headAuthors !== baseAuthors) {
+    const headMaintainer = parseAuthors(headAuthors, `head:${authorsPath}`);
+    if (
+      sameLogin(actor, MAINTAINER_LOGIN) &&
+      isStandaloneAuthorsChange(changedFiles, authorsPath)
+    ) {
+      enforceSubmissionMarker(markerScan, {
+        actor,
+        slug,
+        expectedKind: null,
+      });
+      return {
+        ...audit,
+        mode: "maintenance-authors",
+        owner: headMaintainer,
+        baseOwner: baseMaintainer,
+        maintainer: headMaintainer,
+        slug,
+        submissionTask: null,
+      };
+    }
     reject(
       "author_change_forbidden",
-      `AUTHORS for existing eval ${slug} must remain byte-for-byte identical to base`,
+      `AUTHORS for existing eval ${slug} must remain byte-for-byte identical to base unless @${MAINTAINER_LOGIN} changes only that AUTHORS file in a standalone maintenance PR`,
     );
   }
 
@@ -740,10 +769,14 @@ export async function evaluatePullRequestPolicy({
     nativeRepository: baseRepository,
     source: `head:${evalYamlPath}`,
   });
-  if (!sameLogin(actor, baseSourceOwner) && !sameLogin(actor, baseMaintainer)) {
+  if (
+    !sameLogin(actor, baseSourceOwner) &&
+    !sameLogin(actor, baseMaintainer) &&
+    !sameLogin(actor, MAINTAINER_LOGIN)
+  ) {
     reject(
       "third_party_update_forbidden",
-      `@${actor} cannot update eval ${slug}; update access belongs to public author @${baseSourceOwner} or maintainer @${baseMaintainer}`,
+      `@${actor} cannot update eval ${slug}; update access belongs to public author @${baseSourceOwner}, maintainer @${baseMaintainer}, or repository maintainer @${MAINTAINER_LOGIN}`,
     );
   }
   const submissionTask = enforceSubmissionMarker(markerScan, {

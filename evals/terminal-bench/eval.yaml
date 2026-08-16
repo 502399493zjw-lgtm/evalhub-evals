@@ -1,5 +1,6 @@
 id: terminal-bench
 protocol_revision: 1
+cover: assets/cover.webp
 name: Terminal-Bench 3.0
 category: useful
 description: Terminal-Bench 3.0 用 74 个可在终端环境中完成的长时程任务，评估 Agent 阅读环境、调用工具、编写与调试代码、操作系统和专业软件并交付可验证产物的能力。每个任务运行 5 次，370 个范围为 0–1 的 reward 取算术平均后换算为百分制主成绩。

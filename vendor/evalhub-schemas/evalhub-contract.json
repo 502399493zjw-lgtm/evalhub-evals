@@ -1,6 +1,6 @@
 {
   "schemaContractVersion": "0.1.10",
-  "sourceSha256": "cd081a6fa376536d959daa85066dda9433770419ae598498168a4e33c0f799ea",
+  "sourceSha256": "b2b724a7e295cc44732ebb147d82e9fd8def76f7b11fc0af05d19c28eb950e7c",
   "sourceFiles": [
     "agent-brief.ts",
     "authors.ts",

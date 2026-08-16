@@ -1,5 +1,6 @@
 import { z } from "zod";
 export declare const EvalIdSchema: z.ZodString;
+export declare const EvalCoverPathSchema: z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>;
 export declare const CommandOutputSchema: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
 export declare const CommandOutputOverrideSchema: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
 export declare const CommandInputOverrideSchema: z.ZodEffects<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>, string, string>;
@@ -269,6 +270,11 @@ declare const LegacyEvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
     }>, "many">>;
     figures: z.ZodOptional<z.ZodArray<z.ZodObject<{
         id: z.ZodString;
+        /**
+         * Figures default to the explanatory "关于这套评测" module. Source figures
+         * that are themselves an official result artifact can opt into the fixed
+         * "官方分项结果" module without requiring eval-specific React code.
+         */
         placement: z.ZodOptional<z.ZodEnum<["overview", "insights"]>>;
         label: z.ZodEffects<z.ZodString, string, string>;
         title: z.ZodEffects<z.ZodString, string, string>;
@@ -329,7 +335,6 @@ declare const LegacyEvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
         summary: string;
         url: string;
     }[];
-    markdown?: string | undefined;
     overview_note?: string | undefined;
     key_facts?: {
         value: string;
@@ -387,7 +392,6 @@ declare const LegacyEvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
         summary: string;
         url: string;
     }[];
-    markdown?: string | undefined;
     overview_note?: string | undefined;
     key_facts?: {
         value: string;
@@ -445,7 +449,6 @@ declare const LegacyEvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
         summary: string;
         url: string;
     }[];
-    markdown?: string | undefined;
     overview_note?: string | undefined;
     key_facts?: {
         value: string;
@@ -503,7 +506,6 @@ declare const LegacyEvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
         summary: string;
         url: string;
     }[];
-    markdown?: string | undefined;
     overview_note?: string | undefined;
     key_facts?: {
         value: string;
@@ -542,12 +544,7 @@ declare const LegacyEvalDetailProfileSchema: z.ZodEffects<z.ZodObject<{
     }[] | undefined;
     resources_note?: string | undefined;
 }>;
-/**
- * 新版详情契约：平台继续从评测元信息渲染标准 Hero，markdown 是 Hero 下方的
- * 完整正文。页面不再要求作者把榜单、结果、案例和资源拆成稳定模块；
- * 这些内容由作者 Skill 按文档结构直接写入 markdown，并由前端统一渲染。
- */
-declare const MarkdownOnlyDetailProfileSchema: z.ZodObject<{
+declare const MarkdownOnlyDetailProfileSchema: z.ZodEffects<z.ZodObject<{
     source_kind: z.ZodEnum<["evalhub_native", "upstream_publication"]>;
     markdown: z.ZodEffects<z.ZodString, string, string>;
 }, "strict", z.ZodTypeAny, {
@@ -556,11 +553,23 @@ declare const MarkdownOnlyDetailProfileSchema: z.ZodObject<{
 }, {
     source_kind: "evalhub_native" | "upstream_publication";
     markdown: string;
+}>, {
+    source_kind: "evalhub_native" | "upstream_publication";
+    markdown: string;
+}, {
+    source_kind: "evalhub_native" | "upstream_publication";
+    markdown: string;
 }>;
-export declare const EvalDetailProfileSchema: z.ZodUnion<[z.ZodObject<{
+export declare const EvalDetailProfileSchema: z.ZodUnion<[z.ZodEffects<z.ZodObject<{
     source_kind: z.ZodEnum<["evalhub_native", "upstream_publication"]>;
     markdown: z.ZodEffects<z.ZodString, string, string>;
 }, "strict", z.ZodTypeAny, {
+    source_kind: "evalhub_native" | "upstream_publication";
+    markdown: string;
+}, {
+    source_kind: "evalhub_native" | "upstream_publication";
+    markdown: string;
+}>, {
     source_kind: "evalhub_native" | "upstream_publication";
     markdown: string;
 }, {
@@ -568,11 +577,6 @@ export declare const EvalDetailProfileSchema: z.ZodUnion<[z.ZodObject<{
     markdown: string;
 }>, z.ZodEffects<z.ZodObject<{
     source_kind: z.ZodEnum<["evalhub_native", "upstream_publication"]>;
-    /**
-     * 可选的 Markdown 正文。存在时详情页按 Markdown 渲染；结构化字段仍保留，
-     * 作为历史评测和没有迁移正文的兼容回退。
-     */
-    markdown: z.ZodOptional<z.ZodString>;
     overview_note: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
     summary: z.ZodObject<{
         plain_language: z.ZodEffects<z.ZodString, string, string>;
@@ -738,6 +742,11 @@ export declare const EvalDetailProfileSchema: z.ZodUnion<[z.ZodObject<{
     }>, "many">>;
     figures: z.ZodOptional<z.ZodArray<z.ZodObject<{
         id: z.ZodString;
+        /**
+         * Figures default to the explanatory "关于这套评测" module. Source figures
+         * that are themselves an official result artifact can opt into the fixed
+         * "官方分项结果" module without requiring eval-specific React code.
+         */
         placement: z.ZodOptional<z.ZodEnum<["overview", "insights"]>>;
         label: z.ZodEffects<z.ZodString, string, string>;
         title: z.ZodEffects<z.ZodString, string, string>;
@@ -798,7 +807,6 @@ export declare const EvalDetailProfileSchema: z.ZodUnion<[z.ZodObject<{
         summary: string;
         url: string;
     }[];
-    markdown?: string | undefined;
     overview_note?: string | undefined;
     key_facts?: {
         value: string;
@@ -856,7 +864,6 @@ export declare const EvalDetailProfileSchema: z.ZodUnion<[z.ZodObject<{
         summary: string;
         url: string;
     }[];
-    markdown?: string | undefined;
     overview_note?: string | undefined;
     key_facts?: {
         value: string;
@@ -914,7 +921,6 @@ export declare const EvalDetailProfileSchema: z.ZodUnion<[z.ZodObject<{
         summary: string;
         url: string;
     }[];
-    markdown?: string | undefined;
     overview_note?: string | undefined;
     key_facts?: {
         value: string;
@@ -972,7 +978,6 @@ export declare const EvalDetailProfileSchema: z.ZodUnion<[z.ZodObject<{
         summary: string;
         url: string;
     }[];
-    markdown?: string | undefined;
     overview_note?: string | undefined;
     key_facts?: {
         value: string;
@@ -1090,6 +1095,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     category: z.ZodEnum<["fun", "useful"]>;
     description: z.ZodString;
     hook_title: z.ZodOptional<z.ZodString>;
+    cover: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
     references: z.ZodOptional<z.ZodEffects<z.ZodObject<{
         homepage: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         paper: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
@@ -1127,7 +1133,22 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
         paper?: string | undefined;
         contributors?: string[] | undefined;
     }>>;
-    detail_profile: z.ZodOptional<z.ZodEffects<z.ZodObject<{
+    detail_profile: z.ZodOptional<z.ZodUnion<[z.ZodEffects<z.ZodObject<{
+        source_kind: z.ZodEnum<["evalhub_native", "upstream_publication"]>;
+        markdown: z.ZodEffects<z.ZodString, string, string>;
+    }, "strict", z.ZodTypeAny, {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
+    }, {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
+    }>, {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
+    }, {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
+    }>, z.ZodEffects<z.ZodObject<{
         source_kind: z.ZodEnum<["evalhub_native", "upstream_publication"]>;
         overview_note: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
         summary: z.ZodObject<{
@@ -1567,7 +1588,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
-    }>>;
+    }>]>>;
     dimensions: z.ZodArray<z.ZodEnum<["幽默", "语言", "推理", "代码", "博弈", "经营"]>, "many">;
     interface: z.ZodEnum<["chat", "dialogue", "agent"]>;
     runner: z.ZodEnum<["builtin", "custom"]>;
@@ -1690,6 +1711,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -1758,6 +1780,9 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
+    } | {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
     } | undefined;
     tiebreak?: {
         metric: "tiebreak_value";
@@ -1805,6 +1830,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     protocol_revision?: number | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -1873,6 +1899,9 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
+    } | {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
     } | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
@@ -1924,6 +1953,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -1992,6 +2022,9 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
+    } | {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
     } | undefined;
     tiebreak?: {
         metric: "tiebreak_value";
@@ -2039,6 +2072,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     protocol_revision?: number | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -2107,6 +2141,9 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
+    } | {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
     } | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
@@ -2158,6 +2195,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     hackathon_id?: string | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -2226,6 +2264,9 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
+    } | {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
     } | undefined;
     tiebreak?: {
         metric: "tiebreak_value";
@@ -2273,6 +2314,7 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
     protocol_revision?: number | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -2341,6 +2383,9 @@ export declare const EvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<{
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
+    } | {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
     } | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
@@ -2386,6 +2431,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     category: z.ZodEnum<["fun", "useful"]>;
     description: z.ZodString;
     hook_title: z.ZodOptional<z.ZodString>;
+    cover: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
     references: z.ZodOptional<z.ZodEffects<z.ZodObject<{
         homepage: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
         paper: z.ZodOptional<z.ZodEffects<z.ZodString, string, string>>;
@@ -2423,7 +2469,22 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
         paper?: string | undefined;
         contributors?: string[] | undefined;
     }>>;
-    detail_profile: z.ZodOptional<z.ZodEffects<z.ZodObject<{
+    detail_profile: z.ZodOptional<z.ZodUnion<[z.ZodEffects<z.ZodObject<{
+        source_kind: z.ZodEnum<["evalhub_native", "upstream_publication"]>;
+        markdown: z.ZodEffects<z.ZodString, string, string>;
+    }, "strict", z.ZodTypeAny, {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
+    }, {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
+    }>, {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
+    }, {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
+    }>, z.ZodEffects<z.ZodObject<{
         source_kind: z.ZodEnum<["evalhub_native", "upstream_publication"]>;
         overview_note: z.ZodOptional<z.ZodEffects<z.ZodEffects<z.ZodString, string, string>, string, string>>;
         summary: z.ZodObject<{
@@ -2863,7 +2924,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
-    }>>;
+    }>]>>;
     dimensions: z.ZodArray<z.ZodEnum<["幽默", "语言", "推理", "代码", "博弈", "经营"]>, "many">;
     interface: z.ZodEnum<["chat", "dialogue", "agent"]>;
     runner: z.ZodEnum<["builtin", "custom"]>;
@@ -2986,6 +3047,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     hackathon_id?: string | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -3054,6 +3116,9 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
+    } | {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
     } | undefined;
     tiebreak?: {
         metric: "tiebreak_value";
@@ -3101,6 +3166,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     protocol_revision?: number | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -3169,6 +3235,9 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
+    } | {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
     } | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
@@ -3220,6 +3289,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     hackathon_id?: string | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -3288,6 +3358,9 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
+    } | {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
     } | undefined;
     tiebreak?: {
         metric: "tiebreak_value";
@@ -3335,6 +3408,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     protocol_revision?: number | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -3403,6 +3477,9 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
+    } | {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
     } | undefined;
     score_unit?: string | undefined;
     tiebreak?: {
@@ -3454,6 +3531,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     hackathon_id?: string | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -3522,6 +3600,9 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
+    } | {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
     } | undefined;
     tiebreak?: {
         metric: "tiebreak_value";
@@ -3569,6 +3650,7 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
     protocol_revision?: number | undefined;
     protocol_note?: string | undefined;
     hook_title?: string | undefined;
+    cover?: string | undefined;
     references?: {
         homepage?: string | undefined;
         paper?: string | undefined;
@@ -3637,6 +3719,9 @@ export declare const StoredEvalDefSchema: z.ZodEffects<z.ZodEffects<z.ZodObject<
             placement?: "overview" | "insights" | undefined;
         }[] | undefined;
         resources_note?: string | undefined;
+    } | {
+        source_kind: "evalhub_native" | "upstream_publication";
+        markdown: string;
     } | undefined;
     score_unit?: string | undefined;
     tiebreak?: {

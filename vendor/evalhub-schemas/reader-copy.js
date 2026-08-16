@@ -160,125 +160,130 @@ export function validateEvalReaderCopy(definition, options = {}) {
         });
     }
     if (profile !== undefined) {
-        pushEvalField(fields, "detail_profile.summary.plain_language", profile.summary.plain_language, ["detail_profile", "summary", "plain_language"], { purpose: "eval_what" });
-        pushEvalField(fields, "detail_profile.summary.why_it_matters", profile.summary.why_it_matters, ["detail_profile", "summary", "why_it_matters"], { purpose: "why_it_matters" });
-        pushEvalField(fields, "detail_profile.score_interpretation", profile.score_interpretation, ["detail_profile", "score_interpretation"], { purpose: "score" });
-        if (profile.overview_note !== undefined) {
-            pushEvalField(fields, "detail_profile.overview_note", profile.overview_note, [
-                "detail_profile",
-                "overview_note",
-            ]);
+        if ("markdown" in profile) {
+            pushEvalField(fields, "detail_profile.markdown", profile.markdown, ["detail_profile", "markdown"]);
         }
-        if (profile.resources_note !== undefined) {
-            pushEvalField(fields, "detail_profile.resources_note", profile.resources_note, [
-                "detail_profile",
-                "resources_note",
-            ]);
-        }
-        for (const [index, step] of profile.method_steps.entries()) {
-            pushEvalField(fields, `detail_profile.method_steps.${index}.title`, step.title, [
-                "detail_profile",
-                "method_steps",
-                index,
-                "title",
-            ], { kind: "short" });
-            pushEvalField(fields, `detail_profile.method_steps.${index}.description`, step.description, ["detail_profile", "method_steps", index, "description"]);
-        }
-        for (const [index, caveat] of profile.caveats.entries()) {
-            pushEvalField(fields, `detail_profile.caveats.${index}.title`, caveat.title, [
-                "detail_profile",
-                "caveats",
-                index,
-                "title",
-            ], { kind: "short" });
-            pushEvalField(fields, `detail_profile.caveats.${index}.description`, caveat.description, [
-                "detail_profile",
-                "caveats",
-                index,
-                "description",
-            ]);
-        }
-        for (const [index, fact] of (profile.key_facts ?? []).entries()) {
-            pushEvalField(fields, `detail_profile.key_facts.${index}.label`, fact.label, [
-                "detail_profile",
-                "key_facts",
-                index,
-                "label",
-            ], { kind: "short" });
-            if (fact.description !== undefined) {
-                pushEvalField(fields, `detail_profile.key_facts.${index}.description`, fact.description, [
+        else {
+            pushEvalField(fields, "detail_profile.summary.plain_language", profile.summary.plain_language, ["detail_profile", "summary", "plain_language"], { purpose: "eval_what" });
+            pushEvalField(fields, "detail_profile.summary.why_it_matters", profile.summary.why_it_matters, ["detail_profile", "summary", "why_it_matters"], { purpose: "why_it_matters" });
+            pushEvalField(fields, "detail_profile.score_interpretation", profile.score_interpretation, ["detail_profile", "score_interpretation"], { purpose: "score" });
+            if (profile.overview_note !== undefined) {
+                pushEvalField(fields, "detail_profile.overview_note", profile.overview_note, [
                     "detail_profile",
-                    "key_facts",
+                    "overview_note",
+                ]);
+            }
+            if (profile.resources_note !== undefined) {
+                pushEvalField(fields, "detail_profile.resources_note", profile.resources_note, [
+                    "detail_profile",
+                    "resources_note",
+                ]);
+            }
+            for (const [index, step] of profile.method_steps.entries()) {
+                pushEvalField(fields, `detail_profile.method_steps.${index}.title`, step.title, [
+                    "detail_profile",
+                    "method_steps",
+                    index,
+                    "title",
+                ], { kind: "short" });
+                pushEvalField(fields, `detail_profile.method_steps.${index}.description`, step.description, ["detail_profile", "method_steps", index, "description"]);
+            }
+            for (const [index, caveat] of profile.caveats.entries()) {
+                pushEvalField(fields, `detail_profile.caveats.${index}.title`, caveat.title, [
+                    "detail_profile",
+                    "caveats",
+                    index,
+                    "title",
+                ], { kind: "short" });
+                pushEvalField(fields, `detail_profile.caveats.${index}.description`, caveat.description, [
+                    "detail_profile",
+                    "caveats",
                     index,
                     "description",
                 ]);
             }
-        }
-        for (const [index, resource] of profile.resources.entries()) {
-            pushEvalField(fields, `detail_profile.resources.${index}.title`, resource.title, [
-                "detail_profile",
-                "resources",
-                index,
-                "title",
-            ], { kind: "short" });
-            pushEvalField(fields, `detail_profile.resources.${index}.summary`, resource.summary, [
-                "detail_profile",
-                "resources",
-                index,
-                "summary",
-            ]);
-        }
-        for (const [index, figure] of (profile.figures ?? []).entries()) {
-            for (const [key, value, kind] of [
-                ["label", figure.label, "short"],
-                ["title", figure.title, "short"],
-                ["alt", figure.alt, "prose"],
-                ["caption", figure.caption, "prose"],
-            ]) {
-                pushEvalField(fields, `detail_profile.figures.${index}.${key}`, value, [
+            for (const [index, fact] of (profile.key_facts ?? []).entries()) {
+                pushEvalField(fields, `detail_profile.key_facts.${index}.label`, fact.label, [
                     "detail_profile",
-                    "figures",
+                    "key_facts",
                     index,
-                    key,
-                ], { kind });
-            }
-        }
-        for (const [tableIndex, table] of (profile.overview_tables ?? []).entries()) {
-            pushEvalField(fields, `detail_profile.overview_tables.${tableIndex}.label`, table.label, [
-                "detail_profile",
-                "overview_tables",
-                tableIndex,
-                "label",
-            ], { kind: "short" });
-            pushEvalField(fields, `detail_profile.overview_tables.${tableIndex}.title`, table.title, [
-                "detail_profile",
-                "overview_tables",
-                tableIndex,
-                "title",
-            ], { kind: "short" });
-            pushEvalField(fields, `detail_profile.overview_tables.${tableIndex}.note`, table.note, [
-                "detail_profile",
-                "overview_tables",
-                tableIndex,
-                "note",
-            ]);
-            if (table.caption !== undefined) {
-                pushEvalField(fields, `detail_profile.overview_tables.${tableIndex}.caption`, table.caption, [
-                    "detail_profile",
-                    "overview_tables",
-                    tableIndex,
-                    "caption",
-                ]);
-            }
-            for (const [columnIndex, column] of table.columns.entries()) {
-                pushEvalField(fields, `detail_profile.overview_tables.${tableIndex}.columns.${columnIndex}.label`, column.label, [
-                    "detail_profile",
-                    "overview_tables",
-                    tableIndex,
-                    "columns",
-                    columnIndex,
                     "label",
                 ], { kind: "short" });
+                if (fact.description !== undefined) {
+                    pushEvalField(fields, `detail_profile.key_facts.${index}.description`, fact.description, [
+                        "detail_profile",
+                        "key_facts",
+                        index,
+                        "description",
+                    ]);
+                }
+            }
+            for (const [index, resource] of profile.resources.entries()) {
+                pushEvalField(fields, `detail_profile.resources.${index}.title`, resource.title, [
+                    "detail_profile",
+                    "resources",
+                    index,
+                    "title",
+                ], { kind: "short" });
+                pushEvalField(fields, `detail_profile.resources.${index}.summary`, resource.summary, [
+                    "detail_profile",
+                    "resources",
+                    index,
+                    "summary",
+                ]);
+            }
+            for (const [index, figure] of (profile.figures ?? []).entries()) {
+                for (const [key, value, kind] of [
+                    ["label", figure.label, "short"],
+                    ["title", figure.title, "short"],
+                    ["alt", figure.alt, "prose"],
+                    ["caption", figure.caption, "prose"],
+                ]) {
+                    pushEvalField(fields, `detail_profile.figures.${index}.${key}`, value, [
+                        "detail_profile",
+                        "figures",
+                        index,
+                        key,
+                    ], { kind });
+                }
+            }
+            for (const [tableIndex, table] of (profile.overview_tables ?? []).entries()) {
+                pushEvalField(fields, `detail_profile.overview_tables.${tableIndex}.label`, table.label, [
+                    "detail_profile",
+                    "overview_tables",
+                    tableIndex,
+                    "label",
+                ], { kind: "short" });
+                pushEvalField(fields, `detail_profile.overview_tables.${tableIndex}.title`, table.title, [
+                    "detail_profile",
+                    "overview_tables",
+                    tableIndex,
+                    "title",
+                ], { kind: "short" });
+                pushEvalField(fields, `detail_profile.overview_tables.${tableIndex}.note`, table.note, [
+                    "detail_profile",
+                    "overview_tables",
+                    tableIndex,
+                    "note",
+                ]);
+                if (table.caption !== undefined) {
+                    pushEvalField(fields, `detail_profile.overview_tables.${tableIndex}.caption`, table.caption, [
+                        "detail_profile",
+                        "overview_tables",
+                        tableIndex,
+                        "caption",
+                    ]);
+                }
+                for (const [columnIndex, column] of table.columns.entries()) {
+                    pushEvalField(fields, `detail_profile.overview_tables.${tableIndex}.columns.${columnIndex}.label`, column.label, [
+                        "detail_profile",
+                        "overview_tables",
+                        tableIndex,
+                        "columns",
+                        columnIndex,
+                        "label",
+                    ], { kind: "short" });
+                }
             }
         }
     }

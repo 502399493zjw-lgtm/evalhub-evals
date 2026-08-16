@@ -1,5 +1,6 @@
 id: ego-browser-real-world-bench
 protocol_revision: 1
+cover: assets/cover.webp
 name: "Ego Browser Benchmark：真实世界任务集"
 category: "useful"
 description: "真实世界任务基准（Real-World Bench）通过 31 个涉及研究、导航、表单交互与工具使用的真实网页任务评测浏览器智能体；仅当所有二元评分项均通过时，任务才算完美完成。"
