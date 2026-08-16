@@ -11,6 +11,28 @@ EvalHub 为可复现补充的固定配置写在同一条任务的 `run_spec` 里
 的无网络只读沙箱里跑起来。因此实际运行发生在参赛方自己的基础设施上，本仓库的 `.mjs` 只做一件事：
 把运行结果清单转换成 EvalHub 结果结构，并在结构、协议边界与数值范围不合法时拒绝出分。
 
+## 上游运行路线与环境边界
+
+本条目协议的主来源是 `zlab-princeton/ceobench-src` commit
+`d2b7b32e5301a571b77f5f68bd1032adbcd5b464`。公开的 coding-agent CLI 运行参考是
+`zlab-princeton/run-ceobench` commit `885ae1d7d09b3effa08825ce7f03075224ebe373`；它提供实际会话入口，
+但不替换 `eval.yaml` 中的 canonical prompt，也不修改 protocol revision 1。
+
+固定 `run-ceobench` 版本要求 Python 3.13+：
+
+```bash
+pip install -r requirements.txt
+./novamind-operation new-session --days 500 --seed 42
+```
+
+会话输入包括 CLI/API 经营动作、每周理由和四个期限的现金预测；输出包括 `session_id`、状态、历史、
+ledger 与结束现金。上游只允许创建一个会话，并禁止查看 `world.nmdb` 或 `novamind-operation` 的内部
+内容。EvalHub 的三次运行要求应由三个隔离的新任务实例分别完成，不能绕过上游的一次会话限制。
+
+运行需要本机文件读写和子进程权限、Python 与 SQLCipher 依赖、模型调用网络和凭证，以及相应时间、
+算力和费用。第三方 runner 未在本次 readiness 中执行，runtime verification 为 `unverified`；仓库验证
+只覆盖元数据、转换器输入输出和结果 schema，不是运行兼容性或安全审计。
+
 ## 提交清单格式
 
 `example-submission.json` 是这份清单的结构示例（数值是为了跑通结构而虚构的，不是任何模型的成绩，
@@ -45,6 +67,9 @@ EvalHub 为可复现补充的固定配置写在同一条任务的 `run_spec` 里
 
 ## 转换命令
 
-```
+```bash
 node evals/ceo-bench/pack-to-result.mjs evals/ceo-bench/tasks/example-submission.json --out ceo-bench-result.json
 ```
+
+转换器输入是上表定义的 JSON 清单，输出是一个 `ceo-bench` result-v1 JSON 信封。它不读取上游会话
+目录或数据库；参赛方负责从真实运行记录中生成并审查清单、去除凭证，再保存对应证据包哈希。
