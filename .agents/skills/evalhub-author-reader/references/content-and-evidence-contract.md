@@ -16,6 +16,12 @@ The five reader modules remain visible in that order even when their data is abs
 
 Reader completeness means every supported source fact is mapped to the correct module, not that every optional field is populated. Never invent a chart, task output, trace, table row, or image to avoid an empty state.
 
+## Markdown table presentation contract
+
+Store every source-backed row in one complete Markdown table. Do not truncate a leaderboard, split one logical table, or remove official participants to fit a compact first view. For every table with more than eight body rows, the platform preview must show exactly eight rows initially, one `展开其余 N 行` control whose count equals the hidden remainder, every row after expansion, and `收起至 8 行`; tables with eight rows or fewer have no expansion control. The compact state is visual only: all rows remain in Markdown and the DOM, and narrow layouts expose all columns through horizontal scrolling.
+
+Treat a failure of this interaction as a platform-preview defect, not permission to alter source data. Keep the eval submission source-faithful, record the defect, and route visual implementation through the platform workflow.
+
 ## `detail_profile` field contract
 
 ```yaml
@@ -240,3 +246,4 @@ There is no dedicated `derived` or `formula` property. If the primary `score` is
 - Derived primary scores disclose their formula in `detail`; derived supplementary values disclose it in `note`.
 - Unsupported optional content is omitted rather than filled with guesses.
 - Every overview table has a primary-source URL, complete rows, and stable unique table, column, and row IDs; result metrics are not placed there.
+- Every Markdown table retains its complete source-backed rows; long tables pass the eight-row expand/collapse and narrow-width access checks in an actual preview.

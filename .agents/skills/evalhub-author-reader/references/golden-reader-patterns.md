@@ -11,6 +11,7 @@ Use this when each participant has one final ranking score plus a source-publish
 - Add a `line_chart` only when the source publishes each plotted point or a real EvalHub run emitted it. A start value and final value do not justify an interpolated curve.
 - Keep participant-specific values in rows, series names, and points. Do not encode a model name into the shared view ID.
 - Preserve every source-published participant in `published-results`; the detail page may present a compact subset in a particular reader control, but the stored official leaderboard must not be hand-truncated to three or four models.
+- When transcribing the leaderboard or a run-summary matrix into Markdown, keep one complete source-faithful table. A preview may show only the first eight body rows until the reader expands it, but that presentation limit never authorizes deleting participants, splitting the logical table, or dropping summary rows.
 
 ```json
 {

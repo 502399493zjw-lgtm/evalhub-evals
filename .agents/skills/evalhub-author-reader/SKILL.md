@@ -107,6 +107,16 @@ the document resemble the old detail page. Below the Hero, the platform renders
 this body without the legacy leaderboard, result tabs, task tabs, resource
 modules, or detail-page footer module.
 
+Keep every source-backed row in one complete Markdown table. Never truncate,
+split, or delete official participants merely to make the initial viewport
+compact. The platform presentation may collapse a long table, but every row
+must remain in Markdown and the DOM. In the actual local or uploaded preview,
+verify every table with more than eight body rows shows exactly eight initially,
+offers one `展开其余 N 行` control with the correct remainder, expands to all
+rows, and supports `收起至 8 行`. Tables with eight rows or fewer must have no
+expansion control, and narrow layouts must keep every column reachable through
+horizontal scrolling.
+
 The legacy structured `detail_profile` fields remain accepted for historical
 evals. Do not add new structured fields merely to feed the old page layout. If
 the source does not support a claim, omit that passage or table rather than
@@ -174,6 +184,7 @@ Do not make a custom-runner trial run a publication condition. The runner's actu
 - every authored `submission.run_date` is a real `YYYY-MM-DD` calendar date;
 - displayed claims are traceable to the source ledger;
 - every overview table is a complete transcription with unique stable table, column, and row IDs and a primary-source HTTPS URL;
+- every Markdown table preserves its complete source-backed row set and satisfies the eight-row expand/collapse preview contract without losing narrow-screen column access;
 - official aggregate data is not presented as an EvalHub rerun;
 - sample data is not presented as evidence;
 - shared supplementary-view IDs keep one exact metadata contract across all published participants;
@@ -185,14 +196,14 @@ Complete this reader-readiness matrix from the final files before handoff. “Em
 
 | Reader module | Required data check |
 | --- | --- |
-| `榜单` | Primary `score`, unit/direction, participant identity, and result provenance agree. |
-| `官方分项结果` | Every supported source table/chart is preserved; shared view contracts are identical across participants. |
+| `榜单` | Primary `score`, unit/direction, participant identity, and result provenance agree; every supported participant remains stored, and a long table expands from eight rows to the complete set. |
+| `官方分项结果` | Every supported source table/chart and row is preserved; shared view contracts are identical across participants; long tables expose the same verified expansion behavior. |
 | `关于这套评测` | All required `detail_profile` fields and at least one primary source are complete. |
 | `题目案例` | Stable task ID; complete `prompt` (verbatim upstream original for an `upstream_publication`); translation and real model evidence when available; no `run_spec` content. |
 | `资料与分析` | Source-backed resources and figures only; unsupported optional blocks are omitted. |
 
 Do not reduce the stored official leaderboard to three or four participants merely to imitate a compact task-case control. The platform may show up to four real model results inside a task case; only real `task_results` or task-linked showcases qualify, and an upstream aggregate never does.
 
-If a local platform preview is available, inspect the generic `/e/<slug>` rendering for content order and missing-data fallbacks. Do not change platform styling as part of an eval submission; use the repository's visual-design workflow separately when visual implementation is explicitly requested.
+If a local or uploaded platform preview is available, inspect the generic `/e/<slug>` rendering for content order, missing-data fallbacks, and the complete long-table interaction described above. Do not change platform styling as part of an eval submission; report a renderer defect separately and use the repository's visual-design workflow when visual implementation is explicitly requested. Never delete source rows to work around a preview defect.
 
 Before handoff, summarize the source kind, primary sources, protocol and score semantics, result provenance, omitted unsupported content, changed files, and validation results. For a custom runner, also state its documented source and requirements and whether it was not executed; never imply EvalHub runtime or security endorsement. Stop and ask only when source access, licensing, ownership, or a protocol-defining ambiguity remains unresolved.
