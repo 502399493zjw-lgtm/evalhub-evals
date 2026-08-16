@@ -15,6 +15,7 @@ const MIN_CJK_PER_KIND = {
     task: 12,
 };
 const SPARSE_CHINESE_LATIN_THRESHOLD = 40;
+const LOW_VARIETY_REPETITION_MAX_CJK = 512;
 export function hasChineseText(value) {
     return CJK_PATTERN.test(value);
 }
@@ -29,8 +30,13 @@ function hasMeaninglessRepetition(value) {
     if (cjk.length < 6)
         return false;
     const uniqueRatio = new Set(cjk).size / cjk.length;
-    if (uniqueRatio < 0.22)
+    // Vocabulary naturally repeats in long task translations and complete
+    // Markdown documents. The low-variety ratio is useful for short scaffold
+    // copy, but treating a whole document as one short field creates false
+    // positives. Exact 1–4 character repetition remains rejected at any length.
+    if (cjk.length <= LOW_VARIETY_REPETITION_MAX_CJK && uniqueRatio < 0.22) {
         return true;
+    }
     for (let unitLength = 1; unitLength <= 4; unitLength += 1) {
         if (cjk.length < unitLength * 3 || cjk.length % unitLength !== 0) {
             continue;
