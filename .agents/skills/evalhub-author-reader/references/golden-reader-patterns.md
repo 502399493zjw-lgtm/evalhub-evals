@@ -1,8 +1,8 @@
 # Golden reader patterns
 
-Use the pattern that matches the reviewed source. These are data-shape examples, not permission to invent missing values or copy the example numbers into a submission.
+RSIBench-Data supplies the one page architecture described in `rsibench-reader-contract.md`. Use the pattern that matches the reviewed result artifact only to choose a `published-results` supplementary-view shape. These examples never authorize a different page layout, invented values, or copied example numbers.
 
-## Pattern A: long-horizon operating benchmark (CEO-style)
+## Result shape A: long-horizon operating summary
 
 Use this when each participant has one final ranking score plus a source-published run summary and/or a real time series.
 
@@ -11,7 +11,7 @@ Use this when each participant has one final ranking score plus a source-publish
 - Add a `line_chart` only when the source publishes each plotted point or a real EvalHub run emitted it. A start value and final value do not justify an interpolated curve.
 - Keep participant-specific values in rows, series names, and points. Do not encode a model name into the shared view ID.
 - Preserve every source-published participant in `published-results`; the detail page may present a compact subset in a particular reader control, but the stored official leaderboard must not be hand-truncated to three or four models.
-- When transcribing the leaderboard or a run-summary matrix into Markdown, keep one complete source-faithful table. A preview may show only the first eight body rows until the reader expands it, but that presentation limit never authorizes deleting participants, splitting the logical table, or dropping summary rows.
+- Keep all leaderboard and run-summary data in the result envelope so the platform-native `榜单` and `官方分项结果` modules render them. A preview may show only the first eight body rows until the reader expands it, but that presentation limit never authorizes deleting participants, splitting a logical table, or dropping summary rows.
 
 ```json
 {
@@ -52,7 +52,7 @@ Use this when each participant has one final ranking score plus a source-publish
 
 If the source only publishes the final score and summary, omit `official-cash-process`. The platform renders the remaining modules and their empty states; an author must not manufacture a process curve to make the page look complete.
 
-## Pattern B: multi-benchmark aggregate (RSI-style)
+## Result shape B: multi-benchmark aggregate
 
 Use this when one primary score aggregates several stable benchmark or scenario rows for each participant.
 

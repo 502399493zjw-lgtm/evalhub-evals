@@ -18,7 +18,7 @@ Read these files completely:
 
 Also inspect repository-local instructions and CI configuration. If any instruction conflicts, follow the more specific repository instruction and report the conflict.
 
-After classifying the source shape, read the matching section of `references/golden-reader-patterns.md`: use the CEO-style pattern for long-horizon operating results, the RSI-style pattern for multi-benchmark result tables, and the task-case pattern for every upstream task.
+Read `references/rsibench-reader-contract.md` before designing the page. RSIBench-Data is the single page-architecture reference. Then read the matching result-shape section of `references/golden-reader-patterns.md`: CEO-style and multi-benchmark patterns describe supplementary result data only; they never select a different page layout. Use the task-case pattern for every upstream task.
 
 ## Scope the submission
 
@@ -85,42 +85,53 @@ Then fill every required `detail_profile` field from the ledger. Write for a rea
 - disclose at least one material limitation;
 - link at least one credential-free HTTPS primary source.
 
-For a new or substantially revised eval, prefer the Markdown-only detail contract:
+For a new or substantially revised eval, use the platform-native structured detail contract:
 
 ```yaml
 detail_profile:
   source_kind: upstream_publication
-  markdown: |-
-    ## What this evaluates
-    ...
+  overview_note: This explanation is pinned to reviewed primary sources.
+  summary:
+    plain_language: What the evaluated system actually has to do.
+    why_it_matters: Why this capability is worth comparing.
+  method_steps:
+    - title: Prepare the fixed task and environment
+      description: Where inputs and constraints come from.
+    - title: Run, judge, and aggregate
+      description: How outputs become the primary score.
+  score_interpretation: Direction, unit, aggregation, and comparison boundary.
+  caveats:
+    - title: Result boundary
+      description: The most material limitation on interpretation.
+  resources:
+    - title: Official source
+      summary: The primary protocol or result source.
+      url: https://official.example.org/source
 ```
 
-The platform renders the standard Hero from eval metadata. `markdown` is the
-complete reader-facing body below that Hero. Start the authored body at `##`;
-do not repeat the evaluation name as an H1 or recreate Hero metadata, links,
-statistics, or actions in Markdown. Put the introduction, protocol, score
-interpretation, leaderboard/result tables, task cases, caveats, figures,
-resources, and source links in one coherent Markdown body. Use ordinary Markdown
-headings, paragraphs, lists, tables, fenced code, blockquotes, and HTTPS links;
-do not invent module IDs, JSON blocks, React/MDX, or layout instructions to make
-the document resemble the old detail page. Below the Hero, the platform renders
-this body without the legacy leaderboard, result tabs, task tabs, resource
-modules, or detail-page footer module.
+This contract makes the platform own the same RSIBench reader sequence for every
+eval: Hero, `榜单`, `官方分项结果`, `关于这套评测`, `题目案例`, and
+`资料与分析`. Store ranking rows and official breakdowns in
+`published-results`, protocol explanation in structured `detail_profile`, task
+statements in `tasks[]`, and source cards in `detail_profile.resources`. Do not
+repeat those modules or tables inside authored prose. The exact field-to-module
+mapping and acceptance matrix are in `references/rsibench-reader-contract.md`.
 
-Keep every source-backed row in one complete Markdown table. Never truncate,
-split, or delete official participants merely to make the initial viewport
-compact. The platform presentation may collapse a long table, but every row
-must remain in Markdown and the DOM. In the actual local or uploaded preview,
-verify every table with more than eight body rows shows exactly eight initially,
-offers one `展开其余 N 行` control with the correct remainder, expands to all
-rows, and supports `收起至 8 行`. Tables with eight rows or fewer must have no
-expansion control, and narrow layouts must keep every column reachable through
-horizontal scrolling.
+Use `detail_profile.markdown` only when reviewed source material requires a
+reader construct the bounded structured schema cannot express and omitting that
+construct would materially misstate the benchmark. Record that reason in the
+source ledger and PR description. Markdown is not a shortcut for layout control,
+and it is not structurally identical to RSIBench: it suppresses the platform's
+native leaderboard, breakdown, task, resource, and footer modules. A migration
+whose goal is RSIBench parity therefore must use the structured contract.
 
-The legacy structured `detail_profile` fields remain accepted for historical
-evals. Do not add new structured fields merely to feed the old page layout. If
-the source does not support a claim, omit that passage or table rather than
-creating an empty placeholder.
+When Markdown is justified, start at `##`, do not repeat the Hero, and use the
+five exact H2 headings in this order: `榜单`, `官方分项结果`, `关于这套评测`,
+`题目案例`, `资料与分析`. Keep every source-backed row in one complete table.
+Verify tables over eight body rows show exactly eight initially, expand to the
+complete row set, collapse to eight, and remain horizontally reachable on narrow
+screens. This Markdown fallback preserves information hierarchy but does not
+claim native module or interaction parity.
 
 Replace every generated `TODO`, `待补`, literal `placeholder`, and every `example.com` URL. Omit optional facts or figures when evidence is weak. Never add arbitrary HTML, MDX, React, or layout instructions to emulate the detail page.
 
@@ -184,12 +195,13 @@ Do not make a custom-runner trial run a publication condition. The runner's actu
 - every authored `submission.run_date` is a real `YYYY-MM-DD` calendar date;
 - displayed claims are traceable to the source ledger;
 - every overview table is a complete transcription with unique stable table, column, and row IDs and a primary-source HTTPS URL;
-- every Markdown table preserves its complete source-backed row set and satisfies the eight-row expand/collapse preview contract without losing narrow-screen column access;
+- every structured result or overview table preserves its complete source-backed row set; every table over eight rows satisfies the eight-row expand/collapse preview contract without losing narrow-screen column access;
 - official aggregate data is not presented as an EvalHub rerun;
 - sample data is not presented as evidence;
 - shared supplementary-view IDs keep one exact metadata contract across all published participants;
 - every task declares a unique stable slug-style ID, task references resolve, and each task ID appears no more than the configured `trials` count;
 - optional sections disappear cleanly when unsupported;
+- `node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs --reference evals/rsibench-data/eval.yaml evals/<slug>/eval.yaml` reports the same structured renderer and canonical module order;
 - the diff stays within exactly one eval directory and does not touch `CODEOWNERS` or repository-level files.
 
 Complete this reader-readiness matrix from the final files before handoff. “Empty” is acceptable only when the source ledger or run evidence genuinely has no supported content; never fill a module to make the matrix look complete.
