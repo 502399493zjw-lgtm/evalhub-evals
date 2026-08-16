@@ -13,6 +13,8 @@ npx skills update evalhub-author-reader -y
 
 The second command is a no-op on a fresh install and refreshes an older local copy, so run both. The skill itself lives at `.agents/skills/evalhub-author-reader/`; read it directly if the CLI is unavailable.
 
+Keep every source-backed Markdown table complete. Never truncate, split, or delete official participants merely to fit the first screen. When a platform preview is available, tables with more than eight body rows must show exactly eight initially, expose the correct `展开其余 N 行` control, expand to all rows, and support `收起至 8 行`; tables with eight rows or fewer have no control, and narrow layouts preserve access to every column through horizontal scrolling. Report a preview defect separately instead of altering source data.
+
 Scaffold with `evalhub init <slug>`, then complete:
 
 - `evals/<slug>/eval.yaml`
