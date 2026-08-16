@@ -10,19 +10,21 @@ The platform composes three data layers:
 2. Ranked and supplementary published results from reviewed result envelopes.
 3. Execution evidence from real result `task_results` and `showcases`.
 
-The platform controls a fixed order and fixed reader module names: hero/source; `榜单`; `官方分项结果`; `关于这套评测` (optional `overview_note`, `summary`, `method_steps`, `score_interpretation`, optional `key_facts`, `caveats`, optional `overview_tables`, optional `figures`); `题目案例`; `资料与分析` (optional `resources_note`); footer. Authors provide data, not layout code.
+The platform controls the RSIBench-Data order and fixed reader module names: hero/source; `榜单`; `官方分项结果`; `关于这套评测` (optional `overview_note`, required `summary`, `method_steps`, `score_interpretation`, optional `key_facts`, required `caveats`, optional `overview_tables`, optional `figures`); `题目案例`; `资料与分析` (optional `resources_note`, required `resources`); footer. Authors provide data, not layout code. All source shapes—including CEO-style operating summaries—use this page order; source shape changes supplementary result data, not reader architecture.
 
 The five reader modules remain visible in that order even when their data is absent; the platform renders an explicit empty state inside the missing module. Missing `detail_profile` is tolerated only for already-synced historical records; the evals repository rejects new submissions without it. Invalid historical JSON must degrade by dropping the invalid content and rendering the relevant empty state instead of breaking the page.
 
 Reader completeness means every supported source fact is mapped to the correct module, not that every optional field is populated. Never invent a chart, task output, trace, table row, or image to avoid an empty state.
 
-## Markdown table presentation contract
+## Table presentation contract
 
-Store every source-backed row in one complete Markdown table. Do not truncate a leaderboard, split one logical table, or remove official participants to fit a compact first view. For every table with more than eight body rows, the platform preview must show exactly eight rows initially, one `展开其余 N 行` control whose count equals the hidden remainder, every row after expansion, and `收起至 8 行`; tables with eight rows or fewer have no expansion control. The compact state is visual only: all rows remain in Markdown and the DOM, and narrow layouts expose all columns through horizontal scrolling.
+Store every source-backed row in one complete structured result or overview table. Do not truncate a leaderboard, split one logical table, or remove official participants to fit a compact first view. For every table with more than eight body rows, the platform preview must show exactly eight rows initially, one `展开其余 N 行` control whose count equals the hidden remainder, every row after expansion, and `收起至 8 行`; tables with eight rows or fewer have no expansion control. The compact state is visual only: all rows remain in the source data and the DOM, and narrow layouts expose all columns through horizontal scrolling. A justified Markdown fallback follows the same row-preservation and interaction rule.
 
 Treat a failure of this interaction as a platform-preview defect, not permission to alter source data. Keep the eval submission source-faithful, record the defect, and route visual implementation through the platform workflow.
 
 ## `detail_profile` field contract
+
+Use this structured contract by default. `detail_profile.markdown` is an evidence-driven exception and is not equivalent to the platform-native RSIBench modules; see `rsibench-reader-contract.md`.
 
 ```yaml
 detail_profile:
