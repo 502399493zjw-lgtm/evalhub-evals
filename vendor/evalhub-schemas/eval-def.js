@@ -421,10 +421,10 @@ const DetailProfileResourceSchema = z
 })
     .strict();
 /**
- * 评测详情页的统一编辑型信息结构。该字段只负责解释评测本身；各模型的
- * 官方分项成绩与趋势仍由 result.supplementary_views 承载。
+ * 旧版结构化详情契约。它继续保留，保证已经入库的评测不会因为详情页改成
+ * Markdown 文档而失效。
  */
-export const EvalDetailProfileSchema = z
+const LegacyEvalDetailProfileSchema = z
     .object({
     source_kind: z.enum(["evalhub_native", "upstream_publication"]),
     overview_note: requiredDetailProfilePlainText(600, "detail_profile.overview_note").optional(),
@@ -467,6 +467,47 @@ export const EvalDetailProfileSchema = z
         }
     }
 });
+/**
+ * 新版详情契约：平台继续从评测元信息渲染标准 Hero，markdown 是 Hero 下方的
+ * 完整正文。榜单、结果、案例、资源和局限等内容直接写进同一份 Markdown。
+ */
+function hasDocumentH1(markdown) {
+    let closingFence = null;
+    for (const line of markdown.split(/\r?\n/u)) {
+        if (closingFence !== null) {
+            if (closingFence.test(line))
+                closingFence = null;
+            continue;
+        }
+        const fence = line.match(/^\s*(`{3,})[^`]*$/u);
+        if (fence) {
+            closingFence = new RegExp(`^\\s*${fence[1]}\\s*$`, "u");
+            continue;
+        }
+        if (/^\s{0,3}#(?!#)\s+/u.test(line))
+            return true;
+    }
+    return false;
+}
+const MarkdownOnlyDetailProfileSchema = z
+    .object({
+    source_kind: z.enum(["evalhub_native", "upstream_publication"]),
+    markdown: requiredDetailProfileText(100_000, "detail_profile.markdown"),
+})
+    .strict()
+    .superRefine((profile, ctx) => {
+    if (hasDocumentH1(profile.markdown)) {
+        ctx.addIssue({
+            code: "custom",
+            path: ["markdown"],
+            message: "detail_profile.markdown 由 Hero 之后开始，不能重复 H1",
+        });
+    }
+});
+export const EvalDetailProfileSchema = z.union([
+    MarkdownOnlyDetailProfileSchema,
+    LegacyEvalDetailProfileSchema,
+]);
 /** 每道题最多挂的演示媒体条数：示例区是说明位，不是相册。 */
 export const MAX_TASK_MEDIA_ITEMS = 4;
 /**

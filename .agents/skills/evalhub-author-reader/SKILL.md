@@ -85,9 +85,32 @@ Then fill every required `detail_profile` field from the ledger. Write for a rea
 - disclose at least one material limitation;
 - link at least one credential-free HTTPS primary source.
 
-Use optional `overview_note` and `resources_note` only for short source-backed section introductions. When a paper or official repository publishes a compact protocol, environment, or action-space table, transcribe it into `overview_tables` with stable table/column/row IDs, complete `column_id`-addressed rows, and the exact primary-source URL. Omit the table when any displayed cell is unsupported. Never put model scores, result trends, inferred values, or execution traces in `overview_tables`; those belong to reviewed result envelopes or real run evidence.
+For a new or substantially revised eval, prefer the Markdown-only detail contract:
 
-Author content for the platform's fixed detail-page order and names: hero/source; `榜单`; `官方分项结果`; `关于这套评测`; `题目案例`; `资料与分析`; footer. These five reader modules remain present with an explicit empty state when data is absent. Supply data for these regions, not layout code.
+```yaml
+detail_profile:
+  source_kind: upstream_publication
+  markdown: |-
+    ## What this evaluates
+    ...
+```
+
+The platform renders the standard Hero from eval metadata. `markdown` is the
+complete reader-facing body below that Hero. Start the authored body at `##`;
+do not repeat the evaluation name as an H1 or recreate Hero metadata, links,
+statistics, or actions in Markdown. Put the introduction, protocol, score
+interpretation, leaderboard/result tables, task cases, caveats, figures,
+resources, and source links in one coherent Markdown body. Use ordinary Markdown
+headings, paragraphs, lists, tables, fenced code, blockquotes, and HTTPS links;
+do not invent module IDs, JSON blocks, React/MDX, or layout instructions to make
+the document resemble the old detail page. Below the Hero, the platform renders
+this body without the legacy leaderboard, result tabs, task tabs, resource
+modules, or detail-page footer module.
+
+The legacy structured `detail_profile` fields remain accepted for historical
+evals. Do not add new structured fields merely to feed the old page layout. If
+the source does not support a claim, omit that passage or table rather than
+creating an empty placeholder.
 
 Replace every generated `TODO`, `待补`, literal `placeholder`, and every `example.com` URL. Omit optional facts or figures when evidence is weak. Never add arbitrary HTML, MDX, React, or layout instructions to emulate the detail page.
 
