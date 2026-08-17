@@ -10,7 +10,7 @@ The platform composes three data layers:
 2. Ranked and supplementary published results from reviewed result envelopes.
 3. Execution evidence from real result `task_results` and `showcases`.
 
-The platform owns the Hero and visual styling. For every new or substantially rebuilt detail page, the author supplies one `detail_profile.markdown` body below the Hero. It starts at H2 and presents a coherent sequence of official results, benchmark explanation and protocol, limitations, selected task cases, and primary sources. RSIBench-Data is the content-architecture reference; benchmark-specific headings may vary only when the source shape requires it.
+The platform owns the Hero and visual styling. For every new or substantially rebuilt detail page, the author must supply one `detail_profile.markdown` body below the Hero. It starts at H2 and presents a coherent sequence of official results, benchmark explanation and protocol, limitations, selected task cases, and primary sources. RSIBench-Data is the content-architecture reference; benchmark-specific headings may vary only when the source shape requires it.
 
 Historical untouched evals may still use the structured detail fields documented below. Do not combine `markdown` with structured profile fields. A substantial reader rebuild migrates to Markdown.
 
@@ -24,7 +24,7 @@ Treat a failure of this interaction as a platform-preview defect, not permission
 
 ## `detail_profile` Markdown contract
 
-Use this contract for every new or substantially revised eval:
+Every new or substantially revised eval must use this contract:
 
 ```yaml
 detail_profile:
