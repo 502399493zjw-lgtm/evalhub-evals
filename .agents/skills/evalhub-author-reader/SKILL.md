@@ -1,11 +1,11 @@
 ---
 name: evalhub-author-reader
-description: Research, author, revise, and validate one source-backed EvalHub evaluation submission. Use when creating or updating an eval directory, detail_profile, published-results, sample results, task fixtures, runner documentation, or the evidence shown on an EvalHub detail page.
+description: Research, author, revise, and validate one source-backed EvalHub evaluation submission with a Markdown-only detail page, complete official result tables, and fully translated selected task cases.
 ---
 
 # EvalHub Author Reader
 
-Build one reviewable evaluation package whose detail page has useful, consistent information without inventing evidence. Treat page layout and visual styling as platform concerns; this skill owns research, content structure, result provenance, repository files, and validation.
+Build one reviewable EvalHub evaluation package. This skill owns source research, repository content, Markdown structure, result transcription, selected task cases, and validation. The platform owns page styling and interaction.
 
 ## Read before editing
 
@@ -14,186 +14,149 @@ Read these files completely:
 1. `../../../CONTRIBUTING.md`
 2. `../../../llms.txt`
 3. `references/content-and-evidence-contract.md`
-4. The target `evals/<slug>/eval.yaml`, `README.md`, task fixtures, runner, sample result, and published results when updating an existing eval
+4. `references/rsibench-reader-contract.md`
+5. The target `evals/<slug>/eval.yaml`, `README.md`, result files, and task fixtures when updating an existing eval
 
-Also inspect repository-local instructions and CI configuration. If any instruction conflicts, follow the more specific repository instruction and report the conflict.
+Use `references/golden-reader-patterns.md` only as a shape guide. CEO-style and RSI-style are examples of source shapes, not rigid modes or fixed column counts.
 
-Read `references/rsibench-reader-contract.md` before designing the page. RSIBench-Data is the Markdown content-architecture reference, not a requirement to preserve its old structured renderer. Then read the matching result-shape section of `references/golden-reader-patterns.md`: use the CEO-style pattern for long-horizon operating results, the RSI-style pattern for multi-benchmark result tables, and the task-case pattern for every upstream task.
+## Scope
 
-## Scope the submission
+Confirm only what cannot be learned safely: whether this is a new eval or an update, the primary source, and the target slug. Work inside exactly one `evals/<slug>/` unless the request explicitly changes a shared contract. Do not rename an existing slug or edit `.github/CODEOWNERS` for an eval submission.
 
-Confirm only what cannot be learned safely:
+Keep these identities separate:
 
-- whether this is a new eval or an update;
-- the source repository or exact source directory;
-- the target slug for an update, if the link does not identify it.
+- **Public author**: the owner of the source GitHub repository.
+- **Maintainer**: the single GitHub handle in `AUTHORS`.
+- **Submitter**: the account opening the pull request.
 
-Work inside exactly one `evals/<slug>/` unless the task explicitly changes a shared repository contract. Do not rename an existing slug and never edit `.github/CODEOWNERS` for an eval submission.
+For an existing eval, preserve `AUTHORS` byte-for-byte. The repository PR gate remains the authority for permissions. Do not merge or deploy unless the user asks.
 
-Keep the three identities separate:
+## Stage 1: inspect the source
 
-- **Public author**: the owner of the evaluation's source GitHub repository. Resolve it from `upstream.repo` first, then a strict `https://github.com/<owner>/<repository>` `references.repository` URL; a native eval falls back to the owner of this eval repository. This is the handle shown on public EvalHub cards, detail pages, and rankings.
-- **Maintainer**: the single GitHub handle in `AUTHORS`. This is the person allowed to maintain an existing eval.
-- **Submitter**: the GitHub account that opens the current pull request. It is used for PR attribution and new-eval checks only.
+Read first-party sources before writing. Prefer the official repository, paper, project page, task definitions, and official result artifact over mirrors or summaries.
 
-For a new eval, set `AUTHORS` to the current PR submitter and provide a source repository that can be resolved to a public author. For an existing eval, keep `AUTHORS` byte-for-byte identical to the base version; the PR submitter must be either the base source repository owner or the base maintainer. A source repository owner changing in the head content does not grant a third party update permission, and organization members do not inherit organization-owner permissions. Do not add or remove maintainers, transfer authorship, or design deletion/restore workflows here: the PR gate only supports creating a new eval and updating an existing eval. Submission-task markers use `kind=new` for new evals and `kind=update` for existing eval updates.
+Keep a lightweight working ledger:
 
-The repository PR gate is the final authority for these checks; this skill explains the authoring contract and never grants permission by itself. `upstream.repo`, a paper author, or a source organization is provenance until the source-owner resolver identifies the GitHub repository owner.
+| Claim or artifact | Primary URL or repository path | Version or date | Target section |
+| --- | --- | --- | --- |
 
-Do not merge, deploy, or broaden the PR beyond the requested eval. Never place credentials, hidden files, archives, symlinks, or executable binaries in the eval directory. Do not reject a documented third-party runner merely because it uses model or network calls, environment variables, subprocesses, external tools, compute, or elevated permissions.
+Every published statement, result value, table, and figure must be traceable to this ledger. Omit unsupported optional content instead of guessing. Do not leave `TODO`, `待补`, literal `placeholder`, `example.com`, fabricated values, or credential-bearing URLs.
 
-## Stage 1: inventory the evidence
+## Stage 2: author the Markdown-only detail page
 
-Read the source before designing fields. For a repository, inspect README files, code, task/data files, examples, tests, releases or commit tags, license, and citations. For an upstream benchmark, additionally locate its paper, official project page, official author repository, appendices, and official result artifacts.
-
-Create a working source ledger before authoring:
-
-| Claim or artifact | Primary URL or repository path | Source kind | Version/date | Target field | License/provenance note |
-| --- | --- | --- | --- | --- | --- |
-
-Fill every ledger cell with reviewed values before mapping it into repository files. Do not use `TODO`, `待补`, literal `placeholder`, `example.com`, or a repeated/example digest as a temporary machine-readable source value; omit an unsupported optional claim instead.
-
-Use first-party sources. Search results, mirrors, news posts, and secondary summaries may help discovery but cannot be the final support when a paper, official site, author repository, task definition, runner, or test exists.
-
-Classify the eval once:
-
-- `evalhub_native`: the checked-in definition, tasks, runner, and scoring code are the primary protocol.
-- `upstream_publication`: the protocol or results come from an external paper, official site, or official author repository.
-
-For every `runner: builtin` eval, inspect the authoritative implementation in the EvalHub main repository: the selected scorer under `packages/cli/src/scorers/` and the orchestration and aggregation in `packages/cli/src/commands/run.ts`. Verify normalization, the match predicate, per-task points, aggregation, rounding, and any version boundary; never infer semantics from a scorer name such as `exact`. If the standalone repository does not contain those files, obtain a credential-free HTTPS permalink pinned to an authoritative commit or release and record it in the source ledger. Stop before publishing protocol claims if no such implementation source is available.
-
-Record version and license boundaries. Name the protocol revision, commit, release, or publication date that fixes the comparison boundary. In the eval README, state which repository or upstream license governs each checked-in task, fixture, result artifact, and redistributed asset. If no license grant can be found, record only the observable boundary: no independent open license was found, and permission must not be inferred from the files being visible. Do not present this provenance note as a legal conclusion; stop before publishing third-party material until the applicable authorization is confirmed. Do not imply upstream endorsement, official affiliation, or an EvalHub rerun that did not happen.
-
-## Stage 2: map evidence to the repository contract
-
-Separate three layers:
-
-1. `eval.yaml` and `detail_profile` explain the protocol.
-2. `published-results/*.json` contains reviewed source results and their supplementary views.
-3. Real run envelopes contain `task_results` and `showcases` as execution evidence.
-
-Author the protocol first: every `tasks[]` entry must declare a non-empty ID matching `^[a-z0-9][a-z0-9-]{0,63}$`; task IDs must be unique within the eval and remain unchanged while the task identity is unchanged. `prompt` is the single task-statement field: it is both the executable question and the exact text the detail page renders. There is no fallback field, so a missing or abridged `prompt` shows up as a missing question on the page rather than being silently replaced by other text. For an `upstream_publication`, `prompt` must be the complete source-published original, transcribed character-for-character from the pinned `upstream.commit`; never put a summary, excerpt, `[…]`, or link-only placeholder there, and preserve unreplaced upstream template placeholders verbatim so the text stays diffable against that commit. Put EvalHub's own reproduction procedure — anything not in the upstream original, such as pinned run configuration, evidence packaging, or redaction rules — in the optional `run_spec`. `run_spec` is delivered to the people who run the eval through this repository and is never rendered on the detail page, so it must not carry reader-facing task content. Add a concise `label` for every task.
-
-Select at most five tasks for the reader-facing Markdown `题目案例`. In a repository preview, choose them deterministically across authored task order and include the first and last tasks when at least two cases are shown; a live reader may prioritize tasks with real public evidence, then fill the remaining slots with the same deterministic selection. Require `translation` only for those selected cases; non-case tasks may omit it. Every selected case must show the complete original `prompt` and a complete, faithful Chinese translation rather than a synopsis. Preserve every instruction, constraint, warning, paragraph, list, code block, command, path, filename, literal, placeholder, formula, number, unit, and example; keep non-prose tokens verbatim when translating them would change the task. Reject translator-added omissions such as `[…]`, `[译文省略]`, `其余略`, or a link-only substitute. Source-authored ellipses remain valid when they are part of the pinned original. Long display text is a platform folding concern and must not be shortened in data. Make interface, runner, scoring, scorer, score policy, baseline policy, score unit, trials, command template, and scoring note agree with the README, machine-readable metadata, and documented runner contract. Check obvious static inconsistencies without claiming to have established runtime behavior.
-
-Treat `protocol_revision` as the monotonic version of the scoring protocol. Keep it unchanged for corrections to `translation`, `label`, prose, `detail_profile`, README text, citations, or official baselines that do not change result comparability. Increment it when task identity, interaction or run procedure, scorer predicate or normalization, score aggregation or rounding, trials, primary metric or unit, or tie-break semantics change, and document the reason. For `prompt` the answer depends on the runner: a `runner: builtin` prompt is the executable model input, so any change to it increments; correcting an `upstream_publication` prompt toward the verbatim upstream original does not, because that text is a transcription rather than something EvalHub executes. A change to `run_spec` always increments, because `external_workflow` contestants follow it by hand.
-
-Then fill every required `detail_profile` field from the ledger. Write for a reader who has not read the paper or code:
-
-- say plainly what the model does and why the capability matters;
-- describe the actual input, run, judging, and aggregation in 2–6 steps;
-- explain score direction, unit, aggregation, and comparison boundary;
-- include concrete facts only when directly supported;
-- disclose at least one material limitation;
-- link at least one credential-free HTTPS primary source.
-
-Every new or substantially revised eval must use the Markdown-only detail contract:
+New detail pages and substantial rewrites must use one contract only:
 
 ```yaml
 detail_profile:
   source_kind: upstream_publication
   markdown: |-
     ## 榜单
-
     ...
 ```
 
-Author one coherent Markdown body below the platform Hero. Start at `##`, do not repeat the title, and keep the reader sequence legible: official results, benchmark explanation and protocol, limitations, selected task cases, and primary sources. RSIBench-Data defines the baseline content roles in `references/rsibench-reader-contract.md`; benchmark-specific headings may differ only when the evidence demands it.
+Do not rebuild the page from legacy structured detail fields. Keep machine-readable fields only when repository schema or result ingestion still requires them; the reader-facing body is `detail_profile.markdown`.
 
-Directly author every logical official result matrix as one Markdown table. Use one row per model and columns for the official aggregate plus every compatible official submetric, execution, judging, token, time, cost, and harness field from the same source snapshot. If the source splits sibling tables, join them only on exact participant identity and stable metric meaning. Use `—` plus a coverage note for a source-missing cell; never infer it. Do not emit one table or tab per model. Official images may coexist with the table as provenance, but may never replace or suppress it.
+The platform renders the Hero. Begin authored content at H2 and normally use this order:
 
-Keep model names as plain text, without Markdown links or anchors. Treat harness as secondary metadata. When all participants use the task-provided default harness and the source does not distinguish variants, label the field exactly `题目默认 harness`; preserve a model-specific harness name when the source publishes one.
+1. `## 榜单`
+2. `## 官方分项结果`
+3. `## 关于此评测`
+4. Optional source-backed observations, method details, figures, or resources
+5. `## 题目案例`
+6. `## 一手资料`
 
-Retain every source-backed row and column in Markdown tables. A real preview shows at most eight body rows initially; a table over eight rows expands with `展开其余 N 行`, exposes every stored row, offers `收起至 8 行`, and remains horizontally accessible on narrow screens. This is presentation behavior, never permission to truncate or split source data.
+Equivalent benchmark-specific headings are allowed. Do not repeat the Hero, add empty filler sections, or jump heading levels.
 
-Historical untouched evals may still use the structured detail fields. When maintaining one without a substantial reader rebuild, keep its existing contract source-faithful; do not mix structured blocks and `markdown` in one profile. Any new or substantially revised detail page must migrate to Markdown instead of extending the legacy structured layout.
+### 榜单
 
-Replace every generated `TODO`, `待补`, literal `placeholder`, and every `example.com` URL. Omit optional facts or figures when evidence is weak. Never add arbitrary HTML, MDX, React, or layout instructions to emulate the detail page.
+Use one compact cross-model table. It normally contains rank, model, the official total or primary ranking metric, and Harness when it helps comparison. Do not add a “口径” column. Keep model names as plain text without Markdown links or anchors.
 
-## Stage 3: preserve result provenance
+When every participant uses the same task-provided default and the source does not name variants, label it `题目默认 harness`. Render Harness as secondary metadata rather than a competing headline value.
 
-Choose the result path by evidence origin:
+Preserve every official participant. Tables with more than eight body rows are expected: the platform initially shows eight rows and provides expansion for all remaining rows, so do not delete lower-ranked models for brevity.
 
-- An upstream paper/site/GitHub aggregate uses `submission.kind: upstream_author_publication`, a numeric primary `score`, source metadata, and optional `supplementary_views`. It must not include `usage`, `task_results`, or `showcases`.
-- A real EvalHub run may include `task_results` and `showcases`. Those fields must come from actual runner output, not a paper table, prose summary, or design mock.
-- `sample-result.json` is a schema and example envelope. Never describe its demo participant, score, output, or trajectory as an official benchmark result or verified rerun.
+### 官方分项结果
 
-Use the complete upstream-envelope, `metric_table`, and `line_chart` examples in `references/content-and-evidence-contract.md` as the canonical authoring shapes. Parsers may tolerate historical supplementary views without `id` or `label`, but every new or updated view in `sample-result.json` or `published-results/*.json` must provide both as non-empty strings; IDs must be stable slug-style values and unique within one result. The standalone repository validator enforces this stricter authoring boundary without changing runtime compatibility.
+Convert source results into one or more complete cross-model Markdown tables:
 
-Treat one supplementary-view `id` as one logical machine-readable view across all published participants. For that ID, keep `type`, `title`, `label`, and table `columns` or chart axis labels exactly identical in every result; only rows, series, points, and notes may vary. Do not suffix the ID with a participant name. These payloads retain provenance and compatibility; the Markdown body still needs the explicit cross-model matrix defined above.
+- one row per model whenever models are the shared comparison axis;
+- retain all source-backed metrics needed to understand the official result;
+- combine score, resource, execution, cost, time, token, or judging fields when one readable table works well;
+- split them into multiple cross-model tables when different units or reader questions make that clearer;
+- never emit one table or tab per model;
+- use `—` only for a genuinely source-missing cell and explain missing coverage nearby;
+- allow official figures beside the tables, but never use an image as a replacement for the comparable data.
 
-Keep machine-readable participant metrics source-faithful and use stable shared view metadata across participants. When compatible sibling payloads already share one participant axis and source boundary, they may be consolidated without changing values; when preserving the upstream payload means retaining separate views, the authored Markdown still joins their compatible fields into the single official model matrix. Use separate supplementary-view IDs for a genuinely different row axis, visualization type, or source-defined boundary, and record that boundary in the source ledger.
+There is no universal five-, seven-, three-, eleven-, or thirteen-column layout. Choose the smallest number of readable tables that preserves the source data and supports cross-model comparison.
 
-Put one ranking number in `score`. Preserve source-published subgroups, components, scenarios, or trends in `supplementary_views` only when the source actually provides the points. There is no separate `derived` or `formula` field: put a derived primary score's status, formula, and source inputs in the result `detail`; put the same information for a derived supplementary value in that view's `note`. Prefix the explanation with `Derived:` and do not call the value official.
+### 关于此评测
 
-Every `task_results[].task_id` and optional `compare` or `transcript` showcase `task_id` must reference a stable task ID in `eval.yaml`. A real run may emit one task result per configured trial, so the same task ID may appear at most the `trials` value declared in `eval.yaml` times within one result; the next occurrence is invalid.
+Explain in plain language:
 
-For every authored run envelope, set `submission.run_date` to a real calendar date in exact `YYYY-MM-DD` form; values such as `2026-02-29` and `2026-04-31` are invalid. For an upstream publication, transcribe the ledger into `submission.importer_version` and `submission.source`: use a real primary-source URL, an optional reviewed title, and the lowercase SHA-256 of the exact artifact inspected. The authoring validator rejects placeholder markers, `example.com`, and obviously repeated example digests while the shared runtime schema remains backward compatible.
+- what the benchmark measures;
+- what a task asks the model to do;
+- how the official score is computed or judged;
+- important limitations needed to interpret the numbers.
 
-Never fabricate, interpolate, smooth, or backfill model scores, trend points, income curves, timestamps, outputs, screenshots, or trajectories. If the source does not contain them and no real run produced them, omit the block.
+Do not turn this section into an implementation or reproducibility audit.
 
-## Stage 4: implement reproducibly
+### 题目案例
 
-For a new eval, scaffold with `evalhub init <slug>`, fill `AUTHORS` with the GitHub handle opening the PR, and replace every placeholder. For an existing eval update, preserve `AUTHORS` exactly and update only the requested eval content. Keep fixtures small, bounded, and reviewable.
+Show at most five representative tasks. Select them deterministically across authored task order, including the first and last when at least two are shown. For `n` tasks and `k = min(5, n)`, use indices `round(i * (n - 1) / (k - 1))` for `i = 0..k-1`.
 
-For custom runners, validate metadata and documentation rather than runtime behavior:
+Only displayed cases require `translation`; other tasks may omit it. Every displayed case must contain:
 
-- use the literal-argv placeholder required by the declared `custom_mode`, a safe slug-specific output name, and keep every checked-in repository path reference inside the eval directory; document any external executable, tool, or resource path as a user-environment requirement rather than implying that EvalHub supplies it;
-- resolve the command template and runner path, and flag obvious missing files, malformed placeholders, or contradictions with the README;
-- record the upstream repository or source URL;
-- pin a commit, tag, or release;
-- document installation and invocation;
-- document input and output conventions;
-- document required network access, tools, compute, and permissions;
-- document known limitations.
+1. the complete original `prompt`;
+2. a complete, faithful Chinese translation.
 
-EvalHub-hosted services and repository automation do not execute third-party runners, and EvalHub does not audit or guarantee them. Runners are downloaded and executed only in users' own environments, either directly or through a local tool after explicit confirmation. Users should review the source and code before running one and decide whether to use a container, virtual machine, or other isolation measures. Repository checks cover metadata syntax, referenced paths, schemas, and repository-file safety only; passing them does not establish that a runner is safe, compatible, or runnable.
+The translation must preserve all instructions, constraints, warnings, paragraphs, lists, code blocks, commands, paths, filenames, literals, placeholders, formulas, numbers, units, and examples. A synopsis, omission marker, or link-only substitute is not a full translation. Long content stays complete in data; the platform may fold it visually.
 
-Inspect runner documentation and source only for obvious errors and accurate requirement disclosure. Do not treat that inspection as a security audit, reject runtime capabilities merely because they are powerful, or describe an unexecuted runner as tested, safe, compatible, or runnable.
+### 一手资料
 
-Set `score_policy: required` when submissions must already contain a numeric score. Use `author_fill` only for genuinely author-scored artifacts. Set `baseline_policy: required` only when a reviewed numeric baseline is included under `published-results/`.
+End with credential-free HTTPS links to the primary sources actually used. Prefer the official repository, paper, project page, task source, and result source. Do not add secondary discovery pages when a primary source is available.
 
-## Stage 5: validate and review
+## Stage 3: preserve repository data
 
-Identify all repository gates from the evals repository root:
+- Every task has a non-empty unique ID matching `^[a-z0-9][a-z0-9-]{0,63}$`.
+- `prompt` remains the complete task statement; do not replace it with a summary for display convenience.
+- Published results preserve every official participant and source-backed value.
+- `score` remains the primary ranking metric expected by the repository schema.
+- Supplementary views may remain for machine-readable compatibility, with stable IDs and consistent shared metadata, but the Markdown page must contain the reader-facing cross-model table itself.
+- `sample-result.json` illustrates schema shape only and must not be presented as a published result.
+- Existing files outside the requested eval remain untouched.
+
+## Stage 4: validate and preview
+
+Keep the final check short:
+
+1. Confirm Markdown-only structure, coherent H2/H3 order, and no repeated Hero.
+2. Confirm all official models and rows remain, result tables compare models directly, and there are no per-model table fragments.
+3. Confirm at most five displayed cases, each with the complete original and complete Chinese translation.
+4. Confirm sources work and no placeholders or invented values remain.
+5. Run repository validation, the structure preflight, and inspect a local preview including long-table expansion.
+
+Use:
 
 ```bash
 npm ci --ignore-scripts
 npm run validate
+node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs \
+  --reference evals/rsibench-data/eval.yaml \
+  evals/<slug>/eval.yaml
+git diff --check
 ```
 
-Run only the two commands above for an ordinary eval submission. Use `npm run test:maintenance` only when the task explicitly changes validators, schemas, vendored contracts, CI, or other repository infrastructure.
+When updating an existing reader, also compare the base and candidate for accidentally missing sections, models, rows, figures, or selected task cases. The check is a regression alarm, not a requirement to preserve old table widths or exact table families.
 
-These automated gates validate structure and repository authoring invariants only. They do not fetch or verify source URLs, determine whether a license grants the needed rights, fact-check prose or numbers, execute third-party runners, or establish runner safety or compatibility. Complete the source-ledger, license-boundary, factual, provenance, and obvious documentation-consistency reviews manually even when every command passes.
+## Handoff
 
-Do not make a custom-runner trial run a publication condition. The runner's actual execution, compatibility, and safety belong to the user who downloads it. If the user independently runs it or explicitly asks for help in their own environment, validate the observed result envelope with the same schema, record the exact environment and scope of that observation, and do not call it EvalHub-verified or security-reviewed. Check that:
+Report:
 
-- `detail_profile` and machine-readable source metadata are complete, source-backed, and free of `TODO`, `待补`, literal `placeholder`, `example.com`, and example digests;
-- every authored `submission.run_date` is a real `YYYY-MM-DD` calendar date;
-- displayed claims are traceable to the source ledger;
-- every overview table is a complete transcription with unique stable table, column, and row IDs and a primary-source HTTPS URL;
-- every Markdown and machine-readable result table preserves its complete source-backed row set; every table over eight rows satisfies the eight-row expand/collapse preview contract without losing narrow-screen column access;
-- official aggregate data is not presented as an EvalHub rerun;
-- sample data is not presented as evidence;
-- shared supplementary-view IDs keep one exact metadata contract across all published participants;
-- every logical official result matrix is one complete Markdown table with models as rows and all compatible supported fields as columns; official images may coexist without suppressing the table;
-- model names are plain text, and a source-shared task default is labeled `题目默认 harness` as secondary metadata;
-- every task declares a unique stable slug-style ID, task references resolve, and each task ID appears no more than the configured `trials` count;
-- optional sections disappear cleanly when unsupported;
-- `node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs --reference evals/rsibench-data/eval.yaml evals/<slug>/eval.yaml` reports Markdown readiness, one official result matrix, and complete selected-case translations;
-- the diff stays within exactly one eval directory and does not touch `CODEOWNERS` or repository-level files.
+- files changed;
+- primary sources used;
+- official participant and table coverage;
+- displayed task-case IDs and translation coverage;
+- validation and preview result;
+- any unresolved source gap.
 
-Complete this reader-readiness matrix from the final files before handoff. “Empty” is acceptable only when the source ledger or run evidence genuinely has no supported content; never fill a module to make the matrix look complete.
-
-| Reader module | Required data check |
-| --- | --- |
-| Official results | One Markdown model matrix contains the official aggregate and every compatible source-backed submetric/execution field; provenance agrees; no per-model tables or linked model names. |
-| Benchmark explanation | The Markdown body explains what is evaluated, the actual method, score meaning, comparison boundary, and material limitations. |
-| `题目案例` | At most five cases; stable task ID; complete `prompt` (verbatim upstream original for an `upstream_publication`); complete faithful Chinese `translation` for every displayed case, never a summary; real model evidence when available; no `run_spec` content. Non-case tasks do not require translation. |
-| Sources | Primary-source links and source-backed figures only; unsupported optional blocks are omitted. |
-
-Do not reduce the stored official leaderboard to three or four participants merely to imitate a compact task-case control. The platform may show up to four real model results inside a task case; only real `task_results` or task-linked showcases qualify, and an upstream aggregate never does.
-
-If a local or uploaded platform preview is available, inspect the generic `/e/<slug>` rendering for content order, missing-data fallbacks, and the complete long-table interaction described above. Do not change platform styling as part of an eval submission; report a renderer defect separately and use the repository's visual-design workflow when visual implementation is explicitly requested. Never delete source rows to work around a preview defect.
-
-Before handoff, summarize the source kind, primary sources, protocol and score semantics, result provenance, omitted unsupported content, changed files, and validation results. For a custom runner, also state its documented source and requirements and whether it was not executed; never imply EvalHub runtime or security endorsement. Stop and ask only when source access, licensing, ownership, or a protocol-defining ambiguity remains unresolved.
+Do not describe a PR, merge, deployment, or external action as complete unless it actually occurred.

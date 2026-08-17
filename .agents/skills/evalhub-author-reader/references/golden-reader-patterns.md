@@ -1,128 +1,62 @@
 # Golden reader patterns
 
-Use the pattern that matches the reviewed source. These are data-shape examples, not permission to invent missing values or copy the example numbers into a submission.
+These are optional source-shape guides. They do not create rigid CEO and RSI modes, fixed table counts, or fixed column counts.
 
-## Pattern A: long-horizon operating benchmark (CEO-style)
+## CEO-style operating results
 
-Use this when each participant has one final ranking score plus a source-published run summary and/or a real time series.
+This shape is useful when each model has one final ranking metric plus operating, survival, resource, or time summaries.
 
-- Put the final comparable value in `score`.
-- In machine-readable structured results, give every participant's run-summary table the same `id`, `type`, `title`, `label`, and `columns`.
-- Add a `line_chart` only when the source publishes each plotted point or a real EvalHub run emitted it. A start value and final value do not justify an interpolated curve.
-- Keep participant-specific values in rows, series names, and points. Do not encode a model name into the shared view ID.
-- Preserve every source-published participant in `published-results`; the detail page may present a compact subset in a particular reader control, but the stored official leaderboard must not be hand-truncated to three or four models.
-- In the Markdown body, combine the leaderboard and all compatible source-published run-summary fields into one complete model-by-metrics table. If the source publishes sibling tables, join only by exact participant identity; do not create one tab or table per model.
-- Keep model names as plain text. When all CEO-style runs use the task-provided default harness and the source does not distinguish variants, label it `题目默认 harness` as secondary metadata.
-- An official run-summary image may appear beside the table for provenance, but it does not replace or suppress the text table.
-- A preview may show only the first eight body rows until the reader expands it, but that presentation limit never authorizes deleting participants or dropping summary columns.
+- Put the final comparable metric in the compact leaderboard.
+- Put remaining official fields in one or more cross-model tables.
+- Combine fields when the table remains readable; split them by purpose when clearer.
+- Preserve all official models and source-backed values.
+- Use `题目默认 harness` when all models use the same unnamed task-provided harness.
+- Show a time series only when every point comes from the source.
 
 ```markdown
-| 模型 | 官方总分 | 完成运行 | 最长存活天数 | harness |
-| --- | ---: | ---: | ---: | --- |
-| Official Model A | 22148357 | 3 / 3 | 500 | 题目默认 harness |
-| Official Model B | 17864022 | 3 / 3 | 441 | 题目默认 harness |
+| 排名 | 模型 | 官方总分 | Harness |
+| ---: | --- | ---: | --- |
+| 1 | Official Model A | 22148357 | 题目默认 harness |
+| 2 | Official Model B | 17864022 | 题目默认 harness |
+
+| 模型 | 完成运行 | 最长存活天数 | 执行成本（USD） |
+| --- | ---: | ---: | ---: |
+| Official Model A | 3 / 3 | 500 | 83.20 |
+| Official Model B | 3 / 3 | 441 | 75.10 |
 ```
 
-```json
-{
-  "participant": { "model": "Source-published model name" },
-  "score": 22148357,
-  "supplementary_views": [
-    {
-      "type": "metric_table",
-      "id": "official-run-summary",
-      "label": "运行摘要",
-      "title": "官方运行摘要",
-      "columns": ["运行数", "完成运行", "最长存活天数"],
-      "rows": [{ "cells": [3, 3, 500] }],
-      "note": "Transcribed from the reviewed official result artifact."
-    },
-    {
-      "type": "line_chart",
-      "id": "official-cash-process",
-      "label": "收入过程",
-      "title": "官方现金过程",
-      "x_label": "模拟日",
-      "y_label": "现金（USD）",
-      "series": [
-        {
-          "name": "Source-published model name",
-          "points": [
-            { "x": 0, "y": 1000000 },
-            { "x": 100, "y": 1624000 },
-            { "x": 500, "y": 22148357 }
-          ]
-        }
-      ],
-      "note": "Every point appears in the reviewed source artifact."
-    }
-  ]
-}
-```
+If one readable table can hold both scores and execution fields, that is also acceptable. Do not turn participants into separate tables or tabs.
 
-If the source only publishes the final score and summary, omit `official-cash-process`. Do not manufacture a process curve to make the Markdown body or a legacy module look complete.
+## RSI-style multi-benchmark results
 
-## Pattern B: multi-benchmark aggregate (RSI-style)
+This shape is useful when one primary score summarizes several official benchmarks or scenarios.
 
-Use this when one primary score aggregates several stable benchmark or scenario rows for each participant.
-
-- Put the documented aggregate in `score` and explain its formula in `detail` when needed.
-- In machine-readable structured results, use one stable table ID across participants.
-- Keep the structured table `title`, `label`, and `columns` byte-for-byte identical across participants.
-- Keep its first column as the stable row key. Every participant must use the same complete row-key set before a legacy reader can safely derive a comparison.
-- Preserve source formatting and exact numeric values in separate columns when the source provides both. Do not reverse-engineer a hidden precision value from a rounded display string.
-- In the Markdown body, transpose the source-backed participant payloads into one wide table: one row per model and one column for the aggregate plus every compatible official benchmark or scenario. Do not emit per-model tabs.
-- Keep official figures as adjacent source artifacts; their presence never filters out the normalized table.
+- Keep the documented primary score in the leaderboard.
+- Transpose the official benchmark payload into a cross-model matrix.
+- Resource or cost fields may share that matrix or use another cross-model table.
+- Preserve source formatting and exact source values; do not reconstruct hidden precision.
+- Use `—` and a nearby coverage note when the source genuinely omits a cell.
 
 ```markdown
-| 模型 | 官方汇总 | Code repair | Terminal tasks | harness |
-| --- | ---: | ---: | ---: | --- |
-| Official Model A | 27.964107 | 35% | 5.62% | 题目默认 harness |
-| Official Model B | 24.103221 | 31% | 4.49% | 题目默认 harness |
+| 排名 | 模型 | 官方汇总 | Harness |
+| ---: | --- | ---: | --- |
+| 1 | Official Model A | 27.964107 | 题目默认 harness |
+| 2 | Official Model B | 24.103221 | 题目默认 harness |
+
+| 模型 | Code repair | Terminal tasks | 执行成本（USD） |
+| --- | ---: | ---: | ---: |
+| Official Model A | 35% | 5.62% | 41.20 |
+| Official Model B | 31% | 4.49% | 38.90 |
 ```
 
-```json
-{
-  "participant": { "model": "Source-published model name" },
-  "score": 27.964107,
-  "detail": "Macro-average of the six exact source-published percentages.",
-  "supplementary_views": [
-    {
-      "type": "metric_table",
-      "id": "official-benchmark-breakdown",
-      "label": "分榜成绩",
-      "title": "官方分榜成绩",
-      "columns": ["分项", "官网显示", "成功/试次", "精确分数"],
-      "rows": [
-        { "cells": ["Code repair", "35%", "35/100", 35] },
-        { "cells": ["Terminal tasks", "5.62%", "5/89", 5.617978] }
-      ],
-      "note": "Auxiliary official metrics; they do not define independent rankings."
-    }
-  ]
-}
-```
+## Task cases
 
-If one participant is missing a source-published row, use `—` with a coverage note rather than padding a value. If it uses a genuinely different protocol, do not place it in the same Markdown matrix: record the boundary and use a separately labeled protocol table. A legacy structured reader may fall back to the original per-participant payloads instead of deriving a misleading comparison.
+- Show at most five selected cases.
+- Keep each displayed original prompt complete.
+- Give each displayed case a complete faithful Chinese translation.
+- Non-displayed tasks do not need a translation.
+- Long text remains complete; visual folding belongs to the platform.
 
-## Task-case pattern
+## Machine-readable compatibility
 
-Task examples are independent of aggregate published results:
-
-- `prompt` is the one task statement: what runs and what the page shows. For an upstream task it is the complete source-published original, verbatim from the pinned commit. Long text is intentionally stored in full; the platform owns default folding and expansion.
-- `run_spec` holds EvalHub's own run procedure and is never rendered, so nothing a reader needs may live only there.
-- Select at most five displayed cases deterministically across authored order, including the first and last when at least two are shown; a live reader may prioritize cases with real public evidence before filling the remaining slots.
-- Require `translation` only for those displayed cases. Each one must translate the complete original faithfully, preserving all instructions, constraints, warnings, paragraphs, lists, code, commands, paths, filenames, literals, placeholders, formulas, numbers, units, and examples. A summary, translator-added omission marker, or link-only substitute fails readiness. Non-case tasks may omit `translation`.
-- Real `task_results` or task-linked showcases may provide model tabs. Never convert leaderboard aggregates, paper prose, or a design mock into fake task outputs or execution traces.
-- Do not add author-supplied “view prompt source” or “view official score source” buttons. Global sources belong in `detail_profile.resources` and result provenance belongs in `submission.source`.
-
-## Shared-view preflight
-
-Before opening a PR, group every `published-results` supplementary view by `id` and compare:
-
-| View type | Metadata that must match across participants | Values that may differ |
-| --- | --- | --- |
-| `metric_table` | `type`, `id`, `title`, `label`, `columns` | `rows`, `note` |
-| `line_chart` | `type`, `id`, `title`, `label`, `x_label`, `y_label` | `series`, `points`, `note` |
-
-The repository validator enforces this contract for new authored views. A mismatch is a content-model error, not a frontend styling issue.
+When the repository also stores supplementary tables or charts, keep stable IDs and shared metadata consistent across participants. Those files support ingestion and compatibility; the Markdown page still contains the human-readable cross-model result table itself.

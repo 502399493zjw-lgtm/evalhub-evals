@@ -66,8 +66,12 @@ function isDividerRow(line) {
 function markdownStructure(markdown) {
   const lines = markdown.split(/\r?\n/u);
   const headings = [];
+  const allHeadings = [];
+  const headingLevelJumps = [];
   const tables = [];
   let currentH2 = "";
+  let currentHeading = null;
+  let previousHeading = null;
   let inFence = false;
 
   for (let index = 0; index < lines.length; index += 1) {
@@ -78,10 +82,24 @@ function markdownStructure(markdown) {
     }
     if (inFence) continue;
 
-    const headingMatch = /^##\s+(.+?)\s*$/u.exec(line);
+    const headingMatch = /^(#{2,6})\s+(.+?)\s*$/u.exec(line);
     if (headingMatch) {
-      currentH2 = headingMatch[1];
-      headings.push(currentH2);
+      const level = headingMatch[1].length;
+      const text = headingMatch[2];
+      const heading = { level, text };
+      if (previousHeading && level > previousHeading.level + 1) {
+        headingLevelJumps.push({
+          from: previousHeading,
+          to: heading,
+        });
+      }
+      allHeadings.push(heading);
+      previousHeading = heading;
+      currentHeading = heading;
+      if (level === 2) {
+        currentH2 = text;
+        headings.push(currentH2);
+      }
       continue;
     }
 
@@ -94,16 +112,22 @@ function markdownStructure(markdown) {
       index += 1;
     }
     index -= 1;
-    tables.push({ heading: currentH2, headers, rows, rowCount: rows.length });
+    tables.push({
+      heading: currentH2,
+      sectionHeading: currentHeading?.text ?? currentH2,
+      headers,
+      rows,
+      rowCount: rows.length,
+    });
   }
 
-  return { headings, tables };
+  return { headings, allHeadings, headingLevelJumps, tables };
 }
 
 function headingRole(heading) {
   if (/榜单|官方.*(?:结果|成绩)|成绩.*分项|排名/iu.test(heading)) return "official-results";
   if (/题目案例|任务案例/u.test(heading)) return "task-cases";
-  if (/一手资料|资料与分析|资源与来源|来源与资源|主要来源/u.test(heading)) return "sources";
+  if (/一手资料|主要来源|primary sources/iu.test(heading)) return "sources";
   if (/关于.*评测|评测说明|方法|协议/u.test(heading)) return "about";
   return null;
 }
@@ -162,14 +186,42 @@ export function inspectReader(evalPath) {
     headingRole(table.heading) === "official-results"
     && table.headers.some((header) => /模型|model/iu.test(header)));
   const linkedModelCells = [];
+  const officialResultTables = [];
 
   for (const table of officialTables) {
     const modelColumn = table.headers.findIndex((header) => /模型|model/iu.test(header));
+    const models = [];
     for (const row of table.rows) {
       const cell = row[modelColumn] ?? "";
+      if (cell.length > 0) models.push(cell);
       if (/\[[^\]]+\]\([^)]+\)/u.test(cell)) linkedModelCells.push(cell);
     }
+    officialResultTables.push({
+      heading: table.heading,
+      sectionHeading: table.sectionHeading,
+      headers: table.headers,
+      rowCount: table.rowCount,
+      models,
+    });
   }
+
+  const tablesBySection = new Map();
+  for (const table of officialResultTables) {
+    const sectionTables = tablesBySection.get(table.heading) ?? [];
+    sectionTables.push(table);
+    tablesBySection.set(table.heading, sectionTables);
+  }
+  const fragmentedOfficialResultSections = [];
+  for (const [heading, tables] of tablesBySection) {
+    const distinctModels = new Set(tables.flatMap((table) => table.models));
+    if (tables.length > 1
+      && tables.every((table) => table.rowCount <= 1)
+      && distinctModels.size > 1) {
+      fragmentedOfficialResultSections.push(heading);
+    }
+  }
+
+  const officialModels = [...new Set(officialResultTables.flatMap((table) => table.models))].sort();
 
   const tasks = definition.tasks ?? [];
   return {
@@ -177,11 +229,16 @@ export function inspectReader(evalPath) {
     file: absolutePath,
     renderer: isMarkdown ? "markdown" : "structured",
     markdownH2: structure.headings,
+    markdownHeadings: structure.allHeadings,
+    headingLevelJumps: structure.headingLevelJumps,
     contentRoleOrder: uniqueRoleOrder,
     missingContentRoles: CONTENT_ROLES.filter((role) => !uniqueRoleOrder.includes(role)),
     markdownTableCount: structure.tables.length,
     officialResultMatrixCount: officialTables.length,
     officialResultMatrixRows: officialTables.map((table) => table.rowCount),
+    officialResultTables,
+    officialModels,
+    fragmentedOfficialResultSections,
     linkedModelCells,
     tasks: tasks.length,
     ...taskCaseTranslationStats(tasks),
@@ -191,6 +248,7 @@ export function inspectReader(evalPath) {
 
 export function compareReaders(reference, target) {
   const issues = [];
+  const isSameEvaluation = Boolean(reference.id) && reference.id === target.id;
   if (target.renderer !== reference.renderer) {
     issues.push(`renderer differs: expected ${reference.renderer}, got ${target.renderer}`);
   }
@@ -206,11 +264,35 @@ export function compareReaders(reference, target) {
       `content role order differs: expected ${reference.contentRoleOrder.join(" > ")}, got ${target.contentRoleOrder.join(" > ")}`,
     );
   }
-  if (target.officialResultMatrixCount !== 1) {
-    issues.push(`official result matrix count must be 1, got ${target.officialResultMatrixCount}`);
+  if (target.officialResultMatrixCount === 0) {
+    issues.push("at least one cross-model official result table is required");
+  }
+  if (target.fragmentedOfficialResultSections.length > 0) {
+    issues.push(
+      `official result families are fragmented into per-model tables: ${target.fragmentedOfficialResultSections.join(", ")}`,
+    );
+  }
+  if (target.headingLevelJumps.length > 0) {
+    issues.push(
+      `Markdown heading levels must not skip: ${target.headingLevelJumps.map(({ from, to }) => `H${from.level} ${from.text} -> H${to.level} ${to.text}`).join("; ")}`,
+    );
   }
   if (target.linkedModelCells.length > 0) {
     issues.push(`model names must be plain text: ${target.linkedModelCells.join("; ")}`);
+  }
+  if (isSameEvaluation) {
+    const missingModels = reference.officialModels.filter(
+      (model) => !target.officialModels.includes(model),
+    );
+    if (missingModels.length > 0) {
+      issues.push(`official participants removed from the accepted reader: ${missingModels.join(", ")}`);
+    }
+    const missingTaskCases = reference.taskCaseIds.filter(
+      (taskId) => !target.taskCaseIds.includes(taskId),
+    );
+    if (missingTaskCases.length > 0) {
+      issues.push(`selected task cases removed from the accepted reader: ${missingTaskCases.join(", ")}`);
+    }
   }
   if (target.taskCases > PREVIEW_TASK_CASE_LIMIT) {
     issues.push(`task-case count exceeds ${PREVIEW_TASK_CASE_LIMIT}: ${target.taskCases}`);

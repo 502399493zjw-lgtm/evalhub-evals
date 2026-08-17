@@ -5,11 +5,11 @@ import path from "node:path";
 import test from "node:test";
 import { compareReaders, inspectReader } from "./report-reader-structure.mjs";
 
-function fixture(root, slug, detailProfile, task = {}) {
+function fixture(root, slug, detailProfile, task = {}, definitionId = slug) {
   const directory = path.join(root, "evals", slug);
   fs.mkdirSync(directory, { recursive: true });
   fs.writeFileSync(path.join(directory, "eval.yaml"), [
-    `id: ${slug}`,
+    `id: ${definitionId}`,
     "detail_profile:",
     detailProfile.split("\n").map((line) => `  ${line}`).join("\n"),
     "tasks:",
@@ -139,7 +139,90 @@ test("non-case tasks may omit translations", () => {
   assert.deepEqual(compareReaders(inspectReader(referencePath), target), []);
 });
 
-test("per-model result tables fail the unified matrix contract", () => {
+test("multiple cross-model result families pass the reader contract", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const reference = inspectReader(fixture(root, "reference", markdownProfile));
+  const familyProfile = markdownProfile.replace(
+    "  汇总分等于官方分项的宏平均。",
+    [
+      "  | 模型 | 分项 A | 分项 B |",
+      "  | --- | ---: | ---: |",
+      "  | Model A | 1 | 2 |",
+      "  | Model B | 0.9 | 1.8 |",
+      "",
+      "  ### 资源与执行",
+      "",
+      "  | 模型 | 小时 | 成本 |",
+      "  | --- | ---: | ---: |",
+      "  | Model A | 10 | 20 |",
+      "  | Model B | 12 | 22 |",
+    ].join("\n"),
+  );
+  const target = inspectReader(fixture(root, "target", familyProfile));
+  assert.equal(target.officialResultMatrixCount, 3);
+  assert.equal(target.fragmentedOfficialResultSections.length, 0);
+  assert.deepEqual(compareReaders(reference, target), []);
+});
+
+test("same-eval comparison allows regrouping result fields without losing participants", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const acceptedProfile = markdownProfile.replace(
+    "  汇总分等于官方分项的宏平均。",
+    [
+      "  ### 六项分项成绩",
+      "",
+      "  | 模型 | 分项 A | 分项 B | 分项 C | 分项 D | 分项 E | 分项 F |",
+      "  | --- | ---: | ---: | ---: | ---: | ---: | ---: |",
+      "  | Model | 1 | 1 | 1 | 1 | 1 | 1 |",
+      "",
+      "  ### 资源与运行成本",
+      "",
+      "  | 模型 | 小时 | 成本 |",
+      "  | --- | ---: | ---: |",
+      "  | Model | 10 | 20 |",
+    ].join("\n"),
+  );
+  const wideProfile = markdownProfile.replace(
+    "  汇总分等于官方分项的宏平均。",
+    [
+      "  ### 六项分项成绩",
+      "",
+      "  | 模型 | 分项 A | 分项 B | 分项 C | 分项 D | 分项 E | 分项 F | 官方总分 | 小时 | 成本 | harness |",
+      "  | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |",
+      "  | Model | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 10 | 20 | 题目默认 harness |",
+    ].join("\n"),
+  );
+  const reference = inspectReader(fixture(
+    root, "accepted", acceptedProfile, {}, "same-eval",
+  ));
+  const target = inspectReader(fixture(
+    root, "candidate", wideProfile, {}, "same-eval",
+  ));
+  const issues = compareReaders(reference, target);
+  assert.deepEqual(issues, []);
+});
+
+test("same-eval comparison still rejects removing an official participant", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const acceptedProfile = markdownProfile.replace(
+    "  | Model | 1 | 1 | 题目默认 harness |",
+    "  | Model A | 1 | 1 | 题目默认 harness |\n  | Model B | 0.9 | 0.9 | 题目默认 harness |",
+  );
+  const candidateProfile = markdownProfile.replace(
+    "  | Model | 1 | 1 | 题目默认 harness |",
+    "  | Model A | 1 | 1 | 题目默认 harness |",
+  );
+  const reference = inspectReader(fixture(
+    root, "accepted", acceptedProfile, {}, "same-eval",
+  ));
+  const target = inspectReader(fixture(
+    root, "candidate", candidateProfile, {}, "same-eval",
+  ));
+  const issues = compareReaders(reference, target);
+  assert.ok(issues.includes("official participants removed from the accepted reader: Model B"));
+});
+
+test("per-model result tables fail the family-level cross-model contract", () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
   const reference = inspectReader(fixture(root, "reference", markdownProfile));
   const splitProfile = markdownProfile.replace(
@@ -155,7 +238,21 @@ test("per-model result tables fail the unified matrix contract", () => {
   const target = inspectReader(fixture(root, "target", splitProfile));
   const issues = compareReaders(reference, target);
   assert.equal(target.officialResultMatrixCount, 2);
-  assert.ok(issues.includes("official result matrix count must be 1, got 2"));
+  assert.deepEqual(target.fragmentedOfficialResultSections, ["榜单"]);
+  assert.ok(issues.some((issue) => issue.startsWith("official result families are fragmented")));
+});
+
+test("heading level jumps fail the Markdown hierarchy contract", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const reference = inspectReader(fixture(root, "reference", markdownProfile));
+  const jumpingProfile = markdownProfile.replace(
+    "  汇总分等于官方分项的宏平均。",
+    "  #### 六项分项成绩\n\n  汇总分等于官方分项的宏平均。",
+  );
+  const target = inspectReader(fixture(root, "target", jumpingProfile));
+  const issues = compareReaders(reference, target);
+  assert.equal(target.headingLevelJumps.length, 1);
+  assert.ok(issues.some((issue) => issue.startsWith("Markdown heading levels must not skip")));
 });
 
 test("linked model names fail the plain-text rule", () => {
