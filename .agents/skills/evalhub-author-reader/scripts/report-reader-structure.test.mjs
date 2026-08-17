@@ -164,7 +164,7 @@ test("multiple cross-model result families pass the reader contract", () => {
   assert.deepEqual(compareReaders(reference, target), []);
 });
 
-test("same-eval regression comparison rejects collapsing compact result families into one wide table", () => {
+test("same-eval comparison allows regrouping result fields without losing participants", () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
   const acceptedProfile = markdownProfile.replace(
     "  汇总分等于官方分项的宏平均。",
@@ -199,10 +199,27 @@ test("same-eval regression comparison rejects collapsing compact result families
     root, "candidate", wideProfile, {}, "same-eval",
   ));
   const issues = compareReaders(reference, target);
-  assert.ok(issues.some((issue) => issue.startsWith("official result table families removed")));
-  assert.ok(issues.some((issue) => issue.startsWith("official result table count decreased")));
-  assert.ok(issues.some((issue) => issue.startsWith("official result table width increased materially")));
-  assert.ok(issues.some((issue) => issue.startsWith("official fields are newly duplicated")));
+  assert.deepEqual(issues, []);
+});
+
+test("same-eval comparison still rejects removing an official participant", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const acceptedProfile = markdownProfile.replace(
+    "  | Model | 1 | 1 | 题目默认 harness |",
+    "  | Model A | 1 | 1 | 题目默认 harness |\n  | Model B | 0.9 | 0.9 | 题目默认 harness |",
+  );
+  const candidateProfile = markdownProfile.replace(
+    "  | Model | 1 | 1 | 题目默认 harness |",
+    "  | Model A | 1 | 1 | 题目默认 harness |",
+  );
+  const reference = inspectReader(fixture(
+    root, "accepted", acceptedProfile, {}, "same-eval",
+  ));
+  const target = inspectReader(fixture(
+    root, "candidate", candidateProfile, {}, "same-eval",
+  ));
+  const issues = compareReaders(reference, target);
+  assert.ok(issues.includes("official participants removed from the accepted reader: Model B"));
 });
 
 test("per-model result tables fail the family-level cross-model contract", () => {

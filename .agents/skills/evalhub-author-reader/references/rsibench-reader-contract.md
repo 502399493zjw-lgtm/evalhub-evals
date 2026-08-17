@@ -1,84 +1,53 @@
-# RSIBench Markdown reader contract
+# RSIBench Markdown reader reference
 
-RSIBench-Data is EvalHub's Markdown content-architecture reference. This contract defines the information roles and quality bar for rebuilt detail pages; it does not preserve the old structured renderer, fixed native modules, or frontend-derived per-model tabs.
+RSIBench-Data is the content-architecture comparison page for rebuilt EvalHub detail pages. It is a reference for information order and completeness, not a fixed template for column counts or result-table families.
 
-## Canonical content sequence
+## Reader sequence
 
-The platform owns the Hero. The authored Markdown begins at H2 and follows this reader flow:
+The platform owns the Hero. The authored Markdown normally follows:
 
-1. `榜单`: one compact official ranking table containing rank, model, aggregate, source boundary, and source-published harness when applicable.
-2. `官方分项结果`: one cross-model table per logical result family, followed by formula, coverage, protocol or base-model boundaries, and source-published interpretation. Score breakdown and resource/execution data may remain separate families.
-3. `关于此评测`: plain-language purpose, actual protocol, scoring, comparison boundary, and limitations.
-4. Optional evidence-backed observations and resources.
-5. `题目案例`: at most five complete originals with complete faithful Chinese translations.
-6. `一手资料`: credential-free HTTPS primary sources.
+1. `榜单`
+2. `官方分项结果`
+3. `关于此评测`
+4. Optional source-backed observations, method details, or figures
+5. `题目案例`
+6. `一手资料`
 
-Equivalent benchmark-specific headings are allowed when their meaning is clear and their order remains coherent. Do not repeat the Hero or add empty filler sections.
+Equivalent benchmark-specific headings are allowed. Do not repeat the Hero.
 
-## Ownership map
+## Official results
 
-| Reader surface | Sole data owner | Required authoring rule |
-| --- | --- | --- |
-| Hero | top-level `eval.yaml` metadata and `references` | Do not repeat it in Markdown. |
-| Official result tables | reviewed `published-results/*.json` plus its pinned source snapshot | One compact leaderboard, then one cross-model table per logical score, resource, execution, or judging family; never one table or tab per model. |
-| Protocol explanation | reviewed primary sources and `eval.yaml` protocol | Explain what runs, how it is judged and aggregated, and the comparison boundary without inventing facts. |
-| 题目案例 | deterministically selected `tasks[]` plus any real task-linked run evidence | At most five cases; complete original and complete faithful Chinese translation for each displayed case. |
-| 一手资料 | source ledger and result provenance | Use primary-source HTTPS links; figures may coexist with tables but never replace them. |
+The leaderboard stays compact: rank, model, primary official metric, and Harness when useful. Do not add a “口径” column.
 
-Machine-readable rankings and supplementary views remain in `published-results` for provenance and compatibility. Real result `task_results` and `showcases` may still supply task-linked outputs, trajectories, and evidence. The Markdown body must not manufacture those artifacts and must not depend on frontend derivation to produce its official comparison table.
+The official component section contains one or more complete cross-model tables. Authors may combine or separate score, resource, execution, time, token, cost, and judging fields according to readability. The rules that matter are:
 
-## Official result table families
+- preserve every official participant and source-backed value;
+- compare models on a shared row axis whenever possible;
+- never create one result table or tab per model;
+- never let an official image suppress the comparable Markdown data;
+- keep model names as plain text;
+- label a shared unnamed task-provided default as `题目默认 harness`.
 
-RSI-style multi-benchmark results use a compact ranking table followed by purpose-specific cross-model tables:
+There is no mandatory five-column leaderboard, seven-column score table, three-column resource table, or any other fixed shape.
 
-- one row per source-published model within every family;
-- plain-text model names, with no Markdown links or anchors;
-- rank, aggregate, source boundary, and source-published harness kept in the compact leaderboard;
-- every compatible source-published benchmark or scenario kept in one score-breakdown table;
-- resource, execution, judging, token, time, or cost data kept in a separate cross-model table when it answers a distinct reader question or uses materially different units;
-- aggregate and harness not repeated in the breakdown merely to make one mega-table;
-- `题目默认 harness` only when every participant uses the same task-provided default and the source does not name variants;
-- exact source formatting retained when it communicates precision;
-- `—` for a source-missing cell, accompanied by a coverage note;
-- no per-model tables, per-model result tabs, or hidden dependency on an official image.
+## Task cases
 
-If two source tables describe the same logical family with the same participant axis and snapshot, join that family only by exact participant identity and stable metric meaning. Sharing a participant axis alone does not require merging score, resource, execution, and judging families. If tables use genuinely different protocols or incompatible row axes, keep them separately labeled and explain the boundary.
+Show at most five tasks selected across authored order, including first and last when at least two are shown. Only displayed cases require `translation`. Each displayed case contains the complete source prompt and a complete faithful Chinese translation, including every instruction, constraint, list, code block, command, path, filename, literal, placeholder, formula, number, unit, and example.
 
-The accepted RSIBench reader shape illustrates the distinction: a five-column leaderboard, a seven-column six-benchmark score table, and a three-column resource/cost table. A later draft that repeated total score and harness while folding resource data into an eleven-column score table was wider but not clearer. Preserve the compact family boundaries while keeping the later draft's improvement of complete selected-case originals and translations.
+## Long tables
 
-## Existing-reader regression comparison
+Keep all rows in Markdown. A preview should:
 
-Before changing an existing Markdown reader, compare the base-branch body and the candidate. Inventory H2/H3 order, table purpose, row axis, headers, rows, figures, and selected task cases. Treat an unexplained table-family removal, new field duplication, heading-level jump, participant loss, or large width increase as a regression even when every value is source-backed. Preserve the prior accepted grouping unless new evidence changes the reader question; record intentional differences in the source ledger and PR description.
+- show no fold control for at most eight body rows;
+- initially show eight rows when there are more;
+- expand to every remaining row and allow collapse;
+- retain horizontal access on narrow screens.
 
-## Task-case selection and translation
+## Lightweight regression comparison
 
-The repository preview selects at most five tasks evenly across authored order, including the first and last when at least two cases are displayed. For `n` tasks and `k = min(5, n)` cases, select indices `round(i * (n - 1) / (k - 1))` for `i = 0..k-1`. A live reader may prioritize tasks with real public task evidence and fill the remaining slots with the same deterministic rule.
+When revising an existing page, compare old and new versions for accidentally missing sections, models, source rows, figures, or selected task cases. Also check heading continuity and per-model table fragmentation. Regrouping columns, combining tables, or splitting one wide table is allowed when the result is clearer and no source data is lost.
 
-Only displayed cases require `translation`; non-case tasks may omit it. Each displayed case must preserve the complete source `prompt` and translate every instruction, constraint, warning, paragraph, list, code block, command, path, filename, literal, placeholder, formula, number, unit, and example. A synopsis, translator-added omission marker, or link-only substitute fails readiness. Source-authored ellipses are valid when present in the pinned original.
-
-## Long-table interaction
-
-The stored Markdown always keeps the complete source-backed row set. In a real preview:
-
-- a table with at most eight body rows has no fold control;
-- a table with more than eight rows initially exposes exactly eight;
-- its control says `展开其余 N 行` with the true hidden count;
-- expansion exposes every stored row and offers `收起至 8 行`;
-- narrow layouts retain horizontal access to every column.
-
-This presentation rule never authorizes row deletion, table splitting, participant omission, or a fake summary row.
-
-## Acceptance comparison
-
-Compare every rebuilt page with RSIBench-Data at three levels:
-
-| Level | Must be equivalent | May differ |
-| --- | --- | --- |
-| Data contract | Markdown renderer; compact leaderboard plus source-backed cross-model result families; at most five selected cases with full translations; preserved machine-readable provenance | Counts of models, metrics, tasks, facts, figures, and sources |
-| Content semantics | Results first; protocol and limitations explained; selected cases; primary sources; no repeated Hero | Benchmark-specific headings and prose |
-| Interaction | Eight-row fold behavior; complete expansion; narrow-table access; task selection | Total content height and source-justified tables with genuinely different row axes |
-
-Run the deterministic preflight before preview:
+Run:
 
 ```bash
 node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs \
@@ -86,13 +55,4 @@ node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs \
   evals/<slug>/eval.yaml
 ```
 
-For an existing reader, run the same preflight against the last reviewed accepted revision as a second check:
-
-```bash
-git show <accepted-ref>:evals/<slug>/eval.yaml | \
-  node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs \
-    --reference /dev/stdin \
-    evals/<slug>/eval.yaml
-```
-
-When the reference and target share an eval ID, the preflight also rejects removed result families, a decreased result-table count, material width growth, newly duplicated fields, participant loss, and removed selected cases. The general check covers Markdown readiness, family-level cross-model tables, per-model fragmentation, heading-level continuity, plain model labels, and selected-case translation coverage. It does not prove factual correctness or decide whether an intentional semantic-family change is justified; review and record any intended contract change before replacing the accepted reference. Repository validation, source-ledger review, result provenance review, and staging interaction checks remain required.
+The script checks structural readiness and translation coverage. It is not a mandate to copy RSIBench column-for-column and it does not prove factual correctness.

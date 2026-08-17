@@ -221,18 +221,6 @@ export function inspectReader(evalPath) {
     }
   }
 
-  const officialHeaderCounts = new Map();
-  for (const table of officialResultTables) {
-    for (const header of table.headers) {
-      const normalized = header.trim().toLocaleLowerCase();
-      if (!normalized || /模型|model/iu.test(normalized)) continue;
-      officialHeaderCounts.set(normalized, (officialHeaderCounts.get(normalized) ?? 0) + 1);
-    }
-  }
-  const duplicatedOfficialHeaders = [...officialHeaderCounts.entries()]
-    .filter(([, count]) => count > 1)
-    .map(([header]) => header)
-    .sort();
   const officialModels = [...new Set(officialResultTables.flatMap((table) => table.models))].sort();
 
   const tasks = definition.tasks ?? [];
@@ -249,9 +237,6 @@ export function inspectReader(evalPath) {
     officialResultMatrixCount: officialTables.length,
     officialResultMatrixRows: officialTables.map((table) => table.rowCount),
     officialResultTables,
-    maxOfficialResultColumns: officialTables.reduce(
-      (maximum, table) => Math.max(maximum, table.headers.length), 0),
-    duplicatedOfficialHeaders,
     officialModels,
     fragmentedOfficialResultSections,
     linkedModelCells,
@@ -296,35 +281,6 @@ export function compareReaders(reference, target) {
     issues.push(`model names must be plain text: ${target.linkedModelCells.join("; ")}`);
   }
   if (isSameEvaluation) {
-    const referenceFamilies = new Set(
-      reference.officialResultTables.map((table) => table.sectionHeading),
-    );
-    const targetFamilies = new Set(
-      target.officialResultTables.map((table) => table.sectionHeading),
-    );
-    const removedFamilies = [...referenceFamilies].filter((family) => !targetFamilies.has(family));
-    if (removedFamilies.length > 0) {
-      issues.push(`official result table families removed from the accepted reader: ${removedFamilies.join(", ")}`);
-    }
-    if (target.officialResultMatrixCount < reference.officialResultMatrixCount) {
-      issues.push(
-        `official result table count decreased: expected at least ${reference.officialResultMatrixCount}, got ${target.officialResultMatrixCount}`,
-      );
-    }
-    const widthIncrease = target.maxOfficialResultColumns - reference.maxOfficialResultColumns;
-    if (widthIncrease >= 3
-      || (reference.maxOfficialResultColumns > 0
-        && target.maxOfficialResultColumns / reference.maxOfficialResultColumns >= 1.4)) {
-      issues.push(
-        `official result table width increased materially: ${reference.maxOfficialResultColumns} -> ${target.maxOfficialResultColumns} columns`,
-      );
-    }
-    const newDuplicatedHeaders = target.duplicatedOfficialHeaders.filter(
-      (header) => !reference.duplicatedOfficialHeaders.includes(header),
-    );
-    if (newDuplicatedHeaders.length > 0) {
-      issues.push(`official fields are newly duplicated across result families: ${newDuplicatedHeaders.join(", ")}`);
-    }
     const missingModels = reference.officialModels.filter(
       (model) => !target.officialModels.includes(model),
     );
