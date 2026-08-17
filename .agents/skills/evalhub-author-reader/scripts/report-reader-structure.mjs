@@ -45,19 +45,37 @@ function resultCounts(evalPath) {
   let results = 0;
   let supplementaryViews = 0;
   const viewIds = new Set();
+  const splitParticipantMetricTableGroups = new Set();
 
   for (const file of publishedResultFiles(evalPath)) {
     const envelope = JSON.parse(fs.readFileSync(file, "utf8"));
     for (const result of envelope.results ?? []) {
       results += 1;
-      for (const view of result.supplementary_views ?? []) {
+      const views = result.supplementary_views ?? [];
+      const participantMetricTables = views.filter((view) =>
+        view.type === "metric_table"
+        && Array.isArray(view.rows)
+        && view.rows.length === 1
+        && typeof view.id === "string"
+        && view.id.length > 0);
+      if (participantMetricTables.length > 1) {
+        splitParticipantMetricTableGroups.add(
+          participantMetricTables.map((view) => view.id).sort().join(" + "),
+        );
+      }
+      for (const view of views) {
         supplementaryViews += 1;
         if (view.id) viewIds.add(view.id);
       }
     }
   }
 
-  return { results, supplementaryViews, viewIds: [...viewIds].sort() };
+  return {
+    results,
+    supplementaryViews,
+    viewIds: [...viewIds].sort(),
+    splitParticipantMetricTableGroups: [...splitParticipantMetricTableGroups].sort(),
+  };
 }
 
 function markdownH2(markdown) {
@@ -113,6 +131,11 @@ export function compareReaders(reference, target) {
   }
   if (target.missingCoreFields.length > 0) {
     issues.push(`missing structured core fields: ${target.missingCoreFields.join(", ")}`);
+  }
+  if (target.splitParticipantMetricTableGroups.length > 0) {
+    issues.push(
+      `participant metrics are split across mergeable one-row tables: ${target.splitParticipantMetricTableGroups.join("; ")}`,
+    );
   }
   return issues;
 }

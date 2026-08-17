@@ -22,7 +22,7 @@ An author never changes, repeats, or reorders these modules. An unsupported opti
 | --- | --- | --- |
 | Hero | top-level `eval.yaml` metadata and `references` | Do not repeat it in prose. |
 | 榜单 | `published-results/*.json > results[].score` and participant metadata | Preserve every reviewed participant and source value. |
-| 官方分项结果 | shared `results[].supplementary_views` contracts | One logical view ID has identical metadata across participants. |
+| 官方分项结果 | shared `results[].supplementary_views` contracts | One participant row axis uses one unified metric table; one logical view ID has identical metadata across participants. |
 | 关于这套评测 | structured `detail_profile` | Explain protocol, score, facts, limitations, tables, and figures here only. |
 | 题目案例 | `tasks[]` plus real task-linked run evidence | Keep stable IDs and complete source prompts; never manufacture outputs. |
 | 资料与分析 | `detail_profile.resources_note`, `resources`, and source provenance | Use primary-source HTTPS cards; do not recreate them as a Markdown link list. |
@@ -45,6 +45,7 @@ Use `overview_note`, `key_facts`, `overview_tables`, `figures`, and `resources_n
 
 - Final rankings belong only in `score`; they never appear again in `detail_profile`.
 - Participant run summaries, scenario matrices, sub-benchmarks, rubric components, token statistics, and source-published trends belong in shared `supplementary_views` when the result artifact supports them.
+- Metrics attached to the same participant and source boundary belong in one `metric_table`, even when the source visually groups performance, execution, judging, pricing, cost, or token columns. Split views only for a different row axis, a different visualization type, or a source-defined semantic boundary that cannot be represented faithfully in one table; record the reason in the source ledger.
 - Fixed protocol matrices, action spaces, task-family inventories, scoring weights, and environment definitions belong in `overview_tables`.
 - Protocol diagrams and source-published analytical figures belong in `figures`.
 - Reproduction steps are `method_steps` when they explain the official protocol. EvalHub-only execution instructions belong in `run_spec` and README, not the reader page.
@@ -76,7 +77,7 @@ Compare every rebuilt page with RSIBench-Data at three levels:
 | --- | --- | --- |
 | Data contract | Structured renderer; module signature and order; field ownership | Counts of results, tasks, facts, tables, figures, and resources |
 | DOM semantics | One H1; canonical H2 order; native tabs/cards/empty states | Benchmark names, table columns, labels, and prose |
-| Interaction | Eight-row fold behavior; task selection; resource links; narrow overflow | Number of tabs and total content height |
+| Interaction | Eight-row fold behavior; task selection; resource links; narrow overflow; one unified participant-metric table per shared row axis | Source-justified tabs with different row axes or visualization types; total content height |
 
 Run the deterministic preflight before preview:
 

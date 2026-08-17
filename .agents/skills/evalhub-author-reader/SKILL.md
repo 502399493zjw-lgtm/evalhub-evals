@@ -147,6 +147,8 @@ Use the complete upstream-envelope, `metric_table`, and `line_chart` examples in
 
 Treat one supplementary-view `id` as one logical reader tab across all published participants. For that ID, keep `type`, `title`, `label`, and table `columns` or chart axis labels exactly identical in every result; only rows, series, points, and notes may vary. This lets the platform safely derive CEO-style participant summaries and RSI-style per-benchmark comparison tabs. Do not suffix the ID with a participant name.
 
+Combine participant-level metrics into one `metric_table` when they share the same participant row axis and source boundary. Append columns even when the source groups them under themes such as performance, execution, judging, pricing, cost, or tokens; thematic grouping alone never justifies extra reader tabs. Use separate supplementary-view IDs only for a genuinely different row axis, a different visualization type, or source-defined data that cannot be combined without changing meaning. Record that reason in the source ledger. The structure preflight rejects multiple one-row participant metric tables because they can and should be one table.
+
 Put one ranking number in `score`. Preserve source-published subgroups, components, scenarios, or trends in `supplementary_views` only when the source actually provides the points. There is no separate `derived` or `formula` field: put a derived primary score's status, formula, and source inputs in the result `detail`; put the same information for a derived supplementary value in that view's `note`. Prefix the explanation with `Derived:` and do not call the value official.
 
 Every `task_results[].task_id` and optional `compare` or `transcript` showcase `task_id` must reference a stable task ID in `eval.yaml`. A real run may emit one task result per configured trial, so the same task ID may appear at most the `trials` value declared in `eval.yaml` times within one result; the next occurrence is invalid.
@@ -199,6 +201,7 @@ Do not make a custom-runner trial run a publication condition. The runner's actu
 - official aggregate data is not presented as an EvalHub rerun;
 - sample data is not presented as evidence;
 - shared supplementary-view IDs keep one exact metadata contract across all published participants;
+- participant-level official metrics with one shared row axis use one unified `metric_table`, with no theme-only split tabs;
 - every task declares a unique stable slug-style ID, task references resolve, and each task ID appears no more than the configured `trials` count;
 - optional sections disappear cleanly when unsupported;
 - `node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs --reference evals/rsibench-data/eval.yaml evals/<slug>/eval.yaml` reports the same structured renderer and canonical module order;
