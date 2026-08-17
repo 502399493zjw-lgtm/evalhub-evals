@@ -5,7 +5,7 @@ import path from "node:path";
 import test from "node:test";
 import { compareReaders, inspectReader } from "./report-reader-structure.mjs";
 
-function fixture(root, slug, detailProfile) {
+function fixture(root, slug, detailProfile, task = {}) {
   const directory = path.join(root, "evals", slug);
   fs.mkdirSync(directory, { recursive: true });
   fs.writeFileSync(path.join(directory, "eval.yaml"), [
@@ -14,7 +14,8 @@ function fixture(root, slug, detailProfile) {
     detailProfile.split("\n").map((line) => `  ${line}`).join("\n"),
     "tasks:",
     "  - id: one-task",
-    "    prompt: Complete task",
+    `    prompt: ${task.prompt ?? "Complete task"}`,
+    `    translation: ${task.translation ?? "完成任务"}`,
     "",
   ].join("\n"));
   fs.mkdirSync(path.join(directory, "published-results"));
@@ -53,6 +54,32 @@ test("structured targets match the RSIBench module signature", () => {
   const reference = inspectReader(fixture(root, "reference", structuredProfile));
   const target = inspectReader(fixture(root, "target", structuredProfile));
   assert.deepEqual(compareReaders(reference, target), []);
+});
+
+test("missing task translations fail RSIBench parity", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const reference = inspectReader(fixture(root, "reference", structuredProfile));
+  const target = inspectReader(fixture(root, "target", structuredProfile, { translation: "" }));
+  const issues = compareReaders(reference, target);
+  assert.equal(target.translationCoverage, 0);
+  assert.deepEqual(target.missingTranslationTaskIds, ["one-task"]);
+  assert.ok(issues.some((issue) => issue.startsWith("task translation coverage differs")));
+});
+
+test("short summaries do not pass as translations of long task prompts", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const longPrompt = "Complete every required step and preserve all literals. ".repeat(8);
+  const reference = inspectReader(fixture(root, "reference", structuredProfile, {
+    prompt: longPrompt,
+    translation: "完整执行每一个步骤并保留所有字面量。".repeat(8),
+  }));
+  const target = inspectReader(fixture(root, "target", structuredProfile, {
+    prompt: longPrompt,
+    translation: "完成任务摘要。",
+  }));
+  const issues = compareReaders(reference, target);
+  assert.deepEqual(target.summarizedTranslationTaskIds, ["one-task"]);
+  assert.ok(issues.some((issue) => issue.startsWith("long task translations appear summarized")));
 });
 
 test("markdown is reported as a renderer and module-order mismatch", () => {

@@ -94,12 +94,44 @@ function markdownH2(markdown) {
   return headings;
 }
 
+function taskTranslationStats(tasks) {
+  const missingTranslationTaskIds = [];
+  const summarizedTranslationTaskIds = [];
+  let translatedTasks = 0;
+
+  for (const task of tasks) {
+    const prompt = typeof task?.prompt === "string" ? task.prompt.trim() : "";
+    const translation = typeof task?.translation === "string" ? task.translation.trim() : "";
+    const taskId = typeof task?.id === "string" && task.id.length > 0 ? task.id : "<missing-id>";
+    if (translation.length === 0) {
+      missingTranslationTaskIds.push(taskId);
+      continue;
+    }
+    translatedTasks += 1;
+    // Chinese full-text renderings are normally shorter than English source text,
+    // but a translation under one fifth of a long prompt is almost certainly an
+    // abstract. This is a deterministic review signal, not a semantic proof.
+    if (prompt.length >= 300 && translation.length < prompt.length * 0.2) {
+      summarizedTranslationTaskIds.push(taskId);
+    }
+  }
+
+  return {
+    translatedTasks,
+    translationCoverage: tasks.length === 0 ? 1 : translatedTasks / tasks.length,
+    missingTranslationTaskIds,
+    summarizedTranslationTaskIds,
+  };
+}
+
 export function inspectReader(evalPath) {
   const absolutePath = path.resolve(evalPath);
   const definition = YAML.parse(fs.readFileSync(absolutePath, "utf8"));
   const profile = definition.detail_profile ?? {};
   const isMarkdown = typeof profile.markdown === "string";
   const counts = resultCounts(absolutePath);
+  const tasks = definition.tasks ?? [];
+  const translationStats = taskTranslationStats(tasks);
   const h2 = isMarkdown ? markdownH2(profile.markdown) : [];
   const missingCoreFields = isMarkdown
     ? [...STRUCTURED_CORE_FIELDS]
@@ -116,7 +148,8 @@ export function inspectReader(evalPath) {
       : [...CANONICAL_MODULES],
     markdownH2: h2,
     missingCoreFields,
-    tasks: (definition.tasks ?? []).length,
+    tasks: tasks.length,
+    ...translationStats,
     ...counts,
   };
 }
@@ -135,6 +168,16 @@ export function compareReaders(reference, target) {
   if (target.splitParticipantMetricTableGroups.length > 0) {
     issues.push(
       `participant metrics are split across mergeable one-row tables: ${target.splitParticipantMetricTableGroups.join("; ")}`,
+    );
+  }
+  if (target.translationCoverage < reference.translationCoverage) {
+    issues.push(
+      `task translation coverage differs: expected ${(reference.translationCoverage * 100).toFixed(1)}%, got ${(target.translationCoverage * 100).toFixed(1)}%; missing: ${target.missingTranslationTaskIds.join(", ") || "none"}`,
+    );
+  }
+  if (target.summarizedTranslationTaskIds.length > 0) {
+    issues.push(
+      `long task translations appear summarized instead of full-text: ${target.summarizedTranslationTaskIds.join(", ")}`,
     );
   }
   return issues;

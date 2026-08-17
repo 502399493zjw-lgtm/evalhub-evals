@@ -24,7 +24,7 @@ An author never changes, repeats, or reorders these modules. An unsupported opti
 | 榜单 | `published-results/*.json > results[].score` and participant metadata | Preserve every reviewed participant and source value. |
 | 官方分项结果 | shared `results[].supplementary_views` contracts | One participant row axis uses one unified metric table; one logical view ID has identical metadata across participants. |
 | 关于这套评测 | structured `detail_profile` | Explain protocol, score, facts, limitations, tables, and figures here only. |
-| 题目案例 | `tasks[]` plus real task-linked run evidence | Keep stable IDs and complete source prompts; never manufacture outputs. |
+| 题目案例 | `tasks[]` plus real task-linked run evidence | Keep stable IDs, complete source prompts, and a faithful Chinese full-text translation for every public upstream task; never substitute a summary or manufacture outputs. |
 | 资料与分析 | `detail_profile.resources_note`, `resources`, and source provenance | Use primary-source HTTPS cards; do not recreate them as a Markdown link list. |
 
 ## Structured profile baseline
@@ -75,7 +75,7 @@ Compare every rebuilt page with RSIBench-Data at three levels:
 
 | Level | Must be identical | May differ |
 | --- | --- | --- |
-| Data contract | Structured renderer; module signature and order; field ownership | Counts of results, tasks, facts, tables, figures, and resources |
+| Data contract | Structured renderer; module signature and order; field ownership; 100% full-text Chinese translation coverage for public upstream tasks | Counts of results, tasks, facts, tables, figures, and resources |
 | DOM semantics | One H1; canonical H2 order; native tabs/cards/empty states | Benchmark names, table columns, labels, and prose |
 | Interaction | Eight-row fold behavior; task selection; resource links; narrow overflow; one unified participant-metric table per shared row axis | Source-justified tabs with different row axes or visualization types; total content height |
 
