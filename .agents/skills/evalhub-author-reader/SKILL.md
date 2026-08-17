@@ -87,7 +87,7 @@ Then fill every required `detail_profile` field from the ledger. Write for a rea
 - disclose at least one material limitation;
 - link at least one credential-free HTTPS primary source.
 
-For a new or substantially revised eval, use the Markdown-only detail contract:
+Every new or substantially revised eval must use the Markdown-only detail contract:
 
 ```yaml
 detail_profile:
@@ -106,7 +106,7 @@ Keep model names as plain text, without Markdown links or anchors. Treat harness
 
 Retain every source-backed row and column in Markdown tables. A real preview shows at most eight body rows initially; a table over eight rows expands with `展开其余 N 行`, exposes every stored row, offers `收起至 8 行`, and remains horizontally accessible on narrow screens. This is presentation behavior, never permission to truncate or split source data.
 
-Historical untouched evals may still use the structured detail fields. When maintaining one without a substantial reader rebuild, keep its existing contract source-faithful; do not mix structured blocks and `markdown` in one profile. A substantial reader rebuild migrates to Markdown instead of extending the legacy structured layout.
+Historical untouched evals may still use the structured detail fields. When maintaining one without a substantial reader rebuild, keep its existing contract source-faithful; do not mix structured blocks and `markdown` in one profile. Any new or substantially revised detail page must migrate to Markdown instead of extending the legacy structured layout.
 
 Replace every generated `TODO`, `待补`, literal `placeholder`, and every `example.com` URL. Omit optional facts or figures when evidence is weak. Never add arbitrary HTML, MDX, React, or layout instructions to emulate the detail page.
 
