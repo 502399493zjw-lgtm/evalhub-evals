@@ -1,17 +1,27 @@
 # Golden reader patterns
 
-RSIBench-Data supplies the one page architecture described in `rsibench-reader-contract.md`. Use the pattern that matches the reviewed result artifact only to choose a `published-results` supplementary-view shape. These examples never authorize a different page layout, invented values, or copied example numbers.
+Use the pattern that matches the reviewed source. These are data-shape examples, not permission to invent missing values or copy the example numbers into a submission.
 
-## Result shape A: long-horizon operating summary
+## Pattern A: long-horizon operating benchmark (CEO-style)
 
 Use this when each participant has one final ranking score plus a source-published run summary and/or a real time series.
 
 - Put the final comparable value in `score`.
-- Give every participant's run-summary table the same `id`, `type`, `title`, `label`, and `columns`.
+- In machine-readable structured results, give every participant's run-summary table the same `id`, `type`, `title`, `label`, and `columns`.
 - Add a `line_chart` only when the source publishes each plotted point or a real EvalHub run emitted it. A start value and final value do not justify an interpolated curve.
 - Keep participant-specific values in rows, series names, and points. Do not encode a model name into the shared view ID.
 - Preserve every source-published participant in `published-results`; the detail page may present a compact subset in a particular reader control, but the stored official leaderboard must not be hand-truncated to three or four models.
-- Keep all leaderboard and run-summary data in the result envelope so the platform-native `榜单` and `官方分项结果` modules render them. A preview may show only the first eight body rows until the reader expands it, but that presentation limit never authorizes deleting participants, splitting a logical table, or dropping summary rows.
+- In the Markdown body, combine the leaderboard and all compatible source-published run-summary fields into one complete model-by-metrics table. If the source publishes sibling tables, join only by exact participant identity; do not create one tab or table per model.
+- Keep model names as plain text. When all CEO-style runs use the task-provided default harness and the source does not distinguish variants, label it `题目默认 harness` as secondary metadata.
+- An official run-summary image may appear beside the table for provenance, but it does not replace or suppress the text table.
+- A preview may show only the first eight body rows until the reader expands it, but that presentation limit never authorizes deleting participants or dropping summary columns.
+
+```markdown
+| 模型 | 官方总分 | 完成运行 | 最长存活天数 | harness |
+| --- | ---: | ---: | ---: | --- |
+| Official Model A | 22148357 | 3 / 3 | 500 | 题目默认 harness |
+| Official Model B | 17864022 | 3 / 3 | 441 | 题目默认 harness |
+```
 
 ```json
 {
@@ -50,17 +60,26 @@ Use this when each participant has one final ranking score plus a source-publish
 }
 ```
 
-If the source only publishes the final score and summary, omit `official-cash-process`. The platform renders the remaining modules and their empty states; an author must not manufacture a process curve to make the page look complete.
+If the source only publishes the final score and summary, omit `official-cash-process`. Do not manufacture a process curve to make the Markdown body or a legacy module look complete.
 
-## Result shape B: multi-benchmark aggregate
+## Pattern B: multi-benchmark aggregate (RSI-style)
 
 Use this when one primary score aggregates several stable benchmark or scenario rows for each participant.
 
 - Put the documented aggregate in `score` and explain its formula in `detail` when needed.
-- Use one stable table ID across participants.
-- Keep the table `title`, `label`, and `columns` byte-for-byte identical across participants.
-- Keep the first column as the stable row key. Every participant must use the same complete row-key set before the platform can safely derive one comparison tab per benchmark.
+- In machine-readable structured results, use one stable table ID across participants.
+- Keep the structured table `title`, `label`, and `columns` byte-for-byte identical across participants.
+- Keep its first column as the stable row key. Every participant must use the same complete row-key set before a legacy reader can safely derive a comparison.
 - Preserve source formatting and exact numeric values in separate columns when the source provides both. Do not reverse-engineer a hidden precision value from a rounded display string.
+- In the Markdown body, transpose the source-backed participant payloads into one wide table: one row per model and one column for the aggregate plus every compatible official benchmark or scenario. Do not emit per-model tabs.
+- Keep official figures as adjacent source artifacts; their presence never filters out the normalized table.
+
+```markdown
+| 模型 | 官方汇总 | Code repair | Terminal tasks | harness |
+| --- | ---: | ---: | ---: | --- |
+| Official Model A | 27.964107 | 35% | 5.62% | 题目默认 harness |
+| Official Model B | 24.103221 | 31% | 4.49% | 题目默认 harness |
+```
 
 ```json
 {
@@ -84,7 +103,7 @@ Use this when one primary score aggregates several stable benchmark or scenario 
 }
 ```
 
-If one participant is missing a source-published row or uses a genuinely different protocol, do not pad it. Record the boundary and keep the source-faithful view; the platform must fall back to the original per-participant tables instead of deriving a misleading comparison.
+If one participant is missing a source-published row, use `—` with a coverage note rather than padding a value. If it uses a genuinely different protocol, do not place it in the same Markdown matrix: record the boundary and use a separately labeled protocol table. A legacy structured reader may fall back to the original per-participant payloads instead of deriving a misleading comparison.
 
 ## Task-case pattern
 
@@ -92,7 +111,8 @@ Task examples are independent of aggregate published results:
 
 - `prompt` is the one task statement: what runs and what the page shows. For an upstream task it is the complete source-published original, verbatim from the pinned commit. Long text is intentionally stored in full; the platform owns default folding and expansion.
 - `run_spec` holds EvalHub's own run procedure and is never rendered, so nothing a reader needs may live only there.
-- `translation` is complete when present.
+- Select at most five displayed cases deterministically across authored order, including the first and last when at least two are shown; a live reader may prioritize cases with real public evidence before filling the remaining slots.
+- Require `translation` only for those displayed cases. Each one must translate the complete original faithfully, preserving all instructions, constraints, warnings, paragraphs, lists, code, commands, paths, filenames, literals, placeholders, formulas, numbers, units, and examples. A summary, translator-added omission marker, or link-only substitute fails readiness. Non-case tasks may omit `translation`.
 - Real `task_results` or task-linked showcases may provide model tabs. Never convert leaderboard aggregates, paper prose, or a design mock into fake task outputs or execution traces.
 - Do not add author-supplied “view prompt source” or “view official score source” buttons. Global sources belong in `detail_profile.resources` and result provenance belongs in `submission.source`.
 

@@ -1,65 +1,56 @@
-# RSIBench reader contract
+# RSIBench Markdown reader contract
 
-RSIBench-Data is the single EvalHub detail-page architecture reference. This contract governs page structure; benchmark-specific result shapes and content volume may differ without creating a second architecture.
+RSIBench-Data is EvalHub's Markdown content-architecture reference. This contract defines the information roles and quality bar for rebuilt detail pages; it does not preserve the old structured renderer, fixed native modules, or frontend-derived per-model tabs.
 
-## Canonical module signature
+## Canonical content sequence
 
-The platform-owned order is fixed:
+The platform owns the Hero. The authored Markdown begins at H2 and follows this reader flow:
 
-1. `hero`
-2. `leaderboard` (`榜单`)
-3. `official-breakdown` (`官方分项结果`)
-4. `about` (`关于这套评测`)
-5. `task-cases` (`题目案例`)
-6. `resources` (`资料与分析`)
-7. `footer`
+1. `榜单`: one complete official model matrix containing rank, aggregate, compatible submetrics, harness, and source-backed execution/cost fields.
+2. `官方分项结果`: formula, coverage, protocol or base-model boundaries, and source-published interpretation that should not become a second participant table.
+3. `关于此评测`: plain-language purpose, actual protocol, scoring, comparison boundary, and limitations.
+4. Optional evidence-backed observations and resources.
+5. `题目案例`: at most five complete originals with complete faithful Chinese translations.
+6. `一手资料`: credential-free HTTPS primary sources.
 
-An author never changes, repeats, or reorders these modules. An unsupported optional data block gets the platform empty state or disappears inside its owning module; it never becomes a benchmark-specific H2.
+Equivalent benchmark-specific headings are allowed when their meaning is clear and their order remains coherent. Do not repeat the Hero or add empty filler sections.
 
 ## Ownership map
 
 | Reader surface | Sole data owner | Required authoring rule |
 | --- | --- | --- |
-| Hero | top-level `eval.yaml` metadata and `references` | Do not repeat it in prose. |
-| 榜单 | `published-results/*.json > results[].score` and participant metadata | Preserve every reviewed participant and source value. |
-| 官方分项结果 | shared `results[].supplementary_views` contracts | One participant row axis uses one unified metric table; one logical view ID has identical metadata across participants. |
-| 关于这套评测 | structured `detail_profile` | Explain protocol, score, facts, limitations, tables, and figures here only. |
-| 题目案例 | selected `tasks[]` plus real task-linked run evidence | Keep stable IDs and complete source prompts for all tasks. Require a faithful Chinese full-text translation only for tasks actually selected into the case tabs; never substitute a summary or manufacture outputs. |
-| 资料与分析 | `detail_profile.resources_note`, `resources`, and source provenance | Use primary-source HTTPS cards; do not recreate them as a Markdown link list. |
+| Hero | top-level `eval.yaml` metadata and `references` | Do not repeat it in Markdown. |
+| Official model matrix | reviewed `published-results/*.json` plus its pinned source snapshot | One row per model; one column per compatible official aggregate, submetric, execution, judging, time, cost, token, and harness field. |
+| Protocol explanation | reviewed primary sources and `eval.yaml` protocol | Explain what runs, how it is judged and aggregated, and the comparison boundary without inventing facts. |
+| 题目案例 | deterministically selected `tasks[]` plus any real task-linked run evidence | At most five cases; complete original and complete faithful Chinese translation for each displayed case. |
+| 一手资料 | source ledger and result provenance | Use primary-source HTTPS links; figures may coexist with tables but never replace them. |
 
-## Structured profile baseline
+Machine-readable rankings and supplementary views remain in `published-results` for provenance and compatibility. Real result `task_results` and `showcases` may still supply task-linked outputs, trajectories, and evidence. The Markdown body must not manufacture those artifacts and must not depend on frontend derivation to produce its official comparison table.
 
-Every new or substantially revised source-backed eval uses these core fields:
+## Official result matrix
 
-- `source_kind`
-- `summary.plain_language`
-- `summary.why_it_matters`
-- two to six `method_steps`
-- `score_interpretation`
-- one to six `caveats`
-- one to six `resources`
+RSI-style multi-benchmark results are transposed into one wide table:
 
-Use `overview_note`, `key_facts`, `overview_tables`, `figures`, and `resources_note` whenever reviewed sources support them. Optional means evidence-dependent, not a layout choice. Never create an empty table, synthetic figure, unsupported fact, or filler resource to match RSIBench's content volume.
+- one row per source-published model;
+- plain-text model names, with no Markdown links or anchors;
+- the official aggregate and every compatible source-published benchmark/scenario as columns;
+- source-published harness names preserved as secondary metadata;
+- `题目默认 harness` only when every participant uses the same task-provided default and the source does not name variants;
+- exact source formatting retained when it communicates precision;
+- `—` for a source-missing cell, accompanied by a coverage note;
+- no per-model tables, per-model result tabs, or hidden dependency on an official image.
 
-## Benchmark-specific information mapping
+If two source tables have the same participant axis and snapshot, join them only by exact participant identity and stable metric meaning. If they use genuinely different protocols or incompatible row axes, keep them as separately labeled protocol tables and explain the boundary.
 
-- Final rankings belong only in `score`; they never appear again in `detail_profile`.
-- Participant run summaries, scenario matrices, sub-benchmarks, rubric components, token statistics, and source-published trends belong in shared `supplementary_views` when the result artifact supports them.
-- Metrics attached to the same participant and source boundary belong in one `metric_table`, even when the source visually groups performance, execution, judging, pricing, cost, or token columns. Split views only for a different row axis, a different visualization type, or a source-defined semantic boundary that cannot be represented faithfully in one table; record the reason in the source ledger.
-- Fixed protocol matrices, action spaces, task-family inventories, scoring weights, and environment definitions belong in `overview_tables`.
-- Protocol diagrams and source-published analytical figures belong in `figures`.
-- Reproduction steps are `method_steps` when they explain the official protocol. EvalHub-only execution instructions belong in `run_spec` and README, not the reader page.
-- Material sampling, judging, version, license, cost, and comparison boundaries belong in `caveats`.
+## Task-case selection and translation
 
-## Markdown exception
+The repository preview selects at most five tasks evenly across authored order, including the first and last when at least two cases are displayed. For `n` tasks and `k = min(5, n)` cases, select indices `round(i * (n - 1) / (k - 1))` for `i = 0..k-1`. A live reader may prioritize tasks with real public task evidence and fill the remaining slots with the same deterministic rule.
 
-`detail_profile.markdown` is allowed only when the source ledger identifies a material reader construct that the bounded structured schema cannot represent. The PR must name that construct and why omission would misstate the benchmark. Styling preference, existing prose, desire for custom headings, and convenience are not sufficient reasons.
-
-A Markdown page suppresses the platform-native leaderboard, official breakdown, task controls, resource cards, and footer module. It therefore cannot pass a request for RSIBench-native parity. When Markdown is nonetheless justified, use exactly these H2 headings and order: `榜单`, `官方分项结果`, `关于这套评测`, `题目案例`, `资料与分析`.
+Only displayed cases require `translation`; non-case tasks may omit it. Each displayed case must preserve the complete source `prompt` and translate every instruction, constraint, warning, paragraph, list, code block, command, path, filename, literal, placeholder, formula, number, unit, and example. A synopsis, translator-added omission marker, or link-only substitute fails readiness. Source-authored ellipses are valid when present in the pinned original.
 
 ## Long-table interaction
 
-The storage layer always keeps the complete source-backed row set. In a real preview:
+The stored Markdown always keeps the complete source-backed row set. In a real preview:
 
 - a table with at most eight body rows has no fold control;
 - a table with more than eight rows initially exposes exactly eight;
@@ -73,15 +64,13 @@ This presentation rule never authorizes row deletion, table splitting, participa
 
 Compare every rebuilt page with RSIBench-Data at three levels:
 
-| Level | Must be identical | May differ |
+| Level | Must be equivalent | May differ |
 | --- | --- | --- |
-| Data contract | Structured renderer; module signature and order; field ownership; 100% full-text Chinese translation coverage for the selected task cases | Counts of results, tasks, non-case translations, facts, tables, figures, and resources |
-| DOM semantics | One H1; canonical H2 order; native tabs/cards/empty states | Benchmark names, table columns, labels, and prose |
-| Interaction | Eight-row fold behavior; task selection; resource links; narrow overflow; one unified participant-metric table per shared row axis | Source-justified tabs with different row axes or visualization types; total content height |
+| Data contract | Markdown renderer; source-backed official model matrix; at most five selected cases with full translations; preserved machine-readable provenance | Counts of models, metrics, tasks, facts, figures, and sources |
+| Content semantics | Results first; protocol and limitations explained; selected cases; primary sources; no repeated Hero | Benchmark-specific headings and prose |
+| Interaction | Eight-row fold behavior; complete expansion; narrow-table access; task selection | Total content height and source-justified tables with genuinely different row axes |
 
 Run the deterministic preflight before preview:
-
-The preflight reproduces the evidence-free repository preview selector: at most five tasks evenly spaced across authored order, including the first and last. It reports the selected case IDs and validates translation coverage only for that set. If a live page has real task-linked evidence, inspect its evidence-first case tabs separately because they may replace one or more preview cases.
 
 ```bash
 node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs \
@@ -89,4 +78,4 @@ node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs \
   evals/<slug>/eval.yaml
 ```
 
-A matching signature does not prove factual correctness. Repository validation, source-ledger review, result provenance review, and staging interaction checks remain required.
+The preflight checks Markdown readiness, official matrix shape, plain model labels, and selected-case translation coverage. It does not prove factual correctness. Repository validation, source-ledger review, result provenance review, and staging interaction checks remain required.
