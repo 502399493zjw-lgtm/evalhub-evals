@@ -47,260 +47,593 @@ command_template:
 trials: 3
 detail_profile:
   source_kind: upstream_publication
-  overview_note: >-
-    下面的机制说明来自 CEO-Bench 论文（arXiv:2606.18543，v1 2026-06-16、v2 2026-07-22）、官方站点 ceobench.com
-    与钉死在 commit d2b7b32e 的作者仓库；各模型的官方成绩来自 ceobench.com 2026-08-16 的 19 条官方记录快照，
-    其中 18 个可映射模型已完整收录、1 个未注册模型按覆盖元数据保留
-    （sha256 014ef33e0d63d07567a2089f9aee564501bf6693e5b570166e7357b8425d20c4）。
-  summary:
-    plain_language: >-
-      被评的不是答一道题，而是把一家公司连续经营 500 个模拟日。Agent 接手 NovaMind AI 这家 B2B/B2C 的 AI SaaS 公司，
-      手里有 100 万美元现金，要自己决定各档套餐怎么定价、五个广告渠道分别投给哪些客群、促销给多少、
-      算力买到哪一档、研发投多少钱和立哪些项目，以及跟企业客户一轮一轮谈价。时间以周为单位推进，
-      每周可以任意次调用工具、查数据库，想好了再进入下一周。现金余额就是分数，现金一旦为负，这次运行立刻结束。
-    why_it_matters: >-
-      单题评测衡量的是一次答得对不对，长线经营衡量的是几百个决策累积之后公司还在不在。这里没有正确答案可背：
-      客户期望会因为竞品事件不可逆地上移，广告效果、研发周期、故障都是随机的，
-      现金流要同时兼顾扩张与安全边际。它检验的是 Agent 能不能在部分可观测、长反馈、有不可逆失败的环境里
-      持续做决策，而不是能不能一次给出漂亮答案。
-  method_steps:
-    - title: 钉死同一个世界
-      description: >-
-        所有运行使用同一份模拟器：500 个模拟日、100 万美元初始现金、seed=42、scenario=default。
-        Agent 不能修改模拟器、经济参数或评分逻辑，只能通过公开的业务动作影响世界。
-    - title: 每周决策，轮数不限
-      description: >-
-        时间按周推进（每步 7 个模拟日）。一周之内 Agent 可以任意次调用 34 个业务动作、查询 19 张业务 SQL 表，
-        自己决定何时进入下一周。上游按「每周平均操作轮数」记录这种探索强度。
-    - title: 先发现市场，再经营市场
-      description: >-
-        初始只有 6 个完全已知的客群（个人 S1–S3、企业 E1–E3），另外 20 个客群（个人 D_S01–D_S10、
-        企业 D_E01–D_E10）必须靠付费市场调研发现：research_market 每次 25000 美元、30% 概率随机发现一个客群，
-        再用 research_group 把信息等级从 1 升到 5（精度从 ±65% 收窄到 ±5%）。
-    - title: 在随机与不可逆之间权衡
-      description: >-
-        研发项目的周期与质量增益从正态分布采样，竞品事件按对数正态分布抬高全体客群的质量期望且不可逆，
-        故障与客户投诉按伯努利与泊松过程发生。定价过高、质量跟不上期望的潜客当场永久流失，
-        企业客户 7 天内没收到回复即永久流失或解约。
-    - title: 每周交理由和现金预测
-      description: >-
-        进入下一周必须提交本周决策理由，以及 1 周、4 周、12 周、26 周四个尺度的现金预测，
-        每个尺度给点估计加 95% 置信区间上下界，且必须满足 lower ≤ point ≤ upper。
-        理由与预测被记录下来供分析，不参与计分。
-    - title: 三次运行取最佳
-      description: >-
-        每个模型跑 3 次相互独立的运行。主成绩取最佳运行的结束现金，最佳运行先比存活天数再比结束现金。
-        现金为负是唯一的破产触发条件，触发即刻结束该次运行。
-  score_interpretation: >-
-    主成绩是最佳运行结束时的现金余额，单位是美元，越高越好，没有理论上限（官方给出的现金上界估计是 22 亿美元，
-    远高于任何已公布成绩）。它衡量的是 500 天累积经营结果，而不是单次决策质量：同一个模型三次运行之间的差异可以很大，
-    所以官方同时公布破产次数与存活天数。同分时按存活天数降序排。参照线有两条：初始现金 100 万美元，
-    低于它说明 500 天净烧钱；官方规则基线（rule-based baseline）15,756,408 美元，
-    它是一套固定策略脚本的成绩，高于它才说明模型的经营决策确实优于死板规则。三次运行全部破产时主成绩记 0。
-  key_facts:
-    - value: 500 个模拟日
-      label: 单次运行的经营长度
-      description: 约 71 周、1.37 年，时间按周推进，每步 7 个模拟日。
-      source_url: https://arxiv.org/abs/2606.18543
-    - value: $1,000,000
-      label: 起始现金，也是唯一的生存底线
-      description: 现金余额既是分数也是存续条件，现金为负即刻破产结束该次运行。
-      source_url: https://github.com/zlab-princeton/ceobench-src/blob/d2b7b32e5301a571b77f5f68bd1032adbcd5b464/src/saas_bench/config.py
-    - value: 34 个动作 / 19 张表
-      label: 每周可无限次调用的业务动作与可查数据库表
-      description: 动作分 8 类，覆盖定价、投放、研发、扩容、企业销售、市场调研与公开发声。
-      source_url: https://ceobench.com
-    - value: 26 个客群
-      label: 6 个初始已知 + 20 个需付费调研发现
-      description: 个人 S1–S3、企业 E1–E3 完全已知；D_S01–D_S10 与 D_E01–D_E10 需 research_market 逐个发现。
-      source_url: https://github.com/zlab-princeton/ceobench-src/blob/d2b7b32e5301a571b77f5f68bd1032adbcd5b464/src/saas_bench/config.py
-    - value: 3 次运行
-      label: 每个模型的运行次数，取最佳运行计分
-      description: 最佳运行先比存活天数再比结束现金；官方同时公布破产次数与存活天数均值。
-      source_url: https://ceobench.com
-    - value: $15,756,408
-      label: 官方规则基线的最佳运行现金
-      description: 一套固定策略脚本的成绩，高于它才说明模型决策优于死板规则。
-      source_url: https://ceobench.com
-  caveats:
-    - title: 三次运行方差很大，单一名次不代表稳定能力
-      description: >-
-        官方数据里同一模型三次运行的差异可以非常大：榜首 Kimi K3 最佳运行 22,148,357 美元、最长存活 500 天，
-        但三次里有 1 次破产、平均存活 386.0 ± 161.2 天。破产次数与存活天数均值必须和最佳运行现金一起读，
-        只看主成绩会高估稳定性。
-    - title: 主成绩是最佳运行，不是平均表现
-      description: >-
-        上游口径取三次中的最佳运行，因此它衡量的是「最好一次能做到多好」。
-        平均值、方差、破产率都作为解释信息展示，不参与排名。
-    - title: 结果依赖上游模拟器与随机种子
-      description: >-
-        全部成绩都绑定 commit d2b7b32e 的模拟器实现与 seed=42、scenario=default。
-        上游改动经济参数、客群配置或事件分布后，新旧成绩不可直接比较。
-    - title: 官方页面与散文叙述存在两处不一致
-      description: >-
-        Claude Fable 5 的最佳运行现金在榜单表里是 12,630,078 美元，站内散文写作 $12.63M；
-        Kimi K3 的散文提到「第三次运行在第 158 天破产」，与表中 1/3 破产、最长存活 500 天并不矛盾但粒度不同。
-        本目录一律采用榜单表的数值，不做平均或推断。
-    - title: 上游未授予开源许可，成绩为来源转录
-      description: >-
-        作者仓库 zlab-princeton/ceobench-src 没有 LICENSE 文件，GitHub API 也未识别出许可证；论文在 arXiv 以
-        CC BY 4.0 发布。本目录因此只转录公开数值与协议描述，不搬运上游数据集、轨迹、数据库或产物。
-        所有官方成绩均为上游作者发表值的转录，不是 EvalHub 独立复跑，EvalHub 也未获得上游认证或背书。
-    - title: 复现需要参赛方自己的基础设施
-      description: >-
-        模拟器依赖 SQLCipher 数据库与上游 Python 依赖，Agent 还要调用自己的模型，无法在本仓库的无网络只读沙箱里运行。
-        因此本评测以 external_workflow 方式提交：运行发生在参赛方自己的环境，仓库内的转换器只负责校验与出分。
-  overview_tables:
-    - id: action-space
-      label: 动作空间
-      title: Agent 每周可调用的 8 类业务动作
-      note: >-
-        译自 ceobench.com 2026-08-09 快照的 action-space 表，未增删行列；工具名是代码标识符，保留上游原文以便对照。
-      caption: 一周之内这些动作可以任意次调用，Agent 自己决定何时进入下一周。
-      source_url: https://ceobench.com
-      columns:
-        - { id: category, label: 动作类别 }
-        - { id: actions, label: 可做的事 }
-        - { id: tools, label: 示例工具 }
-      rows:
-        - id: database-query
-          cells:
-            - column_id: category
-              value: 数据库查询
-            - column_id: actions
-              value: 查询 19 张业务 SQL 数据库表并做数据分析
-            - column_id: tools
-              value: query
-        - id: pricing
-          cells:
-            - column_id: category
-              value: 定价与变现
-            - column_id: actions
-              value: 设定价格、用量配额、折扣与产品内广告
-            - column_id: tools
-              value: pricing.set_prices, pricing.set_usage_quotas
-        - id: growth
-          cells:
-            - column_id: category
-              value: 增长与市场拓展
-            - column_id: actions
-              value: 在各渠道与客群之间分配定向广告投放与促销
-            - column_id: tools
-              value: marketing.set_targeted_ad_spend, marketing.set_lead_promotion
-        - id: product-rd
-          cells:
-            - column_id: category
-              value: 产品质量与研发
-            - column_id: actions
-              value: 选择模型档位、投入日常开发、立项研究项目
-            - column_id: tools
-              value: pricing.set_model_tiers, research.start_research_project
-        - id: operations
-          cells:
-            - column_id: category
-              value: 运维与可靠性
-            - column_id: actions
-              value: 采购基础设施算力并投入客户支持
-            - column_id: tools
-              value: infrastructure.set_capacity_tier, analytics.set_targeted_ops_spend
-        - id: enterprise-sales
-          cells:
-            - column_id: category
-              value: 企业销售
-            - column_id: actions
-              value: 与企业潜客和续约客户就价格与套餐进行多轮议价
-            - column_id: tools
-              value: enterprise.send_enterprise_deal, enterprise.reject_enterprise_deal
-        - id: information
-          cells:
-            - column_id: category
-              value: 信息获取
-            - column_id: actions
-              value: 付费做市场调研以发现新客群，并加深对已知客群的了解
-            - column_id: tools
-              value: market.research_market, market.research_group
-        - id: public-communication
-          cells:
-            - column_id: category
-              value: 公开发声
-            - column_id: actions
-              value: >-
-                监控社交媒体上的客户投诉、竞品动态与经济趋势，再通过发帖或回复影响增长
-            - column_id: tools
-              value: marketing.post_social_media, analytics.get_social_posts
-    - id: stochastic-processes
-      label: 随机过程
-      title: 模拟器里的五类随机过程
-      note: >-
-        译自 ceobench.com 2026-08-09 快照的随机过程表，未增删行列；分布名沿用通用中文译名并附英文原文。
-      caption: 这些分布决定了同一策略在三次运行里可能得到完全不同的结果。
-      source_url: https://ceobench.com
-      columns:
-        - { id: distribution, label: 分布 }
-        - { id: usage, label: 在模拟器里的用法举例 }
-        - { id: motivation, label: 为什么用它 }
-      rows:
-        - id: normal
-          cells:
-            - { column_id: distribution, value: 正态分布（Normal） }
-            - { column_id: usage, value: 研发项目的质量增益 }
-            - { column_id: motivation, value: 刻画回报的不确定性 }
-        - id: poisson
-          cells:
-            - { column_id: distribution, value: 泊松分布（Poisson） }
-            - { column_id: usage, value: 某个客群每日新增的潜在客户数 }
-            - { column_id: motivation, value: 刻画按速率发生的计数 }
-        - id: bernoulli
-          cells:
-            - { column_id: distribution, value: 伯努利分布（Bernoulli） }
-            - { column_id: usage, value: 非自愿流失事件 }
-            - { column_id: motivation, value: 刻画二值冲击 }
-        - id: uniform
-          cells:
-            - { column_id: distribution, value: 均匀分布（Uniform） }
-            - { column_id: usage, value: 声誉损伤的噪声 }
-            - { column_id: motivation, value: 加入有界的不确定性 }
-        - id: log-normal
-          cells:
-            - { column_id: distribution, value: 对数正态分布（Log-normal） }
-            - { column_id: usage, value: 竞品质量跃升的幅度 }
-            - { column_id: motivation, value: 刻画右偏的正向冲击 }
-  figures:
-    - id: world-mechanics
-      label: 世界机制
-      title: 官方模拟世界机制图
-      src: https://ceobench.com/assets/figures/world-mechanics.png
-      alt: >-
-        以 NovaMind 公司为中心的机制示意图，画出定价与套餐、广告投放、研发与算力扩容、企业销售议价、
-        市场调研与社交媒体舆情如何影响客群订阅、质量感知、声誉与现金流。
-      caption: 上游用这张图说明各条业务动作与客群、质量、声誉、现金之间的相互作用路径。
-      source_url: https://ceobench.com
-  resources_note: 下面只列上游作者、论文托管方与官方站点提供的一手资料。
-  resources:
-    - title: CEO-Bench 论文（arXiv:2606.18543）
-      summary: >-
-        评测设计、模拟器机制与官方实验结论的权威来源，作者 Haozhe Chen、Karthik Narasimhan、Zhuang Liu，
-        v1 2026-06-16、v2 2026-07-22，arXiv 上以 CC BY 4.0 发布。
-      url: https://arxiv.org/abs/2606.18543
-    - title: CEO-Bench 官方站点
-      summary: >-
-        官方榜单、动作空间表与随机过程表的来源；成绩取自 2026-08-16 的 19 条官方记录快照，
-        其中 18 个可映射模型已完整收录、1 个未注册模型记录在覆盖元数据中
-        （sha256 014ef33e0d63d07567a2089f9aee564501bf6693e5b570166e7357b8425d20c4）。
-      url: https://ceobench.com
-    - title: CEO-Bench 官方作者仓库
-      summary: >-
-        模拟器实现、经济参数、客群配置、工具与数据库文档以及基线 bash-agent harness 的来源，
-        已钉死到 commit d2b7b32e5301a571b77f5f68bd1032adbcd5b464。
-      url: https://github.com/zlab-princeton/ceobench-src
-    - title: 上游模拟器机制文档
-      summary: 本评测题面原文所在的文件，逐字取自钉死的 commit，含未替换的 {total_days} 等模板占位符。
-      url: https://github.com/zlab-princeton/ceobench-src/blob/d2b7b32e5301a571b77f5f68bd1032adbcd5b464/src/saas_bench/agents/simulator_instructions.md
-    - title: coding-agent 官方运行入口
-      summary: >-
-        上游公开的本地 CLI 复现路线，要求 Python 3.13+；本条目固定到 commit
-        885ae1d7d09b3effa08825ce7f03075224ebe373，不把它误写成 EvalHub 托管运行器。
-      url: https://github.com/zlab-princeton/run-ceobench/tree/885ae1d7d09b3effa08825ce7f03075224ebe373
+  markdown: |-
+    ## 榜单
+
+    CEO-Bench 官方页面在 2026-08-16 公布了 19 个模型的结果。主排名指标为三次运行中最佳一次的结束现金；所有模型使用题目提供的默认 harness。
+
+    | 排名 | 模型 | 最佳结束现金（USD） | Harness |
+    | --- | ---: | ---: | ---: |
+    | 1 | Kimi K3 | $22,148,357 | 题目默认 harness |
+    | 2 | Claude Fable 5 | $12,630,078 | 题目默认 harness |
+    | 3 | GPT-5.6 Sol | $11,313,982 | 题目默认 harness |
+    | 4 | Claude Opus 4.8 | $2,399,209 | 题目默认 harness |
+    | 5 | Qwen 3.7 Max | $365,346 | 题目默认 harness |
+    | 6 | Grok 4.6 | $246,419 | 题目默认 harness |
+    | 7 | Gemini 3.5 Flash | $75,126 | 题目默认 harness |
+    | 8 | Claude Opus 4.7 | $70,620 | 题目默认 harness |
+    | 9 | Claude Sonnet 5 | $64,459 | 题目默认 harness |
+    | 10 | Claude Haiku 4.5 | $59,625 | 题目默认 harness |
+    | 11 | GLM 5.2 | $54,327 | 题目默认 harness |
+    | 12 | Kimi K2.6 | $43,598 | 题目默认 harness |
+    | 13 | Claude Sonnet 4.6 | $38,166 | 题目默认 harness |
+    | 14 | GPT-5.5 | $33,260 | 题目默认 harness |
+    | 15 | Grok 4.5 | $15,909 | 题目默认 harness |
+    | 16 | GLM 5.1 | $0 | 题目默认 harness |
+    | 17 | DeepSeek V4 Pro | $0 | 题目默认 harness |
+    | 18 | Gemini 3 Flash | $0 | 题目默认 harness |
+    | 19 | Grok 4.20 | $0 | 题目默认 harness |
+
+    官方同时给出两条参照：规则策略基线为 **$15,756,408**，估算的最终现金上界为 **$2,200,000,000**。它们是参照线，不参与模型排名。
+
+    ## 官方分项结果
+
+    下表把 19 个模型的稳定性和执行强度放在同一个模型 × 分项矩阵里。破产次数越少越好；其余字段用于解释最佳现金之外的运行差异。
+
+    | 模型 | 破产（3 次运行） | 最长存活天数 | 平均存活天数（± 标准差） | 每周操作轮数 |
+    | --- | ---: | ---: | ---: | ---: |
+    | Kimi K3 | 1 / 3 | 500 | 386.0 ± 161.2 | 14.81 |
+    | Claude Fable 5 | 1 / 3 | 500 | 461.7 ± 54.2 | 9.86 |
+    | GPT-5.6 Sol | 2 / 3 | 500 | 294.0 ± 145.7 | 25.96 |
+    | Claude Opus 4.8 | 1 / 3 | 500 | 378.0 ± 172.5 | 16.64 |
+    | Qwen 3.7 Max | 0 / 3 | 500 | 500.0 ± 0.0 | 7.82 |
+    | Grok 4.6 | 1 / 3 | 500 | 427.7 ± 102.3 | 22.92 |
+    | Gemini 3.5 Flash | 0 / 3 | 500 | 500.0 ± 0.0 | 58.37 |
+    | Claude Opus 4.7 | 1 / 3 | 500 | 414.3 ± 121.2 | 14.33 |
+    | Claude Sonnet 5 | 1 / 3 | 500 | 470.7 ± 41.5 | 20.50 |
+    | Claude Haiku 4.5 | 2 / 3 | 500 | 286.3 ± 153.3 | 19.35 |
+    | GLM 5.2 | 2 / 3 | 500 | 376.7 ± 105.6 | 25.24 |
+    | Kimi K2.6 | 0 / 3 | 500 | 500.0 ± 0.0 | 16.64 |
+    | Claude Sonnet 4.6 | 1 / 3 | 500 | 419.3 ± 114.1 | 14.37 |
+    | GPT-5.5 | 2 / 3 | 500 | 401.0 ± 98.3 | 30.41 |
+    | Grok 4.5 | 2 / 3 | 500 | 289.0 ± 154.0 | 21.01 |
+    | GLM 5.1 | 3 / 3 | 319 | 155.7 ± 130.0 | 98.66 |
+    | DeepSeek V4 Pro | 3 / 3 | 160 | 136.3 ± 23.7 | 21.85 |
+    | Gemini 3 Flash | 3 / 3 | 150 | 137.0 ± 10.2 | 15.81 |
+    | Grok 4.20 | 3 / 3 | 59 | 36.0 ± 18.4 | 13.49 |
+
+    ## 关于此评测
+
+    ### 评测目标
+
+    被评的不是答一道题，而是把一家公司连续经营 500 个模拟日。Agent 接手 NovaMind AI 这家 B2B/B2C 的 AI SaaS 公司， 手里有 100 万美元现金，要自己决定各档套餐怎么定价、五个广告渠道分别投给哪些客群、促销给多少、 算力买到哪一档、研发投多少钱和立哪些项目，以及跟企业客户一轮一轮谈价。时间以周为单位推进， 每周可以任意次调用工具、查数据库，想好了再进入下一周。现金余额就是分数，现金一旦为负，这次运行立刻结束。
+
+    单题评测衡量的是一次答得对不对，长线经营衡量的是几百个决策累积之后公司还在不在。这里没有正确答案可背： 客户期望会因为竞品事件不可逆地上移，广告效果、研发周期、故障都是随机的， 现金流要同时兼顾扩张与安全边际。它检验的是 Agent 能不能在部分可观测、长反馈、有不可逆失败的环境里 持续做决策，而不是能不能一次给出漂亮答案。
+
+    ### 固定运行设定
+
+    | 设置 | 固定值 |
+    | --- | --- |
+    | 单次经营长度 | 500 个模拟日（约 71 周） |
+    | 起始现金 | $1,000,000 |
+    | 时间步长 | 每步 7 个模拟日 |
+    | 运行次数 | 每个模型 3 次，取最佳运行 |
+    | 业务动作 | 34 个动作，每周可多次调用 |
+    | 数据库 | 19 张业务表 |
+    | 客群 | 26 个，其中 20 个需付费调研发现 |
+    | 终止条件 | 现金为负时立即破产并结束 |
+
+    ### 一次评测怎么进行
+
+    1. **钉死同一个世界**：所有运行使用同一份模拟器：500 个模拟日、100 万美元初始现金、seed=42、scenario=default。 Agent 不能修改模拟器、经济参数或评分逻辑，只能通过公开的业务动作影响世界。
+    2. **每周决策，轮数不限**：时间按周推进（每步 7 个模拟日）。一周之内 Agent 可以任意次调用 34 个业务动作、查询 19 张业务 SQL 表， 自己决定何时进入下一周。上游按「每周平均操作轮数」记录这种探索强度。
+    3. **先发现市场，再经营市场**：初始只有 6 个完全已知的客群（个人 S1–S3、企业 E1–E3），另外 20 个客群（个人 D_S01–D_S10、 企业 D_E01–D_E10）必须靠付费市场调研发现：research_market 每次 25000 美元、30% 概率随机发现一个客群， 再用 research_group 把信息等级从 1 升到 5（精度从 ±65% 收窄到 ±5%）。
+    4. **在随机与不可逆之间权衡**：研发项目的周期与质量增益从正态分布采样，竞品事件按对数正态分布抬高全体客群的质量期望且不可逆， 故障与客户投诉按伯努利与泊松过程发生。定价过高、质量跟不上期望的潜客当场永久流失， 企业客户 7 天内没收到回复即永久流失或解约。
+    5. **每周交理由和现金预测**：进入下一周必须提交本周决策理由，以及 1 周、4 周、12 周、26 周四个尺度的现金预测， 每个尺度给点估计加 95% 置信区间上下界，且必须满足 lower ≤ point ≤ upper。 理由与预测被记录下来供分析，不参与计分。
+    6. **三次运行取最佳**：每个模型跑 3 次相互独立的运行。主成绩取最佳运行的结束现金，最佳运行先比存活天数再比结束现金。 现金为负是唯一的破产触发条件，触发即刻结束该次运行。
+
+    ### Agent 的动作空间
+
+    | 动作类别 | 可做的事 | 示例工具 |
+    | --- | ---: | ---: |
+    | 数据库查询 | 查询 19 张业务 SQL 数据库表并做数据分析 | query |
+    | 定价与变现 | 设定价格、用量配额、折扣与产品内广告 | pricing.set_prices, pricing.set_usage_quotas |
+    | 增长与市场拓展 | 在各渠道与客群之间分配定向广告投放与促销 | marketing.set_targeted_ad_spend, marketing.set_lead_promotion |
+    | 产品质量与研发 | 选择模型档位、投入日常开发、立项研究项目 | pricing.set_model_tiers, research.start_research_project |
+    | 运维与可靠性 | 采购基础设施算力并投入客户支持 | infrastructure.set_capacity_tier, analytics.set_targeted_ops_spend |
+    | 企业销售 | 与企业潜客和续约客户就价格与套餐进行多轮议价 | enterprise.send_enterprise_deal, enterprise.reject_enterprise_deal |
+    | 信息获取 | 付费做市场调研以发现新客群，并加深对已知客群的了解 | market.research_market, market.research_group |
+    | 公开发声 | 监控社交媒体上的客户投诉、竞品动态与经济趋势，再通过发帖或回复影响增长 | marketing.post_social_media, analytics.get_social_posts |
+
+    ### 模拟器中的随机过程
+
+    | 分布 | 在模拟器里的用法举例 | 为什么用它 |
+    | --- | ---: | ---: |
+    | 正态分布（Normal） | 研发项目的质量增益 | 刻画回报的不确定性 |
+    | 泊松分布（Poisson） | 某个客群每日新增的潜在客户数 | 刻画按速率发生的计数 |
+    | 伯努利分布（Bernoulli） | 非自愿流失事件 | 刻画二值冲击 |
+    | 均匀分布（Uniform） | 声誉损伤的噪声 | 加入有界的不确定性 |
+    | 对数正态分布（Log-normal） | 竞品质量跃升的幅度 | 刻画右偏的正向冲击 |
+
+    ### 世界机制
+
+    ![以 NovaMind 公司为中心的机制示意图，画出定价与套餐、广告投放、研发与算力扩容、企业销售议价、 市场调研与社交媒体舆情如何影响客群订阅、质量感知、声誉与现金流。](https://ceobench.com/assets/figures/world-mechanics.png)
+
+    上游用这张图说明各条业务动作与客群、质量、声誉、现金之间的相互作用路径。
+
+    ## 研究观察
+
+    - Kimi K3 的最佳运行现金最高，为 **$22.15M**，三次运行中有两次完成 500 天。
+    - Claude Fable 5 达到 **$12.63M**；GPT-5.6 Sol 达到 **$11.31M**，但三次运行中有两次破产。高峰成绩与稳定性需要结合阅读。
+    - Qwen 3.7 Max、Gemini 3.5 Flash 和 Kimi K2.6 三次运行都完成 500 天，但最佳结束现金仍低于 $1M 起始资金，说明“存活”与“增长”是不同能力。
+    - 排名末端的四个模型最佳成绩均为 $0；它们的最长存活天数仍不同，因此官方分项表保留了存活数据。
+
+    ## 局限
+
+    - 模拟器包含研发、获客、故障和市场变化等随机过程；每个模型只有 3 次运行，单个最佳成绩不能完整代表稳定能力。
+    - CEO-Bench 把公司经营抽象成固定业务动作、数据库与经济规则，不能覆盖真实组织中的人员、法律、供应链和开放世界风险。
+    - 所有模型都在同一默认任务环境中运行；结果适合比较这套环境下的长程经营表现，不宜直接外推为现实中的 CEO 能力。
+
+    ## 题目案例
+
+    该评测只有一个 500 天经营任务，因此直接展示这一题的完整原文与完整中文翻译。
+
+    ### NovaMind 500 天经营长跑
+
+    #### 题目原文
+
+    ````text
+    # Simulator Instructions
+
+    This document describes how the NovaMind SaaS business simulator works. Understanding these mechanics will help you make better decisions.
+
+    ## Overview
+
+    You are the CEO of NovaMind AI, a B2B/B2C AI SaaS company. Your goal is to maximize cash over {total_days} simulated days ({total_weeks} weeks / {total_years} years). Time advances in weekly increments (7 days per step). You manage pricing, spending, infrastructure, R&D, and enterprise sales.
+
+    > **YOUR OBJECTIVE:** Maximize cash over {total_weeks} weeks. Cash = YOUR SCORE.
+
+    ## Customer Segments
+
+    ### Initial Segments (6 groups, fully known)
+    - **S1, S2, S3**: Individual customers (small business) — ranging from price-sensitive to quality-focused
+    - **E1, E2, E3**: Enterprise customers — ranging from entry-level to large enterprise
+
+    ### Discoverable Segments (20 groups, hidden initially)
+    - 10 individual (D_S01–D_S10) + 10 enterprise (D_E01–D_E10)
+    - Discovered via `research_market()` — $25K per attempt, 30% chance, discovers a random group instantly
+    - Info levels 1–5 with improving accuracy (±65% → ±5%)
+    - Use `research_group()` to upgrade info levels (costs more and takes multiple days at higher levels)
+
+    ## Customer Acquisition
+
+    New customers join through several channels:
+
+    **Advertising & Marketing:**
+    - 5 ad channels: social_media, search_ads, linkedin, content_marketing, referral_program
+    - Each channel has different effectiveness per customer group — effectiveness values determine how many leads you get per dollar spent in that channel for each group
+    - `ads_strength` is a multiplier on ad effectiveness (default 1.0) — increase it to amplify lead generation from all ad spend
+    - In-app ads generate daily revenue per subscriber (proportional to ads strength × seat count), but degrade perceived quality — this is a revenue-vs-quality trade-off. Set via `set_ads_strength`
+    - All ad spend is per-(channel, group) via `set_targeted_ad_spend({channel: {group: $/day}})`. There is no aggregate ad budget — every dollar must be allocated to a specific channel and group.
+    - `set_daily_spend` only handles `operations` and `development` (not advertising).
+
+    **Promotions:**
+    - Offer discounts to attract new leads or retain existing subscribers
+    - Lead promotions reduce the effective price new customers see, increasing conversion rates
+    - Ongoing promotions apply recurring discounts at each billing cycle
+    - Both can be set globally or targeted at specific groups via `set_promotion` and `set_lead_promotion`
+
+    **Network Effects (Cross-Group Referrals):**
+    - Existing subscribers generate word-of-mouth referrals at measurable rates
+    - Each source group's subscribers produce leads in target groups at a specific rate (leads per subscriber per day at neutral reputation)
+    - Example: if rate is 0.005, then 1000 subscribers generate ~5 leads/day in that target group
+    - Only discovered groups participate in cross-group network effects
+    - Use `get_group_insights()` to see referral rates between groups (shown as "leads per 1000 subs/day")
+
+    **Reputation (Cross-Group Sentiment Spread):**
+    - Good service builds reputation; outages/issues/cancellations damage it
+    - Reputation directly affects new customer acquisition speed — higher reputation means more leads convert and arrive faster, while negative reputation suppresses lead flow
+    - Reputation spreads ACROSS related groups — not just within the same group
+    - Enterprise cancellation or negative social media posts can damage reputation in adjacent enterprise groups
+    - Positive reviews from happy customers boost reputation in related groups
+    - Use `get_group_insights()` to see reputation influence weights between groups
+
+    **Market Cap:**
+    - Each group has a market cap (maximum addressable customers). Acquisition slows as subscribers approach the cap. The cap grows over time.
+
+    ## Subscription & Retention Mechanics
+
+    ### Plan Selection
+    Each customer has a personal quality-price curve:
+    - At low prices → require modest quality
+    - At high prices (near budget limit) → require increasingly high quality
+    - Customer subscribes ONLY if at least one plan delivers quality ABOVE their expectation at that price
+    - If no plan meets expectations → leaves forever (lost customer)
+
+    **Lead evaluation happens on arrival.** Each new lead either:
+    1. **Subscribes** — if at least one plan meets their quality-price curve
+    2. **Is lost forever** — if no plan is acceptable. They do NOT retry or come back later.
+
+    *Lead acquisition cost:* each new lead (from ads or organic) incurs a flat $0.5 onboarding cost, charged separately from your ad spend — factor this into your daily burn estimates.
+
+    ### Quality Components
+    **Delivered Quality = (base_product_quality + q_shared + q_group_bonus) × tier_multiplier + penalties**
+
+    - Model tier: acts as a multiplier on product quality (Tier 1=0.60×, Tier 2=0.75×, Tier 3=0.90×, Tier 4=1.00×, Tier 5=1.10×)
+    - base_product_quality: Starting product quality (0.20)
+    - q_shared: Shared quality bonus from development spending (grows with dev spend)
+    - Overload penalty: When usage exceeds capacity
+    - Outage penalty: Significant quality drop during outages
+    - Per-group quality bonus: CUMULATIVE from targeted dev spend (persists after spending stops)
+
+    ### Quality Dynamics
+    - Development spending improves quality: global improvement = 0.0045 × ln(1 + global_spend/5000), targeted per-group improvement = 0.0225 × ln(1 + targeted_spend/5000) (5× coefficient, stacks with global)
+    - Customer expected quality drifts upward over time (global drift + per-group drift)
+    - Competitor events occur randomly and raise customer quality expectations across all groups — these are permanent upward shifts that cannot be reversed, only offset via dev spending or R&D breakthroughs. Different customer groups react to the same competitor event with different magnitudes (some groups are highly trend-sensitive; others — e.g. compliance-bound enterprises — barely move), so the expectation gap widens unevenly across your book. Competitor activity is visible in the social media feed (`get_social_posts`), so you can monitor rival launches/announcements there.
+    - R&D research tiers provide permanent quality boosts (10 independent tiers)
+
+    ### Churn & Plan Changes
+    - Billing evaluation every 30 days per customer
+    - Customer re-evaluates: does current plan still meet quality-at-price expectation?
+    - If not → may downgrade, switch plans, or cancel
+    - Satisfaction affects churn probability
+    - Unresolved issues damage satisfaction over time
+    - Tenure loyalty (stickiness bonus): longer-subscribed customers get a small additive Q_perceived bonus that grows with `ln(1 + months_subscribed)` — up to ~+0.13 at 12 months — making veterans more tolerant of price hikes and quality drift
+
+    ## Enterprise Sales
+
+    ### Negotiation Flow
+    - Enterprise customers arrive as negotiation threads (stored in the `enterprise_turns` table)
+    - Thread types: `new_lead` (inbound), `renegotiation` (you initiate), `churn_prevention`, `plan_change`
+    - You MUST respond with `send_enterprise_deal` using compact tuple format: `deals=[[customer_id, [["plan", price_per_seat], ...]]]` — all contracts are month-to-month (1 month)
+    - Grace period: 1 day to reply with no penalty
+    - Late reply: -0.02 relationship/day after grace period
+    - 7-day timeout (1 week): if YOU (the agent) do not reply within 7 days (1 week), the lead is PERMANENTLY LOST (or existing customer cancels). The clock starts when the customer message arrives — you must call `send_enterprise_deal` within 1 simulation week.
+    - Limited negotiation turns per customer — rejection on final turn = customer lost forever
+
+    ### Proactive Renegotiation
+    - `send_enterprise_deal` auto-detects: if a customer has an open thread, it replies; if no open thread, it initiates a renegotiation
+    - No separate tool needed — just call `send_enterprise_deal` with `deals=[[customer_id, [["plan", price_per_seat], ...]]]` for any active enterprise subscriber
+    - Use `reject_enterprise_deal` to explicitly reject threads — WARNING: rejecting renegotiation/renewal/churn_prevention threads causes the customer to CHURN
+
+    ### Batch Operations (Efficiency)
+    - `send_enterprise_deal(deals=[[cid1, [["plan", price]], [cid2, [["plan", price]]]])` — send offerings to multiple enterprise customers in one call
+    - `reject_enterprise_deal(deals=[...])` — reject multiple threads in one call
+    - Query the `enterprise_turns` table to read negotiation data (each row is a message identified by `message_id`)
+
+    ## Infrastructure & Service Quality
+
+    8 capacity tiers (0–7) ranging from $85/day serverless to $75K/day GPU fleet. Higher tiers handle more usage. Use `set_capacity_tier` to scale up and `get_cost_info` for detailed pricing.
+
+    **Overload & Outages:** When usage > capacity → higher latency, errors, outage risk. Outages cause quality drops, satisfaction penalties, customer issues, negative social posts. Ops spending reduces outage probability: At $0 ~3% daily, at $500 ~1.1% daily.
+
+    ## Financial Mechanics
+
+    ### Revenue
+    - Subscription payments billed every 30 days per customer
+    - Enterprise: seat-based pricing (seats × price_per_seat)
+
+    ### Costs
+    Daily costs: capacity tier + compute (usage × tier cost) + advertising + operations + development + lead acquisition costs
+    - **Lead acquisition cost:** $0.5 per lead, charged for every new lead that arrives regardless of whether they subscribe or are lost
+
+    ## Spending Effects
+
+    ### Advertising
+    - Drives new leads through ad channels
+    - Different channels reach different groups with varying effectiveness
+    - Use targeted spend for precision targeting of high-value segments
+
+    ### Operations
+    - More ops spending accelerates issue resolution
+    - Reduces outage probability
+    - Per-group targeting via `set_targeted_ops_spend`
+
+    ### Development
+    - Customer expected quality changes over time
+    - See "Quality Dynamics" above for the exact dev-spending quality-improvement formulas (global vs. per-group)
+    - Per-group targeting via `set_targeted_dev_spend`: ACCUMULATES a group-specific quality bonus that persists after spending stops
+
+    ## R&D Research Tiers
+
+    - 10 independent tiers — no dependencies, any tier can be started at any time
+    - *Repeatable:* each tier can be started multiple times (one in-progress invocation per tier at a time)
+    - Cost grows with tier (use `list_research_projects` to see exact costs per tier)
+    - Duration grows non-linearly (35–380 days mean) with high variance (~40-50% CV)
+    - Quality boost grows non-linearly (+0.04 to +0.85 mean) with high variance (~50% CV)
+    - Both duration and quality are sampled from Normal distributions when you start — results vary!
+    - R&D provides quality jumps that are *impossible* to achieve through dev spending alone (log saturation)
+    - Use `start_research_project(tier=N)` to begin, `list_research_projects` to see all tiers and status
+    - Strategic insight: competitor events create increasing quality pressure over time; dev spending alone may not keep up — you need R&D to close the gap
+
+    ## Customer Issues
+
+    - Issues appear randomly (higher rate when satisfaction low or during outages)
+    - Unresolved issues damage satisfaction over time
+    - Operations spending speeds resolution
+    - Quick resolution (< 2 days) builds relationship; slow resolution damages it
+
+    ## Social Media
+
+    - Customers post based on satisfaction level
+    - Posts are publicly visible via `get_social_posts`
+    - Sentiment must be inferred from content (sentiment column is hidden)
+    - Viral negative posts can significantly damage reputation
+    - You can post or reply to customer posts via `post_social_media` (max 280 chars, 1/week) — strong posts go viral. Viral posts can either boost or tank new lead arrival speed for each group depending on whether that customer group likes the post or not
+
+    **CRITICAL REQUIREMENT:** Every `next-week` call MUST include a `rationale` argument — your strategic reasoning for this week's actions. This replaces the old standalone `log_rationale` tool, which has been removed. The server returns 400 if `rationale` is missing or empty.
+
+    **IMPORTANT:** Submit ONE rationale per week alongside your forecasts — no more, no less. Your weekly rationale should include:
+    - Your analysis of the current situation and key metrics
+    - What changes you made (or why you kept settings the same)
+    - Your strategy and any hypotheses you're testing
+    - What you're watching for in the coming weeks
+
+    You can call any tool any number of times within a week. Advance to the next week when you are ready.
+
+    **NOTE:** The `next_week` call may take a long time (several minutes) at large subscriber counts. The simulator processes billing, churn, usage, reputation, and other mechanics for every customer individually across 7 simulated days. This is normal and expected — just wait for the response. Do not assume the call has failed or timed out.
+
+    ## Weekly Rationale + Cash Forecasts (MANDATORY)
+
+    Before advancing to the next week, you **MUST** submit (a) a `rationale` string and (b) cash forecasts at FOUR horizons. For each horizon submit a **point estimate** plus **95% confidence interval lower and upper bounds**. The `next-week` command takes 13 positional arguments in this exact order — rationale first, then 12 forecast numbers:
+
+    ```
+    ./novamind-operation next-week \
+        "<rationale: your strategic reasoning for this week's actions>" \
+        <cash_1wk_point>  <cash_1wk_lower>  <cash_1wk_upper>  \
+        <cash_4wk_point>  <cash_4wk_lower>  <cash_4wk_upper>  \
+        <cash_12wk_point> <cash_12wk_lower> <cash_12wk_upper> \
+        <cash_26wk_point> <cash_26wk_lower> <cash_26wk_upper>
+    ```
+
+    | Position | Field | Notes |
+    |----------|-------|-------|
+    | 1 | `rationale` | Required, non-empty string. Recorded for analysis (does not affect scoring). |
+    | 2–4 | `cash_1wk_*` | +7 days |
+    | 5–7 | `cash_4wk_*` | +28 days |
+    | 8–10 | `cash_12wk_*` | +84 days |
+    | 11–13 | `cash_26wk_*` | +182 days (~6 months) |
+
+    **Constraint per horizon:** `lower <= point <= upper`. The server returns 400 if any field is missing, non-numeric, or violates the ordering. The server also returns 400 if `rationale` is missing or empty.
+
+    A *95% confidence interval* means: you believe there's a 95% probability the actual cash on day `submit_day + horizon` will fall inside `[lower, upper]`. Submit *honest* intervals — wide for uncertain horizons (say, 6 months), narrow when you have high confidence (e.g. 1 week if cash flow is stable).
+
+    All forecast values are dollars (e.g. `1250000.0`). All 12 are required, in addition to the rationale string.
+
+    Predictions are stored at submission time; updating them later is not possible. Plan your forecast before you advance.
+    ````
+
+    #### 中文翻译
+
+    ````text
+    # 模拟器说明
+
+    本文档说明 NovaMind SaaS 业务模拟器如何运作。理解这些机制有助于你做出更好的决策。
+
+    ## 概览
+
+    你是 NovaMind AI 的 CEO，这是一家 B2B/B2C 的 AI SaaS 公司。你的目标是在 {total_days} 个模拟日（{total_weeks} 周 / {total_years} 年）里把现金最大化。时间以周为增量推进（每步 7 天）。你负责定价、开支、基础设施、研发与企业销售。
+
+    > **你的目标：** 在 {total_weeks} 周里把现金最大化。现金 = 你的分数。
+
+    ## 客户细分
+
+    ### 初始细分（6 个客群，完全已知）
+    - **S1、S2、S3**：个人客户（小微企业）—— 从价格敏感型到质量导向型
+    - **E1、E2、E3**：企业客户 —— 从入门级到大型企业
+
+    ### 可发现细分（20 个客群，初始隐藏）
+    - 10 个个人（D_S01–D_S10）+ 10 个企业（D_E01–D_E10）
+    - 通过 `research_market()` 发现 —— 每次 2.5 万美元，30% 概率，立刻随机发现一个客群
+    - 信息等级 1–5，精度逐级提升（±65% → ±5%）
+    - 用 `research_group()` 提升信息等级（等级越高花费越多，且需要多天）
+
+    ## 客户获取
+
+    新客户通过以下几种渠道加入：
+
+    **广告与市场营销：**
+    - 5 个广告渠道：social_media、search_ads、linkedin、content_marketing、referral_program
+    - 每个渠道对各客群的有效性不同 —— 有效性数值决定在该渠道对该客群每花 1 美元能拿到多少潜客
+    - `ads_strength` 是广告有效性的乘数（默认 1.0）—— 提高它可以放大全部广告开支带来的潜客生成
+    - 应用内广告按订阅者产生每日收入（与广告强度 × 席位数成正比），但会拉低感知质量 —— 这是收入与质量的取舍。通过 `set_ads_strength` 设置
+    - 所有广告开支都按（渠道，客群）粒度设置，用 `set_targeted_ad_spend({channel: {group: $/day}})`。没有总广告预算 —— 每一美元都必须分配到具体的渠道与客群。
+    - `set_daily_spend` 只管 `operations` 与 `development`（不含广告）。
+
+    **促销：**
+    - 提供折扣以吸引新潜客或留住现有订阅者
+    - 潜客促销降低新客户看到的实际价格，提高转化率
+    - 持续促销在每个计费周期重复打折
+    - 两者都可以全局设置或定向到特定客群，用 `set_promotion` 与 `set_lead_promotion`
+
+    **网络效应（跨客群推荐）：**
+    - 现有订阅者以可测量的速率产生口碑推荐
+    - 每个来源客群的订阅者以特定速率在目标客群里产生潜客（在中性声誉下，每订阅者每天产生的潜客数）
+    - 例如：若速率为 0.005，则 1000 个订阅者在该目标客群里每天产生约 5 个潜客
+    - 只有已发现的客群参与跨客群网络效应
+    - 用 `get_group_insights()` 查看客群之间的推荐速率（显示为「每 1000 订阅者每天的潜客数」）
+
+    **声誉（跨客群情绪扩散）：**
+    - 优质服务积累声誉；故障、投诉、取消订阅会损害声誉
+    - 声誉直接影响新客获取速度 —— 声誉越高，潜客转化越多、到达越快；负面声誉会压制潜客流入
+    - 声誉会在相关客群之间扩散 —— 不只局限于同一个客群
+    - 企业客户解约或负面社交媒体贴文会损害相邻企业客群的声誉
+    - 满意客户的正面评价会提升相关客群的声誉
+    - 用 `get_group_insights()` 查看客群之间的声誉影响权重
+
+    **市场容量：**
+    - 每个客群都有市场容量（可触达客户上限）。订阅者接近上限时获客变慢。容量会随时间增长。
+
+    ## 订阅与留存机制
+
+    ### 套餐选择
+    每个客户都有自己的质量—价格曲线：
+    - 价格低时 → 只要求一般的质量
+    - 价格高时（接近预算上限）→ 要求的质量越来越高
+    - 只有当至少一个套餐在该价位上交付的质量高于客户期望时，客户才会订阅
+    - 如果没有套餐满足期望 → 永久离开（客户流失）
+
+    **潜客评估在到达时就发生。** 每个新潜客要么：
+    1. **订阅** —— 如果至少有一个套餐符合他的质量—价格曲线
+    2. **永久流失** —— 如果没有可接受的套餐。他们不会重试，也不会以后再回来。
+
+    *潜客获取成本：* 每个新潜客（来自广告或自然流量）都产生 0.5 美元的固定引导成本，与广告开支分开计费 —— 估算每日消耗时要把它算进去。
+
+    ### 质量构成
+    **交付质量 =（base_product_quality + q_shared + q_group_bonus）× tier_multiplier + 惩罚项**
+
+    - 模型档位：作为产品质量的乘数（Tier 1=0.60×、Tier 2=0.75×、Tier 3=0.90×、Tier 4=1.00×、Tier 5=1.10×）
+    - base_product_quality：初始产品质量（0.20）
+    - q_shared：来自开发投入的共享质量加成（随开发开支增长）
+    - 过载惩罚：当使用量超过容量时
+    - 故障惩罚：故障期间质量显著下降
+    - 每客群质量加成：来自定向开发开支，累计生效（停止投入后仍然保留）
+
+    ### 质量动态
+    - 开发开支改善质量：全局改善 = 0.0045 × ln(1 + global_spend/5000)，定向的每客群改善 = 0.0225 × ln(1 + targeted_spend/5000)（系数为 5 倍，与全局叠加）
+    - 客户的期望质量会随时间向上漂移（全局漂移 + 每客群漂移）
+    - 竞品事件随机发生，会抬高所有客群的客户质量期望 —— 这是永久性的向上位移，无法逆转，只能靠开发开支或研发突破来抵消。不同客群对同一个竞品事件的反应幅度不同（有些客群对趋势高度敏感；另一些 —— 例如受合规约束的企业 —— 几乎不动），因此你名下各客群的期望差距会不均匀地扩大。竞品活动可以在社交媒体信息流（`get_social_posts`）里看到，你可以在那里监控对手的发布与公告。
+    - 研发档位提供永久质量提升（10 个相互独立的档位）
+
+    ### 流失与套餐变更
+    - 每个客户每 30 天进行一次计费评估
+    - 客户重新评估：当前套餐是否仍然满足他在该价位上的质量期望？
+    - 如果不满足 → 可能降级、换套餐或取消
+    - 满意度影响流失概率
+    - 未解决的问题会随时间损害满意度
+    - 任期忠诚（黏性加成）：订阅时间越长的客户会获得一个随 `ln(1 + months_subscribed)` 增长的小幅加性 Q_perceived 加成 —— 12 个月时最高约 +0.13 —— 让老客户对涨价与质量漂移更宽容
+
+    ## 企业销售
+
+    ### 议价流程
+    - 企业客户以议价线程的形式到达（存放在 `enterprise_turns` 表里）
+    - 线程类型：`new_lead`（inbound）、`renegotiation`（由你发起）、`churn_prevention`、`plan_change`
+    - 你必须用 `send_enterprise_deal` 以紧凑元组格式回复：`deals=[[customer_id, [["plan", price_per_seat], ...]]]` —— 所有合同都是按月签（1 个月）
+    - 宽限期：1 天内回复不受惩罚
+    - 迟回复：超过宽限期后每天 -0.02 关系分
+    - 7 天超时（1 周）：如果你（Agent）在 7 天（1 周）内不回复，该潜客将永久流失（或现有客户解约）。计时从客户消息到达时开始 —— 你必须在 1 个模拟周内调用 `send_enterprise_deal`。
+    - 每个客户的议价轮数有限 —— 在最后一轮被拒意味着永久失去该客户
+
+    ### 主动重新议价
+    - `send_enterprise_deal` 会自动判断：如果该客户有未结线程，就回复它；如果没有未结线程，就发起一次重新议价
+    - 不需要单独的工具 —— 对任何活跃的企业订阅者直接调用 `send_enterprise_deal`，参数为 `deals=[[customer_id, [["plan", price_per_seat], ...]]]`
+    - 用 `reject_enterprise_deal` 显式拒绝线程 —— 警告：拒绝 renegotiation / renewal / churn_prevention 类线程会导致该客户流失
+
+    ### 批量操作（效率）
+    - `send_enterprise_deal(deals=[[cid1, [["plan", price]], [cid2, [["plan", price]]]])` —— 一次调用向多个企业客户发出报价
+    - `reject_enterprise_deal(deals=[...])` —— 一次调用拒绝多个线程
+    - 查询 `enterprise_turns` 表读取议价数据（每一行是一条消息，由 `message_id` 标识）
+
+    ## 基础设施与服务质量
+
+    8 个容量档位（0–7），从每天 85 美元的 serverless 到每天 7.5 万美元的 GPU 集群。档位越高能承载的使用量越大。用 `set_capacity_tier` 扩容，用 `get_cost_info` 查看详细价格。
+
+    **过载与故障：** 当使用量 > 容量时 → 延迟升高、报错、故障风险上升。故障会导致质量下降、满意度惩罚、客户问题与负面社交贴文。运维开支降低故障概率：0 美元时每天约 3%，500 美元时每天约 1.1%。
+
+    ## 财务机制
+
+    ### 收入
+    - 订阅费按每个客户每 30 天计费
+    - 企业：按席位定价（席位数 × 每席位价格）
+
+    ### 成本
+    每日成本：容量档位 + 计算（使用量 × 档位单价）+ 广告 + 运维 + 开发 + 潜客获取成本
+    - **潜客获取成本：** 每个新到达的潜客收取 0.5 美元，无论他是否订阅或是否流失
+
+    ## 开支效果
+
+    ### 广告
+    - 通过广告渠道带来新潜客
+    - 不同渠道触达不同客群，效果各异
+    - 用定向开支精准触达高价值细分
+
+    ### 运维
+    - 运维开支越多，问题解决越快
+    - 降低故障概率
+    - 通过 `set_targeted_ops_spend` 按客群定向
+
+    ### 开发
+    - 客户的期望质量会随时间变化
+    - 开发开支改善质量的确切公式（全局与每客群）见上面的「质量动态」
+    - 通过 `set_targeted_dev_spend` 按客群定向：累积一个客群专属的质量加成，停止投入后仍然保留
+
+    ## 研发档位
+
+    - 10 个相互独立的档位 —— 没有依赖关系，任何档位都可以在任何时候启动
+    - *可重复：* 每个档位都可以多次启动（同一档位每次只能有一个进行中的调用）
+    - 成本随档位上升（用 `list_research_projects` 查看各档位的确切成本）
+    - 周期非线性增长（均值 35–380 天），方差很大（变异系数约 40-50%）
+    - 质量提升非线性增长（均值 +0.04 到 +0.85），方差很大（变异系数约 50%）
+    - 启动时周期与质量都从正态分布采样 —— 结果会有波动！
+    - 研发提供的质量跃升是单靠开发开支不可能达到的（对数饱和）
+    - 用 `start_research_project(tier=N)` 启动，用 `list_research_projects` 查看所有档位与状态
+    - 战略提示：竞品事件会随时间造成越来越大的质量压力；单靠开发开支可能跟不上 —— 你需要研发来把差距补上
+
+    ## 客户问题
+
+    - 问题随机出现（满意度低或故障期间发生率更高）
+    - 未解决的问题会随时间损害满意度
+    - 运维开支加快解决速度
+    - 快速解决（< 2 天）能增进关系；解决缓慢会损害关系
+
+    ## 社交媒体
+
+    - 客户会依据满意度水平发帖
+    - 贴文通过 `get_social_posts` 公开可见
+    - 情绪需要从内容推断（sentiment 列被隐藏）
+    - 病毒式传播的负面贴文会显著损害声誉
+    - 你可以通过 `post_social_media` 发帖或回复客户贴文（最多 280 字符，每周 1 次）—— 强有力的贴文会病毒式传播。病毒贴文对各客群的潜客到达速度可能是提升也可能是打击，取决于该客群喜不喜欢这条贴文
+
+    **关键要求：** 每次调用 `next-week` 都必须带上 `rationale` 参数 —— 也就是你这一周行动的战略理由。它取代了原来独立的 `log_rationale` 工具，该工具已被移除。如果 `rationale` 缺失或为空，服务端返回 400。
+
+    **重要：** 每周随预测一起提交一条理由 —— 不多也不少。你的每周理由应当包含：
+    - 你对当前局势与关键指标的分析
+    - 你做了哪些改动（或者为什么保持设置不变）
+    - 你的策略以及你正在验证的假设
+    - 你在接下来几周里关注什么
+
+    一周之内你可以任意次调用任何工具。准备好之后再推进到下一周。
+
+    **注意：** 在订阅者数量很大时，`next_week` 调用可能耗时很久（若干分钟）。模拟器要为每一个客户逐个处理 7 个模拟日里的计费、流失、使用量、声誉等机制。这是正常且预期的行为 —— 耐心等待响应即可。不要以为调用失败或超时了。
+
+    ## 每周理由 + 现金预测（强制）
+
+    在推进到下一周之前，你**必须**提交 (a) 一个 `rationale` 字符串，以及 (b) 四个时间尺度上的现金预测。每个尺度都要提交一个**点估计**加上 95% 置信区间的下界与上界。`next-week` 命令按以下确切顺序接受 13 个位置参数 —— 先是理由，然后是 12 个预测数值：
+
+    ```
+    ./novamind-operation next-week \
+        "<rationale: your strategic reasoning for this week's actions>" \
+        <cash_1wk_point>  <cash_1wk_lower>  <cash_1wk_upper>  \
+        <cash_4wk_point>  <cash_4wk_lower>  <cash_4wk_upper>  \
+        <cash_12wk_point> <cash_12wk_lower> <cash_12wk_upper> \
+        <cash_26wk_point> <cash_26wk_lower> <cash_26wk_upper>
+    ```
+
+    | 位置 | 字段 | 说明 |
+    |----------|-------|-------|
+    | 1 | `rationale` | 必填，非空字符串。被记录下来供分析（不影响计分）。 |
+    | 2–4 | `cash_1wk_*` | +7 天 |
+    | 5–7 | `cash_4wk_*` | +28 天 |
+    | 8–10 | `cash_12wk_*` | +84 天 |
+    | 11–13 | `cash_26wk_*` | +182 天（约 6 个月） |
+
+    **每个尺度的约束：** `lower <= point <= upper`。任何字段缺失、非数值或违反顺序，服务端都返回 400。`rationale` 缺失或为空时服务端同样返回 400。
+
+    *95% 置信区间*的含义是：你认为在第 `submit_day + horizon` 天的实际现金落在 `[lower, upper]` 区间内的概率为 95%。请提交*诚实*的区间 —— 不确定的尺度（比如 6 个月）就给宽一些，有把握时（例如现金流稳定的 1 周）就给窄一些。
+
+    所有预测值的单位都是美元（例如 `1250000.0`）。除理由字符串之外，这 12 个数值全部必填。
+
+    预测在提交时即被存档，之后无法更新。推进之前先想好你的预测。
+    ````
+
+    ## 一手资料
+
+    - [CEO-Bench 论文（arXiv:2606.18543）](https://arxiv.org/abs/2606.18543)：评测设计、模拟器机制与官方实验结论的权威来源，作者 Haozhe Chen、Karthik Narasimhan、Zhuang Liu， v1 2026-06-16、v2 2026-07-22，arXiv 上以 CC BY 4.0 发布。
+    - [CEO-Bench 官方站点](https://ceobench.com)：官方榜单、动作空间表与随机过程表的来源；成绩取自 2026-08-16 的 19 条官方记录快照， 其中 18 个可映射模型已完整收录、1 个未注册模型记录在覆盖元数据中 （sha256 014ef33e0d63d07567a2089f9aee564501bf6693e5b570166e7357b8425d20c4）。
+    - [CEO-Bench 官方作者仓库](https://github.com/zlab-princeton/ceobench-src)：模拟器实现、经济参数、客群配置、工具与数据库文档以及基线 bash-agent harness 的来源， 已钉死到 commit d2b7b32e5301a571b77f5f68bd1032adbcd5b464。
+    - [上游模拟器机制文档](https://github.com/zlab-princeton/ceobench-src/blob/d2b7b32e5301a571b77f5f68bd1032adbcd5b464/src/saas_bench/agents/simulator_instructions.md)：本评测题面原文所在的文件，逐字取自钉死的 commit，含未替换的 {total_days} 等模板占位符。
+    - [coding-agent 官方运行入口](https://github.com/zlab-princeton/run-ceobench/tree/885ae1d7d09b3effa08825ce7f03075224ebe373)：上游公开的本地 CLI 复现路线，要求 Python 3.13+；本条目固定到 commit 885ae1d7d09b3effa08825ce7f03075224ebe373，不把它误写成 EvalHub 托管运行器。
+
 tasks:
   - id: novamind-500-day-run
     label: NovaMind 500 天经营长跑
