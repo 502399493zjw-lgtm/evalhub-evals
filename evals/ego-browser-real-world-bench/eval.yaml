@@ -33,73 +33,171 @@ command_template:
   "output": "ego-browser-real-world-bench-result.json"
 trials: 1
 detail_profile:
-  "source_kind": "upstream_publication"
-  "overview_note": "本评测包将上游任务数据集和报告固定至一个已审阅的提交。结构化官方成绩文件仅收录有上游来源依据的 13 个模型子集；官方分项结果另保留用户指定的全量 16 模型价值地图，用于展示报告中的成本与评分项微通过率关系，不改变结构化榜单参与者集合。"
-  "summary":
-    "plain_language": "智能体使用浏览器完成 31 个实用网页任务，覆盖信息研究、比较、导航及表单操作等流程。每道题有多项二元评分项，只有所有评分项均通过才计为完成。"
-    "why_it_matters": "浏览器智能体在只完成部分步骤时也可能看似能力很强。要求所有评分项均通过，能够把真正完成任务与仅在不断变化的真实网页环境中走出看似合理但不完整的路径区分开来。"
-  "method_steps":
-    - "title": "固定任务快照"
-      "description": "使用固定上游 Real-World Bench JSON 中的 31 个任务 ID 与完整 confirmed_task 文本，共计 154 项二元评分项。"
-    - "title": "运行上游浏览器流程"
-      "description": "在用户自己的环境中，运行文档所述的上游流程，并满足浏览器、模型提供方、真实网站、登录状态和本地站点等前置条件。"
-    - "title": "逐项判定评分项"
-      "description": "使用上游判定阶段，为每个配置任务得到“所有评分项均通过”（all-rubrics-passed）结论；任一评分项未通过都会使任务不能算作完美完成。"
-    - "title": "打包已完成的清单"
-      "description": "为每个固定任务向本地打包器提供恰好一个布尔结论。打包器只校验清单并计算完美完成率，不会执行上游流程。"
-  "score_interpretation": "分数越高越好。完美完成率（%）= 100 × 所有二元评分项均通过的任务数 / 31。2026-08-04 的来源报告采用这一严格的任务级指标；评分项平均分仅为补充背景，不替代主分数。"
-  "key_facts":
-    - "value": "31 个任务"
-      "label": "固定的 Real-World Bench 任务集"
-      "description": "固定 JSON 包含 31 个稳定任务 ID 和完整的来源提示词。"
-      "source_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/data/real_world_bench.json"
-    - "value": "154 项评分项"
-      "label": "任务集内的二元评分项"
-      "description": "每道任务有 3–6 项二元评分项；完美完成要求所有评分项均通过。"
-      "source_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/data/real_world_bench.json"
-    - "value": "13 个模型"
-      "label": "有上游来源依据的可排名成绩子集"
-      "description": "只有能够在当前 EvalHub 模型注册表中解析的报告身份，才被纳入可排名的已发布成绩。"
-      "source_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/reports/ego-benchmark-model-metrics-2026-08-04.md"
-    - "value": "2026-08-04"
-      "label": "官方报告快照"
-      "description": "本投稿通过 SHA-256 和上游提交固定链接的官方报告。"
-      "source_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/reports/ego-benchmark-model-metrics-2026-08-04.md"
-  "caveats":
-    - "title": "注册表限制下的成绩子集"
-      "description": "官方报告包含 16 个模型身份。Claude Opus 5、DeepSeek V4 Flash 与 ERNIE 5.1 没有可在当前 EvalHub 注册表中核验的标准身份，因此不会创建近似映射、结构化排名、成绩、任务结果或题目案例；结构化 EvalHub 排名只覆盖已纳入的 13 个身份。用户指定的全量价值地图仍在官方分项结果中原样展示这 16 个报告点，但不改变上述身份边界。"
-    - "title": "官方发布，非 EvalHub 独立复跑"
-      "description": "已发布分数与补充指标均转录自上游作者的报告，并非 EvalHub 的独立执行，也不包含逐题输出或运行轨迹。"
-    - "title": "真实环境敏感性"
-      "description": "多数来源任务使用真实网站；页面、反爬机制、账户状态和内容都可能变化。五道来源任务需要已登录会话，另有一道任务依赖上游本地站点。"
-    - "title": "严格的主指标"
-      "description": "完美完成率不为部分完成的任务提供分数。评分项平均分可揭示部分进展，但仅作补充，不影响可排名分数。"
-  "resources_note": "以下为可固定版本的一手上游仓库资料。EvalHub 不主张获得上游背书，也不会代表用户运行文档所述的工作流。"
-  "resources":
-    - "title": "Ego Browser Benchmark Framework 仓库"
-      "summary": "官方上游项目、安装要求、工作流概览和源代码。"
-      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework"
-    - "title": "固定版本的 Real-World Bench 任务"
-      "summary": "本投稿使用的确切 31 个任务 ID、完整来源提示词、任务元数据和二元评分项。"
-      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/data/real_world_bench.json"
-    - "title": "固定版本的官方模型指标报告"
-      "summary": "2026-08-04 的来源报告，包含已发布的完美完成率及补充执行、判定和计费指标。"
-      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/reports/ego-benchmark-model-metrics-2026-08-04.md"
-    - "title": "固定版本的上游工作流文档"
-      "summary": "来自同一上游提交的运行、判定、报告、浏览器和环境说明。"
-      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/README.md"
-    - "title": "固定版本的上游 MIT 许可证"
-      "summary": "来源仓库及所复制任务提示词的许可证与署名边界。"
-      "url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/LICENSE"
-  "figures":
-    - "id": "ego-browser-value-map-2026-08-04"
-      "placement": "insights"
-      "label": "全量价值地图"
-      "title": "评分项微通过率与 Stage A 执行成本（全量 16 个模型）"
-      "src": "https://github.com/502399493zjw-lgtm/evalhub-evals/releases/download/ego-browser-value-map-2026-08-04/codex-clipboard-23633f2c-be88-48ee-9b5f-7b987667458a.png"
-      "alt": "散点图：横轴为 31 项任务的 Stage A 执行成本（美元，对数刻度），纵轴为评分项微通过率（通过评分项除以 154），蓝点表示 2026 年 8 月 4 日报告中的 16 个模型，虚线表示全量模型的成本与微通过率中位数。"
-      "caption": "用户提供的原图，按 citrolabs 2026-08-04 模型指标报告的全量 16 模型口径展示评分项微通过率（通过评分项 ÷ 154）与 Stage A 执行成本；图中包含当前结构化 EvalHub 榜单未纳入的 Claude Opus 5、DeepSeek V4 Flash、ERNIE 5.1。成本沿用报告中的估算或价卡重算口径；图像仅作官方分项结果的视觉展示，不构成 EvalHub 独立复跑，也不为上述三项身份建立注册表映射。"
-      "source_url": "https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/reports/ego-benchmark-model-metrics-2026-08-04.md"
+  source_kind: upstream_publication
+  markdown: |-
+    ## 榜单
+
+    主指标是完美完成率：一道题的全部评分项都通过，才算完美完成。下表保留官方报告中的全部 16 个模型。
+
+    | 排名 | 模型 | 完美完成率 | Harness |
+    | ---: | --- | ---: | --- |
+    | 1 | GPT-5.6-sol | 87.1% | 题目默认 harness |
+    | 2 | Claude Fable 5 | 83.9% | 题目默认 harness |
+    | 3 | Claude Opus 5 | 77.4% | 题目默认 harness |
+    | 4 | Qwen 3.8 Max Preview | 74.2% | 题目默认 harness |
+    | 5 | Qwen 3.8 Max | 67.7% | 题目默认 harness |
+    | 6 | DeepSeek V4 Flash | 67.7% | 题目默认 harness |
+    | 7 | Doubao Seed Evolving | 64.5% | 题目默认 harness |
+    | 8 | Kimi K3 | 64.5% | 题目默认 harness |
+    | 9 | GLM-5.2 | 61.3% | 题目默认 harness |
+    | 10 | Tencent HY3 | 51.6% | 题目默认 harness |
+    | 11 | MiniMax M3 | 45.2% | 题目默认 harness |
+    | 12 | DeepSeek V4 Pro | 35.5% | 题目默认 harness |
+    | 13 | Step 3.7 Flash | 35.5% | 题目默认 harness |
+    | 14 | LongCat 2.0 | 29.0% | 题目默认 harness |
+    | 15 | ERNIE 5.1 | 16.1% | 题目默认 harness |
+    | 16 | MiMo V2.5 Pro | 12.9% | 题目默认 harness |
+
+    ## 官方分项结果
+
+    下表把官方报告中的成绩、执行、判定和计费字段统一到同一条模型轴上。执行成本不含 Judge 成本；平均时长使用分钟。Qwen 3.8 Max Preview 的成本按 qwen-3.8-max 价卡估算，GLM-5.2 按公开价卡和最终会话 Token 重算。
+
+    | 模型 | 完成任务 | 评分项平均分 | 通过评分项 | 执行成本（USD） | 单题成本（USD） | 推理 Token | 平均轮数 | 平均时长（分钟） | Judge 产物 | Judge 成本（USD） | 计费复核总额（USD） | 计费核验 |
+    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+    | GPT-5.6-sol | 27 / 31 | 0.9699 | 149 / 154 | 88.97 | 2.8701 | 268,977 | 29.8 | 10.48 | 31 | 20.27 | 88.9726 | 已核验 |
+    | Claude Fable 5 | 26 / 31 | 0.9570 | 147 / 154 | 88.73 | 2.8622 | 396,558 | 23.5 | 10.09 | 31 | 16.21 | 88.7293 | 已核验 |
+    | Claude Opus 5 | 24 / 31 | 0.9371 | 143 / 154 | 53.10 | 1.7129 | 361,165 | 27.8 | 10.42 | 31 | 17.65 | 53.1008 | 已核验 |
+    | Qwen 3.8 Max Preview | 23 / 31 | 0.9226 | 140 / 154 | 21.98 | 0.7091 | 392,921 | 32.3 | 13.65 | 31 | 18.04 | 21.9820 | 按 qwen-3.8-max 费率估算 |
+    | Qwen 3.8 Max | 21 / 31 | 0.8667 | 131 / 154 | 31.80 | 1.0258 | 453,284 | 37.4 | 14.67 | 31 | 16.17 | 31.8000 | 提供方分项与总额一致 |
+    | DeepSeek V4 Flash | 21 / 31 | 0.8565 | 129 / 154 | 0.62 | 0.0201 | 487,968 | 41.7 | 8.61 | 31 | 16.48 | 0.6242 | 按官方 API 价格重算 |
+    | Doubao Seed Evolving | 20 / 31 | 0.8247 | 125 / 154 | 14.56 | 0.4695 | 194,926 | 30.5 | 11.49 | 31 | 19.94 | 14.5550 | 按未折扣标价重算 |
+    | Kimi K3 | 20 / 31 | 0.8043 | 119 / 154 | 11.43 | 0.3687 | 132,194 | 20.3 | 8.91 | 31 | 14.07 | 11.4309 | 已核验 |
+    | GLM-5.2 | 19 / 31 | 0.8366 | 126 / 154 | 25.09 | 0.8094 | 1,043,308 | 29.4 | 21.35 | 31 | 19.47 | 25.0927 | 按已发布价卡重算 |
+    | Tencent HY3 | 16 / 31 | 0.7554 | 114 / 154 | 3.18 | 0.1025 | 564,185 | 39.3 | 13.16 | 31 | 19.80 | 3.1761 | 按未折扣标价重算 |
+    | MiniMax M3 | 14 / 31 | 0.7220 | 107 / 154 | 5.11 | 0.1649 | 150,463 | 48.6 | 9.97 | 31 | 19.83 | 5.1114 | 按未折扣标价重算 |
+    | DeepSeek V4 Pro | 11 / 31 | 0.7204 | 109 / 154 | 1.57 | 0.0508 | 227,068 | 35.5 | 7.93 | 31 | 20.94 | 1.5748 | 按官方 API 价格重算 |
+    | Step 3.7 Flash | 11 / 31 | 0.6011 | 87 / 154 | 5.98 | 0.1930 | 0 | 45.8 | 12.47 | 31 | 22.55 | 5.9839 | 按未折扣标价重算 |
+    | LongCat 2.0 | 9 / 31 | 0.4855 | 69 / 154 | 2.22 | 0.0716 | 146,487 | 21.3 | 6.59 | 31 | 16.02 | 2.2196 | 按未折扣标价重算 |
+    | ERNIE 5.1 | 5 / 31 | 0.4640 | 66 / 154 | 37.26 | 1.2021 | 209,806 | 33.1 | 14.90 | 31 | 19.78 | 37.2638 | 按未折扣标价、32K 档位重算 |
+    | MiMo V2.5 Pro | 4 / 31 | 0.2737 | 36 / 154 | 1.11 | 0.0358 | 34,241 | 8.5 | 1.98 | 31 | 11.69 | 1.1110 | 按未折扣标价重算 |
+
+    ## 关于此评测
+
+    Ego Browser Benchmark 的 Real-World Bench 用 31 道多步骤任务测试浏览器智能体。任务覆盖真实网页搜索、筛选与比较、表单填写、网页应用操作、政府数据读取和基于网页信息的计算。固定任务快照共有 154 项二元评分项，每题包含 3–6 项。
+
+    官方主成绩是完美完成率：
+
+    **完美完成率 = 100 × 全部评分项均通过的任务数 ÷ 31**
+
+    评分项平均分用于显示部分完成情况，但不替代主成绩。报告中的执行成本、时长和轮数来自每题最终有效会话；Judge 产物由统一判定流程读取会话材料后逐项给出二元结论。
+
+    ### 重要限制
+
+    - 真实网页、登录状态、反爬机制和页面内容会变化，不同日期的运行不是严格受控的同环境实验。
+    - 各模型的并发设置并不完全相同，因此平均时长不能单独当作模型速度排名。
+    - 部分任务在执行错误后进行了选择性重跑；报告保留每题最终状态。
+    - 完美完成率非常严格，部分完成只会反映在评分项平均分中。
+    - 成本受模型价卡、缓存规则和汇率影响，不能脱离计费说明直接比较。
+
+    ## 研究观察
+
+    ![评分项微通过率与 Stage A 执行成本散点图](https://github.com/502399493zjw-lgtm/evalhub-evals/releases/download/ego-browser-value-map-2026-08-04/codex-clipboard-23633f2c-be88-48ee-9b5f-7b987667458a.png)
+
+    图中横轴是 31 题的 Stage A 执行成本（USD，对数刻度），纵轴是评分项微通过率（通过评分项 ÷ 154）。图片与上面的统一数据表并列展示，不替代表格中的可比较数值。
+
+    ## 题目案例
+
+    以下 5 题按任务顺序等距抽取，包含完整英文题面和完整中文翻译。
+
+    ### OpenAI X 近 7 天互动表现
+
+    #### 题目原文
+
+    ```text
+    I'm reviewing OpenAI's social media performance over the past week and want to see which posts received the most attention and engagement. Collect the main posts from the X account https://x.com/OpenAI from the past 7 days (excluding pinned posts, pure reposts, and posts labeled "Replying to @"), and list the top 5 by Views, including the date, Views, Replies, Likes, and engagement rate. At the end, provide the average Views and average engagement rate across all main posts.
+    ```
+
+    #### 中文翻译
+
+    ```text
+    我正在回顾 OpenAI 过去一周的社交媒体表现，想了解哪些帖子获得了最多关注和互动。请收集 X 账号 https://x.com/OpenAI 在过去 7 天发布的主要帖子（排除置顶帖子、纯转发帖子，以及标有“Replying to @”的帖子），按 Views 排名前 5，并列出日期、Views、Replies、Likes 和互动率。最后，请给出所有主要帖子的平均 Views 和平均互动率。
+    ```
+
+    ### Yahoo Finance 五股观察列表
+
+    #### 题目原文
+
+    ```text
+    I'm comparing the recent performance of several U.S. stocks on my watchlist and want to see today's moves, their strength over the past month, and their combined performance weighted by market capitalization. Visit finance.yahoo.com and look up these 5 stocks: AAPL, MSFT, NVDA, TSLA, and META. For each stock, record the Current Price, % Change Today, Market Cap, and 1M Return. Obtain the 1M Return either by switching the chart range to 1M and calculating it from the first and last prices, or by reading the 1M Return directly from the Performance section. Organize the results in a table with Ticker, Current Price, % Change Today, Market Cap, and 1M Return. At the end, identify the largest gainer and largest decliner over the past month with their returns, and calculate the market-cap-weighted average daily percentage change across the 5 stocks.
+    ```
+
+    #### 中文翻译
+
+    ```text
+    我正在比较观察列表中几只美国股票近期的表现，想了解它们今天的涨跌、过去一个月的表现强度，以及按市值加权后的综合表现。请访问 finance.yahoo.com，查询以下 5 只股票：AAPL、MSFT、NVDA、TSLA 和 META。对每只股票，记录 Current Price、% Change Today、Market Cap 和 1M Return。获取 1M Return 的方式可以是将图表范围切换到 1M，并使用第一个和最后一个价格计算；也可以直接从 Performance 部分读取 1M Return。请用表格整理结果，列为 Ticker、Current Price、% Change Today、Market Cap 和 1M Return。最后，找出过去一个月涨幅最大和跌幅最大的股票及其回报率，并计算这 5 只股票按市值加权的平均日百分比变动。
+    ```
+
+    ### StockAnalysis 科技股估值
+
+    #### 题目原文
+
+    ```text
+    I'm considering adding to my technology stock holdings and first want to understand how expensive the largest U.S.-listed technology companies are by valuation. Open the Stock Analysis stock screener at https://stockanalysis.com/stocks/screener/, add a Sector filter for Technology only, switch the table to the Valuation view so the valuation metrics are visible, and sort by Market Cap from highest to lowest. Take the 8 largest companies at the top and record each one's rank, ticker, company name, Market Cap, PE Ratio, PS Ratio, and PB Ratio in a table. Then calculate the average PE Ratio across the 8 companies, rounded to two decimal places. Identify the company with the highest PE Ratio—the most expensive by earnings—and provide its PE Ratio, then identify the company with the highest PS Ratio and provide its PS Ratio.
+    ```
+
+    #### 中文翻译
+
+    ```text
+    我正在考虑增持科技股，首先想了解按估值计算，美国上市的大型科技公司价格有多高。请打开 Stock Analysis 股票筛选器 https://stockanalysis.com/stocks/screener/，添加仅限 Technology 的 Sector 筛选条件，将表格切换到 Valuation 视图以显示估值指标，并按 Market Cap 从高到低排序。取最上方市值最大的 8 家公司，在表格中记录每家的排名、股票代码、公司名称、Market Cap、PE Ratio、PS Ratio 和 PB Ratio。然后计算这 8 家公司的平均 PE Ratio，四舍五入到两位小数。找出 PE Ratio 最高的公司，即按盈利计算最昂贵的公司，并给出其 PE Ratio；再找出 PS Ratio 最高的公司，并给出其 PS Ratio。
+    ```
+
+    ### Scratch《Apple Dash》游戏
+
+    #### 题目原文
+
+    ```text
+    I'm preparing a classroom demo of a small collect-and-dodge game and need a playable Scratch prototype rather than a static animation. In a new Scratch project, keep the Scratch Cat as the player, add the Apple and Crab sprites, and name the project "Apple Dash." When the green flag is clicked, reset Score to 0, Lives to 3, and Time to 30; place the Cat at x: 0, y: 0, the Apple at x: 150, y: 80, and the Crab at x: -150, y: -80.
+
+    First make the Cat move with all four arrow keys while staying on the stage. Once movement works, build the collection loop so touching the Apple adds 1 to Score and immediately moves the Apple to a new random position. Use that scoring loop as the win target: reaching 5 points must make the Cat say "YOU WIN!" and stop the game.
+
+    Then turn the Crab into a moving hazard. It should keep moving around the stage and bounce at the edges; when it touches the Cat, it should subtract 1 from Lives and return the Cat to x: 0, y: 0 without draining multiple lives from one continuous collision. Add a one-second countdown for Time. If Lives reaches 0 or Time reaches 0 before Score reaches 5, the Cat must say "GAME OVER!" and stop.
+
+    Run the project from the green flag and play through one complete winning round so the retained stage shows Score 5, Lives at 1 or more, Time above 0, and the "YOU WIN!" message. At the end, give me a concise summary of the controls, collection rule, hazard rule, and both end conditions. Leave the Scratch editor open with the winning stage and the relevant code visible, and do not share or publish the project.
+    ```
+
+    #### 中文翻译
+
+    ```text
+    我正在为课堂演示准备一个小型“收集并躲避”游戏，需要一个可玩的 Scratch 原型，而不是静态动画。在一个新的 Scratch 项目中，保留 Scratch Cat 作为玩家，添加 Apple 和 Crab 角色，并将项目命名为 “Apple Dash”。点击绿旗时，将 Score 重置为 0、Lives 重置为 3、Time 重置为 30；将 Cat 放在 x: 0、y: 0，Apple 放在 x: 150、y: 80，Crab 放在 x: -150、y: -80。
+
+    首先，让 Cat 能够使用四个方向键移动，同时始终留在舞台内。移动功能正常后，构建收集循环：当 Cat 碰到 Apple 时，Score 增加 1，并立即将 Apple 移到新的随机位置。以该计分循环作为获胜目标：达到 5 分时，Cat 必须说出 “YOU WIN!” 并停止游戏。
+
+    然后将 Crab 变成移动障碍物。它应持续在舞台上移动并在边缘反弹；当它碰到 Cat 时，应从 Lives 中减去 1，并将 Cat 放回 x: 0、y: 0，同时不能因为一次持续碰撞而连续扣除多条生命。为 Time 添加每秒一次的倒计时。如果在 Score 达到 5 之前 Lives 降至 0 或 Time 降至 0，Cat 必须说出 “GAME OVER!” 并停止游戏。
+
+    从绿旗运行项目，并完整玩出一轮胜利局面，使保留在舞台上的状态显示 Score 为 5、Lives 至少为 1、Time 大于 0，以及 “YOU WIN!” 消息。最后，请简要总结控制方式、收集规则、障碍规则和两种结束条件。保持 Scratch 编辑器打开，显示获胜舞台及相关代码；不要分享或发布该项目。
+    ```
+
+    ### Lumen Tickets 抢票
+
+    #### 题目原文
+
+    ```text
+    I'm trying to get two tickets for Northstar's Afterglow Tour in Chicago for a friend and me. On Lumen Tickets, choose the later of the two Saturday performances—the Saturday two weeks out from today's Chicago date—then select Lower Bowl and 2 tickets. Enter the buyer details as Morgan Chen, morgan.c@example.com, 312-555-0166, with billing ZIP code 60601, and agree to the ticket and venue terms. I only want one claim attempt: if it doesn't succeed, stop and do not refresh the page or try again. Once the reservation is confirmed, leave the receipt visible and tell me the performance date, section, quantity, total, and confirmation code.
+    ```
+
+    #### 中文翻译
+
+    ```text
+    我想为我和一位朋友购买两张 Northstar 的 Afterglow Tour 芝加哥场门票。在 Lumen Tickets 上，从两场星期六演出中选择较晚的一场——即以芝加哥当地今日日期起算两周后的星期六——然后选择 Lower Bowl 和 2 张门票。填写购票人信息：Morgan Chen、morgan.c@example.com、312-555-0166，账单 ZIP code 为 60601，并同意票务和场馆条款。
+
+    我只允许一次申领尝试：如果没有成功，请停止，不要刷新页面，也不要再次尝试。预订一经确认，保持收据可见，并告诉我演出日期、座位区域、数量、总价和确认码。
+    ```
+
+    ## 一手资料
+
+    - [Ego Browser Benchmark Framework 官方仓库](https://github.com/citrolabs/ego-browser-benchmark-framework)
+    - [固定版本的 31 道 Real-World Bench 任务](https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/data/real_world_bench.json)
+    - [2026-08-04 官方模型指标报告](https://github.com/citrolabs/ego-browser-benchmark-framework/blob/f566ac293e4e6bd80c4e9b062b5699f04eac41f4/reports/ego-benchmark-model-metrics-2026-08-04.md)
 tasks:
   - "id": "rwb-x-openai-7d-01"
     "label": "OpenAI X 近 7 天互动表现"
@@ -109,44 +207,30 @@ tasks:
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website. The source marks this task as requiring a signed-in session for X."
   - "id": "rwb-openai-careers-apply-01"
     "label": "申请 OpenAI 旧金山云基础设施岗"
-    translation: |-
-      我正在寻找云基础设施岗位，并希望申请 OpenAI 的职位。请打开 OpenAI 招聘页面 https://openai.com/careers/，找到准确职位名称为“Software Engineer, Cloud Infrastructure”的旧金山职位——它隶属于 Applied AI Infrastructure 团队。伦敦也有同名职位，因此务必选择旧金山的职位；不要选择 Senior 或 Staff 等级更高的基础设施职位。打开该职位并点击 Apply now，进入申请页面。将本任务提供的简历文件上传至简历附件字段，然后使用简历中的信息完成每一项必填字段：姓名、电子邮件、电话号码、当前所在地、最早可入职日期、工作授权、是否需要签证担保，以及我是否能够每周到岗办公三天。我不想提供有关性别、种族、退伍军人身份或残障身份的任何 EEOC 自我识别信息，因此请为每一项选择 decline-to-self-identify 或 prefer-not-to-answer 选项。所有内容填写完毕后，不要点击 Submit。请列出你填写的每个字段及其值，供我审核。
     "prompt": "I'm looking for a cloud infrastructure role and would like to apply to OpenAI. Open the OpenAI careers page at https://openai.com/careers/ and find the San Francisco position with the exact title \"Software Engineer, Cloud Infrastructure\"—it belongs to the Applied AI Infrastructure team. There is another position with the same title in London, so make sure you select the San Francisco one, and do not choose a more senior infrastructure role such as Senior or Staff. Open the position and click Apply now to reach the application page. Upload the resume file provided with this task to the resume attachment field, then use the information in the resume to complete every required field: name, email, phone number, current location, earliest start date, work authorization, whether visa sponsorship is required, and whether I can work onsite three days per week. I do not want to provide any of the EEOC self-identification information for gender, race, veteran status, or disability status, so select the decline-to-self-identify or prefer-not-to-answer option for each one. Once everything is filled in, do not click Submit. List every field you filled and its value for me to review."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website. The source declares an attachment for this task. It is not distributed in this EvalHub package; obtain it only from the reviewed upstream source when the original workflow requires it."
   - "id": "rwb-redfin-mortgage-01"
     "label": "Redfin 奥斯汀房贷月供估算"
-    translation: |-
-      我正在奥斯汀寻找一套预算在 $500,000–$600,000 之间的住房，并希望估算一套符合条件房源的月供。请访问 redfin.com，搜索“Austin, TX”。应用以下筛选条件：仅限 Single Family，价格范围为 $500,000–$600,000。按 Price (Low to High) 排序，然后打开第一套房源。在房源页面找到 Payment Calculator，将 Down Payment 设为 20%，同时保持默认利率不变。最后，请提供房产地址、挂牌价格，以及计算出的 Estimated Monthly Payment。
     "prompt": "I'm looking for a home in Austin with a budget between $500,000 and $600,000, and I want to estimate the monthly payment for a qualifying listing. Go to redfin.com and search for \"Austin, TX\". Apply these filters: Single Family only and a price range of $500,000–$600,000. Sort the results by Price (Low to High), then open the first listing. Find the Payment Calculator on the listing page and set the Down Payment to 20% while leaving the default interest rate unchanged. Finally, provide the property address, listed price, and calculated Estimated Monthly Payment."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website. The source marks this task as requiring a signed-in session for Redfin."
   - "id": "rwb-expedia-flight-01"
     "label": "Expedia 纽约至迈阿密机票"
-    translation: |-
-      我正计划在下周五从纽约前往迈阿密，想确认一趟价格合理的直飞航班及其含税最终价格。请在 Expedia 搜索下周五从纽约（JFK）到迈阿密（MIA）的单程航班。应用 Nonstop 筛选条件，并按 Price (Low to High) 排序。选择最便宜的直飞 Delta 或 American Airlines 航班，并继续进入旅客信息页面。使用模拟数据填写表单：姓名 Alex Morgan，出生日期 1992-10-12，性别 Male，以及任意美国格式的电话号码，例如 212-555-0147。完成旅客表单后即停止——不要输入任何信用卡或付款信息，也不要提交或完成预订。请列出航班号、起飞时间和含税总价。
     "prompt": "I'm planning a trip from New York to Miami next Friday and want to confirm a reasonably priced nonstop flight and its final price including taxes. On Expedia, search for a one-way flight next Friday from New York (JFK) to Miami (MIA). Apply the Nonstop filter and sort by Price (Low to High). Select the cheapest nonstop Delta or American Airlines flight and continue to the traveler information page. Fill out the form using mock data: name Alex Morgan, date of birth 1992-10-12, gender Male, and any U.S.-format phone number such as 212-555-0147. Stop after completing the traveler form—do not enter any credit card or payment information, and do not submit or complete the booking. List the flight number, departure time, and total price including taxes."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website. The source marks this task as requiring a signed-in session for Expedia."
   - "id": "rwb-hn-top10-01"
     "label": "Hacker News 前十热门帖概览"
-    translation: |-
-      我想快速了解 Hacker News 首页当天最突出的主题，以及哪些帖子引发了最多讨论。请访问 https://news.ycombinator.com，收集当前排名靠前的 10 篇帖子；跳过任何没有分数的招聘帖，并继续向下查看，直到获得 10 篇有分数的帖子。对每篇帖子，记录其排名、标题、积分分数和评论数量。然后计算这 10 篇帖子的平均分数和平均评论数，均四舍五入到 1 位小数；并找出评论数与积分数之比最高的帖子，给出其标题和该比率，后者四舍五入到 2 位小数。
     "prompt": "I want a quick overview of today's most prominent topics on the Hacker News homepage and which posts are generating the most discussion. Visit https://news.ycombinator.com and collect the current top 10 posts, skipping any job post with no score and continuing farther down the list until you have 10 scored posts. For each one, record its rank, title, score in points, and number of comments. Then calculate the average score and average comment count across the 10 posts, rounded to one decimal place, and identify the post with the highest comments-to-points ratio, giving its title and the ratio rounded to two decimal places."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-imdb-scifi-01"
     "label": "IMDb 近年高分科幻电影"
-    translation: |-
-      我想把一些高评分的近年科幻电影加入待看清单，并为周末挑选 5 个选项。请使用 IMDb Advanced Search（https://www.imdb.com/search/title/）查找符合以下条件的电影：Genres 设为 Sci-Fi，Release date 为 2020-01-01 至 2024-12-31，IMDb 用户评分至少为 8.0，且 Title type 限制为 Movie。按 IMDb rating 降序排列结果。列出排序后的前 5 部电影，包括标题、年份、评分和片长；若页面未显示某项字段，请写“Not listed”。最后，计算这 5 部电影的平均评分，四舍五入到 2 位小数。
     "prompt": "I want to add some highly rated recent science-fiction films to my watchlist and choose 5 options for the weekend. Use IMDb Advanced Search at https://www.imdb.com/search/title/ to find films with Genres set to Sci-Fi, a Release date from 2020-01-01 through 2024-12-31, an IMDb user rating of at least 8.0, and Title type limited to Movie. Sort the results by IMDb rating, descending. List the first 5 films after sorting, including title, year, rating, and runtime; if a field is not shown on the page, write \"Not listed\". Finally, calculate the average rating of the 5 films, rounded to two decimal places."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-calcnet-mortgage-01"
     "label": "Calculator.net 房贷成本测算"
-    translation: |-
-      我正在评估一套 $550,000 房屋的融资成本，并想知道每月还款额及整个贷款期限内的总利息。请访问 https://www.calculator.net/mortgage-calculator.html，将房贷计算器设置为：Home Price 为 $550,000，Down Payment 为 20%，Loan Term 为 30 years，Interest Rate 为 6.5%，然后点击 Calculate。请提供四项结果：仅包含本金和利息、不含税费和其他费用的 Monthly Payment；Loan Amount；Total Interest；以及 360 次还款的本金和利息总额，显示为 Total of 360 Payments 或 Total Payments。
     "prompt": "I'm evaluating the financing cost of a $550,000 home and want to know the monthly payment and total interest over the life of the loan. Visit https://www.calculator.net/mortgage-calculator.html and set the mortgage calculator to a Home Price of $550,000, a Down Payment of 20%, a Loan Term of 30 years, and an Interest Rate of 6.5%, then click Calculate. Provide four results: the Monthly Payment for principal and interest only, excluding taxes and fees; the Loan Amount; the Total Interest; and the total principal and interest across 360 payments, shown as Total of 360 Payments or Total Payments."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-cars-payment-01"
     "label": "Cars.com 凯美瑞月供估算"
-    translation: |-
-      我想在纽约购买一辆较新的二手 Toyota Camry，并希望估算符合条件的最低价房源在支付 $5,000 首付后的月供。请访问 cars.com，在邮编 10001（New York, NY）50 英里范围内搜索“Used Toyota Camry”。应用以下筛选条件：车型年份为 2020 年或更新（Year 2020+），且里程不超过 60,000 miles。按 Price (Low to High) 排序，并打开第一辆车的详情页。在该页面找到 Monthly Payment Calculator，将 Down Payment 改为 $5,000，并将 Loan Term 设为 60 months，同时保持默认利率不变。最后，请提供车辆完整名称（包括年份和车型）、Dealer 名称、Listed Price，以及计算出的 Estimated Monthly Payment。
     "prompt": "I'm looking to buy a relatively recent used Toyota Camry in New York and want to estimate the monthly payment for the lowest-priced qualifying listing with a $5,000 down payment. Visit cars.com and search for \"Used Toyota Camry\" within 50 miles of ZIP code 10001 (New York, NY). Apply these filters: model year 2020 or newer (Year 2020+) and mileage of 60,000 miles or less. Sort the results by Price (Low to High) and open the first vehicle listing. Find the Monthly Payment Calculator on the listing page, change the Down Payment to $5,000, and set the Loan Term to 60 months while leaving the default interest rate unchanged. Finally, provide the vehicle's full name, including year and model, the Dealer name, the Listed Price, and the calculated Estimated Monthly Payment."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website. The source marks this task as requiring a signed-in session for Cars.com."
   - "id": "rwb-yahoo-stocks-01"
@@ -157,38 +241,26 @@ tasks:
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-yelp-opentable-01"
     "label": "Yelp/OpenTable 芝加哥纪念日晚餐"
-    translation: |-
-      我正在规划一顿纪念日晚餐，想在芝加哥找一家评价高、价格适中且支持在线预订的意大利餐厅。请使用以芝加哥当地日期为准的下一个日历周的星期六，不包括本周的星期六。在 yelp.com 中搜索“Italian Restaurants”，地点设为“Chicago, IL”。应用以下筛选条件：评分至少 4.0 星、价格为 $$，并支持 OpenTable Reservations。按 Review Count 从高到低排序，选择评论数最多的餐厅，并打开其 Yelp 详情页。点击“Reserve a Table”，进入 opentable.com 上对应的预订页面，然后为该星期六晚上 7:00 PM 预订 2 人。使用模拟数据填写联系人信息：姓名 Morgan Chen、电子邮件 morgan.c@example.com、电话 312-555-0166，并在特殊请求字段输入“Anniversary dinner”。在最终的 Complete Reservation 按钮之前停止，不要提交。请列出以下字段供我审核：餐厅名称、Yelp 评分和评论数、预订日期和时间、用餐人数，以及可用时所选的座位类型。
     "prompt": "I'm planning an anniversary dinner and want a well-reviewed, moderately priced Italian restaurant in Chicago that accepts online reservations. Use the Saturday in the next calendar week based on the local date in Chicago, excluding this week's Saturday. On yelp.com, search for \"Italian Restaurants\" in \"Chicago, IL\". Apply these filters: rating of at least 4.0 stars, price $$, and support for OpenTable Reservations. Sort the results by Review Count from highest to lowest, select the restaurant with the most reviews, and open its Yelp detail page. Click \"Reserve a Table\" to reach the corresponding reservation page on opentable.com, then set the reservation for 2 people at 7:00 PM on that Saturday. Fill in the contact details using mock data—name Morgan Chen, email morgan.c@example.com, and phone 312-555-0166—and enter \"Anniversary dinner\" in the special requests field. Stop before the final Complete Reservation button and do not submit. List these fields for me to review: restaurant name, Yelp rating and review count, reservation date and time, party size, and selected seating type if one is available."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website. The source marks this task as requiring a signed-in session for Yelp, OpenTable."
   - "id": "rwb-reddit-greenhouse-01"
     "label": "Reddit 美国远程工程师申请"
-    translation: |-
-      我正在寻找美国的远程工程岗位，并希望准备申请 Reddit 的一个职位。请在 Reddit 职位板 https://job-boards.greenhouse.io/reddit 上使用关键词“Engineer”搜索职位。从结果中选择一个职位：职位名称包含“Engineer”、不包含“Manager”，且工作地点为“Remote - United States”；然后打开该职位的申请页面。使用模拟数据填写基本申请字段：First Name = Morgan、Last Name = Chen、Email = morgan.c@example.com、Phone = 312-555-0166。对于 Cover Letter，选择“Enter manually”，并输入一段简短的申请说明，其中必须包含职位名称，以及一个可入职日期：恰好为执行日期（今天）后两周（today + 14 days），并使用 YYYY-MM-DD 格式书写。完成后，请在最终的“Submit application”按钮之前停止，不要提交申请。请列出已完成的字段供我复核：职位名称、工作地点、姓名、电子邮件、电话号码，以及在 Cover Letter 中填写的可入职日期。
     "prompt": "I'm looking for a remote engineering role in the United States and want to prepare an application for a position at Reddit. On the Reddit job board at https://job-boards.greenhouse.io/reddit, search for jobs using the keyword \"Engineer\". From the results, choose a position whose title contains \"Engineer\" but not \"Manager\" and whose location is \"Remote - United States\", then open its application page. Fill in the basic application fields with mock data: First Name = Morgan, Last Name = Chen, Email = morgan.c@example.com, and Phone = 312-555-0166. For the Cover Letter, choose \"Enter manually\" and enter a short application note that includes the title of the position and an available start date exactly two weeks after the execution date (today + 14 days), written in YYYY-MM-DD format. When finished, stop before the final \"Submit application\" button and do not submit. List the completed fields for me to review: position title, work location, name, email, phone number, and the available start date entered in the Cover Letter."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-reddit-pf-indexfund-01"
     "label": "Reddit 指数基金热门帖子"
-    translation: |-
-      我正在研究指数基金，想了解 r/personalfinance 中有关这一主题的哪些帖子最受欢迎。请在 Reddit 的 r/personalfinance 社区搜索关键词“index fund”，将搜索范围限制在该社区内，按 Top 排序，并将时间范围设为 past year。按结果从上到下的顺序取前 8 个帖子。对每个帖子记录其排名、标题、积分、评论数和提交时间（例如“1 month ago”），并整理成包含 Rank、Title、Points、Comments 和 Submission Time 的表格。然后提供以下汇总：这 8 个帖子的平均积分和平均评论数，均四舍五入到一位小数；积分最高的帖子，包括其标题和积分；以及评论数与积分之比最高的帖子，包括其标题和该比值，四舍五入到三位小数。
     "prompt": "I'm researching index funds and want to see which posts about the topic are most popular in r/personalfinance. Search the Reddit r/personalfinance community for the keyword \"index fund\", restrict the search to that community, sort by Top, and set the time range to past year. Take the first 8 posts from the top of the results in order. For each one, record its rank, title, points, comment count, and submission time such as \"1 month ago\", and organize them in a table with Rank, Title, Points, Comments, and Submission Time. Then provide several summaries: the average points and average comment count across the 8 posts, each rounded to one decimal place; the post with the highest points, including its title and points; and the post with the highest comments-to-points ratio, including its title and the ratio rounded to three decimal places."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-github-trending-py-01"
     "label": "GitHub 本周热门 Python 项目"
-    translation: |-
-      我想了解本周 GitHub 上哪些 Python 项目最热门。请打开 GitHub Trending 页面 https://github.com/trending，将语言设为 Python，并将时间范围设为 This week。取本周热门列表中的前 8 个仓库，记录每个仓库的排名、全名（owner/repo）、本周新增 Star 数（以“X stars this week”显示的数值为准）、总 Stars、总 Forks，以及一行描述；如果没有描述，写“Not listed”。将结果整理成表格。然后计算这 8 个仓库本周新增 Star 数的总和与平均值，平均值四舍五入到一位小数。最后，找出“本周新增 Star 数 / 总 Stars”比值最高的仓库，即近期增长势头最强的仓库，并给出其全名及该比值，四舍五入到三位小数。
     "prompt": "I want to see which Python projects are hottest on GitHub this week. Open the GitHub Trending page at https://github.com/trending, set the language to Python, and set the time range to This week. Take the first 8 repositories from this week's trending list and record each repository's rank, full name (owner/repo), stars gained this week as shown by \"X stars this week\", total Stars, total Forks, and one-line description; write \"Not listed\" if there is no description. Organize the results in a table. Then calculate the total and average number of stars gained this week across the 8 repositories, rounding the average to one decimal place. Finally, identify the repository with the highest ratio of stars gained this week to total Stars—the one with the strongest recent surge—and provide its full name and the ratio rounded to three decimal places."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-bankrate-compound-01"
     "label": "Bankrate 复利储蓄与 CryptPad 表格"
-    translation: |-
-      我想计算长期储蓄的复利增长，并将结果保存到在线电子表格中供日后参考。首先，打开 Bankrate 的复利储蓄计算器 https://www.bankrate.com/banking/savings/compound-savings-calculator/，输入以下数值：当前储蓄 $25,000、储蓄期限 20 年、年回报率 7%，以及每月额外投入 $500；将投入频率设为 Per month，并将复利频率设为 Compound monthly。点击 Calculate。记录三个结果：Your estimated savings、Total amount contributed 和 Total interest。然后计算 Total interest 与 Total amount contributed 的比值，四舍五入到两位小数，以显示每投入 1 美元所产生的利息金额。随后，在 CryptPad Sheets 中新建一个名为“Compound Savings 25k-20y”的电子表格，并将上述三个结果和该比值填入两列，列名为 Item 和 Amount，供我日后查阅。
     "prompt": "I want to calculate the compound growth of long-term savings and store the results in an online spreadsheet for future reference. First, open Bankrate's compound savings calculator at https://www.bankrate.com/banking/savings/compound-savings-calculator/ and enter these values: current savings of $25,000, a 20-year saving period, a 7% annual rate of return, and an additional $500 contribution each month with the contribution frequency set to Per month and the compounding frequency set to Compound monthly. Click Calculate. Record the three results: Your estimated savings, Total amount contributed, and Total interest. Then calculate the ratio of Total interest to Total amount contributed, rounded to two decimal places, to show how much interest is generated per dollar contributed. Afterward, create a new spreadsheet in CryptPad Sheets named \"Compound Savings 25k-20y\" and enter those three results and the ratio in two columns labeled Item and Amount so I can refer to them later."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-metacritic-actionrpg-01"
     "label": "Metacritic PS5 与 PC 动作 RPG 对比"
-    translation: |-
-      我想比较 PS5 和 PC 上评分最高的 Action RPG 游戏。请打开 Metacritic 的游戏浏览页面 https://www.metacritic.com/browse/game/，在类型筛选器中只选择 Action RPG；如果列表被折叠，请点击 Show More；并按 Metascore 从高到低排序。先将平台设为 PS5，记录前 5 款游戏，包括排名、游戏名称、发布日期和 Metascore。然后在不改变类型筛选或排序方式的情况下，将平台切换为 PC，并同样记录前 5 款游戏。将结果整理为两张表：PS5 Top 5 和 PC Top 5。最后比较三项内容：每个平台 5 款游戏的平均 Metascore，四舍五入到两位小数；同时出现在两个 Top 5 列表中的游戏，使用游戏名称求交集并报告其名称和数量；以及哪一个平台的排名第一游戏拥有更高的 Metascore，以及高出多少分。
     "prompt": "I want to compare the highest-rated Action RPG games on PS5 and PC. Open Metacritic's game browse page at https://www.metacritic.com/browse/game/, select only Action RPG in the genre filter, clicking Show More if the list is collapsed, and sort by Metascore from highest to lowest. First set the platform to PS5 and record the first 5 games, including rank, game title, release date, and Metascore. Then switch the platform to PC without changing the genre or sort and record the first 5 games there as well. Organize the results into two tables: PS5 Top 5 and PC Top 5. Finally, compare three things: the average Metascore of each platform's 5 games, rounded to two decimal places; the games that appear in both Top 5 lists, using game titles for the intersection and reporting their names and count; and which platform's top-ranked game has the higher Metascore and by how many points."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-stockanalysis-tech-01"
@@ -199,60 +271,30 @@ tasks:
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-zillow-greatschools-austin-01"
     "label": "Zillow/GreatSchools 奥斯汀房源筛选"
-    translation: |-
-      我有一位客户要搬到得克萨斯州奥斯汀，非常重视学校质量；我想在明天与客户通话前准备一份合适的候选房源清单。请先在 Zillow 上搜索得克萨斯州奥斯汀在售的独栋住宅，条件为 3 间及以上卧室、价格低于 $650,000，并按最新发布的房源排序；从最近 7 天内发布的房源中，恰好提取 4 条。对每条房源记录地址、挂牌价、在 Zillow 上的天数和面积（平方英尺）。获得这些地址后，使用 GreatSchools 查询这 4 处房产各自划片对应的小学，并记录每所学校满分 10 分的 GreatSchools 评分。按照“挂牌价 / 学校评分”对全部 4 处房产排序，比值最低者优先；若评分不可用，将该房产标为未排名；若比值相同，则挂牌价较低者优先。另行找出学校评分为 7 或以上的房产中价格最低的一处，作为性价比推荐；如果没有任何一处达到 7 分，请明确说明，并改用排名第一的房产作为推荐。请在单独的标签页中打开推荐房产的 Zillow 详情页，以便我查看照片。最后，简要汇总这 4 处房产，并保持推荐 Zillow 房源标签页及其对应的 GreatSchools 学校页面打开，以便我向客户展示可视化依据。
     "prompt": "I have a client relocating to Austin, TX who cares a lot about school quality, and I want to set up a proper shortlist before our call tomorrow. Please start on Zillow and search for single-family homes for sale in Austin, TX with 3+ bedrooms and priced under $650,000, sorted by newest listings, and pull exactly 4 listings that have been posted in the last 7 days — for each one note the address, list price, days on Zillow, and square footage. Once you have those addresses, use GreatSchools to look up the elementary school zoned for each of those 4 properties and record each school's GreatSchools rating out of 10. Rank all four by list price divided by school rating, lowest ratio first; if a rating is unavailable, mark that property unranked, and break equal ratios by lower list price. Separately identify the lowest-priced property with a school rating of 7 or higher as the sweet-spot recommendation; if none reaches 7, say so and use the top ranked property as the recommendation instead. Open the recommended property's Zillow detail page in its own tab so I can see the photos. At the end, give me a concise summary of the 4 properties and keep the recommended Zillow listing tab and its corresponding GreatSchools school page open so I can show my client the visual proof."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-xe-irs-reimbursement-01"
     "label": "XE/IRS 差旅报销数据核对"
-    translation: |-
-      我正在处理一名员工提交的欧元商务出差收据报销，在最终确定金额前，想在线复核几项信息。请先在 XE.com 上查询 EUR 兑 USD 的汇率，特别记录今天的中间市场汇率，并保持该页面打开，以便我为费用档案截图。获得该汇率后，前往 IRS 网站，找到当前关于差旅每日补贴费率或商务出行标准里程费率的页面，两者中以较容易找到者为准；记录页面列出的具体美元金额，以及其适用的税务年度。然后给我一份简短摘要，并排列出今天的 EUR/USD 汇率和当前 IRS 的每日补贴或里程费率数值，以便我将这两个数字附在报销备忘录中。
     "prompt": "I'm processing a reimbursement for an employee who submitted receipts in euros from a business trip, and before I finalize the numbers I want to double check a couple of things online. Could you start on XE.com and look up the EUR to USD exchange rate, noting today's mid-market rate specifically, then leave that page open so I can screenshot it for the expense file? Once you have that rate, go to the IRS website and find the current page on per diem rates or the standard mileage rate for business travel (whichever page is easier to locate), and note the specific dollar figure listed along with which tax year it applies to. Then give me a short summary that states today's EUR/USD rate and the current IRS per diem or mileage figure side by side, so I can attach both numbers to the reimbursement memo."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-youtube-finance-channel-01"
     "label": "YouTube 个人理财频道内容调研"
-    translation: |-
-      我正在与个人理财领域的创作者对标，以便规划下个月的内容日历。请前往 YouTube，找到一位真实且仍在活跃的个人理财 YouTuber 的频道，例如知名预算管理或投资类频道，并且只查看其最近 30 天内上传的内容。对于该时间窗口内的每一条实际常规视频，请排除直播回放、YouTube Shorts，以及不是实际视频的“社区帖子”式上传内容；记录至少 5 条符合条件的视频的标题、上传日期、观看次数和点赞数。同时，请注明其中是否有任何视频明显属于多集系列的一部分，即同一主题被拆分成多期，因为我不希望将它们重复计算为不同的内容创意。获得这 5 条视频后，告诉我哪一条视频的观看数与点赞数之比最高，并打开该视频页面，以便我观看其内容结构。最后，给出一张简明的 5 条视频统计汇总表，标记系列条目，并保持该最高比值视频的页面在一个标签页中打开。
     "prompt": "I'm benchmarking myself against a creator in the personal finance space before I plan next month's content calendar. Please go to YouTube and pull up the channel for a real, active personal finance YouTuber (something like a well-known budgeting or investing channel), and look at their uploads from the last 30 days only. For each actual regular video in that window — please filter out any live stream replays, YouTube Shorts, and any 'community post' style uploads that aren't real videos — record the title, upload date, view count, and like count for at least 5 qualifying videos. While you're at it, note whether any of those 5 videos are clearly part of a multi-part series (same topic split across episodes), since I don't want to double-count those as separate content ideas. Once you have the 5 videos, tell me which single video has the highest view-to-like ratio and open that video's page so I can watch how they structured it. At the end, give me a concise summary table of the 5 videos with their stats, flag any series entries, and keep that top video's page open in a tab."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-amazon-bottle-leaks-01"
     "label": "Amazon 不锈钢水瓶漏水评价"
-    translation: |-
-      我销售同一类别中的竞品，想研究客户在抱怨什么。请前往 Amazon，在“不锈钢水瓶”（stainless steel water bottle）类别中搜索一款具体、真实且至少拥有 1,000 条客户评分的产品，打开其商品页面，并使用评价区域的关键词搜索框（标签类似“Search customer reviews”）搜索“leak”。从该关键词搜索结果中找出至少 4 条明确描述封闭系统漏水的评价，封闭系统包括瓶盖、密封圈、垫圈、吸管或饮水嘴；记录每条评价的星级和一段简短引用。在这些评价中，选出一条负面评价：它应覆盖下列证据类别中数量最多的项目，包括持有/使用时长、漏水频率、受影响的封闭部件、发生漏水的条件，以及尝试过的修复方法。如果证据类别数量相同，优先选择可见评价文本更长的一条；如果仍相同，优先选择 Amazon 搜索结果中出现更早的一条。最后，简要汇总你找到的漏水相关投诉、星级，并指出哪条评价在该比较中胜出；保持产品评价页面打开，以便我查看。
     "prompt": "I sell a competing product in the same category and I want to research what customers are complaining about. Please go to Amazon and search for a specific real product in the 'stainless steel water bottle' category with at least 1,000 customer ratings, open its product page, and use the review section's keyword search box (labeled something like 'Search customer reviews') to search for 'leak'. Find at least 4 reviews from that keyword search that specifically describe leakage from the closure system—the lid, seal, gasket, straw, or spout—and record the star rating and a short quote from each. Among those, pick the single negative review that covers the greatest number of these evidence categories: ownership duration, leak frequency, affected closure component, conditions when it leaks, and attempted fixes. Break a category-count tie by the longer visible review text, then by earlier Amazon result order if still tied. At the end, give me a concise summary of the leak-related complaints you found, the star ratings, and identify which review won that comparison, keeping the product review page open so I can see it."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-houzz-homedepot-backsplash-01"
     "label": "Houzz/Home Depot 厨房防溅板选材"
-    translation: |-
-      我正在为一位客户的厨房防溅板翻新制作情绪板和粗略预算，因此想先确定整体风格，再进行价格估算。请先在 Houzz 上搜索 “subway tile kitchen backsplash” 图片，找出 2–3 张展示人字形或经典地铁砖铺贴、且色调为白色或米白色的项目照片；记录 Houzz 为每张照片列出的项目标题或设计风格标签，并在单独的标签页中打开其中最有希望的一张，以便我向客户展示。
-
-      在确定这一总体风格后，前往 Home Depot，专门搜索尺寸为 3×6 英寸的白色地铁砖，并找到至少 3 个真实商品列表。对每个商品记录每平方英尺价格（或每箱价格，并注明覆盖面积）、品牌和客户评分。以 Houzz 图片的风格为依据，根据表面描述（亮光 glossy 与哑光 matte）告诉我这 3 种 Home Depot 瓷砖中哪一种在视觉上最匹配。
-
-      最后，请给我一份简洁总结，按价格和表面质感比较这 3 种瓷砖选项；并保持 Houzz 照片标签页和一个 Home Depot 商品标签页打开，以便我能与客户并排比较。
     "prompt": "I'm putting together a mood board and rough budget for a client's kitchen backsplash redo, so I want to nail down a look before pricing it out. Please start on Houzz and search for 'subway tile kitchen backsplash' photos, and find 2-3 project photos that show a herringbone or classic subway pattern in a white or off-white tone, noting the project title or design style tag Houzz lists for each, and open the most promising one in its own tab so I can show the client. Once you've settled on that general style, go to Home Depot and search for white subway tile specifically sized 3x6 inches, and find at least 3 real product listings, recording the price per square foot (or per box, noting the coverage), the brand, and the customer rating for each. Use the Houzz photo's style as your anchor and tell me which of the 3 Home Depot tile options would visually match it best based on the finish description (glossy vs matte). At the end, give me a concise summary comparing the 3 tile options by price and finish, and keep the Houzz photo tab and one Home Depot product tab open so I can compare them side by side with the client."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-google-flights-booking-miami-01"
     "label": "Google Flights/Booking 迈阿密周末行程"
-    translation: |-
-      我想在未来两个月内安排一次从纽约到迈阿密的周末旅行，并希望找到最便宜且实际可行的组合。请先在 Google Flights 上搜索 NYC 往返 Miami 的航班，使用灵活日期网格视图，在接下来 8 周内找出最便宜的“星期五出发、紧接着的星期日返程”选项。记录具体日期、往返总价和航空公司，然后打开该航班的票价详情，以便我查看行李政策。
-
-      以该往返航班价格作为预算锚点：对于同一个星期五至星期日、共两晚的住宿，我不希望酒店花费超过机票价格。前往 Booking.com，按这些确切日期搜索迈阿密酒店，筛选评分 8 分以上且可免费取消的选项，并找出至少 3 家两晚总价低于机票价格的酒店。记录每家酒店的名称、总价、评分以及距 South Beach 的距离。
-
-      最后，请简洁推荐哪一家酒店最适合搭配该航班日期和价格上限；并保持 Google Flights 票价页面和胜出的 Booking.com 房源页面打开，以便我进行视觉比较。
     "prompt": "I'm trying to plan a weekend trip from New York to Miami sometime in the next two months and I want to find the cheapest realistic combo. Please start on Google Flights and search NYC to Miami round trip, using the flexible date grid view, and find the cheapest Friday-departure, immediately-following-Sunday-return option within the next 8 weeks. Note the specific dates, total round-trip price, and airline, then open that flight's fare details so I can see the baggage policy. Use that round-trip flight price as the budget anchor: I don't want to spend more on the hotel for the same Friday-to-Sunday two-night stay than I spent on the flight. Go to Booking.com and search Miami hotels for those exact dates, filtering for a rating of 8+ and free cancellation, and find at least 3 options where the total two-night price is under the flight cost. Record each hotel's name, total price, rating, and distance from South Beach. At the end, give me a concise recommendation on which hotel pairs best with the flight dates and price ceiling, and keep the Google Flights fare page and the winning Booking.com listing open so I can compare them visually."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-courtlistener-sec-helix-01"
     "label": "CourtListener/SEC Helix 诉讼尽调档案"
-    translation: |-
-      我是诉讼协理律师，正在为下周二针对一家名为 “Helix Energy Solutions Group” 的公司的证词采集做准备。在证词采集前，我需要整理一份背景档案。请先在 CourtListener（即 RECAP Archive；它镜像了最初来自 PACER 的联邦法院案卷）中搜索过去 5 年内立案、案件中出现 Helix Energy Solutions Group 名称的所有联邦民事案件。对每个案件列出案号、法院、立案日期、当事人以及一行诉讼性质说明；并保持最新案件的案卷页面打开，以便我浏览。
-
-      请注意，RECAP 只会收录 PACER 用户曾经浏览过的案件；如果覆盖范围看起来不足，或者你预期存在的案件似乎缺失，请明确标示，而不要把“无结果”视为不存在诉讼的证据。
-
-      得到案件清单后，前往 SEC EDGAR 并打开 Helix 最新的 10-K 年报。提取总营收、净利润、审计师名称，以及法律程序（legal proceedings）章节中有关待决诉讼的任何披露；保持该 10-K 文件标签页打开。
-
-      然后，前往 Delaware Court of Chancery 网站。由于该公司在 Delaware 注册成立，请查找在截至任务开始时间的同一 5 年窗口内立案、名称中包含 Helix 的任何公司治理争议，并记录你能找到的案件标题和立案日期。如果网站要求登录才能查看详情，请说明这一点，并记录无需账户即可公开看到的内容。
-
-      最后，请给我一份简洁的证词采集准备简报，结合 CourtListener 的诉讼历史、10-K 中的财务概况，以及法律程序披露中的任何风险信号；清楚指出较早的联邦案件是否仍在进行或已经和解方面的任何不确定性，以及依赖 RECAP 而非实时 PACER 账户所带来的任何覆盖缺口。保持 CourtListener 案卷标签页和 10-K 标签页打开。
     "prompt": "I'm a litigation associate preparing for a deposition next Tuesday against a company called 'Helix Energy Solutions Group'. I need to pull together a background dossier before the depo. Start on CourtListener (the RECAP Archive, which mirrors federal court dockets originally sourced from PACER) and search for any federal civil cases naming Helix Energy Solutions Group filed in the last 5 years — for each case, list the case number, the court, the filing date, the parties, and a one-line nature of suit, and leave the docket page open for the most recent case so I can scan it. Be aware that RECAP only captures cases that PACER users have browsed, so explicitly flag if coverage looks thin or if a case you'd expect to exist appears to be missing, rather than treating 'no results' as proof of no litigation. Once you've got that case list, go to SEC EDGAR and pull up Helix's most recent 10-K annual report — extract the total revenue, net income, the name of the auditor, and anything disclosed in the legal proceedings section about pending litigation — leave that 10-K filing tab open. After that, check the Delaware Court of Chancery website (since they're Delaware-incorporated) for any corporate governance disputes naming Helix filed within the same five-year window ending at the task start time, and note any case captions and filing dates you can find; if the site asks you to log in to view details, say so and record what's publicly visible without an account. At the end, give me a concise deposition-prep brief that combines the litigation history from CourtListener, the financial snapshot from the 10-K, and any red flags from the legal proceedings disclosure, and clearly point out any uncertainty about whether the older federal cases are still active versus settled, as well as any coverage gaps from relying on RECAP instead of a live PACER account. Keep the CourtListener docket tab and the 10-K tab open."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-scratch-apple-dash-01"
@@ -278,24 +320,10 @@ tasks:
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-2048-reach-256-01"
     "label": "Classic 2048 达成 256"
-    translation: |-
-      我正在测试浏览器智能体能否在棋盘状态变得不利时，持续做出一长串有状态的游戏决策而不重置。请打开原版 Classic 2048 并开始一局新游戏。在不刷新页面、也不重新开始游戏的情况下，持续游玩，直到合成一个 256 方块。
-
-      256 方块一出现，就停止移动，报告当前分数，并保持 Classic 2048 标签页打开，使棋盘、256 方块和分数均清晰可见。
     "prompt": "I'm testing whether a browser agent can sustain a long sequence of stateful game decisions without resetting when the board becomes inconvenient. Open the original Classic 2048 and start one new game. Without refreshing the page or restarting the game, keep playing until you create a 256 tile. As soon as the 256 tile appears, stop making moves, report the current score, and leave the Classic 2048 tab open with the board, the 256 tile, and the score visible."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-song-maker-mirror-loop-01"
     "label": "Chrome Song Maker 镜像循环"
-    translation: |-
-      我正在为初学者音乐工作坊准备一项视觉编配练习，需要一个完整、可检查的循环，而不是快速草稿。在一个全新的 Chrome Music Lab Song Maker 网格中，首先将 Length 设为 4 bars、Beats per bar 设为 4、Split beats into 设为 2、Scale 设为 Major、Start on 设为 C / Middle、Range 设为 2 octaves、Tempo 设为 120 BPM。音高乐器使用 Marimba，打击乐器使用 Kit。
-
-      将每个小节视为 8 个八分音符列。主旋律只能填在每拍的起始列，所有相邻的细分列必须留空。在第 1–2 小节，以较低音区输入一个由 8 个音构成的 C 大调上行阶梯：第 1 小节为 C-D-E-F，第 2 小节为 G-A-B-下一个更高的 C。在第 3–4 小节，将这一确切序列反向，形成镜像：第 3 小节为高音 C-B-A-G，第 4 小节为 F-E-D-C。
-
-      在该阶梯旋律上方加入一个第二八度的持续音型，但不得填入任何非拍点列：每个小节的第 1 拍放置高八度 G，第 3 拍放置高八度 C。在 Kit 打击乐行中，每个小节的第 1、3 拍放置底鼓（kick drum），第 2、4 拍放置军鼓（snare drum），所有中间的八分音符列均不得放置打击乐。
-
-      开始播放前，目视检查四个小节是否全部可见、主旋律右半部分是否为左半部分的水平反向，以及所有非拍点列是否保持为空。从开头开始播放，让播放头至少完整走过四个小节一次；当它回到起点时立即暂停；不要有意让第二次完整循环播放。
-
-      然后给我一份简洁的编配检查说明，列出设置、上行与下行音符序列、持续音型、鼓点模式和播放状态。保持完整的四小节网格可见且处于暂停状态，不要点击 Save。
     "prompt": "I'm preparing a visual arranging exercise for a beginner music workshop and need a complete, inspectable loop rather than a quick sketch. In a fresh Chrome Music Lab Song Maker grid, first configure Length to 4 bars, Beats per bar to 4, Split beats into to 2, Scale to Major, Start on to C / Middle, Range to 2 octaves, and Tempo to 120 BPM. Use Marimba for the tonal instrument and Kit for percussion.
 
 
@@ -309,54 +337,18 @@ tasks:
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-census-sba-qcew-naics541511-01"
     "label": "Census/SBA/QCEW 市场规模测算"
-    translation: |-
-      我是增长运营经理，正在构建面向美国定制软件开发公司的自助式获客漏斗。在提出季度获客目标前，我需要一份针对 NAICS 541511（Custom Computer Programming Services）的、经得起核查的市场规模简报。
-
-      请先前往美国人口普查局的 Statistics of U.S. Businesses（SUSB）页面 `census.gov/programs-surveys/susb.html`，打开全国层面 NAICS 541511 的最新数据表。记录数据年份、企业就业规模类别、每个员工人数低于 20 人的类别中的公司数（若表格将 20 人以下规模类别分开列出，则汇总各个 20 人以下类别）、同一规模类别对应的经营场所数，以及该行业的总就业人数；务必清楚区分 firms（公司）与 establishments（经营场所）。保持 SUSB 表格打开。
-
-      将 NAICS 541511 的员工人数低于 20 人的企业规模类别中汇总得到的公司数，作为初始可触达公司数量。然后前往美国 Small Business Administration 网站 `sba.gov`，找到现行小型企业规模标准表；查找 NAICS 541511 的规模标准，记录页面公布的完整标准，包括它是以平均年营业收入的百万美元数表示，还是以员工人数表示，并记录上限值。若该标准基于营业收入，请明确说明：仅凭 SUSB 的员工规模类别数据，无法确定这些员工人数低于 20 人的公司中有多少实际符合营业收入门槛。
-
-      接着前往 Bureau of Labor Statistics 的 QCEW 页面 `bls.gov/cew`，在全国层面、使用 Private 所有权范围查找 NAICS 541511。记录该所有权范围、数据季度、经营场所数、总就业人数和平均周薪，并将 QCEW 的经营场所数与同一 NAICS 541511 的 SUSB 经营场所总数进行数量级比较。
-
-      最后，请给我一份简洁的市场规模简报，串联 NAICS 541511 的 SUSB 公司数与经营场所数、页面公布的确切 SBA 规模标准、同一行业和地理范围内的 QCEW 经营场所交叉核对，以及一项保守的可触达公司估计；并明确附注：如果 SBA 标准基于营业收入，员工规模数据无法证明资格。保持 SUSB 表格和 SBA 规模标准页面打开，作为视觉证据。
     "prompt": "I'm a growth operations manager building a self-serve funnel targeting US custom software development firms and need a defensible market-sizing brief for NAICS 541511 (Custom Computer Programming Services) before I propose a quarterly acquisition target. Start on the U.S. Census Bureau's Statistics of U.S. Businesses (SUSB) page at census.gov/programs-surveys/susb.html and open the latest data table for NAICS 541511 at the national level, recording the data year, the enterprise employment-size classes, the number of firms in each class below 20 employees (summing the individual under-20 size classes if the table breaks them out separately), the corresponding establishment count for those same size classes, and the total employment for that industry, keeping firms and establishments clearly distinguished. Keep the SUSB table open. Use the summed number of NAICS 541511 firms in the under-20-employee enterprise-size classes as the initial addressable-firm count, then go to the U.S. Small Business Administration site at sba.gov and find the current table of small-business size standards; look up the size standard for NAICS 541511, record the exact standard as published on the page including whether it is expressed in millions of dollars of average annual receipts or in number of employees, and note the ceiling value. If the standard is receipts-based, explicitly state that the SUSB employee-size-class data alone cannot determine how many of those under-20-employee firms actually meet the receipts threshold. Then go to the Bureau of Labor Statistics QCEW at bls.gov/cew and look up NAICS 541511 at the national level using the Private ownership scope, recording that scope, the data quarter, the number of establishments, the total employment, and the average weekly wage, and compare the order of magnitude of the QCEW establishment count against the SUSB establishment total for the same NAICS 541511. At the end, give me a concise market-sizing brief that ties together the SUSB firm and establishment counts for NAICS 541511, the exact SBA size standard as published, the QCEW establishment cross-check for the same industry and geography, and a conservative addressable-firm estimate with the explicit caveat that employee-size data cannot prove eligibility if the SBA standard is receipts-based. Keep the SUSB table and the SBA size-standards page open as visual evidence."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-webflow-squarespace-wix-01"
     "label": "Webflow/Squarespace/Wix 落地页审查"
-    translation: |-
-      我是增长运营经理，正准备重新设计我们的注册落地页，并希望参考三个成熟建站平台如何组织首屏信息和行动号召。请先打开 Webflow 首页 `webflow.com`，提取 H1 标题、副标题或支持性说明句、主要 CTA 按钮文案，以及首屏是否可见免费入门或无需信用卡的信号。保持该标签页打开。
-
-      以 Webflow 的主要 CTA 措辞以及是否存在“无需信用卡”信号为比较基准，然后前往 Squarespace 首页 `squarespace.com`，记录其 H1、副标题、主要 CTA 文案，以及同样的“无需信用卡”或免费试用提示。接着前往 Wix 首页 `wix.com`，记录其 H1、副标题、主要 CTA，以及它是否采用“免费开始（get-started-free）”与“查看套餐（view-plans）”并列的双 CTA 模式。
-
-      比较哪一家网站使用了最短的 CTA 标签、哪一家在首屏放置了社会证明或客户徽标，以及其中是否有任何一家提到具体的限时优惠。最后，请给我一份简洁的落地页审查，串联 H1 与 CTA 的模式，推荐一个应优先进行 A/B 测试的首屏结构，并指出哪一个竞争对手的价值主张简洁度最值得作为标杆。保持 Webflow 和 Wix 首页打开，作为视觉证据。
     "prompt": "I'm a growth operations manager about to redesign our signup landing page and want to ground the new layout in how three established website-builder platforms structure their above-the-fold messaging and calls to action. Start on Webflow's homepage at webflow.com and extract the H1 headline, the subheadline or supporting sentence, the primary CTA button text, and whether a free-starter or no-credit-card signal is visible above the fold. Keep that tab open. Use the primary CTA wording and the presence or absence of a no-credit-card signal from Webflow as the comparison baseline, then go to Squarespace's homepage at squarespace.com and record its H1, subhead, primary CTA text, and the same no-credit-card or free-trial indicator. After that, go to Wix's homepage at wix.com and capture the H1, subhead, primary CTA, and whether it uses a get-started-free versus view-plans split-CTA pattern. Compare which site uses the shortest CTA label, which places social proof or customer logos above the fold, and whether any of them mention a specific time-limited offer. At the end, give me a concise landing-page audit that ties together the H1 and CTA patterns, recommends one above-the-fold structure to A/B test first, and flags the competitor whose value-prop brevity we should benchmark against. Keep the Webflow and Wix homepages open as visual evidence."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-nist-cisa-nvd-readiness-01"
     "label": "NIST/CISA/NVD 网络安全就绪度"
-    translation: |-
-      我是 IT 系统经理，正在为内部网络安全就绪度审计做准备，需要在外部评估人员到来前，整理一份来自美国公共部门指南的参考地图。请先打开 NIST Cybersecurity Framework 页面 `nist.gov/cyberframework`，记录六项核心功能：Govern（治理）、Identify（识别）、Protect（保护）、Detect（检测）、Respond（响应）和 Recover（恢复）；同时记录实施层级（implementation tiers）的描述、最新框架版本号和发布日期。保持 NIST CSF 页面打开。
-
-      以 Protect 功能作为主要运营视角，然后前往 CISA 的网络安全指南页面 `cisa.gov`，查找映射到 Protect 功能子类别（例如访问控制、意识培训或数据安全）的公开资源或出版物；记录至少两个具体的 CISA 出版物标题或项目名称，以及它们标明的受众。接着以 Govern 功能作为治理视角，检查 CISA 是否也发布了有关网络安全治理、风险管理或供应链风险的对应指南，并记录任何额外的出版物标题。
-
-      之后，使用 NIST National Vulnerability Database `nvd.nist.gov` 检查最新版 Common Vulnerability Scoring System（CVSS）及其严重性评级量表。对于最近一个完整自然月，报告已发布漏洞总数；仅使用这一相同的最新 CVSS 版本、不得跨版本回退，报告在具有该版本评级的记录中 High 数量、Critical 数量以及 High-or-Critical 占比。还应披露该月有多少记录缺少该版本的评级，并记录一个包含时区偏移量的 ISO 8601 查询时间戳。
-
-      最后，请给我一份简洁的就绪度参考，串联六项 CSF 功能、CISA 的 Protect 与 Govern 资源，以及 NVD 严重性态势；根据漏洞趋势推荐审计应优先关注哪一个 CSF 功能类别，并说明在这个有边界的审查中 Protect 或 Govern 哪个视角的合格资源较少，但不得将此结论泛化为全部 CISA 指南。保持 NIST CSF 页面和 CISA 指南页面打开，作为视觉证据。
     "prompt": "I'm an IT systems manager preparing for an internal cybersecurity readiness audit and need to assemble a reference map from US public-sector guidance before the external assessors arrive. Start on the NIST Cybersecurity Framework page at nist.gov/cyberframework and capture the six core functions—Govern, Identify, Protect, Detect, Respond, and Recover—plus the implementation tier descriptions and the latest framework version number and publication date. Keep the NIST CSF page open. Use the Protect function as the primary operational lens, then go to CISA's cybersecurity guidance pages at cisa.gov and look for public resources or publications mapped to Protect-function subcategories such as access control, awareness training, or data security; record at least two specific CISA publication titles or program names and their stated audience. Then use the Govern function as a governance lens and check whether CISA also publishes corresponding guidance on cybersecurity governance, risk management, or supply-chain risk, recording any additional publication titles. After that, use the NIST National Vulnerability Database at nvd.nist.gov to inspect the latest Common Vulnerability Scoring System version and its severity-rating scale. For the most recent complete calendar month, report the total number of published vulnerabilities and, using only that same latest CVSS version with no cross-version fallback, the High count, Critical count, and High-or-Critical proportion among records that have a rating in that version. Also disclose how many monthly records lack that version's rating and record an ISO 8601 query timestamp including its time-zone offset. At the end, give me a concise readiness reference that ties together the six CSF functions, the CISA Protect and Govern resources, and the NVD severity landscape, recommends which CSF function category to prioritize for the audit based on the vulnerability trend, and states which of the Protect or Govern lenses had fewer qualifying resources in this bounded review without generalizing to all CISA guidance. Keep the NIST CSF page and the CISA guidance page open as visual evidence."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-bls-census-retail-metros-01"
     "label": "BLS/Census 零售都会区排序"
-    translation: |-
-      我是市场研究分析师，正在准备零售门店扩张排序。在建议优先到哪里开展选址考察前，我需要使用官方就业、工资、人口和经营场所数据比较两个美国阳光地带都会区。
-
-      请先在 BLS Occupational Employment and Wage Statistics 查询页面 `bls.gov/oes` 中，获取 Phoenix, AZ 都会区和 Dallas-Fort Worth, TX 都会区中 Retail Salespersons 的最新就业人数和平均年薪；记录数据月份，并注明这些是都会区层面的估计值。保持 BLS OES 结果页面打开，并将其作为单独标注的都会区层面劳动力背景信息。
-
-      将零售就业人数更高的都会区作为后续任务的参照，然后前往 U.S. Census Bureau QuickFacts `census.gov/quickfacts`，获取该参照都会区核心县（Phoenix 对应 Maricopa County，Dallas 对应 Dallas County）与另一都会区核心县的最新人口估计、中位家庭收入和数据年份。
-
-      之后，前往 BLS Quarterly Census of Employment and Wages `bls.gov/cew`，对这两个相同核心县均使用 Private 所有权范围，查找零售贸易（NAICS 44-45）的经营场所总数和平均周薪；记录该所有权范围、数据季度和期间标签。在县级层面，分别计算两个核心县的经营场所与人口比率：用 QCEW 零售经营场所数除以 Census 人口，再乘以 1,000。
-
-      另外，将县级 QCEW 平均周薪乘以 52，年化为估算的年度零售工资；然后用该年化县级零售工资除以该县 Census 中位家庭收入，得出一个背景性的工资成本比率。请将结果标注为“县级年化零售工资与中位家庭收入的比率”，而不是员工可负担性。不得使用任何县级分母去除都会区层面的 OEWS 就业人数或工资。
-
-      最后，请给我一份简洁的扩张排序简报，其中包含全部字段、地理标签、期间、计算出的县级比率、单独标注的都会区层面 OEWS 劳动力背景、来源 URL，以及建议应优先考察哪个都会区。保持 BLS OES 页面和 Census QuickFacts 页面打开，作为视觉证据。
     "prompt": "I'm a market research analyst preparing a retail store-expansion ranking and need to compare two Sun Belt metro areas using official employment, wage, population, and establishment data before recommending where to prioritize site scouting. Start on the BLS Occupational Employment and Wage Statistics query at bls.gov/oes and pull the latest employment and mean annual wage for Retail Salespersons for the Phoenix, AZ metro area and the Dallas-Fort Worth, TX metro area, recording the data month and noting that these are metro-level estimates. Keep the BLS OES result open as the separately labeled metro-level labor context. Use the metro with the higher retail employment as the reference for the rest of the task, then go to U.S. Census Bureau QuickFacts at census.gov/quickfacts and pull the latest population estimate, median household income, and the data year for that reference metro's core county (Maricopa County for Phoenix or Dallas County for Dallas) versus the runner-up's core county. After that, go to the BLS Quarterly Census of Employment and Wages at bls.gov/cew and look up the total number of retail trade establishments (NAICS 44-45) and average weekly wage for those same two core counties using the Private ownership scope for both, recording that scope, the data quarter, and the period label. At the county level, compute an establishment-to-population ratio for each core county by dividing QCEW retail establishments by the Census population and multiplying by 1,000. Separately annualize the county QCEW average weekly wage by multiplying by 52 to obtain an estimated annual retail wage, then divide that annualized county retail wage by the county Census median household income to produce a contextual wage-cost ratio; label the result as a ratio of annualized retail wages to median household income at the county level, not as employee affordability. Do not divide the metro-level OEWS employment or wage by any county-level denominator. At the end, give me a concise expansion-ranking brief with all fields, geographic labels, periods, calculated county-level ratios, the separately labeled metro-level OEWS labor context, source URLs, and a recommendation for which metro to scout first. Keep the BLS OES page and the Census QuickFacts page open as visual evidence."
     "run_spec": "Run the unchanged upstream task through the Real-World Bench external workflow at commit f566ac293e4e6bd80c4e9b062b5699f04eac41f4. After the upstream judge finishes, record the binary all-rubrics-passed verdict in the packing manifest for this task ID. This EvalHub package does not execute the upstream workflow or access the task website."
   - "id": "rwb-lumen-ticket-rush-01"
