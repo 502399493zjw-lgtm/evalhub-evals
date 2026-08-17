@@ -18,7 +18,7 @@ Reader completeness means every supported source fact is mapped to the correct m
 
 ## Table presentation contract
 
-Store every source-backed row and column in one complete Markdown table for each logical matrix. Do not truncate a leaderboard, split one logical table, emit one table per model, or remove official participants to fit a compact first view. For every table with more than eight body rows, the platform preview must show exactly eight rows initially, one `展开其余 N 行` control whose count equals the hidden remainder, every row after expansion, and `收起至 8 行`; tables with eight rows or fewer have no expansion control. The compact state is visual only: all rows remain in the source Markdown and DOM, and narrow layouts expose all columns through horizontal scrolling.
+Store every source-backed row and column in one complete Markdown table for each logical result family. Keep a compact leaderboard separate from score, resource, execution, or judging families when those tables answer distinct reader questions or use materially different units. Do not force all model-level fields into one duplicated mega-table. Within each family, do not truncate, split by model, emit one table per model, or remove official participants to fit a compact first view. For every table with more than eight body rows, the platform preview must show exactly eight rows initially, one `展开其余 N 行` control whose count equals the hidden remainder, every row after expansion, and `收起至 8 行`; tables with eight rows or fewer have no expansion control. The compact state is visual only: all rows remain in the source Markdown and DOM, and narrow layouts expose all columns through horizontal scrolling.
 
 Treat a failure of this interaction as a platform-preview defect, not permission to alter source data. Keep the eval submission source-faithful, record the defect, and route visual implementation through the platform workflow.
 
@@ -49,7 +49,7 @@ detail_profile:
     - [Official source](https://official.example.org/source)
 ```
 
-The official result table is authored directly in Markdown even when the same values remain available in `published-results` for machine use. Use one row per model and include the aggregate plus every compatible source-backed submetric, execution, judging, token, time, cost, and harness field from the same snapshot. Join sibling source tables only on exact participant identity. Use `—` with a coverage note for source-missing cells. Keep model names as plain text. When the source uses one shared task-provided harness without variant names, label it exactly `题目默认 harness`; otherwise preserve source-published harness names. Official images may coexist with the table but never replace or suppress it.
+Official result tables are authored directly in Markdown even when the same values remain available in `published-results` for machine use. Use one row per model and one cross-model table per logical result family: keep the compact leaderboard distinct, combine compatible score/submetric fields into one score table, and keep resource, execution, judging, token, time, or cost fields in a separate family when they answer a different reader question, use materially different units, or would make the score table unwieldy. Join sibling source tables only within the same family and only on exact participant identity. Never split a family into one table or tab per model. Use `—` with a coverage note for source-missing cells. Keep model names as plain text. When the source uses one shared task-provided harness without variant names, label it exactly `题目默认 harness`; otherwise preserve source-published harness names. Official images may coexist with the tables but never replace or suppress them.
 
 Markdown must use credential-free HTTPS sources, contain no generated `TODO`, `待补`, literal `placeholder`, or `example.com` values, and avoid arbitrary HTML, MDX, React, and styling instructions.
 
@@ -212,6 +212,6 @@ There is no dedicated `derived` or `formula` property. If the primary `score` is
 - Unsupported optional content is omitted rather than filled with guesses.
 - Every overview table has a primary-source URL, complete rows, and stable unique table, column, and row IDs; result metrics are not placed there.
 - Every Markdown table retains its complete source-backed rows; long tables pass the eight-row expand/collapse and narrow-width access checks in an actual preview.
-- Every logical official result matrix is one complete Markdown table with models as rows and all compatible supported official fields as columns; an official image may coexist but never replace it.
+- Every logical official result family is one complete cross-model Markdown table; leaderboard, score breakdown, and resource/execution tables may remain separate, while an official image may coexist but never replace them.
 - Model names are plain text, and a shared task-provided harness is labeled `题目默认 harness` as secondary metadata.
 - No more than five tasks appear in `题目案例`; each displayed case has the complete original and complete faithful Chinese translation, while non-case tasks may omit `translation`.

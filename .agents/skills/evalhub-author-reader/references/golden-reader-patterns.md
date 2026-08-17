@@ -11,16 +11,21 @@ Use this when each participant has one final ranking score plus a source-publish
 - Add a `line_chart` only when the source publishes each plotted point or a real EvalHub run emitted it. A start value and final value do not justify an interpolated curve.
 - Keep participant-specific values in rows, series names, and points. Do not encode a model name into the shared view ID.
 - Preserve every source-published participant in `published-results`; the detail page may present a compact subset in a particular reader control, but the stored official leaderboard must not be hand-truncated to three or four models.
-- In the Markdown body, combine the leaderboard and all compatible source-published run-summary fields into one complete model-by-metrics table. If the source publishes sibling tables, join only by exact participant identity; do not create one tab or table per model.
+- In the Markdown body, keep a compact cross-model leaderboard. Use a separate cross-model run-summary table when execution, resource, time, cost, or survival fields answer a distinct reader question or would make the ranking table unwieldy. If the source splits one logical family across sibling tables, join that family only by exact participant identity; do not create one tab or table per model.
 - Keep model names as plain text. When all CEO-style runs use the task-provided default harness and the source does not distinguish variants, label it `题目默认 harness` as secondary metadata.
 - An official run-summary image may appear beside the table for provenance, but it does not replace or suppress the text table.
 - A preview may show only the first eight body rows until the reader expands it, but that presentation limit never authorizes deleting participants or dropping summary columns.
 
 ```markdown
-| 模型 | 官方总分 | 完成运行 | 最长存活天数 | harness |
-| --- | ---: | ---: | ---: | --- |
-| Official Model A | 22148357 | 3 / 3 | 500 | 题目默认 harness |
-| Official Model B | 17864022 | 3 / 3 | 441 | 题目默认 harness |
+| 排名 | 模型 | 官方总分 | harness |
+| ---: | --- | ---: | --- |
+| 1 | Official Model A | 22148357 | 题目默认 harness |
+| 2 | Official Model B | 17864022 | 题目默认 harness |
+
+| 模型 | 完成运行 | 最长存活天数 |
+| --- | ---: | ---: |
+| Official Model A | 3 / 3 | 500 |
+| Official Model B | 3 / 3 | 441 |
 ```
 
 ```json
@@ -71,14 +76,19 @@ Use this when one primary score aggregates several stable benchmark or scenario 
 - Keep the structured table `title`, `label`, and `columns` byte-for-byte identical across participants.
 - Keep its first column as the stable row key. Every participant must use the same complete row-key set before a legacy reader can safely derive a comparison.
 - Preserve source formatting and exact numeric values in separate columns when the source provides both. Do not reverse-engineer a hidden precision value from a rounded display string.
-- In the Markdown body, transpose the source-backed participant payloads into one wide table: one row per model and one column for the aggregate plus every compatible official benchmark or scenario. Do not emit per-model tabs.
+- In the Markdown body, keep the aggregate in a compact leaderboard and transpose the source-backed benchmark/scenario payloads into one cross-model score table. Keep resource or execution totals in a separate cross-model table when they form a distinct family. Do not duplicate aggregate and harness into the score table merely to make one wide matrix, and do not emit per-model tabs.
 - Keep official figures as adjacent source artifacts; their presence never filters out the normalized table.
 
 ```markdown
-| 模型 | 官方汇总 | Code repair | Terminal tasks | harness |
-| --- | ---: | ---: | ---: | --- |
-| Official Model A | 27.964107 | 35% | 5.62% | 题目默认 harness |
-| Official Model B | 24.103221 | 31% | 4.49% | 题目默认 harness |
+| 排名 | 模型 | 官方汇总 | harness |
+| ---: | --- | ---: | --- |
+| 1 | Official Model A | 27.964107 | 题目默认 harness |
+| 2 | Official Model B | 24.103221 | 题目默认 harness |
+
+| 模型 | Code repair | Terminal tasks |
+| --- | ---: | ---: |
+| Official Model A | 35% | 5.62% |
+| Official Model B | 31% | 4.49% |
 ```
 
 ```json

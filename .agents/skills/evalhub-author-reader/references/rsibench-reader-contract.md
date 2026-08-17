@@ -6,8 +6,8 @@ RSIBench-Data is EvalHub's Markdown content-architecture reference. This contrac
 
 The platform owns the Hero. The authored Markdown begins at H2 and follows this reader flow:
 
-1. `榜单`: one complete official model matrix containing rank, aggregate, compatible submetrics, harness, and source-backed execution/cost fields.
-2. `官方分项结果`: formula, coverage, protocol or base-model boundaries, and source-published interpretation that should not become a second participant table.
+1. `榜单`: one compact official ranking table containing rank, model, aggregate, source boundary, and source-published harness when applicable.
+2. `官方分项结果`: one cross-model table per logical result family, followed by formula, coverage, protocol or base-model boundaries, and source-published interpretation. Score breakdown and resource/execution data may remain separate families.
 3. `关于此评测`: plain-language purpose, actual protocol, scoring, comparison boundary, and limitations.
 4. Optional evidence-backed observations and resources.
 5. `题目案例`: at most five complete originals with complete faithful Chinese translations.
@@ -20,27 +20,35 @@ Equivalent benchmark-specific headings are allowed when their meaning is clear a
 | Reader surface | Sole data owner | Required authoring rule |
 | --- | --- | --- |
 | Hero | top-level `eval.yaml` metadata and `references` | Do not repeat it in Markdown. |
-| Official model matrix | reviewed `published-results/*.json` plus its pinned source snapshot | One row per model; one column per compatible official aggregate, submetric, execution, judging, time, cost, token, and harness field. |
+| Official result tables | reviewed `published-results/*.json` plus its pinned source snapshot | One compact leaderboard, then one cross-model table per logical score, resource, execution, or judging family; never one table or tab per model. |
 | Protocol explanation | reviewed primary sources and `eval.yaml` protocol | Explain what runs, how it is judged and aggregated, and the comparison boundary without inventing facts. |
 | 题目案例 | deterministically selected `tasks[]` plus any real task-linked run evidence | At most five cases; complete original and complete faithful Chinese translation for each displayed case. |
 | 一手资料 | source ledger and result provenance | Use primary-source HTTPS links; figures may coexist with tables but never replace them. |
 
 Machine-readable rankings and supplementary views remain in `published-results` for provenance and compatibility. Real result `task_results` and `showcases` may still supply task-linked outputs, trajectories, and evidence. The Markdown body must not manufacture those artifacts and must not depend on frontend derivation to produce its official comparison table.
 
-## Official result matrix
+## Official result table families
 
-RSI-style multi-benchmark results are transposed into one wide table:
+RSI-style multi-benchmark results use a compact ranking table followed by purpose-specific cross-model tables:
 
-- one row per source-published model;
+- one row per source-published model within every family;
 - plain-text model names, with no Markdown links or anchors;
-- the official aggregate and every compatible source-published benchmark/scenario as columns;
-- source-published harness names preserved as secondary metadata;
+- rank, aggregate, source boundary, and source-published harness kept in the compact leaderboard;
+- every compatible source-published benchmark or scenario kept in one score-breakdown table;
+- resource, execution, judging, token, time, or cost data kept in a separate cross-model table when it answers a distinct reader question or uses materially different units;
+- aggregate and harness not repeated in the breakdown merely to make one mega-table;
 - `题目默认 harness` only when every participant uses the same task-provided default and the source does not name variants;
 - exact source formatting retained when it communicates precision;
 - `—` for a source-missing cell, accompanied by a coverage note;
 - no per-model tables, per-model result tabs, or hidden dependency on an official image.
 
-If two source tables have the same participant axis and snapshot, join them only by exact participant identity and stable metric meaning. If they use genuinely different protocols or incompatible row axes, keep them as separately labeled protocol tables and explain the boundary.
+If two source tables describe the same logical family with the same participant axis and snapshot, join that family only by exact participant identity and stable metric meaning. Sharing a participant axis alone does not require merging score, resource, execution, and judging families. If tables use genuinely different protocols or incompatible row axes, keep them separately labeled and explain the boundary.
+
+The accepted RSIBench reader shape illustrates the distinction: a five-column leaderboard, a seven-column six-benchmark score table, and a three-column resource/cost table. A later draft that repeated total score and harness while folding resource data into an eleven-column score table was wider but not clearer. Preserve the compact family boundaries while keeping the later draft's improvement of complete selected-case originals and translations.
+
+## Existing-reader regression comparison
+
+Before changing an existing Markdown reader, compare the base-branch body and the candidate. Inventory H2/H3 order, table purpose, row axis, headers, rows, figures, and selected task cases. Treat an unexplained table-family removal, new field duplication, heading-level jump, participant loss, or large width increase as a regression even when every value is source-backed. Preserve the prior accepted grouping unless new evidence changes the reader question; record intentional differences in the source ledger and PR description.
 
 ## Task-case selection and translation
 
@@ -66,7 +74,7 @@ Compare every rebuilt page with RSIBench-Data at three levels:
 
 | Level | Must be equivalent | May differ |
 | --- | --- | --- |
-| Data contract | Markdown renderer; source-backed official model matrix; at most five selected cases with full translations; preserved machine-readable provenance | Counts of models, metrics, tasks, facts, figures, and sources |
+| Data contract | Markdown renderer; compact leaderboard plus source-backed cross-model result families; at most five selected cases with full translations; preserved machine-readable provenance | Counts of models, metrics, tasks, facts, figures, and sources |
 | Content semantics | Results first; protocol and limitations explained; selected cases; primary sources; no repeated Hero | Benchmark-specific headings and prose |
 | Interaction | Eight-row fold behavior; complete expansion; narrow-table access; task selection | Total content height and source-justified tables with genuinely different row axes |
 
@@ -78,4 +86,13 @@ node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs \
   evals/<slug>/eval.yaml
 ```
 
-The preflight checks Markdown readiness, official matrix shape, plain model labels, and selected-case translation coverage. It does not prove factual correctness. Repository validation, source-ledger review, result provenance review, and staging interaction checks remain required.
+For an existing reader, run the same preflight against the last reviewed accepted revision as a second check:
+
+```bash
+git show <accepted-ref>:evals/<slug>/eval.yaml | \
+  node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs \
+    --reference /dev/stdin \
+    evals/<slug>/eval.yaml
+```
+
+When the reference and target share an eval ID, the preflight also rejects removed result families, a decreased result-table count, material width growth, newly duplicated fields, participant loss, and removed selected cases. The general check covers Markdown readiness, family-level cross-model tables, per-model fragmentation, heading-level continuity, plain model labels, and selected-case translation coverage. It does not prove factual correctness or decide whether an intentional semantic-family change is justified; review and record any intended contract change before replacing the accepted reference. Repository validation, source-ledger review, result provenance review, and staging interaction checks remain required.
