@@ -5,7 +5,7 @@ import path from "node:path";
 import test from "node:test";
 import { compareReaders, inspectReader } from "./report-reader-structure.mjs";
 
-function fixture(root, slug, detailProfile) {
+function fixture(root, slug, detailProfile, task = {}) {
   const directory = path.join(root, "evals", slug);
   fs.mkdirSync(directory, { recursive: true });
   fs.writeFileSync(path.join(directory, "eval.yaml"), [
@@ -14,7 +14,8 @@ function fixture(root, slug, detailProfile) {
     detailProfile.split("\n").map((line) => `  ${line}`).join("\n"),
     "tasks:",
     "  - id: one-task",
-    "    prompt: Complete task",
+    `    prompt: ${task.prompt ?? "Complete task"}`,
+    `    translation: ${task.translation ?? "完成任务"}`,
     "",
   ].join("\n"));
   fs.mkdirSync(path.join(directory, "published-results"));
@@ -27,6 +28,32 @@ function fixture(root, slug, detailProfile) {
   }));
   return path.join(directory, "eval.yaml");
 }
+
+const markdownProfile = [
+  "source_kind: upstream_publication",
+  "markdown: |-",
+  "  ## 榜单",
+  "",
+  "  | 模型 | 官方总分 | 分项 | harness |",
+  "  | --- | ---: | ---: | --- |",
+  "  | Model | 1 | 1 | 题目默认 harness |",
+  "",
+  "  ## 官方分项结果",
+  "",
+  "  汇总分等于官方分项的宏平均。",
+  "",
+  "  ## 关于此评测",
+  "",
+  "  完整说明方法、评分与边界。",
+  "",
+  "  ## 题目案例",
+  "",
+  "  展示完整原文与中文翻译。",
+  "",
+  "  ## 一手资料",
+  "",
+  "  - https://official.example.org/source",
+].join("\n");
 
 const structuredProfile = [
   "source_kind: upstream_publication",
@@ -48,27 +75,98 @@ const structuredProfile = [
   "    url: https://official.example.org/source",
 ].join("\n");
 
-test("structured targets match the RSIBench module signature", () => {
+test("Markdown targets match the RSIBench content contract", () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
-  const reference = inspectReader(fixture(root, "reference", structuredProfile));
-  const target = inspectReader(fixture(root, "target", structuredProfile));
+  const reference = inspectReader(fixture(root, "reference", markdownProfile));
+  const target = inspectReader(fixture(root, "target", markdownProfile));
+  assert.equal(target.renderer, "markdown");
+  assert.equal(target.officialResultMatrixCount, 1);
   assert.deepEqual(compareReaders(reference, target), []);
 });
 
-test("markdown is reported as a renderer and module-order mismatch", () => {
+test("structured targets fail a Markdown rebuild", () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
-  const reference = inspectReader(fixture(root, "reference", structuredProfile));
-  const markdown = [
-    "source_kind: upstream_publication",
-    "markdown: |-",
-    "  ## 关于这套评测",
-    "  Body",
-    "  ## 榜单",
-    "  Body",
-  ].join("\n");
-  const target = inspectReader(fixture(root, "target", markdown));
+  const reference = inspectReader(fixture(root, "reference", markdownProfile));
+  const target = inspectReader(fixture(root, "target", structuredProfile));
   const issues = compareReaders(reference, target);
-  assert.equal(target.renderer, "markdown");
   assert.ok(issues.some((issue) => issue.startsWith("renderer differs")));
-  assert.ok(issues.some((issue) => issue.startsWith("module order differs")));
+  assert.ok(issues.includes("rebuilt reader must use detail_profile.markdown"));
+});
+
+test("missing selected task-case translations fail readiness", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const reference = inspectReader(fixture(root, "reference", markdownProfile));
+  const target = inspectReader(fixture(root, "target", markdownProfile, { translation: "" }));
+  const issues = compareReaders(reference, target);
+  assert.equal(target.taskCaseTranslationCoverage, 0);
+  assert.deepEqual(target.missingCaseTranslationTaskIds, ["one-task"]);
+  assert.ok(issues.some((issue) => issue.startsWith("task-case translation coverage must be")));
+});
+
+test("short summaries do not pass as translations of long task prompts", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const longPrompt = "Complete every required step and preserve all literals. ".repeat(8);
+  const reference = inspectReader(fixture(root, "reference", markdownProfile, {
+    prompt: longPrompt,
+    translation: "完整执行每一个步骤并保留所有字面量。".repeat(8),
+  }));
+  const target = inspectReader(fixture(root, "target", markdownProfile, {
+    prompt: longPrompt,
+    translation: "完成任务摘要。",
+  }));
+  const issues = compareReaders(reference, target);
+  assert.deepEqual(target.summarizedCaseTranslationTaskIds, ["one-task"]);
+  assert.ok(issues.some((issue) => issue.startsWith("long task-case translations appear summarized")));
+});
+
+test("non-case tasks may omit translations", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const referencePath = fixture(root, "reference", markdownProfile);
+  const targetPath = fixture(root, "target", markdownProfile);
+  for (const evalPath of [referencePath, targetPath]) {
+    const document = fs.readFileSync(evalPath, "utf8");
+    const extraTasks = Array.from({ length: 5 }, (_, index) => [
+      `  - id: extra-${index + 1}`,
+      `    prompt: Extra prompt ${index + 1}`,
+      ...(index === 1 ? [] : [`    translation: 额外题目 ${index + 1}`]),
+    ].join("\n")).join("\n");
+    fs.writeFileSync(evalPath, `${document.trimEnd()}\n${extraTasks}\n`);
+  }
+
+  const target = inspectReader(targetPath);
+  assert.deepEqual(target.taskCaseIds, ["one-task", "extra-1", "extra-3", "extra-4", "extra-5"]);
+  assert.equal(target.taskCaseTranslationCoverage, 1);
+  assert.deepEqual(compareReaders(inspectReader(referencePath), target), []);
+});
+
+test("per-model result tables fail the unified matrix contract", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const reference = inspectReader(fixture(root, "reference", markdownProfile));
+  const splitProfile = markdownProfile.replace(
+    "  | Model | 1 | 1 | 题目默认 harness |",
+    [
+      "  | Model A | 1 | 1 | 题目默认 harness |",
+      "",
+      "  | 模型 | 官方总分 | 分项 | harness |",
+      "  | --- | ---: | ---: | --- |",
+      "  | Model B | 0.9 | 0.9 | 题目默认 harness |",
+    ].join("\n"),
+  );
+  const target = inspectReader(fixture(root, "target", splitProfile));
+  const issues = compareReaders(reference, target);
+  assert.equal(target.officialResultMatrixCount, 2);
+  assert.ok(issues.includes("official result matrix count must be 1, got 2"));
+});
+
+test("linked model names fail the plain-text rule", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const reference = inspectReader(fixture(root, "reference", markdownProfile));
+  const linkedProfile = markdownProfile.replace(
+    "  | Model | 1 | 1 | 题目默认 harness |",
+    "  | [Model](#model) | 1 | 1 | 题目默认 harness |",
+  );
+  const target = inspectReader(fixture(root, "target", linkedProfile));
+  const issues = compareReaders(reference, target);
+  assert.deepEqual(target.linkedModelCells, ["[Model](#model)"]);
+  assert.ok(issues.some((issue) => issue.startsWith("model names must be plain text")));
 });

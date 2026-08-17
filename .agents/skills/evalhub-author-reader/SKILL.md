@@ -18,7 +18,7 @@ Read these files completely:
 
 Also inspect repository-local instructions and CI configuration. If any instruction conflicts, follow the more specific repository instruction and report the conflict.
 
-Read `references/rsibench-reader-contract.md` before designing the page. RSIBench-Data is the single page-architecture reference. Then read the matching result-shape section of `references/golden-reader-patterns.md`: CEO-style and multi-benchmark patterns describe supplementary result data only; they never select a different page layout. Use the task-case pattern for every upstream task.
+Read `references/rsibench-reader-contract.md` before designing the page. RSIBench-Data is the Markdown content-architecture reference, not a requirement to preserve its old structured renderer. Then read the matching result-shape section of `references/golden-reader-patterns.md`: use the CEO-style pattern for long-horizon operating results, the RSI-style pattern for multi-benchmark result tables, and the task-case pattern for every upstream task.
 
 ## Scope the submission
 
@@ -72,7 +72,9 @@ Separate three layers:
 2. `published-results/*.json` contains reviewed source results and their supplementary views.
 3. Real run envelopes contain `task_results` and `showcases` as execution evidence.
 
-Author the protocol first: every `tasks[]` entry must declare a non-empty ID matching `^[a-z0-9][a-z0-9-]{0,63}$`; task IDs must be unique within the eval and remain unchanged while the task identity is unchanged. `prompt` is the single task-statement field: it is both the executable question and the exact text the detail page renders. There is no fallback field, so a missing or abridged `prompt` shows up as a missing question on the page rather than being silently replaced by other text. For an `upstream_publication`, `prompt` must be the complete source-published original, transcribed character-for-character from the pinned `upstream.commit`; never put a summary, excerpt, `[…]`, or link-only placeholder there, and preserve unreplaced upstream template placeholders verbatim so the text stays diffable against that commit. Put EvalHub's own reproduction procedure — anything not in the upstream original, such as pinned run configuration, evidence packaging, or redaction rules — in the optional `run_spec`. `run_spec` is delivered to the people who run the eval through this repository and is never rendered on the detail page, so it must not carry reader-facing task content. Add a concise `label` for the task tab and a complete `translation` when a faithful Chinese rendering is available. Long display text is a platform folding concern and must not be shortened in data. Make interface, runner, scoring, scorer, score policy, baseline policy, score unit, trials, command template, and scoring note agree with the README, machine-readable metadata, and documented runner contract. Check obvious static inconsistencies without claiming to have established runtime behavior.
+Author the protocol first: every `tasks[]` entry must declare a non-empty ID matching `^[a-z0-9][a-z0-9-]{0,63}$`; task IDs must be unique within the eval and remain unchanged while the task identity is unchanged. `prompt` is the single task-statement field: it is both the executable question and the exact text the detail page renders. There is no fallback field, so a missing or abridged `prompt` shows up as a missing question on the page rather than being silently replaced by other text. For an `upstream_publication`, `prompt` must be the complete source-published original, transcribed character-for-character from the pinned `upstream.commit`; never put a summary, excerpt, `[…]`, or link-only placeholder there, and preserve unreplaced upstream template placeholders verbatim so the text stays diffable against that commit. Put EvalHub's own reproduction procedure — anything not in the upstream original, such as pinned run configuration, evidence packaging, or redaction rules — in the optional `run_spec`. `run_spec` is delivered to the people who run the eval through this repository and is never rendered on the detail page, so it must not carry reader-facing task content. Add a concise `label` for every task.
+
+Select at most five tasks for the reader-facing Markdown `题目案例`. In a repository preview, choose them deterministically across authored task order and include the first and last tasks when at least two cases are shown; a live reader may prioritize tasks with real public evidence, then fill the remaining slots with the same deterministic selection. Require `translation` only for those selected cases; non-case tasks may omit it. Every selected case must show the complete original `prompt` and a complete, faithful Chinese translation rather than a synopsis. Preserve every instruction, constraint, warning, paragraph, list, code block, command, path, filename, literal, placeholder, formula, number, unit, and example; keep non-prose tokens verbatim when translating them would change the task. Reject translator-added omissions such as `[…]`, `[译文省略]`, `其余略`, or a link-only substitute. Source-authored ellipses remain valid when they are part of the pinned original. Long display text is a platform folding concern and must not be shortened in data. Make interface, runner, scoring, scorer, score policy, baseline policy, score unit, trials, command template, and scoring note agree with the README, machine-readable metadata, and documented runner contract. Check obvious static inconsistencies without claiming to have established runtime behavior.
 
 Treat `protocol_revision` as the monotonic version of the scoring protocol. Keep it unchanged for corrections to `translation`, `label`, prose, `detail_profile`, README text, citations, or official baselines that do not change result comparability. Increment it when task identity, interaction or run procedure, scorer predicate or normalization, score aggregation or rounding, trials, primary metric or unit, or tie-break semantics change, and document the reason. For `prompt` the answer depends on the runner: a `runner: builtin` prompt is the executable model input, so any change to it increments; correcting an `upstream_publication` prompt toward the verbatim upstream original does not, because that text is a transcription rather than something EvalHub executes. A change to `run_spec` always increments, because `external_workflow` contestants follow it by hand.
 
@@ -85,53 +87,26 @@ Then fill every required `detail_profile` field from the ledger. Write for a rea
 - disclose at least one material limitation;
 - link at least one credential-free HTTPS primary source.
 
-For a new or substantially revised eval, use the platform-native structured detail contract:
+For a new or substantially revised eval, use the Markdown-only detail contract:
 
 ```yaml
 detail_profile:
   source_kind: upstream_publication
-  overview_note: This explanation is pinned to reviewed primary sources.
-  summary:
-    plain_language: What the evaluated system actually has to do.
-    why_it_matters: Why this capability is worth comparing.
-  method_steps:
-    - title: Prepare the fixed task and environment
-      description: Where inputs and constraints come from.
-    - title: Run, judge, and aggregate
-      description: How outputs become the primary score.
-  score_interpretation: Direction, unit, aggregation, and comparison boundary.
-  caveats:
-    - title: Result boundary
-      description: The most material limitation on interpretation.
-  resources:
-    - title: Official source
-      summary: The primary protocol or result source.
-      url: https://official.example.org/source
+  markdown: |-
+    ## 榜单
+
+    ...
 ```
 
-This contract makes the platform own the same RSIBench reader sequence for every
-eval: Hero, `榜单`, `官方分项结果`, `关于这套评测`, `题目案例`, and
-`资料与分析`. Store ranking rows and official breakdowns in
-`published-results`, protocol explanation in structured `detail_profile`, task
-statements in `tasks[]`, and source cards in `detail_profile.resources`. Do not
-repeat those modules or tables inside authored prose. The exact field-to-module
-mapping and acceptance matrix are in `references/rsibench-reader-contract.md`.
+Author one coherent Markdown body below the platform Hero. Start at `##`, do not repeat the title, and keep the reader sequence legible: official results, benchmark explanation and protocol, limitations, selected task cases, and primary sources. RSIBench-Data defines the baseline content roles in `references/rsibench-reader-contract.md`; benchmark-specific headings may differ only when the evidence demands it.
 
-Use `detail_profile.markdown` only when reviewed source material requires a
-reader construct the bounded structured schema cannot express and omitting that
-construct would materially misstate the benchmark. Record that reason in the
-source ledger and PR description. Markdown is not a shortcut for layout control,
-and it is not structurally identical to RSIBench: it suppresses the platform's
-native leaderboard, breakdown, task, resource, and footer modules. A migration
-whose goal is RSIBench parity therefore must use the structured contract.
+Directly author every logical official result matrix as one Markdown table. Use one row per model and columns for the official aggregate plus every compatible official submetric, execution, judging, token, time, cost, and harness field from the same source snapshot. If the source splits sibling tables, join them only on exact participant identity and stable metric meaning. Use `—` plus a coverage note for a source-missing cell; never infer it. Do not emit one table or tab per model. Official images may coexist with the table as provenance, but may never replace or suppress it.
 
-When Markdown is justified, start at `##`, do not repeat the Hero, and use the
-five exact H2 headings in this order: `榜单`, `官方分项结果`, `关于这套评测`,
-`题目案例`, `资料与分析`. Keep every source-backed row in one complete table.
-Verify tables over eight body rows show exactly eight initially, expand to the
-complete row set, collapse to eight, and remain horizontally reachable on narrow
-screens. This Markdown fallback preserves information hierarchy but does not
-claim native module or interaction parity.
+Keep model names as plain text, without Markdown links or anchors. Treat harness as secondary metadata. When all participants use the task-provided default harness and the source does not distinguish variants, label the field exactly `题目默认 harness`; preserve a model-specific harness name when the source publishes one.
+
+Retain every source-backed row and column in Markdown tables. A real preview shows at most eight body rows initially; a table over eight rows expands with `展开其余 N 行`, exposes every stored row, offers `收起至 8 行`, and remains horizontally accessible on narrow screens. This is presentation behavior, never permission to truncate or split source data.
+
+Historical untouched evals may still use the structured detail fields. When maintaining one without a substantial reader rebuild, keep its existing contract source-faithful; do not mix structured blocks and `markdown` in one profile. A substantial reader rebuild migrates to Markdown instead of extending the legacy structured layout.
 
 Replace every generated `TODO`, `待补`, literal `placeholder`, and every `example.com` URL. Omit optional facts or figures when evidence is weak. Never add arbitrary HTML, MDX, React, or layout instructions to emulate the detail page.
 
@@ -145,7 +120,9 @@ Choose the result path by evidence origin:
 
 Use the complete upstream-envelope, `metric_table`, and `line_chart` examples in `references/content-and-evidence-contract.md` as the canonical authoring shapes. Parsers may tolerate historical supplementary views without `id` or `label`, but every new or updated view in `sample-result.json` or `published-results/*.json` must provide both as non-empty strings; IDs must be stable slug-style values and unique within one result. The standalone repository validator enforces this stricter authoring boundary without changing runtime compatibility.
 
-Treat one supplementary-view `id` as one logical reader tab across all published participants. For that ID, keep `type`, `title`, `label`, and table `columns` or chart axis labels exactly identical in every result; only rows, series, points, and notes may vary. This lets the platform safely derive CEO-style participant summaries and RSI-style per-benchmark comparison tabs. Do not suffix the ID with a participant name.
+Treat one supplementary-view `id` as one logical machine-readable view across all published participants. For that ID, keep `type`, `title`, `label`, and table `columns` or chart axis labels exactly identical in every result; only rows, series, points, and notes may vary. Do not suffix the ID with a participant name. These payloads retain provenance and compatibility; the Markdown body still needs the explicit cross-model matrix defined above.
+
+Keep machine-readable participant metrics source-faithful and use stable shared view metadata across participants. When compatible sibling payloads already share one participant axis and source boundary, they may be consolidated without changing values; when preserving the upstream payload means retaining separate views, the authored Markdown still joins their compatible fields into the single official model matrix. Use separate supplementary-view IDs for a genuinely different row axis, visualization type, or source-defined boundary, and record that boundary in the source ledger.
 
 Put one ranking number in `score`. Preserve source-published subgroups, components, scenarios, or trends in `supplementary_views` only when the source actually provides the points. There is no separate `derived` or `formula` field: put a derived primary score's status, formula, and source inputs in the result `detail`; put the same information for a derived supplementary value in that view's `note`. Prefix the explanation with `Derived:` and do not call the value official.
 
@@ -195,24 +172,25 @@ Do not make a custom-runner trial run a publication condition. The runner's actu
 - every authored `submission.run_date` is a real `YYYY-MM-DD` calendar date;
 - displayed claims are traceable to the source ledger;
 - every overview table is a complete transcription with unique stable table, column, and row IDs and a primary-source HTTPS URL;
-- every structured result or overview table preserves its complete source-backed row set; every table over eight rows satisfies the eight-row expand/collapse preview contract without losing narrow-screen column access;
+- every Markdown and machine-readable result table preserves its complete source-backed row set; every table over eight rows satisfies the eight-row expand/collapse preview contract without losing narrow-screen column access;
 - official aggregate data is not presented as an EvalHub rerun;
 - sample data is not presented as evidence;
 - shared supplementary-view IDs keep one exact metadata contract across all published participants;
+- every logical official result matrix is one complete Markdown table with models as rows and all compatible supported fields as columns; official images may coexist without suppressing the table;
+- model names are plain text, and a source-shared task default is labeled `题目默认 harness` as secondary metadata;
 - every task declares a unique stable slug-style ID, task references resolve, and each task ID appears no more than the configured `trials` count;
 - optional sections disappear cleanly when unsupported;
-- `node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs --reference evals/rsibench-data/eval.yaml evals/<slug>/eval.yaml` reports the same structured renderer and canonical module order;
+- `node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs --reference evals/rsibench-data/eval.yaml evals/<slug>/eval.yaml` reports Markdown readiness, one official result matrix, and complete selected-case translations;
 - the diff stays within exactly one eval directory and does not touch `CODEOWNERS` or repository-level files.
 
 Complete this reader-readiness matrix from the final files before handoff. “Empty” is acceptable only when the source ledger or run evidence genuinely has no supported content; never fill a module to make the matrix look complete.
 
 | Reader module | Required data check |
 | --- | --- |
-| `榜单` | Primary `score`, unit/direction, participant identity, and result provenance agree; every supported participant remains stored, and a long table expands from eight rows to the complete set. |
-| `官方分项结果` | Every supported source table/chart and row is preserved; shared view contracts are identical across participants; long tables expose the same verified expansion behavior. |
-| `关于这套评测` | All required `detail_profile` fields and at least one primary source are complete. |
-| `题目案例` | Stable task ID; complete `prompt` (verbatim upstream original for an `upstream_publication`); translation and real model evidence when available; no `run_spec` content. |
-| `资料与分析` | Source-backed resources and figures only; unsupported optional blocks are omitted. |
+| Official results | One Markdown model matrix contains the official aggregate and every compatible source-backed submetric/execution field; provenance agrees; no per-model tables or linked model names. |
+| Benchmark explanation | The Markdown body explains what is evaluated, the actual method, score meaning, comparison boundary, and material limitations. |
+| `题目案例` | At most five cases; stable task ID; complete `prompt` (verbatim upstream original for an `upstream_publication`); complete faithful Chinese `translation` for every displayed case, never a summary; real model evidence when available; no `run_spec` content. Non-case tasks do not require translation. |
+| Sources | Primary-source links and source-backed figures only; unsupported optional blocks are omitted. |
 
 Do not reduce the stored official leaderboard to three or four participants merely to imitate a compact task-case control. The platform may show up to four real model results inside a task case; only real `task_results` or task-linked showcases qualify, and an upstream aggregate never does.
 
