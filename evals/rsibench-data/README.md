@@ -76,8 +76,9 @@ node evals/rsibench-data/pack-to-result.mjs <submission.json> --out <result.json
 - 官方榜单页 https://evolvent.co/en/leaderboard
 - 官方矩阵页 https://rsibench.co/data/
 
-`eval.yaml` 里的六份 agent 提示词是上游对应 profile 提示词的转录，`translation` 是中文
-对照译文，`run_spec` 是按上游 `benchmarks/<key>/spec.json` 转录的复评配置。分母
+`eval.yaml` 里的六份 agent 提示词是上游对应 profile 提示词的转录；详情页确定性选中的
+5 个题目案例带完整中文 `translation`，未展示的 SWE-bench Pro 不额外保存译文。`run_spec`
+是按上游 `benchmarks/<key>/spec.json` 转录的复评配置。分母
 100/100/100/89/100 与 30×4 同样转录自这些 spec，权重 0.2/0.2/0.2/0.2/0.1/0.1 转录自官方
 榜单页。
 

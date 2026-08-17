@@ -1,7 +1,7 @@
 {
   "manifest_version": 1,
   "eval_id": "rsibench-data",
-  "protocol_revision": 1,
+  "protocol_revision": 6,
   "upstream_commit": "4c807610243e7b481d382c5ed360c71c79a22f61",
   "target_model": "Qwen/Qwen3.5-35B-A3B-Base",
   "participant": {
