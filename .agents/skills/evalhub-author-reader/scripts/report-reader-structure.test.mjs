@@ -72,3 +72,29 @@ test("markdown is reported as a renderer and module-order mismatch", () => {
   assert.ok(issues.some((issue) => issue.startsWith("renderer differs")));
   assert.ok(issues.some((issue) => issue.startsWith("module order differs")));
 });
+
+test("split one-row participant metric tables fail the unified breakdown contract", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const reference = inspectReader(fixture(root, "reference", structuredProfile));
+  const targetPath = fixture(root, "target", structuredProfile);
+  const resultPath = path.join(path.dirname(targetPath), "published-results", "official.json");
+  const envelope = JSON.parse(fs.readFileSync(resultPath, "utf8"));
+  envelope.results[0].supplementary_views = [
+    {
+      type: "metric_table",
+      id: "performance",
+      rows: [{ cells: ["87.1%"] }],
+    },
+    {
+      type: "metric_table",
+      id: "judging-pricing",
+      rows: [{ cells: ["verified"] }],
+    },
+  ];
+  fs.writeFileSync(resultPath, JSON.stringify(envelope));
+
+  const target = inspectReader(targetPath);
+  const issues = compareReaders(reference, target);
+  assert.deepEqual(target.splitParticipantMetricTableGroups, ["judging-pricing + performance"]);
+  assert.ok(issues.some((issue) => issue.startsWith("participant metrics are split")));
+});
