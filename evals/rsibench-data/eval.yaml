@@ -45,29 +45,19 @@ detail_profile:
   markdown: |-
     ## 榜单
 
-    下表是 2026-08-09 官方榜单快照。前三个总分由官方榜单直接显示；`Opus-4.8` 和 `gpt-5.6-terra` 的总分是 EvalHub 按同一官方公式对公开六项成绩计算出的派生值。
+    下表把 2026-08-09 同一官方快照里的排名、汇总分、六项复评成绩、编排 harness 与资源数据合成一张模型横表。前三个总分由官方榜单直接显示；`Opus-4.8` 和 `gpt-5.6-terra` 的总分是 EvalHub 按同一官方公式对公开六项成绩计算出的派生值。分项成绩是官方复评通过率或精确匹配准确率，统一以百分比展示；资源数据不参与评分。
 
-    | 排名 | 编排模型 | Harness | 总分 | 口径 |
-    | ---: | --- | --- | ---: | --- |
-    | 1 | Kimi K3 | Kimi Code | 27.3 | 官方榜单直接显示 |
-    | 2 | gpt-5.6-sol | Codex | 27.3 | 官方榜单直接显示 |
-    | 3 | Sonnet-5 | Claude Code | 23.4 | 官方榜单直接显示 |
-    | 4 | Opus-4.8 | Claude Code | 22.3 | 按官方公式派生 |
-    | 5 | gpt-5.6-terra | Codex | 22 | 按官方公式派生 |
+    | 排名 | 编排模型 | 总分 | SWE Verified | SWE Multilingual | SWE Pro | Terminal-Bench 2.0 | GPQA Diamond | AIME 2026 | Harness | 六项合计小时 | 六项合计 Tinker USD | 总分口径 |
+    | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
+    | 1 | Kimi K3 | 27.3 | 50% | 11% | 17% | 9% | 55% | 44.2% | Kimi Code | — | — | 官方榜单直接显示 |
+    | 2 | gpt-5.6-sol | 27.3 | 33% | 15% | 9% | 20.2% | 65% | 53.3% | Codex | 42.89 | 577.83 | 官方榜单直接显示 |
+    | 3 | Sonnet-5 | 23.4 | 35% | 22% | 4% | 5.6% | 52% | 49.2% | Claude Code | 63.24 | 885.27 | 官方榜单直接显示 |
+    | 4 | Opus-4.8 | 22.3 | 46% | 5% | 2% | 10.1% | 56% | 40.8% | Claude Code | 44.94 | 674.05 | 按官方公式派生 |
+    | 5 | gpt-5.6-terra | 22 | 42% | 6% | 1% | 12.4% | 64% | 33.3% | Codex | 21.49 | 351.31 | 按官方公式派生 |
+
+    Kimi K3 没有公开资源数据，因此对应单元格用 `—` 表示缺失，不表示 0。这里保留来源公布的模型特定 harness 名称；它们不是统一的题目默认 harness。
 
     ## 官方分项结果
-
-    ### 六项分项成绩
-
-    分项成绩是官方复评通过率或精确匹配准确率，统一以百分比展示。Base model 一行只用于参照，不属于参赛排名。
-
-    | 编排模型 | SWE Verified | SWE Multilingual | SWE Pro | Terminal-Bench 2.0 | GPQA Diamond | AIME 2026 |
-    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-    | Kimi K3 | 50% | 11% | 17% | 9% | 55% | 44.2% |
-    | gpt-5.6-sol | 33% | 15% | 9% | 20.2% | 65% | 53.3% |
-    | Sonnet-5 | 35% | 22% | 4% | 5.6% | 52% | 49.2% |
-    | Opus-4.8 | 46% | 5% | 2% | 10.1% | 56% | 40.8% |
-    | gpt-5.6-terra | 42% | 6% | 1% | 12.4% | 64% | 33.3% |
 
     计算方式为：
 
@@ -81,18 +71,6 @@ detail_profile:
     ```
 
     用同一组权重对官方矩阵中的未微调 Base model 六项成绩计算，得到 **13.1 分**的派生参照分。它不是参赛结果；低于它只能说明该候选在这套固定协议下没有超过未微调参照。
-
-    ### 资源与运行成本
-
-    资源数据只做展示，不进入评分。数值来自官方榜单快照，对每个模型的六个 profile 求和；Kimi K3 没有公开资源数据，因此用 `—` 表示缺失，不表示 0。
-
-    | 编排模型 | 六项合计小时 | 六项合计 Tinker USD |
-    | --- | ---: | ---: |
-    | Kimi K3 | — | — |
-    | gpt-5.6-sol | 42.89 | 577.83 |
-    | Sonnet-5 | 63.24 | 885.27 |
-    | Opus-4.8 | 44.94 | 674.05 |
-    | gpt-5.6-terra | 21.49 | 351.31 |
 
     两个官方页面有两处成本差异：Sonnet-5 的 Terminal-Bench 2.0 为 `156.93` USD（榜单）对 `157.85` USD（rsibench.co 矩阵），gpt-5.6-sol 的 AIME 2026 为 `63.65` USD（榜单）对 `63.87` USD（矩阵）。本文统一采用官方榜单快照中的数值，不做平均或推算。
 
@@ -144,7 +122,7 @@ detail_profile:
 
     论文报告了两个值得注意的搜索行为：24 个 Agent × 基准设定中有 14 个在反馈后找到过优于首个有效尝试的候选，即 **58.3%**；23 条曾越过历史最佳后继续搜索的轨迹中有 18 条最终收在更差候选，其余打平，没有一条再创新高，即 **78.3%**。这些观察描述的是公开研究轨迹，不是本地复跑统计。
 
-    ## 资源与来源
+    ## 局限与证据边界
 
     ### 证据边界与局限
 
@@ -156,9 +134,9 @@ detail_profile:
 
     ## 题目案例
 
-    RSIBench-Data 的“题目”不是一道直接问答，而是一份固定 profile 的后训练研究任务。下面选取四类公开代表任务，说明 Agent 实际接到的目标、不可变的运行链路和对应的官方结果口径。三个 SWE-bench profile 共用同一套上游提示词，差异由各自的 `spec.json` 固定。
+    RSIBench-Data 的“题目”不是一道直接问答，而是一份固定 profile 的后训练研究任务。按仓库顺序确定性选取 5 个案例：SWE-bench Verified、SWE-bench Multilingual、Terminal-Bench 2.0、GPQA Diamond 和 AIME 2026。每个展示案例都保留完整原文与完整中译；未被选中的 SWE-bench Pro 仍保留任务协议和原文，不额外制作译文。三个 SWE-bench profile 共用同一套上游提示词，差异由各自的 `spec.json` 固定。
 
-    ### SWE-bench：用失败证据改进代码修复能力
+    ### SWE-bench Verified：用失败证据改进代码修复能力
 
     #### 题目原文
 
@@ -236,7 +214,89 @@ detail_profile:
 
     #### 公开结果
 
-    三个 profile 都在 seed-23 固定的 100 题子集上复评。Kimi K3 的 Verified / Multilingual / Pro 通过率分别为 **50% / 11% / 17%**；gpt-5.6-sol 为 **33% / 15% / 9%**。这些是整套 profile 的通过率，不是单道题结果或 EvalHub 独立复跑。
+    该 profile 在 seed-23 固定的 100 题子集上复评。Kimi K3 的 Verified 通过率为 **50%**，gpt-5.6-sol 为 **33%**。这些是整套 profile 的通过率，不是单道题结果或 EvalHub 独立复跑。
+
+    ### SWE-bench Multilingual：跨语言代码库修复
+
+    这个 profile 与 Verified 使用字节相同的官方上游提示词；实际数据子集与运行参数由 Multilingual 的 `spec.json` 和 `RUN_CONTRACT.md` 固定。
+
+    #### 题目原文
+
+    ````text
+    # RSIBench-Data SWE-Bench Agent Prompt
+
+    You are the data generation and post-training agent for this RSIBench-Data
+    SWE-bench run.
+
+    The fixed train/eval chain is:
+
+    ```text
+    attempts/<attempt_id>/train_messages.jsonl
+      -> Tinker LoRA SFT
+      -> tinker:// sampler checkpoint
+      -> E2B tool-call proxy sandbox
+      -> Harbor SWE-bench target from RUN_CONTRACT.md with mini-swe-agent
+    ```
+
+    Training and sampling are Tinker-only. Do not replace the fixed Tinker training,
+    E2B proxy, or Harbor evaluation chain.
+
+    Start by reading the workspace instruction files:
+
+    1. RUN_CONTRACT.md
+    2. AGENT_RULES.md
+    3. DATA_GENERATION.md
+    4. MINI_SWE_DATA_FORMAT.md
+    5. EVAL_ATTEMPT_LOOP.md
+
+    If your harness is Claude Code, also read CLAUDE.md. If your harness is Codex,
+    also read CODEX.md. The entrypoint file points to the same shared instructions
+    and does not add separate requirements.
+
+    Do not treat this short prompt as a replacement for the instruction files. Work
+    within those files, run sufficient eval-driven attempts within the available
+    budget, and submit the most reliable final checkpoint only after an official
+    eval can be completed.
+    ````
+
+    #### 中文翻译
+
+    ````text
+    # RSIBench-Data SWE-Bench Agent 提示词
+
+    你是本次 RSIBench-Data SWE-bench 运行的数据生成与后训练 Agent。
+
+    固定的训练/评测链路是：
+
+    ```text
+    attempts/<attempt_id>/train_messages.jsonl
+      -> Tinker LoRA SFT
+      -> tinker:// 采样检查点
+      -> E2B 工具调用代理沙箱
+      -> 由 RUN_CONTRACT.md 指定的 Harbor SWE-bench 目标，配 mini-swe-agent
+    ```
+
+    训练与采样只能用 Tinker。不要替换固定的 Tinker 训练、E2B 代理或 Harbor 评测链路。
+
+    先读工作区里的说明文件：
+
+    1. RUN_CONTRACT.md
+    2. AGENT_RULES.md
+    3. DATA_GENERATION.md
+    4. MINI_SWE_DATA_FORMAT.md
+    5. EVAL_ATTEMPT_LOOP.md
+
+    如果你的 harness 是 Claude Code，另外读 CLAUDE.md；如果是 Codex，另外读 CODEX.md。
+    入口文件指向同一套共享说明，不附加单独要求。
+
+    不要把这段简短提示词当成说明文件的替代品。在那些文件的约束内工作，
+    在可用预算内跑足够多由评测驱动的尝试，并且只有在官方评测能够完成之后，
+    才提交最可靠的最终检查点。
+    ````
+
+    #### 公开结果
+
+    该 profile 在 seed-23 固定的 100 题多语言子集上复评。Kimi K3 的 Multilingual 通过率为 **11%**，gpt-5.6-sol 为 **15%**。这些是整套 profile 的通过率，不是单道题结果或 EvalHub 独立复跑。
 
     ### Terminal-Bench 2.0：改进真实终端工作流
 
@@ -686,37 +746,6 @@ tasks:
       within those files, run sufficient eval-driven attempts within the available
       budget, and submit the most reliable final checkpoint only after an official
       eval can be completed.
-    translation: |-
-      # RSIBench-Data SWE-Bench Agent 提示词
-
-      你是本次 RSIBench-Data SWE-bench 运行的数据生成与后训练 Agent。
-
-      固定的训练/评测链路是：
-
-      ```text
-      attempts/<attempt_id>/train_messages.jsonl
-        -> Tinker LoRA SFT
-        -> tinker:// 采样检查点
-        -> E2B 工具调用代理沙箱
-        -> 由 RUN_CONTRACT.md 指定的 Harbor SWE-bench 目标，配 mini-swe-agent
-      ```
-
-      训练与采样只能用 Tinker。不要替换固定的 Tinker 训练、E2B 代理或 Harbor 评测链路。
-
-      先读工作区里的说明文件：
-
-      1. RUN_CONTRACT.md
-      2. AGENT_RULES.md
-      3. DATA_GENERATION.md
-      4. MINI_SWE_DATA_FORMAT.md
-      5. EVAL_ATTEMPT_LOOP.md
-
-      如果你的 harness 是 Claude Code，另外读 CLAUDE.md；如果是 Codex，另外读 CODEX.md。
-      入口文件指向同一套共享说明，不附加单独要求。
-
-      不要把这段简短提示词当成说明文件的替代品。在那些文件的约束内工作，
-      在可用预算内跑足够多由评测驱动的尝试，并且只有在官方评测能够完成之后，
-      才提交最可靠的最终检查点。
     run_spec: >-
       以 TARGET_BENCHMARK=swe-bench-pro 启动一次独立的名义 16 小时 / 500 USD 预算运行，
       目标模型固定 Qwen/Qwen3.5-35B-A3B-Base，官方复评使用从 731 题 test split 抽取的本地 seed-23 随机 100 题子集、
