@@ -54,327 +54,1446 @@ command_template:
 trials: 1
 detail_profile:
   source_kind: upstream_publication
-  overview_note: >-
-    下面的协议说明来自钉死在 commit 7385d326 的官方作者仓库（140 份任务题面、隐藏 rubric 与验分器源码）、
-    论文 arXiv:2606.17861v1（2026-06-16 提交，CC BY 4.0）与官方项目页 2026-08-10 快照；
-    判分细节以仓库里真正被执行的代码为准，逐条与论文表述交叉核对过。
-  summary:
-    plain_language: >-
-      Agent 拿到的是一段散文式的游戏需求（世界观、玩家会经历什么、要有哪些系统），要交出两样东西：
-      一个放在 /workspace/game/ 的完整 Godot 4 工程，和 1–10 个自己写的输入轨迹 JSON——
-      轨迹里逐帧写明什么时候点哪个坐标、按哪个键，用来向验分器演示这游戏真的能玩。
-      验分器不读代码，而是照着轨迹把游戏重新启动、真的操作一遍、录下屏幕，再让多模态裁判看录像和抽帧，
-      判断需求里的每一条到底有没有在画面上被演示出来。工程启动不了，这题直接 0 分。
-    why_it_matters: >-
-      做游戏是少有的"必须让脚本、场景、资源、渲染、运行时配置和玩家交互同时成立"的任务：
-      单独看每个文件都对，合起来跑不起来或者玩不动，就等于没做完。
-      传统代码评测大多只验单元测试或片段正确性，测不出这种整体可运行性；
-      这套评测把判分放在"真实引擎里被操作时屏幕上发生了什么"，逼着 Agent 交出可交付的成品而不是能过测的片段。
-  method_steps:
-    - title: 发题与工作区
-      description: >-
-        每题给出一份 instruction.md 散文需求（核心愿景、玩家体验，以及交付格式、轨迹格式的统一说明），
-        一个 Godot 工作区，以及两个只读挂载的 2D 资产库（Kenney 与 OpenGameArt，后者每个子目录带自己的 LICENSE.txt）。
-        评分细则放在 /tests/rubric.json，Agent 阶段拿不到内容，属于隐藏 rubric。单题给 Agent 的名义预算是 7200 秒。
-    - title: 交付工程与输入轨迹
-      description: >-
-        Agent 要在 /workspace/game/ 交出完整工程，并在 demo_outputs/ 下放 1–10 个确定性轨迹 JSON，
-        每个含 duration_frames（≤600，即 30 fps 下 20 秒）与按帧排序的事件序列，
-        支持 mouse_click/mouse_down/mouse_up/mouse_move/key_press/key_down/key_up/wait，坐标按 1280×720 视口。
-        需要特定局面的演示要实现 `-- --scenario <id>` 入口：跳过菜单、确定性地构造该状态并立即接受输入。
-    - title: 启动闸门
-      description: >-
-        验分器先在 shell 里跑 `godot --headless --path /workspace/game --quit-after 5`，
-        退出码 0 才算 BUILD=1。BUILD=0 时直接跳过回放与判分，该题记 0 分——工程能不能起来是硬前提。
-    - title: 回放录屏取证
-      description: >-
-        BUILD=1 后按文件名取前 10 个轨迹，逐个在 Xvfb 虚拟屏上重启游戏，用 xdotool 注入合成鼠标键盘事件回放，
-        ffmpeg 录制 1280×720 画面并压到 854×480，每 0.5 秒抽一帧。
-        录像超过 20 秒时按 demo_id 确定性随机取一个 20 秒连续窗口，保证复跑抽到同样的帧。
-    - title: 多模态裁判按隐藏细则打分
-      description: >-
-        每个 demo 调用裁判一次，一次性对该题全部 requirement 给 0–1 分（0 未演示、0.5 部分演示、1 清晰演示）；
-        裁判最多尝试 5 次（首次加 4 次重试），仍失败则该 demo 全部 requirement 记 0。每题 12–21 条 requirement，全库共 2305 条。
-    - title: 合成本题分与总分
-      description: >-
-        每条 requirement 先跨 demo 聚合（agg=max 取最大值，agg=mean 取均值），
-        再按 score_formula 合成：BUILD ×（四类各自 requirement 等权均值，按类权重加权），裁剪到 [0,1]。
-        140 题得分等权平均 ×100 即榜单总分。
-  score_interpretation: >-
-    分数是百分制总分，越高越好，单位是分，理论上限 100，等于 140 题各自 [0,1] 得分的等权平均再乘 100。
-    它衡量的是"隐藏评分细则里的各项要求，有多大比例真的在可操作的游戏画面里被演示出来"，
-    而不是代码风格或单元测试通过率。因为每题都乘以启动闸门，一个起不来的工程无论代码多完整都记 0 分。
-    四个分项 Mechanics/Depth/Visuals/Art 对应 Core Mechanics、Content Depth、Functional Visuals、
-    Presentation & Art 四类，只作解释用，不参与排序。比较边界：同一个来源 commit 7385d326 的 140 道题与隐藏 rubric、
-    同一套 Godot 4.6.2-stable 与 Xvfb/xdotool/ffmpeg 取证链路、同一个多模态裁判 gpt-5.5、
-    每题至多 10 个 demo 与 20 秒取证窗口。换裁判模型、改闸门命令或放宽 demo 上限都会破坏可比性。
-  key_facts:
-    - value: 140 题 / 15 个游戏族
-      label: 任务规模（不含 example 模板题）
-      description: 平台跳跃 19、策略 17、经营 16、开放世界 15、Roguelike 14、视觉小说 11、解谜 8、射击 7、模拟 6、卡牌 5、恐怖 5、音乐节奏 5、放置 4、竞速 4、体育 4。
-      source_url: https://github.com/FreedomIntelligence/gamecraft-bench/tree/7385d326fb25ba9af8b353615987bf680a25b657/tasks
-    - value: 2305 条
-      label: 隐藏评分细则的 requirement 总数
-      description: 逐份统计 140 份 tests/rubric.json 的 requirements 得到；每题 12–21 条，按 Core Mechanics / Content Depth / Functional Visuals / Presentation & Art 四类归组。
-      source_url: https://github.com/FreedomIntelligence/gamecraft-bench/tree/7385d326fb25ba9af8b353615987bf680a25b657/tasks
-    - value: "65.72"
-      label: 官方榜单当前最高总分
-      description: Claude Code 编排、上游标识为 Fable 5 high 的配置，2026-07-20；同一榜单最低为 2.15。
-      source_url: https://tongxuluo.github.io/gamecraft-bench-website/
-    - value: "41.46"
-      label: 论文期最强配置的总分
-      description: 论文 v1（2026-06-16）主表 7 个配置中的最高分，由 Claude Code + Opus-4.7 high 取得。
-      source_url: https://arxiv.org/abs/2606.17861
-    - value: 10 个 / 20 秒
-      label: 单题取证上限
-      description: 每题最多回放 10 个轨迹，单个录像最多取 20 秒窗口，每 0.5 秒抽一帧交裁判。140 份 rubric 全部一致。
-      source_url: https://github.com/FreedomIntelligence/gamecraft-bench/blob/7385d326fb25ba9af8b353615987bf680a25b657/gamecraft_bench/verifier/cli.py
-    - value: gpt-5.5
-      label: 上游默认多模态裁判
-      description: 默认后端 openai 的默认模型；仓库另注册了 claude、opus、kimi、gemini 与 stub 五个可选后端。
-      source_url: https://github.com/FreedomIntelligence/gamecraft-bench/blob/7385d326fb25ba9af8b353615987bf680a25b657/gamecraft_bench/verifier/judges/openai_gpt.py
-  caveats:
-    - title: 榜单跨越两个时间点，论文只覆盖其中 7 个配置
-      description: >-
-        论文 v1（2026-06-16）主表是 7 个配置、最高 41.46；官方榜单到 2026-08-10 已扩到 12 个配置、最高 65.72，
-        新增的 Fable 5 high、GPT-5.6-sol high、Kimi-K3、Seele02-pro 与 Deepseek-V4-Flash-0731 都不在论文里。
-        上游没有声明这几次新测与论文用的是否为同一版验分器、同一裁判模型，仓库也没有 tag 或 release 可区分版本。
-        跨这两个时间点比较请谨慎。另外仓库 README 正文写最强配置为 65.70%，但同一页表格与官方项目页都写 65.72；
-        本目录采用逐格数据 65.72，并如实记录这处来源自身的差异，不做平均或推断。
-    - title: 本目录只收录 9 个可解析身份的配置，3 行如实略去
-      description: >-
-        官方榜单 12 行里，SeeleAgent · Seele02-pro（50.70）、Claude Code · Deepseek-V4-Flash-0731（30.66）
-        与 Code Buddy · MiniMax-M2.7（10.95）
-        在 EvalHub 平台模型注册表中没有对应条目，写进成绩文件会被身份校验判为未知模型；
-        把它们改映射到别的模型属于事实篡改，因此这三行不进入成绩文件。完整 12 行官方榜单见 README、
-        `official-full-leaderboard` 辅助视图与官方项目页。
-        另外上游把推理档位写进模型字符串（Fable 5 high、GPT-5.6-sol high、GPT-5.5 high、Opus-4.7 high），
-        平台注册表只认不含档位的 canonical 名，因此成绩文件用 Claude Fable 5 / GPT-5.6 Sol / GPT-5.5 /
-        Claude Opus 4.7，并在每条成绩的 detail 里原样保留上游字符串与 high 档位；这是身份规范化，不改动任何分数。
-    - title: 裁判是打分链路里最主要的不确定来源
-      description: >-
-        分数由多模态裁判看录像抽帧给出，仓库没有钉死裁判的采样温度或随机种子；
-        论文用固定证据重复 10 次裁判来展示稳定性，但这属于经验证据而非固定解码配置。
-        裁判连续失败 5 次会让该 demo 全部条目记 0，因此裁判侧的可用性问题会直接压低分数。
-    - title: 覆盖面与不评项
-      description: >-
-        只覆盖 Godot 引擎里的 2D 游戏生成，不含 Unity/Unreal、3D、多人联机、大规模物理与长周期生产流程；
-        判分只看可见的游戏行为，音频相关要求通过画面上的可见反馈间接体现；
-        评测衡量的是"有没有按需求实现出可运行的机制、内容、视觉状态与表现"，不试图衡量游戏是否好玩。
-    - title: 复现成本高，且依赖付费裁判与特定 Linux 取证栈
-      description: >-
-        单题名义预算是 Agent 7200 秒 + 验分 1800 秒（140/140 一致），多数题目为 1 CPU / 2048 MB，其中 7 道开放世界题为 4096 MB，另有少数 task.toml 省略了部分环境字段；跑满 140 题还要叠加每个 demo 一次的多模态裁判调用；
-        取证链路需要 Ubuntu 环境下的 Godot 4.6.2-stable、Xvfb、xdotool 与 ffmpeg。
-        这不是能在本地免费快速复跑的评测，被评 Agent 在解题阶段还允许联网。
-  overview_tables:
-    - id: task-families
-      label: 任务族
-      title: 15 个游戏族的题量分布
-      note: 逐格转录自 commit 7385d326 的 README 任务族表与论文 Table 3，并与仓库 tasks/ 目录前缀实际计数逐族核对一致（合计 140，不含 example 模板题）。
-      caption: 论文 Table 3 标题明确写"Counts exclude the example task"，仓库实有 141 个任务目录，减去 example 恰为 140。
-      source_url: https://arxiv.org/abs/2606.17861
-      columns:
-        - { id: family, label: 游戏族 }
-        - { id: dir-prefix, label: 目录前缀 }
-        - { id: tasks, label: 题量 }
-      rows:
-        - id: platformer
-          cells:
-            - { column_id: family, value: Platformer 平台跳跃 }
-            - { column_id: dir-prefix, value: platformer- }
-            - { column_id: tasks, value: 19 }
-        - id: strategy
-          cells:
-            - { column_id: family, value: Strategy 策略 }
-            - { column_id: dir-prefix, value: strategy- }
-            - { column_id: tasks, value: 17 }
-        - id: tycoon
-          cells:
-            - { column_id: family, value: Tycoon 经营模拟 }
-            - { column_id: dir-prefix, value: tycoon- }
-            - { column_id: tasks, value: 16 }
-        - id: openworld
-          cells:
-            - { column_id: family, value: Open-world 开放世界 }
-            - { column_id: dir-prefix, value: openworld- }
-            - { column_id: tasks, value: 15 }
-        - id: roguelike
-          cells:
-            - { column_id: family, value: Roguelike }
-            - { column_id: dir-prefix, value: roguelike- }
-            - { column_id: tasks, value: 14 }
-        - id: visualnovel
-          cells:
-            - { column_id: family, value: Visual novel 视觉小说 }
-            - { column_id: dir-prefix, value: visualnovel- }
-            - { column_id: tasks, value: 11 }
-        - id: puzzle
-          cells:
-            - { column_id: family, value: Puzzle 解谜 }
-            - { column_id: dir-prefix, value: puzzle- }
-            - { column_id: tasks, value: 8 }
-        - id: shooter
-          cells:
-            - { column_id: family, value: Shooter 射击 }
-            - { column_id: dir-prefix, value: shooter- }
-            - { column_id: tasks, value: 7 }
-        - id: simulation
-          cells:
-            - { column_id: family, value: Simulation 模拟 }
-            - { column_id: dir-prefix, value: simulation- }
-            - { column_id: tasks, value: 6 }
-        - id: cardgame
-          cells:
-            - { column_id: family, value: Card game 卡牌 }
-            - { column_id: dir-prefix, value: cardgame- }
-            - { column_id: tasks, value: 5 }
-        - id: horror
-          cells:
-            - { column_id: family, value: Horror 恐怖 }
-            - { column_id: dir-prefix, value: horror- }
-            - { column_id: tasks, value: 5 }
-        - id: rhythm
-          cells:
-            - { column_id: family, value: Rhythm 音乐节奏 }
-            - { column_id: dir-prefix, value: rhythm- }
-            - { column_id: tasks, value: 5 }
-        - id: idle
-          cells:
-            - { column_id: family, value: Idle 放置 }
-            - { column_id: dir-prefix, value: idle- }
-            - { column_id: tasks, value: 4 }
-        - id: racing
-          cells:
-            - { column_id: family, value: Racing 竞速 }
-            - { column_id: dir-prefix, value: racing- }
-            - { column_id: tasks, value: 4 }
-        - id: sports
-          cells:
-            - { column_id: family, value: Sports 体育 }
-            - { column_id: dir-prefix, value: sports- }
-            - { column_id: tasks, value: 4 }
-    - id: rubric-categories
-      label: 评分四类
-      title: 隐藏评分细则的四个类别与权重
-      note: 类别名与条目前缀取自 commit 7385d326 的 tasks/*/tests/rubric.json 与验分器 dashboard 代码；条目数为 140 份 rubric 的实际计数；权重由逐份 score_formula 解析求得。
-      caption: 权重之和恒为 1。论文把第四类的展示名写作 Art and Presentation，rubric 与代码里的键名是 Presentation & Art。
-      source_url: https://github.com/FreedomIntelligence/gamecraft-bench/blob/7385d326fb25ba9af8b353615987bf680a25b657/gamecraft_bench/verifier/score.py
-      columns:
-        - { id: category, label: 类别（代码键名） }
-        - { id: prefix, label: 条目前缀 }
-        - { id: n-items, label: 全库条目数 }
-        - { id: weight, label: 权重（135 题标准等价 / 5 道视觉小说题） }
-        - { id: question, label: 判的是什么 }
-      rows:
-        - id: core-mechanics
-          cells:
-            - { column_id: category, value: Core Mechanics }
-            - { column_id: prefix, value: M }
-            - { column_id: n-items, value: 613 }
-            - { column_id: weight, value: 0.15 / 0.20 }
-            - { column_id: question, value: 需求里的核心玩法机制有没有真的能玩起来 }
-        - id: content-depth
-          cells:
-            - { column_id: category, value: Content Depth }
-            - { column_id: prefix, value: D }
-            - { column_id: n-items, value: 653 }
-            - { column_id: weight, value: 0.35 / 0.30 }
-            - { column_id: question, value: 进程、内容量与状态变化是否足够，而不是只有一个原型 }
-        - id: functional-visuals
-          cells:
-            - { column_id: category, value: Functional Visuals }
-            - { column_id: prefix, value: V }
-            - { column_id: n-items, value: 466 }
-            - { column_id: weight, value: 0.15 / 0.15 }
-            - { column_id: question, value: 玩家能否从画面读出状态、反馈、转场与结果 }
-        - id: presentation-art
-          cells:
-            - { column_id: category, value: Presentation & Art }
-            - { column_id: prefix, value: A }
-            - { column_id: n-items, value: 573 }
-            - { column_id: weight, value: 0.35 / 0.35 }
-            - { column_id: question, value: 观感是否统一、美术与呈现是否达到该类型的基本水准 }
-    - id: benchmark-comparison
-      label: 同类对比
-      title: 官方与同类游戏生成评测的三条准则对比
-      note: 逐格转录自官方项目页 2026-08-10 快照的 Comparison 表与论文 Table 1。
-      caption: >-
-        官方脚注原文："WebGameBench is concurrent with our work: it evaluates delivered Web games,
-        while GameCraft-Bench targets complete projects in a dedicated game engine."
-      source_url: https://tongxuluo.github.io/gamecraft-bench-website/
-      columns:
-        - { id: benchmark, label: 评测 }
-        - { id: engine, label: Engine Grounding }
-        - { id: artifact, label: Artifact Completeness }
-        - { id: verification, label: Interactive Verification }
-      rows:
-        - id: gamedevbench
-          cells:
-            - { column_id: benchmark, value: GameDevBench }
-            - { column_id: engine, value: Godot }
-            - { column_id: artifact, value: 未覆盖 }
-            - { column_id: verification, value: 未覆盖 }
-        - id: opengame-bench
-          cells:
-            - { column_id: benchmark, value: OpenGame-Bench }
-            - { column_id: engine, value: Web }
-            - { column_id: artifact, value: 覆盖 }
-            - { column_id: verification, value: 未覆盖 }
-        - id: webgamebench
-          cells:
-            - { column_id: benchmark, value: WebGameBench（与本工作同期） }
-            - { column_id: engine, value: Web }
-            - { column_id: artifact, value: 覆盖 }
-            - { column_id: verification, value: 覆盖 }
-        - id: gamecraft-bench
-          cells:
-            - { column_id: benchmark, value: GameCraft-Bench }
-            - { column_id: engine, value: Godot }
-            - { column_id: artifact, value: 覆盖 }
-            - { column_id: verification, value: 覆盖 }
-  figures:
-    - id: official-overview
-      label: 总览
-      title: GameCraft-Bench 总览图
-      src: https://arxiv.org/html/2606.17861v1/x1.png
-      alt: 展示 Agent 把自然语言游戏需求转成完整 Godot 工程、验分器回放提交的交互轨迹、再由细则引导判分的整体流程示意图。
-      caption: 论文 Figure 2，来源方发表图，非 EvalHub 独立复跑。
-      source_url: https://arxiv.org/abs/2606.17861
-    - id: official-pipeline
-      label: 判分链路
-      title: 端到端判分链路图
-      src: https://arxiv.org/html/2606.17861v1/x4.png
-      alt: 展示一道题如何打包游戏需求、Godot 环境与隐藏评分细则，以及验分器如何验证可启动性、回放轨迹取证并合成分数的流程图。
-      caption: 论文 Figure 5，来源方发表图，非 EvalHub 独立复跑。
-      source_url: https://arxiv.org/abs/2606.17861
-    - id: official-judge-stability
-      label: 裁判稳定性
-      placement: insights
-      title: 固定证据下的裁判稳定性
-      src: https://arxiv.org/html/2606.17861v1/x8.png
-      alt: 柱状图给出同一份固定游戏证据上重复 10 次 gpt-5.5 裁判的平均分，误差棒表示重复之间的波动。
-      caption: 论文 Figure 9：在固定证据上重复 10 次裁判以展示打分稳定性；这是经验证据，仓库并未钉死裁判的采样参数。
-      source_url: https://arxiv.org/abs/2606.17861
-  resources_note: 下面只列上游作者仓库、论文托管方与官方项目页提供的一手资料。
-  resources:
-    - title: GameCraft-Bench 论文（arXiv:2606.17861v1）
-      summary: 三条设计准则、140 题构成、BUILD 门控与四类评分的权威定义，含分家族结果表与裁判稳定性实验，2026-06-16 提交，CC BY 4.0。
-      url: https://arxiv.org/abs/2606.17861
-    - title: 官方作者仓库（钉死 commit 7385d326）
-      summary: 140 份任务题面、隐藏 rubric、回放取证与判分实现，以及官方榜单与 token 用量表的来源。
-      url: https://github.com/FreedomIntelligence/gamecraft-bench
-    - title: 官方项目页
-      summary: 官方榜单 12 行成绩、同类评测对比表与各配置的游戏录像 demo，本目录官方成绩取自其 2026-08-10 快照。
-      url: https://tongxuluo.github.io/gamecraft-bench-website/
-    - title: 判分实现 score.py
-      summary: 启动闸门短路、跨 demo 的 max/mean 聚合、score_formula 受限 AST 求值与 [0,1] 裁剪的一手代码。
-      url: https://github.com/FreedomIntelligence/gamecraft-bench/blob/7385d326fb25ba9af8b353615987bf680a25b657/gamecraft_bench/verifier/score.py
-    - title: 任务 rubric 样例 cardgame-poker-roguelike
-      summary: 四类类别命名、0.15/0.35/0.15/0.35 权重、闸门命令与单条 requirement 的原始判分口径。
-      url: https://raw.githubusercontent.com/FreedomIntelligence/gamecraft-bench/7385d326fb25ba9af8b353615987bf680a25b657/tasks/cardgame-poker-roguelike/tests/rubric.json
-    - title: Harbor 运行框架
-      summary: GameCraft-Bench 依赖的上游 Agent 执行与评测 harness，Apache-2.0。
-      url: https://github.com/harbor-framework/harbor
+  markdown: |-
+    ## 榜单
+
+    主指标是 Overall Score（0–100，越高越好）。下表完整保留 2026-08-10 官方快照中的 12 个参赛配置；Harness 表示生成项目时使用的编码智能体。
+
+    | 排名 | 模型 | Overall | Harness |
+    | ---: | --- | ---: | --- |
+    | 1 | Fable 5 high | 65.72 | Claude Code |
+    | 2 | GPT-5.6-sol high | 60.50 | Codex |
+    | 3 | Kimi-K3 | 56.96 | Kimi Code |
+    | 4 | Seele02-pro | 50.70 | SeeleAgent |
+    | 5 | Opus-4.7 high | 41.46 | Claude Code |
+    | 6 | GPT-5.5 high | 39.49 | Codex |
+    | 7 | Deepseek-V4-Flash-0731 | 30.66 | Claude Code |
+    | 8 | Kimi-K2.6 | 30.65 | Kimi Code |
+    | 9 | MiMo-V2.5-Pro | 24.10 | Claude Code |
+    | 10 | GLM-5.1 | 18.29 | Code Buddy |
+    | 11 | MiniMax-M2.7 | 10.95 | Code Buddy |
+    | 12 | DeepSeek-V4-Pro | 2.15 | Codex |
+
+    ## 官方分项结果
+
+    Mechanics 衡量核心玩法是否工作，Depth 衡量进度与内容深度，Visuals 衡量状态与反馈是否可读，Art 衡量视觉呈现是否完整。
+
+    | 模型 | Mechanics | Depth | Visuals | Art |
+    | --- | ---: | ---: | ---: | ---: |
+    | Fable 5 high | 76.52 | 58.61 | 66.93 | 67.68 |
+    | GPT-5.6-sol high | 74.50 | 56.10 | 64.80 | 57.00 |
+    | Kimi-K3 | 73.03 | 53.38 | 56.90 | 53.59 |
+    | Seele02-pro | 68.42 | 48.76 | 52.74 | 44.17 |
+    | Opus-4.7 high | 55.34 | 39.48 | 42.78 | 36.86 |
+    | GPT-5.5 high | 54.36 | 38.61 | 41.84 | 32.94 |
+    | Deepseek-V4-Flash-0731 | 40.55 | 27.56 | 32.21 | 28.81 |
+    | Kimi-K2.6 | 39.76 | 28.07 | 33.66 | 27.99 |
+    | MiMo-V2.5-Pro | 32.33 | 22.59 | 27.45 | 20.65 |
+    | GLM-5.1 | 25.23 | 17.80 | 21.14 | 14.59 |
+    | MiniMax-M2.7 | 14.27 | 9.92 | 14.92 | 8.85 |
+    | DeepSeek-V4-Pro | 2.25 | 1.69 | 1.97 | 2.63 |
+
+    ### Token 使用
+
+    官方只为 4 个配置发布了完整 Token 统计；其余模型以“—”表示来源未提供，不做估算。
+
+    | 模型 | 任务数 | Input tokens | Cache tokens | Output tokens | 平均 Input / 题 | 平均 Output / 题 |
+    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+    | Fable 5 high | — | — | — | — | — | — |
+    | GPT-5.6-sol high | — | — | — | — | — | — |
+    | Kimi-K3 | — | — | — | — | — | — |
+    | Seele02-pro | — | — | — | — | — | — |
+    | Opus-4.7 high | 140 | 1.58B | 1.50B | 9.4M | 11.3M | 67.0K |
+    | GPT-5.5 high | 140 | 148.5M | 130.3M | 2.8M | 1.1M | 20.0K |
+    | Deepseek-V4-Flash-0731 | — | — | — | — | — | — |
+    | Kimi-K2.6 | 140 | 2.24B | 2.22B | 10.9M | 16.0M | 77.7K |
+    | MiMo-V2.5-Pro | — | — | — | — | — | — |
+    | GLM-5.1 | — | — | — | — | — | — |
+    | MiniMax-M2.7 | — | — | — | — | — | — |
+    | DeepSeek-V4-Pro | 140 | 232.6M | 58.0M | 7.8M | 1.7M | 55.4K |
+
+    ## 关于此评测
+
+    GameCraft-Bench 测试编码智能体能否仅根据自然语言需求，在 Godot 4 中交付一款可构建、可运行、可交互的完整 2D 微型游戏。固定版本包含 140 道任务、15 个游戏家族和 2,305 条逐项 rubric，覆盖平台跳跃、策略、经营、开放世界、Roguelike、视觉小说、解谜和射击等类型。
+
+    ### 评测流程
+
+    1. Agent 接收完整题面、Godot 工作区和只读素材库，在 `/workspace/game/` 中生成项目，并在 `demo_outputs/` 中提供 1–10 条确定性输入轨迹。
+    2. 项目先通过 Godot headless 构建和启动检查；失败的任务记为 0。
+    3. 每条轨迹在全新游戏进程中以 1280×720 重放键鼠输入，并录制为可视证据。
+    4. 多模态裁判按题面和 rubric 逐项判断是否满足；每条要求跨 demo 取最高命中。
+    5. 普通任务按 Mechanics / Depth / Visuals / Art = 0.15 / 0.35 / 0.15 / 0.35 合成；5 道特殊视觉小说任务使用 0.20 / 0.30 / 0.15 / 0.35。140 题等权平均后乘 100 得到 Overall Score。
+
+    ### Rubric 规模与权重
+
+    | 类别 | 记号 | 要求数 | 普通权重 | 特殊视觉小说权重 | 关注点 |
+    | --- | --- | ---: | ---: | ---: | --- |
+    | Core Mechanics | M | 613 | 0.15 | 0.20 | 机制是否工作 |
+    | Content Depth | D | 653 | 0.35 | 0.30 | 进度、内容与状态 |
+    | Functional Visuals | V | 466 | 0.15 | 0.15 | 状态与反馈是否可读 |
+    | Presentation & Art | A | 573 | 0.35 | 0.35 | 风格与呈现是否完整 |
+
+    ## 任务覆盖
+
+    | 游戏家族 | 任务数 |
+    | --- | ---: |
+    | Platformer | 19 |
+    | Strategy | 17 |
+    | Tycoon | 16 |
+    | Open-world | 15 |
+    | Roguelike | 14 |
+    | Visual novel | 11 |
+    | Puzzle | 8 |
+    | Shooter | 7 |
+    | Simulation | 6 |
+    | Card game | 5 |
+    | Horror | 5 |
+    | Rhythm | 5 |
+    | Idle | 4 |
+    | Racing | 4 |
+    | Sports | 4 |
+
+    ## 研究观察
+
+    ![GameCraft-Bench 总览：从任务构建、Agent 生成项目，到交互取证与多模态 rubric 评分。](https://arxiv.org/html/2606.17861v1/x1.png)
+
+    *论文 Figure 2：从任务构建、Agent 生成项目，到交互取证与多模态 rubric 评分。*
+
+    ![GameCraft-Bench 验证流水线：构建、重放轨迹、录屏抽帧与逐项裁判。](https://arxiv.org/html/2606.17861v1/x4.png)
+
+    *论文 Figure 5：构建、重放轨迹、录屏抽帧与逐项裁判。*
+
+    ![固定游戏证据上重复十次 gpt-5.5 裁判的平均结果与波动。](https://arxiv.org/html/2606.17861v1/x8.png)
+
+    *论文 Figure 9：同一份游戏证据重复 10 次裁判，用于观察多模态判断的波动。*
+
+    ### 重要限制
+
+    - 榜单固定在 2026-08-10；论文与后续官网结果不能直接混入同一快照。
+    - 多模态裁判存在波动，固定证据上的重复判断也可能出现差异。
+    - 分数主要来自可构建项目和 demo 录像，不能完整评价代码架构、性能、安全性或长期可维护性。
+    - 当前任务集中在 Godot 2D 单机微型游戏，不覆盖复杂 3D、网络多人或大型长期内容生产。
+    - 生成、录屏和多模态判定的计算与调用成本较高。
+
+    ## 题目案例
+
+    以下 5 题按任务顺序等距抽取，包含完整英文题面和完整中文翻译。
+
+    ### 卡牌 · Cardgame Autobattler
+
+    #### 题目原文
+
+    ````text
+    # Cardgame Autobattler
+
+    Build a Cardgame Autobattler in Godot 4 at `/workspace/game/`.
+    This is not a prototype. It is a **complete, shippable micro-game** that could
+    sit on an itch.io page or Steam as a polished vertical slice.
+
+    ## Core Vision
+
+    A draft-and-watch autobattler where the player recruits creatures from a shared
+    shop each round, arranges them on a board, and watches them fight automatically
+    against an opponent's team. Strategy lives entirely in the draft phase: which
+    creatures to buy, when to level up for stronger units, and how to build
+    synergies between tribal tags. Creatures of the same tribe buff each other —
+    stack enough Beasts and they gain attack; fill a row with Undead and they
+    resurrect once. An 8-player elimination format (simulated against AI) creates
+    escalating pressure as the field narrows. The fantasy is assembling a dream
+    team from random offerings and watching your synergy engine demolish the
+    opposition.
+
+    ## What the Player Experiences
+
+    1. **Title Screen** — A tavern interior with the game name on a wooden sign
+       above the bar, creature silhouettes seated at tables, and a "Find Match"
+       button styled as a tavern door. No plain Godot grey.
+    2. **Shop Phase** — Each round, a shop displays 3-5 random creatures for
+       purchase. The player buys creatures (spending gold), places them on a
+       bench or directly onto the board (limited slots). Selling creatures
+       refunds partial gold. A timer counts down to the fight phase.
+    3. **Board Arrangement** — The player's board has a front row and back row.
+       Positioning matters: front-row creatures are attacked first; back-row
+       creatures with ranged attacks stay safe longer. Drag-and-drop placement.
+    4. **Auto Combat** — When the timer expires, the player's board fights an
+       opponent's board automatically. Creatures attack in order, targeting the
+       nearest enemy. Abilities trigger based on conditions (on-attack, on-death,
+       start-of-combat). The fight plays out with attack animations and health
+       bars depleting.
+    5. **Tribal Synergies** — At least 5 tribes (Beast, Undead, Mech, Dragon,
+       Elemental). Having 2/4/6 of a tribe activates escalating bonuses shown in
+       a synergy tracker panel. Synergies are the primary strategic axis.
+    6. **Economy** — Gold income increases each round. Winning streaks and losing
+       streaks both grant bonus gold. Interest accrues on saved gold (1 gold per
+       10 saved). Levelling up costs gold but increases shop quality and board
+       size.
+    7. **Elimination** — The player starts with a health pool. Losing a round
+       costs health proportional to surviving enemy creatures. Last player
+       standing wins. A placement screen shows final ranking.
+
+    ## Assets
+
+    2D assets are mounted read-only at:
+
+    - `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+    - `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+      subdir's `LICENSE.txt`.
+
+    Browse the library and choose packs.
+    Copy what you need into your project's `assets/` folder.
+
+    ## Project layout
+
+    ```
+    /workspace/game/
+      project.godot
+      Main.tscn
+      demo_outputs/    ← your input traces (1–10 files)
+      scripts/  scenes/  assets/
+    ```
+
+    The build must launch cleanly with:
+
+    ```
+    godot --headless --path /workspace/game --quit-after 5
+    ```
+
+    A reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.
+    **Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —
+    anything after `--` is forwarded to the project as user args and silently
+    ignored by the engine. Correct shape:
+    `godot --headless --quit-after 5 --path . -- --scenario near_victory`.
+
+    A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+    result screens look like.
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/frame.png --frames 60
+    ```
+
+    To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+    helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+    `OS.get_cmdline_user_args()` for your game code to read. Example:
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+    ```
+
+    ## Demos
+
+    Ship **1–10 input-trace files** under `/workspace/game/demo_outputs/`, one per
+    demo, each named `*.json`. The evaluator launches a fresh game per trace,
+    replays your trace as synthetic mouse and keyboard input at 1280×720, and
+    records the screen. Only the first 10 traces by filename are evaluated;
+    recordings longer than 20 s are sampled from a random 20 s window.
+
+    ### Scenarios
+
+    Normal play should start from the title screen and demonstrate the task's
+    core gameplay loop.
+    Demo playback must be deterministic. For demos that need a specific state
+    (a specific level, combat state, upgrade screen, result state, or late-game
+    setup), define named scenarios your game loads when launched with:
+
+    ```
+    godot --path /workspace/game -- --scenario <id>
+    ```
+
+    When `--scenario <id>` is present the game must skip menus, set up the named
+    state deterministically (seed any RNG), and begin accepting input immediately.
+
+    ### Trace file format
+
+    ```json
+    {
+      "scenario": "title_flow",
+      "duration_frames": 360,
+      "events": [
+        {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+        {"frame": 90,  "type": "key_press",   "keycode": "1"},
+        {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+        {"frame": 300, "type": "wait"}
+      ]
+    }
+    ```
+
+    - `scenario` — optional; omit for a normal game launch from the title screen.
+    - `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+    - `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
+      viewport. Supported types:
+      - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+      - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+        use these for drag interactions: emit `mouse_down` at the start point,
+        one or more `mouse_move` events along the way, and `mouse_up` at the end.
+        A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+        succession.
+      - `mouse_move`: `{frame, type, x, y}`
+      - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+        `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+        `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+      - `wait`: `{frame, type}` — anchor frame, no input.
+
+    Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+    ````
+
+    #### 中文翻译
+
+    ````text
+    # Cardgame Autobattler
+
+    在 Godot 4 中于 `/workspace/game/` 构建一款卡牌自动战斗游戏（Cardgame Autobattler）。
+    这不是原型。它是一款**完整、可交付的微型游戏**，能够以打磨完成的垂直切片形态放在 itch.io 页面或 Steam 上。
+
+    ## Core Vision
+
+    这是一款“选秀并观战”的自动战斗游戏：玩家每回合从共享商店招募生物，将它们布置到棋盘上，然后观看它们与对手队伍自动交战。所有策略都发生在选秀阶段：购买哪些生物、何时升级以获得更强单位，以及如何围绕种族标签构筑协同。相同种族的生物会彼此强化——凑够足够多的 Beast 会获得攻击力；用 Undead 填满一排，它们就能复活一次。八名玩家的淘汰赛制（由 AI 模拟对手）会随着参赛者不断减少而持续加压。其幻想内核是从随机出现的选项中组建梦之队，并看着自己的协同引擎摧毁对手。
+
+    ## What the Player Experiences
+
+    1. **标题界面（Title Screen）** —— 酒馆内部场景，游戏名写在吧台上方的木牌上，生物剪影坐在桌旁，一个样式如酒馆门的“Find Match”按钮用于开始匹配。不能使用朴素的 Godot 灰色默认界面。
+    2. **商店阶段（Shop Phase）** —— 每回合商店展示 3–5 个随机生物供玩家购买。玩家花费金币购买生物，并把它们放到备战区或直接放上棋盘（格位有限）。出售生物会返还部分金币。倒计时结束后进入战斗阶段。
+    3. **棋盘布阵（Board Arrangement）** —— 玩家的棋盘分为前排与后排。站位会影响战斗：前排生物优先承受攻击；后排的远程生物能更久地保持安全。布置采用拖放操作。
+    4. **自动战斗（Auto Combat）** —— 倒计时结束时，玩家棋盘上的队伍会自动与对手棋盘交战。生物按顺序攻击并以最近的敌人为目标。技能会依据条件触发（攻击时、死亡时、战斗开始时）。战斗过程需要播放攻击动画，并让生命条随伤害逐步减少。
+    5. **种族协同（Tribal Synergies）** —— 至少提供 5 个种族（Beast、Undead、Mech、Dragon、Elemental）。同一种族达到 2/4/6 个时，会激活逐级增强的奖励，并显示在协同追踪面板中。种族协同是主要的策略轴。
+    6. **经济系统（Economy）** —— 金币收入随回合增加。连胜和连败都会提供额外金币。存下的金币会产生利息（每存 10 金币获得 1 金币）。升级需要花费金币，但会提升商店品质并扩大棋盘容量。
+    7. **淘汰（Elimination）** —— 玩家以一池生命值开局。输掉回合时，会按照敌方存活生物的数量损失生命。最后存活的玩家获胜。最终名次会显示在排名结算界面中。
+
+    ## Assets
+
+    2D 素材以只读方式挂载于：
+
+    - `/workspace/assets/library/` —— Kenney CC0 素材包（sprites、tiles、UI、fonts）。
+    - `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录的 `LICENSE.txt`。
+
+    浏览素材库并挑选素材包。
+    把你需要的内容复制到你项目的 `assets/` 目录中。
+
+    ## Project layout
+
+    ```
+    /workspace/game/
+      project.godot
+      Main.tscn
+      demo_outputs/    ← your input traces (1–10 files)
+      scripts/  scenes/  assets/
+    ```
+
+    构建产物必须能通过以下命令干净启动：
+
+    ```
+    godot --headless --path /workspace/game --quit-after 5
+    ```
+
+    Godot CLI 参数的参考文档位于 `/workspace/tools/godot_command_line.md`。
+    **诸如 `--headless` 和 `--quit-after N` 之类的引擎参数必须放在 `--` 之前** —— `--` 之后的任何内容都会作为用户参数转发给项目，并被引擎静默忽略。正确的形式为：
+    `godot --headless --quit-after 5 --path . -- --scenario near_victory`。
+
+    截图辅助工具位于 `/workspace/tools/screenshot.sh`。用它来实际查看你的 UI / 战场 / 结算界面长什么样。
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/frame.png --frames 60
+    ```
+
+    要为特定 scenario 截图，请在 `--` 之后追加 `--scenario <id>`。该辅助工具只消费 `--out` / `--frames` / `--scene`；其余参数会保留在 `OS.get_cmdline_user_args()` 中供你的游戏代码读取。示例：
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+    ```
+
+    ## Demos
+
+    在 `/workspace/game/demo_outputs/` 下交付 **1–10 个输入轨迹（input-trace）文件**，每个 demo 一个，均命名为 `*.json`。评测程序为每条轨迹启动一次全新的游戏，以 1280×720 分辨率将你的轨迹回放为合成的鼠标与键盘输入，并录制屏幕。仅按文件名排序的前 10 条轨迹会被评测；超过 20 s 的录制会从随机的 20 s 窗口中采样。
+
+    ### Scenarios
+
+    常规玩法应从标题界面开始，并展示该任务的核心游戏循环。
+    Demo 回放必须是确定性的。对于需要特定状态的 demo（特定关卡、战斗状态、升级界面、结算状态或后期布局），请定义具名 scenario，使你的游戏在以下方式启动时加载它们：
+
+    ```
+    godot --path /workspace/game -- --scenario <id>
+    ```
+
+    当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态（为任何 RNG 设定种子），并立即开始接受输入。
+
+    ### Trace file format
+
+    ```json
+    {
+      "scenario": "title_flow",
+      "duration_frames": 360,
+      "events": [
+        {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+        {"frame": 90,  "type": "key_press",   "keycode": "1"},
+        {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+        {"frame": 300, "type": "wait"}
+      ]
+    }
+    ```
+
+    - `scenario` —— 可选；若为从标题界面开始的常规游戏启动则省略。
+    - `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 s）**。
+    - `events` —— 按时间排序的输入。坐标为 1280×720 视口内的像素值。支持的类型：
+      - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+      - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` —— 用它们实现拖拽交互：在起点发出 `mouse_down`，沿途发出一个或多个 `mouse_move` 事件，并在终点发出 `mouse_up`。一次 `mouse_click` 相当于在同一点上紧密相继的 `mouse_down` + `mouse_up`。
+      - `mouse_move`：`{frame, type, x, y}`
+      - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 取值：`A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+      - `wait`：`{frame, type}` —— 锚定帧，无输入。
+
+    回放必须是确定性的：相同的轨迹、全新的启动，每次都得到相同的结果。
+    ````
+
+    ### 平台跳跃 · Iron Vanguard
+
+    #### 题目原文
+
+    ````text
+    # Iron Vanguard
+
+    Build **Iron Vanguard**, a 2D top-down grid-based tactical tank defense game in
+    Godot 4 at `/workspace/game/`. This is not a prototype. It is a **complete,
+    shippable micro-game** that could sit on an itch.io page or Steam as a polished
+    vertical slice.
+
+    ## Core Vision
+
+    A lone armored tank holds the line against relentless waves of automated
+    warmachines bearing down on a critical command core. The tension lives in
+    positioning and restraint: movement is grid-locked, only one shell can exist on
+    screen at a time, and every shot must count because the enemy never stops
+    advancing. The player is always choosing between pushing forward to intercept a
+    flanking column and falling back to guard the core from a breakthrough. Terrain
+    shapes every engagement — brick barricades offer temporary cover until they
+    crumble, steel walls funnel traffic into kill zones, and mud patches punish
+    careless repositioning. The risk is always the same: one shell slips past, one
+    enemy reaches the core, and the defense collapses instantly. The tone is gritty
+    dieselpunk — rust-iron plating, neon hazard lines, deep shadows, and the
+    percussive flash of shell impacts.
+
+    ## What the Player Experiences
+
+    A dark industrial title screen sets the mood before the player enters a tactical
+    map showing available defense zones. Each zone is a distinct battlefield with its
+    own layout and enemy composition, inviting the player to choose where to make
+    their stand.
+
+    Combat drops the player's tank onto a grid battlefield adjacent to the glowing
+    command core. The field is a maze of destructible brick walls, impenetrable steel
+    barriers, and treacherous mud patches. Enemies pour from spawn points at the top
+    of the screen in waves, each wave more aggressive than the last. Some enemies
+    rush the core directly, others hunt the player, and specialized carriers glow
+    with salvageable cargo.
+
+    The player steers with grid-locked directional inputs and fires a single shell at
+    a time — no spray-and-pray, just deliberate aim. Destroying a carrier drops
+    battlefield salvage: armor repairs, temporary fortifications around the core, or
+    an EMP pulse that freezes everything on screen. Taking hits degrades the tank's
+    hull layer by layer; lose all armor and a life is spent.
+
+    Victory comes when the last enemy in the wave queue is destroyed, rewarding the
+    player with accuracy metrics and unlocking the next zone. Defeat is instant if
+    the core takes a single hit, or gradual if lives run out. Either way the player
+    returns to the map to regroup and try again.
+
+    ## Assets
+
+    2D assets are mounted read-only at:
+
+    - `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+    - `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+      subdir's `LICENSE.txt`.
+
+    Browse the library and choose packs.
+    Copy what you need into your project's `assets/` folder.
+
+    ## Project layout
+
+    ```
+    /workspace/game/
+      project.godot
+      Main.tscn
+      demo_outputs/    ← your input traces (1–10 files)
+      scripts/  scenes/  assets/
+    ```
+
+    The build must launch cleanly with:
+
+    ```
+    godot --headless --path /workspace/game --quit-after 5
+    ```
+
+    A reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.
+    **Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —
+    anything after `--` is forwarded to the project as user args and silently
+    ignored by the engine. Correct shape:
+    `godot --headless --quit-after 5 --path . -- --scenario near_victory`.
+
+    A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+    result screens look like.
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/frame.png --frames 60
+    ```
+
+    To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+    helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+    `OS.get_cmdline_user_args()` for your game code to read. Example:
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+    ```
+
+    ## Demos
+
+    Ship **1–10 input-trace files** under `/workspace/game/demo_outputs/`, one per
+    demo, each named `*.json`. The evaluator launches a fresh game per trace,
+    replays your trace as synthetic mouse and keyboard input at 1280×720, and
+    records the screen. Only the first 10 traces by filename are evaluated;
+    recordings longer than 20 s are sampled from a random 20 s window.
+
+    ### Scenarios
+
+    Normal play should start from the title screen and demonstrate the task's
+    core gameplay loop.
+    Demo playback must be deterministic. For demos that need a specific state
+    (a specific level, combat state, upgrade screen, result state, or late-game
+    setup), define named scenarios your game loads when launched with:
+
+    ```
+    godot --path /workspace/game -- --scenario <id>
+    ```
+
+    When `--scenario <id>` is present the game must skip menus, set up the named
+    state deterministically (seed any RNG), and begin accepting input immediately.
+
+    ### Trace file format
+
+    ```json
+    {
+      "scenario": "title_flow",
+      "duration_frames": 360,
+      "events": [
+        {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+        {"frame": 90,  "type": "key_press",   "keycode": "1"},
+        {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+        {"frame": 300, "type": "wait"}
+      ]
+    }
+    ```
+
+    - `scenario` — optional; omit for a normal game launch from the title screen.
+    - `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+    - `events` — time-ordered inputs. Coordinates are pixels in the 1280×720
+      viewport. Supported types:
+      - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+      - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+        use these for drag interactions: emit `mouse_down` at the start point,
+        one or more `mouse_move` events along the way, and `mouse_up` at the end.
+        A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+        succession.
+      - `mouse_move`: `{frame, type, x, y}`
+      - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+        `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+        `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+      - `wait`: `{frame, type}` — anchor frame, no input.
+
+    Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+    ````
+
+    #### 中文翻译
+
+    ````text
+    # Iron Vanguard
+
+    在 Godot 4 中于 `/workspace/game/` 构建 **Iron Vanguard**：一款 2D 俯视角、基于网格的战术坦克防御游戏。这不是原型，而是一款**完整、可交付的微型游戏**，能够作为打磨完成的垂直切片发布到 itch.io 页面或 Steam。
+
+    ## Core Vision
+
+    一辆孤军奋战的装甲坦克必须守住防线，阻挡源源不断、朝关键指挥核心推进的自动战争机器。紧张感来自站位与克制：移动被锁定在网格上，屏幕中同一时间只能存在一发炮弹；敌军从不停步，因此每一炮都必须命中。玩家始终要在两种行动间抉择：向前截击侧翼纵队，或后撤保护即将被突破的核心。地形塑造每场交战——砖墙在崩塌前提供临时掩护，钢墙把敌军导入歼灭区，泥地则惩罚草率的重新站位。风险始终如一：一发炮弹漏过防线，或一名敌人抵达核心，整场防御便会立即崩溃。整体基调是粗粝的柴油朋克：锈铁装甲、霓虹危险标线、浓重阴影，以及炮弹命中时富有冲击力的闪光。
+
+    ## What the Player Experiences
+
+    黑暗的工业风标题界面先建立气氛，随后玩家进入展示可用防区的战术地图。每个防区都有独特的战场布局和敌军编成，玩家可以选择在哪里坚守。
+
+    战斗开始后，玩家的坦克出现在发光指挥核心旁的网格战场上。场地由可破坏砖墙、不可穿透的钢制障碍和危险泥地构成迷宫。敌人从屏幕顶部的出生点成波涌入，且一波比一波更具攻击性：有的直冲核心，有的追猎玩家，特殊运输车则携带发光、可回收的物资。
+
+    玩家用锁定网格的方向输入驾驶坦克，并且一次只能发射一发炮弹——不能胡乱扫射，只能谨慎瞄准。摧毁运输车会掉落战场物资：修复装甲、在核心周围临时筑防，或释放冻结全屏目标的 EMP 脉冲。受到攻击会逐层削弱坦克车体；全部装甲耗尽后会损失一条生命。
+
+    消灭波次队列中的最后一名敌人即可获胜，结算时显示命中率等指标并解锁下一个防区。核心受到一次攻击便会立即失败；生命耗尽则会逐步走向失败。无论哪种情况，玩家都会回到地图整备并再次尝试。
+
+    ## Assets
+
+    2D 素材以只读方式挂载于：
+
+    - `/workspace/assets/library/` —— Kenney CC0 素材包（sprites、tiles、UI、fonts）。
+    - `/workspace/assets/library-oga/` —— OpenGameArt 条目；须遵守各子目录中的 `LICENSE.txt`。
+
+    浏览素材库并选择合适的素材包，把需要的内容复制到项目的 `assets/` 目录。
+
+    ## Project layout
+
+    ```
+    /workspace/game/
+      project.godot
+      Main.tscn
+      demo_outputs/    ← your input traces (1–10 files)
+      scripts/  scenes/  assets/
+    ```
+
+    构建产物必须能通过以下命令干净启动：
+
+    ```
+    godot --headless --path /workspace/game --quit-after 5
+    ```
+
+    Godot CLI 参数参考位于 `/workspace/tools/godot_command_line.md`。**诸如 `--headless` 和 `--quit-after N` 的引擎参数必须放在 `--` 之前**——`--` 后的内容会作为用户参数转发给项目，并被引擎静默忽略。正确形式：
+    `godot --headless --quit-after 5 --path . -- --scenario near_victory`。
+
+    截图辅助工具位于 `/workspace/tools/screenshot.sh`。请用它实际检查 UI、战场和结算界面的显示效果。
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/frame.png --frames 60
+    ```
+
+    如需为特定 scenario 截图，请在 `--` 后追加 `--scenario <id>`。辅助工具只消费 `--out` / `--frames` / `--scene`，其余参数保留在 `OS.get_cmdline_user_args()` 中供游戏代码读取。示例：
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+    ```
+
+    ## Demos
+
+    在 `/workspace/game/demo_outputs/` 下交付 **1–10 个输入轨迹文件**，每个 demo 一个，均命名为 `*.json`。评测器会为每条轨迹启动全新的游戏，以 1280×720 分辨率将轨迹回放为合成鼠标与键盘输入，并录制屏幕。仅按文件名排序的前 10 条轨迹会被评测；超过 20 s 的录像会从随机的 20 s 窗口中采样。
+
+    ### Scenarios
+
+    常规游玩应从标题界面开始，并展示本题的核心游戏循环。Demo 回放必须具有确定性。若 demo 需要特定状态（特定关卡、战斗状态、升级界面、结算状态或后期配置），请定义具名 scenario，并通过以下方式加载：
+
+    ```
+    godot --path /workspace/game -- --scenario <id>
+    ```
+
+    当存在 `--scenario <id>` 时，游戏必须跳过菜单，以确定性方式建立该具名状态（为所有 RNG 设置种子），并立即开始接受输入。
+
+    ### Trace file format
+
+    ```json
+    {
+      "scenario": "title_flow",
+      "duration_frames": 360,
+      "events": [
+        {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+        {"frame": 90,  "type": "key_press",   "keycode": "1"},
+        {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+        {"frame": 300, "type": "wait"}
+      ]
+    }
+    ```
+
+    - `scenario` —— 可选；从标题界面正常启动时省略。
+    - `duration_frames` —— 按 30 fps 录制的总帧数；上限为 **600（20 s）**。
+    - `events` —— 按时间排序的输入，坐标是 1280×720 视口中的像素值。支持：
+      - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+      - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` —— 用于拖拽：起点发出 `mouse_down`，途中发出一个或多个 `mouse_move`，终点发出 `mouse_up`。一次 `mouse_click` 等价于在同一点紧邻发生的 `mouse_down` + `mouse_up`。
+      - `mouse_move`：`{frame, type, x, y}`
+      - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 可取 `A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+      - `wait`：`{frame, type}` —— 仅锚定帧，不产生输入。
+
+    回放必须具有确定性：相同轨迹、全新启动，每次都得到相同结果。
+
+    ````
+
+    ### Roguelike · Garden Crawl
+
+    #### 题目原文
+
+    ````text
+    # Garden Crawl
+
+    Build **Garden Crawl**, a garden-dungeon roguelike with plants as allies and
+    seed deckbuilding in Godot 4 at `/workspace/game/`. This is not a prototype. It
+    is a **complete, shippable micro-game** that could sit on an itch.io page or
+    Steam as a polished vertical slice.
+
+    ## Core Vision
+
+    A gardener descends through a dungeon that is also a garden — soil tiles can be
+    planted with seeds that grow into allies, barriers, or resource producers over
+    several turns. The player carries a seed deck and plays seeds onto the grid
+    before and during encounters. A sunflower provides energy each turn, a thorn
+    bush damages adjacent enemies, a vine wall blocks paths, and a healing bloom
+    restores the gardener. Seasons rotate every few floors, changing which seeds
+    thrive: spring boosts growth speed, summer strengthens attack plants, autumn
+    yields bonus harvests, and winter slows everything. Between floors the player
+    drafts new seeds, composts unwanted ones, and tends a persistent greenhouse
+    that provides starting bonuses for future runs.
+
+    ## What the Player Experiences
+
+    A title screen shows a garden growing over dungeon stones. Starting a run gives
+    the player a starter seed deck of 8 basic seeds.
+
+    Each floor is a grid-based encounter. The gardener stands on one side, enemies
+    approach from the other. Before enemies reach the gardener, the player plants
+    seeds on soil tiles. Seeds grow over turns: sprout -> mature -> active. Mature
+    plants provide their effect (damage, healing, blocking, energy generation).
+    The player manages an energy resource to plant seeds and activate abilities.
+
+    Between floors, a draft screen offers three new seed choices. A compost option
+    removes a seed from the deck. Every 3 floors the season changes, visually
+    transforming the environment and modifying plant stats. A greenhouse meta-layer
+    persists between runs — seeds planted there provide small starting bonuses.
+    The run ends at a boss floor or when the gardener's health reaches zero. A
+    results screen shows floors cleared, plants grown, and seeds collected.
+
+    ## Assets
+
+    2D assets are mounted read-only at:
+
+    - `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+    - `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+      subdir's `LICENSE.txt`.
+
+    Browse the library and choose packs.
+    Copy what you need into your project's `assets/` folder.
+
+    ## Project layout
+
+    ```
+    /workspace/game/
+      project.godot
+      Main.tscn
+      demo_outputs/    <- your input traces (1-10 files)
+      scripts/  scenes/  assets/
+    ```
+
+    The build must launch cleanly with:
+
+    ```
+    godot --headless --path /workspace/game --quit-after 5
+    ```
+
+    A reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.
+    **Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —
+    anything after `--` is forwarded to the project as user args and silently
+    ignored by the engine. Correct shape:
+    `godot --headless --quit-after 5 --path . -- --scenario near_victory`.
+
+    A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+    result screens look like.
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/frame.png --frames 60
+    ```
+
+    To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+    helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+    `OS.get_cmdline_user_args()` for your game code to read. Example:
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+    ```
+
+    ## Demos
+
+    Ship **1-10 input-trace files** under `/workspace/game/demo_outputs/`, one per
+    demo, each named `*.json`. The evaluator launches a fresh game per trace,
+    replays your trace as synthetic mouse and keyboard input at 1280x720, and
+    records the screen. Only the first 10 traces by filename are evaluated;
+    recordings longer than 20 s are sampled from a random 20 s window.
+
+    ### Scenarios
+
+    Normal play should start from the title screen and demonstrate the task's
+    core gameplay loop.
+    Demo playback must be deterministic. For demos that need a specific state
+    (a specific level, combat state, upgrade screen, result state, or late-game
+    setup), define named scenarios your game loads when launched with:
+
+    ```
+    godot --path /workspace/game -- --scenario <id>
+    ```
+
+    When `--scenario <id>` is present the game must skip menus, set up the named
+    state deterministically (seed any RNG), and begin accepting input immediately.
+
+    ### Trace file format
+
+    ```json
+    {
+      "scenario": "title_flow",
+      "duration_frames": 360,
+      "events": [
+        {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+        {"frame": 90,  "type": "key_press",   "keycode": "1"},
+        {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+        {"frame": 300, "type": "wait"}
+      ]
+    }
+    ```
+
+    - `scenario` — optional; omit for a normal game launch from the title screen.
+    - `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+    - `events` — time-ordered inputs. Coordinates are pixels in the 1280x720
+      viewport. Supported types:
+      - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+      - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+        use these for drag interactions: emit `mouse_down` at the start point,
+        one or more `mouse_move` events along the way, and `mouse_up` at the end.
+        A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+        succession.
+      - `mouse_move`: `{frame, type, x, y}`
+      - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+        `A`-`Z`, `0`-`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+        `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+      - `wait`: `{frame, type}` — anchor frame, no input.
+
+    Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+    ````
+
+    #### 中文翻译
+
+    ````text
+    # Garden Crawl
+
+    在 Godot 4 中于 `/workspace/game/` 构建 **Garden Crawl**：一款以植物为盟友、通过种子牌组构筑推进的花园地牢 Roguelike。这不是原型，而是一款**完整、可交付的微型游戏**，能够作为打磨完成的垂直切片发布到 itch.io 页面或 Steam。
+
+    ## Core Vision
+
+    园丁深入一座同时也是花园的地牢：土壤格可以播种，种子会在数个回合内成长为盟友、障碍或资源生产者。玩家携带一副种子牌组，在遭遇战前和战斗中把种子打到网格上。向日葵每回合提供能量，荆棘丛伤害相邻敌人，藤蔓墙阻挡路径，治疗花朵恢复园丁生命。每隔数层轮换季节并改变适宜生长的种子：春季加快成长，夏季强化攻击植物，秋季提供额外收获，冬季则让一切变慢。层与层之间，玩家可以选取新种子、堆肥移除不需要的牌，并照料会为未来局提供初始加成的永久温室。
+
+    ## What the Player Experiences
+
+    标题界面展示一座覆盖地牢石块生长的花园。开始新局时，玩家获得一副由 8 颗基础种子组成的初始牌组。
+
+    每层都是一次基于网格的遭遇。园丁位于一侧，敌人从另一侧逼近。敌人接近园丁前，玩家可在土壤格播种。种子按回合经历 `sprout -> mature -> active` 的成长过程；成熟植物会提供伤害、治疗、阻挡或能量生成效果。玩家需要管理用于播种和发动能力的能量资源。
+
+    层与层之间的选秀界面会提供三种新种子；堆肥选项可从牌组中移除一颗种子。每 3 层切换季节，环境视觉随之改变，植物数值也会受到修正。温室元系统会跨局保留，种在其中的种子会提供少量开局加成。抵达 Boss 层或园丁生命降为零时本局结束；结算界面显示已通过层数、培育植物数和收集种子数。
+
+    ## Assets
+
+    2D 素材以只读方式挂载于：
+
+    - `/workspace/assets/library/` —— Kenney CC0 素材包（sprites、tiles、UI、fonts）。
+    - `/workspace/assets/library-oga/` —— OpenGameArt 条目；须遵守各子目录中的 `LICENSE.txt`。
+
+    浏览素材库并选择合适的素材包，把需要的内容复制到项目的 `assets/` 目录。
+
+    ## Project layout
+
+    ```
+    /workspace/game/
+      project.godot
+      Main.tscn
+      demo_outputs/    <- your input traces (1-10 files)
+      scripts/  scenes/  assets/
+    ```
+
+    构建产物必须能通过以下命令干净启动：
+
+    ```
+    godot --headless --path /workspace/game --quit-after 5
+    ```
+
+    Godot CLI 参数参考位于 `/workspace/tools/godot_command_line.md`。**诸如 `--headless` 和 `--quit-after N` 的引擎参数必须放在 `--` 之前**——`--` 后的内容会作为用户参数转发给项目，并被引擎静默忽略。正确形式：
+    `godot --headless --quit-after 5 --path . -- --scenario near_victory`。
+
+    截图辅助工具位于 `/workspace/tools/screenshot.sh`。请用它实际检查 UI、战场和结算界面的显示效果。
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/frame.png --frames 60
+    ```
+
+    如需为特定 scenario 截图，请在 `--` 后追加 `--scenario <id>`。辅助工具只消费 `--out` / `--frames` / `--scene`，其余参数保留在 `OS.get_cmdline_user_args()` 中供游戏代码读取。示例：
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+    ```
+
+    ## Demos
+
+    在 `/workspace/game/demo_outputs/` 下交付 **1-10 个输入轨迹文件**，每个 demo 一个，均命名为 `*.json`。评测器会为每条轨迹启动全新的游戏，以 1280x720 分辨率将轨迹回放为合成鼠标与键盘输入，并录制屏幕。仅按文件名排序的前 10 条轨迹会被评测；超过 20 s 的录像会从随机的 20 s 窗口中采样。
+
+    ### Scenarios
+
+    常规游玩应从标题界面开始，并展示本题的核心游戏循环。Demo 回放必须具有确定性。若 demo 需要特定状态（特定关卡、战斗状态、升级界面、结算状态或后期配置），请定义具名 scenario，并通过以下方式加载：
+
+    ```
+    godot --path /workspace/game -- --scenario <id>
+    ```
+
+    当存在 `--scenario <id>` 时，游戏必须跳过菜单，以确定性方式建立该具名状态（为所有 RNG 设置种子），并立即开始接受输入。
+
+    ### Trace file format
+
+    ```json
+    {
+      "scenario": "title_flow",
+      "duration_frames": 360,
+      "events": [
+        {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+        {"frame": 90,  "type": "key_press",   "keycode": "1"},
+        {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+        {"frame": 300, "type": "wait"}
+      ]
+    }
+    ```
+
+    - `scenario` —— 可选；从标题界面正常启动时省略。
+    - `duration_frames` —— 按 30 fps 录制的总帧数；上限为 **600（20 s）**。
+    - `events` —— 按时间排序的输入，坐标是 1280x720 视口中的像素值。支持：
+      - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+      - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` —— 用于拖拽：起点发出 `mouse_down`，途中发出一个或多个 `mouse_move`，终点发出 `mouse_up`。一次 `mouse_click` 等价于在同一点紧邻发生的 `mouse_down` + `mouse_up`。
+      - `mouse_move`：`{frame, type, x, y}`
+      - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 可取 `A`-`Z`、`0`-`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+      - `wait`：`{frame, type}` —— 仅锚定帧，不产生输入。
+
+    回放必须具有确定性：相同轨迹、全新启动，每次都得到相同结果。
+
+    ````
+
+    ### 策略 · Plant Defense
+
+    #### 题目原文
+
+    ````text
+    # Plant Defense
+
+    Build **Plant Defense**, a **lane-based tower defense strategy game** in Godot 4
+    at `/workspace/game/`. This is not a prototype. It is a **complete, shippable
+    micro-game** that could sit on an itch.io page or Steam as a polished vertical
+    slice.
+
+    ## Core Vision
+
+    A garden grid stands between a homestead and waves of encroaching creatures.
+    The player plants defenders on a multi-lane lawn, spending sunlight that must
+    be actively collected. Each plant type fills a tactical role — some shoot, some
+    block, some generate economy — and the creatures come in varieties that punish
+    a one-note defense. The tension is resource scarcity: sunlight arrives slowly,
+    plants cost real economy, and a misplaced defender means a lane falls before
+    reinforcements grow. An adventure map connects levels with escalating challenge
+    and new plant unlocks, giving the player a reason to master each tool before
+    the next threat arrives.
+
+    ## What the Player Experiences
+
+    From the title screen the player enters an adventure map showing a trail of
+    levels. Selecting a level shows the upcoming creature types and lets the player
+    pick a loadout of plant defenders from their unlocked roster.
+
+    The level plays on a grid of lanes. Sunlight drops periodically and the player
+    clicks to collect it, building a resource pool. Plants are dragged from a
+    toolbar onto empty grid cells, each costing sunlight. Shooters fire
+    projectiles down their lane, walls absorb hits, and sun-producers accelerate
+    the economy. Creatures march from the right edge in waves, each lane
+    independent.
+
+    Creature variety forces adaptation: armored types shrug off weak shots, fast
+    types outrun slow-firing plants, and flying types bypass ground walls. Later
+    levels introduce night conditions where sun production drops, forcing the
+    player to rely on alternative economy plants.
+
+    A level is won when all waves are defeated; lost when any creature reaches the
+    left edge. Victory unlocks the next map node and sometimes a new plant type.
+    The result screen shows stars earned and the map updates visibly.
+
+    ## Assets
+
+    2D assets are mounted read-only at:
+
+    - `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+    - `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+      subdir's `LICENSE.txt`.
+
+    Browse the library and choose packs.
+    Copy what you need into your project's `assets/` folder.
+
+    ## Project layout
+
+    ```
+    /workspace/game/
+      project.godot
+      Main.tscn
+      demo_outputs/    <- your input traces (1-10 files)
+      scripts/  scenes/  assets/
+    ```
+
+    The build must launch cleanly with:
+
+    ```
+    godot --headless --path /workspace/game --quit-after 5
+    ```
+
+    A reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.
+    **Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —
+    anything after `--` is forwarded to the project as user args and silently
+    ignored by the engine. Correct shape:
+    `godot --headless --quit-after 5 --path . -- --scenario near_victory`.
+
+    A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+    result screens look like.
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/frame.png --frames 60
+    ```
+
+    To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+    helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+    `OS.get_cmdline_user_args()` for your game code to read. Example:
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+    ```
+
+    ## Demos
+
+    Ship **1-10 input-trace files** under `/workspace/game/demo_outputs/`, one per
+    demo, each named `*.json`. The evaluator launches a fresh game per trace,
+    replays your trace as synthetic mouse and keyboard input at 1280x720, and
+    records the screen. Only the first 10 traces by filename are evaluated;
+    recordings longer than 20 s are sampled from a random 20 s window.
+
+    ### Scenarios
+
+    Normal play should start from the title screen and demonstrate the task's
+    core gameplay loop.
+    Demo playback must be deterministic. For demos that need a specific state
+    (a specific level, combat state, upgrade screen, result state, or late-game
+    setup), define named scenarios your game loads when launched with:
+
+    ```
+    godot --path /workspace/game -- --scenario <id>
+    ```
+
+    When `--scenario <id>` is present the game must skip menus, set up the named
+    state deterministically (seed any RNG), and begin accepting input immediately.
+
+    ### Trace file format
+
+    ```json
+    {
+      "scenario": "title_flow",
+      "duration_frames": 360,
+      "events": [
+        {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+        {"frame": 90,  "type": "key_press",   "keycode": "1"},
+        {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+        {"frame": 300, "type": "wait"}
+      ]
+    }
+    ```
+
+    - `scenario` — optional; omit for a normal game launch from the title screen.
+    - `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+    - `events` — time-ordered inputs. Coordinates are pixels in the 1280x720
+      viewport. Supported types:
+      - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+      - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+        use these for drag interactions: emit `mouse_down` at the start point,
+        one or more `mouse_move` events along the way, and `mouse_up` at the end.
+        A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+        succession.
+      - `mouse_move`: `{frame, type, x, y}`
+      - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+        `A`-`Z`, `0`-`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+        `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+      - `wait`: `{frame, type}` — anchor frame, no input.
+
+    Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+    ````
+
+    #### 中文翻译
+
+    ````text
+    # Plant Defense
+
+    在 Godot 4 中于 `/workspace/game/` 构建 **Plant Defense**：一款**基于多条路线的塔防策略游戏**。这不是原型，而是一款**完整、可交付的微型游戏**，能够作为打磨完成的垂直切片发布到 itch.io 页面或 Steam。
+
+    ## Core Vision
+
+    一片花园网格挡在家园与不断逼近的生物浪潮之间。玩家要在多路线草坪上种植防御植物，并花费必须主动收集的阳光。每种植物承担一种战术职责——有的射击、有的阻挡、有的创造经济——敌方生物则以不同特性惩罚单一化防线。紧张感来自资源稀缺：阳光缓慢到来，种植需要真实成本，错放一个防御者就可能让某条路线在增援长成前失守。冒险地图把难度逐步提高的关卡与新植物解锁串联起来，使玩家必须在下一种威胁出现前掌握每件工具。
+
+    ## What the Player Experiences
+
+    玩家从标题界面进入冒险地图，地图上显示由关卡组成的路径。选择关卡后，界面会展示即将出现的生物类型，并允许玩家从已解锁植物中挑选防御阵容。
+
+    关卡在多路线网格上进行。阳光会定期掉落，玩家点击收集并积累资源。玩家把植物从工具栏拖到空网格中，每株植物都消耗阳光。射手沿所在路线发射投射物，墙类植物吸收攻击，阳光生产植物加速经济。生物从右侧边缘分波前进，每条路线彼此独立。
+
+    敌方差异要求玩家调整策略：装甲生物能抵御弱小攻击，快速生物可越过射速缓慢的火力，飞行生物则能绕开地面墙体。后期关卡加入夜间条件，阳光产量下降，迫使玩家依赖替代经济植物。
+
+    消灭全部波次即可通关；任一生物抵达左侧边缘则失败。胜利会解锁下一个地图节点，有时还会解锁一种新植物。结算界面显示获得的星星，地图也要产生可见更新。
+
+    ## Assets
+
+    2D 素材以只读方式挂载于：
+
+    - `/workspace/assets/library/` —— Kenney CC0 素材包（sprites、tiles、UI、fonts）。
+    - `/workspace/assets/library-oga/` —— OpenGameArt 条目；须遵守各子目录中的 `LICENSE.txt`。
+
+    浏览素材库并选择合适的素材包，把需要的内容复制到项目的 `assets/` 目录。
+
+    ## Project layout
+
+    ```
+    /workspace/game/
+      project.godot
+      Main.tscn
+      demo_outputs/    <- your input traces (1-10 files)
+      scripts/  scenes/  assets/
+    ```
+
+    构建产物必须能通过以下命令干净启动：
+
+    ```
+    godot --headless --path /workspace/game --quit-after 5
+    ```
+
+    Godot CLI 参数参考位于 `/workspace/tools/godot_command_line.md`。**诸如 `--headless` 和 `--quit-after N` 的引擎参数必须放在 `--` 之前**——`--` 后的内容会作为用户参数转发给项目，并被引擎静默忽略。正确形式：
+    `godot --headless --quit-after 5 --path . -- --scenario near_victory`。
+
+    截图辅助工具位于 `/workspace/tools/screenshot.sh`。请用它实际检查 UI、战场和结算界面的显示效果。
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/frame.png --frames 60
+    ```
+
+    如需为特定 scenario 截图，请在 `--` 后追加 `--scenario <id>`。辅助工具只消费 `--out` / `--frames` / `--scene`，其余参数保留在 `OS.get_cmdline_user_args()` 中供游戏代码读取。示例：
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+    ```
+
+    ## Demos
+
+    在 `/workspace/game/demo_outputs/` 下交付 **1-10 个输入轨迹文件**，每个 demo 一个，均命名为 `*.json`。评测器会为每条轨迹启动全新的游戏，以 1280x720 分辨率将轨迹回放为合成鼠标与键盘输入，并录制屏幕。仅按文件名排序的前 10 条轨迹会被评测；超过 20 s 的录像会从随机的 20 s 窗口中采样。
+
+    ### Scenarios
+
+    常规游玩应从标题界面开始，并展示本题的核心游戏循环。Demo 回放必须具有确定性。若 demo 需要特定状态（特定关卡、战斗状态、升级界面、结算状态或后期配置），请定义具名 scenario，并通过以下方式加载：
+
+    ```
+    godot --path /workspace/game -- --scenario <id>
+    ```
+
+    当存在 `--scenario <id>` 时，游戏必须跳过菜单，以确定性方式建立该具名状态（为所有 RNG 设置种子），并立即开始接受输入。
+
+    ### Trace file format
+
+    ```json
+    {
+      "scenario": "title_flow",
+      "duration_frames": 360,
+      "events": [
+        {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+        {"frame": 90,  "type": "key_press",   "keycode": "1"},
+        {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+        {"frame": 300, "type": "wait"}
+      ]
+    }
+    ```
+
+    - `scenario` —— 可选；从标题界面正常启动时省略。
+    - `duration_frames` —— 按 30 fps 录制的总帧数；上限为 **600（20 s）**。
+    - `events` —— 按时间排序的输入，坐标是 1280x720 视口中的像素值。支持：
+      - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+      - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` —— 用于拖拽：起点发出 `mouse_down`，途中发出一个或多个 `mouse_move`，终点发出 `mouse_up`。一次 `mouse_click` 等价于在同一点紧邻发生的 `mouse_down` + `mouse_up`。
+      - `mouse_move`：`{frame, type, x, y}`
+      - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 可取 `A`-`Z`、`0`-`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+      - `wait`：`{frame, type}` —— 仅锚定帧，不产生输入。
+
+    回放必须具有确定性：相同轨迹、全新启动，每次都得到相同结果。
+
+    ````
+
+    ### 视觉小说 · Time Paradox
+
+    #### 题目原文
+
+    ````text
+    # Time Paradox
+
+    Build **Time Paradox**, a **time-travel paradox visual novel** in Godot 4 at
+    `/workspace/game/`. This is not a prototype. It is a **complete, shippable
+    micro-game** that could sit on an itch.io page or Steam as a polished vertical
+    slice.
+
+    ## Core Vision
+
+    The player travels between past and present, making dialogue choices in the
+    past that ripple forward and change the present. But causality is fragile:
+    contradictory changes create paradoxes that must be resolved before reality
+    collapses. The player manages multiple timelines simultaneously, tracking which
+    changes are compatible and which create conflicts. The tension is combinatorial:
+    every past choice fixes one problem in the present but may create two new ones.
+    The tone is sci-fi mystery: temporal distortion effects, split-screen timeline
+    views, and the vertigo of watching reality rewrite itself.
+
+    ## What the Player Experiences
+
+    From the title screen the player enters the present-day scene — something is
+    wrong (a friend is missing, a building is destroyed, a message makes no sense).
+    A time device allows jumping to the past version of the same location.
+
+    In the past, the player makes dialogue choices that change events. Returning
+    to the present shows the consequences: different characters present, different
+    objects in the scene, different dialogue available. A timeline indicator shows
+    the current state of reality and any active paradoxes.
+
+    Paradoxes occur when two past changes contradict each other (saving person A
+    requires an object that saving person B already consumed). The paradox meter
+    fills — if it maxes out, the timeline collapses and the game ends. The player
+    must find resolutions: alternative paths that satisfy both requirements without
+    contradiction.
+
+    Multiple timeline branches are tracked visually on a timeline map. The player
+    can jump between past moments to adjust choices. The true ending requires
+    resolving all paradoxes and reaching a stable timeline where all present-day
+    problems are fixed.
+
+    A styled result screen shows the timeline state, paradoxes resolved, and which
+    ending was reached.
+
+    ## Assets
+
+    2D assets are mounted read-only at:
+
+    - `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).
+    - `/workspace/assets/library-oga/` — OpenGameArt entries; respect each
+      subdir's `LICENSE.txt`.
+
+    Browse the library and choose packs.
+    Copy what you need into your project's `assets/` folder.
+
+    ## Project layout
+
+    ```
+    /workspace/game/
+      project.godot
+      Main.tscn
+      demo_outputs/    <- your input traces (1-10 files)
+      scripts/  scenes/  assets/
+    ```
+
+    The build must launch cleanly with:
+
+    ```
+    godot --headless --path /workspace/game --quit-after 5
+    ```
+
+    A reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.
+    **Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —
+    anything after `--` is forwarded to the project as user args and silently
+    ignored by the engine. Correct shape:
+    `godot --headless --quit-after 5 --path . -- --scenario near_victory`.
+
+    A screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /
+    result screens look like.
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/frame.png --frames 60
+    ```
+
+    To screenshot a specific scenario, append `--scenario <id>` after `--`. The
+    helper consumes only `--out` / `--frames` / `--scene`; remaining args stay in
+    `OS.get_cmdline_user_args()` for your game code to read. Example:
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+    ```
+
+    ## Demos
+
+    Ship **1-10 input-trace files** under `/workspace/game/demo_outputs/`, one per
+    demo, each named `*.json`. The evaluator launches a fresh game per trace,
+    replays your trace as synthetic mouse and keyboard input at 1280x720, and
+    records the screen. Only the first 10 traces by filename are evaluated;
+    recordings longer than 20 s are sampled from a random 20 s window.
+
+    ### Scenarios
+
+    Normal play should start from the title screen and demonstrate the task's
+    core gameplay loop.
+    Demo playback must be deterministic. For demos that need a specific state
+    (a specific level, combat state, upgrade screen, result state, or late-game
+    setup), define named scenarios your game loads when launched with:
+
+    ```
+    godot --path /workspace/game -- --scenario <id>
+    ```
+
+    When `--scenario <id>` is present the game must skip menus, set up the named
+    state deterministically (seed any RNG), and begin accepting input immediately.
+
+    ### Trace file format
+
+    ```json
+    {
+      "scenario": "title_flow",
+      "duration_frames": 360,
+      "events": [
+        {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+        {"frame": 90,  "type": "key_press",   "keycode": "1"},
+        {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+        {"frame": 300, "type": "wait"}
+      ]
+    }
+    ```
+
+    - `scenario` — optional; omit for a normal game launch from the title screen.
+    - `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.
+    - `events` — time-ordered inputs. Coordinates are pixels in the 1280x720
+      viewport. Supported types:
+      - `mouse_click`: `{frame, type, button: "left"|"right", x, y}`
+      - `mouse_down` / `mouse_up`: `{frame, type, button: "left"|"right", x, y}` —
+        use these for drag interactions: emit `mouse_down` at the start point,
+        one or more `mouse_move` events along the way, and `mouse_up` at the end.
+        A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight
+        succession.
+      - `mouse_move`: `{frame, type, x, y}`
+      - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:
+        `A`-`Z`, `0`-`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,
+        `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.
+      - `wait`: `{frame, type}` — anchor frame, no input.
+
+    Replay must be deterministic: same trace, fresh launch, same outcome every time.
+
+    ````
+
+    #### 中文翻译
+
+    ````text
+    # Time Paradox
+
+    在 Godot 4 中于 `/workspace/game/` 构建 **Time Paradox**：一款**时间旅行悖论视觉小说**。这不是原型，而是一款**完整、可交付的微型游戏**，能够作为打磨完成的垂直切片发布到 itch.io 页面或 Steam。
+
+    ## Core Vision
+
+    玩家在过去与现在之间旅行；在过去做出的对话选择会向前产生涟漪并改变现在。但因果关系十分脆弱：互相矛盾的改动会制造悖论，玩家必须在现实崩溃前将其解决。玩家要同时管理多条时间线，追踪哪些变化彼此兼容、哪些会造成冲突。紧张感来自组合复杂性：每个过去的选择都会修复现在的一个问题，却可能制造两个新问题。整体基调是科幻悬疑：时间扭曲特效、分屏时间线视图，以及亲眼看着现实重写时的眩晕感。
+
+    ## What the Player Experiences
+
+    玩家从标题界面进入当代场景，立即发现某件事不对劲：朋友失踪、建筑被毁，或一条消息毫无意义。时间装置允许玩家跳转到同一地点的过去版本。
+
+    在过去，玩家通过对话选择改变事件；返回现在后会看到后果：出现不同角色、场景中存在不同物品、可选择的对话也发生变化。时间线指示器显示现实的当前状态和所有仍然活跃的悖论。
+
+    当两项过去改动互相矛盾时会产生悖论，例如拯救 A 需要一件已经被拯救 B 的行动消耗掉的物品。悖论计量表会不断上升；达到上限后时间线崩溃，游戏结束。玩家必须找到同时满足两边条件而不产生矛盾的替代路径。
+
+    时间线地图会以视觉方式追踪多个分支，玩家可以跳回不同的过去时刻调整选择。真结局要求解决全部悖论，抵达一个稳定时间线，并修复当代的所有问题。
+
+    风格化结算界面会显示最终时间线状态、已解决的悖论，以及玩家抵达的结局。
+
+    ## Assets
+
+    2D 素材以只读方式挂载于：
+
+    - `/workspace/assets/library/` —— Kenney CC0 素材包（sprites、tiles、UI、fonts）。
+    - `/workspace/assets/library-oga/` —— OpenGameArt 条目；须遵守各子目录中的 `LICENSE.txt`。
+
+    浏览素材库并选择合适的素材包，把需要的内容复制到项目的 `assets/` 目录。
+
+    ## Project layout
+
+    ```
+    /workspace/game/
+      project.godot
+      Main.tscn
+      demo_outputs/    <- your input traces (1-10 files)
+      scripts/  scenes/  assets/
+    ```
+
+    构建产物必须能通过以下命令干净启动：
+
+    ```
+    godot --headless --path /workspace/game --quit-after 5
+    ```
+
+    Godot CLI 参数参考位于 `/workspace/tools/godot_command_line.md`。**诸如 `--headless` 和 `--quit-after N` 的引擎参数必须放在 `--` 之前**——`--` 后的内容会作为用户参数转发给项目，并被引擎静默忽略。正确形式：
+    `godot --headless --quit-after 5 --path . -- --scenario near_victory`。
+
+    截图辅助工具位于 `/workspace/tools/screenshot.sh`。请用它实际检查 UI、战场和结算界面的显示效果。
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/frame.png --frames 60
+    ```
+
+    如需为特定 scenario 截图，请在 `--` 后追加 `--scenario <id>`。辅助工具只消费 `--out` / `--frames` / `--scene`，其余参数保留在 `OS.get_cmdline_user_args()` 中供游戏代码读取。示例：
+
+    ```
+    /workspace/tools/screenshot.sh --path /workspace/game \
+          -- --out /workspace/battle_debug.png --frames 120 --scenario battle
+    ```
+
+    ## Demos
+
+    在 `/workspace/game/demo_outputs/` 下交付 **1-10 个输入轨迹文件**，每个 demo 一个，均命名为 `*.json`。评测器会为每条轨迹启动全新的游戏，以 1280x720 分辨率将轨迹回放为合成鼠标与键盘输入，并录制屏幕。仅按文件名排序的前 10 条轨迹会被评测；超过 20 s 的录像会从随机的 20 s 窗口中采样。
+
+    ### Scenarios
+
+    常规游玩应从标题界面开始，并展示本题的核心游戏循环。Demo 回放必须具有确定性。若 demo 需要特定状态（特定关卡、战斗状态、升级界面、结算状态或后期配置），请定义具名 scenario，并通过以下方式加载：
+
+    ```
+    godot --path /workspace/game -- --scenario <id>
+    ```
+
+    当存在 `--scenario <id>` 时，游戏必须跳过菜单，以确定性方式建立该具名状态（为所有 RNG 设置种子），并立即开始接受输入。
+
+    ### Trace file format
+
+    ```json
+    {
+      "scenario": "title_flow",
+      "duration_frames": 360,
+      "events": [
+        {"frame": 30,  "type": "mouse_click", "button": "left", "x": 300, "y": 360},
+        {"frame": 90,  "type": "key_press",   "keycode": "1"},
+        {"frame": 180, "type": "key_press",   "keycode": "SPACE"},
+        {"frame": 300, "type": "wait"}
+      ]
+    }
+    ```
+
+    - `scenario` —— 可选；从标题界面正常启动时省略。
+    - `duration_frames` —— 按 30 fps 录制的总帧数；上限为 **600（20 s）**。
+    - `events` —— 按时间排序的输入，坐标是 1280x720 视口中的像素值。支持：
+      - `mouse_click`：`{frame, type, button: "left"|"right", x, y}`
+      - `mouse_down` / `mouse_up`：`{frame, type, button: "left"|"right", x, y}` —— 用于拖拽：起点发出 `mouse_down`，途中发出一个或多个 `mouse_move`，终点发出 `mouse_up`。一次 `mouse_click` 等价于在同一点紧邻发生的 `mouse_down` + `mouse_up`。
+      - `mouse_move`：`{frame, type, x, y}`
+      - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 可取 `A`-`Z`、`0`-`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。
+      - `wait`：`{frame, type}` —— 仅锚定帧，不产生输入。
+
+    回放必须具有确定性：相同轨迹、全新启动，每次都得到相同结果。
+
+    ````
+
+    ## 一手资料
+
+    - [GameCraft-Bench 官方仓库](https://github.com/FreedomIntelligence/GameCraft-Bench)
+    - [固定版本的任务与评测实现](https://github.com/FreedomIntelligence/GameCraft-Bench/tree/7385d326fb25ba9af8b353615987bf680a25b657)
+    - [GameCraft-Bench 论文](https://arxiv.org/abs/2606.17861)
+    - [官方项目页与榜单](https://gamecraft-bench.github.io/)
 tasks:
  - id: cardgame-autobattler
    label: "卡牌 · Cardgame Autobattler"
@@ -432,7 +1551,6 @@ tasks:
  - id: idle-spell-tower
    label: "放置 · Idle Spell Tower"
    prompt: "# Idle Spell Tower\n\nBuild an **Idle Spell Tower** game in Godot 4 at `/workspace/game/`.\nThis is not a prototype. It is a **complete, shippable micro-game** that could\nsit on an itch.io page or Steam as a polished vertical slice.\n\n## Core Vision\n\nThe player builds a wizard's tower that generates mana passively, researches\nspells, and automates magical casting for ever-increasing power. The fantasy is\narcane accumulation: watching mana flow from crystal to crystal, spells firing\nautomatically at targets, and the tower growing taller with each prestige cycle.\nThe idle loop generates mana continuously; the player's decisions shape which\nspells to research and how to allocate mana between offence, defence, and\ngrowth. Prestige collapses the tower and rebuilds it higher with better\nfoundations.\n\n## What the Player Experiences\n\n1. **Title Screen** — A tall wizard tower against a starry sky with magical\n   particles flowing upward, the game name in arcane script, and a play button\n   glowing with mana.\n2. **Tower View** — A vertical tower cross-section showing floors. Each floor\n   has a function: mana generators, spell labs, crystal storage, automated\n   casters. The tower grows as floors are added.\n3. **Mana Generation** — Base mana ticks up automatically. Mana generators on\n   each floor contribute to the rate. The player can click a crystal to manually\n   generate bursts. A large mana counter dominates the UI.\n4. **Spell Research** — A research tree shows available spells. Each spell costs\n   mana and time to research. Researched spells can be assigned to auto-casters\n   or cast manually for immediate effect.\n5. **Automated Casting** — Auto-caster floors fire spells at targets (monsters\n   approaching the tower base) without player input. Each caster has a rate and\n   spell assignment. Defeating monsters yields mana crystals.\n6. **Tower Growth** — Spending mana builds new floors, each with a specific\n   function. Higher floors generate more mana but cost exponentially more. The\n   tower visually grows taller.\n7. **Prestige** — When the tower reaches maximum height, the player can collapse\n   it (prestige). The tower resets to one floor but gains a permanent height\n   multiplier, faster mana generation, and access to higher-tier spells. Each\n   rebuild reaches greater heights faster.\n\n## Assets\n\n2D assets are mounted read-only at:\n\n- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).\n- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each\n  subdir's `LICENSE.txt`.\n\nBrowse the library and choose packs.\nCopy what you need into your project's `assets/` folder.\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    ← your input traces (1–10 files)\n  scripts/  scenes/  assets/\n```\n\nThe build must launch cleanly with:\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nA reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.\n**Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —\nanything after `--` is forwarded to the project as user args and silently\nignored by the engine. Correct shape:\n`godot --headless --quit-after 5 --path . -- --scenario near_victory`.\n\nA screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /\nresult screens look like.\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\nTo screenshot a specific scenario, append `--scenario <id>` after `--`. The\nhelper consumes only `--out` / `--frames` / `--scene`; remaining args stay in\n`OS.get_cmdline_user_args()` for your game code to read. Example:\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/battle_debug.png --frames 120 --scenario battle\n```\n\n## Demos\n\nShip **1–10 input-trace files** under `/workspace/game/demo_outputs/`, one per\ndemo, each named `*.json`. The evaluator launches a fresh game per trace,\nreplays your trace as synthetic mouse and keyboard input at 1280×720, and\nrecords the screen. Only the first 10 traces by filename are evaluated;\nrecordings longer than 20 s are sampled from a random 20 s window.\n\n### Scenarios\n\nNormal play should start from the title screen and demonstrate the task's\ncore gameplay loop.\nDemo playback must be deterministic. For demos that need a specific state\n(a specific level, combat state, upgrade screen, result state, or late-game\nsetup), define named scenarios your game loads when launched with:\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\nWhen `--scenario <id>` is present the game must skip menus, set up the named\nstate deterministically (seed any RNG), and begin accepting input immediately.\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` — optional; omit for a normal game launch from the title screen.\n- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.\n- `events` — time-ordered inputs. Coordinates are pixels in the 1280×720\n  viewport. Supported types:\n  - `mouse_click`: `{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`: `{frame, type, button: \"left\"|\"right\", x, y}` —\n    use these for drag interactions: emit `mouse_down` at the start point,\n    one or more `mouse_move` events along the way, and `mouse_up` at the end.\n    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight\n    succession.\n  - `mouse_move`: `{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:\n    `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,\n    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.\n  - `wait`: `{frame, type}` — anchor frame, no input.\n\nReplay must be deterministic: same trace, fresh launch, same outcome every time.\n"
-   translation: "# Idle Spell Tower\n\n在 Godot 4 中于 `/workspace/game/` 构建一款 **Idle Spell Tower**（放置法术塔）游戏。\n这不是原型。它是一款**完整、可交付的微型游戏**，能够以打磨完成的垂直切片形态放在 itch.io 页面或 Steam 上。\n\n## Core Vision\n\n玩家建造一座被动产出魔力（mana）的巫师塔，研究法术，并将施法自动化以获取不断增长的力量。其幻想内核是奥术积累：看着魔力在水晶之间流动，法术自动射向目标，塔身随着每一轮转生（prestige）循环而越来越高。放置循环持续产出魔力；玩家的决策决定研究哪些法术，以及如何在进攻、防御与成长之间分配魔力。转生会让塔倒塌，并以更好的地基将其重建得更高。\n\n## What the Player Experiences\n\n1. **标题界面（Title Screen）** —— 星空下的一座高耸巫师塔，魔法粒子向上流动，游戏名以奥术字体呈现，开始按钮闪耀着魔力光芒。\n2. **塔视图（Tower View）** —— 展示各层楼的塔身垂直剖面图。每一层都有其功能：魔力生成器、法术实验室、水晶储藏、自动施法器。随着楼层的添加，塔不断增高。\n3. **魔力生成（Mana Generation）** —— 基础魔力自动累加。各层楼的魔力生成器提升产出速率。玩家可以点击水晶手动产生爆发式产出。一个大号魔力计数器主导整个 UI。\n4. **法术研究（Spell Research）** —— 研究树展示可用法术。每个法术需要消耗魔力和时间来研究。已研究的法术可以指派给自动施法器，或手动施放以获得即时效果。\n5. **自动施法（Automated Casting）** —— 自动施法层无需玩家输入即可向目标（逼近塔基的怪物）发射法术。每个施法器都有各自的施法速率和法术指派。击败怪物会掉落魔力水晶。\n6. **塔的成长（Tower Growth）** —— 消耗魔力建造新楼层，每层具备特定功能。更高的楼层产出更多魔力，但成本呈指数级上升。塔在视觉上不断增高。\n7. **转生（Prestige）** —— 当塔达到最大高度时，玩家可以令其倒塌（转生）。塔重置为一层，但获得永久的高度倍率、更快的魔力产出，以及更高阶法术的使用权。每一次重建都能更快地达到更高的高度。\n\n## Assets\n\n2D 素材以只读方式挂载于：\n\n- `/workspace/assets/library/` —— Kenney CC0 素材包（sprites、tiles、UI、fonts）。\n- `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录的 `LICENSE.txt`。\n\n浏览素材库并挑选素材包。\n把你需要的内容复制到你项目的 `assets/` 目录中。\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    ← your input traces (1–10 files)\n  scripts/  scenes/  assets/\n```\n\n构建产物必须能通过以下命令干净启动：\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nGodot CLI 参数的参考文档位于 `/workspace/tools/godot_command_line.md`。\n**诸如 `--headless` 和 `--quit-after N` 之类的引擎参数必须放在 `--` 之前** —— `--` 之后的任何内容都会作为用户参数转发给项目，并被引擎静默忽略。正确的形式为：\n`godot --headless --quit-after 5 --path . -- --scenario near_victory`。\n\n截图辅助工具位于 `/workspace/tools/screenshot.sh`。用它来实际查看你的 UI / 战场 / 结算界面长什么样。\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\n要为特定 scenario 截图，请在 `--` 之后追加 `--scenario <id>`。该辅助工具只消费 `--out` / `--frames` / `--scene`；其余参数会保留在 `OS.get_cmdline_user_args()` 中供你的游戏代码读取。示例：\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/battle_debug.png --frames 120 --scenario battle\n```\n\n## Demos\n\n在 `/workspace/game/demo_outputs/` 下交付 **1–10 个输入轨迹（input-trace）文件**，每个 demo 一个，均命名为 `*.json`。评测程序为每条轨迹启动一次全新的游戏，以 1280×720 分辨率将你的轨迹回放为合成的鼠标与键盘输入，并录制屏幕。仅按文件名排序的前 10 条轨迹会被评测；超过 20 s 的录制会从随机的 20 s 窗口中采样。\n\n### Scenarios\n\n常规玩法应从标题界面开始，并展示该任务的核心游戏循环。\nDemo 回放必须是确定性的。对于需要特定状态的 demo（特定关卡、战斗状态、升级界面、结算状态或后期布局），请定义具名 scenario，使你的游戏在以下方式启动时加载它们：\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\n当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态（为任何 RNG 设定种子），并立即开始接受输入。\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` —— 可选；若为从标题界面开始的常规游戏启动则省略。\n- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 s）**。\n- `events` —— 按时间排序的输入。坐标为 1280×720 视口内的像素值。支持的类型：\n  - `mouse_click`：`{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`：`{frame, type, button: \"left\"|\"right\", x, y}` —— 用它们实现拖拽交互：在起点发出 `mouse_down`，沿途发出一个或多个 `mouse_move` 事件，并在终点发出 `mouse_up`。一次 `mouse_click` 相当于在同一点上紧密相继的 `mouse_down` + `mouse_up`。\n  - `mouse_move`：`{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 取值：`A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。\n  - `wait`：`{frame, type}` —— 锚定帧，无输入。\n\n回放必须是确定性的：相同的轨迹、全新的启动，每次都得到相同的结果。"
    run_spec: "上游族 Idle；隐藏 rubric 13 条（M3/D4/V2/A4，3 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
  - id: openworld-airship-trader
    label: "开放世界 · Open-World Airship Trader"
@@ -501,7 +1619,6 @@ tasks:
  - id: platformer-cozy-harbor-delivery
    label: "平台跳跃 · Cozy Harbor Delivery"
    prompt: "# Cozy Harbor Delivery\n\nBuild **Cozy Harbor Delivery**, a 2D top-down delivery routing mini-game in\nGodot 4 at `/workspace/game/`. This is not a prototype. It is a **complete,\nshippable micro-game** that could sit on an itch.io page or Steam as a polished\nvertical slice.\n\n## Core Vision\n\nA small courier boat putters through a sun-dappled harbor, weaving between\nislands and buoys to ferry parcels from pickup crates to waiting dock customers.\nThe tension lives in the routing: multiple orders tick down simultaneously, each\nwith a different destination and urgency, and the harbor is just tangled enough\nthat the player cannot serve everyone on a straight line. Choosing which parcel\nto grab first, which customer to disappoint, and when to risk a tight shortcut\nbetween moored hulls is the entire decision space. Between shifts the player\nreinvests earnings into speed, cargo capacity, or route hints, shaping how the\nnext shift feels. The tone is warm and unhurried on the surface but quietly\ndemanding underneath — a cozy logistics puzzle wrapped in watercolor docks and\nbobbing boats.\n\n## What the Player Experiences\n\nA styled title screen sets the mood: the game name, a harbor map illustration,\nand a courier boat identity greet the player before they press Start.\n\nThe shift begins on a top-down harbor map alive with water lanes, wooden docks,\nrocky islands, painted buoys, and waiting customers. The player steers the boat\nsmoothly through the water, feeling it slow near obstacles and bounce off island\nedges. Picking up a crate changes the boat's silhouette or HUD loadout,\nconfirming what is aboard and where it needs to go.\n\nOrders stack up on the screen — each with a destination marker and a countdown.\nSome are leisurely, others flash urgent. The player threads routes, drops\nparcels at matching customers, and watches coins or reputation tick upward with\neach successful delivery. Miss a timer and the customer frowns away. A day timer\nor shift meter counts down the round, escalating the pressure as remaining\norders pile up.\n\nWhen the shift ends, a result screen tallies deliveries, earnings, and a\nperformance rating. Between shifts an upgrade or planning screen offers choices\nthat change the next run — faster engine, bigger hold, better route hints. The\nloop invites one more shift, then one more after that.\n\n## Assets\n\n2D assets are mounted read-only at:\n\n- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).\n- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each\n  subdir's `LICENSE.txt`.\n\nBrowse the library and choose packs.\nCopy what you need into your project's `assets/` folder.\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    ← your input traces (1–10 files)\n  scripts/  scenes/  assets/\n```\n\nThe build must launch cleanly with:\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nA reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.\n**Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —\nanything after `--` is forwarded to the project as user args and silently\nignored by the engine. Correct shape:\n`godot --headless --quit-after 5 --path . -- --scenario near_victory`.\n\nA screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /\nresult screens look like.\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\nTo screenshot a specific scenario, append `--scenario <id>` after `--`. The\nhelper consumes only `--out` / `--frames` / `--scene`; remaining args stay in\n`OS.get_cmdline_user_args()` for your game code to read. Example:\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/battle_debug.png --frames 120 --scenario battle\n```\n\n## Demos\n\nShip **1–10 input-trace files** under `/workspace/game/demo_outputs/`, one per\ndemo, each named `*.json`. The evaluator launches a fresh game per trace,\nreplays your trace as synthetic mouse and keyboard input at 1280×720, and\nrecords the screen. Only the first 10 traces by filename are evaluated;\nrecordings longer than 20 s are sampled from a random 20 s window.\n\n### Scenarios\n\nNormal play should start from the title screen and demonstrate the task's\ncore gameplay loop.\nDemo playback must be deterministic. For demos that need a specific state\n(a specific level, combat state, upgrade screen, result state, or late-game\nsetup), define named scenarios your game loads when launched with:\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\nWhen `--scenario <id>` is present the game must skip menus, set up the named\nstate deterministically (seed any RNG), and begin accepting input immediately.\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` — optional; omit for a normal game launch from the title screen.\n- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.\n- `events` — time-ordered inputs. Coordinates are pixels in the 1280×720\n  viewport. Supported types:\n  - `mouse_click`: `{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`: `{frame, type, button: \"left\"|\"right\", x, y}` —\n    use these for drag interactions: emit `mouse_down` at the start point,\n    one or more `mouse_move` events along the way, and `mouse_up` at the end.\n    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight\n    succession.\n  - `mouse_move`: `{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:\n    `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,\n    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.\n  - `wait`: `{frame, type}` — anchor frame, no input.\n\nReplay must be deterministic: same trace, fresh launch, same outcome every time.\n"
-   translation: "# Cozy Harbor Delivery\n\n在 `/workspace/game/` 用 Godot 4 构建 **Cozy Harbor Delivery**，一款 2D 俯视视角的送货路线规划小游戏。这不是原型。它必须是一款**完整、可发布的微型游戏**，其打磨程度足以作为一个垂直切片放在 itch.io 页面或 Steam 上。\n\n## Core Vision\n\n一艘小小的快递船在阳光斑驳的港湾中缓缓穿行，在岛屿与浮标之间穿梭，把包裹从取货货箱运送到码头上等待的顾客手中。张力来自路线规划（routing）：多个订单同时倒计时，每个订单的目的地和紧急程度都不相同，而港湾的地形恰好错综复杂到让玩家无法沿一条直线服务所有人。先去取哪个包裹、让哪位顾客失望、以及何时冒险从停泊的船体之间抄一条狭窄的近道——这就是全部的决策空间。在每个班次（shift）之间，玩家把收入重新投入到速度、货舱容量或路线提示上，从而塑造下一个班次的手感。整体调性表面上温暖而不慌不忙，底下却在悄然施压——一个被水彩码头与摇曳小船包裹起来的舒缓（cozy）物流谜题。\n\n## What the Player Experiences\n\n一个经过美术设计的标题画面确立整体氛围：游戏名称、一张港湾地图插画，以及一个快递船身份，在玩家按下 Start 之前迎接他们。\n\n班次从一张俯视港湾地图开始，地图上有航道、木质码头、岩石岛屿、彩绘浮标和等待中的顾客，一派生机。玩家平滑地操纵小船在水中航行，能感受到它在靠近障碍物时减速、并在岛屿边缘发生弹开。拾取一个货箱会改变小船的轮廓或 HUD 上的载货显示，从而确认船上装了什么、要送到哪里。\n\n订单在屏幕上不断堆积——每个订单都带有一个目的地标记和一个倒计时。有些订单不紧不慢，有些则闪烁着紧急提示。玩家串联路线，把包裹投递给匹配的顾客，并看着金币或声望随每次成功送达而上涨。错过一次计时，顾客就会皱着眉离开。一个日间计时器或班次进度条为本回合倒计时，随着未完成订单堆积而不断加码压力。\n\n班次结束时，结算画面统计送达数量、收入和一项表现评级。在班次之间，一个升级或规划画面提供若干会改变下一轮体验的选项——更快的引擎、更大的货舱、更好的路线提示。这个循环让人想再来一个班次，然后再来一个。\n\n## Assets\n\n2D 素材以只读方式挂载在：\n\n- `/workspace/assets/library/` —— Kenney CC0 素材包（精灵图、图块、UI、字体）。\n- `/workspace/assets/library-oga/` —— OpenGameArt 条目；请遵守各子目录中的 `LICENSE.txt`。\n\n浏览素材库并选择素材包。把你需要的内容复制到你项目的 `assets/` 文件夹中。\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    ← your input traces (1–10 files)\n  scripts/  scenes/  assets/\n```\n\n构建必须能通过以下命令干净启动：\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nGodot CLI 参数的参考文档位于 `/workspace/tools/godot_command_line.md`。**像 `--headless` 和 `--quit-after N` 这样的引擎参数必须放在 `--` 之前**——`--` 之后的任何内容都会作为用户参数转发给项目，并被引擎静默忽略。正确写法：\n`godot --headless --quit-after 5 --path . -- --scenario near_victory`。\n\n`/workspace/tools/screenshot.sh` 提供了一个截图辅助工具。用它来实际查看你的 UI / 战场 / 结算画面长什么样。\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\n若要对某个特定 scenario 截图，在 `--` 之后追加 `--scenario <id>`。该辅助工具只消费 `--out` / `--frames` / `--scene`；其余参数会保留在 `OS.get_cmdline_user_args()` 中，供你的游戏代码读取。示例：\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/battle_debug.png --frames 120 --scenario battle\n```\n\n## Demos\n\n在 `/workspace/game/demo_outputs/` 下提交 **1–10 个输入轨迹（input-trace）文件**，每个 demo 一个，均命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，以 1280×720 分辨率将你的轨迹回放为合成的鼠标与键盘输入，并录制屏幕。只有按文件名排序的前 10 条轨迹会被评测；长度超过 20 s 的录像会从一个随机的 20 s 窗口中采样。\n\n### Scenarios\n\n常规游玩应从标题画面开始，并演示该任务的核心游戏循环。\nDemo 回放必须是确定性的。对于需要特定状态的 demo（某个特定关卡、战斗状态、升级画面、结算状态或后期游戏配置），请定义具名 scenario，使你的游戏在通过下列方式启动时加载它们：\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\n当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态（为所有 RNG 设定种子），并立即开始接受输入。\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` —— 可选；从标题画面进行常规启动时省略。\n- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 s）**。\n- `events` —— 按时间排序的输入。坐标是 1280×720 视口中的像素值。支持的类型：\n  - `mouse_click`：`{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`：`{frame, type, button: \"left\"|\"right\", x, y}` —— 用它们来实现拖拽交互：在起点发出 `mouse_down`，沿途发出一个或多个 `mouse_move` 事件，并在终点发出 `mouse_up`。一次 `mouse_click` 相当于在同一点上紧接连续发生的 `mouse_down` + `mouse_up`。\n  - `mouse_move`：`{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 取值：`A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。\n  - `wait`：`{frame, type}` —— 锚点帧，不产生输入。\n\n回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同结果。"
    run_spec: "上游族 Platformer；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
  - id: platformer-dig-descent
    label: "平台跳跃 · Dig Descent"
@@ -750,7 +1867,6 @@ tasks:
  - id: roguelike-dice-throne
    label: "Roguelike · Dice Throne"
    prompt: "# Dice Throne\n\nBuild **Dice Throne**, a dice-rolling roguelike with reroll mechanics and\nequipment that modifies die faces in Godot 4 at `/workspace/game/`. This is not\na prototype. It is a **complete, shippable micro-game** that could sit on an\nitch.io page or Steam as a polished vertical slice.\n\n## Core Vision\n\nA warrior battles through a dungeon using dice as their combat system. Each\nturn the player rolls a set of dice, then chooses which to keep and which to\nreroll (up to two rerolls). Die faces map to abilities: swords deal damage,\nshields block, hearts heal, and skulls trigger special attacks. The twist:\nequipment found in the dungeon physically modifies die faces — a flame sword\nreplaces one sword face with a fire-sword that deals double damage, enchanted\narmor adds a shield face to a die. The enemy rolls visible dice too, creating\na transparent contest where both sides see what is coming. Building a set of\ndice with synergistic faces is the meta-progression within each run.\n\n## What the Player Experiences\n\nA title screen shows dice tumbling with glowing face icons. Starting a run\ngives the player 5 standard dice (each with sword, sword, shield, heart,\nskull, blank faces).\n\nIn combat, the player rolls all dice simultaneously with a satisfying tumble\nanimation. Results land face-up. The player selects dice to keep (they lock in\nplace) and rerolls the rest — up to two rerolls per turn. After finalizing,\nfaces activate: swords deal damage to the enemy, shields reduce incoming damage,\nhearts heal, skulls trigger a special ability. The enemy then rolls their own\nvisible dice and resolves similarly.\n\nBetween encounters, loot screens offer equipment that modifies die faces —\nreplacing, upgrading, or adding faces. A map shows branching paths with combat,\nelite, shop, and rest nodes. Shops sell face modifications and new dice. The\nrun ends at a boss with powerful custom dice. Death shows floor reached, best\nroll, and equipment collected.\n\n## Assets\n\n2D assets are mounted read-only at:\n\n- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).\n- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each\n  subdir's `LICENSE.txt`.\n\nBrowse the library and choose packs.\nCopy what you need into your project's `assets/` folder.\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    <- your input traces (1-10 files)\n  scripts/  scenes/  assets/\n```\n\nThe build must launch cleanly with:\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nA reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.\n**Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —\nanything after `--` is forwarded to the project as user args and silently\nignored by the engine. Correct shape:\n`godot --headless --quit-after 5 --path . -- --scenario near_victory`.\n\nA screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /\nresult screens look like.\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\nTo screenshot a specific scenario, append `--scenario <id>` after `--`. The\nhelper consumes only `--out` / `--frames` / `--scene`; remaining args stay in\n`OS.get_cmdline_user_args()` for your game code to read. Example:\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/battle_debug.png --frames 120 --scenario battle\n```\n\n## Demos\n\nShip **1-10 input-trace files** under `/workspace/game/demo_outputs/`, one per\ndemo, each named `*.json`. The evaluator launches a fresh game per trace,\nreplays your trace as synthetic mouse and keyboard input at 1280x720, and\nrecords the screen. Only the first 10 traces by filename are evaluated;\nrecordings longer than 20 s are sampled from a random 20 s window.\n\n### Scenarios\n\nNormal play should start from the title screen and demonstrate the task's\ncore gameplay loop.\nDemo playback must be deterministic. For demos that need a specific state\n(a specific level, combat state, upgrade screen, result state, or late-game\nsetup), define named scenarios your game loads when launched with:\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\nWhen `--scenario <id>` is present the game must skip menus, set up the named\nstate deterministically (seed any RNG), and begin accepting input immediately.\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` — optional; omit for a normal game launch from the title screen.\n- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.\n- `events` — time-ordered inputs. Coordinates are pixels in the 1280x720\n  viewport. Supported types:\n  - `mouse_click`: `{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`: `{frame, type, button: \"left\"|\"right\", x, y}` —\n    use these for drag interactions: emit `mouse_down` at the start point,\n    one or more `mouse_move` events along the way, and `mouse_up` at the end.\n    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight\n    succession.\n  - `mouse_move`: `{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:\n    `A`-`Z`, `0`-`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,\n    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.\n  - `wait`: `{frame, type}` — anchor frame, no input.\n\nReplay must be deterministic: same trace, fresh launch, same outcome every time.\n"
-   translation: "# Dice Throne\n\n在 Godot 4 中于 `/workspace/game/` 构建 **Dice Throne**——一款带重掷（reroll）机制、并且装备会修改骰面的骰子 Roguelike 游戏。这不是一个原型，而是一款**完整、可发布的微型游戏**，其打磨程度足以作为纵向切片放在 itch.io 页面或 Steam 上。\n\n## Core Vision\n\n一名战士以骰子作为战斗系统闯荡地牢。每个回合玩家投掷一组骰子，然后选择保留哪些、重掷哪些（最多两次重掷）。骰面对应各种能力：剑造成伤害，盾进行格挡，心恢复生命，骷髅触发特殊攻击。精妙之处在于：在地牢中找到的装备会实际修改骰面——火焰剑把一个剑面替换为造成双倍伤害的火剑面，附魔护甲则为某个骰子增加一个盾面。敌人也会投掷可见的骰子，形成一场双方都能看到接下来会发生什么的透明较量。构筑一组骰面彼此协同的骰子，就是每一轮游戏（run）内部的元进程（meta-progression）。\n\n## What the Player Experiences\n\n标题界面展示滚动的骰子和发光的骰面图标。开始一轮游戏后，玩家获得 5 个标准骰子（每个骰子的骰面为：剑、剑、盾、心、骷髅、空白）。\n\n在战斗中，玩家同时投出所有骰子，伴随令人满足的翻滚动画。结果朝上落定。玩家选择要保留的骰子（它们会锁定在原位），并重掷其余骰子——每回合最多两次重掷。确认后，骰面生效：剑对敌人造成伤害，盾减少受到的伤害，心恢复生命，骷髅触发一项特殊能力。随后敌人投掷自己的可见骰子，并以同样方式结算。\n\n在两场遭遇战之间，战利品界面提供可修改骰面的装备——替换、升级或添加骰面。地图显示带有战斗、精英、商店和休息节点的分支路径。商店出售骰面改造和新骰子。这一轮游戏在一个拥有强力自定义骰子的 Boss 处结束。死亡时显示抵达的层数、最佳一次投掷，以及已收集的装备。\n\n## Assets\n\n2D 素材以只读方式挂载在：\n\n- `/workspace/assets/library/` — Kenney CC0 素材包（sprites、tiles、UI、字体）。\n- `/workspace/assets/library-oga/` — OpenGameArt 条目；请遵守各子目录中的 `LICENSE.txt`。\n\n浏览素材库并选择素材包。把需要的文件复制到你项目的 `assets/` 目录中。\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    <- your input traces (1-10 files)\n  scripts/  scenes/  assets/\n```\n\n构建产物必须能通过以下命令干净启动：\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nGodot CLI 参数的参考文档位于 `/workspace/tools/godot_command_line.md`。**诸如 `--headless` 和 `--quit-after N` 之类的引擎参数必须放在 `--` 之前**——`--` 之后的任何内容都会作为用户参数转发给项目，并被引擎静默忽略。正确形式：\n`godot --headless --quit-after 5 --path . -- --scenario near_victory`。\n\n`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的 UI／战场／结算界面到底是什么样子。\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\n要对特定场景（scenario）截图，请在 `--` 之后追加 `--scenario <id>`。该辅助工具只消费 `--out` / `--frames` / `--scene`；其余参数会留在 `OS.get_cmdline_user_args()` 中供你的游戏代码读取。示例：\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/battle_debug.png --frames 120 --scenario battle\n```\n\n## Demos\n\n在 `/workspace/game/demo_outputs/` 下提交 **1-10 个输入轨迹（input-trace）文件**，每个演示一个，均命名为 `*.json`。评测器为每个轨迹启动一个全新的游戏实例，以 1280x720 分辨率将你的轨迹重放为合成的鼠标与键盘输入，并录制屏幕。仅按文件名排序的前 10 个轨迹会被评测；长度超过 20 s 的录制将从一个随机的 20 s 窗口中采样。\n\n### Scenarios\n\n常规玩法应从标题界面开始，并展示该任务的核心游戏循环。\n演示回放必须是确定性的。对于需要特定状态的演示（某个特定关卡、战斗状态、升级界面、结算状态或后期布局），请定义具名场景，使你的游戏在以下方式启动时加载它们：\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\n当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名状态（为任何 RNG 设定种子），并立即开始接受输入。\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` — 可选；从标题界面进行常规游戏启动时省略此项。\n- `duration_frames` — 以 30 fps 录制的总帧数；上限为 **600（20 s）**。\n- `events` — 按时间排序的输入。坐标为 1280x720 视口中的像素值。支持的类型：\n  - `mouse_click`：`{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`：`{frame, type, button: \"left\"|\"right\", x, y}` —— 用于拖拽交互：在起点发出 `mouse_down`，途中发出一个或多个 `mouse_move` 事件，并在终点发出 `mouse_up`。一次 `mouse_click` 相当于在同一点上紧接连续发出的 `mouse_down` + `mouse_up`。\n  - `mouse_move`：`{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 取值：`A`-`Z`、`0`-`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。\n  - `wait`：`{frame, type}` —— 锚定帧，不产生输入。\n\n回放必须是确定性的：相同的轨迹、全新的启动，每次都得到相同的结果。"
    run_spec: "上游族 Roguelike；隐藏 rubric 18 条（M5/D5/V4/A4，5 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
  - id: roguelike-dungeon-shop
    label: "Roguelike · Dungeon Shop"
@@ -917,7 +2033,6 @@ tasks:
  - id: shooter-void-patrol
    label: "射击 · Void Patrol"
    prompt: "# Void Patrol\n\nBuild **Void Patrol**, a side-scrolling shoot-em-up in Godot 4 at `/workspace/game/`.\nThis is not a prototype. It is a **complete, shippable micro-game** that could\nsit on an itch.io page or Steam as a polished vertical slice.\n\n## Core Vision\n\nThe fantasy is piloting a lone interceptor through hostile deep-space corridors,\nweaving between curtains of enemy fire while chaining power-ups into an\never-escalating weapons loadout. The interesting tension is greed versus safety:\neach collected power-up extends the current weapon chain, but the orbs drift into\ndangerous positions, tempting the player to fly into bullet patterns for the next\ntier. Death resets the chain, and with limited lives the player must decide when\nto play it safe and when to push for the devastating max-chain beam. Stages\nscroll relentlessly, each ending with a multi-phase boss whose patterns demand\nmastery of the ship's narrow hitbox and screen-clearing bomb reserve.\n\n## What the Player Experiences\n\nThe player launches into a title screen showing the ship silhouetted against a\nscrolling starfield, then selects Start to enter Stage 1. The viewport scrolls\nright automatically; enemy formations sweep in from the edges in choreographed\nwaves, dropping bullets and occasionally releasing glowing power-up orbs. The\nplayer moves freely within the screen bounds, fires a primary weapon with a held\nbutton, and can trigger a limited bomb to clear all on-screen projectiles.\n\nCollecting sequential power-ups without dying upgrades the weapon through visible\ntiers — single shot, spread, laser, homing missiles — each with distinct\nvisual flair. Dying drops the chain back to base. Between stages a brief\ninterstitial shows score and lives remaining. Boss encounters fill the right side\nof the screen with a large multi-part enemy whose segments flash and break away\nas health depletes, cycling through distinct attack phases. After five stages the\ngame shows a victory tally; losing all lives triggers a continue screen with\nlimited continues before game over.\n\n## Assets\n\n2D assets are mounted read-only at:\n\n- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).\n- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each\n  subdir's `LICENSE.txt`.\n\nBrowse the library and choose packs.\nCopy what you need into your project's `assets/` folder.\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    <- your input traces (1-10 files)\n  scripts/  scenes/  assets/\n```\n\nThe build must launch cleanly with:\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nA reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.\n**Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —\nanything after `--` is forwarded to the project as user args and silently\nignored by the engine. Correct shape:\n`godot --headless --quit-after 5 --path . -- --scenario near_victory`.\n\nA screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to actually see what your UI / battlefield /\nresult screens look like.\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\nTo screenshot a specific scenario, append `--scenario <id>` after `--`. The\nhelper consumes only `--out` / `--frames` / `--scene`; remaining args stay in\n`OS.get_cmdline_user_args()` for your game code to read. Example:\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/battle_debug.png --frames 120 --scenario battle\n```\n\n## Demos\n\nShip **1-10 input-trace files** under `/workspace/game/demo_outputs/`, one per\ndemo, each named `*.json`. The evaluator launches a fresh game per trace,\nreplays your trace as synthetic mouse and keyboard input at 1280x720, and\nrecords the screen. Only the first 10 traces by filename are evaluated;\nrecordings longer than 20 s are sampled from a random 20 s window.\n\n### Scenarios\n\nNormal play should start from the title screen and demonstrate the task's\ncore gameplay loop.\nDemo playback must be deterministic. For demos that need a specific state\n(a specific level, combat state, upgrade screen, result state, or late-game\nsetup), define named scenarios your game loads when launched with:\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\nWhen `--scenario <id>` is present the game must skip menus, set up the named\nstate deterministically (seed any RNG), and begin accepting input immediately.\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` — optional; omit for a normal game launch from the title screen.\n- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.\n- `events` — time-ordered inputs. Coordinates are pixels in the 1280x720\n  viewport. Supported types:\n  - `mouse_click`: `{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`: `{frame, type, button: \"left\"|\"right\", x, y}` —\n    use these for drag interactions: emit `mouse_down` at the start point,\n    one or more `mouse_move` events along the way, and `mouse_up` at the end.\n    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight\n    succession.\n  - `mouse_move`: `{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:\n    `A`-`Z`, `0`-`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,\n    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.\n  - `wait`: `{frame, type}` — anchor frame, no input.\n\nReplay must be deterministic: same trace, fresh launch, same outcome every time.\n"
-   translation: "# Void Patrol\n\n在 `/workspace/game/` 用 Godot 4 构建 **Void Patrol**，一款横版卷轴射击游戏（side-scrolling shoot-em-up）。\n这不是原型。它是一款**完整、可交付的微型游戏**，能够作为打磨完善的垂直切片放到 itch.io 页面或 Steam 上。\n\n## Core Vision\n\n游戏所营造的幻想是：驾驶一架孤身作战的拦截机穿越充满敌意的深空走廊，\n在敌方弹幕的帷幕之间穿梭腾挪，同时把拾取到的强化道具（power-up）串联成\n不断升级的武器配置。有趣的张力在于贪婪与安全之间的取舍：\n每次拾取强化道具都会延长当前的武器连锁，但能量球会漂移到危险的位置，\n诱使玩家为了下一个层级而飞入弹幕之中。死亡会重置连锁，而在生命有限的情况下，\n玩家必须判断何时求稳、何时冒险去追求毁灭性的满连锁光束。关卡\n无情地持续滚动，每一关都以一个多阶段 Boss 收尾，其弹幕模式要求玩家\n精通飞船狭窄的判定框（hitbox）与清屏炸弹（bomb）储备的运用。\n\n## What the Player Experiences\n\n玩家进入标题画面，画面中飞船的轮廓映衬在滚动的星空背景之上，\n随后选择 Start 进入 Stage 1。视口自动向右滚动；敌人编队按照编排好的\n波次从画面边缘扫入，投下子弹，并偶尔释放发光的强化能量球。\n玩家可在屏幕边界内自由移动，按住按键即可发射主武器，\n并可触发数量有限的炸弹以清除屏幕上的全部弹幕。\n\n在不死亡的前提下连续拾取强化道具，会让武器沿着可见的层级升级——\n单发、散射、激光、追踪导弹——每一级都有各自鲜明的\n视觉表现。死亡会让连锁跌回基础等级。关卡之间会有一段简短的\n过场画面，显示分数和剩余生命数。Boss 战会以一个巨大的多部件敌人\n填满屏幕右侧，随着血量下降，它的各个部位会闪烁并崩解脱落，\n并在几种不同的攻击阶段之间循环。通过五个关卡后，\n游戏会显示胜利结算；耗尽所有生命则会触发续关画面，续关次数有限，用完后即为游戏结束。\n\n## Assets\n\n2D 素材以只读方式挂载于：\n\n- `/workspace/assets/library/` — Kenney CC0 素材包（精灵图、图块、UI、字体）。\n- `/workspace/assets/library-oga/` — OpenGameArt 条目；请遵守各子目录中的\n  `LICENSE.txt`。\n\n浏览素材库并选择素材包。\n把你需要的内容复制到你项目的 `assets/` 目录中。\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    <- your input traces (1-10 files)\n  scripts/  scenes/  assets/\n```\n\n构建产物必须能通过以下命令干净启动：\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nGodot CLI 参数的参考文档位于 `/workspace/tools/godot_command_line.md`。\n**诸如 `--headless` 和 `--quit-after N` 这类引擎参数必须放在 `--` 之前**——\n`--` 之后的任何内容都会作为用户参数转发给项目，并被引擎静默忽略。正确的形式是：\n`godot --headless --quit-after 5 --path . -- --scenario near_victory`。\n\n`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的 UI / 战场 /\n结算画面到底长什么样。\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\n要对特定场景（scenario）截图，请在 `--` 之后追加 `--scenario <id>`。该\n辅助工具只消费 `--out` / `--frames` / `--scene`；其余参数会保留在\n`OS.get_cmdline_user_args()` 中供你的游戏代码读取。示例：\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/battle_debug.png --frames 120 --scenario battle\n```\n\n## Demos\n\n在 `/workspace/game/demo_outputs/` 下交付 **1-10 个输入轨迹（input-trace）文件**，\n每个 demo 一个，均命名为 `*.json`。评测程序会为每个轨迹启动一个全新的游戏实例，\n在 1280x720 分辨率下把你的轨迹回放为合成的鼠标与键盘输入，\n并录制屏幕。仅按文件名排序的前 10 个轨迹会被评测；\n超过 20 s 的录制会从随机的 20 s 窗口中采样。\n\n### Scenarios\n\n常规玩法应当从标题画面开始，并展示该任务的\n核心游戏循环。\nDemo 回放必须是确定性的。对于需要特定状态的 demo\n（特定关卡、战斗状态、升级界面、结算状态或后期\n布局），请定义具名场景，使游戏在以下方式启动时加载它们：\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\n当 `--scenario <id>` 存在时，游戏必须跳过菜单，确定性地建立该具名\n状态（为任何 RNG 设定种子），并立即开始接受输入。\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` — 可选；若为从标题画面开始的常规游戏启动，则省略该字段。\n- `duration_frames` — 以 30 fps 录制的总帧数；上限为 **600（20 s）**。\n- `events` — 按时间排序的输入。坐标是 1280x720 视口内的像素值。\n  支持的类型：\n  - `mouse_click`：`{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`：`{frame, type, button: \"left\"|\"right\", x, y}` ——\n    用它们来实现拖拽交互：在起始点发出 `mouse_down`，\n    沿途发出一个或多个 `mouse_move` 事件，并在终点发出 `mouse_up`。\n    一次 `mouse_click` 等价于在同一点上紧接连续发生的\n    `mouse_down` + `mouse_up`。\n  - `mouse_move`：`{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 取值：\n    `A`-`Z`、`0`-`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、\n    `DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。\n  - `wait`：`{frame, type}` —— 锚定帧，不产生输入。\n\n回放必须是确定性的：同一个轨迹、全新启动，每次都得到相同的结果。"
    run_spec: "上游族 Shooter；隐藏 rubric 18 条（M5/D5/V4/A4，6 条按 demo 均值聚合，其余取最大值），四类权重 0.15 / 0.35 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
  - id: shooter-wave-commander
    label: "射击 · Wave Commander"
@@ -1222,7 +2337,6 @@ tasks:
  - id: visualnovel-keepsake
    label: "视觉小说 · Keepsake"
    prompt: "# Keepsake\n\nBuild **Keepsake**, a quiet memory-reconstruction visual novel about sorting a\nlate person's belongings, in Godot 4 at `/workspace/game/`. This is not a\nprototype. It is a **complete, shippable micro-game** that could sit on an\nitch.io page or Steam as a polished vertical slice.\n\n## Core Vision\n\nSomeone has died, and you have been asked to sort through what they left behind.\nA faded photograph, a folded letter, a worn ring, a diary with a torn-out\npage — each object holds a fragment of a life, and they do not give up their\nmeaning in order. Keepsake is a **choice-driven visual novel of reconstruction**\nwhere the player examines the keepsakes of a stranger and, piece by piece and\nout of sequence, assembles the story of who this person really was — and the\nquiet secret time had buried with them.\n\nThe fantasy is **piecing together a life from the things it left behind**. The\nheart of the loop is **examine, remember, connect, understand** — turning a\nkeepsake over, hearing the memory it stirs, and fitting it against what you have\nalready found until a hidden shape emerges. The order the player chooses, and\nhow they come to read an ambiguous choice the dead made, shape the\nunderstanding they arrive at. It should feel like a slow, tender, melancholy\npiece with real emotional weight and more than one way to understand a life, not\na single linear obituary read start to finish.\n\n## What the Player Experiences\n\n1. **An Authored Opening** — From a styled title the player is given their\n   task — a room, a box, a life's worth of objects to sort — established as a\n   quiet illustrated scene with narration that sets the mood and the absence at\n   its center.\n2. **Examining the Keepsakes** — The player chooses which object to take up,\n   in whatever order they like, and each keepsake is examined as an illustrated\n   item with the memory or fragment of the past it reveals. The room of\n   belongings is something the player works through at their own pace, not a\n   fixed slideshow.\n3. **Fragments That Connect** — Each examined keepsake adds a remembered\n   fragment to what the player knows, and fragments fit against one another:\n   a date on a letter explains a photograph, an object's absence answers an\n   earlier question. The player feels a life assembling out of order, and what\n   they have already found colors how the next piece reads.\n4. **A Choice of Understanding** — As the picture comes together the player\n   reaches moments of interpretation — how to read an ambiguous decision the\n   dead person made, what to believe about a secret, whether to judge or\n   forgive. These choices are deliberate and remembered, and what the player has\n   uncovered shapes which understandings are even available.\n5. **More Than One Way to Remember** — The piece resolves into one of several\n   genuinely different closing understandings — a life redeemed, a secret kept\n   in kindness, a quiet grief, a truth that recasts everything — each reached\n   through which fragments the player found and how they chose to read them,\n   and shown as an authored, styled conclusion that names the understanding they\n   came to. The player can begin again and arrive somewhere else.\n\n## Assets\n\n2D assets are mounted read-only at:\n\n- `/workspace/assets/library/` — Kenney CC0 packs (sprites, tiles, UI, fonts).\n- `/workspace/assets/library-oga/` — OpenGameArt entries; respect each\n  subdir's `LICENSE.txt`.\n\nBrowse the library and choose packs.\nCopy what you need into your project's `assets/` folder.\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    ← your input traces (1–10 files)\n  scripts/  scenes/  assets/\n```\n\nThe build must launch cleanly with:\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nA reference for Godot CLI flags is at `/workspace/tools/godot_command_line.md`.\n**Engine flags like `--headless` and `--quit-after N` must come BEFORE `--`** —\nanything after `--` is forwarded to the project as user args and silently\nignored by the engine. Correct shape:\n`godot --headless --quit-after 5 --path . -- --scenario ending_forgive`.\n\nA screenshot helper is available at `/workspace/tools/screenshot.sh`. Use it to\nactually see what your title / room / keepsake / ending screens look like.\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\nTo screenshot a specific scenario, append `--scenario <id>` after `--`. The\nhelper consumes only `--out` / `--frames` / `--scene`; remaining args stay in\n`OS.get_cmdline_user_args()` for your game code to read. Example:\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/memory_debug.png --frames 120 --scenario ending_forgive\n```\n\n## Demos\n\nShip **1–10 input-trace files** under `/workspace/game/demo_outputs/`, one per\ndemo, each named `*.json`. The evaluator launches a fresh game per trace,\nreplays your trace as synthetic mouse and keyboard input at 1280×720, and\nrecords the screen. Only the first 10 traces by filename are evaluated;\nrecordings longer than 20 s are sampled from a random 20 s window.\n\n### Scenarios\n\nNormal play should start from the title screen and demonstrate the task's\ncore gameplay loop.\nDemo playback must be deterministic. For demos that need a specific state\n(a particular keepsake, a memory-board state, an interpretation choice, or one\nof the closing understandings), define named scenarios your game loads when\nlaunched with:\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\nWhen `--scenario <id>` is present the game must skip menus, set up the named\nstate deterministically (seed any RNG), and begin accepting input immediately.\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` — optional; omit for a normal game launch from the title screen.\n- `duration_frames` — total frames to record at 30 fps; cap at **600 (20 s)**.\n- `events` — time-ordered inputs. Coordinates are pixels in the 1280×720\n  viewport. Supported types:\n  - `mouse_click`: `{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`: `{frame, type, button: \"left\"|\"right\", x, y}` —\n    use these for drag interactions: emit `mouse_down` at the start point,\n    one or more `mouse_move` events along the way, and `mouse_up` at the end.\n    A `mouse_click` is a `mouse_down` + `mouse_up` at the same point in tight\n    succession.\n  - `mouse_move`: `{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`: `{frame, type, keycode}` — keycodes:\n    `A`–`Z`, `0`–`9`, `ESCAPE`, `ENTER`, `SPACE`, `TAB`, `BACKSPACE`,\n    `DELETE`, `SHIFT`, `CTRL`, `ALT`, `UP`, `DOWN`, `LEFT`, `RIGHT`.\n  - `wait`: `{frame, type}` — anchor frame, no input.\n\nReplay must be deterministic: same trace, fresh launch, same outcome every time.\n"
-   translation: "# Keepsake\n\n在 Godot 4 中于 `/workspace/game/` 构建 **Keepsake**——一部关于整理逝者遗物的静默记忆重构视觉小说（visual novel）。这不是原型，而是一款**完整、可发布的微型游戏**，其打磨程度足以作为垂直切片放上 itch.io 页面或 Steam。\n\n## Core Vision\n\n有人去世了，你被托付去整理他们留下的东西。一张褪色的照片、一封折叠的信、一枚磨损的戒指、一本被撕去一页的日记——每件物品都承载着一生的某个碎片，而它们并不按顺序交出自己的含义。Keepsake 是一部**以选择驱动的重构视觉小说**：玩家检视一位陌生人的遗物，一件一件、不按次序地拼出这个人究竟是谁——以及被时间一同埋葬的那个静默秘密。\n\n其幻想内核是**从遗留之物中拼凑出一生**。循环的核心是**检视、回忆、连接、理解**——翻转一件遗物，聆听它唤起的记忆，并将它与你已发现的内容对照，直到一个隐藏的形状浮现出来。玩家选择的顺序，以及他们如何解读逝者做出的某个含义暧昧的决定，共同塑造他们最终抵达的理解。它应当给人一种缓慢、温柔、忧郁的质感，具备真实的情感重量，并且对一段人生存在不止一种理解方式，而不是一篇从头读到尾的单线讣告。\n\n## What the Player Experiences\n\n1. **一段作者化的开场（An Authored Opening）** —— 从一个风格化的标题画面开始，玩家被交予任务：一间房、一只箱子、一生分量的物品需要整理；这一切以一个静默的插画场景建立起来，配以设定氛围与其核心之缺席的旁白。\n2. **检视遗物（Examining the Keepsakes）** —— 玩家自行选择拿起哪件物品，顺序完全自由，每件遗物都作为一件插画物品被检视，并揭示它所带出的记忆或往事碎片。这间堆满遗物的房间是玩家按自己的节奏逐步处理的对象，而不是一套固定的幻灯片。\n3. **相互连接的碎片（Fragments That Connect）** —— 每件被检视的遗物都会向玩家的已知内容中添加一个回忆碎片，而碎片之间彼此契合：一封信上的日期解释了一张照片，一件物品的缺失回答了先前的疑问。玩家会感受到一段人生正以非线性的方式装配起来，而他们已经发现的内容会为下一块碎片的解读染上色彩。\n4. **理解的选择（A Choice of Understanding）** —— 随着图景逐渐成形，玩家会抵达若干诠释时刻——如何解读逝者做出的一个含义暧昧的决定、关于某个秘密该相信什么、是评判还是宽恕。这些选择是有意为之且会被记住的，而玩家已经揭开的内容决定了哪些理解方式才会被提供。\n5. **记忆的多种方式（More Than One Way to Remember）** —— 作品会收束为数个真正不同的结尾理解之一——一段被救赎的人生、一个出于善意被守住的秘密、一场静默的悲伤、一个重塑一切的真相——每一种都通过玩家找到了哪些碎片、以及他们选择如何解读这些碎片而抵达，并以作者化、风格化的结论呈现，点名他们所抵达的那种理解。玩家可以重新开始，并抵达别处。\n\n## Assets\n\n2D 素材以只读方式挂载于：\n\n- `/workspace/assets/library/` —— Kenney CC0 素材包（sprites、tiles、UI、字体）。\n- `/workspace/assets/library-oga/` —— OpenGameArt 条目；须遵守各子目录中的 `LICENSE.txt`。\n\n浏览素材库并挑选素材包。把你需要的内容复制到项目的 `assets/` 目录下。\n\n## Project layout\n\n```\n/workspace/game/\n  project.godot\n  Main.tscn\n  demo_outputs/    ← your input traces (1–10 files)\n  scripts/  scenes/  assets/\n```\n\n构建产物必须能通过以下命令干净启动：\n\n```\ngodot --headless --path /workspace/game --quit-after 5\n```\n\nGodot CLI 参数的参考文档位于 `/workspace/tools/godot_command_line.md`。**诸如 `--headless` 和 `--quit-after N` 这类引擎参数必须放在 `--` 之前**——`--` 之后的任何内容都会作为用户参数转发给项目，并被引擎静默忽略。正确形式：\n`godot --headless --quit-after 5 --path . -- --scenario ending_forgive`。\n\n`/workspace/tools/screenshot.sh` 提供了截图辅助工具。用它来实际查看你的标题 / 房间 / 遗物 / 结尾画面长什么样。\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/frame.png --frames 60\n```\n\n要为特定场景（scenario）截图，请在 `--` 之后追加 `--scenario <id>`。该辅助工具只消费 `--out` / `--frames` / `--scene`；其余参数保留在 `OS.get_cmdline_user_args()` 中供你的游戏代码读取。示例：\n\n```\n/workspace/tools/screenshot.sh --path /workspace/game \\\n      -- --out /workspace/memory_debug.png --frames 120 --scenario ending_forgive\n```\n\n## Demos\n\n在 `/workspace/game/demo_outputs/` 下交付 **1–10 个输入轨迹（input-trace）文件**，每个 demo 一个，均命名为 `*.json`。评测器会为每条轨迹启动一个全新的游戏实例，以 1280×720 分辨率将你的轨迹重放为合成的鼠标与键盘输入，并录制屏幕。仅按文件名排序的前 10 条轨迹会被评测；超过 20 s 的录制会从一个随机的 20 s 窗口中采样。\n\n### Scenarios\n\n常规游玩应从标题画面开始，并演示该任务的核心游玩循环。\nDemo 回放必须是确定性的。对于需要特定状态的 demo（某件具体的遗物、某个记忆板状态、某个诠释选择，或某个结尾理解），请定义具名 scenario，让你的游戏在以下方式启动时加载它：\n\n```\ngodot --path /workspace/game -- --scenario <id>\n```\n\n当 `--scenario <id>` 存在时，游戏必须跳过菜单、确定性地建立该具名状态（为任何 RNG 设定种子），并立即开始接受输入。\n\n### Trace file format\n\n```json\n{\n  \"scenario\": \"title_flow\",\n  \"duration_frames\": 360,\n  \"events\": [\n    {\"frame\": 30,  \"type\": \"mouse_click\", \"button\": \"left\", \"x\": 300, \"y\": 360},\n    {\"frame\": 90,  \"type\": \"key_press\",   \"keycode\": \"1\"},\n    {\"frame\": 180, \"type\": \"key_press\",   \"keycode\": \"SPACE\"},\n    {\"frame\": 300, \"type\": \"wait\"}\n  ]\n}\n```\n\n- `scenario` —— 可选；从标题画面开始的常规游戏启动请省略此项。\n- `duration_frames` —— 以 30 fps 录制的总帧数；上限为 **600（20 s）**。\n- `events` —— 按时间排序的输入。坐标为 1280×720 视口中的像素值。支持的类型：\n  - `mouse_click`：`{frame, type, button: \"left\"|\"right\", x, y}`\n  - `mouse_down` / `mouse_up`：`{frame, type, button: \"left\"|\"right\", x, y}` —— 用于拖拽交互：在起点发出 `mouse_down`，沿途发出一个或多个 `mouse_move` 事件，并在终点发出 `mouse_up`。一次 `mouse_click` 相当于在同一点上紧邻连续发生的 `mouse_down` + `mouse_up`。\n  - `mouse_move`：`{frame, type, x, y}`\n  - `key_press` / `key_down` / `key_up`：`{frame, type, keycode}` —— keycode 取值：`A`–`Z`、`0`–`9`、`ESCAPE`、`ENTER`、`SPACE`、`TAB`、`BACKSPACE`、`DELETE`、`SHIFT`、`CTRL`、`ALT`、`UP`、`DOWN`、`LEFT`、`RIGHT`。\n  - `wait`：`{frame, type}` —— 锚定帧，无输入。\n\n回放必须是确定性的：同一条轨迹、全新启动，每次都得到相同结果。"
    run_spec: "上游族 Visual novel；隐藏 rubric 17 条（M5/D5/V3/A4，7 条按 demo 均值聚合，其余取最大值），四类权重 0.2 / 0.3 / 0.15 / 0.35，本题得分 ∈ [0,1]。证据留存：reward.txt、breakdown.json、judge_log.json、build.log 与 demos/<id>/ 的 mp4 与抽帧；提交清单需给出本题 reward、build_ok、scored_demos 与产物目录 sha256。"
  - id: visualnovel-lastsignal
    label: "视觉小说 · Last Signal"
