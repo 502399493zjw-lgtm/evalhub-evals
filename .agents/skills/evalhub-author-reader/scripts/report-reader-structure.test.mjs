@@ -56,14 +56,14 @@ test("structured targets match the RSIBench module signature", () => {
   assert.deepEqual(compareReaders(reference, target), []);
 });
 
-test("missing task translations fail RSIBench parity", () => {
+test("missing selected task-case translations fail RSIBench parity", () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
   const reference = inspectReader(fixture(root, "reference", structuredProfile));
   const target = inspectReader(fixture(root, "target", structuredProfile, { translation: "" }));
   const issues = compareReaders(reference, target);
-  assert.equal(target.translationCoverage, 0);
-  assert.deepEqual(target.missingTranslationTaskIds, ["one-task"]);
-  assert.ok(issues.some((issue) => issue.startsWith("task translation coverage differs")));
+  assert.equal(target.taskCaseTranslationCoverage, 0);
+  assert.deepEqual(target.missingCaseTranslationTaskIds, ["one-task"]);
+  assert.ok(issues.some((issue) => issue.startsWith("task-case translation coverage differs")));
 });
 
 test("short summaries do not pass as translations of long task prompts", () => {
@@ -78,8 +78,28 @@ test("short summaries do not pass as translations of long task prompts", () => {
     translation: "完成任务摘要。",
   }));
   const issues = compareReaders(reference, target);
-  assert.deepEqual(target.summarizedTranslationTaskIds, ["one-task"]);
-  assert.ok(issues.some((issue) => issue.startsWith("long task translations appear summarized")));
+  assert.deepEqual(target.summarizedCaseTranslationTaskIds, ["one-task"]);
+  assert.ok(issues.some((issue) => issue.startsWith("long task-case translations appear summarized")));
+});
+
+test("non-case tasks may omit translations", () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "reader-structure-"));
+  const referencePath = fixture(root, "reference", structuredProfile);
+  const targetPath = fixture(root, "target", structuredProfile);
+  for (const evalPath of [referencePath, targetPath]) {
+    const document = fs.readFileSync(evalPath, "utf8");
+    const extraTasks = Array.from({ length: 5 }, (_, index) => [
+      `  - id: extra-${index + 1}`,
+      `    prompt: Extra prompt ${index + 1}`,
+      ...(index === 1 ? [] : [`    translation: 额外题目 ${index + 1}`]),
+    ].join("\n")).join("\n");
+    fs.writeFileSync(evalPath, `${document.trimEnd()}\n${extraTasks}\n`);
+  }
+
+  const target = inspectReader(targetPath);
+  assert.deepEqual(target.taskCaseIds, ["one-task", "extra-1", "extra-3", "extra-4", "extra-5"]);
+  assert.equal(target.taskCaseTranslationCoverage, 1);
+  assert.deepEqual(compareReaders(inspectReader(referencePath), target), []);
 });
 
 test("markdown is reported as a renderer and module-order mismatch", () => {

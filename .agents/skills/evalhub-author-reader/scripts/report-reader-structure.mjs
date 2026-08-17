@@ -32,6 +32,8 @@ const STRUCTURED_CORE_FIELDS = [
   "resources",
 ];
 
+const PREVIEW_TASK_CASE_LIMIT = 5;
+
 function publishedResultFiles(evalPath) {
   const directory = path.join(path.dirname(evalPath), "published-results");
   if (!fs.existsSync(directory)) return [];
@@ -94,33 +96,47 @@ function markdownH2(markdown) {
   return headings;
 }
 
-function taskTranslationStats(tasks) {
-  const missingTranslationTaskIds = [];
-  const summarizedTranslationTaskIds = [];
-  let translatedTasks = 0;
+function previewTaskCases(tasks, limit = PREVIEW_TASK_CASE_LIMIT) {
+  const sampleCount = Math.min(limit, tasks.length);
+  if (sampleCount <= 1) return tasks.slice(0, sampleCount);
+  return Array.from({ length: sampleCount }, (_, index) => {
+    const taskIndex = Math.round((index * (tasks.length - 1)) / (sampleCount - 1));
+    return tasks[taskIndex];
+  });
+}
 
-  for (const task of tasks) {
+function taskCaseTranslationStats(tasks) {
+  const taskCases = previewTaskCases(tasks);
+  const missingCaseTranslationTaskIds = [];
+  const summarizedCaseTranslationTaskIds = [];
+  let translatedTaskCases = 0;
+
+  for (const task of taskCases) {
     const prompt = typeof task?.prompt === "string" ? task.prompt.trim() : "";
     const translation = typeof task?.translation === "string" ? task.translation.trim() : "";
     const taskId = typeof task?.id === "string" && task.id.length > 0 ? task.id : "<missing-id>";
     if (translation.length === 0) {
-      missingTranslationTaskIds.push(taskId);
+      missingCaseTranslationTaskIds.push(taskId);
       continue;
     }
-    translatedTasks += 1;
+    translatedTaskCases += 1;
     // Chinese full-text renderings are normally shorter than English source text,
     // but a translation under one fifth of a long prompt is almost certainly an
     // abstract. This is a deterministic review signal, not a semantic proof.
     if (prompt.length >= 300 && translation.length < prompt.length * 0.2) {
-      summarizedTranslationTaskIds.push(taskId);
+      summarizedCaseTranslationTaskIds.push(taskId);
     }
   }
 
   return {
-    translatedTasks,
-    translationCoverage: tasks.length === 0 ? 1 : translatedTasks / tasks.length,
-    missingTranslationTaskIds,
-    summarizedTranslationTaskIds,
+    taskCaseIds: taskCases.map((task) =>
+      typeof task?.id === "string" && task.id.length > 0 ? task.id : "<missing-id>"),
+    taskCases: taskCases.length,
+    translatedTaskCases,
+    taskCaseTranslationCoverage:
+      taskCases.length === 0 ? 1 : translatedTaskCases / taskCases.length,
+    missingCaseTranslationTaskIds,
+    summarizedCaseTranslationTaskIds,
   };
 }
 
@@ -131,7 +147,7 @@ export function inspectReader(evalPath) {
   const isMarkdown = typeof profile.markdown === "string";
   const counts = resultCounts(absolutePath);
   const tasks = definition.tasks ?? [];
-  const translationStats = taskTranslationStats(tasks);
+  const translationStats = taskCaseTranslationStats(tasks);
   const h2 = isMarkdown ? markdownH2(profile.markdown) : [];
   const missingCoreFields = isMarkdown
     ? [...STRUCTURED_CORE_FIELDS]
@@ -170,14 +186,14 @@ export function compareReaders(reference, target) {
       `participant metrics are split across mergeable one-row tables: ${target.splitParticipantMetricTableGroups.join("; ")}`,
     );
   }
-  if (target.translationCoverage < reference.translationCoverage) {
+  if (target.taskCaseTranslationCoverage < reference.taskCaseTranslationCoverage) {
     issues.push(
-      `task translation coverage differs: expected ${(reference.translationCoverage * 100).toFixed(1)}%, got ${(target.translationCoverage * 100).toFixed(1)}%; missing: ${target.missingTranslationTaskIds.join(", ") || "none"}`,
+      `task-case translation coverage differs: expected ${(reference.taskCaseTranslationCoverage * 100).toFixed(1)}%, got ${(target.taskCaseTranslationCoverage * 100).toFixed(1)}%; missing: ${target.missingCaseTranslationTaskIds.join(", ") || "none"}`,
     );
   }
-  if (target.summarizedTranslationTaskIds.length > 0) {
+  if (target.summarizedCaseTranslationTaskIds.length > 0) {
     issues.push(
-      `long task translations appear summarized instead of full-text: ${target.summarizedTranslationTaskIds.join(", ")}`,
+      `long task-case translations appear summarized instead of full-text: ${target.summarizedCaseTranslationTaskIds.join(", ")}`,
     );
   }
   return issues;
