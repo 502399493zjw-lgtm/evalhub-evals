@@ -15,9 +15,10 @@
 | `gpqa-diamond` | terminus-2 | 100 题 × 1 次解码 | 0.1 |
 | `aime` | terminus-2 | 30 题 × 4 次解码 | 0.1 |
 
-每条 task 的 `prompt` 是上游对应 profile 的 agent 提示词，`translation` 是中文对照，
-`run_spec` 写明该 profile 的官方复评配置与分项分数算法。三个 SWE profile 共用同一份上游
-提示词，profile 差异由上游 `spec.json` 决定，不由提示词决定。
+每条 task 的 `prompt` 是上游对应 profile 的 agent 提示词；按详情页确定性选作题目案例的
+5 条 task 带完整中文 `translation`，未展示的 `swe-bench-pro` 不额外保存译文。`run_spec`
+写明该 profile 的官方复评配置与分项分数算法。三个 SWE profile 共用同一份上游提示词，
+profile 差异由上游 `spec.json` 决定，不由提示词决定。
 
 题面本身不在本目录内联复制：被评的题目集合由上游 Harbor 数据集与本地 seed-23 子集抽样
 决定，参赛方按 `run_spec` 在自己的运行环境里取得，本仓库只固定分母、评测 agent 与算分口径。
@@ -35,7 +36,7 @@ node evals/rsibench-data/pack-to-result.mjs <submission.json> --out <result.json
 
 - `manifest_version`：目前只接受 `1`
 - `eval_id`：必须是 `rsibench-data`
-- `protocol_revision`：必须是 `1`
+- `protocol_revision`：必须是 `6`
 - `upstream_commit`：必须是本评测钉死的来源 commit `4c807610243e7b481d382c5ed360c71c79a22f61`
 - `target_model`：必须是 `Qwen/Qwen3.5-35B-A3B-Base`
 - `participant`：`model`（不含空格的编排模型标识）、`harness`、`harness_version`；

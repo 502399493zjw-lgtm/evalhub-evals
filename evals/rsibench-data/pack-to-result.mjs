@@ -11,8 +11,8 @@ import {
 import { parse as parseYaml } from "yaml";
 
 const EVAL_ID = "rsibench-data";
-const RUNNER_VERSION = "rsibench-data/pack-to-result@1.0.0";
-const PROTOCOL_REVISION = 1;
+const RUNNER_VERSION = "rsibench-data/pack-to-result@1.0.1";
+const PROTOCOL_REVISION = 6;
 const UPSTREAM_COMMIT = "4c807610243e7b481d382c5ed360c71c79a22f61";
 const TARGET_MODEL = "Qwen/Qwen3.5-35B-A3B-Base";
 const WALL_CLOCK_BUDGET_HOURS = 16;
