@@ -1,4 +1,4 @@
 interface:
   display_name: "EvalHub Author Reader"
-  short_description: "Build Markdown-only EvalHub detail pages"
-  default_prompt: "Use $evalhub-author-reader to prepare a source-backed EvalHub submission with a Markdown-only detail page and verify readiness through repository-required checks."
+  short_description: "Build EvalHub pages with covers and Harness identity"
+  default_prompt: "Use $evalhub-author-reader to prepare a source-backed EvalHub submission with a declared cover, visible Harness identity, a Markdown-only detail page, and repository-required cloud checks."

@@ -6,7 +6,7 @@ This reference defines the small set of content rules shared by EvalHub Markdown
 
 Use `detail_profile.markdown` as the reader-facing source of truth for every new page and substantial rewrite. Legacy structured fields may remain only where repository schema or migration compatibility requires them; they do not define a second page layout.
 
-The Hero comes from top-level metadata. Markdown starts at H2 and must not repeat the title, author, tags, or summary already shown in the Hero.
+The Hero comes from top-level metadata. Every new eval declares one repository-owned raster `cover` that satisfies the repository format, path, signature, and size contract. Prefer a license-compatible official asset; otherwise use an original editorial illustration and record it as non-evidentiary in `assets/README.md`. Markdown starts at H2 and must not repeat the title, author, tags, or summary already shown in the Hero.
 
 ## Recommended reader flow
 
@@ -21,7 +21,7 @@ Benchmark-specific headings are fine when their roles are clear.
 
 ## Result tables
 
-- The leaderboard is a compact cross-model summary: rank, model, primary metric, and Harness when useful. Do not add a “口径” column.
+- The leaderboard is a compact cross-model summary: rank, model, primary metric, and Harness for agent evaluations. Do not omit a shared Harness merely because it is constant. Do not add a “口径” column.
 - All official participants remain in the Markdown data.
 - More than eight rows is normal; the platform initially shows eight and expands the remainder.
 - Official component data appears in one or more cross-model tables, never one table or tab per model.
@@ -32,7 +32,8 @@ Benchmark-specific headings are fine when their roles are clear.
 - Identify illustrations derived from cited result values instead of implying that the upstream source published them directly.
 - Figures may coexist with comparable tables but may not replace them. Use a separate observations section only when a figure does not directly explain a result table.
 - Model names are plain text.
-- Use `题目默认 harness` when all models use the same unnamed task-provided default.
+- Use the published Harness name when available and `题目默认 harness` only when all models use the same unnamed task-provided default.
+- Treat Harness as the agent scaffolding or product around the base model, not the benchmark environment, scorer, packer, or validation workflow. Do not invent a version that the result source does not publish.
 
 ## Task cases
 
@@ -52,18 +53,19 @@ Show no more than five representative tasks. When the submitted scope contains a
 
 Use primary sources for factual claims, result values, task text, and figures. A shared title is not proof that two papers or projects are the same work; require matching ownership, domain and task definitions, links, or explicit first-party cross-references before asserting identity. End the Markdown with credential-free HTTPS links to the sources used. Omit unsupported optional claims instead of filling them with guesses or placeholders.
 
-Consider relevant visuals while inspecting official sources, but do not require a figure for every reader. A browser screenshot of a credential-free first-party public page is optional when it materially improves understanding and no suitable static asset exists. Record its URL, capture date, visible page state, scope, provenance, and dynamic status. Do not use live values as fixed result evidence unless they match the pinned submission boundary. Label illustrations recreated from pinned values as derived, keep comparable Markdown tables, and explain an omission only when a materially useful visual was considered but not used.
+Treat body figures separately from the required cover. Consider relevant figures while inspecting official sources, but do not require one for every reader. A browser screenshot of a credential-free first-party public page is optional when it materially improves understanding and no suitable static asset exists. Record its URL, capture date, visible page state, scope, provenance, and dynamic status. Do not use live values as fixed result evidence unless they match the pinned submission boundary. Label illustrations recreated from pinned values as derived, keep comparable Markdown tables, and explain an omission only when a materially useful figure was considered but not used.
 
 Reader limitations explain factors needed to interpret published results. CI state, audit state, and runtime-verification state are workflow metadata unless the platform explicitly presents them with reader-relevant meaning. A content or rendering check does not prove benchmark runtime execution.
 
 ## Acceptance checklist
 
 - Markdown-only reader structure is present and headings are coherent.
+- A local declared cover is present for a new eval and its provenance is recorded.
 - The leaderboard is compact and all official participants remain.
 - Component results use readable cross-model table(s), with no per-model fragments.
 - Tables keep all source-backed rows; long tables expand beyond eight rows.
 - At most five task cases are shown and each has full original text plus full Chinese translation.
 - Primary links work and no placeholder or invented value remains.
-- Score displays use at most one decimal without changing full-precision ranking, and every model resolves through the registry.
+- Score displays use at most one decimal without changing full-precision ranking, every model resolves through the registry, and agent Harness identity is visible and source-backed.
 - The repository's required cloud checks pass for the reported candidate commit and its official preview is inspected.
 - Validation claims describe only what the required workflows actually ran.
