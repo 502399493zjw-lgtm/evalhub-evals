@@ -25,6 +25,7 @@ Benchmark-specific headings are fine when their roles are clear.
 - All official participants remain in the Markdown data.
 - More than eight rows is normal; the platform initially shows eight and expands the remainder.
 - Official component data appears in one or more cross-model tables, never one table or tab per model.
+- Public score cells, including component scores, use at most one decimal place. Counts, costs, times, and other non-score measurements retain meaningful precision. Ranking and ties use unrounded source values, which remain available in machine-readable results.
 - Authors may combine score, resource, execution, time, token, cost, and judging fields into one table when readable, or split them by purpose when clearer.
 - There are no fixed column counts or mandatory table families.
 - Related official figures or source-backed result illustrations may appear inside the official component-results section, beside or immediately after the table they explain.
@@ -35,19 +36,25 @@ Benchmark-specific headings are fine when their roles are clear.
 
 ## Task cases
 
-Show no more than five representative tasks. Only those displayed cases require a Chinese translation. For every displayed case, preserve the full original prompt and translate it in full; do not use a summary, omitted middle, or link-only substitute. Preserve code, paths, filenames, literals, placeholders, formulas, numbers, units, and examples.
+Show no more than five representative tasks. When the submitted scope contains at least two source-backed tasks, show at least two; show one only for a genuinely single-task scope and explain that boundary. Only displayed cases require a Chinese translation. For every displayed case, preserve the full original prompt and translate it in full; do not use a summary, omitted middle, or link-only substitute. Preserve code, paths, filenames, literals, placeholders, formulas, numbers, units, and examples.
 
 ## Repository data
 
 - Tasks have stable unique IDs.
 - Published results preserve all source-backed participant rows and values.
+- Machine-readable participants use registered canonical model IDs, while Markdown tables use registry-resolved display names.
+- Machine-readable values preserve source precision even when Markdown displays are rounded.
 - The primary score and any machine-readable supplementary views continue to follow repository schema.
 - The Markdown body contains the actual comparable result tables and does not depend on frontend derivation.
 - Sample results illustrate schema only.
 
 ## Sources
 
-Use primary sources for factual claims, result values, task text, and figures. End the Markdown with credential-free HTTPS links to the sources used. Omit unsupported optional claims instead of filling them with guesses or placeholders.
+Use primary sources for factual claims, result values, task text, and figures. A shared title is not proof that two papers or projects are the same work; require matching ownership, domain and task definitions, links, or explicit first-party cross-references before asserting identity. End the Markdown with credential-free HTTPS links to the sources used. Omit unsupported optional claims instead of filling them with guesses or placeholders.
+
+Consider relevant visuals while inspecting official sources, but do not require a figure for every reader. A browser screenshot of a credential-free first-party public page is optional when it materially improves understanding and no suitable static asset exists. Record its URL, capture date, visible page state, scope, provenance, and dynamic status. Do not use live values as fixed result evidence unless they match the pinned submission boundary. Label illustrations recreated from pinned values as derived, keep comparable Markdown tables, and explain an omission only when a materially useful visual was considered but not used.
+
+Reader limitations explain factors needed to interpret published results. CI state, audit state, and runtime-verification state are workflow metadata unless the platform explicitly presents them with reader-relevant meaning. A content or rendering check does not prove benchmark runtime execution.
 
 ## Acceptance checklist
 
@@ -57,4 +64,6 @@ Use primary sources for factual claims, result values, task text, and figures. E
 - Tables keep all source-backed rows; long tables expand beyond eight rows.
 - At most five task cases are shown and each has full original text plus full Chinese translation.
 - Primary links work and no placeholder or invented value remains.
-- Repository validation, structure preflight, diff check, and local preview pass.
+- Score displays use at most one decimal without changing full-precision ranking, and every model resolves through the registry.
+- The repository's required cloud checks pass for the reported candidate commit and its official preview is inspected.
+- Validation claims describe only what the required workflows actually ran.
