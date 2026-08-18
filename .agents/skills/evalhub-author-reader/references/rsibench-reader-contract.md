@@ -22,6 +22,8 @@ The leaderboard stays compact: rank, model, primary official metric, and Harness
 The official component section contains one or more complete cross-model tables. Authors may combine or separate score, resource, execution, time, token, cost, and judging fields according to readability. The rules that matter are:
 
 - preserve every official participant and source-backed value;
+- render public score cells, including component scores, with at most one decimal while retaining unrounded machine-readable values for ranking and ties; keep meaningful precision for counts, costs, times, and other non-score measurements;
+- use registered canonical model IDs in result data and registry-resolved display names in Markdown;
 - compare models on a shared row axis whenever possible;
 - never create one result table or tab per model;
 - never let an official image suppress the comparable Markdown data;
@@ -34,7 +36,7 @@ There is no mandatory five-column leaderboard, seven-column score table, three-c
 
 ## Task cases
 
-Show at most five tasks selected across authored order, including first and last when at least two are shown. Only displayed cases require `translation`. Each displayed case contains the complete source prompt and a complete faithful Chinese translation, including every instruction, constraint, list, code block, command, path, filename, literal, placeholder, formula, number, unit, and example.
+Show at most five tasks selected across authored order, including first and last when at least two are shown. Show at least two when the submitted scope contains multiple source-backed tasks; a single case is appropriate only for a genuinely single-task scope whose boundary is stated. Only displayed cases require `translation`. Each displayed case contains the complete source prompt and a complete faithful Chinese translation, including every instruction, constraint, list, code block, command, path, filename, literal, placeholder, formula, number, unit, and example.
 
 ## Long tables
 
@@ -49,12 +51,4 @@ Keep all rows in Markdown. A preview should:
 
 When revising an existing page, compare old and new versions for accidentally missing sections, models, source rows, figures, or selected task cases. Also check heading continuity and per-model table fragmentation. Regrouping columns, combining tables, or splitting one wide table is allowed when the result is clearer and no source data is lost.
 
-Run:
-
-```bash
-node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs \
-  --reference evals/rsibench-data/eval.yaml \
-  evals/<slug>/eval.yaml
-```
-
-The script checks structural readiness and translation coverage. It is not a mandate to copy RSIBench column-for-column and it does not prove factual correctness.
+Use the repository's required workflow as the source of truth for structural readiness and translation coverage. This reference intentionally does not duplicate its command line. The check is not a mandate to copy RSIBench column-for-column, does not prove factual correctness, and does not prove that the benchmark runtime executed.
