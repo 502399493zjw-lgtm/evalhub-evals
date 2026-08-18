@@ -6,7 +6,7 @@ This reference defines the small set of content rules shared by EvalHub Markdown
 
 Use `detail_profile.markdown` as the reader-facing source of truth for every new page and substantial rewrite. Legacy structured fields may remain only where repository schema or migration compatibility requires them; they do not define a second page layout.
 
-The Hero comes from top-level metadata. Every new eval declares one repository-owned raster `cover` that satisfies the repository format, path, signature, and size contract. Prefer a license-compatible official asset; otherwise use an original editorial illustration and record it as non-evidentiary in `assets/README.md`. Markdown starts at H2 and must not repeat the title, author, tags, or summary already shown in the Hero.
+The Hero comes from top-level metadata. Every new eval declares one repository-owned raster `cover` that satisfies the repository format, path, signature, and size contract. The final cover follows 懂模帝's established 16:9 pixel-art language, with intentional visible pixels, hard edges, high contrast, and a composition that remains readable as a thumbnail. Use a license-compatible official asset only when it fits that language; otherwise create an original pixel-art reinterpretation and record it as non-evidentiary in `assets/README.md`. Markdown starts at H2 and must not repeat the title, author, tags, or summary already shown in the Hero.
 
 ## Recommended reader flow
 
@@ -60,7 +60,7 @@ Reader limitations explain factors needed to interpret published results. CI sta
 ## Acceptance checklist
 
 - Markdown-only reader structure is present and headings are coherent.
-- A local declared cover is present for a new eval and its provenance is recorded.
+- A local declared 16:9 pixel-art cover is present for a new eval, matches the platform visual language, and has recorded provenance.
 - The leaderboard is compact and all official participants remain.
 - Component results use readable cross-model table(s), with no per-model fragments.
 - Tables keep all source-backed rows; long tables expand beyond eight rows.
