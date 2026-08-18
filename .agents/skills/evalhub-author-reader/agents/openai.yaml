@@ -1,4 +1,4 @@
 interface:
   display_name: "EvalHub Author Reader"
   short_description: "Build Markdown-only EvalHub detail pages"
-  default_prompt: "Use $evalhub-author-reader to prepare and validate a source-backed EvalHub submission with a Markdown-only detail page."
+  default_prompt: "Use $evalhub-author-reader to prepare a source-backed EvalHub submission with a Markdown-only detail page and verify readiness through repository-required checks."

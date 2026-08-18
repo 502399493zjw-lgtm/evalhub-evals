@@ -1,11 +1,11 @@
 ---
 name: evalhub-author-reader
-description: Research, author, revise, and validate one source-backed EvalHub evaluation submission with a Markdown-only detail page, complete official result tables, and fully translated selected task cases.
+description: Research, author, revise, and verify the readiness of one source-backed EvalHub evaluation submission with a Markdown-only detail page, complete official result tables, and fully translated selected task cases.
 ---
 
 # EvalHub Author Reader
 
-Build one reviewable EvalHub evaluation package. This skill owns source research, repository content, Markdown structure, result transcription, selected task cases, and validation. The platform owns page styling and interaction.
+Build one reviewable EvalHub evaluation package. This skill owns source research, repository content, Markdown structure, result transcription, selected task cases, and readiness interpretation. Repository workflows own validation implementation and execution. The platform owns page styling and interaction.
 
 ## Read before editing
 
@@ -42,6 +42,10 @@ Keep a lightweight working ledger:
 
 Every published statement, result value, table, and figure must be traceable to this ledger. Omit unsupported optional content instead of guessing. Do not leave `TODO`, `待补`, literal `placeholder`, `example.com`, fabricated values, or credential-bearing URLs.
 
+Do not infer that two sources describe the same benchmark from a shared or similar title. Before linking a paper, project, dataset, or repository as the same work, compare its authors or owners, game or domain version, task definition, method, repository and dataset links, and explicit cross-references from first-party sources. Without affirmative identity evidence, treat the sources as distinct and do not imply a relationship.
+
+Make a visual inventory while inspecting sources. Check the official repository, project page, publication, and result artifact for charts, screenshots, diagrams, or other reader-useful figures. For each candidate, record its URL or path, version, provenance or license, metric and filter boundary, data coverage, and whether it is a committed static asset or a dynamically rendered view. Prefer a committed official asset whose scope matches the submitted results. A live or interactive view may be captured or recreated only from pinned source data, must be labeled as a derived illustration, and must not be presented as an upstream-published static figure. Record a brief handoff reason when a materially useful official visual is omitted.
+
 ## Stage 2: author the Markdown-only detail page
 
 New detail pages and substantial rewrites must use one contract only:
@@ -70,6 +74,8 @@ Equivalent benchmark-specific headings are allowed. Do not repeat the Hero, add 
 ### 榜单
 
 Use one compact cross-model table. It normally contains rank, model, the official total or primary ranking metric, and Harness when it helps comparison. Do not add a “口径” column. Keep model names as plain text without Markdown links or anchors.
+
+Render public score columns, including component scores, with no more than one decimal place. Integers may remain integers; counts, costs, times, and other non-score measurements retain the precision needed to stay meaningful. Compute ranks, ties, and aggregates from the unrounded source values, and preserve source precision in machine-readable result files; display rounding must not change the ranking. State the rounding convention once when it is not obvious.
 
 When every participant uses the same task-provided default and the source does not name variants, label it `题目默认 harness`. Render Harness as secondary metadata rather than a competing headline value.
 
@@ -106,7 +112,9 @@ Do not turn this section into an implementation or reproducibility audit.
 
 ### 题目案例
 
-Show at most five representative tasks. Select them deterministically across authored task order, including the first and last when at least two are shown. For `n` tasks and `k = min(5, n)`, use indices `round(i * (n - 1) / (k - 1))` for `i = 0..k-1`.
+Show at most five representative tasks. Select them deterministically across authored task order, including the first and last when at least two are shown. For `n` tasks and `k = min(5, n)`, select index `0` when `k = 1`; otherwise use indices `round(i * (n - 1) / (k - 1))` for `i = 0..k-1`.
+
+Select from the complete in-scope task set, not from a manually reduced convenience subset. When at least two in-scope source-backed tasks exist, show at least two. Show only one when the submitted evaluation boundary genuinely contains one task, and say so near the case section. Do not add out-of-scope tasks merely to increase the count.
 
 Only displayed cases require `translation`; other tasks may omit it. Every displayed case must contain:
 
@@ -125,11 +133,13 @@ End with credential-free HTTPS links to the primary sources actually used. Prefe
 - `prompt` remains the complete task statement; do not replace it with a summary for display convenience.
 - Published results preserve every official participant and source-backed value.
 - `score` remains the primary ranking metric expected by the repository schema.
+- Use registered canonical model IDs in machine-readable results and the registry-resolved display names in reader tables. Verify that every published participant resolves through the repository model registry; do not expose an upstream label as a canonical ID when a registry mapping exists.
+- Preserve source precision in machine-readable values even when the Markdown display is rounded to one decimal place.
 - Supplementary views may remain for machine-readable compatibility, with stable IDs and consistent shared metadata, but the Markdown page must contain the reader-facing cross-model table itself.
 - `sample-result.json` illustrates schema shape only and must not be presented as a published result.
 - Existing files outside the requested eval remain untouched.
 
-## Stage 4: validate and preview
+## Stage 4: verify readiness and preview
 
 Keep the final check short:
 
@@ -137,18 +147,11 @@ Keep the final check short:
 2. Confirm all official models and rows remain, result tables compare models directly, and there are no per-model table fragments.
 3. Confirm at most five displayed cases, each with the complete original and complete Chinese translation.
 4. Confirm sources work and no placeholders or invented values remain.
-5. Run repository validation, the structure preflight, and inspect a local preview including long-table expansion.
+5. Confirm public score displays use at most one decimal while machine-readable values retain source precision and registry IDs resolve.
+6. Use the repository's required checks and official preview workflow as the execution source of truth. Do not duplicate their commands in this skill or invent an alternate validation path.
+7. For a pull request, report the exact candidate commit and wait for its required cloud checks and official preview. Do not install dependencies or run validation on the user's workstation unless the user explicitly requests local execution.
 
-Use:
-
-```bash
-npm ci --ignore-scripts
-npm run validate
-node .agents/skills/evalhub-author-reader/scripts/report-reader-structure.mjs \
-  --reference evals/rsibench-data/eval.yaml \
-  evals/<slug>/eval.yaml
-git diff --check
-```
+Treat content, schema, policy, and rendering checks according to what their workflow actually runs. Never describe a static repository check or successful preview as benchmark runtime verification. Internal readiness labels such as CI state, audit state, or `runtime verification: unverified` belong in structured status or the handoff unless the platform explicitly exposes them and they materially help readers interpret the results; do not add them as reader-facing limitation prose by default.
 
 When updating an existing reader, also compare the base and candidate for accidentally missing sections, models, rows, figures, or selected task cases. The check is a regression alarm, not a requirement to preserve old table widths or exact table families.
 
@@ -160,7 +163,9 @@ Report:
 - primary sources used;
 - official participant and table coverage;
 - displayed task-case IDs and translation coverage;
-- validation and preview result;
+- omitted visual candidates and reasons, when applicable;
+- exact candidate commit, required cloud-check results, and official preview URL;
+- the precise scope of validation, without implying benchmark execution that did not occur;
 - any unresolved source gap.
 
 Do not describe a PR, merge, deployment, or external action as complete unless it actually occurred.
