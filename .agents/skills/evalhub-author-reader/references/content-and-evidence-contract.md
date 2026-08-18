@@ -27,7 +27,9 @@ Benchmark-specific headings are fine when their roles are clear.
 - Official component data appears in one or more cross-model tables, never one table or tab per model.
 - Authors may combine score, resource, execution, time, token, cost, and judging fields into one table when readable, or split them by purpose when clearer.
 - There are no fixed column counts or mandatory table families.
-- Official figures may coexist with comparable tables but may not replace them.
+- Related official figures or source-backed result illustrations may appear inside the official component-results section, beside or immediately after the table they explain.
+- Identify illustrations derived from cited result values instead of implying that the upstream source published them directly.
+- Figures may coexist with comparable tables but may not replace them. Use a separate observations section only when a figure does not directly explain a result table.
 - Model names are plain text.
 - Use `题目默认 harness` when all models use the same unnamed task-provided default.
 
