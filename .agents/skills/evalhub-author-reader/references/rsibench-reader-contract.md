@@ -25,6 +25,8 @@ The official component section contains one or more complete cross-model tables.
 - compare models on a shared row axis whenever possible;
 - never create one result table or tab per model;
 - never let an official image suppress the comparable Markdown data;
+- place related official figures or source-backed result illustrations inside `官方分项结果`, beside or immediately after the table they explain;
+- identify any illustration derived from cited result values, and use a later observations section only for figures that do not directly explain a result table;
 - keep model names as plain text;
 - label a shared unnamed task-provided default as `题目默认 harness`.
 

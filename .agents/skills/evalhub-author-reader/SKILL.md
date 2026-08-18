@@ -85,9 +85,13 @@ Convert source results into one or more complete cross-model Markdown tables:
 - split them into multiple cross-model tables when different units or reader questions make that clearer;
 - never emit one table or tab per model;
 - use `—` only for a genuinely source-missing cell and explain missing coverage nearby;
-- allow official figures beside the tables, but never use an image as a replacement for the comparable data.
+- allow related official figures or result illustrations in this section, placed beside or immediately after the table they explain;
+- keep each figure source-backed, and state when an illustration is derived from cited result values rather than published directly by the upstream source;
+- never use an image as a replacement for the comparable Markdown data.
 
 There is no universal five-, seven-, three-, eleven-, or thirteen-column layout. Choose the smallest number of readable tables that preserves the source data and supports cross-model comparison.
+
+Do not move a result illustration into a separate observations section merely because it is an image. Keep it under `## 官方分项结果` when it directly visualizes those results. Reserve a later observations section for figures that do not directly explain a result table.
 
 ### 关于此评测
 
