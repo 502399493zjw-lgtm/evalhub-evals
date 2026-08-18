@@ -145,7 +145,7 @@ detail_profile:
 
     ## 题目案例
 
-    上游虽有三个场景，但当前协议只 authored `ground-control` 一个任务，所以这里应当只有一个代表题目标签；增加 Snowflake 或 Cry Havoc 会改变评测协议与结果可比边界。
+    当前 EvalHub 评测边界只包含 Ground Control；Snowflake 和 Cry Havoc 虽属于上游完整场景集，但未纳入本协议和这批 19 局结果。因此题目案例仅展示 Ground Control，不能用另外两个场景补足标签数量。
 
     ### Ground Control
 

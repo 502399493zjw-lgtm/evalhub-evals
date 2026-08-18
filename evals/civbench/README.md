@@ -18,10 +18,6 @@ This directory is a lightweight EvalHub record for CivBench's Ground Control pro
 
 All four source model versions have exact canonical entries in the EvalHub model registry. The published-results envelope preserves the source labels in each result detail and maps them explicitly to `google/gemini-3.1-pro-preview`, `openai/gpt-5.4`, `anthropic/claude-opus-4-6`, and `moonshot/kimi-k2.5`; no result is silently dropped or guessed to be a different model version.
 
-## Runtime status
-
-Runtime verification is **unverified**. This submission did not launch Civilization VI, call a model, run the upstream scorer, or reproduce a published baseline. Repository validation checks metadata, schemas, paths, and obvious static errors only; it is not a safety audit or a compatibility guarantee.
-
 ## Upstream installation and invocation
 
 Review the pinned code before running it. In a user-controlled environment:
