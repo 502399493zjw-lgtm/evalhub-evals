@@ -18,6 +18,8 @@ This directory is a lightweight EvalHub record for CivBench's Ground Control pro
 
 All four source model versions have exact canonical entries in the EvalHub model registry. The published-results envelope preserves the source labels in each result detail and maps them explicitly to `google/gemini-3.1-pro-preview`, `openai/gpt-5.4`, `anthropic/claude-opus-4-6`, and `moonshot/kimi-k2.5`; no result is silently dropped or guessed to be a different model version.
 
+All four official rows share the source-defined `civbench_standard` Harness: the fixed Inspect AI `react()` Agent, standard system prompt/playbook, and Civ6-MCP tool server. The published 19-game snapshot does not expose a per-run Harness version, so the official result envelopes preserve the source-backed name `CivBench Standard (Inspect AI ReAct)` without inventing a version from a later repository tag or lockfile.
+
 ## Upstream installation and invocation
 
 Review the pinned code before running it. In a user-controlled environment:
@@ -80,6 +82,7 @@ The upstream workflow requires:
 | --- | --- | --- |
 | [Civ6-MCP repository](https://github.com/lmwilki/civ6-mcp/tree/dd2019056371b92ea4854e879ddf05a8cad95e8a) | commit `dd2019056371b92ea4854e879ddf05a8cad95e8a`, tag `v1.1.11`, MIT | benchmark purpose, runtime, interface, runner and implementation boundary |
 | [Ground Control definition](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/scenarios.py) | same commit | exact objective, civilization, map, difficulty and 330-turn budget |
+| [Standard-track Harness](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/civbench.py) | same commit | fixed Inspect AI `react()` Agent, standard system prompt/playbook and Civ6-MCP tool server |
 | [Bulk runner](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/runner.py) | same commit | standard track, one-game-at-a-time invocation and default run count |
 | [Analysis scorer](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/scripts/analyze.py) | same commit | eight dimensions and arithmetic-mean AGGREGATE formula |
 | [Official dataset](https://huggingface.co/datasets/civbench/civbench-v1/tree/2d9937d1e273a18fbe0e9e8f32325d4d6cb61dea) | commit `2d9937d1e273a18fbe0e9e8f32325d4d6cb61dea`, CC BY 4.0 | canonical admissibility rule and published Ground Control result rows |

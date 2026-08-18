@@ -14,7 +14,8 @@
   "results": [
     {
       "participant": {
-        "model": "google/gemini-3.1-pro-preview"
+        "model": "google/gemini-3.1-pro-preview",
+        "harness": "CivBench Standard (Inspect AI ReAct)"
       },
       "score": 62.9375,
       "detail": "CivBench 官方数据集把来源标签“gemini-3.1-pro-preview”映射为平台注册表 canonical ID “google/gemini-3.1-pro-preview”。Ground Control canonical cut 共 6 局；每局八维算术平均后再取局间均值，得到派生主分 62.9375。run_id: blazing-pearl-bastion-64, verdant-lapis-frontier-29, stormborn-ebony-ridgeline-17, vast-cedar-chronicle-40, volcanic-vermil-ember-37, remnant-khaki-oracle-28。入选行的 gitDescribe: v1.1.10-17-geb0e611, v1.1.10-20-g1207967, v1.1.10-33-ge1de239。这是钉死公开快照的可复核聚合，不是 EvalHub 独立复跑，也没有把原始游戏分或跨场景 ELO 当作主分。",
@@ -108,7 +109,8 @@
     },
     {
       "participant": {
-        "model": "openai/gpt-5.4"
+        "model": "openai/gpt-5.4",
+        "harness": "CivBench Standard (Inspect AI ReAct)"
       },
       "score": 59.7708,
       "detail": "CivBench 官方数据集把来源标签“gpt-5.4”映射为平台注册表 canonical ID “openai/gpt-5.4”。Ground Control canonical cut 共 6 局；每局八维算术平均后再取局间均值，得到派生主分 59.7708。run_id: gilded-teal-relic-32, elder-lilac-epoch-88, veiled-lapis-flagship-44, dread-cobalt-chariot-34, flint-olive-phalanx-07, fierce-umber-garrison-15。入选行的 gitDescribe: v1.1.10-33-ge1de239, v1.1.10-4-gfc1d7fe-dirty, v1.1.10-7-g365c2cc-dirty, v1.1.8-5-g03ebef5-dirty, v1.1.9-dirty。这是钉死公开快照的可复核聚合，不是 EvalHub 独立复跑，也没有把原始游戏分或跨场景 ELO 当作主分。",
@@ -202,7 +204,8 @@
     },
     {
       "participant": {
-        "model": "anthropic/claude-opus-4-6"
+        "model": "anthropic/claude-opus-4-6",
+        "harness": "CivBench Standard (Inspect AI ReAct)"
       },
       "score": 55.2083,
       "detail": "CivBench 官方数据集把来源标签“claude-opus-4-6”映射为平台注册表 canonical ID “anthropic/claude-opus-4-6”。Ground Control canonical cut 共 6 局；每局八维算术平均后再取局间均值，得到派生主分 55.2083。run_id: epic-sable-atlas-20, exalted-vermil-ember-69, weathered-vermil-column-34, steep-vermil-trebuchet-27, wandering-carmine-ballista-57, solar-flax-forum-10。入选行的 gitDescribe: v1.1.10-33-ge1de239, v1.1.6-7-g2220d03, v1.1.6-dirty, v1.1.8-1-g039a513-dirty。这是钉死公开快照的可复核聚合，不是 EvalHub 独立复跑，也没有把原始游戏分或跨场景 ELO 当作主分。",
@@ -296,7 +299,8 @@
     },
     {
       "participant": {
-        "model": "moonshot/kimi-k2.5"
+        "model": "moonshot/kimi-k2.5",
+        "harness": "CivBench Standard (Inspect AI ReAct)"
       },
       "score": 48.25,
       "detail": "CivBench 官方数据集把来源标签“Kimi-K2.5”映射为平台注册表 canonical ID “moonshot/kimi-k2.5”。Ground Control canonical cut 共 1 局；每局八维算术平均后再取局间均值，得到派生主分 48.25。run_id: rusted-indigo-oracle-11。入选行的 gitDescribe: v1.1.10-33-ge1de239。这是钉死公开快照的可复核聚合，不是 EvalHub 独立复跑，也没有把原始游戏分或跨场景 ELO 当作主分。",

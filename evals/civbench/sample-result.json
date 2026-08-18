@@ -9,7 +9,7 @@
     {
       "participant": {
         "model": "local/example-strategy-agent",
-        "harness": "Inspect AI + Civ6-MCP",
+        "harness": "CivBench Standard (Inspect AI ReAct)",
         "harness_version": "example-1.0"
       },
       "score": 50,

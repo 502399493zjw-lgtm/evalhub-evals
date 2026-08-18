@@ -5,6 +5,7 @@ protocol_note: >-
   each game score is the arithmetic mean of the eight published 0–100 dimensions,
   and a submission score is the arithmetic mean across all admissible submitted games.
 name: CivBench（文明 VI 长程战略 Agent）
+cover: assets/cover.webp
 category: useful
 description: >-
   CivBench 让 LLM Agent 通过 MCP 工具在《文明 VI》的 Ground Control 固定场景中经营巴比伦，
@@ -61,12 +62,14 @@ detail_profile:
 
     下表来自 CivBench 官方 Hugging Face 数据集的固定快照 `2d9937d1e273a18fbe0e9e8f32325d4d6cb61dea`。筛选边界是 `admissible == true`、`evalTrack == civbench_standard`、`scenarioId == ground_control`，共 19 局。每局先对八项公开维度取算术平均，再按模型对全部入选局取均值；这是可复核的**派生主分**，不是 EvalHub 独立复跑。表格统一四舍五入到最多一位小数，排序仍使用机器可读结果中的完整精度。
 
-    | 排名 | 模型 | 主分（派生） |
-    | ---: | --- | ---: |
-    | 1 | Gemini 3.1 Pro Preview | 62.9 |
-    | 2 | GPT-5.4 | 59.8 |
-    | 3 | Claude Opus 4.6 | 55.2 |
-    | 4 | Kimi K2.5 | 48.3 |
+    | 排名 | 模型 | 主分（派生） | Harness |
+    | ---: | --- | ---: | --- |
+    | 1 | Gemini 3.1 Pro Preview | 62.9 | CivBench Standard（Inspect AI ReAct） |
+    | 2 | GPT-5.4 | 59.8 | CivBench Standard（Inspect AI ReAct） |
+    | 3 | Claude Opus 4.6 | 55.2 | CivBench Standard（Inspect AI ReAct） |
+    | 4 | Kimi K2.5 | 48.3 | CivBench Standard（Inspect AI ReAct） |
+
+    四个模型共享上游 `civbench_standard` 定义的固定 Harness：Inspect AI `react()` Agent、标准 system prompt/playbook 与 Civ6-MCP 工具服务。官方 19 局快照没有发布逐局 Harness 版本，因此结构化结果只记录来源可证的 Harness 名称，不从较新的依赖锁文件倒推版本。
 
     模型列使用 EvalHub 注册表显示名；结构化公开结果分别保留 canonical ID `google/gemini-3.1-pro-preview`、`openai/gpt-5.4`、`anthropic/claude-opus-4-6` 与 `moonshot/kimi-k2.5`。运行覆盖和胜负放在分项表中一起解读；上游跨场景 ELO 不进入本协议的 Ground Control 主分或排序。
 
@@ -112,7 +115,9 @@ detail_profile:
     **系统链路（据固定上游架构说明整理）**
 
     ```text
-    LLM Agent
+    LLM
+        ▼
+    Inspect AI react() + 标准 playbook（Harness）
         │ MCP tool calls
         ▼
     civ6-mcp（Python / 76 tools）
@@ -167,6 +172,7 @@ detail_profile:
     - [Ground Control 场景定义](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/scenarios.py)
     - [上游三场景说明](https://civ6-mcp.lwilko.com/docs/benchmarks)
     - [固定版本系统架构图与说明](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/docs/architecture-diagrams.md)
+    - [CivBench Standard Harness 定义](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/civbench.py)
     - [CivBench runner](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/runner.py)
     - [八维评分与 AGGREGATE 公式](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/scripts/analyze.py)
     - [官方数据集固定快照](https://huggingface.co/datasets/civbench/civbench-v1/tree/2d9937d1e273a18fbe0e9e8f32325d4d6cb61dea)
