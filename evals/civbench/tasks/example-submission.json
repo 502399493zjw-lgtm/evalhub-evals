@@ -1,0 +1,32 @@
+{
+  "manifest_version": 1,
+  "eval_id": "civbench",
+  "protocol_revision": 1,
+  "upstream_commit": "dd2019056371b92ea4854e879ddf05a8cad95e8a",
+  "participant": {
+    "model": "local/example-strategy-agent",
+    "harness": "Inspect AI + Civ6-MCP",
+    "harness_version": "example-1.0"
+  },
+  "run_date": "2026-08-18",
+  "games": [
+    {
+      "run_id": "example-ground-control-001",
+      "scenario_id": "ground_control",
+      "eval_track": "civbench_standard",
+      "admissible": true,
+      "outcome": "defeat",
+      "raw_game_score": 500,
+      "dimensions": {
+        "overall": 50,
+        "economic": 50,
+        "military": 50,
+        "scientific": 50,
+        "diplomatic": 50,
+        "spatial": 50,
+        "toolFluency": 50,
+        "coherence": 50
+      }
+    }
+  ]
+}

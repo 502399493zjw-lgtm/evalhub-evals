@@ -1,0 +1,106 @@
+{
+  "eval_id": "civbench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "civbench/ground-control-pack@1.0.0",
+    "run_date": "2026-08-18"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "local/example-strategy-agent",
+        "harness": "Inspect AI + Civ6-MCP",
+        "harness_version": "example-1.0"
+      },
+      "score": 50,
+      "detail": "Ground Control standard-track 派生分；1 局，run_id: example-ground-control-001。本地打包器只复核清单结构与算术，不代表 EvalHub 复跑或验证外部证据。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "ground-control-scorecard",
+          "label": "Ground Control 分项",
+          "title": "Ground Control 八维、主分与运行覆盖",
+          "columns": [
+            "指标",
+            "均值或记录"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall Score",
+                50
+              ]
+            },
+            {
+              "cells": [
+                "Economic Management",
+                50
+              ]
+            },
+            {
+              "cells": [
+                "Military Competence",
+                50
+              ]
+            },
+            {
+              "cells": [
+                "Scientific Progress",
+                50
+              ]
+            },
+            {
+              "cells": [
+                "Diplomatic Skill",
+                50
+              ]
+            },
+            {
+              "cells": [
+                "Spatial Reasoning",
+                50
+              ]
+            },
+            {
+              "cells": [
+                "Tool-Use Fluency",
+                50
+              ]
+            },
+            {
+              "cells": [
+                "Long-Horizon Coherence",
+                50
+              ]
+            },
+            {
+              "cells": [
+                "派生主分",
+                50
+              ]
+            },
+            {
+              "cells": [
+                "原始游戏分均值",
+                500
+              ]
+            },
+            {
+              "cells": [
+                "入选局数",
+                1
+              ]
+            },
+            {
+              "cells": [
+                "胜 / 负",
+                "0 / 1"
+              ]
+            }
+          ],
+          "note": "八维均值、原始游戏分、局数与胜负来自提交清单。派生主分 = 每局八维算术平均，再对全部入选局取算术平均。只有结果条目的 score 参与排名；本表是辅助展示。打包器验证结构和算术，不验证外部运行、admissible 判定或分项来源。"
+        }
+      ]
+    }
+  ]
+}
