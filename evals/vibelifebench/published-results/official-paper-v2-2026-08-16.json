@@ -1,0 +1,304 @@
+{
+  "eval_id": "vibelifebench",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "vibelifebench/paper-v2-transcription@1.0.0",
+    "retrieved_on": "2026-08-19",
+    "source": {
+      "title": "VibeLifeBench: A Benchmark for Long-Horizon Agentic Planning in Real Life",
+      "url": "https://arxiv.org/html/2608.10875v2",
+      "snapshot_sha256": "cf63d744c86483dccb9e09a93fe4bdd7542b2ff368e523b61871ac436108a20f",
+      "official_result_count": 7
+    }
+  },
+  "results": [
+    {
+      "participant": { "model": "anthropic/claude-opus-5", "harness": "OpenClaw", "harness_version": "2026.7.1" },
+      "score": 32.5,
+      "raw_metric": { "label": "完整 200 题 avg@3", "value": "32.5 分" },
+      "detail": "论文 arXiv:2608.10875v2 Table 5 直接发表的完整 200 题 avg@3。每题 3 次运行，先求题内平均，再对 200 题取平均。以下汇总指标、领域分数与检查通过率逐格转录自论文 Tables 5–7；不是 EvalHub 复跑，也不是公开 20 题子集成绩。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "paper-table-5",
+          "label": "汇总指标",
+          "title": "论文 Table 5：完整集表现与资源统计",
+          "columns": ["avg@3", "max@3", "min@3", "题内 σ", "Context（M）", "Output tokens", "Tool calls", "Turns"],
+          "rows": [{ "cells": [32.5, 41.2, 23.8, 9.8, 30.2, 325198, 316, 210] }],
+          "note": "只有 avg@3 进入 EvalHub 主排名；其余列是论文发表的辅助统计。"
+        },
+        {
+          "type": "metric_table",
+          "id": "paper-table-6",
+          "label": "领域分数",
+          "title": "论文 Table 6：十领域 avg@3",
+          "columns": ["领域", "avg@3"],
+          "rows": [
+            { "cells": ["Career", 27.0] }, { "cells": ["Exam preparation", 23.5] },
+            { "cells": ["Finance", 25.4] }, { "cells": ["Fitness", 31.4] },
+            { "cells": ["Litigation", 33.2] }, { "cells": ["Renovation", 45.7] },
+            { "cells": ["Rental", 25.4] }, { "cells": ["Shopping", 51.1] },
+            { "cells": ["Team building", 21.8] }, { "cells": ["Travel", 41.0] }
+          ],
+          "note": "每个领域 20 题，共 200 题；领域值只作解释。"
+        },
+        {
+          "type": "metric_table",
+          "id": "paper-table-7",
+          "label": "检查通过率",
+          "title": "论文 Table 7：检查类型与能力维度通过率",
+          "columns": ["检查组", "通过率（%）"],
+          "rows": [
+            { "cells": ["Per-stage", 44.9] }, { "cells": ["Cross-stage", 31.0] },
+            { "cells": ["Final", 31.3] }, { "cells": ["Proactivity", 33.6] },
+            { "cells": ["Propagation and recovery", 32.0] },
+            { "cells": ["Persistence and bookkeeping", 28.0] },
+            { "cells": ["Safety and privacy", 31.1] },
+            { "cells": ["Authorization boundary", 34.8] }
+          ],
+          "note": "逐格转录；不参与主排名。"
+        }
+      ]
+    },
+    {
+      "participant": { "model": "openai/gpt-5.5", "harness": "OpenClaw", "harness_version": "2026.7.1" },
+      "score": 30.1,
+      "raw_metric": { "label": "完整 200 题 avg@3", "value": "30.1 分" },
+      "detail": "论文 arXiv:2608.10875v2 Table 5 直接发表的完整 200 题 avg@3。每题 3 次运行，先求题内平均，再对 200 题取平均。以下汇总指标、领域分数与检查通过率逐格转录自论文 Tables 5–7；不是 EvalHub 复跑，也不是公开 20 题子集成绩。",
+      "supplementary_views": [
+        {
+          "type": "metric_table", "id": "paper-table-5", "label": "汇总指标",
+          "title": "论文 Table 5：完整集表现与资源统计",
+          "columns": ["avg@3", "max@3", "min@3", "题内 σ", "Context（M）", "Output tokens", "Tool calls", "Turns"],
+          "rows": [{ "cells": [30.1, 38.8, 21.5, 10.0, 17.6, 78631, 332, 146] }],
+          "note": "只有 avg@3 进入 EvalHub 主排名；其余列是论文发表的辅助统计。"
+        },
+        {
+          "type": "metric_table", "id": "paper-table-6", "label": "领域分数",
+          "title": "论文 Table 6：十领域 avg@3", "columns": ["领域", "avg@3"],
+          "rows": [
+            { "cells": ["Career", 21.9] }, { "cells": ["Exam preparation", 20.2] },
+            { "cells": ["Finance", 23.2] }, { "cells": ["Fitness", 27.6] },
+            { "cells": ["Litigation", 32.0] }, { "cells": ["Renovation", 41.5] },
+            { "cells": ["Rental", 13.5] }, { "cells": ["Shopping", 60.2] },
+            { "cells": ["Team building", 21.4] }, { "cells": ["Travel", 39.1] }
+          ],
+          "note": "每个领域 20 题，共 200 题；领域值只作解释。"
+        },
+        {
+          "type": "metric_table", "id": "paper-table-7", "label": "检查通过率",
+          "title": "论文 Table 7：检查类型与能力维度通过率", "columns": ["检查组", "通过率（%）"],
+          "rows": [
+            { "cells": ["Per-stage", 40.2] }, { "cells": ["Cross-stage", 26.0] },
+            { "cells": ["Final", 32.8] }, { "cells": ["Proactivity", 28.6] },
+            { "cells": ["Propagation and recovery", 26.7] },
+            { "cells": ["Persistence and bookkeeping", 24.8] },
+            { "cells": ["Safety and privacy", 28.2] },
+            { "cells": ["Authorization boundary", 25.3] }
+          ],
+          "note": "逐格转录；不参与主排名。"
+        }
+      ]
+    },
+    {
+      "participant": { "model": "google/gemini-3.5-flash", "harness": "OpenClaw", "harness_version": "2026.7.1" },
+      "score": 27.5,
+      "raw_metric": { "label": "完整 200 题 avg@3", "value": "27.5 分" },
+      "detail": "论文 arXiv:2608.10875v2 Table 5 直接发表的完整 200 题 avg@3。每题 3 次运行，先求题内平均，再对 200 题取平均。以下汇总指标、领域分数与检查通过率逐格转录自论文 Tables 5–7；不是 EvalHub 复跑，也不是公开 20 题子集成绩。",
+      "supplementary_views": [
+        {
+          "type": "metric_table", "id": "paper-table-5", "label": "汇总指标",
+          "title": "论文 Table 5：完整集表现与资源统计",
+          "columns": ["avg@3", "max@3", "min@3", "题内 σ", "Context（M）", "Output tokens", "Tool calls", "Turns"],
+          "rows": [{ "cells": [27.5, 35.6, 20.1, 8.3, 41.2, 213757, 243, 227] }],
+          "note": "只有 avg@3 进入 EvalHub 主排名；其余列是论文发表的辅助统计。"
+        },
+        {
+          "type": "metric_table", "id": "paper-table-6", "label": "领域分数",
+          "title": "论文 Table 6：十领域 avg@3", "columns": ["领域", "avg@3"],
+          "rows": [
+            { "cells": ["Career", 21.9] }, { "cells": ["Exam preparation", 25.6] },
+            { "cells": ["Finance", 27.7] }, { "cells": ["Fitness", 26.3] },
+            { "cells": ["Litigation", 28.3] }, { "cells": ["Renovation", 30.8] },
+            { "cells": ["Rental", 22.3] }, { "cells": ["Shopping", 33.2] },
+            { "cells": ["Team building", 20.2] }, { "cells": ["Travel", 39.1] }
+          ],
+          "note": "每个领域 20 题，共 200 题；领域值只作解释。"
+        },
+        {
+          "type": "metric_table", "id": "paper-table-7", "label": "检查通过率",
+          "title": "论文 Table 7：检查类型与能力维度通过率", "columns": ["检查组", "通过率（%）"],
+          "rows": [
+            { "cells": ["Per-stage", 37.3] }, { "cells": ["Cross-stage", 25.6] },
+            { "cells": ["Final", 30.3] }, { "cells": ["Proactivity", 25.0] },
+            { "cells": ["Propagation and recovery", 26.8] },
+            { "cells": ["Persistence and bookkeeping", 23.1] },
+            { "cells": ["Safety and privacy", 30.4] },
+            { "cells": ["Authorization boundary", 23.1] }
+          ],
+          "note": "逐格转录；不参与主排名。"
+        }
+      ]
+    },
+    {
+      "participant": { "model": "anthropic/claude-opus-4-8", "harness": "OpenClaw", "harness_version": "2026.7.1" },
+      "score": 27.5,
+      "raw_metric": { "label": "完整 200 题 avg@3", "value": "27.5 分" },
+      "detail": "论文 arXiv:2608.10875v2 Table 5 直接发表的完整 200 题 avg@3。每题 3 次运行，先求题内平均，再对 200 题取平均。以下汇总指标、领域分数与检查通过率逐格转录自论文 Tables 5–7；不是 EvalHub 复跑，也不是公开 20 题子集成绩。",
+      "supplementary_views": [
+        {
+          "type": "metric_table", "id": "paper-table-5", "label": "汇总指标",
+          "title": "论文 Table 5：完整集表现与资源统计",
+          "columns": ["avg@3", "max@3", "min@3", "题内 σ", "Context（M）", "Output tokens", "Tool calls", "Turns"],
+          "rows": [{ "cells": [27.5, 34.3, 20.3, 7.5, 28.8, 220795, 228, 111] }],
+          "note": "只有 avg@3 进入 EvalHub 主排名；其余列是论文发表的辅助统计。"
+        },
+        {
+          "type": "metric_table", "id": "paper-table-6", "label": "领域分数",
+          "title": "论文 Table 6：十领域 avg@3", "columns": ["领域", "avg@3"],
+          "rows": [
+            { "cells": ["Career", 24.3] }, { "cells": ["Exam preparation", 19.8] },
+            { "cells": ["Finance", 20.8] }, { "cells": ["Fitness", 24.3] },
+            { "cells": ["Litigation", 32.1] }, { "cells": ["Renovation", 35.9] },
+            { "cells": ["Rental", 16.8] }, { "cells": ["Shopping", 41.1] },
+            { "cells": ["Team building", 23.3] }, { "cells": ["Travel", 37.7] }
+          ],
+          "note": "每个领域 20 题，共 200 题；领域值只作解释。"
+        },
+        {
+          "type": "metric_table", "id": "paper-table-7", "label": "检查通过率",
+          "title": "论文 Table 7：检查类型与能力维度通过率", "columns": ["检查组", "通过率（%）"],
+          "rows": [
+            { "cells": ["Per-stage", 40.0] }, { "cells": ["Cross-stage", 26.7] },
+            { "cells": ["Final", 29.5] }, { "cells": ["Proactivity", 27.7] },
+            { "cells": ["Propagation and recovery", 27.1] },
+            { "cells": ["Persistence and bookkeeping", 26.0] },
+            { "cells": ["Safety and privacy", 30.6] },
+            { "cells": ["Authorization boundary", 27.4] }
+          ],
+          "note": "逐格转录；不参与主排名。"
+        }
+      ]
+    },
+    {
+      "participant": { "model": "zai/glm-5.2", "harness": "OpenClaw", "harness_version": "2026.7.1" },
+      "score": 25.4,
+      "raw_metric": { "label": "完整 200 题 avg@3", "value": "25.4 分" },
+      "detail": "论文 arXiv:2608.10875v2 Table 5 直接发表的完整 200 题 avg@3。每题 3 次运行，先求题内平均，再对 200 题取平均。以下汇总指标、领域分数与检查通过率逐格转录自论文 Tables 5–7；不是 EvalHub 复跑，也不是公开 20 题子集成绩。",
+      "supplementary_views": [
+        {
+          "type": "metric_table", "id": "paper-table-5", "label": "汇总指标",
+          "title": "论文 Table 5：完整集表现与资源统计",
+          "columns": ["avg@3", "max@3", "min@3", "题内 σ", "Context（M）", "Output tokens", "Tool calls", "Turns"],
+          "rows": [{ "cells": [25.4, 29.9, 20.9, 4.8, 22.3, 133285, 288, 141] }],
+          "note": "只有 avg@3 进入 EvalHub 主排名；其余列是论文发表的辅助统计。"
+        },
+        {
+          "type": "metric_table", "id": "paper-table-6", "label": "领域分数",
+          "title": "论文 Table 6：十领域 avg@3", "columns": ["领域", "avg@3"],
+          "rows": [
+            { "cells": ["Career", 23.1] }, { "cells": ["Exam preparation", 18.7] },
+            { "cells": ["Finance", 24.0] }, { "cells": ["Fitness", 18.2] },
+            { "cells": ["Litigation", 25.8] }, { "cells": ["Renovation", 34.7] },
+            { "cells": ["Rental", 13.6] }, { "cells": ["Shopping", 38.6] },
+            { "cells": ["Team building", 17.7] }, { "cells": ["Travel", 39.4] }
+          ],
+          "note": "每个领域 20 题，共 200 题；领域值只作解释。"
+        },
+        {
+          "type": "metric_table", "id": "paper-table-7", "label": "检查通过率",
+          "title": "论文 Table 7：检查类型与能力维度通过率", "columns": ["检查组", "通过率（%）"],
+          "rows": [
+            { "cells": ["Per-stage", 39.0] }, { "cells": ["Cross-stage", 23.3] },
+            { "cells": ["Final", 27.4] }, { "cells": ["Proactivity", 21.2] },
+            { "cells": ["Propagation and recovery", 23.5] },
+            { "cells": ["Persistence and bookkeeping", 23.9] },
+            { "cells": ["Safety and privacy", 26.2] },
+            { "cells": ["Authorization boundary", 24.1] }
+          ],
+          "note": "逐格转录；不参与主排名。"
+        }
+      ]
+    },
+    {
+      "participant": { "model": "moonshot/kimi-k2.6", "harness": "OpenClaw", "harness_version": "2026.7.1" },
+      "score": 22.6,
+      "raw_metric": { "label": "完整 200 题 avg@3", "value": "22.6 分" },
+      "detail": "论文 arXiv:2608.10875v2 Table 5 直接发表的完整 200 题 avg@3。每题 3 次运行，先求题内平均，再对 200 题取平均。以下汇总指标、领域分数与检查通过率逐格转录自论文 Tables 5–7；不是 EvalHub 复跑，也不是公开 20 题子集成绩。",
+      "supplementary_views": [
+        {
+          "type": "metric_table", "id": "paper-table-5", "label": "汇总指标",
+          "title": "论文 Table 5：完整集表现与资源统计",
+          "columns": ["avg@3", "max@3", "min@3", "题内 σ", "Context（M）", "Output tokens", "Tool calls", "Turns"],
+          "rows": [{ "cells": [22.6, 27.1, 18.4, 4.6, 21.8, 120516, 231, 166] }],
+          "note": "只有 avg@3 进入 EvalHub 主排名；其余列是论文发表的辅助统计。"
+        },
+        {
+          "type": "metric_table", "id": "paper-table-6", "label": "领域分数",
+          "title": "论文 Table 6：十领域 avg@3", "columns": ["领域", "avg@3"],
+          "rows": [
+            { "cells": ["Career", 22.0] }, { "cells": ["Exam preparation", 16.0] },
+            { "cells": ["Finance", 21.1] }, { "cells": ["Fitness", 17.3] },
+            { "cells": ["Litigation", 21.1] }, { "cells": ["Renovation", 33.4] },
+            { "cells": ["Rental", 9.8] }, { "cells": ["Shopping", 41.0] },
+            { "cells": ["Team building", 10.5] }, { "cells": ["Travel", 33.6] }
+          ],
+          "note": "每个领域 20 题，共 200 题；领域值只作解释。"
+        },
+        {
+          "type": "metric_table", "id": "paper-table-7", "label": "检查通过率",
+          "title": "论文 Table 7：检查类型与能力维度通过率", "columns": ["检查组", "通过率（%）"],
+          "rows": [
+            { "cells": ["Per-stage", 34.3] }, { "cells": ["Cross-stage", 21.2] },
+            { "cells": ["Final", 25.5] }, { "cells": ["Proactivity", 16.0] },
+            { "cells": ["Propagation and recovery", 19.6] },
+            { "cells": ["Persistence and bookkeeping", 19.9] },
+            { "cells": ["Safety and privacy", 25.4] },
+            { "cells": ["Authorization boundary", 19.2] }
+          ],
+          "note": "逐格转录；不参与主排名。"
+        }
+      ]
+    },
+    {
+      "participant": { "model": "deepseek/deepseek-v4-pro", "harness": "OpenClaw", "harness_version": "2026.7.1" },
+      "score": 21.1,
+      "raw_metric": { "label": "完整 200 题 avg@3", "value": "21.1 分" },
+      "detail": "论文 arXiv:2608.10875v2 Table 5 直接发表的完整 200 题 avg@3。每题 3 次运行，先求题内平均，再对 200 题取平均。以下汇总指标、领域分数与检查通过率逐格转录自论文 Tables 5–7；不是 EvalHub 复跑，也不是公开 20 题子集成绩。",
+      "supplementary_views": [
+        {
+          "type": "metric_table", "id": "paper-table-5", "label": "汇总指标",
+          "title": "论文 Table 5：完整集表现与资源统计",
+          "columns": ["avg@3", "max@3", "min@3", "题内 σ", "Context（M）", "Output tokens", "Tool calls", "Turns"],
+          "rows": [{ "cells": [21.1, 24.7, 17.7, 3.7, 13.7, 91088, 203, 101] }],
+          "note": "只有 avg@3 进入 EvalHub 主排名；其余列是论文发表的辅助统计。"
+        },
+        {
+          "type": "metric_table", "id": "paper-table-6", "label": "领域分数",
+          "title": "论文 Table 6：十领域 avg@3", "columns": ["领域", "avg@3"],
+          "rows": [
+            { "cells": ["Career", 19.3] }, { "cells": ["Exam preparation", 16.3] },
+            { "cells": ["Finance", 20.4] }, { "cells": ["Fitness", 13.6] },
+            { "cells": ["Litigation", 23.0] }, { "cells": ["Renovation", 27.1] },
+            { "cells": ["Rental", 10.5] }, { "cells": ["Shopping", 33.2] },
+            { "cells": ["Team building", 13.7] }, { "cells": ["Travel", 33.7] }
+          ],
+          "note": "每个领域 20 题，共 200 题；领域值只作解释。"
+        },
+        {
+          "type": "metric_table", "id": "paper-table-7", "label": "检查通过率",
+          "title": "论文 Table 7：检查类型与能力维度通过率", "columns": ["检查组", "通过率（%）"],
+          "rows": [
+            { "cells": ["Per-stage", 34.3] }, { "cells": ["Cross-stage", 18.2] },
+            { "cells": ["Final", 23.7] }, { "cells": ["Proactivity", 18.1] },
+            { "cells": ["Propagation and recovery", 18.5] },
+            { "cells": ["Persistence and bookkeeping", 18.9] },
+            { "cells": ["Safety and privacy", 23.0] },
+            { "cells": ["Authorization boundary", 17.8] }
+          ],
+          "note": "逐格转录；不参与主排名。"
+        }
+      ]
+    }
+  ]
+}
