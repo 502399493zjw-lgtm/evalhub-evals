@@ -38,65 +38,65 @@ detail_profile:
 
     | 排名 | 模型 | 主分（×100） | Harness |
     | ---: | --- | ---: | --- |
-    | 1 | GPT-5.6 Sol | 53.616285 | codex · reasoning-xhigh |
-    | 2 | GPT-5.6 Sol | 52.762780 | codex · reasoning-max |
-    | 3 | Qwen 3.8 Max | 52.485613 | claude_code · thinking-xhigh |
-    | 4 | GPT-5.6 Sol | 52.372867 | codex · reasoning-high |
-    | 5 | GPT-5.6 Sol | 52.100269 | codex · reasoning-medium |
-    | 6 | Kimi K3 | 51.583232 | kimi_code · thinking-max |
-    | 7 | Grok 4.5 | 51.221844 | grok_build · reasoning-high |
-    | 8 | Kimi K3 | 50.724878 | claude_code · thinking-max |
-    | 9 | GPT-5.6 Terra | 50.702065 | codex · reasoning-max |
-    | 10 | GPT-5.6-Luna（未注册） | 50.373521 | codex · reasoning-max |
-    | 11 | GPT-5.6-Luna（未注册） | 49.414815 | codex · reasoning-xhigh |
-    | 12 | Claude Opus 5 | 49.001018 | claude_code · thinking-max |
-    | 13 | Claude Fable 5 | 48.701412 | claude_code · reasoning-xhigh |
-    | 14 | GPT-5.6 Terra | 48.494226 | codex · reasoning-xhigh |
-    | 15 | GPT-5.5 | 47.931391 | codex · reasoning-xhigh |
-    | 16 | GPT-5.6 Terra | 46.571631 | codex · reasoning-high |
-    | 17 | GPT-5.6-Luna（未注册） | 46.128767 | codex · reasoning-high |
-    | 18 | GPT-5.5 | 45.784432 | ale_claw |
-    | 19 | Claude Opus 4.8 | 45.148577 | claude_code · thinking-max |
-    | 20 | GPT-5.6 Sol | 45.097518 | codex · reasoning-low |
-    | 21 | GPT-5.5 | 44.715784 | codex |
-    | 22 | qwen-3-8-27b（未注册） | 42.884751 | claude_code · reasoning-max |
-    | 23 | GPT-5.6 Terra | 42.586352 | codex · reasoning-medium |
-    | 24 | Claude Opus 4.7 | 42.487184 | cursor_cli · thinking-high |
-    | 25 | Claude Opus 4.8 | 42.348784 | claude_code · thinking-xhigh |
-    | 26 | GPT-5.5 | 42.072397 | openclaw |
-    | 27 | Claude Fable 5 | 41.287764 | claude_code |
-    | 28 | ark-0614c（未注册） | 41.131723 | claude_code |
-    | 29 | GLM-5.2 | 41.085407 | claude_code · max |
-    | 30 | GPT-5.5 | 40.680079 | cursor_cli |
-    | 31 | Claude Opus 4.8 | 40.677646 | claude_code · thinking-high |
-    | 32 | Claude Opus 4.7 | 40.496053 | ale_claw |
-    | 33 | GPT-5.6 Terra | 40.249082 | codex · reasoning-low |
-    | 34 | GPT-5.5 | 39.776665 | codex · reasoning-medium |
-    | 35 | composer-2-5（未注册） | 39.480863 | cursor_cli |
-    | 36 | GPT-5.5 | 39.246513 | droid |
-    | 37 | GPT-5.6-Luna（未注册） | 38.500415 | codex · reasoning-medium |
-    | 38 | Claude Opus 4.8 | 38.312084 | claude_code |
-    | 39 | GPT-5.4 | 37.326078 | openclaw |
-    | 40 | GPT-5.5 | 36.369651 | codex · reasoning-low |
-    | 41 | Claude Opus 4.7 | 35.803700 | claude_code |
-    | 42 | Claude Opus 4.7 | 35.215068 | openclaw |
-    | 43 | Gemini 3.1 Pro Preview | 32.707661 | gemini_cli |
-    | 44 | ark-0614c（未注册） | 31.720138 | openclaw_cli |
-    | 45 | Claude Opus 4.7 | 31.695780 | droid |
-    | 46 | Qwen 3.7 Max | 31.568645 | openclaw |
-    | 47 | GPT-5.6-Luna（未注册） | 31.023835 | codex · reasoning-low |
-    | 48 | Gemini 3.1 Pro Preview | 29.272656 | openclaw |
-    | 49 | GPT-5.4 | 28.638324 | ale_claw |
-    | 50 | GLM-5.1 | 28.137365 | openclaw |
-    | 51 | DeepSeek V4 Pro | 27.620148 | openclaw |
-    | 52 | qwen3-6-plus（未注册） | 24.606981 | openclaw |
-    | 53 | MiMo V2.5 | 23.555957 | openclaw |
-    | 54 | Kimi K2.6 | 21.665040 | openclaw |
-    | 55 | grok-4-3（未注册） | 21.253888 | grok_cli |
-    | 56 | grok-4-3（未注册） | 15.778799 | openclaw |
-    | 57 | minimax-m2-7（未注册） | 14.187993 | openclaw |
-    | 58 | GPT-5.4 | 13.336790 | codex |
-    | 59 | grok-3（未注册） | 12.614549 | grok_cli |
+    | 1 | GPT-5.6 Sol | 53.6 | codex · reasoning-xhigh |
+    | 2 | GPT-5.6 Sol | 52.8 | codex · reasoning-max |
+    | 3 | Qwen 3.8 Max | 52.5 | claude_code · thinking-xhigh |
+    | 4 | GPT-5.6 Sol | 52.4 | codex · reasoning-high |
+    | 5 | GPT-5.6 Sol | 52.1 | codex · reasoning-medium |
+    | 6 | Kimi K3 | 51.6 | kimi_code · thinking-max |
+    | 7 | Grok 4.5 | 51.2 | grok_build · reasoning-high |
+    | 8 | Kimi K3 | 50.7 | claude_code · thinking-max |
+    | 9 | GPT-5.6 Terra | 50.7 | codex · reasoning-max |
+    | 10 | GPT-5.6-Luna（未注册） | 50.4 | codex · reasoning-max |
+    | 11 | GPT-5.6-Luna（未注册） | 49.4 | codex · reasoning-xhigh |
+    | 12 | Claude Opus 5 | 49.0 | claude_code · thinking-max |
+    | 13 | Claude Fable 5 | 48.7 | claude_code · reasoning-xhigh |
+    | 14 | GPT-5.6 Terra | 48.5 | codex · reasoning-xhigh |
+    | 15 | GPT-5.5 | 47.9 | codex · reasoning-xhigh |
+    | 16 | GPT-5.6 Terra | 46.6 | codex · reasoning-high |
+    | 17 | GPT-5.6-Luna（未注册） | 46.1 | codex · reasoning-high |
+    | 18 | GPT-5.5 | 45.8 | ale_claw |
+    | 19 | Claude Opus 4.8 | 45.1 | claude_code · thinking-max |
+    | 20 | GPT-5.6 Sol | 45.1 | codex · reasoning-low |
+    | 21 | GPT-5.5 | 44.7 | codex |
+    | 22 | qwen-3-8-27b（未注册） | 42.9 | claude_code · reasoning-max |
+    | 23 | GPT-5.6 Terra | 42.6 | codex · reasoning-medium |
+    | 24 | Claude Opus 4.7 | 42.5 | cursor_cli · thinking-high |
+    | 25 | Claude Opus 4.8 | 42.3 | claude_code · thinking-xhigh |
+    | 26 | GPT-5.5 | 42.1 | openclaw |
+    | 27 | Claude Fable 5 | 41.3 | claude_code |
+    | 28 | ark-0614c（未注册） | 41.1 | claude_code |
+    | 29 | GLM-5.2 | 41.1 | claude_code · max |
+    | 30 | GPT-5.5 | 40.7 | cursor_cli |
+    | 31 | Claude Opus 4.8 | 40.7 | claude_code · thinking-high |
+    | 32 | Claude Opus 4.7 | 40.5 | ale_claw |
+    | 33 | GPT-5.6 Terra | 40.2 | codex · reasoning-low |
+    | 34 | GPT-5.5 | 39.8 | codex · reasoning-medium |
+    | 35 | composer-2-5（未注册） | 39.5 | cursor_cli |
+    | 36 | GPT-5.5 | 39.2 | droid |
+    | 37 | GPT-5.6-Luna（未注册） | 38.5 | codex · reasoning-medium |
+    | 38 | Claude Opus 4.8 | 38.3 | claude_code |
+    | 39 | GPT-5.4 | 37.3 | openclaw |
+    | 40 | GPT-5.5 | 36.4 | codex · reasoning-low |
+    | 41 | Claude Opus 4.7 | 35.8 | claude_code |
+    | 42 | Claude Opus 4.7 | 35.2 | openclaw |
+    | 43 | Gemini 3.1 Pro Preview | 32.7 | gemini_cli |
+    | 44 | ark-0614c（未注册） | 31.7 | openclaw_cli |
+    | 45 | Claude Opus 4.7 | 31.7 | droid |
+    | 46 | Qwen 3.7 Max | 31.6 | openclaw |
+    | 47 | GPT-5.6-Luna（未注册） | 31.0 | codex · reasoning-low |
+    | 48 | Gemini 3.1 Pro Preview | 29.3 | openclaw |
+    | 49 | GPT-5.4 | 28.6 | ale_claw |
+    | 50 | GLM-5.1 | 28.1 | openclaw |
+    | 51 | DeepSeek V4 Pro | 27.6 | openclaw |
+    | 52 | qwen3-6-plus（未注册） | 24.6 | openclaw |
+    | 53 | MiMo V2.5 | 23.6 | openclaw |
+    | 54 | Kimi K2.6 | 21.7 | openclaw |
+    | 55 | grok-4-3（未注册） | 21.3 | grok_cli |
+    | 56 | grok-4-3（未注册） | 15.8 | openclaw |
+    | 57 | minimax-m2-7（未注册） | 14.2 | openclaw |
+    | 58 | GPT-5.4 | 13.3 | codex |
+    | 59 | grok-3（未注册） | 12.6 | grok_cli |
 
     ## 官方分项结果
 
