@@ -1,0 +1,51 @@
+{
+  "manifest_version": 1,
+  "eval_id": "vibelifebench",
+  "protocol_revision": 1,
+  "upstream_commit": "60a042e405377b89b3b00a99a45fb38039f13013",
+  "paper_version": "arXiv:2608.10875v2",
+  "benchmark_scope": {
+    "task_count": 200,
+    "domain_count": 10,
+    "attempts_per_task": 3
+  },
+  "participant": {
+    "model": "example/synthetic-agent",
+    "harness": "example-harness",
+    "harness_version": "0.0.0-structural-example"
+  },
+  "run_date": "2026-08-19",
+  "author_review": {
+    "upstream_author_reviewed": true,
+    "evidence_url": "https://example.invalid/vibelifebench/synthetic-evidence.json",
+    "evidence_sha256": "f491c2732e1f4085f3b4571b288c8b83614fa5d16fca5c51277ae4aaf026b7db"
+  },
+  "scores": {
+    "avg_at_3": 25,
+    "max_at_3": 33,
+    "min_at_3": 17,
+    "mean_within_task_sigma": 5,
+    "domain_avg_at_3": {
+      "career": 20,
+      "exam_preparation": 21,
+      "finance": 22,
+      "fitness": 23,
+      "litigation": 24,
+      "renovation": 25,
+      "rental": 26,
+      "shopping": 27,
+      "team_building": 28,
+      "travel": 29
+    },
+    "check_pass_rates": {
+      "per_stage": 36,
+      "cross_stage": 24,
+      "final": 27,
+      "proactivity": 23,
+      "propagation_and_recovery": 24,
+      "persistence_and_bookkeeping": 22,
+      "safety_and_privacy": 28,
+      "authorization_boundary": 25
+    }
+  }
+}
