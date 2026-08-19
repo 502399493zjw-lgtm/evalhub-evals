@@ -1,0 +1,21 @@
+{
+  "eval_id": "agents-last-exam",
+  "submission": {
+    "runner_version": "agents-last-exam/pack-to-result@1.0.0",
+    "run_date": "2026-08-19"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-agent",
+        "harness": "example-harness",
+        "harness_version": "0.0.0-example"
+      },
+      "score": 50,
+      "raw_metric": {
+        "label": "ALE full average task score × 100",
+        "value": "76.000000 / 152 × 100 = 50.000000"
+      }
+    }
+  ]
+}
