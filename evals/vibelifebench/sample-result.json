@@ -1,0 +1,74 @@
+{
+  "eval_id": "vibelifebench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "vibelifebench/pack-to-result@1.0.0",
+    "run_date": "2026-08-19"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-agent",
+        "harness": "example-harness",
+        "harness_version": "0.0.0-structural-example"
+      },
+      "score": 25,
+      "raw_metric": {
+        "label": "完整 200 题 avg@3",
+        "value": "25 分"
+      },
+      "detail": "完整 200 题、10 领域、每题 3 次运行；主分数直接采用上游作者审核报告的 avg@3=25。 来源固定为 arXiv:2608.10875v2 与 commit 60a042e405377b89b3b00a99a45fb38039f13013。 报告证据 https://example.invalid/vibelifebench/synthetic-evidence.json，evidence_sha256=f491c2732e1f4085f3b4571b288c8b83614fa5d16fca5c51277ae4aaf026b7db；提交清单 sha256=967de875ca75c180cb601b12f77b4b5146312292a175f75c0a8fd81b68c3b983。 该转换器不运行 benchmark，也不把公开 20 题子集的结果当成完整集成绩。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "run-aggregate-metrics",
+          "label": "汇总指标",
+          "title": "完整 200 题三次运行汇总",
+          "columns": ["avg@3", "max@3", "min@3", "平均题内标准差"],
+          "rows": [
+            { "cells": [25, 33, 17, 5] }
+          ],
+          "note": "四项均来自上游作者审核报告；只有 avg@3 进入 EvalHub 主排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "run-domain-breakdown",
+          "label": "领域分数",
+          "title": "完整 200 题十领域 avg@3",
+          "columns": ["领域", "avg@3"],
+          "rows": [
+            { "cells": ["Career", 20] },
+            { "cells": ["Exam preparation", 21] },
+            { "cells": ["Finance", 22] },
+            { "cells": ["Fitness", 23] },
+            { "cells": ["Litigation", 24] },
+            { "cells": ["Renovation", 25] },
+            { "cells": ["Rental", 26] },
+            { "cells": ["Shopping", 27] },
+            { "cells": ["Team building", 28] },
+            { "cells": ["Travel", 29] }
+          ],
+          "note": "每个领域含 20 题；这些是辅助展示，不单独参与排名。"
+        },
+        {
+          "type": "metric_table",
+          "id": "run-check-pass-rates",
+          "label": "检查通过率",
+          "title": "检查类型与能力维度通过率",
+          "columns": ["检查组", "通过率（%）"],
+          "rows": [
+            { "cells": ["Per-stage", 36] },
+            { "cells": ["Cross-stage", 24] },
+            { "cells": ["Final", 27] },
+            { "cells": ["Proactivity", 23] },
+            { "cells": ["Propagation and recovery", 24] },
+            { "cells": ["Persistence and bookkeeping", 22] },
+            { "cells": ["Safety and privacy", 28] },
+            { "cells": ["Authorization boundary", 25] }
+          ],
+          "note": "通过率来自同一完整集报告，只解释错误结构，不参与主排名。"
+        }
+      ]
+    }
+  ]
+}
