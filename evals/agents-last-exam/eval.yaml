@@ -197,9 +197,21 @@ detail_profile:
 
     ## 题目案例
 
-    以下五题按完整 152 题清单的第 1、39、77、115、152 个位置等距抽取。英文原文来自固定 commit 的 task_card.json；中文为忠实翻译。
+    这些案例不是可以只看网页直接作答的问答题。题面中的 `base/input/…` 是 ALE 启动任务时放入虚拟机的**输入附件路径**，例如数据表、压缩包、图片、视频和说明文档；`base/software/…` 是任务提供的工具，`base/output/…` 是智能体必须写入交付物的位置。隐藏参考答案和 grader 只会在智能体结束后进入评分流程。
 
-    ### agriculture_env/crop_rotation_d02
+    EvalHub 预览只展示公开题面，不随页面分发输入附件、软件环境或隐藏评分资料，所以脱离沙箱单看路径会显得不完整。实际运行时，上游 ALE 会从[固定版本的官方任务实现](https://github.com/rdi-berkeley/agents-last-exam/tree/75a3f866535946b67f9a57e4f158eb30ad50be8a/tasks)准备完整环境。下面先用一张表说明每题会拿到什么、需要做什么；随后保留可追溯的完整双语题面。
+
+    | 案例 | 运行时提供的主要附件 | 智能体需要交付 |
+    | --- | --- | --- |
+    | 农业地块轮作审计 | 地块 GeoPackage、任务简报与运行环境清单 | 合格与待核查地块两个 GeoPackage |
+    | Linux 日志权限整改 | 文件系统快照、权限与所有权表、排除清单和初始化脚本 | 描述全部文件最终状态的 JSON |
+    | 流感预测记分卡 | 预测 Parquet、真实值 CSV 与 Python 环境清单 | 模型汇总和逐单元评分两个 CSV |
+    | 酵母菌落检测 | 培养皿照片与区域掩码图 | 菌落计数 JSON 和测量 CSV |
+    | 动画镜头日志 | 动画源片与 QC 问题 DOCX | 按时间编写的镜头日志 DOCX |
+
+    以下五题按完整 152 题清单的第 1、39、77、115、152 个位置等距抽取。英文原文来自固定 commit 的 `task_card.json`；中文为忠实翻译。
+
+    ### 农业地块轮作审计
 
     #### 题目原文
 
@@ -279,7 +291,7 @@ detail_profile:
     - 最终输出仅写入 base\output。
     ```
 
-    ### computing_math/os_log_permission_guard_v1
+    ### Linux 日志权限安全整改
 
     #### 题目原文
 
@@ -351,7 +363,7 @@ detail_profile:
     不得在 base/output 以外写入输出。
     ```
 
-    ### health_medicine/epidemiology_forecast
+    ### 流感住院预测记分卡
 
     #### 题目原文
 
@@ -447,7 +459,7 @@ detail_profile:
     - 可以运行规范入口 base/software/bootstrap_runtime.sh；它会调用 uv sync --project input/runtime_env，并把虚拟环境写到 input/runtime_env/.venv。
     ```
 
-    ### life_sciences/yeast_colony_detection
+    ### 酵母菌落图像检测与计数
 
     #### 题目原文
 
@@ -515,7 +527,7 @@ detail_profile:
     - 所有任务生成文件均保留在 base/output 内。
     ```
 
-    ### visual_media/video_storyboard_001
+    ### 动画源片镜头日志编制
 
     #### 题目原文
 
