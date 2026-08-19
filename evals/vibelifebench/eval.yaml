@@ -1,5 +1,6 @@
 id: vibelifebench
 protocol_revision: 1
+cover: assets/cover.webp
 name: VibeLifeBench（长程生活事务 Agent）
 category: useful
 description: >-
