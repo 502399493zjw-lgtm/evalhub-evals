@@ -1,0 +1,21 @@
+{
+  "manifest_version": 1,
+  "eval_id": "agents-last-exam",
+  "protocol_revision": 1,
+  "upstream_commit": "75a3f866535946b67f9a57e4f158eb30ad50be8a",
+  "participant": {
+    "model": "example/synthetic-agent",
+    "harness": "example-harness",
+    "harness_version": "0.0.0-example"
+  },
+  "run_date": "2026-08-19",
+  "task_results": [
+    {
+      "task_id": "agriculture_env/crop_rotation_d02",
+      "score": 0.75,
+      "run_id": "synthetic-example-only",
+      "run_sha256": "a80bf6dc4fea3dde3071926fabbe0a0b3c525fe81bfedbb724bdd6b06c57875a",
+      "eval_result_sha256": "4decee19e624ba02910080e974d5264f71ba85d7313e6c8d0f83361513c28c4a"
+    }
+  ]
+}

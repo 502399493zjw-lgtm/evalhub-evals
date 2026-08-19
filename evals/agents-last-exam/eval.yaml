@@ -1,0 +1,1156 @@
+id: agents-last-exam
+protocol_revision: 1
+name: Agents’ Last Exam（ALE）智能体综合能力评测
+category: useful
+description: Agents’ Last Exam 以 152 个跨领域、可执行的真实任务评估 Agent；本包只转换已完成的上游结果，不执行评测。
+hook_title: 152 个真实任务，Agent 能完成多少
+upstream:
+  repo: rdi-berkeley/agents-last-exam
+  commit: 75a3f866535946b67f9a57e4f158eb30ad50be8a
+references:
+  homepage: https://agents-last-exam.org/
+  repository: https://github.com/rdi-berkeley/agents-last-exam
+dimensions: [代码, 推理]
+interface: agent
+runner: custom
+custom_mode: external_workflow
+scoring: custom
+scored_by: author
+score_policy: required
+baseline_policy: required
+score_unit: 分
+leaderboard: latest_session
+scoring_note: >-
+  全量固定为 152 个任务，每题只取该任务上游 eval_result.json 的有限数值 score（0–1）。主成绩为所有 152 个值的算术平均 × 100；上游失败、缺失、非数值或无效结果计 0。pack-to-result.mjs 只验证提交清单和证据摘要并打包，不运行 Agent、ALE、Docker、虚拟机、测试或网络下载。
+command_template:
+  argv: [node, evals/agents-last-exam/pack-to-result.mjs, "{input}", --out, "{output}"]
+  output: agents-last-exam-result.json
+trials: 1
+detail_profile:
+  source_kind: upstream_publication
+  markdown: |-
+    ## 榜单
+
+    主指标为 full split 的 152 个任务分数的算术平均 × 100，越高越好。以下保留 2026-08-19 从官方 leaderboard API 取得的全部 59 条来源记录；同一模型的不同 harness / variant 是不同官方行，并不自行合并。
+
+    | 官方排名 | 模型（官方原文） | Harness | Variant | 平均任务分（×100） |
+    | ---: | --- | --- | --- | ---: |
+    | 1 | GPT-5.6-Sol | codex | reasoning-xhigh | 53.616285 |
+    | 2 | GPT-5.6-Sol | codex | reasoning-max | 52.762780 |
+    | 3 | qwen-3-8-max | claude_code | thinking-xhigh | 52.485613 |
+    | 4 | GPT-5.6-Sol | codex | reasoning-high | 52.372867 |
+    | 5 | GPT-5.6-Sol | codex | reasoning-medium | 52.100269 |
+    | 6 | kimi-k3 | kimi_code | thinking-max | 51.583232 |
+    | 7 | grok-4-5 | grok_build | reasoning-high | 51.221844 |
+    | 8 | kimi-k3 | claude_code | thinking-max | 50.724878 |
+    | 9 | GPT-5.6-Terra | codex | reasoning-max | 50.702065 |
+    | 10 | GPT-5.6-Luna | codex | reasoning-max | 50.373521 |
+    | 11 | GPT-5.6-Luna | codex | reasoning-xhigh | 49.414815 |
+    | 12 | claude-opus-5 | claude_code | thinking-max | 49.001018 |
+    | 13 | anthropic-claude-fable-5 | claude_code | reasoning-xhigh | 48.701412 |
+    | 14 | GPT-5.6-Terra | codex | reasoning-xhigh | 48.494226 |
+    | 15 | gpt-5-5 | codex | reasoning-xhigh | 47.931391 |
+    | 16 | GPT-5.6-Terra | codex | reasoning-high | 46.571631 |
+    | 17 | GPT-5.6-Luna | codex | reasoning-high | 46.128767 |
+    | 18 | gpt-5-5 | ale_claw | — | 45.784432 |
+    | 19 | claude-opus-4-8 | claude_code | thinking-max | 45.148577 |
+    | 20 | GPT-5.6-Sol | codex | reasoning-low | 45.097518 |
+    | 21 | gpt-5-5 | codex | — | 44.715784 |
+    | 22 | qwen-3-8-27b | claude_code | reasoning-max | 42.884751 |
+    | 23 | GPT-5.6-Terra | codex | reasoning-medium | 42.586352 |
+    | 24 | claude-opus-4-7 | cursor_cli | thinking-high | 42.487184 |
+    | 25 | claude-opus-4-8 | claude_code | thinking-xhigh | 42.348784 |
+    | 26 | gpt-5-5 | openclaw | — | 42.072397 |
+    | 27 | anthropic-claude-fable-5 | claude_code | — | 41.287764 |
+    | 28 | ark-0614c | claude_code | — | 41.131723 |
+    | 29 | glm-5-2 | claude_code | max | 41.085407 |
+    | 30 | gpt-5-5 | cursor_cli | — | 40.680079 |
+    | 31 | claude-opus-4-8 | claude_code | thinking-high | 40.677646 |
+    | 32 | claude-opus-4-7 | ale_claw | — | 40.496053 |
+    | 33 | GPT-5.6-Terra | codex | reasoning-low | 40.249082 |
+    | 34 | gpt-5-5 | codex | reasoning-medium | 39.776665 |
+    | 35 | composer-2-5 | cursor_cli | — | 39.480863 |
+    | 36 | gpt-5-5 | droid | — | 39.246513 |
+    | 37 | GPT-5.6-Luna | codex | reasoning-medium | 38.500415 |
+    | 38 | claude-opus-4-8 | claude_code | — | 38.312084 |
+    | 39 | gpt-5-4 | openclaw | — | 37.326078 |
+    | 40 | gpt-5-5 | codex | reasoning-low | 36.369651 |
+    | 41 | claude-opus-4-7 | claude_code | — | 35.803700 |
+    | 42 | claude-opus-4-7 | openclaw | — | 35.215068 |
+    | 43 | gemini-3-1-pro-preview | gemini_cli | — | 32.707661 |
+    | 44 | ark-0614c | openclaw_cli | — | 31.720138 |
+    | 45 | claude-opus-4-7 | droid | — | 31.695780 |
+    | 46 | qwen-qwen3-7-max | openclaw | — | 31.568645 |
+    | 47 | GPT-5.6-Luna | codex | reasoning-low | 31.023835 |
+    | 48 | gemini-3-1-pro-preview | openclaw | — | 29.272656 |
+    | 49 | gpt-5-4 | ale_claw | — | 28.638324 |
+    | 50 | glm-5-1 | openclaw | — | 28.137365 |
+    | 51 | deepseek-v4-pro | openclaw | — | 27.620148 |
+    | 52 | qwen3-6-plus | openclaw | — | 24.606981 |
+    | 53 | mimo-v2-5 | openclaw | — | 23.555957 |
+    | 54 | kimi-k2-6 | openclaw | — | 21.665040 |
+    | 55 | grok-4-3 | grok_cli | — | 21.253888 |
+    | 56 | grok-4-3 | openclaw | — | 15.778799 |
+    | 57 | minimax-m2-7 | openclaw | — | 14.187993 |
+    | 58 | gpt-5-4 | codex | — | 13.336790 |
+    | 59 | grok-3 | grok_cli | — | 12.614549 |
+
+    ## 官方分项结果
+
+    官方 API 同时公开了完成运行数、完成任务数、通过数、总时长、输入与输出 token、成本和成本来源。空成本字段如实标为“—”，没有补推或估算。
+
+    | 官方排名 | 模型（官方原文） | 完成运行/总运行 | 完成题数/分割题数 | 通过数 | 总时长（秒） | 输入 token | 输出 token | 成本（USD） | 成本来源 |
+    | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+    | 1 | GPT-5.6-Sol | 301 | 152/152 | 93 | 340,729.696 | 762,936,773 | 3,798,418 | 771.62 | db+list |
+    | 2 | GPT-5.6-Sol | 307 | 152/152 | 89 | 373,587.878 | 1,095,236,841 | 5,443,525 | 1,084.09 | db+list |
+    | 3 | qwen-3-8-max | 148 | 148/152 | 41 | 729,633.300 | 1,234,201,310 | 12,430,863 | 486.47 | db |
+    | 4 | GPT-5.6-Sol | 299 | 152/152 | 91 | 340,491.970 | 594,028,867 | 2,890,302 | 575.68 | db+list |
+    | 5 | GPT-5.6-Sol | 302 | 152/152 | 87 | 328,693.942 | 539,877,935 | 2,196,350 | 518.72 | db+list |
+    | 6 | kimi-k3 | 149 | 149/152 | 43 | 669,880.985 | 1,402,173,402 | 7,479,641 | 605.78 | db |
+    | 7 | grok-4-5 | 151 | 151/152 | 41 | 320,860.166 | 668,267,258 | 5,447,367 | 336.79 | db |
+    | 8 | kimi-k3 | 149 | 149/152 | 41 | 775,905.225 | 950,614,474 | 7,394,400 | 463.87 | db |
+    | 9 | GPT-5.6-Terra | 297 | 152/152 | 82 | 427,119.000 | 1,244,130,626 | 5,783,220 | 544.61 | list |
+    | 10 | GPT-5.6-Luna | 149 | 149/152 | 44 | 239,192.000 | 2,499,272,937 | 6,752,715 | 390.61 | list |
+    | 11 | GPT-5.6-Luna | 152 | 152/152 | 46 | 238,042.000 | 1,435,261,861 | 4,162,374 | 235.12 | list |
+    | 12 | claude-opus-5 | 151 | 151/152 | 41 | 636,862.355 | 1,802,968,693 | 12,892,839 | 7,239.27 | db |
+    | 13 | anthropic-claude-fable-5 | 150 | 150/152 | 39 | 251,985.000 | 2,740,460,142 | 10,436,301 | 4,340.24 | official |
+    | 14 | GPT-5.6-Terra | 299 | 152/152 | 82 | 314,395.500 | 822,499,178 | 3,817,073 | 380.73 | list |
+    | 15 | gpt-5-5 | 299 | 152/152 | 80 | 349,652.500 | 560,480,756 | 6,366,309 | 601.69 | db |
+    | 16 | GPT-5.6-Terra | 298 | 151/152 | 77 | 354,908.120 | 533,875,324 | 2,793,980 | 261.53 | db+list |
+    | 17 | GPT-5.6-Luna | 152 | 152/152 | 37 | 165,192.000 | 699,354,083 | 2,559,522 | 127.52 | list |
+    | 18 | gpt-5-5 | 145 | 145/152 | 35 | 128,044.228 | 334,305,043 | 2,340,693 | 309.77 | db |
+    | 19 | claude-opus-4-8 | 150 | 150/152 | 41 | 645,508.000 | 1,692,408,720 | 22,067,608 | 3,985.00 | published+task-ratio |
+    | 20 | GPT-5.6-Sol | 299 | 151/152 | 73 | 270,652.026 | 251,962,277 | 1,269,049 | 248.12 | db+list |
+    | 21 | gpt-5-5 | 438 | 152/152 | 110 | 270,900.400 | 489,884,949 | 3,517,361 | 415.59 | db+list |
+    | 22 | qwen-3-8-27b | 148 | 148/152 | 31 | 1,000,718.902 | 2,742,661,908 | 14,977,273 | — | — |
+    | 23 | GPT-5.6-Terra | 297 | 152/152 | 69 | 310,012.218 | 244,642,170 | 1,565,132 | 128.23 | db+list |
+    | 24 | claude-opus-4-7 | 137 | 137/152 | 32 | 229,732.552 | 429,515,271 | 4,464,514 | 1,899.32 | official+adj |
+    | 25 | claude-opus-4-8 | 151 | 151/152 | 34 | 519,320.000 | 1,209,502,455 | 16,507,476 | 2,815.00 | published+task-ratio |
+    | 26 | gpt-5-5 | 136 | 136/152 | 33 | 297,468.116 | 469,259,907 | 3,279,175 | 446.52 | db |
+    | 27 | anthropic-claude-fable-5 | 152 | 144/152 | 35 | 382,422.500 | 880,037,049 | 9,436,039 | 2,314.73 | official |
+    | 28 | ark-0614c | 146 | 143/152 | 30 | 558,819.500 | 1,903,250,156 | 8,006,212 | 935.70 | db |
+    | 29 | glm-5-2 | 146 | 146/152 | 31 | 387,747.000 | 1,291,344,387 | 7,729,473 | 1,085.62 | db |
+    | 30 | gpt-5-5 | 142 | 139/152 | 33 | 211,627.308 | 148,061,075 | 1,687,764 | 173.52 | list |
+    | 31 | claude-opus-4-8 | 143 | 143/152 | 34 | 298,162.000 | 1,796,865,182 | 6,432,918 | 1,626.00 | published+task-ratio |
+    | 32 | claude-opus-4-7 | 143 | 143/152 | 28 | 279,527.280 | 1,342,066,095 | 5,568,247 | 1,132.24 | official |
+    | 33 | GPT-5.6-Terra | 300 | 152/152 | 60 | 275,061.747 | 171,679,764 | 1,124,089 | 89.49 | db+list |
+    | 34 | gpt-5-5 | 149 | 149/152 | 28 | 270,641.000 | 294,404,262 | 2,853,487 | 357.68 | db |
+    | 35 | composer-2-5 | 138 | 138/152 | 31 | 280,094.000 | 338,804,815 | 2,898,338 | 176.65 | db+list |
+    | 36 | gpt-5-5 | 139 | 137/152 | 30 | 229,751.496 | 234,782,616 | 2,196,372 | 242.24 | list |
+    | 37 | GPT-5.6-Luna | 152 | 152/152 | 26 | 151,697.000 | 287,164,350 | 1,082,713 | 57.00 | list |
+    | 38 | claude-opus-4-8 | 141 | 141/152 | 25 | 489,984.000 | 452,042,179 | 3,793,251 | 1,837.79 | official+adj |
+    | 39 | gpt-5-4 | 179 | 142/152 | 40 | 459,960.919 | 488,753,872 | 7,283,825 | 274.10 | db |
+    | 40 | gpt-5-5 | 152 | 152/152 | 26 | 139,211.000 | 109,294,354 | 1,270,291 | 146.61 | db |
+    | 41 | claude-opus-4-7 | 137 | 137/152 | 21 | 153,370.833 | 456,438,963 | 3,700,468 | 1,792.72 | official+adj |
+    | 42 | claude-opus-4-7 | 142 | 141/152 | 24 | 446,984.745 | 807,329,919 | 3,963,996 | 1,688.85 | official+adj |
+    | 43 | gemini-3-1-pro-preview | 142 | 142/152 | 25 | 332,449.000 | 1,212,565,963 | 3,542,216 | 2,018.05 | db+list+adj |
+    | 44 | ark-0614c | 144 | 144/152 | 19 | 685,102.000 | 1,673,959,024 | 20,768,691 | 439.63 | db |
+    | 45 | claude-opus-4-7 | 105 | 99/152 | 22 | 101,780.769 | 352,060,265 | 2,726,292 | 1,356.25 | official+adj |
+    | 46 | qwen-qwen3-7-max | 142 | 142/152 | 18 | 363,579.000 | 1,382,717,830 | 17,557,559 | 663.87 | db+list |
+    | 47 | GPT-5.6-Luna | 152 | 152/152 | 18 | 88,490.000 | 119,921,277 | 610,291 | 26.77 | list |
+    | 48 | gemini-3-1-pro-preview | 149 | 141/152 | 22 | 529,548.720 | 3,369,212,141 | 3,653,426 | 2,968.62 | db+adj |
+    | 49 | gpt-5-4 | 143 | 143/152 | 18 | 199,675.929 | 1,070,761,845 | 2,049,232 | 335.05 | db |
+    | 50 | glm-5-1 | 260 | 140/152 | 35 | 607,138.443 | 755,773,178 | 5,896,205 | 439.78 | db+list |
+    | 51 | deepseek-v4-pro | 275 | 146/152 | 39 | 470,844.493 | 511,717,583 | 4,746,342 | 273.05 | db |
+    | 52 | qwen3-6-plus | 272 | 146/152 | 25 | 484,970.809 | 738,910,364 | 7,027,388 | 253.85 | db |
+    | 53 | mimo-v2-5 | 261 | 146/152 | 25 | 386,539.284 | 394,850,494 | 4,001,432 | 43.34 | db+list |
+    | 54 | kimi-k2-6 | 241 | 144/152 | 25 | 659,868.311 | 295,931,465 | 6,043,559 | 123.45 | db+list |
+    | 55 | grok-4-3 | 149 | 142/152 | 11 | 155,198.849 | 223,145,636 | 2,267,516 | 284.60 | list |
+    | 56 | grok-4-3 | 262 | 145/152 | 13 | 284,644.085 | 168,652,811 | 2,745,183 | 80.18 | db+list |
+    | 57 | minimax-m2-7 | 223 | 146/152 | 14 | 520,646.222 | 277,209,592 | 4,379,146 | 26.74 | db+list |
+    | 58 | gpt-5-4 | 144 | 142/152 | 11 | 147,936.492 | 206,835,018 | 3,239,535 | 134.93 | db |
+    | 59 | grok-3 | 143 | 140/152 | 7 | 65,674.819 | 55,532,220 | 512,410 | 174.28 | db |
+
+
+    ### 1. GPT-5.6-Sol（codex / reasoning-xhigh）
+
+    官方行：平均任务分 53.616285；完成题数 152/152；通过数 93；总运行 301。其余公开字段见本节上方的完整分项表。
+
+    ### 2. GPT-5.6-Sol（codex / reasoning-max）
+
+    官方行：平均任务分 52.762780；完成题数 152/152；通过数 89；总运行 307。其余公开字段见本节上方的完整分项表。
+
+    ### 3. qwen-3-8-max（claude_code / thinking-xhigh）
+
+    官方行：平均任务分 52.485613；完成题数 148/152；通过数 41；总运行 148。其余公开字段见本节上方的完整分项表。
+
+    ### 4. GPT-5.6-Sol（codex / reasoning-high）
+
+    官方行：平均任务分 52.372867；完成题数 152/152；通过数 91；总运行 299。其余公开字段见本节上方的完整分项表。
+
+    ### 5. GPT-5.6-Sol（codex / reasoning-medium）
+
+    官方行：平均任务分 52.100269；完成题数 152/152；通过数 87；总运行 302。其余公开字段见本节上方的完整分项表。
+
+    ### 6. kimi-k3（kimi_code / thinking-max）
+
+    官方行：平均任务分 51.583232；完成题数 149/152；通过数 43；总运行 149。其余公开字段见本节上方的完整分项表。
+
+    ### 7. grok-4-5（grok_build / reasoning-high）
+
+    官方行：平均任务分 51.221844；完成题数 151/152；通过数 41；总运行 151。其余公开字段见本节上方的完整分项表。
+
+    ### 8. kimi-k3（claude_code / thinking-max）
+
+    官方行：平均任务分 50.724878；完成题数 149/152；通过数 41；总运行 149。其余公开字段见本节上方的完整分项表。
+
+    ### 9. GPT-5.6-Terra（codex / reasoning-max）
+
+    官方行：平均任务分 50.702065；完成题数 152/152；通过数 82；总运行 297。其余公开字段见本节上方的完整分项表。
+
+    ### 10. GPT-5.6-Luna（codex / reasoning-max）
+
+    官方行：平均任务分 50.373521；完成题数 149/152；通过数 44；总运行 149。其余公开字段见本节上方的完整分项表。
+
+    ### 11. GPT-5.6-Luna（codex / reasoning-xhigh）
+
+    官方行：平均任务分 49.414815；完成题数 152/152；通过数 46；总运行 152。其余公开字段见本节上方的完整分项表。
+
+    ### 12. claude-opus-5（claude_code / thinking-max）
+
+    官方行：平均任务分 49.001018；完成题数 151/152；通过数 41；总运行 151。其余公开字段见本节上方的完整分项表。
+
+    ### 13. anthropic-claude-fable-5（claude_code / reasoning-xhigh）
+
+    官方行：平均任务分 48.701412；完成题数 150/152；通过数 39；总运行 150。其余公开字段见本节上方的完整分项表。
+
+    ### 14. GPT-5.6-Terra（codex / reasoning-xhigh）
+
+    官方行：平均任务分 48.494226；完成题数 152/152；通过数 82；总运行 299。其余公开字段见本节上方的完整分项表。
+
+    ### 15. gpt-5-5（codex / reasoning-xhigh）
+
+    官方行：平均任务分 47.931391；完成题数 152/152；通过数 80；总运行 299。其余公开字段见本节上方的完整分项表。
+
+    ### 16. GPT-5.6-Terra（codex / reasoning-high）
+
+    官方行：平均任务分 46.571631；完成题数 151/152；通过数 77；总运行 298。其余公开字段见本节上方的完整分项表。
+
+    ### 17. GPT-5.6-Luna（codex / reasoning-high）
+
+    官方行：平均任务分 46.128767；完成题数 152/152；通过数 37；总运行 152。其余公开字段见本节上方的完整分项表。
+
+    ### 18. gpt-5-5（ale_claw / 官方未公布 variant）
+
+    官方行：平均任务分 45.784432；完成题数 145/152；通过数 35；总运行 145。其余公开字段见本节上方的完整分项表。
+
+    ### 19. claude-opus-4-8（claude_code / thinking-max）
+
+    官方行：平均任务分 45.148577；完成题数 150/152；通过数 41；总运行 150。其余公开字段见本节上方的完整分项表。
+
+    ### 20. GPT-5.6-Sol（codex / reasoning-low）
+
+    官方行：平均任务分 45.097518；完成题数 151/152；通过数 73；总运行 299。其余公开字段见本节上方的完整分项表。
+
+    ### 21. gpt-5-5（codex / 官方未公布 variant）
+
+    官方行：平均任务分 44.715784；完成题数 152/152；通过数 110；总运行 438。其余公开字段见本节上方的完整分项表。
+
+    ### 22. qwen-3-8-27b（claude_code / reasoning-max）
+
+    官方行：平均任务分 42.884751；完成题数 148/152；通过数 31；总运行 148。其余公开字段见本节上方的完整分项表。
+
+    ### 23. GPT-5.6-Terra（codex / reasoning-medium）
+
+    官方行：平均任务分 42.586352；完成题数 152/152；通过数 69；总运行 297。其余公开字段见本节上方的完整分项表。
+
+    ### 24. claude-opus-4-7（cursor_cli / thinking-high）
+
+    官方行：平均任务分 42.487184；完成题数 137/152；通过数 32；总运行 137。其余公开字段见本节上方的完整分项表。
+
+    ### 25. claude-opus-4-8（claude_code / thinking-xhigh）
+
+    官方行：平均任务分 42.348784；完成题数 151/152；通过数 34；总运行 151。其余公开字段见本节上方的完整分项表。
+
+    ### 26. gpt-5-5（openclaw / 官方未公布 variant）
+
+    官方行：平均任务分 42.072397；完成题数 136/152；通过数 33；总运行 136。其余公开字段见本节上方的完整分项表。
+
+    ### 27. anthropic-claude-fable-5（claude_code / 官方未公布 variant）
+
+    官方行：平均任务分 41.287764；完成题数 144/152；通过数 35；总运行 152。其余公开字段见本节上方的完整分项表。
+
+    ### 28. ark-0614c（claude_code / 官方未公布 variant）
+
+    官方行：平均任务分 41.131723；完成题数 143/152；通过数 30；总运行 146。其余公开字段见本节上方的完整分项表。
+
+    ### 29. glm-5-2（claude_code / max）
+
+    官方行：平均任务分 41.085407；完成题数 146/152；通过数 31；总运行 146。其余公开字段见本节上方的完整分项表。
+
+    ### 30. gpt-5-5（cursor_cli / 官方未公布 variant）
+
+    官方行：平均任务分 40.680079；完成题数 139/152；通过数 33；总运行 142。其余公开字段见本节上方的完整分项表。
+
+    ### 31. claude-opus-4-8（claude_code / thinking-high）
+
+    官方行：平均任务分 40.677646；完成题数 143/152；通过数 34；总运行 143。其余公开字段见本节上方的完整分项表。
+
+    ### 32. claude-opus-4-7（ale_claw / 官方未公布 variant）
+
+    官方行：平均任务分 40.496053；完成题数 143/152；通过数 28；总运行 143。其余公开字段见本节上方的完整分项表。
+
+    ### 33. GPT-5.6-Terra（codex / reasoning-low）
+
+    官方行：平均任务分 40.249082；完成题数 152/152；通过数 60；总运行 300。其余公开字段见本节上方的完整分项表。
+
+    ### 34. gpt-5-5（codex / reasoning-medium）
+
+    官方行：平均任务分 39.776665；完成题数 149/152；通过数 28；总运行 149。其余公开字段见本节上方的完整分项表。
+
+    ### 35. composer-2-5（cursor_cli / 官方未公布 variant）
+
+    官方行：平均任务分 39.480863；完成题数 138/152；通过数 31；总运行 138。其余公开字段见本节上方的完整分项表。
+
+    ### 36. gpt-5-5（droid / 官方未公布 variant）
+
+    官方行：平均任务分 39.246513；完成题数 137/152；通过数 30；总运行 139。其余公开字段见本节上方的完整分项表。
+
+    ### 37. GPT-5.6-Luna（codex / reasoning-medium）
+
+    官方行：平均任务分 38.500415；完成题数 152/152；通过数 26；总运行 152。其余公开字段见本节上方的完整分项表。
+
+    ### 38. claude-opus-4-8（claude_code / 官方未公布 variant）
+
+    官方行：平均任务分 38.312084；完成题数 141/152；通过数 25；总运行 141。其余公开字段见本节上方的完整分项表。
+
+    ### 39. gpt-5-4（openclaw / 官方未公布 variant）
+
+    官方行：平均任务分 37.326078；完成题数 142/152；通过数 40；总运行 179。其余公开字段见本节上方的完整分项表。
+
+    ### 40. gpt-5-5（codex / reasoning-low）
+
+    官方行：平均任务分 36.369651；完成题数 152/152；通过数 26；总运行 152。其余公开字段见本节上方的完整分项表。
+
+    ### 41. claude-opus-4-7（claude_code / 官方未公布 variant）
+
+    官方行：平均任务分 35.803700；完成题数 137/152；通过数 21；总运行 137。其余公开字段见本节上方的完整分项表。
+
+    ### 42. claude-opus-4-7（openclaw / 官方未公布 variant）
+
+    官方行：平均任务分 35.215068；完成题数 141/152；通过数 24；总运行 142。其余公开字段见本节上方的完整分项表。
+
+    ### 43. gemini-3-1-pro-preview（gemini_cli / 官方未公布 variant）
+
+    官方行：平均任务分 32.707661；完成题数 142/152；通过数 25；总运行 142。其余公开字段见本节上方的完整分项表。
+
+    ### 44. ark-0614c（openclaw_cli / 官方未公布 variant）
+
+    官方行：平均任务分 31.720138；完成题数 144/152；通过数 19；总运行 144。其余公开字段见本节上方的完整分项表。
+
+    ### 45. claude-opus-4-7（droid / 官方未公布 variant）
+
+    官方行：平均任务分 31.695780；完成题数 99/152；通过数 22；总运行 105。其余公开字段见本节上方的完整分项表。
+
+    ### 46. qwen-qwen3-7-max（openclaw / 官方未公布 variant）
+
+    官方行：平均任务分 31.568645；完成题数 142/152；通过数 18；总运行 142。其余公开字段见本节上方的完整分项表。
+
+    ### 47. GPT-5.6-Luna（codex / reasoning-low）
+
+    官方行：平均任务分 31.023835；完成题数 152/152；通过数 18；总运行 152。其余公开字段见本节上方的完整分项表。
+
+    ### 48. gemini-3-1-pro-preview（openclaw / 官方未公布 variant）
+
+    官方行：平均任务分 29.272656；完成题数 141/152；通过数 22；总运行 149。其余公开字段见本节上方的完整分项表。
+
+    ### 49. gpt-5-4（ale_claw / 官方未公布 variant）
+
+    官方行：平均任务分 28.638324；完成题数 143/152；通过数 18；总运行 143。其余公开字段见本节上方的完整分项表。
+
+    ### 50. glm-5-1（openclaw / 官方未公布 variant）
+
+    官方行：平均任务分 28.137365；完成题数 140/152；通过数 35；总运行 260。其余公开字段见本节上方的完整分项表。
+
+    ### 51. deepseek-v4-pro（openclaw / 官方未公布 variant）
+
+    官方行：平均任务分 27.620148；完成题数 146/152；通过数 39；总运行 275。其余公开字段见本节上方的完整分项表。
+
+    ### 52. qwen3-6-plus（openclaw / 官方未公布 variant）
+
+    官方行：平均任务分 24.606981；完成题数 146/152；通过数 25；总运行 272。其余公开字段见本节上方的完整分项表。
+
+    ### 53. mimo-v2-5（openclaw / 官方未公布 variant）
+
+    官方行：平均任务分 23.555957；完成题数 146/152；通过数 25；总运行 261。其余公开字段见本节上方的完整分项表。
+
+    ### 54. kimi-k2-6（openclaw / 官方未公布 variant）
+
+    官方行：平均任务分 21.665040；完成题数 144/152；通过数 25；总运行 241。其余公开字段见本节上方的完整分项表。
+
+    ### 55. grok-4-3（grok_cli / 官方未公布 variant）
+
+    官方行：平均任务分 21.253888；完成题数 142/152；通过数 11；总运行 149。其余公开字段见本节上方的完整分项表。
+
+    ### 56. grok-4-3（openclaw / 官方未公布 variant）
+
+    官方行：平均任务分 15.778799；完成题数 145/152；通过数 13；总运行 262。其余公开字段见本节上方的完整分项表。
+
+    ### 57. minimax-m2-7（openclaw / 官方未公布 variant）
+
+    官方行：平均任务分 14.187993；完成题数 146/152；通过数 14；总运行 223。其余公开字段见本节上方的完整分项表。
+
+    ### 58. gpt-5-4（codex / 官方未公布 variant）
+
+    官方行：平均任务分 13.336790；完成题数 142/152；通过数 11；总运行 144。其余公开字段见本节上方的完整分项表。
+
+    ### 59. grok-3（grok_cli / 官方未公布 variant）
+
+    官方行：平均任务分 12.614549；完成题数 140/152；通过数 7；总运行 143。其余公开字段见本节上方的完整分项表。
+
+    ## 关于此评测
+
+    ### 范围与固定版本
+
+    本提交以官方 GitHub 仓库的 commit `75a3f866535946b67f9a57e4f158eb30ad50be8a` 为准，完整范围是 `selected_tasks/full/overall.txt` 中的 152 个 task ID。EvalHub 只展示 5 个等距抽取的题面案例；这不缩小提交或评分范围。
+
+    ### 评分与提交协议
+
+    主成绩 = 152 个任务的 `eval_result.json.score` 之和 / 152 × 100。缺失、非数值、失败或无效任务均按 0 处理。提交者先在自己的合规基础设施上运行未改动的上游 ALE；本目录中的轻量转换器只验证 152 个固定任务 ID 及其证据哈希，然后写入聚合分数，不执行 ALE。
+
+    官方快照使用 `upstream_author_publication` 基线。59 条官方来源记录中，有 45 条可映射到 EvalHub 注册模型；其余 14 条因没有可验证的注册模型 ID 而写入 omitted_models。对于同名但不同 harness/variant 的未注册行，省略标签显式保留该来源身份，避免合并或伪造 canonical ID。
+
+    ### 限制
+
+    官方榜单是外部评测快照，运行环境、harness、模型版本、成本口径和完成率并不完全一致；成绩仅适用于该公开配置。外部提交仍由评测作者核验上游 run 与证据。
+
+    ## 题目案例
+
+    以下五题按完整 152 题清单的第 1、39、77、115、152 个位置等距抽取。英文原文来自固定 commit 的 task_card.json；中文为忠实翻译。
+
+    ### agriculture_env/crop_rotation_d02
+
+    #### 题目原文
+
+    ```text
+    You are auditing crop rotation eligibility for stable agricultural parcels in France.
+
+    Task directory:
+    - `base`
+
+    Visible inputs:
+    - Parcel GeoPackage: `base\input\seq1524_d02.gpkg`
+    - Task brief: `base\input\task_prompt.md`
+    - Citation note: `base\input\citation.txt`
+    - Optional Python runtime manifest:
+      - `base\input\runtime_env\pyproject.toml`
+      - `base\input\runtime_env\uv.lock`
+      - `base\input\runtime_env\requirements.txt`
+    - Software note: `base\software\README.txt`
+
+    Optional Python runtime:
+    - Use `base\software\python_geo.bat` if you want the benchmark-provisioned geospatial Python stack (pinned `numpy`, `pandas`, `geopandas`, `shapely`, `pyogrio`, `fiona`, `pyproj`).
+    - The package manifest is visible at `base\input\runtime_env\pyproject.toml` if you prefer to build your own environment.
+
+    Your task:
+    1. Read `base\input\task_prompt.md` and follow it exactly.
+    2. Load the input layer `seq1524_d02` from `base\input\seq1524_d02.gpkg`.
+    3. Produce these two GeoPackages under `base\output`:
+       - `eligible_units.gpkg`
+       - `flagged_units.gpkg`
+    4. Use exact layer names:
+       - `eligible_units`
+       - `flagged_units`
+
+    Rules:
+    - Do not modify files under `input/`.
+    - Preserve the input geometry and original columns exactly as required by the task brief.
+    - Keep the output CRS as EPSG:2154.
+    - Write final outputs only under `base\output`.
+    ```
+
+    #### 中文翻译
+
+    ```text
+    你正在审计法国稳定农业地块的轮作资格。
+
+    任务目录：
+    - base
+
+    可见输入：
+    - 地块 GeoPackage：base\input\seq1524_d02.gpkg
+    - 任务简报：base\input\task_prompt.md
+    - 引用说明：base\input\citation.txt
+    - 可选 Python 运行时清单：
+      - base\input\runtime_env\pyproject.toml
+      - base\input\runtime_env\uv.lock
+      - base\input\runtime_env\requirements.txt
+    - 软件说明：base\software\README.txt
+
+    可选 Python 运行时：
+    - 若需要基准提供的地理空间 Python 栈（固定版本的 numpy、pandas、geopandas、shapely、pyogrio、fiona、pyproj），可使用 base\software\python_geo.bat。
+    - 若自行构建环境，可查看 base\input\runtime_env\pyproject.toml 中的包清单。
+
+    你的任务：
+    1. 阅读 base\input\task_prompt.md，并完全遵循其中要求。
+    2. 从 base\input\seq1524_d02.gpkg 加载 seq1524_d02 输入图层。
+    3. 在 base\output 下生成两个 GeoPackage：
+       - eligible_units.gpkg
+       - flagged_units.gpkg
+    4. 使用精确图层名：
+       - eligible_units
+       - flagged_units
+
+    规则：
+    - 不得修改 input/ 下的文件。
+    - 按任务简报的要求，精确保留输入几何和原始列。
+    - 输出 CRS 保持 EPSG:2154。
+    - 最终输出仅写入 base\output。
+    ```
+
+    ### computing_math/os_log_permission_guard_v1
+
+    #### 题目原文
+
+    ```text
+    You are working on a Linux VM.
+
+    ## Task Directory
+    `base`
+
+    ## Visible Inputs
+    - Filesystem snapshot: `base/input/fs_snapshot.tar.gz`
+    - Ownership metadata: `base/input/ownership.csv`
+    - Initial permission metadata: `base/input/permissions.csv`
+    - Active-writer exclusion list: `base/input/active_writers.json`
+    - Workspace setup helper: `base/input/setup_workspace.sh`
+    - Detailed instructions: `base/input/task_instructions.md`
+
+    ## Your Task
+    Update the sandboxed `/var/logs` file permissions while respecting the safety constraints in the metadata files.
+
+    Use this workflow:
+    1. Read `base/input/task_instructions.md`.
+    2. Run `base/input/setup_workspace.sh "base/output"` to create a writable workspace at `base/output/sandbox_fs`.
+    3. Change every regular `.log` file under `base/output/sandbox_fs/var/logs` to mode `444`, except files owned by `syslog` in `ownership.csv` and files listed in `active_writers.json`.
+    4. Do not modify non-`.log` files. Do not change file contents.
+    5. Do not change ownership/group metadata in your final state.
+    6. Save final metadata to `base/output/final_state.json`.
+
+    The active-writer list is a provided safety record for this benchmark. Treat listed files as actively written and leave them unchanged; do not terminate or interfere with any processes.
+
+    ## Output Contract
+    `base/output/final_state.json` must be valid JSON with a top-level `files` list or mapping. Include one entry for each file listed in `ownership.csv`, with path, type, owner, group, and final mode.
+
+    Do not write outputs outside `base/output`.
+    ```
+
+    #### 中文翻译
+
+    ```text
+    你正在 Linux 虚拟机上工作。
+
+    ## 任务目录
+    base
+
+    ## 可见输入
+    - 文件系统快照：base/input/fs_snapshot.tar.gz
+    - 所有权元数据：base/input/ownership.csv
+    - 初始权限元数据：base/input/permissions.csv
+    - 活跃写入者排除清单：base/input/active_writers.json
+    - 工作区初始化助手：base/input/setup_workspace.sh
+    - 详细说明：base/input/task_instructions.md
+
+    ## 你的任务
+    在尊重元数据文件中安全约束的前提下，更新受沙箱保护的 /var/logs 文件权限。
+
+    按此流程执行：
+    1. 阅读 base/input/task_instructions.md。
+    2. 运行 base/input/setup_workspace.sh "base/output"，在 base/output/sandbox_fs 创建可写工作区。
+    3. 将 base/output/sandbox_fs/var/logs 下每个普通 .log 文件改为 444；但 ownership.csv 中属主为 syslog 的文件，以及 active_writers.json 中列出的文件除外。
+    4. 不得改动非 .log 文件。不得更改文件内容。
+    5. 最终状态中不得改变所有者或组元数据。
+    6. 将最终元数据保存到 base/output/final_state.json。
+
+    活跃写入者清单是本基准给出的安全记录。把列出的文件视为正被写入，保持其不变；不要终止或干扰任何进程。
+
+    ## 输出契约
+    base/output/final_state.json 必须是有效 JSON，顶层含 files 列表或映射。为 ownership.csv 中的每个文件写入一条记录，含 path、type、owner、group 和最终 mode。
+
+    不得在 base/output 以外写入输出。
+    ```
+
+    ### health_medicine/epidemiology_forecast
+
+    #### 题目原文
+
+    ```text
+    You are working on a Linux VM to produce the 2021-22 CDC FluSight influenza-hospitalization forecast skill scorecard.
+
+    Visible task files:
+    - `base/input/forecasts_2021-22.parquet`
+    - `base/input/truth_2021-22.csv`
+    - `base/input/runtime_env/pyproject.toml`
+    - `base/input/runtime_env/uv.lock`
+
+    Write exactly these outputs under `base/output`:
+    - `base/output/submission.csv`
+    - `base/output/per_cell_scores.csv`
+
+    Implementation rules:
+    - Use IEEE 754 double precision throughout.
+    - Keep only `forecast_date` in the closed interval `[2022-02-21, 2022-06-20]`.
+    - Keep only targets `1 wk ahead inc flu hosp` through `4 wk ahead inc flu hosp`.
+    - Keep only `type == "quantile"`.
+    - Drop every row with `location == "US"` before aggregation.
+    - Join truth on `(location, target_end_date)` using `base/input/truth_2021-22.csv` exactly as staged.
+    - Quantile levels are the 23 values:
+      `0.010, 0.025, 0.050, 0.100, 0.150, 0.200, 0.250, 0.300, 0.350, 0.400, 0.450, 0.500, 0.550, 0.600, 0.650, 0.700, 0.750, 0.800, 0.850, 0.900, 0.950, 0.975, 0.990`.
+    - Round quantile levels to 3 decimals before matching.
+    - Apply the round-outward rule to forecast values before scoring:
+      `q < 0.5 -> floor(value)`, `q > 0.5 -> ceil(value)`, `q == 0.5 -> round half to even`.
+    - A model is eligible iff its non-US quantile-row count is at least 75% of `Flusight-baseline`'s count after the window/type filters.
+    - For each eligible `(model, location, target_end_date, target)` cell, compute:
+      `wis`, `ae_median`, `cov50_hit`, `cov95_hit`.
+    - Use the proper-score WIS normalization `1 / (K + 1/2)` with `K = 11` and alphas
+      `0.02, 0.05, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90`.
+    - If any required quantile is missing for a cell, treat that cell's `wis` and `ae_median` as NaN, then aggregate with `fillna(0).mean()`.
+    - Aggregate per model into `wis`, `mae`, `cov50`, and `cov95`.
+    - Compute `rel_wis` from pairwise overlapping-cell WIS ratios using the geometric mean over all eligible models, including the self-ratio of 1, then normalize by `Flusight-baseline`.
+
+    Output requirements:
+    - `per_cell_scores.csv` columns:
+      `model, location, target_end_date, target, wis, ae_median, cov50_hit, cov95_hit`
+    - `submission.csv` columns:
+      `model, wis, rel_wis, mae, cov50, cov95`
+    - `submission.csv` must contain exactly one row per eligible model.
+    - `per_cell_scores.csv` must contain exactly one row per eligible scored cell.
+
+    Runtime guidance:
+    - The staged `input/runtime_env/` folder is the agent-facing dependency manifest.
+    - If you need `numpy`, `pandas`, or `pyarrow`, install them from the staged UV project rather than relying on global packages.
+    - You may materialize the task-local runtime by running the canonical entry point `base/software/bootstrap_runtime.sh`, which invokes `uv sync --project input/runtime_env` and writes the venv under `input/runtime_env/.venv`.
+    ```
+
+    #### 中文翻译
+
+    ```text
+    你正在 Linux 虚拟机上生成 2021–22 CDC FluSight 流感住院预测技能记分卡。
+
+    可见任务文件：
+    - base/input/forecasts_2021-22.parquet
+    - base/input/truth_2021-22.csv
+    - base/input/runtime_env/pyproject.toml
+    - base/input/runtime_env/uv.lock
+
+    在 base/output 下且仅生成这些输出：
+    - base/output/submission.csv
+    - base/output/per_cell_scores.csv
+
+    实现规则：
+    - 全程使用 IEEE 754 双精度。
+    - 只保留 forecast_date 位于闭区间 [2022-02-21, 2022-06-20] 的记录。
+    - 只保留目标 1 wk ahead inc flu hosp 至 4 wk ahead inc flu hosp。
+    - 只保留 type == "quantile"。
+    - 聚合前删除所有 location == "US" 的记录。
+    - 严格按阶段化的 base/input/truth_2021-22.csv，在 (location, target_end_date) 上连接真实值。
+    - 分位水平为 23 个值：0.010、0.025、0.050、0.100、0.150、0.200、0.250、0.300、0.350、0.400、0.450、0.500、0.550、0.600、0.650、0.700、0.750、0.800、0.850、0.900、0.950、0.975、0.990。
+    - 匹配前把分位水平舍入到 3 位小数。
+    - 评分前对预测值应用向外舍入规则：q < 0.5 时 floor(value)，q > 0.5 时 ceil(value)，q == 0.5 时采用向偶数舍入。
+    - 模型合格当且仅当，窗口与类型过滤后其非 US 分位行数至少为 Flusight-baseline 行数的 75%。
+    - 对每个合格的 (model, location, target_end_date, target) 单元格计算 wis、ae_median、cov50_hit、cov95_hit。
+    - 使用 proper-score WIS 归一化 1 / (K + 1/2)，其中 K = 11，alpha 为 0.02、0.05、0.10、0.20、0.30、0.40、0.50、0.60、0.70、0.80、0.90。
+    - 若单元格缺少任一必需分位，将该单元格的 wis 和 ae_median 视为 NaN，再以 fillna(0).mean() 聚合。
+    - 按模型聚合为 wis、mae、cov50、cov95。
+    - 从成对重叠单元格的 WIS 比值（含自身为 1 的比值）取全部合格模型的几何平均来计算 rel_wis，之后再按 Flusight-baseline 归一化。
+
+    输出要求：
+    - per_cell_scores.csv 列：model、location、target_end_date、target、wis、ae_median、cov50_hit、cov95_hit。
+    - submission.csv 列：model、wis、rel_wis、mae、cov50、cov95。
+    - submission.csv 对每个合格模型恰有一行。
+    - per_cell_scores.csv 对每个合格评分单元格恰有一行。
+
+    运行时提示：
+    - 阶段化的 input/runtime_env/ 文件夹是面向 Agent 的依赖清单。
+    - 若需要 numpy、pandas 或 pyarrow，请从阶段化 UV 项目安装，不要依赖全局包。
+    - 可以运行规范入口 base/software/bootstrap_runtime.sh；它会调用 uv sync --project input/runtime_env，并把虚拟环境写到 input/runtime_env/.venv。
+    ```
+
+    ### life_sciences/yeast_colony_detection
+
+    #### 题目原文
+
+    ```text
+    You are analyzing a yeast colony plate image on Linux.
+
+    ## Your Task
+    Detect the red yeast colonies growing on the agar plate while excluding white dots and other visual noise.
+
+    ## Visible Inputs
+    - Plate image: `base/input/6-1.jpg`
+    - Plate-region mask: `base/input/PlateTemplate.png`
+    - CellProfiler entry point, if provisioned: `base/software/cellprofiler`
+
+    ## What You Must Do
+    1. Use the plate image and mask to identify red yeast colonies inside the plate region.
+    2. Create a reproducible detection workflow in CellProfiler 4.2.8 or another image-analysis workflow available on the VM.
+    3. Count the detected red colonies.
+    4. Save all required outputs under `base/output`.
+
+    ## Required Outputs
+    - JSON count file: `base/output/answer.json`
+      - exact schema: `{"colony_count": <integer>}`
+    - Measurement CSV: `base/output/measurements/RedColonies.csv`
+      - include one row per detected red colony
+      - include numeric centroid columns named `Location_Center_X` and `Location_Center_Y`
+      - include `ObjectNumber` if your workflow can provide it
+
+    ## Constraints
+    - Do not modify files under `base/input`.
+    - Only read the visible files under `base/input`.
+    - Keep all task-produced files inside `base/output`.
+    ```
+
+    #### 中文翻译
+
+    ```text
+    你正在 Linux 上分析一张酵母菌落平板图像。
+
+    ## 你的任务
+    检测琼脂平板内生长的红色酵母菌落，同时排除白点和其他视觉噪声。
+
+    ## 可见输入
+    - 平板图像：base/input/6-1.jpg
+    - 平板区域掩码：base/input/PlateTemplate.png
+    - 若已配置，可用的 CellProfiler 入口：base/software/cellprofiler
+
+    ## 必须完成的工作
+    1. 使用平板图像和掩码，在平板区域内识别红色酵母菌落。
+    2. 在 CellProfiler 4.2.8 或虚拟机中的其他图像分析工作流里创建可复现的检测流程。
+    3. 统计检测出的红色菌落。
+    4. 将所有必需输出保存到 base/output。
+
+    ## 必需输出
+    - JSON 计数文件：base/output/answer.json
+      - 精确 schema：{"colony_count": <integer>}
+    - 测量 CSV：base/output/measurements/RedColonies.csv
+      - 每个检测出的红色菌落一行
+      - 含名为 Location_Center_X 和 Location_Center_Y 的数值质心列
+      - 若工作流可提供，也应含 ObjectNumber
+
+    ## 约束
+    - 不得修改 base/input 下的文件。
+    - 只读取 base/input 下可见的文件。
+    - 所有任务生成文件均保留在 base/output 内。
+    ```
+
+    ### visual_media/video_storyboard_001
+
+    #### 题目原文
+
+    ```text
+    ## Context
+
+    A small restoration studio is about to begin a scan + remaster pass on a public-domain print of a vintage Yasuji Murata animation (*A Wolf is a Wolf*, 1931). Before any restoration work starts, the pipeline requires an **archival shot log / continuity report** of the source print: a temporal, per-shot factual record of what is on screen, written by an archival assistant editor.
+
+    The QC team has handed you a **restoration fact-check brief** (a DOCX of factual visual questions about the film). Your shot log must preserve enough detail that downstream QC engineers can verify every item in the brief by reading the log alone. As the archivist, you record facts — you do **not** answer the brief's questions or insert interpretation. Answering is the QC engineers' job.
+
+    ## Input Files
+    - Source print: `input/Yasuji_Murata-_A_Wolf_is_a_Wolf_(1931).ogv`
+    - QC fact-check brief: `input/video_storyboard_qa_set.docx`
+
+    ## Software
+    Use any DOCX-capable workflow available on the VM. A task-local launcher is available at `software/launch_word_processor.cmd`.
+
+    ## Your Task
+    1. Inspect the full source print end-to-end.
+    2. Read the QC brief so your log preserves the facts each item depends on.
+    3. Produce a concise, complete shot log in temporal order.
+    4. For each shot or segment, include shot/segment ID, start and end time, visual description, key actions, important objects/people/animals/scene details, and visible on-screen text or dialogue relevant to the brief.
+    5. Do **not** answer the brief's questions. Record only the observable facts a QC engineer would need to answer them.
+    6. Use only information grounded in the source print — no external knowledge, plot context, or interpretation.
+
+    ## Output
+    Save the final readable Word document exactly as `output/storyboard.docx`.
+    ```
+
+    #### 中文翻译
+
+    ```text
+    ## 背景
+
+    一家小型修复工作室即将开始处理一部公版的村田安司动画《狼就是狼》（1931）：先扫描、再修复。在修复工作开始前，流程需要先有源拷贝的档案镜头日志／连续性报告：由档案助理剪辑师写成的、按时间顺序逐镜头记录画面的事实性资料。
+
+    QC 团队给了你一份修复事实核查简报（一份包含影片视觉事实问题的 DOCX）。你的镜头日志必须保留充分细节，使下游 QC 工程师只阅读该日志便能核验简报的每一个项目。作为档案人员，你记录事实——不直接回答简报问题，也不加入解释；回答由 QC 工程师完成。
+
+    ## 输入文件
+    - 源拷贝：input/Yasuji_Murata-_A_Wolf_is_a_Wolf_(1931).ogv
+    - QC 事实核查简报：input/video_storyboard_qa_set.docx
+
+    ## 软件
+    使用虚拟机里任意可处理 DOCX 的工作流。任务本地提供 software/launch_word_processor.cmd 启动器。
+
+    ## 你的任务
+    1. 从头到尾检查完整源拷贝。
+    2. 阅读 QC 简报，以便日志保存每一个问题依赖的事实。
+    3. 按时间顺序生成简洁而完整的镜头日志。
+    4. 对每个镜头或片段，包含镜头／片段 ID、起止时间、视觉描述、关键动作、重要物品／人物／动物／场景细节，以及与简报相关的可见屏幕文字或对白。
+    5. 不要回答简报问题。只记录 QC 工程师回答所需的可观察事实。
+    6. 只能使用源拷贝中有根据的信息——不使用外部知识、剧情背景或解释。
+
+    ## 输出
+    将最终可读的 Word 文档精确保存为 output/storyboard.docx。
+    ```
+
+    ## 一手资料
+
+    - [Agents’ Last Exam 官网](https://agents-last-exam.org/)
+    - [Agents’ Last Exam 官方 GitHub 仓库](https://github.com/rdi-berkeley/agents-last-exam)
+    - [固定 commit 的完整任务清单](https://github.com/rdi-berkeley/agents-last-exam/blob/75a3f866535946b67f9a57e4f158eb30ad50be8a/selected_tasks/full/overall.txt)
+    - [官方 full leaderboard API](https://agents-last-exam.org/api/demo/leaderboard)（本快照 SHA-256：`e2ead78a77de0e7c2859ae79d758ed9de7c73cbc5bd4d935ac810905589bb1fb`）
+tasks:
+  - "id": "crop-rotation-audit"
+    "source_task_id": "agriculture_env/crop_rotation_d02"
+    "label": "稳定农业地块的轮作资格审计"
+    translation: |-
+      你正在审计法国稳定农业地块的轮作资格。
+
+      任务目录：
+      - base
+
+      可见输入：
+      - 地块 GeoPackage：base\input\seq1524_d02.gpkg
+      - 任务简报：base\input\task_prompt.md
+      - 引用说明：base\input\citation.txt
+      - 可选 Python 运行时清单：
+        - base\input\runtime_env\pyproject.toml
+        - base\input\runtime_env\uv.lock
+        - base\input\runtime_env\requirements.txt
+      - 软件说明：base\software\README.txt
+
+      可选 Python 运行时：
+      - 若需要基准提供的地理空间 Python 栈（固定版本的 numpy、pandas、geopandas、shapely、pyogrio、fiona、pyproj），可使用 base\software\python_geo.bat。
+      - 若自行构建环境，可查看 base\input\runtime_env\pyproject.toml 中的包清单。
+
+      你的任务：
+      1. 阅读 base\input\task_prompt.md，并完全遵循其中要求。
+      2. 从 base\input\seq1524_d02.gpkg 加载 seq1524_d02 输入图层。
+      3. 在 base\output 下生成两个 GeoPackage：
+         - eligible_units.gpkg
+         - flagged_units.gpkg
+      4. 使用精确图层名：
+         - eligible_units
+         - flagged_units
+
+      规则：
+      - 不得修改 input/ 下的文件。
+      - 按任务简报的要求，精确保留输入几何和原始列。
+      - 输出 CRS 保持 EPSG:2154。
+      - 最终输出仅写入 base\output。
+    "prompt": |-
+      You are auditing crop rotation eligibility for stable agricultural parcels in France.
+
+      Task directory:
+      - `base`
+
+      Visible inputs:
+      - Parcel GeoPackage: `base\input\seq1524_d02.gpkg`
+      - Task brief: `base\input\task_prompt.md`
+      - Citation note: `base\input\citation.txt`
+      - Optional Python runtime manifest:
+        - `base\input\runtime_env\pyproject.toml`
+        - `base\input\runtime_env\uv.lock`
+        - `base\input\runtime_env\requirements.txt`
+      - Software note: `base\software\README.txt`
+
+      Optional Python runtime:
+      - Use `base\software\python_geo.bat` if you want the benchmark-provisioned geospatial Python stack (pinned `numpy`, `pandas`, `geopandas`, `shapely`, `pyogrio`, `fiona`, `pyproj`).
+      - The package manifest is visible at `base\input\runtime_env\pyproject.toml` if you prefer to build your own environment.
+
+      Your task:
+      1. Read `base\input\task_prompt.md` and follow it exactly.
+      2. Load the input layer `seq1524_d02` from `base\input\seq1524_d02.gpkg`.
+      3. Produce these two GeoPackages under `base\output`:
+         - `eligible_units.gpkg`
+         - `flagged_units.gpkg`
+      4. Use exact layer names:
+         - `eligible_units`
+         - `flagged_units`
+
+      Rules:
+      - Do not modify files under `input/`.
+      - Preserve the input geometry and original columns exactly as required by the task brief.
+      - Keep the output CRS as EPSG:2154.
+      - Write final outputs only under `base\output`.
+    "run_spec": >-
+      在固定到 commit 75a3f866535946b67f9a57e4f158eb30ad50be8a 的原始 Agents’ Last Exam 外部工作流中运行此题。仅当上游已生成该任务的 eval_result.json 后，才在提交清单中记录 task_id、score、run_id 及 sha256 证据；本 EvalHub 包不会启动 Agent、虚拟机、容器、测试或下载任何 ALE 资源。
+  - "id": "os-log-permission-guard"
+    "source_task_id": "computing_math/os_log_permission_guard_v1"
+    "label": "Linux 系统日志权限安全整改"
+    translation: |-
+      任务：你需要根据给定的文件系统快照和所有权元数据，检查并整改 Linux 日志文件的权限；成功条件是只在规定输出目录提交符合任务简报全部安全要求的最终状态清单。
+
+      你正在 Linux 虚拟机上工作。
+
+      ## 任务目录
+      base
+
+      ## 可见输入
+      - 文件系统快照：base/input/fs_snapshot.tar.gz
+      - 所有权元数据：base/input/ownership.csv
+      - 初始权限元数据：base/input/permissions.csv
+      - 活跃写入者排除清单：base/input/active_writers.json
+      - 工作区初始化助手：base/input/setup_workspace.sh
+      - 详细说明：base/input/task_instructions.md
+
+      ## 你的任务
+      在尊重元数据文件中安全约束的前提下，更新受沙箱保护的 /var/logs 文件权限。
+
+      按此流程执行：
+      1. 阅读 base/input/task_instructions.md。
+      2. 运行 base/input/setup_workspace.sh "base/output"，在 base/output/sandbox_fs 创建可写工作区。
+      3. 将 base/output/sandbox_fs/var/logs 下每个普通 .log 文件改为 444；但 ownership.csv 中属主为 syslog 的文件，以及 active_writers.json 中列出的文件除外。
+      4. 不得改动非 .log 文件。不得更改文件内容。
+      5. 最终状态中不得改变所有者或组元数据。
+      6. 将最终元数据保存到 base/output/final_state.json。
+
+      活跃写入者清单是本基准给出的安全记录。把列出的文件视为正被写入，保持其不变；不要终止或干扰任何进程。
+
+      ## 输出契约
+      base/output/final_state.json 必须是有效 JSON，顶层含 files 列表或映射。为 ownership.csv 中的每个文件写入一条记录，含 path、type、owner、group 和最终 mode。
+
+      不得在 base/output 以外写入输出。
+    "prompt": |-
+      You are working on a Linux VM.
+
+      ## Task Directory
+      `base`
+
+      ## Visible Inputs
+      - Filesystem snapshot: `base/input/fs_snapshot.tar.gz`
+      - Ownership metadata: `base/input/ownership.csv`
+      - Initial permission metadata: `base/input/permissions.csv`
+      - Active-writer exclusion list: `base/input/active_writers.json`
+      - Workspace setup helper: `base/input/setup_workspace.sh`
+      - Detailed instructions: `base/input/task_instructions.md`
+
+      ## Your Task
+      Update the sandboxed `/var/logs` file permissions while respecting the safety constraints in the metadata files.
+
+      Use this workflow:
+      1. Read `base/input/task_instructions.md`.
+      2. Run `base/input/setup_workspace.sh "base/output"` to create a writable workspace at `base/output/sandbox_fs`.
+      3. Change every regular `.log` file under `base/output/sandbox_fs/var/logs` to mode `444`, except files owned by `syslog` in `ownership.csv` and files listed in `active_writers.json`.
+      4. Do not modify non-`.log` files. Do not change file contents.
+      5. Do not change ownership/group metadata in your final state.
+      6. Save final metadata to `base/output/final_state.json`.
+
+      The active-writer list is a provided safety record for this benchmark. Treat listed files as actively written and leave them unchanged; do not terminate or interfere with any processes.
+
+      ## Output Contract
+      `base/output/final_state.json` must be valid JSON with a top-level `files` list or mapping. Include one entry for each file listed in `ownership.csv`, with path, type, owner, group, and final mode.
+
+      Do not write outputs outside `base/output`.
+    "run_spec": >-
+      在固定到 commit 75a3f866535946b67f9a57e4f158eb30ad50be8a 的原始 Agents’ Last Exam 外部工作流中运行此题。仅当上游已生成该任务的 eval_result.json 后，才在提交清单中记录 task_id、score、run_id 及 sha256 证据；本 EvalHub 包不会启动 Agent、虚拟机、容器、测试或下载任何 ALE 资源。
+  - "id": "epidemiology-forecast"
+    "source_task_id": "health_medicine/epidemiology_forecast"
+    "label": "流感住院预测技能记分卡生成"
+    translation: |-
+      你正在 Linux 虚拟机上生成 2021–22 CDC FluSight 流感住院预测技能记分卡。
+
+      可见任务文件：
+      - base/input/forecasts_2021-22.parquet
+      - base/input/truth_2021-22.csv
+      - base/input/runtime_env/pyproject.toml
+      - base/input/runtime_env/uv.lock
+
+      在 base/output 下且仅生成这些输出：
+      - base/output/submission.csv
+      - base/output/per_cell_scores.csv
+
+      实现规则：
+      - 全程使用 IEEE 754 双精度。
+      - 只保留 forecast_date 位于闭区间 [2022-02-21, 2022-06-20] 的记录。
+      - 只保留目标 1 wk ahead inc flu hosp 至 4 wk ahead inc flu hosp。
+      - 只保留 type == "quantile"。
+      - 聚合前删除所有 location == "US" 的记录。
+      - 严格按阶段化的 base/input/truth_2021-22.csv，在 (location, target_end_date) 上连接真实值。
+      - 分位水平为 23 个值：0.010、0.025、0.050、0.100、0.150、0.200、0.250、0.300、0.350、0.400、0.450、0.500、0.550、0.600、0.650、0.700、0.750、0.800、0.850、0.900、0.950、0.975、0.990。
+      - 匹配前把分位水平舍入到 3 位小数。
+      - 评分前对预测值应用向外舍入规则：q < 0.5 时 floor(value)，q > 0.5 时 ceil(value)，q == 0.5 时采用向偶数舍入。
+      - 模型合格当且仅当，窗口与类型过滤后其非 US 分位行数至少为 Flusight-baseline 行数的 75%。
+      - 对每个合格的 (model, location, target_end_date, target) 单元格计算 wis、ae_median、cov50_hit、cov95_hit。
+      - 使用 proper-score WIS 归一化 1 / (K + 1/2)，其中 K = 11，alpha 为 0.02、0.05、0.10、0.20、0.30、0.40、0.50、0.60、0.70、0.80、0.90。
+      - 若单元格缺少任一必需分位，将该单元格的 wis 和 ae_median 视为 NaN，再以 fillna(0).mean() 聚合。
+      - 按模型聚合为 wis、mae、cov50、cov95。
+      - 从成对重叠单元格的 WIS 比值（含自身为 1 的比值）取全部合格模型的几何平均来计算 rel_wis，之后再按 Flusight-baseline 归一化。
+
+      输出要求：
+      - per_cell_scores.csv 列：model、location、target_end_date、target、wis、ae_median、cov50_hit、cov95_hit。
+      - submission.csv 列：model、wis、rel_wis、mae、cov50、cov95。
+      - submission.csv 对每个合格模型恰有一行。
+      - per_cell_scores.csv 对每个合格评分单元格恰有一行。
+
+      运行时提示：
+      - 阶段化的 input/runtime_env/ 文件夹是面向 Agent 的依赖清单。
+      - 若需要 numpy、pandas 或 pyarrow，请从阶段化 UV 项目安装，不要依赖全局包。
+      - 可以运行规范入口 base/software/bootstrap_runtime.sh；它会调用 uv sync --project input/runtime_env，并把虚拟环境写到 input/runtime_env/.venv。
+    "prompt": |-
+      You are working on a Linux VM to produce the 2021-22 CDC FluSight influenza-hospitalization forecast skill scorecard.
+
+      Visible task files:
+      - `base/input/forecasts_2021-22.parquet`
+      - `base/input/truth_2021-22.csv`
+      - `base/input/runtime_env/pyproject.toml`
+      - `base/input/runtime_env/uv.lock`
+
+      Write exactly these outputs under `base/output`:
+      - `base/output/submission.csv`
+      - `base/output/per_cell_scores.csv`
+
+      Implementation rules:
+      - Use IEEE 754 double precision throughout.
+      - Keep only `forecast_date` in the closed interval `[2022-02-21, 2022-06-20]`.
+      - Keep only targets `1 wk ahead inc flu hosp` through `4 wk ahead inc flu hosp`.
+      - Keep only `type == "quantile"`.
+      - Drop every row with `location == "US"` before aggregation.
+      - Join truth on `(location, target_end_date)` using `base/input/truth_2021-22.csv` exactly as staged.
+      - Quantile levels are the 23 values:
+        `0.010, 0.025, 0.050, 0.100, 0.150, 0.200, 0.250, 0.300, 0.350, 0.400, 0.450, 0.500, 0.550, 0.600, 0.650, 0.700, 0.750, 0.800, 0.850, 0.900, 0.950, 0.975, 0.990`.
+      - Round quantile levels to 3 decimals before matching.
+      - Apply the round-outward rule to forecast values before scoring:
+        `q < 0.5 -> floor(value)`, `q > 0.5 -> ceil(value)`, `q == 0.5 -> round half to even`.
+      - A model is eligible iff its non-US quantile-row count is at least 75% of `Flusight-baseline`'s count after the window/type filters.
+      - For each eligible `(model, location, target_end_date, target)` cell, compute:
+        `wis`, `ae_median`, `cov50_hit`, `cov95_hit`.
+      - Use the proper-score WIS normalization `1 / (K + 1/2)` with `K = 11` and alphas
+        `0.02, 0.05, 0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90`.
+      - If any required quantile is missing for a cell, treat that cell's `wis` and `ae_median` as NaN, then aggregate with `fillna(0).mean()`.
+      - Aggregate per model into `wis`, `mae`, `cov50`, and `cov95`.
+      - Compute `rel_wis` from pairwise overlapping-cell WIS ratios using the geometric mean over all eligible models, including the self-ratio of 1, then normalize by `Flusight-baseline`.
+
+      Output requirements:
+      - `per_cell_scores.csv` columns:
+        `model, location, target_end_date, target, wis, ae_median, cov50_hit, cov95_hit`
+      - `submission.csv` columns:
+        `model, wis, rel_wis, mae, cov50, cov95`
+      - `submission.csv` must contain exactly one row per eligible model.
+      - `per_cell_scores.csv` must contain exactly one row per eligible scored cell.
+
+      Runtime guidance:
+      - The staged `input/runtime_env/` folder is the agent-facing dependency manifest.
+      - If you need `numpy`, `pandas`, or `pyarrow`, install them from the staged UV project rather than relying on global packages.
+      - You may materialize the task-local runtime by running the canonical entry point `base/software/bootstrap_runtime.sh`, which invokes `uv sync --project input/runtime_env` and writes the venv under `input/runtime_env/.venv`.
+    "run_spec": >-
+      在固定到 commit 75a3f866535946b67f9a57e4f158eb30ad50be8a 的原始 Agents’ Last Exam 外部工作流中运行此题。仅当上游已生成该任务的 eval_result.json 后，才在提交清单中记录 task_id、score、run_id 及 sha256 证据；本 EvalHub 包不会启动 Agent、虚拟机、容器、测试或下载任何 ALE 资源。
+  - "id": "yeast-colony-detection"
+    "source_task_id": "life_sciences/yeast_colony_detection"
+    "label": "酵母菌落图像检测与计数"
+    translation: |-
+      任务：你需要分析给定的酵母菌落平板图像与掩码，识别红色菌落并排除噪声；成功条件是将符合输出格式和计数要求的结果写入指定输出目录。
+
+      你正在 Linux 上分析一张酵母菌落平板图像。
+
+      ## 你的任务
+      检测琼脂平板内生长的红色酵母菌落，同时排除白点和其他视觉噪声。
+
+      ## 可见输入
+      - 平板图像：base/input/6-1.jpg
+      - 平板区域掩码：base/input/PlateTemplate.png
+      - 若已配置，可用的 CellProfiler 入口：base/software/cellprofiler
+
+      ## 必须完成的工作
+      1. 使用平板图像和掩码，在平板区域内识别红色酵母菌落。
+      2. 在 CellProfiler 4.2.8 或虚拟机中的其他图像分析工作流里创建可复现的检测流程。
+      3. 统计检测出的红色菌落。
+      4. 将所有必需输出保存到 base/output。
+
+      ## 必需输出
+      - JSON 计数文件：base/output/answer.json
+        - 精确 schema：{"colony_count": <integer>}
+      - 测量 CSV：base/output/measurements/RedColonies.csv
+        - 每个检测出的红色菌落一行
+        - 含名为 Location_Center_X 和 Location_Center_Y 的数值质心列
+        - 若工作流可提供，也应含 ObjectNumber
+
+      ## 约束
+      - 不得修改 base/input 下的文件。
+      - 只读取 base/input 下可见的文件。
+      - 所有任务生成文件均保留在 base/output 内。
+    "prompt": |-
+      You are analyzing a yeast colony plate image on Linux.
+
+      ## Your Task
+      Detect the red yeast colonies growing on the agar plate while excluding white dots and other visual noise.
+
+      ## Visible Inputs
+      - Plate image: `base/input/6-1.jpg`
+      - Plate-region mask: `base/input/PlateTemplate.png`
+      - CellProfiler entry point, if provisioned: `base/software/cellprofiler`
+
+      ## What You Must Do
+      1. Use the plate image and mask to identify red yeast colonies inside the plate region.
+      2. Create a reproducible detection workflow in CellProfiler 4.2.8 or another image-analysis workflow available on the VM.
+      3. Count the detected red colonies.
+      4. Save all required outputs under `base/output`.
+
+      ## Required Outputs
+      - JSON count file: `base/output/answer.json`
+        - exact schema: `{"colony_count": <integer>}`
+      - Measurement CSV: `base/output/measurements/RedColonies.csv`
+        - include one row per detected red colony
+        - include numeric centroid columns named `Location_Center_X` and `Location_Center_Y`
+        - include `ObjectNumber` if your workflow can provide it
+
+      ## Constraints
+      - Do not modify files under `base/input`.
+      - Only read the visible files under `base/input`.
+      - Keep all task-produced files inside `base/output`.
+    "run_spec": >-
+      在固定到 commit 75a3f866535946b67f9a57e4f158eb30ad50be8a 的原始 Agents’ Last Exam 外部工作流中运行此题。仅当上游已生成该任务的 eval_result.json 后，才在提交清单中记录 task_id、score、run_id 及 sha256 证据；本 EvalHub 包不会启动 Agent、虚拟机、容器、测试或下载任何 ALE 资源。
+  - "id": "video-storyboard-shot-log"
+    "source_task_id": "visual_media/video_storyboard_001"
+    "label": "修复前动画源片的镜头日志编制"
+    translation: |-
+      任务：你需要依据给定的动画源片和 QC 事实核查简报，编制按时间顺序的镜头日志；成功条件是输出满足简报全部核验要求、且仅记录可观察事实的完整档案报告。
+
+      ## 背景
+
+      一家小型修复工作室即将开始处理一部公版的村田安司动画《狼就是狼》（1931）：先扫描、再修复。在修复工作开始前，流程需要先有源拷贝的档案镜头日志／连续性报告：由档案助理剪辑师写成的、按时间顺序逐镜头记录画面的事实性资料。
+
+      QC 团队给了你一份修复事实核查简报（一份包含影片视觉事实问题的 DOCX）。你的镜头日志必须保留充分细节，使下游 QC 工程师只阅读该日志便能核验简报的每一个项目。作为档案人员，你记录事实——不直接回答简报问题，也不加入解释；回答由 QC 工程师完成。
+
+      ## 输入文件
+      - 源拷贝：input/Yasuji_Murata-_A_Wolf_is_a_Wolf_(1931).ogv
+      - QC 事实核查简报：input/video_storyboard_qa_set.docx
+
+      ## 软件
+      使用虚拟机里任意可处理 DOCX 的工作流。任务本地提供 software/launch_word_processor.cmd 启动器。
+
+      ## 你的任务
+      1. 从头到尾检查完整源拷贝。
+      2. 阅读 QC 简报，以便日志保存每一个问题依赖的事实。
+      3. 按时间顺序生成简洁而完整的镜头日志。
+      4. 对每个镜头或片段，包含镜头／片段 ID、起止时间、视觉描述、关键动作、重要物品／人物／动物／场景细节，以及与简报相关的可见屏幕文字或对白。
+      5. 不要回答简报问题。只记录 QC 工程师回答所需的可观察事实。
+      6. 只能使用源拷贝中有根据的信息——不使用外部知识、剧情背景或解释。
+
+      ## 输出
+      将最终可读的 Word 文档精确保存为 output/storyboard.docx。
+    "prompt": |-
+      ## Context
+
+      A small restoration studio is about to begin a scan + remaster pass on a public-domain print of a vintage Yasuji Murata animation (*A Wolf is a Wolf*, 1931). Before any restoration work starts, the pipeline requires an **archival shot log / continuity report** of the source print: a temporal, per-shot factual record of what is on screen, written by an archival assistant editor.
+
+      The QC team has handed you a **restoration fact-check brief** (a DOCX of factual visual questions about the film). Your shot log must preserve enough detail that downstream QC engineers can verify every item in the brief by reading the log alone. As the archivist, you record facts — you do **not** answer the brief's questions or insert interpretation. Answering is the QC engineers' job.
+
+      ## Input Files
+      - Source print: `input/Yasuji_Murata-_A_Wolf_is_a_Wolf_(1931).ogv`
+      - QC fact-check brief: `input/video_storyboard_qa_set.docx`
+
+      ## Software
+      Use any DOCX-capable workflow available on the VM. A task-local launcher is available at `software/launch_word_processor.cmd`.
+
+      ## Your Task
+      1. Inspect the full source print end-to-end.
+      2. Read the QC brief so your log preserves the facts each item depends on.
+      3. Produce a concise, complete shot log in temporal order.
+      4. For each shot or segment, include shot/segment ID, start and end time, visual description, key actions, important objects/people/animals/scene details, and visible on-screen text or dialogue relevant to the brief.
+      5. Do **not** answer the brief's questions. Record only the observable facts a QC engineer would need to answer them.
+      6. Use only information grounded in the source print — no external knowledge, plot context, or interpretation.
+
+      ## Output
+      Save the final readable Word document exactly as `output/storyboard.docx`.
+    "run_spec": >-
+      在固定到 commit 75a3f866535946b67f9a57e4f158eb30ad50be8a 的原始 Agents’ Last Exam 外部工作流中运行此题。仅当上游已生成该任务的 eval_result.json 后，才在提交清单中记录 task_id、score、run_id 及 sha256 证据；本 EvalHub 包不会启动 Agent、虚拟机、容器、测试或下载任何 ALE 资源。
