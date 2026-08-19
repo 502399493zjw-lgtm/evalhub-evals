@@ -1,0 +1,180 @@
+id: civbench
+protocol_revision: 1
+protocol_note: >-
+  Ground Control standard-track protocol at civ6-mcp dd2019056371b92ea4854e879ddf05a8cad95e8a;
+  each game score is the arithmetic mean of the eight published 0–100 dimensions,
+  and a submission score is the arithmetic mean across all admissible submitted games.
+name: CivBench（文明 VI 长程战略 Agent）
+cover: assets/cover.webp
+category: useful
+description: >-
+  CivBench 让 LLM Agent 通过 MCP 工具在《文明 VI》的 Ground Control 固定场景中经营巴比伦，
+  连续处理探索、科研、经济、军事、外交与胜利竞赛。主分数是每局八项 0–100 分维度的算术平均，
+  多局提交再取局间均值；分数越高，表示长程战略执行越完整。
+hook_title: Agent 能把 300 多回合的计划真正打进《文明 VI》吗
+upstream:
+  repo: lmwilki/civ6-mcp
+  commit: dd2019056371b92ea4854e879ddf05a8cad95e8a
+references:
+  homepage: https://civ6-mcp.lwilko.com
+  repository: https://github.com/lmwilki/civ6-mcp
+dimensions: [博弈, 推理]
+interface: agent
+runner: custom
+custom_mode: external_workflow
+scoring: custom
+scored_by: local
+score_policy: required
+baseline_policy: required
+score_unit: 分
+leaderboard: latest_session
+scoring_note: >-
+  外部工作流先在固定 Ground Control、civbench_standard 配置下完成一局或多局上游运行，
+  并用钉死版本的上游评分代码得到 Overall Score、Economic Management、Military Competence、
+  Scientific Progress、Diplomatic Skill、Spatial Reasoning、Tool-Use Fluency 与 Long-Horizon Coherence
+  八项 0–100 分。打包器拒绝场景、赛道、admissible 状态或八维范围不符的清单；每局主分为八维算术平均，
+  最终 score 为所有提交局主分的算术平均，保留四位小数。原始游戏分、胜负和运行数只作辅助展示，
+  ELO 不参与 EvalHub 排名。打包器只验证清单结构和确定性算术，不验证外部运行真实性或安全性。
+command_template:
+  argv: [node, evals/civbench/pack-to-result.mjs, "{input}", --out, "{output}"]
+  output: civbench-result.json
+trials: 1
+tasks:
+  - id: ground-control
+    label: 巴比伦 Ground Control 标准场景
+    prompt: "Play as Babylon on a Standard Pangaea map. Build a thriving empire, research technologies, and pursue a path to victory. Babylon's unique ability grants the full technology (not just a boost) when you trigger a eureka — leverage this to accelerate your progress."
+    translation: "在标准尺寸的泛大陆地图上扮演巴比伦。建立繁荣的帝国，研究科技，并追求一条通往胜利的道路。巴比伦的独特能力会在触发尤里卡时直接授予完整科技（而不只是提供加成）——请利用这一点加速发展。"
+    run_spec: >-
+      Checkout civ6-mcp commit dd2019056371b92ea4854e879ddf05a8cad95e8a and run only scenario
+      ground_control on track civbench_standard. Keep the bundled 0A_GROUND_CONTROL.Civ6Save and scenario settings:
+      Babylon (Hammurabi), Prince difficulty, Standard Pangaea, Quick speed, and a 330-turn budget. The upstream
+      bulk runner defaults to one run per model/scenario pair; exact invocation is `uv run python evals/runner.py
+      --model <provider/model> --scenarios ground_control --track civbench_standard --runs 1`. A comparison submission
+      may repeat the same fixed run and must include every completed run that passed the upstream canonical filters:
+      at least 10 turns, no save scumming, and no failed launch. Score each included run with the pinned upstream
+      eight-dimension analysis, then pass the eight dimension scores, raw game score, outcome, run id, and admissible
+      flag to the local packer. Do not substitute Snowflake, Cry Havoc, the open track, resumed/non-canonical runs, or
+      ELO. Runtime execution and provenance review remain external to EvalHub.
+detail_profile:
+  source_kind: upstream_publication
+  markdown: |-
+    ## 榜单
+
+    下表来自 CivBench 官方 Hugging Face 数据集的固定快照 `2d9937d1e273a18fbe0e9e8f32325d4d6cb61dea`。筛选边界是 `admissible == true`、`evalTrack == civbench_standard`、`scenarioId == ground_control`，共 19 局。每局先对八项公开维度取算术平均，再按模型对全部入选局取均值；这是可复核的**派生主分**，不是 EvalHub 独立复跑。表格统一四舍五入到最多一位小数，排序仍使用机器可读结果中的完整精度。
+
+    | 排名 | 模型 | 主分（派生） | Harness |
+    | ---: | --- | ---: | --- |
+    | 1 | Gemini 3.1 Pro Preview | 62.9 | CivBench Standard（Inspect AI ReAct） |
+    | 2 | GPT-5.4 | 59.8 | CivBench Standard（Inspect AI ReAct） |
+    | 3 | Claude Opus 4.6 | 55.2 | CivBench Standard（Inspect AI ReAct） |
+    | 4 | Kimi K2.5 | 48.3 | CivBench Standard（Inspect AI ReAct） |
+
+    四个模型共享上游 `civbench_standard` 定义的固定 Harness：Inspect AI `react()` Agent、标准 system prompt/playbook 与 Civ6-MCP 工具服务。官方 19 局快照没有发布逐局 Harness 版本，因此结构化结果只记录来源可证的 Harness 名称，不从较新的依赖锁文件倒推版本。
+
+    模型列使用 EvalHub 注册表显示名；结构化公开结果分别保留 canonical ID `google/gemini-3.1-pro-preview`、`openai/gpt-5.4`、`anthropic/claude-opus-4-6` 与 `moonshot/kimi-k2.5`。运行覆盖和胜负放在分项表中一起解读；上游跨场景 ELO 不进入本协议的 Ground Control 主分或排序。
+
+    ## 官方分项结果
+
+    八个维度均为上游 `scripts/analyze.py` 产生的 0–100 整数分。下列数值是各模型在固定 19 局边界中的局间算术平均；为保证横向比较，按同一模型行组织，而不是为每个模型生成独立标签页。
+
+    **总体、经济、军事、科研与外交**
+
+    | 模型 | Overall | Economic | Military | Scientific | Diplomatic |
+    | --- | ---: | ---: | ---: | ---: | ---: |
+    | Gemini 3.1 Pro Preview | 73.2 | 21 | 83.3 | 65.8 | 81.2 |
+    | GPT-5.4 | 57 | 13 | 76.3 | 62.3 | 81 |
+    | Claude Opus 4.6 | 63.8 | 10.7 | 64.5 | 67.5 | 80 |
+    | Kimi K2.5 | 45 | 7 | 73 | 63 | 40 |
+
+    **空间推理、工具使用与长程一致性**
+
+    | 模型 | Spatial Reasoning | Tool-Use Fluency | Long-Horizon Coherence |
+    | --- | ---: | ---: | ---: |
+    | Gemini 3.1 Pro Preview | 68.2 | 85.5 | 25.3 |
+    | GPT-5.4 | 59.5 | 87.5 | 41.5 |
+    | Claude Opus 4.6 | 49.7 | 87.8 | 17.7 |
+    | Kimi K2.5 | 53 | 81 | 24 |
+
+    **主分与运行覆盖**
+
+    | 模型 | 主分（派生） | 原始游戏分均值 | 入选局数 | 胜 / 负 |
+    | --- | ---: | ---: | ---: | ---: |
+    | Gemini 3.1 Pro Preview | 62.9 | 611.2 | 6 | 1 / 5 |
+    | GPT-5.4 | 59.8 | 469 | 6 | 0 / 6 |
+    | Claude Opus 4.6 | 55.2 | 629 | 6 | 2 / 4 |
+    | Kimi K2.5 | 48.3 | 477 | 1 | 0 / 1 |
+
+    Kimi K2.5 只有一局，其他三个模型各六局；主分必须与覆盖量一起阅读。原始游戏分不是主分，只作为游戏内结果参照。
+
+    ## 关于此评测
+
+    ### 评测目标
+
+    CivBench 把语言模型 Agent 放进完整的《文明 VI》回合制环境。Agent 通过 MCP 接收叙述化游戏状态并调用 76 种工具，游戏引擎继续执行移动、生产、外交与战斗规则。Ground Control 固定为巴比伦（汉谟拉比）、王子难度、**标准尺寸**泛大陆、**快速速度**和 330 回合预算，重点观察 Agent 能否在数百回合里维持科研节奏、资源配置、军事安全、外交判断与长期计划。题目原文中的 “Standard Pangaea” 指地图尺寸，不是游戏速度。
+
+    **系统链路（据固定上游架构说明整理）**
+
+    ```text
+    LLM
+        ▼
+    Inspect AI react() + 标准 playbook（Harness）
+        │ MCP tool calls
+        ▼
+    civ6-mcp（Python / 76 tools）
+        │ Lua via FireTuner · TCP 4318
+        ▼
+    Civilization VI 规则引擎
+    ```
+
+    上游完整 battery 共有三个固定场景；本 EvalHub 协议和这批公开结果只收录 Ground Control，不把另外两个场景的设计目标或跨场景 ELO 混入当前排名。
+
+    | 上游场景 | Agent 文明 | 难度 | 胜利条件 | 主要盲点 | 本协议 |
+    | --- | --- | --- | --- | --- | --- |
+    | Ground Control | 巴比伦 | 王子 | 全部开启 | 节奏感知 | 收录 |
+    | Snowflake | 韩国 | 国王 | 仅征服 | 战略重构 | 未收录 |
+    | Cry Havoc | 苏美尔 | 仙人 | 全部开启 | 难度情境 | 未收录 |
+
+    ### 评分方法
+
+    ```text
+    game_score = mean(overall, economic, military, scientific,
+                      diplomatic, spatial, tool_fluency, coherence)
+    submission_score = mean(game_score for every admissible submitted game)
+    ```
+
+    八维缺一不可，单维范围必须在 0–100。只接受 `ground_control`、`civbench_standard` 且上游标记为 admissible 的完整运行；canonical cut 至少排除少于 10 回合、save scumming 和启动失败。
+
+    ### 解读边界
+
+    这是 19 局公开快照上的确定性聚合，不是同一代码版本下重新运行四个模型。入选记录的 `gitDescribe` 来自多个较早开发版本，且模型覆盖不均衡，因此数字适合比较当前公开样本，不适合表述成大样本“官方 ELO”或稳定模型排名。
+
+    ## 题目案例
+
+    当前 EvalHub 评测边界只包含 Ground Control；Snowflake 和 Cry Havoc 虽属于上游完整场景集，但未纳入本协议和这批 19 局结果。因此题目案例仅展示 Ground Control，不能用另外两个场景补足标签数量。
+
+    ### Ground Control
+
+    #### 题目原文
+
+    ```text
+    Play as Babylon on a Standard Pangaea map. Build a thriving empire, research technologies, and pursue a path to victory. Babylon's unique ability grants the full technology (not just a boost) when you trigger a eureka — leverage this to accelerate your progress.
+    ```
+
+    #### 中文翻译
+
+    ```text
+    在标准尺寸的泛大陆地图上扮演巴比伦。建立繁荣的帝国，研究科技，并追求一条通往胜利的道路。巴比伦的独特能力会在触发尤里卡时直接授予完整科技（而不只是提供加成）——请利用这一点加速发展。
+    ```
+
+    ## 一手资料
+
+    - [Civ6-MCP 固定源码（v1.1.11 / dd201905）](https://github.com/lmwilki/civ6-mcp/tree/dd2019056371b92ea4854e879ddf05a8cad95e8a)
+    - [Ground Control 场景定义](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/scenarios.py)
+    - [上游三场景说明](https://civ6-mcp.lwilko.com/docs/benchmarks)
+    - [固定版本系统架构图与说明](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/docs/architecture-diagrams.md)
+    - [CivBench Standard Harness 定义](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/civbench.py)
+    - [CivBench runner](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/evals/runner.py)
+    - [八维评分与 AGGREGATE 公式](https://github.com/lmwilki/civ6-mcp/blob/dd2019056371b92ea4854e879ddf05a8cad95e8a/scripts/analyze.py)
+    - [官方数据集固定快照](https://huggingface.co/datasets/civbench/civbench-v1/tree/2d9937d1e273a18fbe0e9e8f32325d4d6cb61dea)
+    - [CivBench 官方网站](https://civ6-mcp.lwilko.com)
+    - [作者长文：I Gave an AI a Civilization to Run](https://www.lwilko.com/blog/i-gave-an-ai-a-civilization)

@@ -1,0 +1,396 @@
+{
+  "eval_id": "civbench",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "civbench/hf-ground-control-aggregation@1.0.0",
+    "retrieved_on": "2026-08-18",
+    "source": {
+      "title": "CivBench v1 official games table — Ground Control canonical cut",
+      "url": "https://huggingface.co/datasets/civbench/civbench-v1/blob/2d9937d1e273a18fbe0e9e8f32325d4d6cb61dea/tables/games.parquet",
+      "snapshot_sha256": "31250d37a837d2f659bada53ad5cede82091f22be66474c9a6e5b03b5e9fad39",
+      "official_result_count": 4
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "google/gemini-3.1-pro-preview",
+        "harness": "CivBench Standard (Inspect AI ReAct)"
+      },
+      "score": 62.9375,
+      "detail": "CivBench 官方数据集把来源标签“gemini-3.1-pro-preview”映射为平台注册表 canonical ID “google/gemini-3.1-pro-preview”。Ground Control canonical cut 共 6 局；每局八维算术平均后再取局间均值，得到派生主分 62.9375。run_id: blazing-pearl-bastion-64, verdant-lapis-frontier-29, stormborn-ebony-ridgeline-17, vast-cedar-chronicle-40, volcanic-vermil-ember-37, remnant-khaki-oracle-28。入选行的 gitDescribe: v1.1.10-17-geb0e611, v1.1.10-20-g1207967, v1.1.10-33-ge1de239。这是钉死公开快照的可复核聚合，不是 EvalHub 独立复跑，也没有把原始游戏分或跨场景 ELO 当作主分。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "ground-control-scorecard",
+          "label": "Ground Control 分项",
+          "title": "Ground Control 八维、主分与运行覆盖",
+          "columns": [
+            "指标",
+            "均值或记录"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall Score",
+                73.2
+              ]
+            },
+            {
+              "cells": [
+                "Economic Management",
+                21.0
+              ]
+            },
+            {
+              "cells": [
+                "Military Competence",
+                83.3
+              ]
+            },
+            {
+              "cells": [
+                "Scientific Progress",
+                65.8
+              ]
+            },
+            {
+              "cells": [
+                "Diplomatic Skill",
+                81.2
+              ]
+            },
+            {
+              "cells": [
+                "Spatial Reasoning",
+                68.2
+              ]
+            },
+            {
+              "cells": [
+                "Tool-Use Fluency",
+                85.5
+              ]
+            },
+            {
+              "cells": [
+                "Long-Horizon Coherence",
+                25.3
+              ]
+            },
+            {
+              "cells": [
+                "派生主分",
+                62.9
+              ]
+            },
+            {
+              "cells": [
+                "原始游戏分均值",
+                611.2
+              ]
+            },
+            {
+              "cells": [
+                "入选局数",
+                6
+              ]
+            },
+            {
+              "cells": [
+                "胜 / 负",
+                "1 / 5"
+              ]
+            }
+          ],
+          "note": "八维、原始游戏分、局数和胜负逐局取自钉死的 CivBench 官方 games.parquet 快照，表中均值四舍五入到最多一位小数。派生主分 = 每局八维算术平均，再对该模型全部入选局取算术平均；只有结果条目的完整精度 score 参与排名，本表仅作辅助展示。这是公开结果的确定性聚合，不代表 EvalHub 独立复跑。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "openai/gpt-5.4",
+        "harness": "CivBench Standard (Inspect AI ReAct)"
+      },
+      "score": 59.7708,
+      "detail": "CivBench 官方数据集把来源标签“gpt-5.4”映射为平台注册表 canonical ID “openai/gpt-5.4”。Ground Control canonical cut 共 6 局；每局八维算术平均后再取局间均值，得到派生主分 59.7708。run_id: gilded-teal-relic-32, elder-lilac-epoch-88, veiled-lapis-flagship-44, dread-cobalt-chariot-34, flint-olive-phalanx-07, fierce-umber-garrison-15。入选行的 gitDescribe: v1.1.10-33-ge1de239, v1.1.10-4-gfc1d7fe-dirty, v1.1.10-7-g365c2cc-dirty, v1.1.8-5-g03ebef5-dirty, v1.1.9-dirty。这是钉死公开快照的可复核聚合，不是 EvalHub 独立复跑，也没有把原始游戏分或跨场景 ELO 当作主分。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "ground-control-scorecard",
+          "label": "Ground Control 分项",
+          "title": "Ground Control 八维、主分与运行覆盖",
+          "columns": [
+            "指标",
+            "均值或记录"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall Score",
+                57.0
+              ]
+            },
+            {
+              "cells": [
+                "Economic Management",
+                13.0
+              ]
+            },
+            {
+              "cells": [
+                "Military Competence",
+                76.3
+              ]
+            },
+            {
+              "cells": [
+                "Scientific Progress",
+                62.3
+              ]
+            },
+            {
+              "cells": [
+                "Diplomatic Skill",
+                81.0
+              ]
+            },
+            {
+              "cells": [
+                "Spatial Reasoning",
+                59.5
+              ]
+            },
+            {
+              "cells": [
+                "Tool-Use Fluency",
+                87.5
+              ]
+            },
+            {
+              "cells": [
+                "Long-Horizon Coherence",
+                41.5
+              ]
+            },
+            {
+              "cells": [
+                "派生主分",
+                59.8
+              ]
+            },
+            {
+              "cells": [
+                "原始游戏分均值",
+                469.0
+              ]
+            },
+            {
+              "cells": [
+                "入选局数",
+                6
+              ]
+            },
+            {
+              "cells": [
+                "胜 / 负",
+                "0 / 6"
+              ]
+            }
+          ],
+          "note": "八维、原始游戏分、局数和胜负逐局取自钉死的 CivBench 官方 games.parquet 快照，表中均值四舍五入到最多一位小数。派生主分 = 每局八维算术平均，再对该模型全部入选局取算术平均；只有结果条目的完整精度 score 参与排名，本表仅作辅助展示。这是公开结果的确定性聚合，不代表 EvalHub 独立复跑。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-opus-4-6",
+        "harness": "CivBench Standard (Inspect AI ReAct)"
+      },
+      "score": 55.2083,
+      "detail": "CivBench 官方数据集把来源标签“claude-opus-4-6”映射为平台注册表 canonical ID “anthropic/claude-opus-4-6”。Ground Control canonical cut 共 6 局；每局八维算术平均后再取局间均值，得到派生主分 55.2083。run_id: epic-sable-atlas-20, exalted-vermil-ember-69, weathered-vermil-column-34, steep-vermil-trebuchet-27, wandering-carmine-ballista-57, solar-flax-forum-10。入选行的 gitDescribe: v1.1.10-33-ge1de239, v1.1.6-7-g2220d03, v1.1.6-dirty, v1.1.8-1-g039a513-dirty。这是钉死公开快照的可复核聚合，不是 EvalHub 独立复跑，也没有把原始游戏分或跨场景 ELO 当作主分。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "ground-control-scorecard",
+          "label": "Ground Control 分项",
+          "title": "Ground Control 八维、主分与运行覆盖",
+          "columns": [
+            "指标",
+            "均值或记录"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall Score",
+                63.8
+              ]
+            },
+            {
+              "cells": [
+                "Economic Management",
+                10.7
+              ]
+            },
+            {
+              "cells": [
+                "Military Competence",
+                64.5
+              ]
+            },
+            {
+              "cells": [
+                "Scientific Progress",
+                67.5
+              ]
+            },
+            {
+              "cells": [
+                "Diplomatic Skill",
+                80.0
+              ]
+            },
+            {
+              "cells": [
+                "Spatial Reasoning",
+                49.7
+              ]
+            },
+            {
+              "cells": [
+                "Tool-Use Fluency",
+                87.8
+              ]
+            },
+            {
+              "cells": [
+                "Long-Horizon Coherence",
+                17.7
+              ]
+            },
+            {
+              "cells": [
+                "派生主分",
+                55.2
+              ]
+            },
+            {
+              "cells": [
+                "原始游戏分均值",
+                629.0
+              ]
+            },
+            {
+              "cells": [
+                "入选局数",
+                6
+              ]
+            },
+            {
+              "cells": [
+                "胜 / 负",
+                "2 / 4"
+              ]
+            }
+          ],
+          "note": "八维、原始游戏分、局数和胜负逐局取自钉死的 CivBench 官方 games.parquet 快照，表中均值四舍五入到最多一位小数。派生主分 = 每局八维算术平均，再对该模型全部入选局取算术平均；只有结果条目的完整精度 score 参与排名，本表仅作辅助展示。这是公开结果的确定性聚合，不代表 EvalHub 独立复跑。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "moonshot/kimi-k2.5",
+        "harness": "CivBench Standard (Inspect AI ReAct)"
+      },
+      "score": 48.25,
+      "detail": "CivBench 官方数据集把来源标签“Kimi-K2.5”映射为平台注册表 canonical ID “moonshot/kimi-k2.5”。Ground Control canonical cut 共 1 局；每局八维算术平均后再取局间均值，得到派生主分 48.25。run_id: rusted-indigo-oracle-11。入选行的 gitDescribe: v1.1.10-33-ge1de239。这是钉死公开快照的可复核聚合，不是 EvalHub 独立复跑，也没有把原始游戏分或跨场景 ELO 当作主分。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "ground-control-scorecard",
+          "label": "Ground Control 分项",
+          "title": "Ground Control 八维、主分与运行覆盖",
+          "columns": [
+            "指标",
+            "均值或记录"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Overall Score",
+                45.0
+              ]
+            },
+            {
+              "cells": [
+                "Economic Management",
+                7.0
+              ]
+            },
+            {
+              "cells": [
+                "Military Competence",
+                73.0
+              ]
+            },
+            {
+              "cells": [
+                "Scientific Progress",
+                63.0
+              ]
+            },
+            {
+              "cells": [
+                "Diplomatic Skill",
+                40.0
+              ]
+            },
+            {
+              "cells": [
+                "Spatial Reasoning",
+                53.0
+              ]
+            },
+            {
+              "cells": [
+                "Tool-Use Fluency",
+                81.0
+              ]
+            },
+            {
+              "cells": [
+                "Long-Horizon Coherence",
+                24.0
+              ]
+            },
+            {
+              "cells": [
+                "派生主分",
+                48.3
+              ]
+            },
+            {
+              "cells": [
+                "原始游戏分均值",
+                477.0
+              ]
+            },
+            {
+              "cells": [
+                "入选局数",
+                1
+              ]
+            },
+            {
+              "cells": [
+                "胜 / 负",
+                "0 / 1"
+              ]
+            }
+          ],
+          "note": "八维、原始游戏分、局数和胜负逐局取自钉死的 CivBench 官方 games.parquet 快照，表中均值四舍五入到最多一位小数。派生主分 = 每局八维算术平均，再对该模型全部入选局取算术平均；只有结果条目的完整精度 score 参与排名，本表仅作辅助展示。这是公开结果的确定性聚合，不代表 EvalHub 独立复跑。"
+        }
+      ]
+    }
+  ]
+}
