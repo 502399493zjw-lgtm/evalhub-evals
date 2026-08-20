@@ -17,7 +17,7 @@ Equivalent benchmark-specific headings are allowed. Do not repeat the Hero.
 
 ## Official results
 
-The leaderboard stays compact: rank, model, primary official metric, and Harness when useful. Do not add a “口径” column.
+The leaderboard stays compact: rank, model, primary official metric, and Harness for agent evaluations. A shared Harness remains visible. Do not add a “口径” column.
 
 The official component section contains one or more complete cross-model tables. Authors may combine or separate score, resource, execution, time, token, cost, and judging fields according to readability. The rules that matter are:
 
@@ -30,7 +30,8 @@ The official component section contains one or more complete cross-model tables.
 - place related official figures or source-backed result illustrations inside `官方分项结果`, beside or immediately after the table they explain;
 - identify any illustration derived from cited result values, and use a later observations section only for figures that do not directly explain a result table;
 - keep model names as plain text;
-- label a shared unnamed task-provided default as `题目默认 harness`.
+- use the published Harness name when available and label a shared unnamed task-provided default as `题目默认 harness`;
+- distinguish agent scaffolding from the benchmark runner, scorer, packer, and validation workflow, and never invent an unpublished Harness version.
 
 There is no mandatory five-column leaderboard, seven-column score table, three-column resource table, or any other fixed shape.
 
