@@ -58,28 +58,24 @@ detail_profile:
     | 9 | Qwen3.5-397B-A17B | SWE-agent | 11.2 |
     | 10 | MiniMax M2.5 | SWE-agent | 7.2 |
 
-    ### 榜单说明
-
-    上表完整保留 2026-08-20 官方 live JSON 的 10 条 verified 结果，统一显示一位小数；上游字段名为 Scaffold，本页按榜单组件约定显示为模型名下方的 Harness。arito 与 WPS AI 的发布日期分别为 2026-08-04、2026-08-11，其余八条为 2026-03-26。
-
-    arito 与 WPS AI 是来源公布的产品级参与者，不推断其底层模型。当前 EvalHub registry 只能无歧义接纳 Claude Opus 4.6 与 Kimi K2.5；其余八条仍在本页和固定快照中保留，并由机器结果的 `omitted_models` 明示为未注册。排序和机器结果保留来源数值精度。
+    页面顶部的“2 个模型 / 34.9”只统计可导入的机器结果；官方榜单完整包含 10 行，最高成绩为 45.5。Harness 对应上游 Scaffold。
 
     ## 官方分项结果
 
-    四类任务数分别为 Template 97、Financial Modeling 100、Debugging 100、Visualization 24。下表同样只在阅读页显示到一位小数；固定来源快照和机器分项表保留官方 JSON 原精度。
+    四类任务数为 97 / 100 / 100 / 24，分数按一位小数显示。
 
     | 模型或产品 | Template（97） | Financial Modeling（100） | Debugging（100） | Visualization（24） |
     | --- | ---: | ---: | ---: | ---: |
-    | arito（未注册产品） | 44.3 | 55.0 | 28.0 | 83.0 |
-    | WPS AI（未注册产品） | 66.0 | 46.0 | 12.0 | 57.0 |
+    | arito | 44.3 | 55.0 | 28.0 | 83.0 |
+    | WPS AI | 66.0 | 46.0 | 12.0 | 57.0 |
     | Claude Opus 4.6 | 52.6 | 34.0 | 12.0 | 62.5 |
-    | GPT-5.2（未注册） | 35.1 | 33.0 | 8.0 | 45.8 |
-    | Gemini 3.1 Pro（未注册） | 28.9 | 31.0 | 7.0 | 41.7 |
-    | GLM-5.0（未注册） | 17.5 | 22.0 | 7.0 | 37.5 |
-    | Deepseek-V3.2（未注册） | 25.8 | 7.0 | 10.0 | 33.3 |
+    | GPT-5.2 | 35.1 | 33.0 | 8.0 | 45.8 |
+    | Gemini 3.1 Pro | 28.9 | 31.0 | 7.0 | 41.7 |
+    | GLM-5.0 | 17.5 | 22.0 | 7.0 | 37.5 |
+    | Deepseek-V3.2 | 25.8 | 7.0 | 10.0 | 33.3 |
     | Kimi K2.5 | 18.6 | 15.0 | 4.0 | 41.7 |
-    | Qwen3.5-397B-A17B（未注册） | 17.5 | 10.0 | 3.0 | 25.0 |
-    | MiniMax M2.5（未注册） | 7.2 | 8.0 | 4.0 | 16.7 |
+    | Qwen3.5-397B-A17B | 17.5 | 10.0 | 3.0 | 25.0 |
+    | MiniMax M2.5 | 7.2 | 8.0 | 4.0 | 16.7 |
 
     Overall 的可核验公式为：
 
@@ -108,6 +104,7 @@ detail_profile:
 
     ### 版本、评分与许可限制
 
+    - 官方 live JSON 的十条结果全部保留。arito 与 WPS AI 是产品级参与者，来源未公开底层模型；当前 registry 仅能无歧义接纳 Claude Opus 4.6 与 Kimi K2.5，其余八条保留官方标签，不猜测映射。
     - 论文 v1 只有八行模型结果；本页使用后来更新的 live 十行 JSON，不混用两个榜单来源。
     - 论文把非可视化分数和官方页面口语概括为 exact accuracy；固定代码实际对两个 ratio 四舍五入到 4 位，并把 `regression_ratio >= 0.998` 强制归一化为 1。本协议按固定代码保留这一 regression 容差，不把页面概括误写成逐单元格零容差。
     - 论文把 Visualization 称为 average rubric pass rate；当前代码同时产出 mean score 和 `>0.7` 二值 ACC。本协议依据 live 分数与 Overall 算术固定前者。
