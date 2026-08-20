@@ -1,0 +1,658 @@
+{
+  "eval_id": "terminal-bench-2-1",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "terminal-bench-2-1/official-live-transcription@1.0.0",
+    "retrieved_on": "2026-08-20",
+    "source": {
+      "title": "Terminal-Bench 2.1 official live leaderboard (17/17 rows)",
+      "url": "https://www.tbench.ai/leaderboard/terminal-bench/2.1",
+      "snapshot_sha256": "84eb96b7c1b27cffb6a224acc3056c7e1478653f4405d273f9f40c723cebdb6f",
+      "official_result_count": 17,
+      "omitted_models": [
+        {
+          "model": "Muse Spark 1.1 — mini-SWE-agent",
+          "reason": "unregistered"
+        },
+        {
+          "model": "GPT-5.6 Luna — Codex",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Gemini 3 Pro — Terminus 2",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Gemini 3 Pro — Gemini CLI",
+          "reason": "unregistered"
+        }
+      ]
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "anthropic/claude-fable-5",
+        "harness": "Claude Code",
+        "harness_version": "2.1.167"
+      },
+      "score": 83.82,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "83.82%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Claude Code，reasoning_effort=xhigh，官网显示 83.8% ± 1.2%，发布日期 2026-06-07，来源提交 #75。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "83.8% ± 1.2%",
+                0.8978,
+                0.918,
+                0.9281,
+                0.9326,
+                0.22,
+                204502003,
+                552.67,
+                579.7
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "openai/gpt-5.5",
+        "harness": "Codex",
+        "harness_version": "0.125.0"
+      },
+      "score": 83.15,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "83.15%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Codex，reasoning_effort=xhigh，官网显示 83.1% ± 1.1%，发布日期 2026-05-01，来源提交 #45。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "83.1% ± 1.1%",
+                0.8888,
+                0.9135,
+                0.9303,
+                0.9438,
+                0.22,
+                735197348,
+                2059.19,
+                482.6
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-fable-5",
+        "harness": "Terminus 2",
+        "harness_version": "2.0.0"
+      },
+      "score": 80.45,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "80.45%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Terminus 2，reasoning_effort=high，官网显示 80.4% ± 1.2%，发布日期 2026-06-05，来源提交 #78。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "80.4% ± 1.2%",
+                0.864,
+                0.891,
+                0.9079,
+                0.9213,
+                0,
+                71432809,
+                438.64,
+                697.1
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "xai/grok-4.5",
+        "harness": "Cursor CLI",
+        "harness_version": "2026.07.08-0c04a8a"
+      },
+      "score": 79.33,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "79.33%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Cursor CLI，reasoning_effort=high，官网显示 79.3% ± 1.5%，发布日期 2026-07-09，来源提交 #86。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "79.3% ± 1.5%",
+                0.8888,
+                0.9236,
+                0.9416,
+                0.9551,
+                8.99,
+                178384443,
+                134.09,
+                443
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-opus-4-8",
+        "harness": "Claude Code",
+        "harness_version": "2.1.205"
+      },
+      "score": 78.88,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "78.88%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Claude Code，reasoning_effort=high，官网显示 78.9% ± 1.3%，发布日期 2026-07-09，来源提交 #92。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "78.9% ± 1.3%",
+                0.8652,
+                0.9011,
+                0.9258,
+                0.9438,
+                0,
+                182894067,
+                286.94,
+                551.4
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "openai/gpt-5.6-terra",
+        "harness": "Codex",
+        "harness_version": "0.144.1"
+      },
+      "score": 78.43,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "78.43%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Codex，reasoning_effort=max，官网显示 78.4% ± 1.3%，发布日期 2026-07-11，来源提交 #115。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "78.4% ± 1.3%",
+                0.8539,
+                0.8753,
+                0.8876,
+                0.8989,
+                0.22,
+                902641810,
+                421.15,
+                432.8
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "openai/gpt-5.5",
+        "harness": "Terminus 2",
+        "harness_version": "2.0.0"
+      },
+      "score": 77.98,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "77.98%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Terminus 2，reasoning_effort=xhigh，官网显示 78.0% ± 1.2%，发布日期 2026-05-01，来源提交 #47。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "78.0% ± 1.2%",
+                0.8461,
+                0.864,
+                0.8719,
+                0.8764,
+                0.22,
+                92237198,
+                493.85,
+                726.7
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-sonnet-5",
+        "harness": "Claude Code",
+        "harness_version": "2.1.205"
+      },
+      "score": 74.61,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "74.61%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Claude Code，reasoning_effort=high，官网显示 74.6% ± 1.6%，发布日期 2026-07-09，来源提交 #98。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "74.6% ± 1.6%",
+                0.8652,
+                0.8955,
+                0.9101,
+                0.9213,
+                0.67,
+                558574454,
+                288.18,
+                629.6
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-opus-4-7",
+        "harness": "Claude Code",
+        "harness_version": "2.1.123"
+      },
+      "score": 68.9,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "68.9%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Claude Code，reasoning_effort=max，官网显示 68.9% ± 1.4%，发布日期 2026-05-01，来源提交 #44。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "68.9% ± 1.4%",
+                0.7801,
+                0.8124,
+                0.83,
+                0.8408,
+                0.45,
+                853354358,
+                599.52,
+                799.6
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-opus-4-7",
+        "harness": "Terminus 2",
+        "harness_version": "2.0.0"
+      },
+      "score": 66.07,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "66.07%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Terminus 2，reasoning_effort=max，官网显示 66.1% ± 1.4%，发布日期 2026-05-01，来源提交 #46。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "66.1% ± 1.4%",
+                0.7438,
+                0.782,
+                0.809,
+                0.8315,
+                0,
+                365259530,
+                582.26,
+                1042.7
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "google/gemini-3.1-pro-preview",
+        "harness": "Gemini CLI",
+        "harness_version": "0.40.0"
+      },
+      "score": 65.84,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "65.84%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Gemini CLI，reasoning_effort=high，官网显示 65.8% ± 1.7%，发布日期 2026-05-05，来源提交 #68。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "65.8% ± 1.7%",
+                0.782,
+                0.8315,
+                0.8584,
+                0.8764,
+                0.22,
+                417550107,
+                236.49,
+                652.9
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "google/gemini-3.1-pro-preview",
+        "harness": "Terminus 2",
+        "harness_version": "2.0.0"
+      },
+      "score": 65.62,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "65.62%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Terminus 2，reasoning_effort=high，官网显示 65.6% ± 1.7%，发布日期 2026-05-05，来源提交 #69。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "65.6% ± 1.7%",
+                0.7775,
+                0.8225,
+                0.8472,
+                0.8652,
+                0.45,
+                136661331,
+                229.99,
+                672.8
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "zai/glm-5.1",
+        "harness": "Claude Code",
+        "harness_version": "2.1.123"
+      },
+      "score": 58.65,
+      "raw_metric": {
+        "label": "官方 Accuracy",
+        "value": "58.65%"
+      },
+      "detail": "Terminal-Bench 2.1 官方在线榜单；Agent=Claude Code，reasoning_effort=max，官网显示 58.7% ± 1.2%，发布日期 2026-05-01，来源提交 #67。这是上游作者发表结果，不是 EvalHub 独立复跑。",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-run-statistics",
+          "label": "官方运行统计",
+          "title": "Terminal-Bench 2.1 官方榜单行",
+          "columns": [
+            "官网显示成绩",
+            "pass@2",
+            "pass@3",
+            "pass@4",
+            "pass@5",
+            "奖励黑客率（%）",
+            "总 Token",
+            "成本（USD）",
+            "平均时长（秒）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "58.7% ± 1.2%",
+                0.6551,
+                0.6899,
+                0.7146,
+                0.7303,
+                0,
+                398783761,
+                277.14,
+                944.6
+              ]
+            }
+          ],
+          "note": "逐格转录自官方仓库与在线榜单对应提交；辅助展示，不参与 EvalHub 主成绩再次计算。"
+        }
+      ]
+    }
+  ]
+}
