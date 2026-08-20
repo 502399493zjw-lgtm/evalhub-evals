@@ -41,9 +41,9 @@ detail_profile:
   source_kind: upstream_publication
   markdown: |-
     ## 榜单
-    
+
     下表完整转录 2026-08-20 可访问的官方 live JSON 中全部 10 行。页面展示统一四舍五入到一位小数；排序和机器结果保留来源数值精度。`arito` 与 `WPS AI` 是来源公布的产品级参与者，不被编造成底层模型。当前 EvalHub registry 只能无歧义接纳 Claude Opus 4.6 与 Kimi K2.5；其余八行仍在本页和固定快照中完整保留，并由机器结果的 `omitted_models` 明示为未注册。
-    
+
     | 排名 | 模型或产品 | Overall | Scaffold | 日期 |
     | ---: | --- | ---: | --- | --- |
     | 1 | arito（未注册产品） | 45.5 | arito | 2026-08-04 |
@@ -56,13 +56,13 @@ detail_profile:
     | 8 | Kimi K2.5 | 14.6 | SWE-agent | 2026-03-26 |
     | 9 | Qwen3.5-397B-A17B（未注册） | 11.2 | SWE-agent | 2026-03-26 |
     | 10 | MiniMax M2.5（未注册） | 7.2 | SWE-agent | 2026-03-26 |
-    
+
     所有来源行都标记为 `verified: true`。机器结果只导入 `anthropic/claude-opus-4-6` 与 `moonshot/kimi-k2.5`，分别使用 registry 的 canonical display name；没有把 `Gemini 3.1 Pro` 推断成 registry 中更具体的 Preview，也没有用较新的 GLM、DeepSeek、Qwen 或 MiniMax 身份替代旧来源标签。
-    
+
     ## 官方分项结果
-    
+
     四类任务数分别为 Template 97、Financial Modeling 100、Debugging 100、Visualization 24。下表同样只在阅读页显示到一位小数；固定来源快照和机器分项表保留官方 JSON 原精度。
-    
+
     | 模型或产品 | Template（97） | Financial Modeling（100） | Debugging（100） | Visualization（24） |
     | --- | ---: | ---: | ---: | ---: |
     | arito（未注册产品） | 44.3 | 55.0 | 28.0 | 83.0 |
@@ -75,135 +75,135 @@ detail_profile:
     | Kimi K2.5 | 18.6 | 15.0 | 4.0 | 41.7 |
     | Qwen3.5-397B-A17B（未注册） | 17.5 | 10.0 | 3.0 | 25.0 |
     | MiniMax M2.5（未注册） | 7.2 | 8.0 | 4.0 | 16.7 |
-    
+
     Overall 的可核验公式为：
-    
+
     ```text
     Overall = (97 × Template + 100 × Financial Modeling
              + 100 × Debugging + 24 × Visualization) / 321
     ```
-    
+
     逐行核验后，十个官方 Overall 均与四分项按 321 个任务加权的结果在来源展示精度下相符。非可视化分项是整题 exact accuracy。Visualization 采用每题 rubric 通过比例，再对 24 题取均值；官方当前脚本另输出的 `score > 0.7` 二值 ACC 不进入这张 live 榜。`arito=83.02` 和 `WPS AI=57.02` 也从数值上排除了“24 题二值通过率”这一解释。
-    
+
     ## 关于此评测
-    
+
     SpreadsheetBench 2 评估 Agent 在真实商业电子表格中的端到端工作：补全模板、构建财务模型、调试复杂工作簿和制作可视化。官方数据集共有 321 题，本条目固定到 Hugging Face commit `9dea60025792fbac5928ce9f44812362dccbeecd`；执行与评分代码参考当前官方 repo commit `83d415ce87b1d6b8e8eafcc26957f5d13d37210f`。
-    
+
     ### 一次运行怎么走
-    
+
     1. 从固定 Hugging Face 快照取得工作簿并核验 zip SHA-256；golden workbook、答案区域和 Visualization rubric 不得暴露给被测 Agent。
     2. 把每条完整英文 instruction 发给同一个被测系统，保持工作簿现有结构、布局与格式，并保存输出 `.xlsx`。
     3. 对 297 个非可视化任务运行上游 spreadsheet execution evaluator；只有 regression 与 modification 都完整通过才记 1，否则记 0。
     4. 对 24 个 Visualization 任务运行固定代码的 VLM checklist evaluator，以 `passed / total_expected` 作为每题主分；保留二值 ACC 只能作诊断。
     5. 失败、超时和缺失题保持为 0。按固定 321 条顺序生成外部清单，再由本目录打包器验证模型 registry、证据标识、范围和算术。
-    
+
     ### 运行环境与审核边界
-    
+
     完整运行不是 EvalHub 沙箱内的一条轻量命令：上游要求 Python 3.11、模型 API、LibreOffice/Docker，并在 Visualization 路径使用 Windows Excel 或 WPS COM 与 GLM-4.6V。模型调用、网络、凭据、文件写入、Office 自动化、磁盘和长时间计算都在外部基础设施发生。打包器不会执行 Excel、访问 API、判定 artifact 真伪或复现作者审核，因此本评测声明 `scored_by: author`。
-    
+
     ### 版本、评分与许可限制
-    
+
     - 论文 v1 只有八行模型结果；本页使用后来更新的 live 十行 JSON，不混用两个榜单来源。
     - 论文把 Visualization 称为 average rubric pass rate；当前代码同时产出 mean score 和 `>0.7` 二值 ACC。本协议依据 live 分数与 Overall 算术固定前者。
     - 论文 Appendix F 明确 dataset 为 CC BY-SA 4.0、evaluation code 为 MIT；HF card 却只标 MIT，根代码仓库又没有根级 LICENSE。本目录以更具体的论文声明处理任务文字与中译，不复制上游代码、工作簿或原始文档。完整证据见 `SOURCE_LEDGER.md` 和 `THIRD_PARTY_NOTICES.md`。
     - live JSON 只公开产品/模型标签、scaffold、四分项、Overall、日期与 verified 状态，没有公开逐题输出、运行成本、完整模型快照或 scaffold 版本；本条目不填补这些未知项。
-    
+
     ## 评测案例
-    
+
     321 条英文任务全部作为可执行 `prompt` 收录。为避免选择最显眼或最短的例子，阅读页按固定等距索引 `0, 80, 160, 240, 320` 展示五条，并附完整简体中文翻译。工作簿和参考答案仍由参与者从官方数据集外部取得。
-    
+
     ### 调试（索引 0） · `debugging-01-01`
-    
+
     上游 ID：`01_01`；输入工作簿路径：`spreadsheet/01_Debugging/input_files/Double Counting_input.xlsx`。
-    
+
     **英文原题**
-    
+
     ```text
     Please audit and fix this file thoroughly. Errors may include but are not limited to: formula logic errors or inconsistencies, hardcoded values that should be formulas, broken cell references, data validation issues, potential calculation errors, inconsistent formatting or naming conventions, best practice violations, and any other issues that could affect accuracy or maintainability.
     ```
-    
+
     **完整中译**
-    
+
     ```text
     请彻底审查并修复此文件。错误可能包括但不限于：公式逻辑错误或不一致、应使用公式却被硬编码的数值、损坏的单元格引用、数据验证问题、潜在计算错误、格式或命名约定不一致、违反最佳实践，以及任何其他可能影响准确性或可维护性的问题。
     ```
-    
+
     ### 调试（索引 80） · `debugging-09-01`
-    
+
     上游 ID：`09_01`；输入工作簿路径：`spreadsheet/09_Debugging/input_files/Double Counting_input.xlsx`。
-    
+
     **英文原题**
-    
+
     ```text
     Please audit and fix this file thoroughly. Errors may include but are not limited to: formula logic errors or inconsistencies, hardcoded values that should be formulas, broken cell references, data validation issues, potential calculation errors, inconsistent formatting or naming conventions, best practice violations, and any other issues that could affect accuracy or maintainability.
     ```
-    
+
     **完整中译**
-    
+
     ```text
     请彻底审查并修复此文件。错误可能包括但不限于：公式逻辑错误或不一致、应使用公式却被硬编码的数值、损坏的单元格引用、数据验证问题、潜在计算错误、格式或命名约定不一致、违反最佳实践，以及任何其他可能影响准确性或可维护性的问题。
     ```
-    
+
     ### 财务建模（索引 160） · `financial-model-13-01`
-    
+
     上游 ID：`13_01`；输入工作簿路径：`spreadsheet/13_Project Logistic/13_01_Logistic_input.xlsx`。
-    
+
     **英文原题**
-    
+
     ```text
     Complete the financial model based on the provided assumptions. Ensure the existing structure, layout, and formatting of the model are preserved throughout the process.
     In the Input Sheet, define Air Inbound growth rates (40% FY26, 40% FY27, 35% FY28, 30% FY29, 25% FY30), then in the Revenue Driver sheet calculate Freight Inbound – Air revenue for FY26–FY30. In the Cost Drivers tab, calculate the Cost Summary for FY26–FY30. In the IS tab, calculate tax for FY26–FY30 using the statutory tax rate from WACC, recognizing tax only in profitable periods. In the Cash Flow Statement, link Capex for FY26–FY30 from Asset Schedule. In the Working Capital tab, calculate Trade Payables for FY26–FY30 at 35 Payable Days, then calculate Current Assets.
     ```
-    
+
     **完整中译**
-    
+
     ```text
     请根据所提供的假设完成财务模型。整个过程中，请确保保留模型现有的结构、布局和格式。
     在 Input Sheet 工作表中，定义 Air Inbound 增长率（FY26 为 40%、FY27 为 40%、FY28 为 35%、FY29 为 30%、FY30 为 25%），然后在 Revenue Driver 工作表中计算 FY26–FY30 的 Freight Inbound – Air 收入。在 Cost Drivers 选项卡中，计算 FY26–FY30 的 Cost Summary。在 IS 选项卡中，使用 WACC 中的法定税率计算 FY26–FY30 的税费，并且仅在盈利期间确认税费。在 Cash Flow Statement 中，将 FY26–FY30 的 Capex 链接至 Asset Schedule。在 Working Capital 选项卡中，按 35 天 Payable Days 计算 FY26–FY30 的 Trade Payables，然后计算 Current Assets。
     ```
-    
+
     ### 模板（索引 240） · `template-06-19`
-    
+
     上游 ID：`06_19`；输入工作簿路径：`spreadsheet/06_equity_forecast/06_19_input.xlsx`。
-    
+
     **英文原题**
-    
+
     ```text
     Complete the financial model based on the provided assumptions. Ensure that all formulas, references, and calculations are correct.
     ```
-    
+
     **完整中译**
-    
+
     ```text
     请根据所提供的假设完成财务模型。确保所有公式、引用和计算均正确。
     ```
-    
+
     ### 可视化（索引 320） · `visualization-fa8df8be-3865-425b-ab5d-fd8eb1a7a9da`
-    
+
     上游 ID：`Task 129`；输入工作簿路径：`spreadsheet/Task 129/Task 129_input.xlsx`。
-    
+
     **英文原题**
-    
+
     ```text
     Create a football field valuation chart titled 'Project Mars - Standalone Valuation Summary'. Display horizontal bars showing valuation ranges for each methodology. List methodologies vertically on the Y-axis in this order from top to bottom: DCF (Based on Management Forecast), Precedent Transactions (10.7x - 13.0x Management 2025A EBITDA), Mgmt Projections 2026E (Based on 9.0x - 15.0x Management Projection), Mgmt Projections 2027E (Based on 8.5x - 14.5x Management Projection), Analyst Target Price Range, 52-Week Trading Range. Use light blue bars for Analyst Target Price Range and 52-Week Trading Range, and dark blue bars for all other methodologies. The X-axis should show share price from $15.00 to $65.00 with gridlines every $5.00. Add data labels on each bar showing the low and high values of the range.
-    
+
     ```
-    
+
     **完整中译**
-    
+
     ```text
     创建一张标题为“Project Mars - Standalone Valuation Summary”的足球场估值图。显示水平条形图，以展示每种估值方法的估值区间。按以下从上到下的顺序在 Y 轴上纵向列出估值方法：DCF (Based on Management Forecast)、Precedent Transactions (10.7x - 13.0x Management 2025A EBITDA)、Mgmt Projections 2026E (Based on 9.0x - 15.0x Management Projection)、Mgmt Projections 2027E (Based on 8.5x - 14.5x Management Projection)、Analyst Target Price Range、52-Week Trading Range。Analyst Target Price Range 和 52-Week Trading Range 使用浅蓝色条形，其余所有估值方法使用深蓝色条形。X 轴应显示 $15.00 至 $65.00 的每股价格，并每隔 $5.00 显示网格线。为每个条形添加数据标签，显示区间的最低值和最高值。
-    
+
     ```
-    
+
     ## 主要来源
-    
+
     - [SpreadsheetBench 2 官方主页与 live 排行榜](https://spreadsheetbench.github.io/)
     - [固定 live leaderboard JSON](https://github.com/spreadsheetbench/spreadsheetbench.github.io/blob/c72f46b1eeb898c515d70248cb8d1b721f7a2584/data/leaderboard-v2-full.json)
     - [官方代码仓库固定 commit](https://github.com/RUCKBReasoning/SpreadsheetBench-2/tree/83d415ce87b1d6b8e8eafcc26957f5d13d37210f)
     - [官方 Hugging Face 数据固定 commit](https://huggingface.co/datasets/KAKA22/SpreadsheetBench-v2/tree/9dea60025792fbac5928ce9f44812362dccbeecd)
     - [SpreadsheetBench 2 论文 v1](https://arxiv.org/abs/2606.29955v1)
-    
+
     来源快照的 SHA-256、许可冲突和采用理由记录在 `SOURCE_LEDGER.md`；这一条目是来源转录与外部工作流适配，不代表 EvalHub 独立复跑了官方十行结果。
 tasks:
   - id: "debugging-01-01"
