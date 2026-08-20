@@ -1,0 +1,154 @@
+{
+  "eval_id": "spreadsheetbench-2",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "spreadsheetbench-2/live-transcription@1.0.0",
+    "retrieved_on": "2026-08-20",
+    "source": {
+      "title": "SpreadsheetBench 2 normalized official live leaderboard snapshot (10 rows)",
+      "url": "https://spreadsheetbench.github.io/data/leaderboard-v2-full.json",
+      "snapshot_sha256": "7383446dad579e019ccc1d1feb6fe2e876372c73d1fb867a7461d0438989c8e2",
+      "official_result_count": 10,
+      "omitted_models": [
+        {
+          "model": "arito",
+          "reason": "unregistered"
+        },
+        {
+          "model": "WPS AI",
+          "reason": "unregistered"
+        },
+        {
+          "model": "GPT-5.2",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Gemini 3.1 Pro",
+          "reason": "unregistered"
+        },
+        {
+          "model": "GLM-5.0",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Deepseek-V3.2",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Qwen3.5-397B-A17B",
+          "reason": "unregistered"
+        },
+        {
+          "model": "MiniMax M2.5",
+          "reason": "unregistered"
+        }
+      ]
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "anthropic/claude-opus-4-6",
+        "harness": "SWE-agent"
+      },
+      "score": 34.89,
+      "detail": "SpreadsheetBench 2 official live leaderboard, retrieved 2026-08-20: source label Claude Opus 4.6, rank 3, verified=true, published Overall=34.89. The source publishes Template=52.58, Financial Modeling=34, Debugging=12, Visualization=62.5; Overall is consistent with the official 97/100/100/24 task-count weighting. Visualization uses the live leaderboard's mean rubric pass rate, not the current evaluator's separate >0.7 binary diagnostic. Upstream-author publication transcription, not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-category-breakdown",
+          "label": "官方四分项",
+          "title": "SpreadsheetBench 2 官方四类任务分数",
+          "columns": [
+            "分项",
+            "任务数",
+            "官网分数"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Template",
+                97,
+                52.58
+              ]
+            },
+            {
+              "cells": [
+                "Financial Modeling",
+                100,
+                34
+              ]
+            },
+            {
+              "cells": [
+                "Debugging",
+                100,
+                12
+              ]
+            },
+            {
+              "cells": [
+                "Visualization",
+                24,
+                62.5
+              ]
+            }
+          ],
+          "note": "四分项逐格转录自 submission.source 固定快照，保持来源精度。Overall 按 97/100/100/24 个任务加权；Visualization 是 rubric pass rate 的任务均值。辅助展示，不参与独立排名。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "moonshot/kimi-k2.5",
+        "harness": "SWE-agent"
+      },
+      "score": 14.64,
+      "detail": "SpreadsheetBench 2 official live leaderboard, retrieved 2026-08-20: source label Kimi K2.5, rank 8, verified=true, published Overall=14.64. The source publishes Template=18.56, Financial Modeling=15, Debugging=4, Visualization=41.67; Overall is consistent with the official 97/100/100/24 task-count weighting. Visualization uses the live leaderboard's mean rubric pass rate, not the current evaluator's separate >0.7 binary diagnostic. Upstream-author publication transcription, not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-category-breakdown",
+          "label": "官方四分项",
+          "title": "SpreadsheetBench 2 官方四类任务分数",
+          "columns": [
+            "分项",
+            "任务数",
+            "官网分数"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Template",
+                97,
+                18.56
+              ]
+            },
+            {
+              "cells": [
+                "Financial Modeling",
+                100,
+                15
+              ]
+            },
+            {
+              "cells": [
+                "Debugging",
+                100,
+                4
+              ]
+            },
+            {
+              "cells": [
+                "Visualization",
+                24,
+                41.67
+              ]
+            }
+          ],
+          "note": "四分项逐格转录自 submission.source 固定快照，保持来源精度。Overall 按 97/100/100/24 个任务加权；Visualization 是 rubric pass rate 的任务均值。辅助展示，不参与独立排名。"
+        }
+      ]
+    }
+  ]
+}

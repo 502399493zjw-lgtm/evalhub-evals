@@ -1,0 +1,1607 @@
+[
+  {
+    "task_id": "debugging-01-01",
+    "category": "Debugging",
+    "source_id": "01_01"
+  },
+  {
+    "task_id": "debugging-01-02",
+    "category": "Debugging",
+    "source_id": "01_02"
+  },
+  {
+    "task_id": "debugging-01-03",
+    "category": "Debugging",
+    "source_id": "01_03"
+  },
+  {
+    "task_id": "debugging-01-04",
+    "category": "Debugging",
+    "source_id": "01_04"
+  },
+  {
+    "task_id": "debugging-01-05",
+    "category": "Debugging",
+    "source_id": "01_05"
+  },
+  {
+    "task_id": "debugging-01-06",
+    "category": "Debugging",
+    "source_id": "01_06"
+  },
+  {
+    "task_id": "debugging-01-07",
+    "category": "Debugging",
+    "source_id": "01_07"
+  },
+  {
+    "task_id": "debugging-01-08",
+    "category": "Debugging",
+    "source_id": "01_08"
+  },
+  {
+    "task_id": "debugging-01-09",
+    "category": "Debugging",
+    "source_id": "01_09"
+  },
+  {
+    "task_id": "debugging-01-10",
+    "category": "Debugging",
+    "source_id": "01_10"
+  },
+  {
+    "task_id": "debugging-02-01",
+    "category": "Debugging",
+    "source_id": "02_01"
+  },
+  {
+    "task_id": "debugging-02-02",
+    "category": "Debugging",
+    "source_id": "02_02"
+  },
+  {
+    "task_id": "debugging-02-03",
+    "category": "Debugging",
+    "source_id": "02_03"
+  },
+  {
+    "task_id": "debugging-02-04",
+    "category": "Debugging",
+    "source_id": "02_04"
+  },
+  {
+    "task_id": "debugging-02-05",
+    "category": "Debugging",
+    "source_id": "02_05"
+  },
+  {
+    "task_id": "debugging-02-06",
+    "category": "Debugging",
+    "source_id": "02_06"
+  },
+  {
+    "task_id": "debugging-02-07",
+    "category": "Debugging",
+    "source_id": "02_07"
+  },
+  {
+    "task_id": "debugging-02-08",
+    "category": "Debugging",
+    "source_id": "02_08"
+  },
+  {
+    "task_id": "debugging-02-09",
+    "category": "Debugging",
+    "source_id": "02_09"
+  },
+  {
+    "task_id": "debugging-02-10",
+    "category": "Debugging",
+    "source_id": "02_10"
+  },
+  {
+    "task_id": "debugging-03-01",
+    "category": "Debugging",
+    "source_id": "03_01"
+  },
+  {
+    "task_id": "debugging-03-02",
+    "category": "Debugging",
+    "source_id": "03_02"
+  },
+  {
+    "task_id": "debugging-03-03",
+    "category": "Debugging",
+    "source_id": "03_03"
+  },
+  {
+    "task_id": "debugging-03-04",
+    "category": "Debugging",
+    "source_id": "03_04"
+  },
+  {
+    "task_id": "debugging-03-05",
+    "category": "Debugging",
+    "source_id": "03_05"
+  },
+  {
+    "task_id": "debugging-03-06",
+    "category": "Debugging",
+    "source_id": "03_06"
+  },
+  {
+    "task_id": "debugging-03-07",
+    "category": "Debugging",
+    "source_id": "03_07"
+  },
+  {
+    "task_id": "debugging-03-08",
+    "category": "Debugging",
+    "source_id": "03_08"
+  },
+  {
+    "task_id": "debugging-03-09",
+    "category": "Debugging",
+    "source_id": "03_09"
+  },
+  {
+    "task_id": "debugging-03-10",
+    "category": "Debugging",
+    "source_id": "03_10"
+  },
+  {
+    "task_id": "debugging-04-01",
+    "category": "Debugging",
+    "source_id": "04_01"
+  },
+  {
+    "task_id": "debugging-04-02",
+    "category": "Debugging",
+    "source_id": "04_02"
+  },
+  {
+    "task_id": "debugging-04-03",
+    "category": "Debugging",
+    "source_id": "04_03"
+  },
+  {
+    "task_id": "debugging-04-04",
+    "category": "Debugging",
+    "source_id": "04_04"
+  },
+  {
+    "task_id": "debugging-04-05",
+    "category": "Debugging",
+    "source_id": "04_05"
+  },
+  {
+    "task_id": "debugging-04-06",
+    "category": "Debugging",
+    "source_id": "04_06"
+  },
+  {
+    "task_id": "debugging-04-07",
+    "category": "Debugging",
+    "source_id": "04_07"
+  },
+  {
+    "task_id": "debugging-04-08",
+    "category": "Debugging",
+    "source_id": "04_08"
+  },
+  {
+    "task_id": "debugging-04-09",
+    "category": "Debugging",
+    "source_id": "04_09"
+  },
+  {
+    "task_id": "debugging-04-10",
+    "category": "Debugging",
+    "source_id": "04_10"
+  },
+  {
+    "task_id": "debugging-05-01",
+    "category": "Debugging",
+    "source_id": "05_01"
+  },
+  {
+    "task_id": "debugging-05-02",
+    "category": "Debugging",
+    "source_id": "05_02"
+  },
+  {
+    "task_id": "debugging-05-03",
+    "category": "Debugging",
+    "source_id": "05_03"
+  },
+  {
+    "task_id": "debugging-05-04",
+    "category": "Debugging",
+    "source_id": "05_04"
+  },
+  {
+    "task_id": "debugging-05-05",
+    "category": "Debugging",
+    "source_id": "05_05"
+  },
+  {
+    "task_id": "debugging-05-06",
+    "category": "Debugging",
+    "source_id": "05_06"
+  },
+  {
+    "task_id": "debugging-05-07",
+    "category": "Debugging",
+    "source_id": "05_07"
+  },
+  {
+    "task_id": "debugging-05-08",
+    "category": "Debugging",
+    "source_id": "05_08"
+  },
+  {
+    "task_id": "debugging-05-09",
+    "category": "Debugging",
+    "source_id": "05_09"
+  },
+  {
+    "task_id": "debugging-05-10",
+    "category": "Debugging",
+    "source_id": "05_10"
+  },
+  {
+    "task_id": "debugging-06-01",
+    "category": "Debugging",
+    "source_id": "06_01"
+  },
+  {
+    "task_id": "debugging-06-02",
+    "category": "Debugging",
+    "source_id": "06_02"
+  },
+  {
+    "task_id": "debugging-06-03",
+    "category": "Debugging",
+    "source_id": "06_03"
+  },
+  {
+    "task_id": "debugging-06-04",
+    "category": "Debugging",
+    "source_id": "06_04"
+  },
+  {
+    "task_id": "debugging-06-05",
+    "category": "Debugging",
+    "source_id": "06_05"
+  },
+  {
+    "task_id": "debugging-06-06",
+    "category": "Debugging",
+    "source_id": "06_06"
+  },
+  {
+    "task_id": "debugging-06-07",
+    "category": "Debugging",
+    "source_id": "06_07"
+  },
+  {
+    "task_id": "debugging-06-08",
+    "category": "Debugging",
+    "source_id": "06_08"
+  },
+  {
+    "task_id": "debugging-06-09",
+    "category": "Debugging",
+    "source_id": "06_09"
+  },
+  {
+    "task_id": "debugging-06-10",
+    "category": "Debugging",
+    "source_id": "06_10"
+  },
+  {
+    "task_id": "debugging-07-01",
+    "category": "Debugging",
+    "source_id": "07_01"
+  },
+  {
+    "task_id": "debugging-07-02",
+    "category": "Debugging",
+    "source_id": "07_02"
+  },
+  {
+    "task_id": "debugging-07-03",
+    "category": "Debugging",
+    "source_id": "07_03"
+  },
+  {
+    "task_id": "debugging-07-04",
+    "category": "Debugging",
+    "source_id": "07_04"
+  },
+  {
+    "task_id": "debugging-07-05",
+    "category": "Debugging",
+    "source_id": "07_05"
+  },
+  {
+    "task_id": "debugging-07-06",
+    "category": "Debugging",
+    "source_id": "07_06"
+  },
+  {
+    "task_id": "debugging-07-07",
+    "category": "Debugging",
+    "source_id": "07_07"
+  },
+  {
+    "task_id": "debugging-07-08",
+    "category": "Debugging",
+    "source_id": "07_08"
+  },
+  {
+    "task_id": "debugging-07-09",
+    "category": "Debugging",
+    "source_id": "07_09"
+  },
+  {
+    "task_id": "debugging-07-10",
+    "category": "Debugging",
+    "source_id": "07_10"
+  },
+  {
+    "task_id": "debugging-08-01",
+    "category": "Debugging",
+    "source_id": "08_01"
+  },
+  {
+    "task_id": "debugging-08-02",
+    "category": "Debugging",
+    "source_id": "08_02"
+  },
+  {
+    "task_id": "debugging-08-03",
+    "category": "Debugging",
+    "source_id": "08_03"
+  },
+  {
+    "task_id": "debugging-08-04",
+    "category": "Debugging",
+    "source_id": "08_04"
+  },
+  {
+    "task_id": "debugging-08-05",
+    "category": "Debugging",
+    "source_id": "08_05"
+  },
+  {
+    "task_id": "debugging-08-06",
+    "category": "Debugging",
+    "source_id": "08_06"
+  },
+  {
+    "task_id": "debugging-08-07",
+    "category": "Debugging",
+    "source_id": "08_07"
+  },
+  {
+    "task_id": "debugging-08-08",
+    "category": "Debugging",
+    "source_id": "08_08"
+  },
+  {
+    "task_id": "debugging-08-09",
+    "category": "Debugging",
+    "source_id": "08_09"
+  },
+  {
+    "task_id": "debugging-08-10",
+    "category": "Debugging",
+    "source_id": "08_10"
+  },
+  {
+    "task_id": "debugging-09-01",
+    "category": "Debugging",
+    "source_id": "09_01"
+  },
+  {
+    "task_id": "debugging-09-02",
+    "category": "Debugging",
+    "source_id": "09_02"
+  },
+  {
+    "task_id": "debugging-09-03",
+    "category": "Debugging",
+    "source_id": "09_03"
+  },
+  {
+    "task_id": "debugging-09-04",
+    "category": "Debugging",
+    "source_id": "09_04"
+  },
+  {
+    "task_id": "debugging-09-05",
+    "category": "Debugging",
+    "source_id": "09_05"
+  },
+  {
+    "task_id": "debugging-09-06",
+    "category": "Debugging",
+    "source_id": "09_06"
+  },
+  {
+    "task_id": "debugging-09-07",
+    "category": "Debugging",
+    "source_id": "09_07"
+  },
+  {
+    "task_id": "debugging-09-08",
+    "category": "Debugging",
+    "source_id": "09_08"
+  },
+  {
+    "task_id": "debugging-09-09",
+    "category": "Debugging",
+    "source_id": "09_09"
+  },
+  {
+    "task_id": "debugging-09-10",
+    "category": "Debugging",
+    "source_id": "09_10"
+  },
+  {
+    "task_id": "debugging-10-01",
+    "category": "Debugging",
+    "source_id": "10_01"
+  },
+  {
+    "task_id": "debugging-10-02",
+    "category": "Debugging",
+    "source_id": "10_02"
+  },
+  {
+    "task_id": "debugging-10-03",
+    "category": "Debugging",
+    "source_id": "10_03"
+  },
+  {
+    "task_id": "debugging-10-04",
+    "category": "Debugging",
+    "source_id": "10_04"
+  },
+  {
+    "task_id": "debugging-10-05",
+    "category": "Debugging",
+    "source_id": "10_05"
+  },
+  {
+    "task_id": "debugging-10-06",
+    "category": "Debugging",
+    "source_id": "10_06"
+  },
+  {
+    "task_id": "debugging-10-07",
+    "category": "Debugging",
+    "source_id": "10_07"
+  },
+  {
+    "task_id": "debugging-10-08",
+    "category": "Debugging",
+    "source_id": "10_08"
+  },
+  {
+    "task_id": "debugging-10-09",
+    "category": "Debugging",
+    "source_id": "10_09"
+  },
+  {
+    "task_id": "debugging-10-10",
+    "category": "Debugging",
+    "source_id": "10_10"
+  },
+  {
+    "task_id": "financial-model-01-01",
+    "category": "Financial_Model",
+    "source_id": "01_01"
+  },
+  {
+    "task_id": "financial-model-01-02",
+    "category": "Financial_Model",
+    "source_id": "01_02"
+  },
+  {
+    "task_id": "financial-model-01-03",
+    "category": "Financial_Model",
+    "source_id": "01_03"
+  },
+  {
+    "task_id": "financial-model-01-04",
+    "category": "Financial_Model",
+    "source_id": "01_04"
+  },
+  {
+    "task_id": "financial-model-01-05",
+    "category": "Financial_Model",
+    "source_id": "01_05"
+  },
+  {
+    "task_id": "financial-model-02-01",
+    "category": "Financial_Model",
+    "source_id": "02_01"
+  },
+  {
+    "task_id": "financial-model-02-02",
+    "category": "Financial_Model",
+    "source_id": "02_02"
+  },
+  {
+    "task_id": "financial-model-02-03",
+    "category": "Financial_Model",
+    "source_id": "02_03"
+  },
+  {
+    "task_id": "financial-model-02-04",
+    "category": "Financial_Model",
+    "source_id": "02_04"
+  },
+  {
+    "task_id": "financial-model-02-05",
+    "category": "Financial_Model",
+    "source_id": "02_05"
+  },
+  {
+    "task_id": "financial-model-03-01",
+    "category": "Financial_Model",
+    "source_id": "03_01"
+  },
+  {
+    "task_id": "financial-model-03-02",
+    "category": "Financial_Model",
+    "source_id": "03_02"
+  },
+  {
+    "task_id": "financial-model-03-03",
+    "category": "Financial_Model",
+    "source_id": "03_03"
+  },
+  {
+    "task_id": "financial-model-03-04",
+    "category": "Financial_Model",
+    "source_id": "03_04"
+  },
+  {
+    "task_id": "financial-model-03-05",
+    "category": "Financial_Model",
+    "source_id": "03_05"
+  },
+  {
+    "task_id": "financial-model-04-01",
+    "category": "Financial_Model",
+    "source_id": "04_01"
+  },
+  {
+    "task_id": "financial-model-04-02",
+    "category": "Financial_Model",
+    "source_id": "04_02"
+  },
+  {
+    "task_id": "financial-model-04-03",
+    "category": "Financial_Model",
+    "source_id": "04_03"
+  },
+  {
+    "task_id": "financial-model-04-04",
+    "category": "Financial_Model",
+    "source_id": "04_04"
+  },
+  {
+    "task_id": "financial-model-04-05",
+    "category": "Financial_Model",
+    "source_id": "04_05"
+  },
+  {
+    "task_id": "financial-model-05-01",
+    "category": "Financial_Model",
+    "source_id": "05_01"
+  },
+  {
+    "task_id": "financial-model-05-02",
+    "category": "Financial_Model",
+    "source_id": "05_02"
+  },
+  {
+    "task_id": "financial-model-05-03",
+    "category": "Financial_Model",
+    "source_id": "05_03"
+  },
+  {
+    "task_id": "financial-model-05-04",
+    "category": "Financial_Model",
+    "source_id": "05_04"
+  },
+  {
+    "task_id": "financial-model-05-05",
+    "category": "Financial_Model",
+    "source_id": "05_05"
+  },
+  {
+    "task_id": "financial-model-06-01",
+    "category": "Financial_Model",
+    "source_id": "06_01"
+  },
+  {
+    "task_id": "financial-model-06-02",
+    "category": "Financial_Model",
+    "source_id": "06_02"
+  },
+  {
+    "task_id": "financial-model-06-03",
+    "category": "Financial_Model",
+    "source_id": "06_03"
+  },
+  {
+    "task_id": "financial-model-06-04",
+    "category": "Financial_Model",
+    "source_id": "06_04"
+  },
+  {
+    "task_id": "financial-model-06-05",
+    "category": "Financial_Model",
+    "source_id": "06_05"
+  },
+  {
+    "task_id": "financial-model-07-01",
+    "category": "Financial_Model",
+    "source_id": "07_01"
+  },
+  {
+    "task_id": "financial-model-07-02",
+    "category": "Financial_Model",
+    "source_id": "07_02"
+  },
+  {
+    "task_id": "financial-model-07-03",
+    "category": "Financial_Model",
+    "source_id": "07_03"
+  },
+  {
+    "task_id": "financial-model-07-04",
+    "category": "Financial_Model",
+    "source_id": "07_04"
+  },
+  {
+    "task_id": "financial-model-07-05",
+    "category": "Financial_Model",
+    "source_id": "07_05"
+  },
+  {
+    "task_id": "financial-model-08-01",
+    "category": "Financial_Model",
+    "source_id": "08_01"
+  },
+  {
+    "task_id": "financial-model-08-02",
+    "category": "Financial_Model",
+    "source_id": "08_02"
+  },
+  {
+    "task_id": "financial-model-08-03",
+    "category": "Financial_Model",
+    "source_id": "08_03"
+  },
+  {
+    "task_id": "financial-model-08-04",
+    "category": "Financial_Model",
+    "source_id": "08_04"
+  },
+  {
+    "task_id": "financial-model-08-05",
+    "category": "Financial_Model",
+    "source_id": "08_05"
+  },
+  {
+    "task_id": "financial-model-09-01",
+    "category": "Financial_Model",
+    "source_id": "09_01"
+  },
+  {
+    "task_id": "financial-model-09-02",
+    "category": "Financial_Model",
+    "source_id": "09_02"
+  },
+  {
+    "task_id": "financial-model-09-03",
+    "category": "Financial_Model",
+    "source_id": "09_03"
+  },
+  {
+    "task_id": "financial-model-09-04",
+    "category": "Financial_Model",
+    "source_id": "09_04"
+  },
+  {
+    "task_id": "financial-model-09-05",
+    "category": "Financial_Model",
+    "source_id": "09_05"
+  },
+  {
+    "task_id": "financial-model-10-01",
+    "category": "Financial_Model",
+    "source_id": "10_01"
+  },
+  {
+    "task_id": "financial-model-10-02",
+    "category": "Financial_Model",
+    "source_id": "10_02"
+  },
+  {
+    "task_id": "financial-model-10-03",
+    "category": "Financial_Model",
+    "source_id": "10_03"
+  },
+  {
+    "task_id": "financial-model-10-04",
+    "category": "Financial_Model",
+    "source_id": "10_04"
+  },
+  {
+    "task_id": "financial-model-10-05",
+    "category": "Financial_Model",
+    "source_id": "10_05"
+  },
+  {
+    "task_id": "financial-model-11-01",
+    "category": "Financial_Model",
+    "source_id": "11_01"
+  },
+  {
+    "task_id": "financial-model-11-02",
+    "category": "Financial_Model",
+    "source_id": "11_02"
+  },
+  {
+    "task_id": "financial-model-11-03",
+    "category": "Financial_Model",
+    "source_id": "11_03"
+  },
+  {
+    "task_id": "financial-model-11-04",
+    "category": "Financial_Model",
+    "source_id": "11_04"
+  },
+  {
+    "task_id": "financial-model-11-05",
+    "category": "Financial_Model",
+    "source_id": "11_05"
+  },
+  {
+    "task_id": "financial-model-12-01",
+    "category": "Financial_Model",
+    "source_id": "12_01"
+  },
+  {
+    "task_id": "financial-model-12-02",
+    "category": "Financial_Model",
+    "source_id": "12_02"
+  },
+  {
+    "task_id": "financial-model-12-03",
+    "category": "Financial_Model",
+    "source_id": "12_03"
+  },
+  {
+    "task_id": "financial-model-12-04",
+    "category": "Financial_Model",
+    "source_id": "12_04"
+  },
+  {
+    "task_id": "financial-model-12-05",
+    "category": "Financial_Model",
+    "source_id": "12_05"
+  },
+  {
+    "task_id": "financial-model-13-01",
+    "category": "Financial_Model",
+    "source_id": "13_01"
+  },
+  {
+    "task_id": "financial-model-13-02",
+    "category": "Financial_Model",
+    "source_id": "13_02"
+  },
+  {
+    "task_id": "financial-model-13-03",
+    "category": "Financial_Model",
+    "source_id": "13_03"
+  },
+  {
+    "task_id": "financial-model-13-04",
+    "category": "Financial_Model",
+    "source_id": "13_04"
+  },
+  {
+    "task_id": "financial-model-13-05",
+    "category": "Financial_Model",
+    "source_id": "13_05"
+  },
+  {
+    "task_id": "financial-model-14-01",
+    "category": "Financial_Model",
+    "source_id": "14_01"
+  },
+  {
+    "task_id": "financial-model-14-02",
+    "category": "Financial_Model",
+    "source_id": "14_02"
+  },
+  {
+    "task_id": "financial-model-14-03",
+    "category": "Financial_Model",
+    "source_id": "14_03"
+  },
+  {
+    "task_id": "financial-model-14-04",
+    "category": "Financial_Model",
+    "source_id": "14_04"
+  },
+  {
+    "task_id": "financial-model-14-05",
+    "category": "Financial_Model",
+    "source_id": "14_05"
+  },
+  {
+    "task_id": "financial-model-15-01",
+    "category": "Financial_Model",
+    "source_id": "15_01"
+  },
+  {
+    "task_id": "financial-model-15-02",
+    "category": "Financial_Model",
+    "source_id": "15_02"
+  },
+  {
+    "task_id": "financial-model-15-03",
+    "category": "Financial_Model",
+    "source_id": "15_03"
+  },
+  {
+    "task_id": "financial-model-15-04",
+    "category": "Financial_Model",
+    "source_id": "15_04"
+  },
+  {
+    "task_id": "financial-model-15-05",
+    "category": "Financial_Model",
+    "source_id": "15_05"
+  },
+  {
+    "task_id": "financial-model-16-01",
+    "category": "Financial_Model",
+    "source_id": "16_01"
+  },
+  {
+    "task_id": "financial-model-16-02",
+    "category": "Financial_Model",
+    "source_id": "16_02"
+  },
+  {
+    "task_id": "financial-model-16-03",
+    "category": "Financial_Model",
+    "source_id": "16_03"
+  },
+  {
+    "task_id": "financial-model-16-04",
+    "category": "Financial_Model",
+    "source_id": "16_04"
+  },
+  {
+    "task_id": "financial-model-16-05",
+    "category": "Financial_Model",
+    "source_id": "16_05"
+  },
+  {
+    "task_id": "financial-model-17-01",
+    "category": "Financial_Model",
+    "source_id": "17_01"
+  },
+  {
+    "task_id": "financial-model-17-02",
+    "category": "Financial_Model",
+    "source_id": "17_02"
+  },
+  {
+    "task_id": "financial-model-17-03",
+    "category": "Financial_Model",
+    "source_id": "17_03"
+  },
+  {
+    "task_id": "financial-model-17-04",
+    "category": "Financial_Model",
+    "source_id": "17_04"
+  },
+  {
+    "task_id": "financial-model-17-05",
+    "category": "Financial_Model",
+    "source_id": "17_05"
+  },
+  {
+    "task_id": "financial-model-18-01",
+    "category": "Financial_Model",
+    "source_id": "18_01"
+  },
+  {
+    "task_id": "financial-model-18-02",
+    "category": "Financial_Model",
+    "source_id": "18_02"
+  },
+  {
+    "task_id": "financial-model-18-03",
+    "category": "Financial_Model",
+    "source_id": "18_03"
+  },
+  {
+    "task_id": "financial-model-18-04",
+    "category": "Financial_Model",
+    "source_id": "18_04"
+  },
+  {
+    "task_id": "financial-model-18-05",
+    "category": "Financial_Model",
+    "source_id": "18_05"
+  },
+  {
+    "task_id": "financial-model-19-01",
+    "category": "Financial_Model",
+    "source_id": "19_01"
+  },
+  {
+    "task_id": "financial-model-19-02",
+    "category": "Financial_Model",
+    "source_id": "19_02"
+  },
+  {
+    "task_id": "financial-model-19-03",
+    "category": "Financial_Model",
+    "source_id": "19_03"
+  },
+  {
+    "task_id": "financial-model-19-04",
+    "category": "Financial_Model",
+    "source_id": "19_04"
+  },
+  {
+    "task_id": "financial-model-19-05",
+    "category": "Financial_Model",
+    "source_id": "19_05"
+  },
+  {
+    "task_id": "financial-model-20-01",
+    "category": "Financial_Model",
+    "source_id": "20_01"
+  },
+  {
+    "task_id": "financial-model-20-02",
+    "category": "Financial_Model",
+    "source_id": "20_02"
+  },
+  {
+    "task_id": "financial-model-20-03",
+    "category": "Financial_Model",
+    "source_id": "20_03"
+  },
+  {
+    "task_id": "financial-model-20-04",
+    "category": "Financial_Model",
+    "source_id": "20_04"
+  },
+  {
+    "task_id": "financial-model-20-05",
+    "category": "Financial_Model",
+    "source_id": "20_05"
+  },
+  {
+    "task_id": "template-01-01",
+    "category": "Template",
+    "source_id": "01_01"
+  },
+  {
+    "task_id": "template-01-02",
+    "category": "Template",
+    "source_id": "01_02"
+  },
+  {
+    "task_id": "template-01-03",
+    "category": "Template",
+    "source_id": "01_03"
+  },
+  {
+    "task_id": "template-01-04",
+    "category": "Template",
+    "source_id": "01_04"
+  },
+  {
+    "task_id": "template-01-05",
+    "category": "Template",
+    "source_id": "01_05"
+  },
+  {
+    "task_id": "template-01-06",
+    "category": "Template",
+    "source_id": "01_06"
+  },
+  {
+    "task_id": "template-01-07",
+    "category": "Template",
+    "source_id": "01_07"
+  },
+  {
+    "task_id": "template-01-08",
+    "category": "Template",
+    "source_id": "01_08"
+  },
+  {
+    "task_id": "template-01-09",
+    "category": "Template",
+    "source_id": "01_09"
+  },
+  {
+    "task_id": "template-02-01",
+    "category": "Template",
+    "source_id": "02_01"
+  },
+  {
+    "task_id": "template-02-02",
+    "category": "Template",
+    "source_id": "02_02"
+  },
+  {
+    "task_id": "template-02-03",
+    "category": "Template",
+    "source_id": "02_03"
+  },
+  {
+    "task_id": "template-02-04",
+    "category": "Template",
+    "source_id": "02_04"
+  },
+  {
+    "task_id": "template-02-05",
+    "category": "Template",
+    "source_id": "02_05"
+  },
+  {
+    "task_id": "template-02-06",
+    "category": "Template",
+    "source_id": "02_06"
+  },
+  {
+    "task_id": "template-03-01",
+    "category": "Template",
+    "source_id": "03_01"
+  },
+  {
+    "task_id": "template-03-02",
+    "category": "Template",
+    "source_id": "03_02"
+  },
+  {
+    "task_id": "template-03-03",
+    "category": "Template",
+    "source_id": "03_03"
+  },
+  {
+    "task_id": "template-03-04",
+    "category": "Template",
+    "source_id": "03_04"
+  },
+  {
+    "task_id": "template-04-03",
+    "category": "Template",
+    "source_id": "04_03"
+  },
+  {
+    "task_id": "template-04-04",
+    "category": "Template",
+    "source_id": "04_04"
+  },
+  {
+    "task_id": "template-05-01",
+    "category": "Template",
+    "source_id": "05_01"
+  },
+  {
+    "task_id": "template-05-02",
+    "category": "Template",
+    "source_id": "05_02"
+  },
+  {
+    "task_id": "template-06-01",
+    "category": "Template",
+    "source_id": "06_01"
+  },
+  {
+    "task_id": "template-06-02",
+    "category": "Template",
+    "source_id": "06_02"
+  },
+  {
+    "task_id": "template-06-03",
+    "category": "Template",
+    "source_id": "06_03"
+  },
+  {
+    "task_id": "template-06-04",
+    "category": "Template",
+    "source_id": "06_04"
+  },
+  {
+    "task_id": "template-06-05",
+    "category": "Template",
+    "source_id": "06_05"
+  },
+  {
+    "task_id": "template-06-06",
+    "category": "Template",
+    "source_id": "06_06"
+  },
+  {
+    "task_id": "template-06-07",
+    "category": "Template",
+    "source_id": "06_07"
+  },
+  {
+    "task_id": "template-06-08",
+    "category": "Template",
+    "source_id": "06_08"
+  },
+  {
+    "task_id": "template-06-09",
+    "category": "Template",
+    "source_id": "06_09"
+  },
+  {
+    "task_id": "template-06-11",
+    "category": "Template",
+    "source_id": "06_11"
+  },
+  {
+    "task_id": "template-06-12",
+    "category": "Template",
+    "source_id": "06_12"
+  },
+  {
+    "task_id": "template-06-13",
+    "category": "Template",
+    "source_id": "06_13"
+  },
+  {
+    "task_id": "template-06-14",
+    "category": "Template",
+    "source_id": "06_14"
+  },
+  {
+    "task_id": "template-06-15",
+    "category": "Template",
+    "source_id": "06_15"
+  },
+  {
+    "task_id": "template-06-16",
+    "category": "Template",
+    "source_id": "06_16"
+  },
+  {
+    "task_id": "template-06-17",
+    "category": "Template",
+    "source_id": "06_17"
+  },
+  {
+    "task_id": "template-06-18",
+    "category": "Template",
+    "source_id": "06_18"
+  },
+  {
+    "task_id": "template-06-19",
+    "category": "Template",
+    "source_id": "06_19"
+  },
+  {
+    "task_id": "template-06-20",
+    "category": "Template",
+    "source_id": "06_20"
+  },
+  {
+    "task_id": "template-06-21",
+    "category": "Template",
+    "source_id": "06_21"
+  },
+  {
+    "task_id": "template-06-22",
+    "category": "Template",
+    "source_id": "06_22"
+  },
+  {
+    "task_id": "template-06-23",
+    "category": "Template",
+    "source_id": "06_23"
+  },
+  {
+    "task_id": "template-06-24",
+    "category": "Template",
+    "source_id": "06_24"
+  },
+  {
+    "task_id": "template-06-25",
+    "category": "Template",
+    "source_id": "06_25"
+  },
+  {
+    "task_id": "template-07-01",
+    "category": "Template",
+    "source_id": "07_01"
+  },
+  {
+    "task_id": "template-07-02",
+    "category": "Template",
+    "source_id": "07_02"
+  },
+  {
+    "task_id": "template-07-03",
+    "category": "Template",
+    "source_id": "07_03"
+  },
+  {
+    "task_id": "template-08-01",
+    "category": "Template",
+    "source_id": "08_01"
+  },
+  {
+    "task_id": "template-08-02",
+    "category": "Template",
+    "source_id": "08_02"
+  },
+  {
+    "task_id": "template-08-03",
+    "category": "Template",
+    "source_id": "08_03"
+  },
+  {
+    "task_id": "template-09-01",
+    "category": "Template",
+    "source_id": "09_01"
+  },
+  {
+    "task_id": "template-09-02",
+    "category": "Template",
+    "source_id": "09_02"
+  },
+  {
+    "task_id": "template-09-03",
+    "category": "Template",
+    "source_id": "09_03"
+  },
+  {
+    "task_id": "template-09-04",
+    "category": "Template",
+    "source_id": "09_04"
+  },
+  {
+    "task_id": "template-10-01",
+    "category": "Template",
+    "source_id": "10_01"
+  },
+  {
+    "task_id": "template-10-02",
+    "category": "Template",
+    "source_id": "10_02"
+  },
+  {
+    "task_id": "template-11-01",
+    "category": "Template",
+    "source_id": "11_01"
+  },
+  {
+    "task_id": "template-11-02",
+    "category": "Template",
+    "source_id": "11_02"
+  },
+  {
+    "task_id": "template-11-03",
+    "category": "Template",
+    "source_id": "11_03"
+  },
+  {
+    "task_id": "template-11-04",
+    "category": "Template",
+    "source_id": "11_04"
+  },
+  {
+    "task_id": "template-12-01",
+    "category": "Template",
+    "source_id": "12_01"
+  },
+  {
+    "task_id": "template-13-01",
+    "category": "Template",
+    "source_id": "13_01"
+  },
+  {
+    "task_id": "template-13-02",
+    "category": "Template",
+    "source_id": "13_02"
+  },
+  {
+    "task_id": "template-13-03",
+    "category": "Template",
+    "source_id": "13_03"
+  },
+  {
+    "task_id": "template-13-04",
+    "category": "Template",
+    "source_id": "13_04"
+  },
+  {
+    "task_id": "template-13-05",
+    "category": "Template",
+    "source_id": "13_05"
+  },
+  {
+    "task_id": "template-13-06",
+    "category": "Template",
+    "source_id": "13_06"
+  },
+  {
+    "task_id": "template-13-07",
+    "category": "Template",
+    "source_id": "13_07"
+  },
+  {
+    "task_id": "template-13-08",
+    "category": "Template",
+    "source_id": "13_08"
+  },
+  {
+    "task_id": "template-14-01",
+    "category": "Template",
+    "source_id": "14_01"
+  },
+  {
+    "task_id": "template-14-02",
+    "category": "Template",
+    "source_id": "14_02"
+  },
+  {
+    "task_id": "template-14-03",
+    "category": "Template",
+    "source_id": "14_03"
+  },
+  {
+    "task_id": "template-14-04",
+    "category": "Template",
+    "source_id": "14_04"
+  },
+  {
+    "task_id": "template-14-05",
+    "category": "Template",
+    "source_id": "14_05"
+  },
+  {
+    "task_id": "template-14-06",
+    "category": "Template",
+    "source_id": "14_06"
+  },
+  {
+    "task_id": "template-14-07",
+    "category": "Template",
+    "source_id": "14_07"
+  },
+  {
+    "task_id": "template-14-08",
+    "category": "Template",
+    "source_id": "14_08"
+  },
+  {
+    "task_id": "template-14-09",
+    "category": "Template",
+    "source_id": "14_09"
+  },
+  {
+    "task_id": "template-15-01",
+    "category": "Template",
+    "source_id": "15_01"
+  },
+  {
+    "task_id": "template-15-02",
+    "category": "Template",
+    "source_id": "15_02"
+  },
+  {
+    "task_id": "template-15-03",
+    "category": "Template",
+    "source_id": "15_03"
+  },
+  {
+    "task_id": "template-15-04",
+    "category": "Template",
+    "source_id": "15_04"
+  },
+  {
+    "task_id": "template-16-01",
+    "category": "Template",
+    "source_id": "16_01"
+  },
+  {
+    "task_id": "template-16-02",
+    "category": "Template",
+    "source_id": "16_02"
+  },
+  {
+    "task_id": "template-16-03",
+    "category": "Template",
+    "source_id": "16_03"
+  },
+  {
+    "task_id": "template-16-04",
+    "category": "Template",
+    "source_id": "16_04"
+  },
+  {
+    "task_id": "template-16-05",
+    "category": "Template",
+    "source_id": "16_05"
+  },
+  {
+    "task_id": "template-16-06",
+    "category": "Template",
+    "source_id": "16_06"
+  },
+  {
+    "task_id": "template-16-07",
+    "category": "Template",
+    "source_id": "16_07"
+  },
+  {
+    "task_id": "template-16-08",
+    "category": "Template",
+    "source_id": "16_08"
+  },
+  {
+    "task_id": "template-16-09",
+    "category": "Template",
+    "source_id": "16_09"
+  },
+  {
+    "task_id": "template-16-10",
+    "category": "Template",
+    "source_id": "16_10"
+  },
+  {
+    "task_id": "template-16-11",
+    "category": "Template",
+    "source_id": "16_11"
+  },
+  {
+    "task_id": "template-16-12",
+    "category": "Template",
+    "source_id": "16_12"
+  },
+  {
+    "task_id": "visualization-b268a98c-5618-45bc-87ad-adf78fc527a1",
+    "category": "Visualization",
+    "source_id": "Task 96"
+  },
+  {
+    "task_id": "visualization-a277adbb-fa70-474c-b437-df346eee0c56",
+    "category": "Visualization",
+    "source_id": "Task 95"
+  },
+  {
+    "task_id": "visualization-9ce1c4ff-a9b7-4dd5-8e1c-bf2d63602beb",
+    "category": "Visualization",
+    "source_id": "Task 1411527"
+  },
+  {
+    "task_id": "visualization-3397711e-d174-4b2e-b252-8279d78f9f88",
+    "category": "Visualization",
+    "source_id": "Task 1437004"
+  },
+  {
+    "task_id": "visualization-4c03cc20-1c4a-405d-ac31-8d0002ff0293",
+    "category": "Visualization",
+    "source_id": "Task 1423401"
+  },
+  {
+    "task_id": "visualization-96ae351a-4fd6-48fa-915d-a4e2aa4bc02a",
+    "category": "Visualization",
+    "source_id": "Task 1426290"
+  },
+  {
+    "task_id": "visualization-7209d196-3667-412e-b00d-a459c48ec4f4",
+    "category": "Visualization",
+    "source_id": "Task 1420776"
+  },
+  {
+    "task_id": "visualization-a95db6a5-5691-4941-9046-d0ac61770b01",
+    "category": "Visualization",
+    "source_id": "Task 1433875"
+  },
+  {
+    "task_id": "visualization-bae5c3cc-788d-4b2d-82e0-353600d60dfb",
+    "category": "Visualization",
+    "source_id": "Task 1428419"
+  },
+  {
+    "task_id": "visualization-03a53c99-414e-4feb-bfc7-b782b1719d14",
+    "category": "Visualization",
+    "source_id": "Task 1434951"
+  },
+  {
+    "task_id": "visualization-5960ac92-ba4d-422f-816d-4e0462578c0e",
+    "category": "Visualization",
+    "source_id": "Task 1417365"
+  },
+  {
+    "task_id": "visualization-b2baad5f-fbab-4be0-bd54-f99520b95bfe",
+    "category": "Visualization",
+    "source_id": "Task 90"
+  },
+  {
+    "task_id": "visualization-8d09f61f-522e-4100-b07c-55d0ebe0b333",
+    "category": "Visualization",
+    "source_id": "Task 1430721"
+  },
+  {
+    "task_id": "visualization-9046611f-8e49-42bf-ac95-8a666483269a",
+    "category": "Visualization",
+    "source_id": "Task 127"
+  },
+  {
+    "task_id": "visualization-0d448a4f-869b-459b-b34e-c4779dbf7371",
+    "category": "Visualization",
+    "source_id": "Task 133"
+  },
+  {
+    "task_id": "visualization-57d1c089-cf23-436a-8348-d79a0808d768",
+    "category": "Visualization",
+    "source_id": "Task 1431124"
+  },
+  {
+    "task_id": "visualization-7b6e0284-b185-47a5-94c4-30d80656cbf7",
+    "category": "Visualization",
+    "source_id": "Task 1421372"
+  },
+  {
+    "task_id": "visualization-32a173fa-b6f5-407c-9fe1-e0aecb1f5db9",
+    "category": "Visualization",
+    "source_id": "Task 1419935"
+  },
+  {
+    "task_id": "visualization-e3d30eb7-5dc1-4e91-b3cf-df2f003cf9a6",
+    "category": "Visualization",
+    "source_id": "Task 1422635"
+  },
+  {
+    "task_id": "visualization-201f0e0e-eb67-41c5-8ed4-ad0cf2233b47",
+    "category": "Visualization",
+    "source_id": "Task 131"
+  },
+  {
+    "task_id": "visualization-278848e9-6678-4425-a0cb-b94c6fd30663",
+    "category": "Visualization",
+    "source_id": "Task 134"
+  },
+  {
+    "task_id": "visualization-aaae1537-cfb6-406d-bf1e-2457a25bc154",
+    "category": "Visualization",
+    "source_id": "Task 126"
+  },
+  {
+    "task_id": "visualization-aceb537b-3a26-41bf-a344-4569b89aae5e",
+    "category": "Visualization",
+    "source_id": "Task 132"
+  },
+  {
+    "task_id": "visualization-fa8df8be-3865-425b-ab5d-fd8eb1a7a9da",
+    "category": "Visualization",
+    "source_id": "Task 129"
+  }
+]

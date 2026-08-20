@@ -1,0 +1,1680 @@
+{
+  "eval_id": "spreadsheetbench-2",
+  "submission": {
+    "kind": "run",
+    "runner_version": "spreadsheetbench-2/mean-rubric-pack@1.0.0",
+    "run_date": "2026-08-20"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "openai/gpt-5.4",
+        "harness": "structural-fixture",
+        "harness_version": "0.0.0-synthetic"
+      },
+      "score": 0,
+      "raw_metric": {
+        "label": "321 题等权平均",
+        "value": "0 分",
+        "tiebreak_value": 0
+      },
+      "detail": "结构性合成 fixture；固定数据 commit 9dea60025792fbac5928ce9f44812362dccbeecd，代码 commit 83d415ce87b1d6b8e8eafcc26957f5d13d37210f。297 个非可视化任务按 exact task accuracy 计 0/1；24 个 Visualization 任务按 mean rubric pass rate 计 0–1；321 题等权平均后乘 100。artifact_sha256=4b69661007f17d27d994dce718331aa318e7d7fce301c17765908dbc32a0917b。打包器只复核清单结构、模型身份与算术，不代表 EvalHub 运行或验证外部证据。",
+      "task_results": [
+        {
+          "task_id": "debugging-01-01",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-01-02",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-01-03",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-01-04",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-01-05",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-01-06",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-01-07",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-01-08",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-01-09",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-01-10",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-02-01",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-02-02",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-02-03",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-02-04",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-02-05",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-02-06",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-02-07",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-02-08",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-02-09",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-02-10",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-03-01",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-03-02",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-03-03",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-03-04",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-03-05",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-03-06",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-03-07",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-03-08",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-03-09",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-03-10",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-04-01",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-04-02",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-04-03",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-04-04",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-04-05",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-04-06",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-04-07",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-04-08",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-04-09",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-04-10",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-05-01",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-05-02",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-05-03",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-05-04",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-05-05",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-05-06",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-05-07",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-05-08",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-05-09",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-05-10",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-06-01",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-06-02",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-06-03",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-06-04",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-06-05",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-06-06",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-06-07",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-06-08",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-06-09",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-06-10",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-07-01",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-07-02",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-07-03",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-07-04",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-07-05",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-07-06",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-07-07",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-07-08",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-07-09",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-07-10",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-08-01",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-08-02",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-08-03",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-08-04",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-08-05",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-08-06",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-08-07",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-08-08",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-08-09",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-08-10",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-09-01",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-09-02",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-09-03",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-09-04",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-09-05",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-09-06",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-09-07",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-09-08",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-09-09",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-09-10",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-10-01",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-10-02",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-10-03",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-10-04",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-10-05",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-10-06",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-10-07",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-10-08",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-10-09",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "debugging-10-10",
+          "score": 0,
+          "raw": "Debugging · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-01-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-01-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-01-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-01-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-01-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-02-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-02-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-02-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-02-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-02-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-03-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-03-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-03-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-03-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-03-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-04-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-04-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-04-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-04-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-04-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-05-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-05-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-05-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-05-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-05-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-06-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-06-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-06-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-06-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-06-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-07-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-07-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-07-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-07-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-07-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-08-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-08-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-08-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-08-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-08-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-09-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-09-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-09-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-09-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-09-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-10-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-10-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-10-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-10-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-10-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-11-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-11-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-11-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-11-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-11-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-12-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-12-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-12-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-12-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-12-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-13-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-13-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-13-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-13-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-13-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-14-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-14-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-14-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-14-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-14-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-15-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-15-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-15-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-15-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-15-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-16-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-16-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-16-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-16-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-16-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-17-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-17-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-17-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-17-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-17-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-18-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-18-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-18-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-18-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-18-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-19-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-19-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-19-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-19-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-19-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-20-01",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-20-02",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-20-03",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-20-04",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "financial-model-20-05",
+          "score": 0,
+          "raw": "Financial_Model · missing · raw score=0"
+        },
+        {
+          "task_id": "template-01-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-01-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-01-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-01-04",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-01-05",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-01-06",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-01-07",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-01-08",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-01-09",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-02-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-02-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-02-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-02-04",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-02-05",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-02-06",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-03-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-03-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-03-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-03-04",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-04-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-04-04",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-05-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-05-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-04",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-05",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-06",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-07",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-08",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-09",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-11",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-12",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-13",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-14",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-15",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-16",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-17",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-18",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-19",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-20",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-21",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-22",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-23",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-24",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-06-25",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-07-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-07-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-07-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-08-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-08-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-08-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-09-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-09-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-09-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-09-04",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-10-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-10-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-11-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-11-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-11-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-11-04",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-12-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-13-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-13-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-13-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-13-04",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-13-05",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-13-06",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-13-07",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-13-08",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-14-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-14-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-14-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-14-04",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-14-05",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-14-06",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-14-07",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-14-08",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-14-09",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-15-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-15-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-15-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-15-04",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-16-01",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-16-02",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-16-03",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-16-04",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-16-05",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-16-06",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-16-07",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-16-08",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-16-09",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-16-10",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-16-11",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "template-16-12",
+          "score": 0,
+          "raw": "Template · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-b268a98c-5618-45bc-87ad-adf78fc527a1",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-a277adbb-fa70-474c-b437-df346eee0c56",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-9ce1c4ff-a9b7-4dd5-8e1c-bf2d63602beb",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-3397711e-d174-4b2e-b252-8279d78f9f88",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-4c03cc20-1c4a-405d-ac31-8d0002ff0293",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-96ae351a-4fd6-48fa-915d-a4e2aa4bc02a",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-7209d196-3667-412e-b00d-a459c48ec4f4",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-a95db6a5-5691-4941-9046-d0ac61770b01",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-bae5c3cc-788d-4b2d-82e0-353600d60dfb",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-03a53c99-414e-4feb-bfc7-b782b1719d14",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-5960ac92-ba4d-422f-816d-4e0462578c0e",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-b2baad5f-fbab-4be0-bd54-f99520b95bfe",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-8d09f61f-522e-4100-b07c-55d0ebe0b333",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-9046611f-8e49-42bf-ac95-8a666483269a",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-0d448a4f-869b-459b-b34e-c4779dbf7371",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-57d1c089-cf23-436a-8348-d79a0808d768",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-7b6e0284-b185-47a5-94c4-30d80656cbf7",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-32a173fa-b6f5-407c-9fe1-e0aecb1f5db9",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-e3d30eb7-5dc1-4e91-b3cf-df2f003cf9a6",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-201f0e0e-eb67-41c5-8ed4-ad0cf2233b47",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-278848e9-6678-4425-a0cb-b94c6fd30663",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-aaae1537-cfb6-406d-bf1e-2457a25bc154",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-aceb537b-3a26-41bf-a344-4569b89aae5e",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        },
+        {
+          "task_id": "visualization-fa8df8be-3865-425b-ab5d-fd8eb1a7a9da",
+          "score": 0,
+          "raw": "Visualization · missing · raw score=0"
+        }
+      ],
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "run-category-breakdown",
+          "label": "本次四分项",
+          "title": "SpreadsheetBench 2 本次运行四类任务分数",
+          "columns": [
+            "分项",
+            "任务数",
+            "success 状态数",
+            "分项分数"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "Debugging",
+                100,
+                0,
+                0
+              ]
+            },
+            {
+              "cells": [
+                "Financial Modeling",
+                100,
+                0,
+                0
+              ]
+            },
+            {
+              "cells": [
+                "Template",
+                97,
+                0,
+                0
+              ]
+            },
+            {
+              "cells": [
+                "Visualization",
+                24,
+                0,
+                0
+              ]
+            }
+          ],
+          "note": "分项分数由固定清单逐题确定性聚合；总分是四类按 100/100/97/24 个任务加权后的 321 题等权平均。Visualization 使用 rubric pass rate，不使用 >0.7 二值 ACC。只有结果条目的 score 参与排名；本表只作解释。"
+        }
+      ]
+    }
+  ]
+}

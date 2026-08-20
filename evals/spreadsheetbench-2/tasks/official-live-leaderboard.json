@@ -1,0 +1,152 @@
+[
+  {
+    "model": "arito",
+    "scaffold": "arito",
+    "organization": "arito",
+    "url": "https://arito.ai",
+    "verified": true,
+    "score": 45.46,
+    "date": "2026-08-04",
+    "subscores": {
+      "Template": 44.33,
+      "Fin.Model": 55.00,
+      "Debug": 28.00,
+      "Visualization": 83.02
+    }
+  },
+  {
+    "model": "WPS AI",
+    "scaffold": "WPS AI",
+    "organization": "Kingsoft Office",
+    "url": "https://www.wps.cn/",
+    "verified": true,
+    "score": 42.27,
+    "date": "2026-08-11",
+    "subscores": {
+      "Template": 65.98,
+      "Fin.Model": 46.00,
+      "Debug": 12.00,
+      "Visualization": 57.02
+    }
+  },
+  {
+    "model": "Claude Opus 4.6",
+    "scaffold": "SWE-agent",
+    "organization": "Anthropic",
+    "url": "https://www.anthropic.com",
+    "verified": true,
+    "score": 34.89,
+    "date": "2026-03-26",
+    "subscores": {
+      "Template": 52.58,
+      "Fin.Model": 34,
+      "Debug": 12,
+      "Visualization": 62.5
+    }
+  },
+  {
+    "model": "GPT-5.2",
+    "scaffold": "SWE-agent",
+    "organization": "OpenAI",
+    "url": "https://www.openai.com",
+    "verified": true,
+    "score": 26.79,
+    "date": "2026-03-26",
+    "subscores": {
+      "Template": 35.05,
+      "Fin.Model": 33,
+      "Debug": 8,
+      "Visualization": 45.83
+    }
+  },
+  {
+    "model": "Gemini 3.1 Pro",
+    "scaffold": "SWE-agent",
+    "organization": "Google",
+    "url": "https://gemini.google.com/",
+    "verified": true,
+    "score": 23.68,
+    "date": "2026-03-26",
+    "subscores": {
+      "Template": 28.87,
+      "Fin.Model": 31,
+      "Debug": 7,
+      "Visualization": 41.67
+    }
+  },
+  {
+    "model": "GLM-5.0",
+    "scaffold": "SWE-agent",
+    "organization": "Zhipu.AI",
+    "url": "https://www.zhipuai.cn",
+    "verified": true,
+    "score": 17.14,
+    "date": "2026-03-26",
+    "subscores": {
+      "Template": 17.53,
+      "Fin.Model": 22,
+      "Debug": 7,
+      "Visualization": 37.5
+    }
+  },
+  {
+    "model": "Deepseek-V3.2",
+    "scaffold": "SWE-agent",
+    "organization": "DeepSeek",
+    "url": "https://www.deepseek.com",
+    "verified": true,
+    "score": 15.58,
+    "date": "2026-03-26",
+    "subscores": {
+      "Template": 25.77,
+      "Fin.Model": 7,
+      "Debug": 10,
+      "Visualization": 33.33
+    }
+  },
+  {
+    "model": "Kimi K2.5",
+    "scaffold": "SWE-agent",
+    "organization": "Moonshot",
+    "url": "https://www.moonshot.cn",
+    "verified": true,
+    "score": 14.64,
+    "date": "2026-03-26",
+    "subscores": {
+      "Template": 18.56,
+      "Fin.Model": 15,
+      "Debug": 4,
+      "Visualization": 41.67
+    }
+  },
+  {
+    "model": "Qwen3.5-397B-A17B",
+    "scaffold": "SWE-agent",
+    "organization": "Alibaba",
+    "url": "https://qwen.ai/",
+    "verified": true,
+    "score": 11.22,
+    "date": "2026-03-26",
+    "subscores": {
+      "Template": 17.53,
+      "Fin.Model": 10,
+      "Debug": 3,
+      "Visualization": 25
+    }
+  },
+  {
+    "model": "MiniMax M2.5",
+    "scaffold": "SWE-agent",
+    "organization": "MiniMax",
+    "url": "https://www.minimax.io",
+    "verified": true,
+    "score": 7.17,
+    "date": "2026-03-26",
+    "subscores": {
+      "Template": 7.22,
+      "Fin.Model": 8,
+      "Debug": 4,
+      "Visualization": 16.67
+    }
+  }
+]
