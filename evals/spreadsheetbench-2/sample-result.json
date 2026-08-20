@@ -18,7 +18,7 @@
         "value": "0 分",
         "tiebreak_value": 0
       },
-      "detail": "结构性合成 fixture；固定数据 commit 9dea60025792fbac5928ce9f44812362dccbeecd，代码 commit 83d415ce87b1d6b8e8eafcc26957f5d13d37210f。297 个非可视化任务按 exact task accuracy 计 0/1；24 个 Visualization 任务按 mean rubric pass rate 计 0–1；321 题等权平均后乘 100。artifact_sha256=4b69661007f17d27d994dce718331aa318e7d7fce301c17765908dbc32a0917b。打包器只复核清单结构、模型身份与算术，不代表 EvalHub 运行或验证外部证据。",
+      "detail": "结构性合成 fixture；固定数据 commit 9dea60025792fbac5928ce9f44812362dccbeecd，代码 commit 83d415ce87b1d6b8e8eafcc26957f5d13d37210f。297 个非可视化任务按固定 evaluator 计 0/1：两个 ratio 均四舍五入到 4 位，regression_ratio >= 0.998 归一化为 1，再要求 regression_ratio 与 modification_ratio 均为 1；24 个 Visualization 任务按 mean rubric pass rate 计 0–1；321 题等权平均后乘 100。artifact_sha256=4b69661007f17d27d994dce718331aa318e7d7fce301c17765908dbc32a0917b。打包器只复核清单结构、模型身份与算术，不代表 EvalHub 运行或验证外部证据。",
       "task_results": [
         {
           "task_id": "debugging-01-01",

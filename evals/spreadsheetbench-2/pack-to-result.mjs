@@ -336,7 +336,7 @@ function buildResult(validated) {
         },
         detail:
           `${fixtureLabel}；固定数据 commit ${DATASET_COMMIT}，代码 commit ${CODE_COMMIT}。` +
-          "297 个非可视化任务按 exact task accuracy 计 0/1；24 个 Visualization 任务按 mean rubric pass rate 计 0–1；" +
+          "297 个非可视化任务按固定 evaluator 计 0/1：两个 ratio 均四舍五入到 4 位，regression_ratio >= 0.998 归一化为 1，再要求 regression_ratio 与 modification_ratio 均为 1；24 个 Visualization 任务按 mean rubric pass rate 计 0–1；" +
           `321 题等权平均后乘 100。artifact_sha256=${validated.artifactSha256}。` +
           "打包器只复核清单结构、模型身份与算术，不代表 EvalHub 运行或验证外部证据。",
         task_results: validated.taskResults.map((row) => ({

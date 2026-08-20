@@ -6,7 +6,7 @@
     "retrieved_on": "2026-08-20",
     "source": {
       "title": "SpreadsheetBench 2 normalized official live leaderboard snapshot (10 rows)",
-      "url": "https://spreadsheetbench.github.io/data/leaderboard-v2-full.json",
+      "url": "https://github.com/spreadsheetbench/spreadsheetbench.github.io/blob/c72f46b1eeb898c515d70248cb8d1b721f7a2584/data/leaderboard-v2-full.json",
       "snapshot_sha256": "7383446dad579e019ccc1d1feb6fe2e876372c73d1fb867a7461d0438989c8e2",
       "official_result_count": 10,
       "omitted_models": [

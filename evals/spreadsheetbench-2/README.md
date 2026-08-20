@@ -7,7 +7,7 @@
 - 数据：`KAKA22/SpreadsheetBench-v2@9dea60025792fbac5928ce9f44812362dccbeecd`，官方 zip SHA-256 为 `17147ef9578cd57ce76c9a719d19da7821f3e5cb0d8f776c820f699fdcdb761c`。
 - 任务：Template 97、Financial Modeling 100、Debugging 100、Visualization 24，共 321 条。EvalHub 固定顺序为 Debugging → Financial Modeling → Template → Visualization；每条 ID 可回溯到上游 ID。
 - 代码参考：`RUCKBReasoning/SpreadsheetBench-2@83d415ce87b1d6b8e8eafcc26957f5d13d37210f`。实际 Agent 与官方 evaluator 均在 EvalHub 外部运行。
-- 非可视化任务：按上游 evaluator 的完整任务 exact accuracy，只有 regression 与 modification 两部分都完全通过才记 1，否则记 0。
+- 非可视化任务：按固定上游 evaluator 的实现，`regression_ratio` 与 `modification_ratio` 均先四舍五入到 4 位，再把 `regression_ratio >= 0.998` 强制归一化为 1；只有归一化后的 `regression_ratio == 1` 且四舍五入后的 `modification_ratio == 1` 才记 1，否则记 0。论文和官方页面用 “exact accuracy” 概括这一口径，但固定代码对 regression 保留上述容差。
 - Visualization：主分采用每题通过 rubric 数 ÷ rubric 总数；当前脚本另算的 `score > 0.7` 二值 ACC 不进入 live 可比主分。
 - 总分：321 个任务分数的等权平均 × 100，等价于按 97/100/100/24 对四类百分比分数加权。
 - 失败、超时或缺失：必须保留为该题 0 分，不能删除后缩小分母。
