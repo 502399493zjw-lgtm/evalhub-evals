@@ -1,0 +1,266 @@
+{
+  "eval_id": "tau3-banking",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "tau3-banking/artificial-analysis-score-transcription@1.0.0",
+    "retrieved_on": "2026-08-20",
+    "source": {
+      "title": "Artificial Analysis τ³-Banking: Score dataset (20 rows)",
+      "url": "https://artificialanalysis.ai/evaluations/tau3-banking",
+      "snapshot_sha256": "95210a5ae73f650b398d67de358f071ac77318abbb2c52a539ba068308bbbf35",
+      "official_result_count": 20,
+      "omitted_models": [
+        {
+          "model": "Grok 4.6 (high)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "GLM-5.3 (max)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Qwen3.8 2.4T A95B",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Qwen3.8 27B",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Claude Fable 5 (with fallback)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Motif 3",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Muse Spark 1.2 (xhigh)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Gemini 3.7 Flash (high)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "GPT-5.6 Luna (max)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Inkling",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Muse Glimmer (high)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Solar Open2 250B",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Gemini 3.5 Flash-Lite",
+          "reason": "unregistered"
+        },
+        {
+          "model": "A.X-K2",
+          "reason": "unregistered"
+        }
+      ]
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "alibaba/qwen3.8-max",
+        "harness": "tau2-bench",
+        "harness_version": "v1.0.1"
+      },
+      "score": 51.340206185567006,
+      "detail": "Artificial Analysis 2026-08-20 score dataset rank 1: Qwen3.8 Max, source fraction 0.51340206185567, converted to 51.3% for EvalHub. This is an upstream-author publication transcription, not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-score-row",
+          "label": "官方成绩行",
+          "title": "Artificial Analysis τ³-Banking",
+          "columns": [
+            "官方名次",
+            "来源模型名",
+            "Pass@1（%）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                1,
+                "Qwen3.8 Max",
+                51.340206185567006
+              ]
+            }
+          ],
+          "note": "来源页面 machine-readable Score dataset 的 fraction 按百分制 ×100 换算；辅助展示不参与主分计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "moonshot/kimi-k3",
+        "harness": "tau2-bench",
+        "harness_version": "v1.0.1"
+      },
+      "score": 45.979381443299,
+      "detail": "Artificial Analysis 2026-08-20 score dataset rank 6: Kimi K3 (max), source fraction 0.45979381443299, converted to 46.0% for EvalHub. This is an upstream-author publication transcription, not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-score-row",
+          "label": "官方成绩行",
+          "title": "Artificial Analysis τ³-Banking",
+          "columns": [
+            "官方名次",
+            "来源模型名",
+            "Pass@1（%）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                6,
+                "Kimi K3 (max)",
+                45.979381443299
+              ]
+            }
+          ],
+          "note": "来源页面 machine-readable Score dataset 的 fraction 按百分制 ×100 换算；辅助展示不参与主分计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "openai/gpt-5.6-sol",
+        "harness": "tau2-bench",
+        "harness_version": "v1.0.1"
+      },
+      "score": 44.3298969072165,
+      "detail": "Artificial Analysis 2026-08-20 score dataset rank 7: GPT-5.6 Sol (max), source fraction 0.443298969072165, converted to 44.3% for EvalHub. This is an upstream-author publication transcription, not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-score-row",
+          "label": "官方成绩行",
+          "title": "Artificial Analysis τ³-Banking",
+          "columns": [
+            "官方名次",
+            "来源模型名",
+            "Pass@1（%）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                7,
+                "GPT-5.6 Sol (max)",
+                44.3298969072165
+              ]
+            }
+          ],
+          "note": "来源页面 machine-readable Score dataset 的 fraction 按百分制 ×100 换算；辅助展示不参与主分计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-opus-5",
+        "harness": "tau2-bench",
+        "harness_version": "v1.0.1"
+      },
+      "score": 42.0618556701031,
+      "detail": "Artificial Analysis 2026-08-20 score dataset rank 8: Claude Opus 5 (max), source fraction 0.420618556701031, converted to 42.1% for EvalHub. This is an upstream-author publication transcription, not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-score-row",
+          "label": "官方成绩行",
+          "title": "Artificial Analysis τ³-Banking",
+          "columns": [
+            "官方名次",
+            "来源模型名",
+            "Pass@1（%）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                8,
+                "Claude Opus 5 (max)",
+                42.0618556701031
+              ]
+            }
+          ],
+          "note": "来源页面 machine-readable Score dataset 的 fraction 按百分制 ×100 换算；辅助展示不参与主分计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "openai/gpt-5.6-terra",
+        "harness": "tau2-bench",
+        "harness_version": "v1.0.1"
+      },
+      "score": 40.2061855670103,
+      "detail": "Artificial Analysis 2026-08-20 score dataset rank 9: GPT-5.6 Terra (max), source fraction 0.402061855670103, converted to 40.2% for EvalHub. This is an upstream-author publication transcription, not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-score-row",
+          "label": "官方成绩行",
+          "title": "Artificial Analysis τ³-Banking",
+          "columns": [
+            "官方名次",
+            "来源模型名",
+            "Pass@1（%）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                9,
+                "GPT-5.6 Terra (max)",
+                40.2061855670103
+              ]
+            }
+          ],
+          "note": "来源页面 machine-readable Score dataset 的 fraction 按百分制 ×100 换算；辅助展示不参与主分计算。"
+        }
+      ]
+    },
+    {
+      "participant": {
+        "model": "deepseek/deepseek-v4-pro",
+        "harness": "tau2-bench",
+        "harness_version": "v1.0.1"
+      },
+      "score": 39.587628865979404,
+      "detail": "Artificial Analysis 2026-08-20 score dataset rank 10: DeepSeek V4 Pro 0813 (max), source fraction 0.395876288659794, converted to 39.6% for EvalHub. This is an upstream-author publication transcription, not an EvalHub rerun.",
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "official-score-row",
+          "label": "官方成绩行",
+          "title": "Artificial Analysis τ³-Banking",
+          "columns": [
+            "官方名次",
+            "来源模型名",
+            "Pass@1（%）"
+          ],
+          "rows": [
+            {
+              "cells": [
+                10,
+                "DeepSeek V4 Pro 0813 (max)",
+                39.587628865979404
+              ]
+            }
+          ],
+          "note": "来源页面 machine-readable Score dataset 的 fraction 按百分制 ×100 换算；辅助展示不参与主分计算。"
+        }
+      ]
+    }
+  ]
+}
