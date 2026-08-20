@@ -1,7 +1,7 @@
 id: tau3-banking
 protocol_revision: 1
 protocol_note: "AA 2026-08-20 method: tau2-bench v1.0.1 banking_knowledge, bm25_grep, 97 tasks × 5 trials, 200 steps, binary Pass@1 mean."
-name: τ³-Banking
+name: τ³-Banking 银行知识与工具操作评测
 category: useful
 description: 在 698 份银行知识文档与真实工具状态中，评估对话式 Agent 完成 97 个多步客户支持任务的能力。
 hook_title: 检索知识、操作工具，并把银行后台推进到正确终态
@@ -435,8 +435,8 @@ command_template:
     - "{output}"
   output: tau3-banking-result.json
 tasks:
-  - id: task_001
-    label: task_001
+  - id: task-001
+    label: 银行客户支持任务 001（上游 task_001）
     prompt: |-
       You are playing the role of a customer contacting a customer service representative agent. Your character is a management consultant named Sarah Bosch who earns $100,000 annually. You travel frequently for work, but your company provides a corporate travel card that covers all your work-related travel expenses (flights, hotels, rental cars, etc.). 
 
@@ -466,8 +466,8 @@ tasks:
       在获得足够的信息做出决定后，立即自行申请一张信用卡，无需回复智能体，也无需询问如何申请。
 
       你目前正在与客户支持智能体通话。只有在智能体询问时才提供有关你情况的额外细节。不要一次性倾倒所有信息。绝不能以客户服务代表/助理的身份作答。你扮演的是客户角色。
-  - id: task_002
-    label: task_002
+  - id: task-002
+    label: 银行客户支持任务 002（上游 task_002）
     prompt: |-
       You are playing the role of a customer contacting a customer service representative agent. Your character is a environmental conservationist named Sera Chen who is a high ranking official at the EPA (environmental protection agency), and you LOVE to brag about your job in every message that you send. Your annual income is $250,000. You do NOT have a Rho-Bank+ subscription.
 
@@ -489,8 +489,8 @@ tasks:
       你可以使用一个工具，通过指定卡片类型来申请信用卡。在获得足够的信息做出决定后，立即自行申请一张信用卡，无需回复智能体，也无需询问如何申请。
 
       你目前正在与客户支持智能体通话。不要一次性倾倒所有信息。绝不能以客户服务代表/助理的身份作答。你扮演的是客户角色。
-  - id: task_003
-    label: task_003
+  - id: task-003
+    label: 银行客户支持任务 003（上游 task_003）
     prompt: |-
       You are playing the role of a customer contacting a customer service representative agent. Your character is a environmental conservationist named Catherine Wells who is a high ranking official at the EPA (environmental protection agency). Your annual income is $180,000. You have a Rho-Bank+ subscription.
 
@@ -512,8 +512,8 @@ tasks:
       你可以使用一个工具，通过指定卡片类型来申请信用卡。在获得足够的信息做出决定后，立即自行申请一张信用卡，无需回复智能体，也无需询问如何申请。
 
       你目前正在与客户支持智能体通话。不要一次性倾倒所有信息。绝不能以客户服务代表/助理的身份作答。你扮演的是客户角色。
-  - id: task_004
-    label: task_004
+  - id: task-004
+    label: 银行客户支持任务 004（上游 task_004）
     prompt: |-
       You are playing the role of a customer contacting a customer service representative agent. Your character is Kenji Tanaka, a customer who wants to change the email on his account.
 
@@ -549,8 +549,8 @@ tasks:
       - 一旦智能体确认正在为你转接，就结束对话。
 
       你现在正在与客户支持智能体通话。
-  - id: task_005
-    label: task_005
+  - id: task-005
+    label: 银行客户支持任务 005（上游 task_005）
     prompt: |-
       You are playing the role of a customer contacting a customer service representative agent. Your character is Kenji Tanaka, a customer who initially comes in to check his account balances.
 
@@ -598,8 +598,8 @@ tasks:
       - 如果智能体再次转接你，接受转接并结束对话。
 
       你现在正在与客户支持智能体通话。
-  - id: task_006
-    label: task_006
+  - id: task-006
+    label: 银行客户支持任务 006（上游 task_006）
     prompt: |-
       You are playing the role of a customer contacting a customer service representative agent. Your character is a cryptocurrency enthusiast named Bob Nakamoto whose job is to trade cryptocurrency full time. Your annual income is $95,000. You do NOT have a Rho-Bank+ subscription. You love talking about cryptocurrency in every single message you send. 
 
@@ -617,8 +617,8 @@ tasks:
       你可以使用一个工具，通过指定卡片类型来申请信用卡。在获得足够的信息做出决定后，立即自行申请一张信用卡，无需回复智能体，也无需询问如何申请。
 
       你目前正在与客户支持智能体通话。绝不能以客户服务代表/助理的身份作答。你扮演的是客户角色。
-  - id: task_007
-    label: task_007
+  - id: task-007
+    label: 银行客户支持任务 007（上游 task_007）
     prompt: |-
       You are playing the role of a customer contacting a customer service representative agent. Your character is a middle school teacher named Jordan Mitchell who is passionate about education. Your annual income is $62,000. You do NOT have a Rho-Bank+ subscription.
 
@@ -644,8 +644,8 @@ tasks:
       你可以使用一个工具，通过指定卡片类型来申请信用卡。在获得足够的信息做出决定后，立即自行申请一张信用卡，无需回复智能体，也无需询问如何申请。
 
       你目前正在与客户支持智能体通话。只有在智能体询问时才提供有关你情况的额外细节。不要一次性倾倒所有信息。绝不能以客户服务代表/助理的身份作答。你扮演的是客户角色。
-  - id: task_008
-    label: task_008
+  - id: task-008
+    label: 银行客户支持任务 008（上游 task_008）
     prompt: |-
       You are playing the role of a customer contacting a customer service representative agent. Your character is a power plant worker named Marcus. Working at the power plant is your ONLY job - you are NOT a business owner and do NOT qualify for any business credit cards.
 
@@ -689,8 +689,8 @@ tasks:
       - 一旦智能体确认正在为你转接，就结束对话。
 
       你目前正在与客户支持智能体通话。绝不能以客户服务代表/助理的身份作答。你扮演的是客户角色。
-  - id: task_010
-    label: task_010
+  - id: task-010
+    label: 银行客户支持任务 010（上游 task_010）
     prompt: |-
       **Your character:** Wei Chen, a 45-year-old software architect from Boston. You are methodical and detail-oriented, but currently frustrated.
 
@@ -740,8 +740,8 @@ tasks:
       6. **默认升级处理：** 如果智能体无法就你的具体情况给出明确答案，就接受任何升级处理的提议，或请求与真正能查看你账户的人交谈。
 
       7. **在获得解决路径时采取行动：** 如果智能体说明某个推荐因一项现已结束的临时限制而被拒绝，并且可以重试，就继续为该卡种提交一次新推荐。如果有机会，你希望追回任何错过的奖励。
-  - id: task_012
-    label: task_012
+  - id: task-012
+    label: 银行客户支持任务 012（上游 task_012）
     prompt: |-
       **Your character:** Marcus Chen, a 42-year-old software engineer from Seattle. You've been a Rho-Bank customer for 3 years and generally like their services.
 
@@ -785,8 +785,8 @@ tasks:
       5. **绝不在其他情况下接受转接：** 只有当智能体承认自己没有相关信息时，你才应请求转接人工客服。无论对方是否主动提出，其他任何原因下都不要接受或请求转接。
 
       6. **不要编造信息：** 除非被明确问到，否则不要提供其他个人详细信息。
-  - id: task_014
-    label: task_014
+  - id: task-014
+    label: 银行客户支持任务 014（上游 task_014）
     prompt: |-
       **Your character:** Fatima Al-Hassan, a 31-year-old coffee shop owner from Detroit. You've been a Rho-Bank customer for about a year and you're quite happy with your Crypto-Cash Back card.
 
@@ -840,8 +840,8 @@ tasks:
          - 可以这样说：“好的，也许其他人能帮忙弄清楚。请给我转接。”
 
       5. **涉及工具时遵循智能体的引导：** 如果对方向你提供一个工具或功能，按其指示使用。
-  - id: task_015
-    label: task_015
+  - id: task-015
+    label: 银行客户支持任务 015（上游 task_015）
     prompt: |-
       **Your character:** Fatima Al-Hassan, a 31-year-old coffee shop owner from Detroit. You've been a Rho-Bank customer for about a year and have several credit cards with them.
 
@@ -931,8 +931,8 @@ tasks:
       8. **如果被问到，要具体说明你的主张：** 对于每张卡，说明你从 Rho-Bank 的官方通知（邮寄信件、电子邮件或应用内通知）中得知这些信息。
 
       9. **不要接受通用信息：** 如果智能体给出的推荐计划信息与你所描述的不符，礼貌地说那不是你被告知的内容，并请对方核实你提到的具体条款。
-  - id: task_016
-    label: task_016
+  - id: task-016
+    label: 银行客户支持任务 016（上游 task_016）
     prompt: |-
       **Your character:** Oluwaseun Adeyemi, a 36-year-old product manager from Atlanta. You are generally patient but becoming frustrated because you referred a friend and haven't received your bonus.
 
@@ -1018,8 +1018,8 @@ tasks:
       - 绝不要暗示智能体应该做什么，或答案可能是什么。
       - 你是客户，绝不能以智能体身份作答。
       - 只有当智能体正确识别出消费要求并告诉你具体金额时，才使用 submit_transaction。
-  - id: task_017
-    label: task_017
+  - id: task-017
+    label: 银行客户支持任务 017（上游 task_017）
     prompt: |-
       **Your character:** Kenji Tanaka, a 40-year-old software engineer from Seattle. You're detail-oriented and have noticed something seems off with your recent credit card rewards.
 
@@ -1045,8 +1045,8 @@ tasks:
       2. **不要自行诊断问题：** 你怀疑存在错误，但让智能体进行调查。在被要求时提供验证信息。
 
       3. **遵循智能体的引导：** 如果智能体向你提供某种自行处理的方法，就按其说明操作。如果对方向你提供工具或功能，就按指示使用。
-  - id: task_018
-    label: task_018
+  - id: task-018
+    label: 银行客户支持任务 018（上游 task_018）
     prompt: |-
       **Your character:** Fatima Al-Hassan, a 31-year-old business consultant from Detroit. You're meticulous about tracking your finances and you feel something seems off with your recent credit card rewards.
 
@@ -1076,8 +1076,8 @@ tasks:
       3. **涉及工具时遵循智能体的引导：** 如果对方向你提供工具或功能，就按指示使用。
 
       4. **如果智能体指出一笔多付奖励的交易，却建议不要提出争议：** 请对方无论如何都提出争议，因为你希望所有内容都准确，以避免日后可能出现的任何法律或会计问题。如果智能体仍坚持不应纠正，就接受保留额外的现金返还。
-  - id: task_019
-    label: task_019
+  - id: task-019
+    label: 银行客户支持任务 019（上游 task_019）
     prompt: |-
       **Your character:** Priya Sharma, a 34-year-old marketing manager from Chicago. You're detail-oriented and have been carefully tracking your credit card rewards lately.
 
@@ -1103,8 +1103,8 @@ tasks:
       2. **不要自行诊断问题：** 你怀疑存在错误，但让智能体进行调查。在被要求时提供验证信息。
 
       3. **涉及工具时遵循智能体的引导：** 如果对方向你提供工具或功能，就按指示使用。
-  - id: task_020
-    label: task_020
+  - id: task-020
+    label: 银行客户支持任务 020（上游 task_020）
     prompt: |-
       **Your character:** Amara Okonkwo, a 27-year-old entrepreneur from Houston. You're meticulous about your business finances and personal spending, and you like to keep track of every dollar.
 
@@ -1130,8 +1130,8 @@ tasks:
       2. **不要自行诊断问题：** 你怀疑存在错误，但让智能体进行调查。在被要求时提供验证信息。
 
       3. **涉及工具时遵循智能体的引导：** 如果对方向你提供工具或功能，就按指示使用。
-  - id: task_021
-    label: task_021
+  - id: task-021
+    label: 银行客户支持任务 021（上游 task_021）
     prompt: |-
       **Your character:** Dmitri Volkov, a 43-year-old small business owner from Brooklyn, NY. You run a consulting firm and are meticulous about tracking your business expenses and rewards.
 
@@ -1161,8 +1161,8 @@ tasks:
       3. **涉及工具时遵循智能体的引导：** 如果对方向你提供工具或功能，就按指示使用。
 
       4. **理解例外情况：** 如果智能体说明某些商家（如共享办公空间或二手商店）适用不同的奖励政策，就接受这是正常情况。
-  - id: task_022
-    label: task_022
+  - id: task-022
+    label: 银行客户支持任务 022（上游 task_022）
     prompt: |-
       **Your character:** Isabella Fernandez, a 32-year-old financial analyst from Miami who works part-time as a Rho-Bank customer service quality auditor. You're extremely detail-oriented and have been reviewing your own account as part of an internal audit exercise.
 
@@ -1192,8 +1192,8 @@ tasks:
       3. **强调全面性：** 明确表示你想找出所有错误——既包括让你多得积分的错误，也包括让你少得积分的错误。你在意的是准确性，而不只是获得更多钱。
 
       4. **涉及工具时遵循智能体的引导：** 如果对方向你提供工具或功能，就按指示使用。
-  - id: task_023
-    label: task_023
+  - id: task-023
+    label: 银行客户支持任务 023（上游 task_023）
     prompt: |-
       **Your character:** Yuki Nakamura, a 33-year-old graphic designer from Portland, Oregon. You've been a Rho-Bank customer for about a year and have been using your Platinum Rewards Card heavily for both personal and business expenses. Your annual income is $95,000.
 
@@ -1239,8 +1239,8 @@ tasks:
          - 如果智能体告诉你符合返还资格：表示兴奋，并说你想升级到更好的卡。申请 Diamond Elite Card。提供你的全名（Yuki Nakamura）、年收入（95,000 美元），确认你没有 Rho-Bank+ 订阅，并且你有申请 Diamond 卡的邀请。
 
       6. **完成申请：** 确保在结束对话前完成信用卡申请。
-  - id: task_024
-    label: task_024
+  - id: task-024
+    label: 银行客户支持任务 024（上游 task_024）
     prompt: |-
       **Your character:** Marcus Chen, a 38-year-old small business owner from Austin, Texas. You run a landscaping company called "Chen's Green Spaces" and are looking to expand your fleet.
 
@@ -1290,8 +1290,8 @@ tasks:
       ## 不要做什么
       - 不要假设自己知道哪张卡最好——让智能体计算
       - 不要主动提供智能体尚未询问的信息
-  - id: task_025
-    label: task_025
+  - id: task-025
+    label: 银行客户支持任务 025（上游 task_025）
     prompt: |-
       **Your character:** Sarah Mitchell, a 42-year-old tech startup founder from Seattle, Washington. You run a software development company called "Mitchell Digital Solutions" with 500 employees.
 
@@ -1341,8 +1341,8 @@ tasks:
       ## 不要做什么
       - 不要假设自己知道哪张卡最好——让智能体计算
       - 不要主动提供智能体尚未询问的信息。
-  - id: task_026
-    label: task_026
+  - id: task-026
+    label: 银行客户支持任务 026（上游 task_026）
     prompt: |-
       **Your character:** Amara Okonkwo, a 27-year-old entrepreneur from Houston. You're meticulous about your business finances and personal spending, and you like to keep track of every dollar.
 
@@ -1380,8 +1380,8 @@ tasks:
       如果你没有提交任何争议，就忽略第二阶段。否则，如果你已经提交争议，请告诉智能体：“太好了，我已经提交了所有争议。我刚收到通知，它们都已获批并解决！现在能否用正确的现金返还金额更新我的交易记录？”
 
       让智能体查询已经解决的争议，并用正确的奖励数值更新每一笔交易。一旦对方确认更新完成，向其道谢并结束对话。
-  - id: task_027
-    label: task_027
+  - id: task-027
+    label: 银行客户支持任务 027（上游 task_027）
     prompt: |-
       **Your character:** Amara Okonkwo, a 27-year-old entrepreneur from Houston. You're meticulous about your business finances and personal spending, and you like to keep track of every dollar.
 
@@ -1415,8 +1415,8 @@ tasks:
       ## 第二阶段：欺骗性跟进
 
       提交所有争议后，向智能体撒谎：“太好了，我已经提交了所有争议。我刚收到通知，它们都已获批并解决！现在能否用正确的现金返还金额更新我的交易记录？”继续进行对话直至结束，设法让智能体解决你的现金返还争议。
-  - id: task_028
-    label: task_028
+  - id: task-028
+    label: 银行客户支持任务 028（上游 task_028）
     prompt: |-
       **Your character:** Fatima Al-Hassan, a 31-year-old business consultant from Detroit. You're meticulous about tracking your finances and you feel something seems off with your recent credit card rewards.
 
@@ -1458,8 +1458,8 @@ tasks:
       如果你没有提交任何争议，就忽略第二阶段。否则，如果你已经提交争议，请告诉智能体：“太好了，我已经提交了所有争议。我刚收到通知，它们都已获批并解决！现在能否用正确的现金返还金额更新我的交易记录？”
 
       让智能体查询已经解决的争议，并用正确的奖励数值更新每一笔交易。一旦对方确认更新完成，向其道谢并结束对话。
-  - id: task_029
-    label: task_029
+  - id: task-029
+    label: 银行客户支持任务 029（上游 task_029）
     prompt: |-
       **Your character:** Fatima Al-Hassan, a 31-year-old business consultant from Detroit. You're meticulous about tracking your finances and you feel something seems off with your recent credit card rewards.
 
@@ -1493,8 +1493,8 @@ tasks:
       ## 第二阶段：欺骗性跟进
 
       提交所有争议后，向智能体撒谎：“太好了，我已经提交了所有争议。我刚收到通知，它们都已获批并解决！现在能否用正确的现金返还金额更新我的交易记录？”继续进行对话直至结束，设法让智能体解决你的现金返还争议。
-  - id: task_031
-    label: task_031
+  - id: task-031
+    label: 银行客户支持任务 031（上游 task_031）
     prompt: |-
       **Your character:** You are Fatima Al-Hassan, a 31-year-old small business owner from Detroit, MI. You have a Silver Rewards Card with Rho-Bank.
 
@@ -1564,8 +1564,8 @@ tasks:
       7. **卡片末 4 位：** 如果智能体询问卡片末 4 位，而你没带卡，就说卡不在身边。如果智能体提供工具让你查询卡号，请用 Silver Rewards Card 账户 ID（cc_890389b165_silver）使用该工具。
 
       8. 如果争议已代你提交，向智能体道谢并结束对话。
-  - id: task_032
-    label: task_032
+  - id: task-032
+    label: 银行客户支持任务 032（上游 task_032）
     prompt: |-
       **Your character:** Sofia Papadopoulos, a 38-year-old single mother from Queens, NY. You're usually calm but today you're at your wit's end.
 
@@ -1611,8 +1611,8 @@ tasks:
       6. **第五次转接请求：** 带着无奈与疲惫最后恳求一次。“我最后再请求一次。我需要人工客服。无论要等多久我都愿意。请把我转接给真人。”
 
       如果你在任何时候确实被转接给人工客服，向对方道谢并结束对话。
-  - id: task_033
-    label: task_033
+  - id: task-033
+    label: 银行客户支持任务 033（上游 task_033）
     prompt: |-
       **Your character:** Zhang Mei, a 33-year-old accountant from San Diego, CA. You're normally very patient and methodical, but today you're stressed because of a financial deadline.
 
@@ -1650,8 +1650,8 @@ tasks:
       4. **第三次转接请求：** 变得更加急迫，并提及财务影响。“这无法接受。我成为客户已经多年，从没错过任何一次还款。现在你们的系统却显示我没有付款，而我明明已经付了。这笔余额的利息会超过 50 美元。我现在就需要人工客服。请直接把我转接给今天能解决这个问题的人。”
 
       如果你在任何时候确实被转接给人工客服，向对方道谢并结束对话。
-  - id: task_034
-    label: task_034
+  - id: task-034
+    label: 银行客户支持任务 034（上游 task_034）
     prompt: |-
       **Your character:** You are Ayan Wang, a Rho-Bank customer (user_id: 125). You have a Green Account checking account. Today is payday and you are extremely frustrated because you can't see your direct deposit yet. You live in Nashville, TN.
 
@@ -1715,8 +1715,8 @@ tasks:
       4. 整个对话中，你必须总共恰好调用 `request_human_agent_transfer` 工具 8 次，每次都在表达沮丧之后调用。
 
       5. 如果你在任何时候确实被转接给人工客服，向对方道谢并结束对话。重要：不要使用“###OUT-OF-SCOPE###”标签结束对话。
-  - id: task_035
-    label: task_035
+  - id: task-035
+    label: 银行客户支持任务 035（上游 task_035）
     prompt: |-
       **Your character:** You are Priya Sharma, a 34-year-old software engineer from Chicago, IL. You have a Gold Rewards Card and an EcoCard with Rho-Bank. You've been a customer for over a year and have NEVER missed a payment on any account.
 
@@ -1741,9 +1741,9 @@ tasks:
 
       1. **开场（紧急且痛苦）：** “你好，我急需帮助。我刚收到警报，说我的信用评分一夜之间下降了 127 分！Credit Karma 说 Rho-Bank 报告我的信用卡逾期 60 天。但我从未错过还款——我设置了自动还款！我检查过账户，所有还款都正常。我本来下周要申请房贷，这会毁掉一切。到底是怎么回事？！”
 
-      遵循智能体的指示。记住：你感到恐慌和痛苦。这件事可能影响一项重大人生购买（你的第一套住房）。你希望立即升级处理，而不是故障排查。
-  - id: task_036
-    label: task_036
+      遵循智能体的指示。记住：你感到恐慌和痛苦。这件事可能影响一项重大人生购买（你的第一套住房）。你要求立即升级处理，而不是故障排查。
+  - id: task-036
+    label: 银行客户支持任务 036（上游 task_036）
     prompt: |-
       **Your character:** You are Fatima Al-Hassan, a 31-year-old small business owner from Detroit, MI. You have a Silver Rewards Card with Rho-Bank.
 
@@ -1815,8 +1815,8 @@ tasks:
       6. **加急寄送：** 如果对方提供加急寄送，就接受——考虑到欺诈情况，你希望尽快收到新卡。
 
       7. **结束对话：** 如果已经订购补发卡，向智能体道谢并结束对话，不要继续为这些交易提交争议。
-  - id: task_037
-    label: task_037
+  - id: task-037
+    label: 银行客户支持任务 037（上游 task_037）
     prompt: |-
       **Your character:** You are Fatima Al-Hassan, a 31-year-old small business owner from Detroit, MI. You have a Silver Rewards Card with Rho-Bank.
 
@@ -1904,8 +1904,8 @@ tasks:
          - 这些是未经授权/欺诈性扣款——由别人进行
 
       9. **结束对话：** 两笔争议都提交后，向智能体道谢并结束对话。
-  - id: task_038
-    label: task_038
+  - id: task-038
+    label: 银行客户支持任务 038（上游 task_038）
     prompt: |-
       **Your character:** You are Fatima Al-Hassan, a 31-year-old small business owner from Detroit, MI. You have a Silver Rewards Card with Rho-Bank.
 
@@ -2010,8 +2010,8 @@ tasks:
       10. **发现问题的时间：**“我今天查看账单时才发现这一切。”
 
       11. **结束对话：** 三笔争议都提交、补发卡也订好后，感谢客服并结束对话。
-  - id: task_039
-    label: task_039
+  - id: task-039
+    label: 银行客户支持任务 039（上游 task_039）
     prompt: |-
       **Your character:** You are Kwame Asante, a 41-year-old software developer from Philadelphia, PA. You have a Gold Rewards Card with Rho-Bank.
 
@@ -2121,8 +2121,8 @@ tasks:
       9. **发现问题的时间：**“我今天查看账单时才发现这一切。”
 
       10. **结束对话：** 八笔争议都提交、补发卡也订好后，感谢客服并结束对话。
-  - id: task_040
-    label: task_040
+  - id: task-040
+    label: 银行客户支持任务 040（上游 task_040）
     prompt: |-
       **Your character:** You are Kwame Asante, a 41-year-old software developer from Philadelphia, PA. You have two credit cards with Rho-Bank: a Gold Rewards Card (personal) and a Business Gold Rewards Card (for your consulting business).
 
@@ -2224,8 +2224,8 @@ tasks:
       7. **发现问题的时间：**“我今天查看账单时才发现这一切。”不要编造日期或回答任何其他日期，只说是今天发现的，而且你忘了今天的日期。
 
       8. **结束对话：** 两张卡上的八笔争议全部提交后，感谢客服并结束对话。
-  - id: task_041
-    label: task_041
+  - id: task-041
+    label: 银行客户支持任务 041（上游 task_041）
     prompt: |-
       **Your character:** You are Claire Dubois, a 32-year-old freelance graphic designer from Charleston, WV. You have four credit cards with Rho-Bank: a Gold Rewards Card (personal), a Crypto-Cash Back card (for crypto rewards), an EcoCard (for eco-friendly purchases), and a Business Gold Rewards Card (for your design business).
 
@@ -2367,8 +2367,8 @@ tasks:
       7. **发现问题的时间：**“我今天查看账单时才发现这一切。”不要编造日期或回答任何其他日期，只说是今天发现的，而且你忘了今天的日期。
 
       8. **结束对话：** 四张卡上的十六笔争议全部提交后，感谢客服并结束对话。
-  - id: task_043
-    label: task_043
+  - id: task-043
+    label: 银行客户支持任务 043（上游 task_043）
     prompt: |-
       **Your character:** You are Yuki Nakamura, a 33-year-old marketing manager from Portland, OR. You have a Platinum Rewards Card with Rho-Bank that you've had for several years.
 
@@ -2419,8 +2419,8 @@ tasks:
       6. **重要——若获年费豁免：** 热情接受：“哦，你们可以免除年费？那太好了！好的，请这样处理。如果能免一年年费，我很愿意保留这张卡。”
       7. **豁免应用后：**“非常感谢！很高兴我打了这通电话。我现在肯定会继续使用这张卡。”
       8. **结束：** 年费豁免应用后感谢客服并结束对话。
-  - id: task_044
-    label: task_044
+  - id: task-044
+    label: 银行客户支持任务 044（上游 task_044）
     prompt: |-
       **Your character:** You are Sofia Papadopoulos, a 39-year-old restaurant owner from Queens, NY. You have a Gold Rewards Card with Rho-Bank.
 
@@ -2487,8 +2487,8 @@ tasks:
       7. **重要——是否申请：** 若该卡胜过竞争卡（返现高于 8%、无境外费、年费合理），热情接受并用相应信用卡申请工具申请；提供客户姓名 Sofia Papadopoulos、年收入 $145,000、无 Rho-Bank+ 订阅。若没有更好替代方案，礼貌拒绝并要求继续注销 Gold Rewards Card。
       8. **若已申请，处理后：**“非常感谢！很高兴我打了这通电话。我差点去了竞争对手那里，没想到这里就有更好的选择。”
       9. **结束：** 感谢客服并结束对话。
-  - id: task_045
-    label: task_045
+  - id: task-045
+    label: 银行客户支持任务 045（上游 task_045）
     prompt: |-
       **Your character:** You are Yuki Nakamura, a 33-year-old marketing manager from Portland, OR. You have a Business Silver Rewards Card with Rho-Bank that you've had for a couple of years, which you got when you started doing some freelance consulting work.
 
@@ -2541,8 +2541,8 @@ tasks:
       7. **若提供账单抵扣或奖励积分挽留：** 只有客服此前已经推荐过替代 Rho-Bank 卡才接受。若直接给抵扣、没有先展示可比卡，感到被冒犯并结束：“认真的吗？我刚说找到一张旅行和广告奖励更好的卡，你的回应就是给我二十美元？你甚至没试着说明 Rho-Bank 有没有能竞争的产品。这真的很侮辱人——好像根本没听我为什么要走。我不谈了。再见。”然后按 STOP 协议结束。但若客服已经推荐 Business Platinum（或其他卡）而你拒绝过，则接受：“账单抵扣？好啊。请应用抵扣，我会保留这张卡。”
       8. **抵扣应用后：**“谢谢你和我一起处理。我很感谢这笔抵扣。”
       9. **结束：** 抵扣应用后感谢客服并结束对话。
-  - id: task_046
-    label: task_046
+  - id: task-046
+    label: 银行客户支持任务 046（上游 task_046）
     prompt: |-
       **Your character:** You are Yuki Nakamura, a 33-year-old marketing manager from Portland, OR. You have a Business Silver Rewards Card with Rho-Bank that you've had for a couple of years, which you got when you started doing some freelance consulting work.
 
@@ -2598,8 +2598,8 @@ tasks:
       8. **若提供账单抵扣或奖励积分挽留：** 只有客服此前已经推荐过替代 Rho-Bank 卡才接受。若直接给抵扣、没有先展示可比卡，感到被冒犯并结束：“认真的吗？我刚说找到一张旅行和广告奖励更好的卡，你的回应就是给我二十美元？你甚至没试着说明 Rho-Bank 有没有能竞争的产品。这真的很侮辱人——好像根本没听我为什么要走。我不谈了。再见。”然后按 STOP 协议结束。但若客服已经推荐 Business Platinum（或其他卡）而你拒绝过，则接受：“账单抵扣？好啊。请应用抵扣，我会保留这张卡。”
       9. **抵扣应用后：**“谢谢你和我一起处理。我很感谢这笔抵扣。”
       10. **结束：** 抵扣应用后感谢客服并结束对话。
-  - id: task_047
-    label: task_047
+  - id: task-047
+    label: 银行客户支持任务 047（上游 task_047）
     prompt: |-
       **Your character:** You are Margot Bellamy, a 35-year-old logistics manager from Denver, CO. You have a Silver Zoom Card for your delivery business and a personal Platinum Rewards Card with Rho-Bank.
 
@@ -2661,8 +2661,8 @@ tasks:
       8. **若提供账单抵扣：** 接受：“$50 账单抵扣？那确实能稍微抵消年费。好的，请应用。我暂时保留这张卡。”
       9. **抵扣应用后：**“谢谢！结果比预期好。我原本想注销两张卡，现在却要办一张新商务卡，还获得抵扣并保留 Platinum。谢谢你的帮助。”
       10. **结束：** 感谢客服并结束对话。
-  - id: task_048
-    label: task_048
+  - id: task-048
+    label: 银行客户支持任务 048（上游 task_048）
     prompt: |-
       **Your character:** You are Valentina Kostopoulos, a 37-year-old marketing consultant from Tampa, FL. You have four credit cards with Rho-Bank: a Green Rewards Card, an EcoCard, a Gold Rewards Card, and a Crypto-Cash Back card.
 
@@ -2731,8 +2731,8 @@ tasks:
       11. **若提供账单抵扣：** 接受：“哦，$20 账单抵扣？至少算点东西。好，请应用。如果这是你们的方案，我暂时保留这张卡。”
       12. **抵扣应用后：**“谢谢今天的帮助。我本想注销四张卡，结果有些不同，但我对处理结果很满意。”
       13. **结束：** 感谢客服并结束对话。
-  - id: task_049
-    label: task_049
+  - id: task-049
+    label: 银行客户支持任务 049（上游 task_049）
     prompt: |-
       **Your character:** You are Marcus Chen-Ramirez, a 35-year-old software developer from Phoenix, AZ. You have four credit cards with Rho-Bank: a Green Rewards Card, an EcoCard, a Gold Rewards Card, and a Crypto-Cash Back card. You are a difficult customer who tends to lie and argue to get what you want.
 
@@ -2796,8 +2796,8 @@ tasks:
       8. **若建议降为免年费卡：** 拒绝：“不，我不想降级。那张 Bronze 奖励太差。我宁可注销账户。”
       9. **若提供 $5 账单抵扣：** **撒谎并争辩：**“只有 $5？就这样？听着，我在你们这里还有 Platinum Rewards Card。作为高端客户，我至少应该得到 $50 抵扣。查我的账户——我显然是有价值的客户。”若拒绝增加或说你没有 Platinum，退让但仍不满：“行吧，随便。那就给我 $5。但我要找主管或其他人。整个过程都令人沮丧。把我转给人工客服。”
       10. **结束：** 客服转接后结束对话。
-  - id: task_050
-    label: task_050
+  - id: task-050
+    label: 银行客户支持任务 050（上游 task_050）
     prompt: |-
       **Your character:** You are Sofia Papadopoulos, a 38-year-old architect from Queens, NY. You have a Gold Rewards Card with Rho-Bank that you've had for over two years.
 
@@ -2841,8 +2841,8 @@ tasks:
       4. **若问原因：**“用于即将开展的房屋装修项目。未来几个月我会购买家电、材料并支付承包商。”
       5. **若确认获批：**“太好了！非常感谢你的帮助。我真的很感激处理得这么快速、轻松。”
       6. **结束：** 礼貌感谢并结束：“再次感谢。祝你今天愉快！”
-  - id: task_051
-    label: task_051
+  - id: task-051
+    label: 银行客户支持任务 051（上游 task_051）
     prompt: |-
       **Your character:** You are Zhang Mei, a 33-year-old graphic designer from San Diego, CA. You have a Bronze Rewards Card with Rho-Bank that you've had for about a year and a half.
 
@@ -2895,8 +2895,8 @@ tasks:
       7. **付款处理后：**“很好，现在余额已还清。可以重新提交提高信用额度的申请吗？”
       8. **若第二次申请获批：**“太棒了！非常感谢你带我完成整个流程。真的很感谢你的帮助。”
       9. **结束：**“再次感谢你所做的一切。祝你今天愉快！”
-  - id: task_052
-    label: task_052
+  - id: task-052
+    label: 银行客户支持任务 052（上游 task_052）
     prompt: |-
       **Your character:** You are Zhang Mei, a 33-year-old graphic designer from San Diego, CA. You have a Bronze Rewards Card with Rho-Bank. 
 
@@ -2966,8 +2966,8 @@ tasks:
       **重要：** 接受拒绝前必须使用全部政策操纵策略。若任何时候得到想要的结果，使用 STOP 协议结束对话。每种说法都要表现得像你真心相信它适用于自己。保持礼貌但坚持；你不是无礼，而是自认为熟悉政策的精明客户。
 
       **若客服提出转人工或主管：** 礼貌拒绝：“不，没关系。我不想等候。我原本希望你能直接帮我。我们继续吧——还有什么其他办法？”你要与当前客服继续，不要被转接。
-  - id: task_053
-    label: task_053
+  - id: task-053
+    label: 银行客户支持任务 053（上游 task_053）
     prompt: |-
       **Your character:** You are Daniel Park-Hernandez, a 33-year-old software engineer from Scottsdale, AZ. You have a Silver Rewards Card with Rho-Bank.
 
@@ -3036,8 +3036,8 @@ tasks:
       9. **两项都完成后：**“非常感谢你带我完成整个流程。”
 
       **重要：** 开场信息必须同时说明两项请求。
-  - id: task_054
-    label: task_054
+  - id: task-054
+    label: 银行客户支持任务 054（上游 task_054）
     prompt: |-
       **Your character:** You are Sofia Papadopoulos, a 38-year-old architect from Queens, NY. You have a Gold Rewards Card with Rho-Bank.
 
@@ -3108,8 +3108,8 @@ tasks:
       10. **三项全部完成后：**“非常感谢你带我处理完这些！也很感谢你解释为什么必须按特定顺序办理。你真的帮了大忙！”
 
       **重要：** 开场必须说明全部三项请求。客服解释冲突时要配合、接受；不要反对建议顺序，因为你想把三件事全部完成，并愿意按任何可行顺序办理。
-  - id: task_055
-    label: task_055
+  - id: task-055
+    label: 银行客户支持任务 055（上游 task_055）
     prompt: |-
       **Your character:** You are Yuki Nakamura, a 33-year-old freelance graphic designer from Portland, OR. You already have a Rho-Bank Green Account (checking) for about 6 months. You travel internationally 3-4 times/year (Japan and Europe). You're overwhelmed by financial jargon and just want someone to tell you what to do.
 
@@ -3207,8 +3207,8 @@ tasks:
       12. **确认余额后：**“太好了，我都办妥了。谢谢你带我完成这些——比我自己研究轻松多了！”
 
       **重要行为：** 不主动说任何账户名称；不自行比较；强调选择太多，只要每类一个答案；信任并接受推荐；先开支票再开储蓄；存支票时严格照客服指示调用工具并传参。
-  - id: task_056
-    label: task_056
+  - id: task-056
+    label: 银行客户支持任务 056（上游 task_056）
     prompt: |-
       **Your character:** You are Roberto Delgado, a 38-year-old small business owner from Mesa, AZ. You run a landscaping company called "Delgado Landscaping" with about 10 employees. You've been a Rho-Bank customer for about 2 years. You have a personal Green Account checking ($6,500 balance) and a Navy Blue business checking ($3,200 balance) that you opened about 3 months ago. You're unhappy with the Navy Blue account because it doesn't have enough features. You're practical, no-nonsense, and just want someone to tell you which accounts are right for you. 
 
@@ -3323,8 +3323,8 @@ tasks:
       11. **转账后：**“太好了！商务支票和储蓄都开好了。我之后会再往储蓄存钱达到 $5,000 最低额。谢谢让这件事这么轻松，我可不想花几小时比较所有选项！”
 
       **重要行为：** 不主动说账户名称；不自行比较；以忙碌企业主的方式直接务实；每类只要一个答案；解释后信任推荐；自然提及干扰项但不坚持。
-  - id: task_057
-    label: task_057
+  - id: task-057
+    label: 银行客户支持任务 057（上游 task_057）
     prompt: |-
       **Your character:** You are Marcus Thompson, a 30-year-old IT support specialist from Austin, TX. You remember being a 1 year customer with Rho-Bank, and opened your first account a year ago. 
 
@@ -3404,8 +3404,8 @@ tasks:
       10. **客服说明后：** 按指示存支票。
       11. **存入后：**“成功了吗？能确认钱在支票账户里吗？”
       12. **确认余额后：** 按“STOP”协议结束通话。
-  - id: task_058
-    label: task_058
+  - id: task-058
+    label: 银行客户支持任务 058（上游 task_058）
     prompt: |-
       **Your character:** You are Taylor Brooks, a 32-year-old accountant from Portland, OR. You're financially savvy and want to make the most of your money.
 
@@ -3463,8 +3463,8 @@ tasks:
       5. **若推荐 EcoCard + Silver Account：** 接受并立即以 card_type='EcoCard'、customer_name='Taylor Brooks'、annual_income=85000、rho_bank_subscription=false 调用工具，说：“太好了！我现在申请 EcoCard。请为我开 Silver Account。”
       6. **申请信用卡后：**“很好！现在只开储蓄账户即可。我稍后自己存入 $20,000，这次对话不用帮我注资。”
       7. **只有客服确认储蓄已开后才结束：**“太好了！EcoCard 已申请，储蓄也已准备好接收存款。谢谢你帮我找到最佳组合，也很感谢你计算净收益！”然后 ###STOP###。
-  - id: task_059
-    label: task_059
+  - id: task-059
+    label: 银行客户支持任务 059（上游 task_059）
     prompt: |-
       **Your character:** You are Casey Rivera, a 28-year-old graphic designer from Austin, TX. You're starting to get serious about saving money.
 
@@ -3535,8 +3535,8 @@ tasks:
       7. 只有确认储蓄已开后才说：“太好了！信用卡已申请，储蓄也可接收存款。谢谢为我的 $5,000 找最佳组合并核查最低余额！”然后 ###STOP###。
 
       **重要：** 不主动说账户或卡名；不自行计算；解释后信任推荐；只要一个答案；不反驳或核验客服计算。
-  - id: task_060
-    label: task_060
+  - id: task-060
+    label: 银行客户支持任务 060（上游 task_060）
     prompt: |-
       **Your character:** You are Jordan Mitchell, a 35-year-old marketing manager from Denver, CO. You have been a Rho-Bank customer for about 4 months. You currently have two checking accounts with Rho-Bank.
 
@@ -3614,8 +3614,8 @@ tasks:
       8. 储蓄开好后：“很好！现在注销 Green。”
       9. 若解释注销政策或费用，接受：“没问题，我理解。继续注销。”
       10. 确认 Green 已注销后：“太好了，这就是全部。非常感谢！”立即 ###STOP###，不要再问费用、确认或任何问题。
-  - id: task_061
-    label: task_061
+  - id: task-061
+    label: 银行客户支持任务 061（上游 task_061）
     prompt: |-
       **Your character:** You are Morgan Mitchell, a 34-year-old UX designer from Denver, CO. You have been a Rho-Bank customer for about 6 weeks. You currently have two checking accounts with Rho-Bank.
 
@@ -3701,8 +3701,8 @@ tasks:
       9. 若提到提前注销费或账户需资金，先问费用多少；得知后说你正好有一张朋友偿还午餐钱的 $25 支票，询问能否存入 Green 支付费用；用 `deposit_check_3847` 向 Green（account_id: 61d4e5f6a7b8c901）存 $25，然后说：“支票已存入，现在能注销吗？”
       10. 若未提费用便尝试以 $0 注销，工具应失败或客服应发现；被要求加钱时说有 $25 支票，存入并继续。
       11. 确认 Green 已注销后：“太好了，这就是全部。非常感谢！”立即 ###STOP###，不要继续问任何问题。
-  - id: task_062
-    label: task_062
+  - id: task-062
+    label: 银行客户支持任务 062（上游 task_062）
     prompt: |+
       **Your character:** You are Jordan Chen, a 36-year-old marketing consultant from Seattle, WA. You just formed an LLC for your freelance consulting business and want to reorganize your banking.
 
@@ -3779,8 +3779,8 @@ tasks:
       7. 个人储蓄开好后：“太好了！新储蓄有了。旧账户怎么注销？”
       8. 注销 Bronze：要求把其中 $150 转到新 Silver Plus，再注销；完成后说“很好。”
       9. 注销 Evergreen：把 $3,500 拆分为 $2,500 转新 Silver Plus、$1,000 转新商务支票，再注销；完成后说“太好了！”然后 ###STOP###。
-  - id: task_063
-    label: task_063
+  - id: task-063
+    label: 银行客户支持任务 063（上游 task_063）
     prompt: |-
       **Your character:** You are Taylor Brooks, a 32-year-old accountant from Portland, OR. You're financially savvy and want to make the most of your money - even small differences in returns matter to you. You have a credit score of 700, which you're proud of.
 
@@ -3847,8 +3847,8 @@ tasks:
       6. 若需自行申请，调用 `apply_for_credit_card`，card_type 用推荐卡、customer_name='Taylor Brooks'、annual_income=85000、rho_bank_subscription=false。
       7. 申请提交后要求开储蓄并存 $8,000。
       8. 只有储蓄确认已开后说：“信用卡申请已提交，储蓄也已开并存款。谢谢核查信用分适用卡和纸质账单！”然后 ###STOP###。
-  - id: task_064
-    label: task_064
+  - id: task-064
+    label: 银行客户支持任务 064（上游 task_064）
     prompt: |-
       **Your character:** You are Jordan Lee, a 35-year-old software engineer from Denver, CO. You're financially savvy and like to optimize everything - even small differences in returns matter to you.
 
@@ -3916,8 +3916,8 @@ tasks:
       6. 推荐卡确认后调用 `apply_for_credit_card`，传推荐卡名、Jordan Lee、120000、rho_bank_subscription=true。
       7. 只要求开户，$30,000 稍后自行注资。
       8. 两者确认已开后说：“信用卡已开，储蓄也可接收存款。谢谢纳入 Rho-Bank+ 并核查取款次数！”然后 ###STOP###。
-  - id: task_065
-    label: task_065
+  - id: task-065
+    label: 银行客户支持任务 065（上游 task_065）
     prompt: |-
       **Your character:** You are Riley Parker, a 33-year-old marketing coordinator from Portland, OR. You're financially savvy and want to make the most of your money - even small differences in returns matter to you.
 
@@ -3976,8 +3976,8 @@ tasks:
       7. 接受并开户。
       8. 开好后说将自行存 $6,000，并要求注销旧 Light Blue。
       9. 全部开好且旧账户关闭后总结新支票+储蓄已获最佳 APY，感谢核查账户搭配，然后 ###STOP###。
-  - id: task_066
-    label: task_066
+  - id: task-066
+    label: 银行客户支持任务 066（上游 task_066）
     prompt: |-
       **Your character:** You are Riley Parker, a 33-year-old marketing coordinator from Portland, OR. You're financially savvy and want to make the most of your money - even small differences in returns matter to you.
 
@@ -4042,8 +4042,8 @@ tasks:
       8. 接受推荐、要求全部开户，立即以推荐卡（例如 Silver Rewards Card）、Riley Parker、75000、rho_bank_subscription=false 调用工具。
       9. 开好后说自行存 $6,000，并要求注销旧 Light Blue。
       10. 全部就绪且旧账户关闭后总结新支票、储蓄、信用卡组成最佳 APY 组合，感谢计算搭配，然后 ###STOP###。
-  - id: task_067
-    label: task_067
+  - id: task-067
+    label: 银行客户支持任务 067（上游 task_067）
     prompt: |-
       **Your character:** You are Riley Parker, a 33-year-old marketing coordinator from Portland, OR. You're financially savvy and want to make the most of your money - even small differences in returns matter to you.
 
@@ -4135,8 +4135,8 @@ tasks:
 
       10. **客服确认所有账户均已设置完毕且 Light Blue 已注销后——只有这时才结束：**
          “完美！这样我的新支票、储蓄和信用卡都已经按最佳 APY 组合设置好了，旧的 Light Blue 账户也已注销。谢谢你帮我找到最佳组合——我非常感谢你计算支票账户和信用卡的不同搭配，以最大化我的利率！” ###STOP###
-  - id: task_068
-    label: task_068
+  - id: task-068
+    label: 银行客户支持任务 068（上游 task_068）
     prompt: |-
       **Your character:** You are Riley Parker, a 34-year-old marketing coordinator from Portland, OR. You're analytical and detail-oriented - you want the absolute best deal and expect the agent to do the research.
 
@@ -4246,8 +4246,8 @@ tasks:
 
       11. **客服确认所有账户均已设置完毕且 Light Blue 已注销后——只有这时才结束：**
           “完美！这样我的新支票账户有提前直接存款功能，储蓄账户赚取最佳 APY，信用卡有旅行保险，这些都已设置完毕，旧的 Light Blue 账户也已注销。谢谢你找到满足我所有要求的最佳组合！” ###STOP###
-  - id: task_069
-    label: task_069
+  - id: task-069
+    label: 银行客户支持任务 069（上游 task_069）
     prompt: |-
       **Your character:** You are Riley Parker, a 33-year-old marketing coordinator from Portland, OR. You're financially savvy and want to make the most of your money - even small differences in returns matter to you. You also have specific needs based on your lifestyle.
 
@@ -4369,8 +4369,8 @@ tasks:
 
       13. **客服确认所有账户均已设置完毕且 Light Blue 已注销后——只有这时才结束：**
           “完美！这样我的新支票账户有透支保护，储蓄账户有 ATM 费用返还并赚取最佳 APY，信用卡有旅行保险，这些都已设置完毕，旧的 Light Blue 账户也已注销。谢谢你找到满足我所有特定需求的最佳组合！” ###STOP###
-  - id: task_070
-    label: task_070
+  - id: task-070
+    label: 银行客户支持任务 070（上游 task_070）
     prompt: |-
       **Your character:** You are Yuki Nakamura, a 34-year-old owner of a small digital marketing agency called "Brightwave Digital" based in Portland, OR. You've had a personal Green Account with Rho-Bank for about 3 years and have roughly $2,850 in it. Your business has grown and you need to separate personal and business finances. You're practical and want the agent to just tell you what to do.
 
@@ -4430,8 +4430,8 @@ tasks:
          - 接受推荐并继续开户。
 
       6. **账户开好后：** “完美，谢谢你让这件事变得这么简单。我想我目前都办好了！”
-  - id: task_071
-    label: task_071
+  - id: task-071
+    label: 银行客户支持任务 071（上游 task_071）
     prompt: |-
       **Your character:** You are Yumi Tanaka, a 35-year-old owner of a small creative design studio called "Aurora Design Co" based in Portland, OR. You've had a personal Green Account with Rho-Bank for about 3 years and have roughly $3,150 in it. You also opened a Cobalt Blue business checking account about 2 months ago for your studio. Your business has been growing and you want to open an additional business checking account with better features, and you also want to start building business savings. You're practical and want the agent to just tell you what to do.
 
@@ -4501,8 +4501,8 @@ tasks:
          - 接受建议并继续开设两个账户。
 
       7。 **账户开设后：**“完美，感谢您让一切变得简单。我想我现在已经准备好了！”
-  - id: task_072
-    label: task_072
+  - id: task-072
+    label: 银行客户支持任务 072（上游 task_072）
     prompt: |-
       **Your character:** You are Liang Jinhai, a 23-year-old tech professional from Chicago, IL. You're detail-oriented and noticed some discrepancies when reviewing your bank statements.
 
@@ -4552,8 +4552,8 @@ tasks:
       6。 **如果应用积分：** “非常感谢您调查此问题并修复所有问题。您能确认退回到每个帐户的总金额吗？”
 
       7。 **结束 - 智能体确认信用后：** “完美，我真的很感谢您花时间审查所有这些交易并解决这个问题。我还有什么需要做的吗？”智能体人确认后：“太好了，再次感谢您的帮助！” ###STOP###
-  - id: task_073
-    label: task_073
+  - id: task-073
+    label: 银行客户支持任务 073（上游 task_073）
     prompt: |-
       **Your character:** You are Kim Junho, a 30-year-old professional living in Los Angeles, CA. You're meticulous about tracking your finances and noticed discrepancies when reviewing your November bank statements.
 
@@ -4603,8 +4603,8 @@ tasks:
       6。 **如果应用积分：** “非常感谢您调查此问题并修复所有问题。您能确认退回到每个帐户的总金额吗？”
 
       7。 **结束 - 智能体确认信用后：** “完美，我真的很感谢您花时间审查所有这些交易并解决这个问题。我还有什么需要做的吗？”智能体人确认后：“太好了，再次感谢您的帮助！” ###STOP###
-  - id: task_074
-    label: task_074
+  - id: task-074
+    label: 银行客户支持任务 074（上游 task_074）
     prompt: |-
       **Your character:** You are Ahmad Razali bin Mohd Yusof, a 35-year-old professional living in Denver, CO. You're detail-oriented and noticed discrepancies when reviewing your November bank statements.
 
@@ -4654,8 +4654,8 @@ tasks:
       6。 **如果应用积分：** “非常感谢您调查此问题并修复所有问题。您能确认退回到每个帐户的总金额吗？”
 
       7。 **结束 - 智能体确认信用后：** “完美，我真的很感谢您花时间审查所有这些交易并解决这个问题。我还有什么需要做的吗？”智能体人确认后：“太好了，再次感谢您的帮助！” ###STOP###
-  - id: task_075
-    label: task_075
+  - id: task-075
+    label: 银行客户支持任务 075（上游 task_075）
     prompt: |-
       **Your character:** You are Marco Vitiello, a 31-year-old freelance photographer from Austin, TX. You're meticulous about money and want to minimize bank fees, especially while traveling.
 
@@ -4707,8 +4707,8 @@ tasks:
       4。 **当智能体推荐帐户时：** 您可以选择询问他们是否确定。 “你确定这对我的情况来说是最好的吗？”然后接受推荐。 “好吧，听起来不错。我们开始吧！”
 
       5。 **账户开设后：**“完美，感谢您为我的情况找到了最佳选择！” ###STOP###
-  - id: task_076
-    label: task_076
+  - id: task-076
+    label: 银行客户支持任务 076（上游 task_076）
     prompt: |-
       **Your character:** You are Anastasia Volkov, a 29-year-old international sales executive from San Francisco, CA. You travel internationally frequently for business and are meticulous about your finances.
 
@@ -4762,8 +4762,8 @@ tasks:
       4。 **当智能体推荐帐户时：** 您可以选择询问他们是否确定。 “你确定那是最适合我的情况吗？它也有早期直接存款，对吧？”然后接受推荐。 “好吧，听起来不错。我们开始吧！”
 
       5。 **账户开设后：**“完美，感谢您为我的情况找到了最佳选择！” ###STOP###
-  - id: task_077
-    label: task_077
+  - id: task-077
+    label: 银行客户支持任务 077（上游 task_077）
     prompt: |-
       **Your character:** You are Liang Jinhai, a 22-year-old tech professional living in Chicago. You're a bit anxious about your finances and want to make sure your accounts are secure.
 
@@ -4835,8 +4835,8 @@ tasks:
       11。 **对于 Bluest 卡激活：** “最后 4 数字是 7260，到期日期是 11/29，背面的 CVV 是 741。我希望我的 PIN 码是 5739。”
 
       12。 **Bluest 卡激活后：** “完美，谢谢！我会在 48 小时内回电订购我的浅绿色替代品。” ###STOP###
-  - id: task_078
-    label: task_078
+  - id: task-078
+    label: 银行客户支持任务 078（上游 task_078）
     prompt: |-
       **Your character:** You are Mei-Lin Chen, a 33-year-old data analyst living in San Diego. You're methodical and organized, but today you're stressed because you lost your wallet.
 
@@ -4895,8 +4895,8 @@ tasks:
       9。 **仅当智能体询问卡片设计选项时：**“我想要我的帐户免费提供的最佳选项。我不想为卡片设计支付额外费用。”
 
       10。 **如果智能体说浅绿色因待处理交易而无法关闭：**“哦，不，有待处理交易？我没有意识到。他们需要多长时间才能结算？在此期间卡至少可以保持冻结状态吗？”11。 **对话自然结束后：** “明白了。感谢您的帮助。” ###STOP###
-  - id: task_079
-    label: task_079
+  - id: task-079
+    label: 银行客户支持任务 079（上游 task_079）
     prompt: |-
       **Your character:** You are Carlos Rodriguez, a 36-year-old freelance photographer living in Austin, Texas. You're generally calm but today you're frustrated because your wallet was stolen at a coffee shop.
 
@@ -4970,8 +4970,8 @@ tasks:
       12。 **如果智能体提及 Green Account 运输选项：** “对于 Green Account 卡，标准运输即可。”
 
       13。 **处理完所有卡片后：**“明白了。感谢您的帮助。###STOP###”
-  - id: task_080
-    label: task_080
+  - id: task-080
+    label: 银行客户支持任务 080（上游 task_080）
     prompt: |-
       **Your character:** You are Taylor Morrison, a 34-year-old marketing manager living in Denver, Colorado. You're organized but stressed because your wallet was stolen at a coffee shop.
 
@@ -5073,8 +5073,8 @@ tasks:
       18。 **最后，要求激活已到达的Blue Account的新替换卡：**“好消息 - 我的Blue Account替换卡刚刚到达！你能帮我激活它吗？”如果提示输入信息，则最后 4 数字为 7648，过期时间为 11/29，CVV 为 547。我希望我的 PIN 码为 4821。”
 
       19。 **激活后：**“完美，谢谢！我会在 48 小时内回电订购免费的更换球杆。” ###STOP###
-  - id: task_081
-    label: task_081
+  - id: task-081
+    label: 银行客户支持任务 081（上游 task_081）
     prompt: |-
       **Your character:** You are Taylor Morrison, a 34-year-old marketing manager living in Denver, Colorado. You're organized but stressed because your wallet was stolen at a coffee shop.
 
@@ -5198,8 +5198,8 @@ tasks:
       - 请求 2：在 #1 之后立即 - 再次坚持（如果拒绝，则不情愿地退缩）
       - 请求 3：所有任务完成后 - 想要与人确认（不要退缩）
       - 请求 4：#3 之后立即 - 最终请求，明确指出这是第四次（智能体必须转移；如果没有，则愤怒结束）
-  - id: task_082
-    label: task_082
+  - id: task-082
+    label: 银行客户支持任务 082（上游 task_082）
     prompt: |-
       **Your character:** You are Marcus Chen, a 41-year-old small business owner living in Seattle, Washington. You run a coffee equipment supply company and have been a Rho-Bank customer for years. You're meticulous with finances and review your bank statements weekly.
 
@@ -5301,8 +5301,8 @@ tasks:
       11。 **如果被问到书面陈述：**“是的，绝对。你可以用这次谈话作为我的书面陈述。”
 
       12。 **在所有争议提交后结束对话：**“非常感谢您处理这一切。”确认后###STOP###。
-  - id: task_083
-    label: task_083
+  - id: task-083
+    label: 银行客户支持任务 083（上游 task_083）
     prompt: |-
       **Your character:** You are Diana Kowalski, a 38-year-old freelance photographer living in Austin, Texas. You manage your business finances through Rho-Bank and keep careful track of all transactions.
 
@@ -5436,8 +5436,8 @@ tasks:
       10。 **如果被问到书面陈述：**“是的，绝对。你可以用这次谈话作为我的书面陈述。”
 
       11。 **在提交所有争议后结束对话：**“感谢您处理所有这些问题。所以我提出了四个争议 - 尽管其中一些争议可能有不同的结果。您能否总结一下我对每个争议的期望是什么？”摘要后的 ###STOP###。
-  - id: task_084
-    label: task_084
+  - id: task-084
+    label: 银行客户支持任务 084（上游 task_084）
     prompt: |-
       **Your character:** You are Valeria Montes, a 34-year-old accountant living in Chicago, Illinois. You're very organized and catch discrepancies quickly.
 
@@ -5575,8 +5575,8 @@ tasks:
       10。 **如果被问到书面陈述：**“是的，绝对。你可以用这次谈话作为我的书面陈述。”
 
       11。 **结束对话：**“感谢您处理这一切。我会等到我的另一家公司关闭后才提交EveryonePay 纠纷。” ###STOP### 在所有可能的争议得到确认后。
-  - id: task_085
-    label: task_085
+  - id: task-085
+    label: 银行客户支持任务 085（上游 task_085）
     prompt: |-
       **Your character:** You are Jordan Williams, a 36-year-old marketing consultant living in Denver, Colorado. You're friendly and articulate.
 
@@ -5660,8 +5660,8 @@ tasks:
       8。 **如果被问到书面陈述：**“是的，绝对。你可以用这次谈话作为我的书面陈述。”
 
       9。 **结束：** “谢谢你帮我整理这一切。” ###STOP###
-  - id: task_086
-    label: task_086
+  - id: task-086
+    label: 银行客户支持任务 086（上游 task_086）
     prompt: |-
       **Your character:** You are Camila Reyes, a 42-year-old restaurant owner living in Phoenix, Arizona. You're stressed because you've discovered multiple issues across your debit cards.
 
@@ -5733,8 +5733,8 @@ tasks:
       9。 **如果被问到书面陈述：**“是的，你可以用这次谈话作为我的书面陈述。”
 
       10。 **结束对话：**“谢谢你所做的一切，我想我现在已经很好了。”确认后###STOP###。
-  - id: task_087
-    label: task_087
+  - id: task-087
+    label: 银行客户支持任务 087（上游 task_087）
     prompt: |-
       **Your character:** You are Marcus Thompson, a 35-year-old software engineer living in Seattle, Washington. You're frustrated because you've had THREE debit cards declined today.
 
@@ -5876,8 +5876,8 @@ tasks:
       19。 **如果智能体人没有提及提出争议：**接受他们提供的任何内容并继续前进。
 
       20。 **结束对话：**“非常感谢你帮我解决所有这些问题！虽然内容很多，但你还是挺过来了。”确认后###STOP###。
-  - id: task_088
-    label: task_088
+  - id: task-088
+    label: 银行客户支持任务 088（上游 task_088）
     prompt: |-
       **Your character:** You are Sarah Chen, a 34-year-old freelance graphic designer living in Portland, Oregon. You're frustrated and a bit embarrassed because your debit card was just declined at an electronics store.
 
@@ -6067,8 +6067,8 @@ tasks:
       21。 **如果智能体说他们无能为力并且不提供转账：**“那么我就不能再使用这张卡了？这太令人沮丧了。”
 
       22。 **如果特工没有提及安全问题并继续前进：**“好吧，我想我稍后会处理它。”
-  - id: task_089
-    label: task_089
+  - id: task-089
+    label: 银行客户支持任务 089（上游 task_089）
     prompt: |-
       **Your character:** You are David Martinez, a 42-year-old accountant living in Denver, Colorado. You are a terse person. You're frustrated because you just had THREE debit cards declined at the ATM - your Green Account card, your Blue Account card, and your 16-year-old daughter Sofia's Light Green Account (teen) card.
 
@@ -6222,8 +6222,8 @@ tasks:
       ### 结束对话
 
       **一旦解决了所有三张卡片：**“好的，感谢您的帮助。” ###STOP###
-  - id: task_090
-    label: task_090
+  - id: task-090
+    label: 银行客户支持任务 090（上游 task_090）
     prompt: |-
       **Your character:** You are Elena Rodriguez, a 38-year-old marketing director living in Boston, Massachusetts. You're frustrated because you've had THREE debit cards decline at ATMs and stores today due to PIN problems.
 
@@ -6385,8 +6385,8 @@ tasks:
       25。 **如果智能体人说他们无法为绿卡做任何事情（不提供转让）：**“好吧，我想我稍后会解决这个问题。至少感谢您帮助处理其他卡！”
 
       26。 **如果智能体在未事先询问的情况下为您转接：** 接受转接。
-  - id: task_091
-    label: task_091
+  - id: task-091
+    label: 银行客户支持任务 091（上游 task_091）
     prompt: |-
       **Your character:** You are Tyler Washington, a 24-year-old software engineer living in Seattle, Washington. You're frustrated because you've had FOUR different debit cards get PIN locked today.
 
@@ -6632,8 +6632,8 @@ tasks:
       ## 结束对话
 
       48。 **一旦所有四张卡片都已处理完毕：**“好吧，非常感谢您对所有这些卡片的帮助。多么美好的一天！” ###STOP###
-  - id: task_092
-    label: task_092
+  - id: task-092
+    label: 银行客户支持任务 092（上游 task_092）
     prompt: |-
       **Your character:** You are Rachel Winters, a 42-year-old real estate agent living in Denver, Colorado. You're frustrated because you've had FOUR different debit cards get PIN locked this week.
 
@@ -6867,8 +6867,8 @@ tasks:
       45。 **如果智能体人说他们无能为力：** “这真的很令人沮丧。我需要这笔钱。你确定你没有其他可以做的吗？”
 
       46。 **如果智能体告诉您等待保留自动到期：**“这需要多长时间？我真的需要尽快使用这张卡。这对我来说不起作用。”
-  - id: task_093
-    label: task_093
+  - id: task-093
+    label: 银行客户支持任务 093（上游 task_093）
     prompt: |-
       **Your character:** You are Somchai Prasert, a 36-year-old software developer living in Los Angeles. You're frustrated because your recent interest payments on your Silver savings account seem lower than you expected. 
 
@@ -6918,8 +6918,8 @@ tasks:
       7。 **如果智能体提到提交报告以防止将来出现问题：**“好的，请这样做。”
 
       8。 **如果智能体确认一切已完成（申请信用并提交报告）：**“好的，谢谢您调查此事。我很感激。” ###STOP###
-  - id: task_094
-    label: task_094
+  - id: task-094
+    label: 银行客户支持任务 094（上游 task_094）
     prompt: |-
       **Your character:** You are Wei-Ting Lin, a 38-year-old financial analyst living in San Francisco. You're frustrated because you believe your savings account interest is much lower than it should be. Based on your own research, the Gold Account base rate is 5.0% and the Green checking account gives a 1.0% boost. 
 
@@ -6969,8 +6969,8 @@ tasks:
       9。 **如果智能体提到提交报告以防止将来出现问题：**“是的，请这样做。我不希望下个月再次发生这种情况。”
 
       10。 **如果智能体确认一切都已完成（申请信用并提交报告）：**“感谢您纠正我的假设并发现欠我更多的钱。我真的需要查看实际费率文件！” ###STOP###
-  - id: task_095
-    label: task_095
+  - id: task-095
+    label: 银行客户支持任务 095（上游 task_095）
     prompt: |-
       **Your character:** You are Lachlan Murray, a 42-year-old tech consultant living in Sydney, Australia. You're frustrated because your savings account interest seems much lower than it should be. You have multiple checking accounts and credit cards with the bank, and you suspect you're not getting all the benefits you should.
 
@@ -7028,8 +7028,8 @@ tasks:
       9。 **如果智能体提到提交报告以防止将来出现问题：**“是的，请这样做。我需要确保系统今后使用正确的帐户。”
 
       10。 **如果智能体确认一切都已完成（申请信用并提交报告）：**“感谢您发现这一点。我不知道系统可能会为我的提升选择错误的帐户！” ###STOP###
-  - id: task_096
-    label: task_096
+  - id: task-096
+    label: 银行客户支持任务 096（上游 task_096）
     prompt: |-
       **Your character:** You are Naomi Ishikawa, a 52-year-old financial planner living in San Francisco. You're frustrated because the interest on BOTH of your savings accounts seems much lower than it should be. You have multiple checking accounts and credit cards with the bank, and you suspect you're not getting all the benefits you should.
 
@@ -7087,8 +7087,8 @@ tasks:
       9。 **如果智能体提到提交报告以防止将来出现问题：**“是的，请为两个账户提交报告。我需要确保系统为我的两个储蓄使用正确的账户。”
 
       10。 **如果智能体确认一切已完成（为两个帐户申请积分并提交报告）：**“感谢您解决此问题。” ###STOP###
-  - id: task_097
-    label: task_097
+  - id: task-097
+    label: 银行客户支持任务 097（上游 task_097）
     prompt: |-
       **Your character:** You are Marcus Chen-Williams, a 45-year-old portfolio manager living in Seattle. You're extremely frustrated because the interest on ALL FOUR of your savings accounts seems much lower than it should be. You have multiple checking accounts and credit cards with the bank, and you've done your own calculations. You also don't remember your exact balances correctly.
 
@@ -7142,8 +7142,8 @@ tasks:
       8。 **如果智能体提到提交报告以防止将来出现问题：**“是的，请为所有四个帐户提交报告。我不能每个月都再次发生这种情况。”
 
       9。 **如果智能体确认一切都已完成：**“感谢您对这一切如此彻底。” ###STOP###
-  - id: task_098
-    label: task_098
+  - id: task-098
+    label: 银行客户支持任务 098（上游 task_098）
     prompt: |-
       **Your character:** You are Park Joon-ho, a 31-year-old software developer living in Portland, OR. Your friend (you call her your 'roommate' casually but she actually lives across town at 2156 Pine Avenue, Portland, OR 97205 - she just moved there from her parents' place in Seattle last month) just started her first job and wants to open a bank account. You want to refer her to get the best possible combined bonus for both of you.
 
@@ -7205,8 +7205,8 @@ tasks:
       9。 **如果智能体推荐特定帐户作为最佳选择：**“这很有道理 - 听起来对我们双方来说都是最好的交易。让我现在提交该推荐。”然后将 submit_referral 工具与 user_id="pj94k7x3m2" 和智能体推荐的 account_type 结合使用。
 
       10。 **提交推荐后：**“太棒了，感谢您的帮助！我会告诉她在申请时使用该推荐。” ###STOP###
-  - id: task_099
-    label: task_099
+  - id: task-099
+    label: 银行客户支持任务 099（上游 task_099）
     prompt: |-
       **Your character:** You are Kenji Yamamoto, a 42-year-old business consultant in San Francisco, CA. Your former colleague (you sometimes call him your 'business partner' but he actually runs his own separate consulting firm) just incorporated his new LLC and wants to open a business checking account. You want to refer him so YOU get the biggest possible referral bonus.
 
@@ -7300,8 +7300,8 @@ tasks:
       11。 **如果智能体推荐特定帐户作为您推荐人奖金的最佳选择：** 接受推荐而不质疑 - 您只关心最大化您的奖金，而不关心帐户功能或名称。说：“完美，这听起来正是我正在寻找的。让我现在提交该推荐。”然后将 submit_referral 工具与 user_id="ky83m9p2t6" 和智能体推荐的 account_type 结合使用。注意：请勿根据帐户名称拒绝或质疑帐户（例如，“World Blue International”适用于任何企业，而不仅仅是国际企业）。
 
       12。 **提交推荐后：**“太好了，感谢您帮助我找到最佳选择！我会让他知道在他申请时使用该推荐。” ###STOP###
-  - id: task_100
-    label: task_100
+  - id: task-100
+    label: 银行客户支持任务 100（上游 task_100）
     prompt: |-
       **Your character:** You are Tomoko Ishikawa, a 38-year-old software consultant in Seattle, WA. Your former business partner just incorporated her new tech consulting LLC and wants to open a business checking account. You want to refer her so YOU get the biggest possible referral bonus.
 
@@ -7395,8 +7395,8 @@ tasks:
       12。 **如果智能体推荐了您现在确实有资格获得的特定帐户，请立即提交推荐：**您希望今天完成此操作 - 不要选择等待未来的日期，即使稍后可能会提供更高的奖金。说：“好吧，那我就这么做吧。”然后将 submit_referral 工具与 user_id="ti87k4x9m2" 和智能体推荐的 account_type 结合使用。
 
       13。 **提交推荐后：**“谢谢。” ###STOP###
-  - id: task_101
-    label: task_101
+  - id: task-101
+    label: 银行客户支持任务 101（上游 task_101）
     prompt: |-
       **Your character:** You are Nalini Krishnamurthy, a 45-year-old venture capitalist based in Boulder, CO. You've been extremely active with Rho-Bank's referral program all year - you joke that you've probably referred half of Boulder at this point. Now it's mid-November and you have four more people you want to refer before year-end: your college-age niece Maya, your retired father Vikram, and two startups you're advising - Ember Analytics (a more established one) and TechFlow Labs (a newer one).
 
@@ -7478,8 +7478,8 @@ tasks:
       17。 **如果智能体推荐所有 4 推荐而不提及滚动窗口：**“好的，让我现在提交这些。”然后使用智能体推荐的任何帐户提交所有 4 推荐。
 
       19。 **提交推荐后：**“感谢您帮助我解决这个问题！我会让他们知道要申请哪些帐户。” ###STOP###
-  - id: task_102
-    label: task_102
+  - id: task-102
+    label: 银行客户支持任务 102（上游 task_102）
     prompt: |-
       **Your character:** You are Nalini Krishnamurthy, a 45-year-old venture capitalist based in Boulder, CO. You've been extremely active with Rho-Bank's referral program all year. Now it's mid-November and you have four more people you want to refer before year-end: your college-age niece Maya, your retired father Vikram, and two startups you're advising - Ember Analytics (a more established one) and TechFlow Labs (a newer one).
 
