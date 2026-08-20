@@ -17,7 +17,7 @@
         "label": "5×89 成功率",
         "value": "89/445"
       },
-      "detail": "Harbor 0.0.0-example (1234567890abcdef1234567890abcdef12345678) job bb24efa9-efd2-476b-85f3-fc7951e10e1a; 445 trials with 445 unique IDs and names; 89/89 pinned task digests matched; 445 result.json/lock.json SHA-256 pairs recorded; evidence_sha256=43a98e928fbb85d879d891dd362af3fd1358f909bedaf2c2ae782d2f9ddbe041; manifest_sha256=4e54334103f74ac8af75dcde6975f4617f37f693dbc92f2289006eb57a71ef1c. 结构示例：纯合成证据，不代表真实模型或 Harbor 运行。",
+      "detail": "Harbor 0.0.0-example (1234567890abcdef1234567890abcdef12345678) job bb24efa9-efd2-476b-85f3-fc7951e10e1a; 445 trials with 445 unique IDs and names; 89/89 pinned task digests matched; 445 result.json/lock.json SHA-256 pairs recorded; evidence_sha256=43a98e928fbb85d879d891dd362af3fd1358f909bedaf2c2ae782d2f9ddbe041; manifest_sha256=ccccc6897688a8095e1e04bf7541dc3c6d6383dcc3c67a9542917a0f391af678.",
       "task_results": [
         {
           "task_id": "adaptive-rejection-sampler",
