@@ -1,0 +1,158 @@
+{
+  "eval_id": "tau3-banking",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "tau3-banking/artificial-analysis-transcription@1.2.0",
+    "retrieved_on": "2026-08-20",
+    "source": {
+      "title": "Artificial Analysis τ³-Banking normalized official-page snapshot (29 rows)",
+      "url": "https://artificialanalysis.ai/evaluations/tau3-banking",
+      "snapshot_sha256": "d52b0e9a2164ae79c8fcc5df1abc47cf4b7886113baba8ce317e8c6c8b9d8f3d",
+      "official_result_count": 29,
+      "omitted_models": [
+        {
+          "model": "Grok 4.6 (high)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "GLM-5.3 (max)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Qwen3.8 2.4T A95B",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Qwen3.8 27B",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Claude Fable 5 (with fallback)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Motif 3",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Muse Spark 1.2 (xhigh)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Gemini 3.7 Flash (high)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "GPT-5.6 Luna (max)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Inkling",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Muse Glimmer (high)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Solar Open2 250B",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Gemini 3.5 Flash-Lite",
+          "reason": "unregistered"
+        },
+        {
+          "model": "A.X-K2",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Mistral Medium 3.5",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Nemotron 3 Ultra",
+          "reason": "unregistered"
+        },
+        {
+          "model": "gpt-oss-120b (high)",
+          "reason": "unregistered"
+        },
+        {
+          "model": "K-EXAONE 2.0",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Nemotron 3 Super",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Nemotron 3.5 Lightning",
+          "reason": "unregistered"
+        },
+        {
+          "model": "Command A+",
+          "reason": "unregistered"
+        }
+      ]
+    }
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "alibaba/qwen3.8-max"
+      },
+      "score": 51.340206185567,
+      "detail": "Artificial Analysis 2026-08-20 rank 1; source label=Qwen3.8 Max; source fraction=0.51340206185567; converted to percent by exact decimal-point shift. Upstream-author publication transcription, not an EvalHub rerun."
+    },
+    {
+      "participant": {
+        "model": "moonshot/kimi-k3"
+      },
+      "score": 45.979381443299,
+      "detail": "Artificial Analysis 2026-08-20 rank 6; source label=Kimi K3 (max); source fraction=0.45979381443299; converted to percent by exact decimal-point shift. Upstream-author publication transcription, not an EvalHub rerun."
+    },
+    {
+      "participant": {
+        "model": "openai/gpt-5.6-sol"
+      },
+      "score": 44.3298969072165,
+      "detail": "Artificial Analysis 2026-08-20 rank 7; source label=GPT-5.6 Sol (max); source fraction=0.443298969072165; converted to percent by exact decimal-point shift. Upstream-author publication transcription, not an EvalHub rerun."
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-opus-5"
+      },
+      "score": 42.0618556701031,
+      "detail": "Artificial Analysis 2026-08-20 rank 8; source label=Claude Opus 5 (max); source fraction=0.420618556701031; converted to percent by exact decimal-point shift. Upstream-author publication transcription, not an EvalHub rerun."
+    },
+    {
+      "participant": {
+        "model": "openai/gpt-5.6-terra"
+      },
+      "score": 40.2061855670103,
+      "detail": "Artificial Analysis 2026-08-20 rank 9; source label=GPT-5.6 Terra (max); source fraction=0.402061855670103; converted to percent by exact decimal-point shift. Upstream-author publication transcription, not an EvalHub rerun."
+    },
+    {
+      "participant": {
+        "model": "deepseek/deepseek-v4-pro"
+      },
+      "score": 39.5876288659794,
+      "detail": "Artificial Analysis 2026-08-20 rank 10; source label=DeepSeek V4 Pro 0813 (max); source fraction=0.395876288659794; converted to percent by exact decimal-point shift. Upstream-author publication transcription, not an EvalHub rerun."
+    },
+    {
+      "participant": {
+        "model": "minimax/minimax-m3"
+      },
+      "score": 15.2577319587629,
+      "detail": "Artificial Analysis 2026-08-20 rank 21; source label=MiniMax-M3; source fraction=0.152577319587629; converted to percent by exact decimal-point shift. Upstream-author publication transcription, not an EvalHub rerun."
+    },
+    {
+      "participant": {
+        "model": "anthropic/claude-haiku-4-5"
+      },
+      "score": 9.27835051546392,
+      "detail": "Artificial Analysis 2026-08-20 rank 27; source label=Claude 4.5 Haiku; source fraction=0.0927835051546392; converted to percent by exact decimal-point shift. Upstream-author publication transcription, not an EvalHub rerun."
+    }
+  ]
+}

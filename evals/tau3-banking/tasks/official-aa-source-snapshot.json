@@ -1,0 +1,658 @@
+{
+  "schema_version": 1,
+  "source_url": "https://artificialanalysis.ai/evaluations/tau3-banking",
+  "retrieved_on": "2026-08-20",
+  "source_html_sha256": "65d04c52b62643b7b1aa25905476e521dd13329c7be920ec5848887384743de4",
+  "extraction_boundary": "Next initialModels entries with non-null tauBanking, sorted by unrounded score descending",
+  "benchmark_task_count": 97,
+  "derivations": {
+    "score_percent": "score_fraction * 100",
+    "output_tokens_per_task": "(token_counts.answer + token_counts.reasoning) / 97",
+    "time_minutes_per_task": "output_tokens_per_task / median_output_tokens_per_second / 60",
+    "cache_read_tokens": "token_counts.cacheable_input * cache_hit_rate when both are published",
+    "cache_write_tokens": "token_counts.input - cache_read_tokens when cacheable input and cache hit rate are published",
+    "non_cache_input_tokens": "token_counts.input when cacheable_input is null; otherwise 0",
+    "cost_usd_per_task": "sum(token bucket * corresponding published per-million price) / 1,000,000 / 97; a missing required price yields no value"
+  },
+  "models": [
+    {
+      "rank": 1,
+      "source_model_label": "Qwen3.8 Max",
+      "source_model_slug": "qwen3-8-max",
+      "creator": "Alibaba",
+      "release_date": "2026-08-03",
+      "score_fraction": 0.51340206185567,
+      "token_counts": {
+        "input": 163504611,
+        "answer": 280112,
+        "reasoning": 639858,
+        "cacheable_input": 153624134
+      },
+      "cache_hit_rate": 0.8638,
+      "prices_usd_per_million_tokens": {
+        "input": 2,
+        "output": 6,
+        "cache_hit": 0.25,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 62.8558735162355
+    },
+    {
+      "rank": 2,
+      "source_model_label": "Grok 4.6 (high)",
+      "source_model_slug": "grok-4-6",
+      "creator": "SpaceXAI",
+      "release_date": "2026-08-12",
+      "score_fraction": 0.507216494845361,
+      "token_counts": {
+        "input": 223199893,
+        "answer": 271025,
+        "reasoning": 725954,
+        "cacheable_input": 211127195
+      },
+      "cache_hit_rate": 0.876337184424476,
+      "prices_usd_per_million_tokens": {
+        "input": 2,
+        "output": 6,
+        "cache_hit": 0.5,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 63.5037842772234
+    },
+    {
+      "rank": 3,
+      "source_model_label": "GLM-5.3 (max)",
+      "source_model_slug": "glm-5-3",
+      "creator": "Z AI",
+      "release_date": "2026-08-18",
+      "score_fraction": 0.503092783505155,
+      "token_counts": {
+        "input": 97164948,
+        "answer": 246937,
+        "reasoning": 585986,
+        "cacheable_input": 91128280
+      },
+      "cache_hit_rate": 0.9953,
+      "prices_usd_per_million_tokens": {
+        "input": 1.4,
+        "output": 4.4,
+        "cache_hit": 0.26,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 97.8797019696082
+    },
+    {
+      "rank": 4,
+      "source_model_label": "Qwen3.8 2.4T A95B",
+      "source_model_slug": "qwen3-8-2-4t-a95b",
+      "creator": "Alibaba",
+      "release_date": "2026-08-12",
+      "score_fraction": 0.490721649484536,
+      "token_counts": {
+        "input": 176092113,
+        "answer": 271047,
+        "reasoning": 697680,
+        "cacheable_input": 166758232
+      },
+      "cache_hit_rate": 0.8638,
+      "prices_usd_per_million_tokens": {
+        "input": 2,
+        "output": 6,
+        "cache_hit": 0.25,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 62.4263949730878
+    },
+    {
+      "rank": 5,
+      "source_model_label": "Qwen3.8 27B",
+      "source_model_slug": "qwen3-8-27b",
+      "creator": "Alibaba",
+      "release_date": "2026-08-14",
+      "score_fraction": 0.480412371134021,
+      "token_counts": {
+        "input": 174388284,
+        "answer": 287739,
+        "reasoning": 663169,
+        "cacheable_input": 163907148
+      },
+      "cache_hit_rate": 0.860019683233388,
+      "prices_usd_per_million_tokens": {
+        "input": 0.42500000000000004,
+        "output": 3.1,
+        "cache_hit": 0.045,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 36.8883669994365
+    },
+    {
+      "rank": 6,
+      "source_model_label": "Kimi K3 (max)",
+      "source_model_slug": "kimi-k3",
+      "creator": "Kimi",
+      "release_date": "2026-07-16",
+      "score_fraction": 0.45979381443299,
+      "token_counts": {
+        "input": 186181877,
+        "answer": 339213,
+        "reasoning": 613131,
+        "cacheable_input": 176018670
+      },
+      "cache_hit_rate": 0.974396108357006,
+      "prices_usd_per_million_tokens": {
+        "input": 3,
+        "output": 15,
+        "cache_hit": 0.3,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 42.5198479579145
+    },
+    {
+      "rank": 7,
+      "source_model_label": "GPT-5.6 Sol (max)",
+      "source_model_slug": "gpt-5-6-sol",
+      "creator": "OpenAI",
+      "release_date": "2026-07-09",
+      "score_fraction": 0.443298969072165,
+      "token_counts": {
+        "input": 152870950,
+        "answer": 233300,
+        "reasoning": 598528,
+        "cacheable_input": 144354495
+      },
+      "cache_hit_rate": 0.99339067738,
+      "prices_usd_per_million_tokens": {
+        "input": 5,
+        "output": 30,
+        "cache_hit": 0.5,
+        "cache_write": 6.25
+      },
+      "median_output_tokens_per_second": 68.2768945735085
+    },
+    {
+      "rank": 8,
+      "source_model_label": "Claude Opus 5 (max)",
+      "source_model_slug": "claude-opus-5",
+      "creator": "Anthropic",
+      "release_date": "2026-07-24",
+      "score_fraction": 0.420618556701031,
+      "token_counts": {
+        "input": 182360141,
+        "answer": 492548,
+        "reasoning": 888839,
+        "cacheable_input": 171221004
+      },
+      "cache_hit_rate": 0.996663404781368,
+      "prices_usd_per_million_tokens": {
+        "input": 5,
+        "output": 25,
+        "cache_hit": 0.5,
+        "cache_write": 6.25
+      },
+      "median_output_tokens_per_second": 93.5661421098299
+    },
+    {
+      "rank": 9,
+      "source_model_label": "GPT-5.6 Terra (max)",
+      "source_model_slug": "gpt-5-6-terra",
+      "creator": "OpenAI",
+      "release_date": "2026-07-09",
+      "score_fraction": 0.402061855670103,
+      "token_counts": {
+        "input": 141126363,
+        "answer": 212197,
+        "reasoning": 762471,
+        "cacheable_input": 133028016
+      },
+      "cache_hit_rate": 0.99339067738,
+      "prices_usd_per_million_tokens": {
+        "input": 2,
+        "output": 12,
+        "cache_hit": 0.2,
+        "cache_write": 2.5
+      },
+      "median_output_tokens_per_second": 119.425779730707
+    },
+    {
+      "rank": 10,
+      "source_model_label": "DeepSeek V4 Pro 0813 (max)",
+      "source_model_slug": "deepseek-v4-pro",
+      "creator": "DeepSeek",
+      "release_date": "2026-08-13",
+      "score_fraction": 0.395876288659794,
+      "token_counts": {
+        "input": 104722653,
+        "answer": 293348,
+        "reasoning": 1031561,
+        "cacheable_input": 98115624
+      },
+      "cache_hit_rate": 1,
+      "prices_usd_per_million_tokens": {
+        "input": 1.32,
+        "output": 3.96,
+        "cache_hit": 0.044,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 101.878603215338
+    },
+    {
+      "rank": 11,
+      "source_model_label": "Claude Fable 5 (with fallback)",
+      "source_model_slug": "claude-fable-5",
+      "creator": "Anthropic",
+      "release_date": "2026-06-09",
+      "score_fraction": 0.381443298969072,
+      "token_counts": {
+        "input": 136245311,
+        "answer": 430891,
+        "reasoning": 1161993,
+        "cacheable_input": 127678510
+      },
+      "cache_hit_rate": 0.994524976,
+      "prices_usd_per_million_tokens": {
+        "input": 10,
+        "output": 50,
+        "cache_hit": 1,
+        "cache_write": 12.5
+      },
+      "median_output_tokens_per_second": 116.506734520369
+    },
+    {
+      "rank": 12,
+      "source_model_label": "Motif 3",
+      "source_model_slug": "motif-3",
+      "creator": "Motif Technologies",
+      "release_date": "2026-08-12",
+      "score_fraction": 0.352577319587629,
+      "token_counts": {
+        "input": 110449875,
+        "answer": 224831,
+        "reasoning": 827959,
+        "cacheable_input": 104404328
+      },
+      "cache_hit_rate": null,
+      "prices_usd_per_million_tokens": {
+        "input": null,
+        "output": null,
+        "cache_hit": null,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": null
+    },
+    {
+      "rank": 13,
+      "source_model_label": "Muse Spark 1.2 (xhigh)",
+      "source_model_slug": "muse-spark-1-2",
+      "creator": "Meta",
+      "release_date": "2026-08-05",
+      "score_fraction": 0.348453608247423,
+      "token_counts": {
+        "input": 112669880,
+        "answer": 387308,
+        "reasoning": 476936,
+        "cacheable_input": 107497897
+      },
+      "cache_hit_rate": 0.95,
+      "prices_usd_per_million_tokens": {
+        "input": 1.25,
+        "output": 4.25,
+        "cache_hit": 0.15,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": null
+    },
+    {
+      "rank": 14,
+      "source_model_label": "Gemini 3.7 Flash (high)",
+      "source_model_slug": "gemini-3-7-flash",
+      "creator": "Google",
+      "release_date": "2026-08-13",
+      "score_fraction": 0.327835051546392,
+      "token_counts": {
+        "input": 186346134,
+        "answer": 256771,
+        "reasoning": 1102055,
+        "cacheable_input": 178563656
+      },
+      "cache_hit_rate": 0.892089776686994,
+      "prices_usd_per_million_tokens": {
+        "input": 0.75,
+        "output": 3.75,
+        "cache_hit": 0.075,
+        "cache_write": 0.75
+      },
+      "median_output_tokens_per_second": 385.658585585882
+    },
+    {
+      "rank": 15,
+      "source_model_label": "GPT-5.6 Luna (max)",
+      "source_model_slug": "gpt-5-6-luna",
+      "creator": "OpenAI",
+      "release_date": "2026-07-09",
+      "score_fraction": 0.311340206185567,
+      "token_counts": {
+        "input": 110705739,
+        "answer": 201232,
+        "reasoning": 651209,
+        "cacheable_input": 104402078
+      },
+      "cache_hit_rate": 0.99339067738,
+      "prices_usd_per_million_tokens": {
+        "input": 0.2,
+        "output": 1.2,
+        "cache_hit": 0.02,
+        "cache_write": 0.25
+      },
+      "median_output_tokens_per_second": 155.664065287004
+    },
+    {
+      "rank": 16,
+      "source_model_label": "Inkling",
+      "source_model_slug": "inkling",
+      "creator": "Thinking Machines",
+      "release_date": "2026-07-15",
+      "score_fraction": 0.290721649484536,
+      "token_counts": {
+        "input": 186284638,
+        "answer": 220931,
+        "reasoning": 604369,
+        "cacheable_input": 178484913
+      },
+      "cache_hit_rate": 0.980941578291172,
+      "prices_usd_per_million_tokens": {
+        "input": 1,
+        "output": 4.05,
+        "cache_hit": 0.17,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 69.1490417305403
+    },
+    {
+      "rank": 17,
+      "source_model_label": "Muse Glimmer (high)",
+      "source_model_slug": "muse-glimmer",
+      "creator": "Meta",
+      "release_date": "2026-08-10",
+      "score_fraction": 0.235051546391753,
+      "token_counts": {
+        "input": 105009762,
+        "answer": 331617,
+        "reasoning": 487458,
+        "cacheable_input": 99985779
+      },
+      "cache_hit_rate": 0.8284052699523821,
+      "prices_usd_per_million_tokens": {
+        "input": 0.32499999999999996,
+        "output": 1.35,
+        "cache_hit": 0.04,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 107.810472158115
+    },
+    {
+      "rank": 18,
+      "source_model_label": "Solar Open2 250B",
+      "source_model_slug": "solar-open2-250b",
+      "creator": "Upstage",
+      "release_date": "2026-08-12",
+      "score_fraction": 0.216494845360825,
+      "token_counts": {
+        "input": 143816983,
+        "answer": 275846,
+        "reasoning": 658649,
+        "cacheable_input": 137712152
+      },
+      "cache_hit_rate": null,
+      "prices_usd_per_million_tokens": {
+        "input": null,
+        "output": null,
+        "cache_hit": null,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": null
+    },
+    {
+      "rank": 19,
+      "source_model_label": "Gemini 3.5 Flash-Lite",
+      "source_model_slug": "gemini-3-5-flash-lite",
+      "creator": "Google",
+      "release_date": "2026-07-21",
+      "score_fraction": 0.175257731958763,
+      "token_counts": {
+        "input": 147144423,
+        "answer": 186755,
+        "reasoning": 799634,
+        "cacheable_input": 140023606
+      },
+      "cache_hit_rate": 0.8188520111359,
+      "prices_usd_per_million_tokens": {
+        "input": 0.3,
+        "output": 2.5,
+        "cache_hit": 0.03,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 388.606686398565
+    },
+    {
+      "rank": 20,
+      "source_model_label": "A.X-K2",
+      "source_model_slug": "a-x-k2",
+      "creator": "SK Telecom",
+      "release_date": "2026-08-12",
+      "score_fraction": 0.160824742268041,
+      "token_counts": {
+        "input": 145389016,
+        "answer": 477449,
+        "reasoning": 1741779,
+        "cacheable_input": 136458046
+      },
+      "cache_hit_rate": null,
+      "prices_usd_per_million_tokens": {
+        "input": null,
+        "output": null,
+        "cache_hit": null,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": null
+    },
+    {
+      "rank": 21,
+      "source_model_label": "MiniMax-M3",
+      "source_model_slug": "minimax-m3",
+      "creator": "MiniMax",
+      "release_date": "2026-06-01",
+      "score_fraction": 0.152577319587629,
+      "token_counts": {
+        "input": 71918204,
+        "answer": 239402,
+        "reasoning": 408774,
+        "cacheable_input": 67239747
+      },
+      "cache_hit_rate": 0.972844718040998,
+      "prices_usd_per_million_tokens": {
+        "input": 0.3,
+        "output": 1.2,
+        "cache_hit": 0.06,
+        "cache_write": 0.375
+      },
+      "median_output_tokens_per_second": 100.136292919702
+    },
+    {
+      "rank": 22,
+      "source_model_label": "Mistral Medium 3.5",
+      "source_model_slug": "mistral-medium-3-5",
+      "creator": "Mistral",
+      "release_date": "2026-04-29",
+      "score_fraction": 0.150515463917526,
+      "token_counts": {
+        "input": 140760443,
+        "answer": 223086,
+        "reasoning": 796767,
+        "cacheable_input": 134439241
+      },
+      "cache_hit_rate": 0.897267716743362,
+      "prices_usd_per_million_tokens": {
+        "input": 1.5,
+        "output": 7.5,
+        "cache_hit": 0.15,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 148.621712498741
+    },
+    {
+      "rank": 23,
+      "source_model_label": "Nemotron 3 Ultra",
+      "source_model_slug": "nvidia-nemotron-3-ultra-550b-a55b",
+      "creator": "NVIDIA",
+      "release_date": "2026-06-04",
+      "score_fraction": 0.142268041237113,
+      "token_counts": {
+        "input": 71965598,
+        "answer": 319547,
+        "reasoning": 595631,
+        "cacheable_input": 65422647
+      },
+      "cache_hit_rate": 0,
+      "prices_usd_per_million_tokens": {
+        "input": 0.6,
+        "output": 2.75,
+        "cache_hit": 0.2,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 140.937267551331
+    },
+    {
+      "rank": 24,
+      "source_model_label": "gpt-oss-120b (high)",
+      "source_model_slug": "gpt-oss-120b",
+      "creator": "OpenAI",
+      "release_date": "2025-08-05",
+      "score_fraction": 0.127835051546392,
+      "token_counts": {
+        "input": 115630135,
+        "answer": 247384,
+        "reasoning": 2069162,
+        "cacheable_input": 110052237
+      },
+      "cache_hit_rate": 0,
+      "prices_usd_per_million_tokens": {
+        "input": 0.15,
+        "output": 0.6,
+        "cache_hit": 0.15,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 165.035896584554
+    },
+    {
+      "rank": 25,
+      "source_model_label": "K-EXAONE 2.0",
+      "source_model_slug": "k-exaone-2-0-0803",
+      "creator": "LG AI Research",
+      "release_date": "2026-08-12",
+      "score_fraction": 0.115463917525773,
+      "token_counts": {
+        "input": 162173146,
+        "answer": 314978,
+        "reasoning": 1206371,
+        "cacheable_input": 152679261
+      },
+      "cache_hit_rate": null,
+      "prices_usd_per_million_tokens": {
+        "input": null,
+        "output": null,
+        "cache_hit": null,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": null
+    },
+    {
+      "rank": 26,
+      "source_model_label": "Nemotron 3 Super",
+      "source_model_slug": "nvidia-nemotron-3-super-120b-a12b",
+      "creator": "NVIDIA",
+      "release_date": "2026-03-11",
+      "score_fraction": 0.103092783505155,
+      "token_counts": {
+        "input": 187750811,
+        "answer": 525738,
+        "reasoning": 1592455,
+        "cacheable_input": 177622346
+      },
+      "cache_hit_rate": 0,
+      "prices_usd_per_million_tokens": {
+        "input": 0.2,
+        "output": 0.8,
+        "cache_hit": null,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 147.796389562734
+    },
+    {
+      "rank": 27,
+      "source_model_label": "Claude 4.5 Haiku",
+      "source_model_slug": "claude-4-5-haiku-reasoning",
+      "creator": "Anthropic",
+      "release_date": "2025-10-15",
+      "score_fraction": 0.0927835051546392,
+      "token_counts": {
+        "input": 56922656,
+        "answer": 317057,
+        "reasoning": 463855,
+        "cacheable_input": 52717342
+      },
+      "cache_hit_rate": 0.937635119668337,
+      "prices_usd_per_million_tokens": {
+        "input": 1,
+        "output": 5,
+        "cache_hit": 0.1,
+        "cache_write": 1.25
+      },
+      "median_output_tokens_per_second": 114.73263977884
+    },
+    {
+      "rank": 28,
+      "source_model_label": "Nemotron 3.5 Lightning",
+      "source_model_slug": "nemotron-3-5-lightning",
+      "creator": "NVIDIA",
+      "release_date": "2026-08-11",
+      "score_fraction": 0.088659793814433,
+      "token_counts": {
+        "input": 54100469,
+        "answer": 341966,
+        "reasoning": 1058308,
+        "cacheable_input": 50601078
+      },
+      "cache_hit_rate": 0.4,
+      "prices_usd_per_million_tokens": {
+        "input": 0.07,
+        "output": 0.22,
+        "cache_hit": 0.05,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 353.413860218557
+    },
+    {
+      "rank": 29,
+      "source_model_label": "Command A+",
+      "source_model_slug": "command-a-plus",
+      "creator": "Cohere",
+      "release_date": "2026-05-20",
+      "score_fraction": 0.0597938144329897,
+      "token_counts": {
+        "input": 60358042,
+        "answer": 268880,
+        "reasoning": 267902,
+        "cacheable_input": 57031297
+      },
+      "cache_hit_rate": 0,
+      "prices_usd_per_million_tokens": {
+        "input": 0,
+        "output": 0,
+        "cache_hit": null,
+        "cache_write": null
+      },
+      "median_output_tokens_per_second": 220.418318686183
+    }
+  ]
+}
+
