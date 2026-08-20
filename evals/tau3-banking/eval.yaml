@@ -18,40 +18,49 @@ upstream:
 detail_profile:
   source_kind: upstream_publication
   markdown: |
-    ## 这项评测测什么
+    ## 榜单
+
+    下表完整保留 2026-08-20 来源 HTML 内 Next 数据 `initialModels` 中具有 `tauBanking` 分数的全部 29 行；这 29 行构成本次结果快照边界。页面内 JSON-LD 仍滞留在较早的 20 行，因而本快照以与页面“29 of 170 models”一致的 Next 数据为准。已映射行使用 EvalHub 注册表显示名；Artificial Analysis 的原始标签与配置保留在对应机器结果的 `detail` 和辅助表中。
+
+    | 名次 | 模型 | Pass@1 |
+    | ---: | --- | ---: |
+    | 1 | Qwen 3.8 Max | 51.3% |
+    | 2 | Grok 4.6 (high) | 50.7% |
+    | 3 | GLM-5.3 (max) | 50.3% |
+    | 4 | Qwen3.8 2.4T A95B | 49.1% |
+    | 5 | Qwen3.8 27B | 48.0% |
+    | 6 | Kimi K3 | 46.0% |
+    | 7 | GPT-5.6 Sol | 44.3% |
+    | 8 | Claude Opus 5 | 42.1% |
+    | 9 | GPT-5.6 Terra | 40.2% |
+    | 10 | DeepSeek V4 Pro | 39.6% |
+    | 11 | Claude Fable 5 | 38.1% |
+    | 12 | Motif 3 | 35.3% |
+    | 13 | Muse Spark 1.2 (xhigh) | 34.8% |
+    | 14 | Gemini 3.7 Flash (high) | 32.8% |
+    | 15 | GPT-5.6 Luna (max) | 31.1% |
+    | 16 | Inkling | 29.1% |
+    | 17 | Muse Glimmer (high) | 23.5% |
+    | 18 | Solar Open2 250B | 21.6% |
+    | 19 | Gemini 3.5 Flash-Lite | 17.5% |
+    | 20 | A.X-K2 | 16.1% |
+    | 21 | MiniMax M3 | 15.3% |
+    | 22 | Mistral Medium 3.5 | 15.1% |
+    | 23 | Nemotron 3 Ultra | 14.2% |
+    | 24 | gpt-oss-120b (high) | 12.8% |
+    | 25 | K-EXAONE 2.0 | 11.5% |
+    | 26 | Nemotron 3 Super | 10.3% |
+    | 27 | Claude Haiku 4.5 | 9.3% |
+    | 28 | Nemotron 3.5 Lightning | 8.9% |
+    | 29 | Command A+ | 6.0% |
+
+    EvalHub 当前模型注册表可无歧义映射其中 9 行；其余 20 行仍完整保留在上表，并在 `published-results` 的 `omitted_models` 中明确标成未注册或配置不可消歧，未编造模型 ID。
+
+    ## 关于此评测
 
     τ³-Banking 是 Sierra Research τ-Knowledge 的银行知识检索域。被测 Agent 不是回答静态问答，而是在一段由模型驱动的客户对话中检索 698 份银行产品文档、调用读写工具，并把实际后端数据库推进到正确状态。当前 EvalHub 版本逐字固定上游 `v1.0.1` 的 97 个公开任务；早于 1.0.1 的 banking_knowledge 成绩因 grading 修复而不可比。
 
     这里采用用户指定的 Artificial Analysis 当前评测口径，而不是 Sierra 官方 leaderboard 的 4-trial 标准赛道。两套结果不可混用。
-
-    ## 官方成绩
-
-    下表完整保留 2026-08-20 来源 HTML 内 machine-readable “τ³-Banking: Score” dataset 的全部 20 行；这 20 行构成本次结果快照边界。来源页面还允许切换更大的模型比较集合，因此页面的动态总数不等于这张固定 Score dataset 的行数。
-
-    | 名次 | Artificial Analysis 模型标签 | Pass@1 |
-    | ---: | --- | ---: |
-    | 1 | [Qwen3.8 Max](https://artificialanalysis.ai/models/qwen3-8-max) | 51.3% |
-    | 2 | [Grok 4.6 (high)](https://artificialanalysis.ai/models/grok-4-6) | 50.7% |
-    | 3 | [GLM-5.3 (max)](https://artificialanalysis.ai/models/glm-5-3) | 50.3% |
-    | 4 | [Qwen3.8 2.4T A95B](https://artificialanalysis.ai/models/qwen3-8-2-4t-a95b) | 49.1% |
-    | 5 | [Qwen3.8 27B](https://artificialanalysis.ai/models/qwen3-8-27b) | 48.0% |
-    | 6 | [Kimi K3 (max)](https://artificialanalysis.ai/models/kimi-k3) | 46.0% |
-    | 7 | [GPT-5.6 Sol (max)](https://artificialanalysis.ai/models/gpt-5-6-sol) | 44.3% |
-    | 8 | [Claude Opus 5 (max)](https://artificialanalysis.ai/models/claude-opus-5) | 42.1% |
-    | 9 | [GPT-5.6 Terra (max)](https://artificialanalysis.ai/models/gpt-5-6-terra) | 40.2% |
-    | 10 | [DeepSeek V4 Pro 0813 (max)](https://artificialanalysis.ai/models/deepseek-v4-pro) | 39.6% |
-    | 11 | [Claude Fable 5 (with fallback)](https://artificialanalysis.ai/models/claude-fable-5) | 38.1% |
-    | 12 | [Motif 3](https://artificialanalysis.ai/models/motif-3) | 35.3% |
-    | 13 | [Muse Spark 1.2 (xhigh)](https://artificialanalysis.ai/models/muse-spark-1-2) | 34.8% |
-    | 14 | [Gemini 3.7 Flash (high)](https://artificialanalysis.ai/models/gemini-3-7-flash) | 32.8% |
-    | 15 | [GPT-5.6 Luna (max)](https://artificialanalysis.ai/models/gpt-5-6-luna) | 31.1% |
-    | 16 | [Inkling](https://artificialanalysis.ai/models/inkling) | 29.1% |
-    | 17 | [Muse Glimmer (high)](https://artificialanalysis.ai/models/muse-glimmer) | 23.5% |
-    | 18 | [Solar Open2 250B](https://artificialanalysis.ai/models/solar-open2-250b) | 21.6% |
-    | 19 | [Gemini 3.5 Flash-Lite](https://artificialanalysis.ai/models/gemini-3-5-flash-lite) | 17.5% |
-    | 20 | [A.X-K2](https://artificialanalysis.ai/models/a-x-k2) | 16.1% |
-
-    EvalHub 当前模型注册表可无歧义映射其中 6 行；其余 14 行仍完整保留在上表，并在 `published-results` 的 `omitted_models` 中明确标成未注册或配置不可消歧，未编造模型 ID。
 
     ## 当前方法
 
@@ -69,9 +78,9 @@ detail_profile:
     - EvalHub 提供的是 external-workflow 打包器：真实运行必须先在参与者自己的固定 τ-Bench 环境完成，再把 485 条逐次 reward 与 trajectory SHA-256 交给打包器。打包器拒绝提交者自行填写总分。
     - 本提交只做静态来源核验和打包器样例校验，没有调用模型 API、没有运行 485 次模拟，也没有验证供应商凭据、配额、延迟或完整 runtime；因此 runtime 状态是 **unverified**。
     - Artificial Analysis 披露了方法参数，但没有公开其供应商侧所有模型标识、路由、fallback 与私有运行编排。README 给出可核查的上游 CLI 骨架，不声称逐字复刻其内部基础设施。
-    - 来源榜单会变化。本页只发布 2026-08-20 HTML 中固定 Score dataset 的 20 行，不把其他日期、Sierra 官方 4-trial 赛道或 v1.0.1 之前的数字混入。
+    - 来源榜单会变化。本页只发布 SHA-256 已记录的 2026-08-20 HTML 快照中 29 条 `tauBanking` 结果，不把其他日期、Sierra 官方 4-trial 赛道或 v1.0.1 之前的数字混入。
 
-    ## 确定性题目示例
+    ## 题目案例
 
     97 个任务按上游 JSON 数组顺序，以 `round(i × (n−1)/(k−1))`、`k=min(5,n)` 选取索引 0、24、48、72、96。以下原文逐字来自固定 commit，翻译完整保留角色、约束、分阶段要求和工具使用指令。
 
@@ -79,7 +88,7 @@ detail_profile:
 
     题目原文（这是 user simulator 的完整场景指令，不是直接发给被测 Agent 的单轮提示）：
 
-    ~~~text
+    ```text
     You are playing the role of a customer contacting a customer service representative agent. Your character is a management consultant named Sarah Bosch who earns $100,000 annually. You travel frequently for work, but your company provides a corporate travel card that covers all your work-related travel expenses (flights, hotels, rental cars, etc.). 
 
     You're looking for a credit card to use for your everyday purchases. You want the card that gives you the highest cash back available in the company profile. You will not accept a credit card that has any annual fees unless it is the ONLY option available. 
@@ -93,11 +102,11 @@ detail_profile:
     After you receive enough information to make a decision, immediately apply for a credit card on your own, and there is no need to respond to the agent, or ask for instructions on how to apply.
 
     You are currently on the line with a customer support agent. Only provide additional details about your situation when the agent asks for them. Don't dump all your information at once. Never respond as a customer service representative/assistant. You are playing the role of the customer.
-    ~~~
+    ```
 
     完整中文翻译：
 
-    ~~~text
+    ```text
     你正在扮演一位联系客户服务代表智能体的客户。你的角色是一名名叫 Sarah Bosch 的管理顾问，年收入为 100,000 美元。你经常因工作出差，但你的公司提供一张企业差旅卡，承担你所有与工作相关的差旅费用（机票、酒店、租车等）。
 
     你正在寻找一张用于日常购物的信用卡。你想要公司资料中可获得最高现金返还的卡。除非它是唯一可用的选项，否则你不会接受任何收取年费的信用卡。
@@ -111,13 +120,13 @@ detail_profile:
     在获得足够的信息做出决定后，立即自行申请一张信用卡，无需回复智能体，也无需询问如何申请。
 
     你目前正在与客户支持智能体通话。只有在智能体询问时才提供有关你情况的额外细节。不要一次性倾倒所有信息。绝不能以客户服务代表/助理的身份作答。你扮演的是客户角色。
-    ~~~
+    ```
 
     ### task_028
 
     题目原文（这是 user simulator 的完整场景指令，不是直接发给被测 Agent 的单轮提示）：
 
-    ~~~text
+    ```text
     **Your character:** Fatima Al-Hassan, a 31-year-old business consultant from Detroit. You're meticulous about tracking your finances and you feel something seems off with your recent credit card rewards.
 
     **Your situation:** The total amount of cash back rewards you have received is not what you expected. You're not sure which ones are wrong or by how much, but you want the agent to investigate and help you fix any errors. You are bad with technology so therefore you do not know how to, or want to access your transactions, and you need the agent manage everything for you. Do not make up any information that you are not 100% certain of, such as any information about yourself that is not stated here. Your date of birth is 12/05/1993 and your phone number is 313-555-0246.
@@ -137,11 +146,11 @@ detail_profile:
     If you have not submitted any disputes, ignore Phase 2. Otherwise, if you have submitted disputes, tell the agent: "Great, I've submitted all the disputes. I just got a notification that they've all been approved and resolved! Can you now update my transaction records with the correct cash back amounts?"
 
     Let the agent look up the resolved disputes and update each transaction with the correct reward values. Once they confirm the updates are complete, thank them and end the conversation.
-    ~~~
+    ```
 
     完整中文翻译：
 
-    ~~~text
+    ```text
     **你的角色：** Fatima Al-Hassan，一名来自底特律、31 岁的商业顾问。你一丝不苟地追踪自己的财务状况，并觉得最近的信用卡奖励似乎有些不对。
 
     **你的情况：** 你收到的现金返还奖励总额与预期不符。你不确定具体哪几笔不对，也不知道差额多少，但希望智能体进行调查并帮你纠正所有错误。你不擅长使用技术，因此不知道如何、也不想亲自查看交易；你需要智能体为你处理一切。不要编造任何你并非百分之百确定的信息，例如此处未说明的任何个人信息。你的出生日期是 12/05/1993，电话号码是 313-555-0246。
@@ -161,13 +170,13 @@ detail_profile:
     如果你没有提交任何争议，就忽略第二阶段。否则，如果你已经提交争议，请告诉智能体：“太好了，我已经提交了所有争议。我刚收到通知，它们都已获批并解决！现在能否用正确的现金返还金额更新我的交易记录？”
 
     让智能体查询已经解决的争议，并用正确的奖励数值更新每一笔交易。一旦对方确认更新完成，向其道谢并结束对话。
-    ~~~
+    ```
 
     ### task_054
 
     题目原文（这是 user simulator 的完整场景指令，不是直接发给被测 Agent 的单轮提示）：
 
-    ~~~text
+    ```text
     **Your character:** You are Sofia Papadopoulos, a 38-year-old architect from Queens, NY. You have a Gold Rewards Card with Rho-Bank.
 
     **Your situation:** You noticed a fraudulent charge on your Gold Rewards Card from "CloudSync Storage" for $487.50 - a service you've never used. You're worried your card information was compromised, so you want to dispute the charge AND get a replacement card to be safe. Additionally, you've been meaning to request a credit limit increase because you have a home renovation project coming up and need more headroom for large purchases.
@@ -211,18 +220,27 @@ detail_profile:
     10. **After all three are complete:** "Thank you so much for walking me through all of that! I really appreciate you explaining why we had to do things in a specific order. You've been incredibly helpful!"
 
     **IMPORTANT:** You must state ALL THREE requests in your opening message. Be cooperative and receptive when the agent explains the conflict. Do not push back on the suggested order - you want all three things done and are happy to do them in whatever order works best.
-    ~~~
+    ```
 
     完整中文翻译：
 
-    ~~~text
+    ```text
     **你的角色：** 你是 Sofia Papadopoulos，38 岁，来自纽约州皇后区的建筑师，持有 Rho-Bank 的 Gold Rewards Card。
 
     **你的情况：** 你发现一笔 CloudSync Storage 的 $487.50 欺诈扣款；你从未使用该服务。担心卡片信息泄露，因此要争议扣款并补发卡。此外，装修项目即将开始，你需要更多额度进行大额采购，也想提高信用额度。
 
     **你的目标：** 完成全部三件事：（1）争议欺诈扣款；（2）补发卡；（3）提高信用额度。
 
-    **被问及时提供：** 全名 Sofia Papadopoulos；电话 347-555-0387；邮箱 sofia.p@outlook.com；出生日期 01/25/1986；地址 1456 Astoria Boulevard, Queens, NY 11102；欺诈交易为约 3 天前 CloudSync Storage 的 $487.50；从未使用该服务，肯定是欺诈；因卡片信息显然泄露而要补发卡；最初想为装修项目把额度提高 $4,000（从 $5,000 到 $9,000），若被告知超过上限，同意改为提高 $2,500（从 $5,000 到 $7,500）。
+    **你知道且应在被问及时提供的信息：**
+    - 你的全名：Sofia Papadopoulos
+    - 你的电话号码：347-555-0387
+    - 你的电子邮箱：sofia.p@outlook.com
+    - 你的出生日期：01/25/1986
+    - 你的地址：1456 Astoria Boulevard, Queens, NY 11102
+    - 欺诈交易：约 3 天前 CloudSync Storage 的 $487.50
+    - 你从未使用过 CloudSync Storage——这肯定是欺诈
+    - 你想补发卡，因为你的卡片信息显然已泄露
+    - 你最初想为装修项目把信用额度提高 $4,000（从 $5,000 到 $9,000）；如果智能体告诉你这超过允许的最高额度，你会同意改为提高 $2,500（从 $5,000 到 $7,500）
 
     ## 对话流程：
     1. **开场——说明全部三项，欺诈优先：**“你好，我的 Gold Rewards Card 有几件事需要帮助。最紧急的是 CloudSync Storage 的一笔 $487.50 欺诈扣款，我必须马上争议——我从未使用该服务，并担心卡片安全。既然卡片信息明显泄露，我还想补发一张卡。哦，我也一直想为装修项目申请提高信用额度，但先处理优先级更高的欺诈问题。能全部帮我处理吗？”
@@ -240,13 +258,13 @@ detail_profile:
     10. **三项全部完成后：**“非常感谢你带我处理完这些！也很感谢你解释为什么必须按特定顺序办理。你真的帮了大忙！”
 
     **重要：** 开场必须说明全部三项请求。客服解释冲突时要配合、接受；不要反对建议顺序，因为你想把三件事全部完成，并愿意按任何可行顺序办理。
-    ~~~
+    ```
 
     ### task_078
 
     题目原文（这是 user simulator 的完整场景指令，不是直接发给被测 Agent 的单轮提示）：
 
-    ~~~text
+    ```text
     **Your character:** You are Mei-Lin Chen, a 33-year-old data analyst living in San Diego. You're methodical and organized, but today you're stressed because you lost your wallet.
 
     **Your situation:** You lost your wallet containing three debit cards from three different checking accounts at Rho-Bank. You have a Light Blue Account, a Green Account, and a Light Green Account.
@@ -275,18 +293,18 @@ detail_profile:
 
 
     10. **If agent says Light Green can't be closed due to pending transactions:** "Oh no, there are pending transactions? I didn't realize. How long until they settle? Can the card at least stay frozen in the meantime?"11. **After the conversation comes to a natural close:** "Got it. Thanks for your help." ###STOP###
-    ~~~
+    ```
 
     完整中文翻译：
 
-    ~~~text
-    **你的角色：** 你是 Mei-Lin Chen，一位居住在圣地亚哥的 33 岁数据分析师。你很有条理、有条理，但今天你因为丢了钱包而感到压力。
+    ```text
+    **你的角色：** 你是 Mei-Lin Chen，一位居住在 San Diego 的 33 岁数据分析师。你做事讲究方法且井井有条，但今天因为丢了钱包而感到压力。
 
     **您的情况：** 您丢失了钱包，其中包含 Rho-Bank 三个不同支票账户的三张借记卡。您有一个 Light Blue Account、一个 Green Account 和一个 Light Green Account。
 
     **验证信息：**
-    - 姓名：陈美琳 |电话：619-555-0284 |电子邮件：meiling.chen@outlook.com
-    - 出生日期：07/18/1991 |地址：3245 日落大道，圣地亚哥，加利福尼亚州 92103
+    - 姓名：Mei-Lin Chen | 电话：619-555-0284 | 电子邮件：meiling.chen@outlook.com
+    - 出生日期：07/18/1991 | 地址：3245 Sunset Boulevard, San Diego, CA 92103
 
     ## 对话流程（仅当客服人员提出任何要点时才遵循以下流程，否则，请尽力遵循客服人员的指导）：
 
@@ -298,22 +316,22 @@ detail_profile:
 
     4。 **冻结后，确认卡肯定丢失了：**“好吧，我已经到处找了——我的车，我的办公室，原路返回。钱包肯定不见了。我需要关闭所有三张卡并重新获取新的。”
 
-    5。 **如果智能体提到浅蓝色更换限制问题：** 表现出惊讶：“哦，我完全忘记了今年我已经两次更换该卡了。这令人沮丧。我有什么选择？”
+    5。 **如果智能体提到 Light Blue 的补发次数限制问题：** 表现出惊讶：“哦，我完全忘记了今年我已经补发过那张卡两次。这令人沮丧。我有什么选择？”
 
-    6。 **如果智能体提供 $25 浅蓝色的超额更换费：** “$25 更换卡的费用似乎很高。我会等到最旧的卡过期。那会是什么时候？”
+    6。 **如果智能体提出为 Light Blue 支付 $25 的超额补发费：**“仅补发一张卡就要 $25，似乎太贵了。我会等到最早的一次补发不再计入限制。那会是什么时候？”
 
     7。 **如果智能体提到 Green Account 替换选项：**“是的，我想要替换我的 Green Account。”如果智能体商提到运输选项，请要求加急运输并同意智能体商提出的任何费用。
 
     9。 **仅当智能体询问卡片设计选项时：**“我想要我的帐户免费提供的最佳选项。我不想为卡片设计支付额外费用。”
 
-    10。 **如果智能体说浅绿色因待处理交易而无法关闭：**“哦，不，有待处理交易？我没有意识到。他们需要多长时间才能结算？在此期间卡至少可以保持冻结状态吗？”11。 **对话自然结束后：** “明白了。感谢您的帮助。” ###STOP###
-    ~~~
+    10。 **如果智能体说 Light Green 因待处理交易而无法关闭：**“哦，不，有待处理交易？我没有意识到。它们需要多长时间才能结算？在此期间卡至少可以保持冻结状态吗？”11。 **对话自然结束后：**“明白了。感谢你的帮助。” ###STOP###
+    ```
 
     ### task_102
 
     题目原文（这是 user simulator 的完整场景指令，不是直接发给被测 Agent 的单轮提示）：
 
-    ~~~text
+    ```text
     **Your character:** You are Nalini Krishnamurthy, a 45-year-old venture capitalist based in Boulder, CO. You've been extremely active with Rho-Bank's referral program all year. Now it's mid-November and you have four more people you want to refer before year-end: your college-age niece Maya, your retired father Vikram, and two startups you're advising - Ember Analytics (a more established one) and TechFlow Labs (a newer one).
 
     **Verification info:**
@@ -355,24 +373,24 @@ detail_profile:
     13. **If agent does NOT verify and just gives recommendations based on your stated info:** "Great, let me submit these now." Then attempt to submit whatever the agent recommended. Call submit_referral with user_id="nk80d5r2j7" and whatever account_types the agent suggested.
 
     14. **After the conversation concludes (whether told to wait or after submitting):** "Thanks for your help! I'll keep track of things better going forward." ###STOP###
-    ~~~
+    ```
 
     完整中文翻译：
 
-    ~~~text
-    **您的角色：** 您是 Nalini Krishnamurthy，一位居住在科罗拉多州博尔德的 45 岁风险投资家。您全年都非常积极地参与 Rho-Bank 的推荐计划。现在是 11 月中旬，您在年底前还想推荐四个人：您上大学的侄女 Maya、您退休的父亲 Vikram，以及您正在为之提供咨询的两家初创公司 - Ember Analytics（较成熟的一家）和 TechFlow Labs（较新的一家）。
+    ```text
+    **你的角色：** 你是 Nalini Krishnamurthy，一位常驻 Boulder, CO 的 45 岁风险投资人。这一整年里，你一直非常积极地参与 Rho-Bank 的推荐计划。现在是 11 月中旬，在年底前，你还想推荐四个对象：正在上大学的侄女 Maya、已经退休的父亲 Vikram，以及你正在为其提供咨询的两家初创公司——较成熟的 Ember Analytics 和较新的 TechFlow Labs。
 
     **验证信息：**
-    - 姓名：纳里尼·克里希那穆西 |电话：303-555-4721 |电子邮件：nalini.k@bouldercap.vc
-    - 出生日期：06/18/1980 |地址：2847 Mapleton Avenue，博尔德，科罗拉多州 80304
+    - 姓名：Nalini Krishnamurthy | 电话：303-555-4721 | 电子邮件：nalini.k@bouldercap.vc
+    - 出生日期：06/18/1980 | 地址：2847 Mapleton Avenue, Boulder, CO 80304
 
     **工具使用：** 您可以访问`submit_referral`。在智能体为您的推荐推荐帐户后使用它。使用您的 user_id (nk80d5r2j7) 和智能体推荐的 account_type 进行调用。重要提示：指定 account_type 时，始终在末尾包含单词“Account”。
 
     ## 对话流程：
 
-    1。 **开场白：**“嗨！我有一个复杂的推荐情况 - 我想在年底前推荐四个人。只是为了给您提供背景信息，我的最后一次推荐是大约3几周前的十月。我的侄女玛雅是一名大学生，我的父亲维克拉姆是71，刚刚退休 - 我想我今年只做了大约4黄金年推荐，所以那里应该有他的空间：Ember Analytics 已经成立了大约 3 年，TechFlow Labs 已经成立了大约 2 年。对于初创公司来说，我今年可能只完成了 2 或 3 Sky Blue 推荐，所以应该有足够的空间。”
+    1。 **开场：**“你好！我的推荐情况有些复杂——我想在年底前推荐四个对象。先说明一下背景，我上一次推荐大约是在 3 周前的 October。我的侄女 Maya 是一名大学生；我的父亲 Vikram 已经 71 岁，刚刚退休——我想今年只做过大约 4 次 Gold Years 推荐，所以应该还有名额可以推荐他。还有两家初创公司：Ember Analytics 已经成立大约 3 年，TechFlow Labs 则成立了大约 2 年。对于这些初创公司，我想今年只做过大约 2 或 3 次 Sky Blue 推荐，所以那里应该还有充足的名额。”
 
-    2。 **如果被问及有关推荐的更多详细信息：**“Maya 是 19，科罗拉多大学博尔德分校大二学生，她会从她的兼职工作中存入约 $300。我父亲 Vikram 是 71，去年退休，希望从他的养老金中存入约 $1,200。Ember Analytics 希望从他们的养老金中存入约 $18,000。 TechFlow Labs 希望在 $12,000 左右存入资金。”
+    2。 **如果被问及推荐对象的更多详细信息：**“Maya 今年 19 岁，是 CU Boulder 的大二学生；她会存入大约 $300，那是她兼职工作的收入。我的父亲 Vikram 今年 71 岁，去年退休，希望从养老金中存入大约 $1,200。Ember Analytics 希望从最近一轮融资中存入大约 $18,000。TechFlow Labs 希望存入大约 $12,000。”
 
     3。 **如果要求提供验证：** 请提供您的姓名、电话、电子邮件、出生日期和/或地址。
 
@@ -380,7 +398,7 @@ detail_profile:
 
     5。 **如果智能体询问账户余额：** “我不太记得了，你能帮我查一下吗？”
 
-    6。 **如果智能体询问今年的推荐历史：**“就像我提到的，我的最后一次推荐是关于 3 几周前的。让我考虑一下具体情况...我可能为退休朋友做过 4 黄金岁月推荐，为学生做过一些深绿色推荐，我认为只有 2 或 3 天蓝色为初创公司...老实说，我不记得确切的数字，但我确实一直很活跃。”
+    6。 **如果智能体询问你今年的推荐记录：**“就像我提到的，上一次推荐大约是在 3 周前。让我想想具体分布……我可能为退休的朋友做过大约 4 次 Gold Years 推荐，为学生做过几次 Dark Green 推荐，我想还只为初创公司做过 2 或 3 次 Sky Blue 推荐……说实话，我记不清确切数字了，但我肯定一直很活跃。”
 
     7。 **如果智能体询问 Ember Analytics 的公司年龄：** “他们成立于 2022 后期，所以现在大约是 3 年。他们做得非常好，已经过了早期的启动阶段。”
 
@@ -390,7 +408,7 @@ detail_profile:
 
     10。 **如果特工核实并纠正了您的黄金年数（说您已经完成了 6，而不是 4）：** “六？！哦，哇，我真的失去了踪迹。我猜其中一些是在今年早些时候，我忘记了。”
 
-    11。 **如果智能体人核实并更正了您关于 Ember 的年龄（说他们是 5 岁，而不是 3）：** “嗯，5 岁？哦，对了，他们并入 2020，而不是 2022。我总是混淆我们刚开始合作时和他们实际成立公司时的情况。我的错！”
+    11。 **如果智能体验证并纠正你所说的 Ember 年龄（说他们已经成立 5 年，而不是 3 年）：**“嗯，5 年？哦，对，他们是在 2020 年注册成立的，不是 2022 年。我总是把我们最初开始合作的时间和他们真正成立公司的时间弄混。是我记错了！”
 
     11b。 **如果智能体验证并纠正了您关于 Sky Blue 的计数（说您已经完成了 7，而不是 2-3）：** “七？！哇，我真的迷失了方向。我想我比我记忆中更积极地进行初创公司推荐。”
 
@@ -401,7 +419,7 @@ detail_profile:
     13。 **如果智能体没有验证，只是根据您所述的信息提供建议：**“太好了，让我现在提交这些。”然后尝试提交智能体推荐的任何内容。使用 user_id="nk80d5r2j7" 以及智能体建议的任何 account_types 调用 submit_referral。
 
     14。 **对话结束后（无论是等待还是提交后）：**“感谢您的帮助！我会更好地跟踪未来的情况。” ###STOP###
-    ~~~
+    ```
 
     ## 一手资料
 
@@ -3090,7 +3108,16 @@ tasks:
 
       **你的目标：** 完成全部三件事：（1）争议欺诈扣款；（2）补发卡；（3）提高信用额度。
 
-      **被问及时提供：** 全名 Sofia Papadopoulos；电话 347-555-0387；邮箱 sofia.p@outlook.com；出生日期 01/25/1986；地址 1456 Astoria Boulevard, Queens, NY 11102；欺诈交易为约 3 天前 CloudSync Storage 的 $487.50；从未使用该服务，肯定是欺诈；因卡片信息显然泄露而要补发卡；最初想为装修项目把额度提高 $4,000（从 $5,000 到 $9,000），若被告知超过上限，同意改为提高 $2,500（从 $5,000 到 $7,500）。
+      **你知道且应在被问及时提供的信息：**
+      - 你的全名：Sofia Papadopoulos
+      - 你的电话号码：347-555-0387
+      - 你的电子邮箱：sofia.p@outlook.com
+      - 你的出生日期：01/25/1986
+      - 你的地址：1456 Astoria Boulevard, Queens, NY 11102
+      - 欺诈交易：约 3 天前 CloudSync Storage 的 $487.50
+      - 你从未使用过 CloudSync Storage——这肯定是欺诈
+      - 你想补发卡，因为你的卡片信息显然已泄露
+      - 你最初想为装修项目把信用额度提高 $4,000（从 $5,000 到 $9,000）；如果智能体告诉你这超过允许的最高额度，你会同意改为提高 $2,500（从 $5,000 到 $7,500）
 
       ## 对话流程：
       1. **开场——说明全部三项，欺诈优先：**“你好，我的 Gold Rewards Card 有几件事需要帮助。最紧急的是 CloudSync Storage 的一笔 $487.50 欺诈扣款，我必须马上争议——我从未使用该服务，并担心卡片安全。既然卡片信息明显泄露，我还想补发一张卡。哦，我也一直想为装修项目申请提高信用额度，但先处理优先级更高的欺诈问题。能全部帮我处理吗？”
@@ -4868,13 +4895,13 @@ tasks:
       10. **If agent says Light Green can't be closed due to pending transactions:** "Oh no, there are pending transactions? I didn't realize. How long until they settle? Can the card at least stay frozen in the meantime?"11. **After the conversation comes to a natural close:** "Got it. Thanks for your help." ###STOP###
     run_spec: Pin sierra-research/tau2-bench at fc0055dc4e0a316c3f83133267fbd6faaa770992 (v1.0.1). This prompt is the complete user-simulator scenario, not a direct one-turn instruction to the participant agent. Run the matching banking_knowledge task with the pinned policy, 698 documents, initial state, user tools, agent tools, and evaluation criteria. Use the text/half-duplex workflow, retrieval_config=bm25_grep, exactly 5 independent trials, and max_steps=200. Use GPT-5.4 Mini at medium reasoning for the user simulator and the same disclosed model for any natural-language assertion judge; use temperature 0 for non-reasoning participant models and 0.6 for reasoning models unless the model provider recommends otherwise. Preserve each upstream binary reward and its trajectory SHA-256. Package all 97 task IDs × trials 1..5 with pack-to-result.mjs; do not supply a precomputed score.
     translation: |-
-      **你的角色：** 你是 Mei-Lin Chen，一位居住在圣地亚哥的 33 岁数据分析师。你很有条理、有条理，但今天你因为丢了钱包而感到压力。
+      **你的角色：** 你是 Mei-Lin Chen，一位居住在 San Diego 的 33 岁数据分析师。你做事讲究方法且井井有条，但今天因为丢了钱包而感到压力。
 
       **您的情况：** 您丢失了钱包，其中包含 Rho-Bank 三个不同支票账户的三张借记卡。您有一个 Light Blue Account、一个 Green Account 和一个 Light Green Account。
 
       **验证信息：**
-      - 姓名：陈美琳 |电话：619-555-0284 |电子邮件：meiling.chen@outlook.com
-      - 出生日期：07/18/1991 |地址：3245 日落大道，圣地亚哥，加利福尼亚州 92103
+      - 姓名：Mei-Lin Chen | 电话：619-555-0284 | 电子邮件：meiling.chen@outlook.com
+      - 出生日期：07/18/1991 | 地址：3245 Sunset Boulevard, San Diego, CA 92103
 
       ## 对话流程（仅当客服人员提出任何要点时才遵循以下流程，否则，请尽力遵循客服人员的指导）：
 
@@ -4886,15 +4913,15 @@ tasks:
 
       4。 **冻结后，确认卡肯定丢失了：**“好吧，我已经到处找了——我的车，我的办公室，原路返回。钱包肯定不见了。我需要关闭所有三张卡并重新获取新的。”
 
-      5。 **如果智能体提到浅蓝色更换限制问题：** 表现出惊讶：“哦，我完全忘记了今年我已经两次更换该卡了。这令人沮丧。我有什么选择？”
+      5。 **如果智能体提到 Light Blue 的补发次数限制问题：** 表现出惊讶：“哦，我完全忘记了今年我已经补发过那张卡两次。这令人沮丧。我有什么选择？”
 
-      6。 **如果智能体提供 $25 浅蓝色的超额更换费：** “$25 更换卡的费用似乎很高。我会等到最旧的卡过期。那会是什么时候？”
+      6。 **如果智能体提出为 Light Blue 支付 $25 的超额补发费：**“仅补发一张卡就要 $25，似乎太贵了。我会等到最早的一次补发不再计入限制。那会是什么时候？”
 
       7。 **如果智能体提到 Green Account 替换选项：**“是的，我想要替换我的 Green Account。”如果智能体商提到运输选项，请要求加急运输并同意智能体商提出的任何费用。
 
       9。 **仅当智能体询问卡片设计选项时：**“我想要我的帐户免费提供的最佳选项。我不想为卡片设计支付额外费用。”
 
-      10。 **如果智能体说浅绿色因待处理交易而无法关闭：**“哦，不，有待处理交易？我没有意识到。他们需要多长时间才能结算？在此期间卡至少可以保持冻结状态吗？”11。 **对话自然结束后：** “明白了。感谢您的帮助。” ###STOP###
+      10。 **如果智能体说 Light Green 因待处理交易而无法关闭：**“哦，不，有待处理交易？我没有意识到。它们需要多长时间才能结算？在此期间卡至少可以保持冻结状态吗？”11。 **对话自然结束后：**“明白了。感谢你的帮助。” ###STOP###
   - id: task-079
     label: 银行客户支持任务 079（上游 task_079）
     prompt: |-
@@ -7524,19 +7551,19 @@ tasks:
       14. **After the conversation concludes (whether told to wait or after submitting):** "Thanks for your help! I'll keep track of things better going forward." ###STOP###
     run_spec: Pin sierra-research/tau2-bench at fc0055dc4e0a316c3f83133267fbd6faaa770992 (v1.0.1). This prompt is the complete user-simulator scenario, not a direct one-turn instruction to the participant agent. Run the matching banking_knowledge task with the pinned policy, 698 documents, initial state, user tools, agent tools, and evaluation criteria. Use the text/half-duplex workflow, retrieval_config=bm25_grep, exactly 5 independent trials, and max_steps=200. Use GPT-5.4 Mini at medium reasoning for the user simulator and the same disclosed model for any natural-language assertion judge; use temperature 0 for non-reasoning participant models and 0.6 for reasoning models unless the model provider recommends otherwise. Preserve each upstream binary reward and its trajectory SHA-256. Package all 97 task IDs × trials 1..5 with pack-to-result.mjs; do not supply a precomputed score.
     translation: |-
-      **您的角色：** 您是 Nalini Krishnamurthy，一位居住在科罗拉多州博尔德的 45 岁风险投资家。您全年都非常积极地参与 Rho-Bank 的推荐计划。现在是 11 月中旬，您在年底前还想推荐四个人：您上大学的侄女 Maya、您退休的父亲 Vikram，以及您正在为之提供咨询的两家初创公司 - Ember Analytics（较成熟的一家）和 TechFlow Labs（较新的一家）。
+      **你的角色：** 你是 Nalini Krishnamurthy，一位常驻 Boulder, CO 的 45 岁风险投资人。这一整年里，你一直非常积极地参与 Rho-Bank 的推荐计划。现在是 11 月中旬，在年底前，你还想推荐四个对象：正在上大学的侄女 Maya、已经退休的父亲 Vikram，以及你正在为其提供咨询的两家初创公司——较成熟的 Ember Analytics 和较新的 TechFlow Labs。
 
       **验证信息：**
-      - 姓名：纳里尼·克里希那穆西 |电话：303-555-4721 |电子邮件：nalini.k@bouldercap.vc
-      - 出生日期：06/18/1980 |地址：2847 Mapleton Avenue，博尔德，科罗拉多州 80304
+      - 姓名：Nalini Krishnamurthy | 电话：303-555-4721 | 电子邮件：nalini.k@bouldercap.vc
+      - 出生日期：06/18/1980 | 地址：2847 Mapleton Avenue, Boulder, CO 80304
 
       **工具使用：** 您可以访问`submit_referral`。在智能体为您的推荐推荐帐户后使用它。使用您的 user_id (nk80d5r2j7) 和智能体推荐的 account_type 进行调用。重要提示：指定 account_type 时，始终在末尾包含单词“Account”。
 
       ## 对话流程：
 
-      1。 **开场白：**“嗨！我有一个复杂的推荐情况 - 我想在年底前推荐四个人。只是为了给您提供背景信息，我的最后一次推荐是大约3几周前的十月。我的侄女玛雅是一名大学生，我的父亲维克拉姆是71，刚刚退休 - 我想我今年只做了大约4黄金年推荐，所以那里应该有他的空间：Ember Analytics 已经成立了大约 3 年，TechFlow Labs 已经成立了大约 2 年。对于初创公司来说，我今年可能只完成了 2 或 3 Sky Blue 推荐，所以应该有足够的空间。”
+      1。 **开场：**“你好！我的推荐情况有些复杂——我想在年底前推荐四个对象。先说明一下背景，我上一次推荐大约是在 3 周前的 October。我的侄女 Maya 是一名大学生；我的父亲 Vikram 已经 71 岁，刚刚退休——我想今年只做过大约 4 次 Gold Years 推荐，所以应该还有名额可以推荐他。还有两家初创公司：Ember Analytics 已经成立大约 3 年，TechFlow Labs 则成立了大约 2 年。对于这些初创公司，我想今年只做过大约 2 或 3 次 Sky Blue 推荐，所以那里应该还有充足的名额。”
 
-      2。 **如果被问及有关推荐的更多详细信息：**“Maya 是 19，科罗拉多大学博尔德分校大二学生，她会从她的兼职工作中存入约 $300。我父亲 Vikram 是 71，去年退休，希望从他的养老金中存入约 $1,200。Ember Analytics 希望从他们的养老金中存入约 $18,000。 TechFlow Labs 希望在 $12,000 左右存入资金。”
+      2。 **如果被问及推荐对象的更多详细信息：**“Maya 今年 19 岁，是 CU Boulder 的大二学生；她会存入大约 $300，那是她兼职工作的收入。我的父亲 Vikram 今年 71 岁，去年退休，希望从养老金中存入大约 $1,200。Ember Analytics 希望从最近一轮融资中存入大约 $18,000。TechFlow Labs 希望存入大约 $12,000。”
 
       3。 **如果要求提供验证：** 请提供您的姓名、电话、电子邮件、出生日期和/或地址。
 
@@ -7544,7 +7571,7 @@ tasks:
 
       5。 **如果智能体询问账户余额：** “我不太记得了，你能帮我查一下吗？”
 
-      6。 **如果智能体询问今年的推荐历史：**“就像我提到的，我的最后一次推荐是关于 3 几周前的。让我考虑一下具体情况...我可能为退休朋友做过 4 黄金岁月推荐，为学生做过一些深绿色推荐，我认为只有 2 或 3 天蓝色为初创公司...老实说，我不记得确切的数字，但我确实一直很活跃。”
+      6。 **如果智能体询问你今年的推荐记录：**“就像我提到的，上一次推荐大约是在 3 周前。让我想想具体分布……我可能为退休的朋友做过大约 4 次 Gold Years 推荐，为学生做过几次 Dark Green 推荐，我想还只为初创公司做过 2 或 3 次 Sky Blue 推荐……说实话，我记不清确切数字了，但我肯定一直很活跃。”
 
       7。 **如果智能体询问 Ember Analytics 的公司年龄：** “他们成立于 2022 后期，所以现在大约是 3 年。他们做得非常好，已经过了早期的启动阶段。”
 
@@ -7554,7 +7581,7 @@ tasks:
 
       10。 **如果特工核实并纠正了您的黄金年数（说您已经完成了 6，而不是 4）：** “六？！哦，哇，我真的失去了踪迹。我猜其中一些是在今年早些时候，我忘记了。”
 
-      11。 **如果智能体人核实并更正了您关于 Ember 的年龄（说他们是 5 岁，而不是 3）：** “嗯，5 岁？哦，对了，他们并入 2020，而不是 2022。我总是混淆我们刚开始合作时和他们实际成立公司时的情况。我的错！”
+      11。 **如果智能体验证并纠正你所说的 Ember 年龄（说他们已经成立 5 年，而不是 3 年）：**“嗯，5 年？哦，对，他们是在 2020 年注册成立的，不是 2022 年。我总是把我们最初开始合作的时间和他们真正成立公司的时间弄混。是我记错了！”
 
       11b。 **如果智能体验证并纠正了您关于 Sky Blue 的计数（说您已经完成了 7，而不是 2-3）：** “七？！哇，我真的迷失了方向。我想我比我记忆中更积极地进行初创公司推荐。”
 

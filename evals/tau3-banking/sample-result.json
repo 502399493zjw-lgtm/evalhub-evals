@@ -2,7 +2,7 @@
   "eval_id": "tau3-banking",
   "submission": {
     "kind": "run",
-    "runner_version": "tau3-banking-packager@1.0.0",
+    "runner_version": "tau3-banking-packager@1.0.1",
     "run_date": "2026-08-20"
   },
   "results": [

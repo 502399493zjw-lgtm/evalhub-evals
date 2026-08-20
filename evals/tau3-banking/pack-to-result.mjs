@@ -6,6 +6,8 @@ const EXPECTED_COMMIT = "fc0055dc4e0a316c3f83133267fbd6faaa770992";
 const TASK_IDS = ["task-001","task-002","task-003","task-004","task-005","task-006","task-007","task-008","task-010","task-012","task-014","task-015","task-016","task-017","task-018","task-019","task-020","task-021","task-022","task-023","task-024","task-025","task-026","task-027","task-028","task-029","task-031","task-032","task-033","task-034","task-035","task-036","task-037","task-038","task-039","task-040","task-041","task-043","task-044","task-045","task-046","task-047","task-048","task-049","task-050","task-051","task-052","task-053","task-054","task-055","task-056","task-057","task-058","task-059","task-060","task-061","task-062","task-063","task-064","task-065","task-066","task-067","task-068","task-069","task-070","task-071","task-072","task-073","task-074","task-075","task-076","task-077","task-078","task-079","task-080","task-081","task-082","task-083","task-084","task-085","task-086","task-087","task-088","task-089","task-090","task-091","task-092","task-093","task-094","task-095","task-096","task-097","task-098","task-099","task-100","task-101","task-102"];
 const SHA256 = /^[0-9a-f]{64}$/;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+const CONTROL_CHARACTERS = /[\u0000-\u001f\u007f-\u009f]/u;
+const PARTICIPANT_IDENTITY_MAX_LENGTH = 255;
 
 function fail(message) {
   console.error(`tau3-banking packer: ${message}`);
@@ -37,8 +39,17 @@ const participant = object(input.participant, "participant");
 exactKeys(participant, ["model", "harness", "harness_version", "config"], "participant");
 for (const key of ["model", "harness", "harness_version"]) {
   if (typeof participant[key] !== "string" || participant[key].trim() === "") fail(`participant.${key} must be non-empty`);
+  if (participant[key].length > PARTICIPANT_IDENTITY_MAX_LENGTH) fail(`participant.${key} must be at most 255 characters`);
+  if (CONTROL_CHARACTERS.test(participant[key])) fail(`participant.${key} must not contain control characters`);
 }
-if (participant.config !== undefined) object(participant.config, "participant.config");
+if (participant.model.length < 4) fail("participant.model must be at least 4 characters");
+if (participant.model !== participant.model.trim()) fail("participant.model must be already trimmed");
+if (participant.config !== undefined) {
+  object(participant.config, "participant.config");
+  if (Object.hasOwn(participant.config, "adapter") && !["api", "command"].includes(participant.config.adapter)) {
+    fail("participant.config.adapter must be api or command");
+  }
+}
 
 const protocol = object(input.protocol, "protocol");
 exactKeys(protocol, ["upstream_commit", "domain", "retrieval_config", "user_simulator", "user_reasoning", "max_steps", "trials"], "protocol");
@@ -77,7 +88,7 @@ for (const taskId of TASK_IDS) for (let trial = 1; trial <= 5; trial += 1) if (!
 const score = (successes / (TASK_IDS.length * 5)) * 100;
 const output = {
   eval_id: "tau3-banking",
-  submission: { kind: "run", runner_version: "tau3-banking-packager@1.0.0", run_date: input.run_date },
+  submission: { kind: "run", runner_version: "tau3-banking-packager@1.0.1", run_date: input.run_date },
   results: [{
     participant,
     score,
