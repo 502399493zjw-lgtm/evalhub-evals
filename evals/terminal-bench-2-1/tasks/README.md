@@ -44,6 +44,8 @@ harbor upload <job-dir> --public
 
 每题对象包含 `task_id`、固定 `task_digest` 和恰好 5 个 `trials`。每个 trial 包含真实 `trial_id`、`trial_name`、原始 `result.json` 与 `lock.json` 的 SHA-256，以及 `reward`。必须提交全部 89 题和 445 个 trial；不能重复、删题、改分母或加入自报总分。
 
+清单中的 `task_id` 始终使用 Harbor 的原始任务名。唯一包含句点的上游任务 `install-windows-3.11` 在 EvalHub 结果中确定性映射为稳定机器 ID `install-windows-3-11`；题面、digest、trial 名称与上游身份均不改变。
+
 ## reward 与奖励黑客判定
 
 官方 Accuracy 的成功条件是 reward 大于 0。对通过奖励黑客审查的 trial，填写 `result.json.verifier_result.rewards.reward` 的有限数值；超时、执行失败、缺失/None reward，以及被官方审查判定不合格的 trial，必须在清单中显式填 0。打包器保留原 reward 到证据文本，但逐 trial 分只派生为 0 或 100，主分固定为成功数 / 445 × 100。

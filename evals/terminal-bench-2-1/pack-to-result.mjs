@@ -134,6 +134,8 @@ const TASK_DIGEST_ENTRIES = Object.freeze([
   ["write-compressor", "sha256:d9ddd9a8e925e2c566b37b2492cbf995afecefe58874e4043ef78d7f3c892c7e"],
 ]);
 const TASK_IDS = Object.freeze(TASK_DIGEST_ENTRIES.map(([taskId]) => taskId));
+const evalTaskId = (upstreamTaskId) => upstreamTaskId.replaceAll(".", "-");
+const EVAL_TASK_IDS = Object.freeze(TASK_IDS.map(evalTaskId));
 const TASK_DIGESTS = new Map(TASK_DIGEST_ENTRIES);
 const TASK_ID_SET = new Set(TASK_IDS);
 const TOTAL_REWARDS = TASK_IDS.length * REQUIRED_TRIALS;
@@ -861,7 +863,7 @@ function loadEvalDefinition() {
     parsed.data.id !== EVAL_ID ||
     parsed.data.protocol_revision !== PROTOCOL_REVISION ||
     taskIds.length !== TASK_IDS.length ||
-    taskIds.some((taskId, index) => taskId !== TASK_IDS[index])
+    taskIds.some((taskId, index) => taskId !== EVAL_TASK_IDS[index])
   ) {
     fail("eval.yaml 与转换器钉死的评测 ID、协议版本或任务顺序不一致");
   }
@@ -879,7 +881,7 @@ function buildResult({ participant, runDate, harborVersion, harborCommit, harbor
     for (const [index, trial] of sortedTrials.entries()) {
       rewards.push(trial.reward > 0 ? 1 : 0);
       taskResults.push({
-        task_id: taskId,
+        task_id: evalTaskId(taskId),
         score: trial.reward > 0 ? 100 : 0,
         raw:
           `trial=${index + 1} reward=${trial.reward} ` +

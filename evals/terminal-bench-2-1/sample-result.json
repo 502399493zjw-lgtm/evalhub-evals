@@ -945,27 +945,27 @@
           "raw": "trial=5 reward=1 trial_id=b803136b-9f75-421e-882c-1440711fbb5a trial_name=hf-model-inference__4AbbcA4 task_digest=sha256:01370f37e61286f920dfca1e471496640ebcc8d06e1cc48d874c790715dbd4ad result_sha256=73059a8ef452ff6d81661972bdb02997bc137b7a47aa7305665b5b705af9401b lock_sha256=cafdd43f299170d4a50de686799bb6d0c48a1041c75fe3bdf61880d0d8d25309"
         },
         {
-          "task_id": "install-windows-3.11",
+          "task_id": "install-windows-3-11",
           "score": 0,
           "raw": "trial=1 reward=0 trial_id=1d4ffc37-d79b-4317-8207-95ff0db41d5d trial_name=install-windows-3.11__eA4864e task_digest=sha256:1f1361b0012e1ad24054e7cfc039829459e8ab0631b3573d9b93499bf6b3563e result_sha256=9093a5e63fc8876a3894e1e8591d7648a52e40f6329de944327350f63392e7ef lock_sha256=bf21a38cac93432518e2b4de67a6ff59fa898fb5d2342fea9826738bf6ca93ae"
         },
         {
-          "task_id": "install-windows-3.11",
+          "task_id": "install-windows-3-11",
           "score": 0,
           "raw": "trial=2 reward=0 trial_id=6dc98297-f0fb-4d18-8b0b-de35649c349f trial_name=install-windows-3.11__7Ae726A task_digest=sha256:1f1361b0012e1ad24054e7cfc039829459e8ab0631b3573d9b93499bf6b3563e result_sha256=220dba940911a151a109f3a6adf0edafed8d6409c328f08ea56c017353b52885 lock_sha256=bf21a38cac93432518e2b4de67a6ff59fa898fb5d2342fea9826738bf6ca93ae"
         },
         {
-          "task_id": "install-windows-3.11",
+          "task_id": "install-windows-3-11",
           "score": 0,
           "raw": "trial=3 reward=0 trial_id=81dd9499-e925-4ebc-8cc6-b7c5879b1f2b trial_name=install-windows-3.11__f9efA24 task_digest=sha256:1f1361b0012e1ad24054e7cfc039829459e8ab0631b3573d9b93499bf6b3563e result_sha256=341882726458a3d35948455bd2894373b793f545a81786a16bc2547aceaa2347 lock_sha256=bf21a38cac93432518e2b4de67a6ff59fa898fb5d2342fea9826738bf6ca93ae"
         },
         {
-          "task_id": "install-windows-3.11",
+          "task_id": "install-windows-3-11",
           "score": 100,
           "raw": "trial=4 reward=1 trial_id=85712ab9-16f7-44d4-868e-02a571b5647f trial_name=install-windows-3.11__79eAdbf task_digest=sha256:1f1361b0012e1ad24054e7cfc039829459e8ab0631b3573d9b93499bf6b3563e result_sha256=af8e82c7af6209a30cce0fa26aa07b67c580c862db0483ae4597afc6b4b4b57e lock_sha256=bf21a38cac93432518e2b4de67a6ff59fa898fb5d2342fea9826738bf6ca93ae"
         },
         {
-          "task_id": "install-windows-3.11",
+          "task_id": "install-windows-3-11",
           "score": 0,
           "raw": "trial=5 reward=0 trial_id=f777bc23-51fc-46a8-801c-1f4afbf0331b trial_name=install-windows-3.11__6abfA3d task_digest=sha256:1f1361b0012e1ad24054e7cfc039829459e8ab0631b3573d9b93499bf6b3563e result_sha256=11ca524ef148a5d1243b16bd47ec5d4853ea6cce01ff0b80d733d863a735f4ee lock_sha256=bf21a38cac93432518e2b4de67a6ff59fa898fb5d2342fea9826738bf6ca93ae"
         },
