@@ -20,39 +20,39 @@ detail_profile:
   markdown: |-
     ## 榜单
     
-    下表完整保留 2026-08-20 官方页面内 Next 数据中全部 29 个具有 τ³-Banking 分数的参与者，并按未舍入分数排序。分数仅在此处四舍五入到一位小数；可无歧义映射的模型使用 EvalHub 注册表显示名，来源中的推理档位、版本或 fallback 标签保留在提交内的固定来源快照中。
-    
-    | 名次 | 模型 | Pass@1 |
-    | ---: | --- | ---: |
-    | 1 | Qwen 3.8 Max | 51.3% |
-    | 2 | Grok 4.6 (high) | 50.7% |
-    | 3 | GLM-5.3 (max) | 50.3% |
-    | 4 | Qwen3.8 2.4T A95B | 49.1% |
-    | 5 | Qwen3.8 27B | 48.0% |
-    | 6 | Kimi K3 | 46.0% |
-    | 7 | GPT-5.6 Sol | 44.3% |
-    | 8 | Claude Opus 5 | 42.1% |
-    | 9 | GPT-5.6 Terra | 40.2% |
-    | 10 | DeepSeek V4 Pro | 39.6% |
-    | 11 | Claude Fable 5 (with fallback) | 38.1% |
-    | 12 | Motif 3 | 35.3% |
-    | 13 | Muse Spark 1.2 (xhigh) | 34.8% |
-    | 14 | Gemini 3.7 Flash (high) | 32.8% |
-    | 15 | GPT-5.6 Luna (max) | 31.1% |
-    | 16 | Inkling | 29.1% |
-    | 17 | Muse Glimmer (high) | 23.5% |
-    | 18 | Solar Open2 250B | 21.6% |
-    | 19 | Gemini 3.5 Flash-Lite | 17.5% |
-    | 20 | A.X-K2 | 16.1% |
-    | 21 | MiniMax M3 | 15.3% |
-    | 22 | Mistral Medium 3.5 | 15.1% |
-    | 23 | Nemotron 3 Ultra | 14.2% |
-    | 24 | gpt-oss-120b (high) | 12.8% |
-    | 25 | K-EXAONE 2.0 | 11.5% |
-    | 26 | Nemotron 3 Super | 10.3% |
-    | 27 | Claude Haiku 4.5 | 9.3% |
-    | 28 | Nemotron 3.5 Lightning | 8.9% |
-    | 29 | Command A+ | 6.0% |
+    下表完整保留 2026-08-20 官方页面内 Next 数据中全部 29 个具有 τ³-Banking 分数的参与者，并按未舍入分数排序。分数仅在此处四舍五入到一位小数；可无歧义映射的模型使用 EvalHub 注册表显示名，来源中的推理档位、版本或 fallback 标签保留在提交内的固定来源快照中。来源没有区分参与者所用的 Harness 变体，因此按统一的未命名执行方式标为“题目默认 harness”，不把它解释成来源未公开的具体产品。
+
+    | 名次 | 模型 | Pass@1 | Harness |
+    | ---: | --- | ---: | --- |
+    | 1 | Qwen 3.8 Max | 51.3% | 题目默认 harness |
+    | 2 | Grok 4.6 (high) | 50.7% | 题目默认 harness |
+    | 3 | GLM-5.3 (max) | 50.3% | 题目默认 harness |
+    | 4 | Qwen3.8 2.4T A95B | 49.1% | 题目默认 harness |
+    | 5 | Qwen3.8 27B | 48.0% | 题目默认 harness |
+    | 6 | Kimi K3 | 46.0% | 题目默认 harness |
+    | 7 | GPT-5.6 Sol | 44.3% | 题目默认 harness |
+    | 8 | Claude Opus 5 | 42.1% | 题目默认 harness |
+    | 9 | GPT-5.6 Terra | 40.2% | 题目默认 harness |
+    | 10 | DeepSeek V4 Pro | 39.6% | 题目默认 harness |
+    | 11 | Claude Fable 5 (with fallback) | 38.1% | 题目默认 harness |
+    | 12 | Motif 3 | 35.3% | 题目默认 harness |
+    | 13 | Muse Spark 1.2 (xhigh) | 34.8% | 题目默认 harness |
+    | 14 | Gemini 3.7 Flash (high) | 32.8% | 题目默认 harness |
+    | 15 | GPT-5.6 Luna (max) | 31.1% | 题目默认 harness |
+    | 16 | Inkling | 29.1% | 题目默认 harness |
+    | 17 | Muse Glimmer (high) | 23.5% | 题目默认 harness |
+    | 18 | Solar Open2 250B | 21.6% | 题目默认 harness |
+    | 19 | Gemini 3.5 Flash-Lite | 17.5% | 题目默认 harness |
+    | 20 | A.X-K2 | 16.1% | 题目默认 harness |
+    | 21 | MiniMax M3 | 15.3% | 题目默认 harness |
+    | 22 | Mistral Medium 3.5 | 15.1% | 题目默认 harness |
+    | 23 | Nemotron 3 Ultra | 14.2% | 题目默认 harness |
+    | 24 | gpt-oss-120b (high) | 12.8% | 题目默认 harness |
+    | 25 | K-EXAONE 2.0 | 11.5% | 题目默认 harness |
+    | 26 | Nemotron 3 Super | 10.3% | 题目默认 harness |
+    | 27 | Claude Haiku 4.5 | 9.3% | 题目默认 harness |
+    | 28 | Nemotron 3.5 Lightning | 8.9% | 题目默认 harness |
+    | 29 | Command A+ | 6.0% | 题目默认 harness |
     
     其中 8 个参与者可无歧义映射到当前模型注册表。其余 21 个参与者仍在本页和固定来源快照中完整保留；机器结果文件通过 `omitted_models` 说明未映射原因，没有把来源标签编造成 canonical model ID。Claude Fable 5 的来源行明确包含 fallback，因此不按裸模型身份导入。
     
