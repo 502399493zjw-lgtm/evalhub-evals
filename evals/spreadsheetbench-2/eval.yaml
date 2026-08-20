@@ -45,22 +45,24 @@ detail_profile:
   markdown: |-
     ## 榜单
 
-    下表完整转录 2026-08-20 可访问的官方 live JSON 中全部 10 行。页面展示统一四舍五入到一位小数；排序和机器结果保留来源数值精度。`arito` 与 `WPS AI` 是来源公布的产品级参与者，不被编造成底层模型。当前 EvalHub registry 只能无歧义接纳 Claude Opus 4.6 与 Kimi K2.5；其余八行仍在本页和固定快照中完整保留，并由机器结果的 `omitted_models` 明示为未注册。
+    | 名次 | 模型 | Harness | 成绩 |
+    | ---: | --- | --- | ---: |
+    | 1 | arito | arito | 45.5 |
+    | 2 | WPS AI | WPS AI | 42.3 |
+    | 3 | Claude Opus 4.6 | SWE-agent | 34.9 |
+    | 4 | GPT-5.2 | SWE-agent | 26.8 |
+    | 5 | Gemini 3.1 Pro | SWE-agent | 23.7 |
+    | 6 | GLM-5.0 | SWE-agent | 17.1 |
+    | 7 | Deepseek-V3.2 | SWE-agent | 15.6 |
+    | 8 | Kimi K2.5 | SWE-agent | 14.6 |
+    | 9 | Qwen3.5-397B-A17B | SWE-agent | 11.2 |
+    | 10 | MiniMax M2.5 | SWE-agent | 7.2 |
 
-    | 排名 | 模型或产品 | Overall | Scaffold | 日期 |
-    | ---: | --- | ---: | --- | --- |
-    | 1 | arito（未注册产品） | 45.5 | arito | 2026-08-04 |
-    | 2 | WPS AI（未注册产品） | 42.3 | WPS AI | 2026-08-11 |
-    | 3 | Claude Opus 4.6 | 34.9 | SWE-agent | 2026-03-26 |
-    | 4 | GPT-5.2（未注册） | 26.8 | SWE-agent | 2026-03-26 |
-    | 5 | Gemini 3.1 Pro（未注册） | 23.7 | SWE-agent | 2026-03-26 |
-    | 6 | GLM-5.0（未注册） | 17.1 | SWE-agent | 2026-03-26 |
-    | 7 | Deepseek-V3.2（未注册） | 15.6 | SWE-agent | 2026-03-26 |
-    | 8 | Kimi K2.5 | 14.6 | SWE-agent | 2026-03-26 |
-    | 9 | Qwen3.5-397B-A17B（未注册） | 11.2 | SWE-agent | 2026-03-26 |
-    | 10 | MiniMax M2.5（未注册） | 7.2 | SWE-agent | 2026-03-26 |
+    ### 榜单说明
 
-    所有来源行都标记为 `verified: true`。机器结果只导入 `anthropic/claude-opus-4-6` 与 `moonshot/kimi-k2.5`，分别使用 registry 的 canonical display name；没有把 `Gemini 3.1 Pro` 推断成 registry 中更具体的 Preview，也没有用较新的 GLM、DeepSeek、Qwen 或 MiniMax 身份替代旧来源标签。
+    上表完整保留 2026-08-20 官方 live JSON 的 10 条 verified 结果，统一显示一位小数；上游字段名为 Scaffold，本页按榜单组件约定显示为模型名下方的 Harness。arito 与 WPS AI 的发布日期分别为 2026-08-04、2026-08-11，其余八条为 2026-03-26。
+
+    arito 与 WPS AI 是来源公布的产品级参与者，不推断其底层模型。当前 EvalHub registry 只能无歧义接纳 Claude Opus 4.6 与 Kimi K2.5；其余八条仍在本页和固定快照中保留，并由机器结果的 `omitted_models` 明示为未注册。排序和机器结果保留来源数值精度。
 
     ## 官方分项结果
 
