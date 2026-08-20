@@ -20,7 +20,8 @@
   "results": [
     {
       "participant": {
-        "model": "moonshot/kimi-k3"
+        "model": "moonshot/kimi-k3",
+        "harness": "题目默认 harness"
       },
       "score": 22148357,
       "detail": "官方榜单第 1 名，站点展示名「Kimi K3」。",
@@ -57,7 +58,8 @@
     },
     {
       "participant": {
-        "model": "anthropic/claude-fable-5"
+        "model": "anthropic/claude-fable-5",
+        "harness": "题目默认 harness"
       },
       "score": 12630078,
       "detail": "官方榜单第 2 名，站点展示名「Claude Fable 5」。",
@@ -94,7 +96,8 @@
     },
     {
       "participant": {
-        "model": "openai/gpt-5.6-sol"
+        "model": "openai/gpt-5.6-sol",
+        "harness": "题目默认 harness"
       },
       "score": 11313982,
       "detail": "官方榜单第 3 名，站点展示名「GPT-5.6 Sol」。",
@@ -131,7 +134,8 @@
     },
     {
       "participant": {
-        "model": "anthropic/claude-opus-4-8"
+        "model": "anthropic/claude-opus-4-8",
+        "harness": "题目默认 harness"
       },
       "score": 2399209,
       "detail": "官方榜单第 4 名，站点展示名「Claude Opus 4.8」。",
@@ -168,7 +172,8 @@
     },
     {
       "participant": {
-        "model": "alibaba/qwen3.7-max"
+        "model": "alibaba/qwen3.7-max",
+        "harness": "题目默认 harness"
       },
       "score": 365346,
       "detail": "官方榜单第 5 名，站点展示名「Qwen3.7 Max」。",
@@ -205,7 +210,8 @@
     },
     {
       "participant": {
-        "model": "google/gemini-3.5-flash"
+        "model": "google/gemini-3.5-flash",
+        "harness": "题目默认 harness"
       },
       "score": 75126,
       "detail": "官方榜单第 7 名，站点展示名「Gemini 3.5 Flash」；第 6 名 Grok 4.6 因模型注册表暂无 canonical ID 而在 source.omitted_models 中披露。",
@@ -242,7 +248,8 @@
     },
     {
       "participant": {
-        "model": "anthropic/claude-opus-4-7"
+        "model": "anthropic/claude-opus-4-7",
+        "harness": "题目默认 harness"
       },
       "score": 70620,
       "detail": "官方榜单第 8 名，站点展示名「Claude Opus 4.7」。",
@@ -279,7 +286,8 @@
     },
     {
       "participant": {
-        "model": "anthropic/claude-sonnet-5"
+        "model": "anthropic/claude-sonnet-5",
+        "harness": "题目默认 harness"
       },
       "score": 64459,
       "detail": "官方榜单第 9 名，站点展示名「Claude Sonnet 5」。",
@@ -316,7 +324,8 @@
     },
     {
       "participant": {
-        "model": "anthropic/claude-haiku-4-5"
+        "model": "anthropic/claude-haiku-4-5",
+        "harness": "题目默认 harness"
       },
       "score": 59625,
       "detail": "官方榜单第 10 名，站点展示名「Claude Haiku 4.5」。",
@@ -353,7 +362,8 @@
     },
     {
       "participant": {
-        "model": "zai/glm-5.2"
+        "model": "zai/glm-5.2",
+        "harness": "题目默认 harness"
       },
       "score": 54327,
       "detail": "官方榜单第 11 名，站点展示名「GLM 5.2」。",
@@ -390,7 +400,8 @@
     },
     {
       "participant": {
-        "model": "moonshot/kimi-k2.6"
+        "model": "moonshot/kimi-k2.6",
+        "harness": "题目默认 harness"
       },
       "score": 43598,
       "detail": "官方榜单第 12 名，站点展示名「Kimi K2.6」。",
@@ -427,7 +438,8 @@
     },
     {
       "participant": {
-        "model": "anthropic/claude-sonnet-4-6"
+        "model": "anthropic/claude-sonnet-4-6",
+        "harness": "题目默认 harness"
       },
       "score": 38166,
       "detail": "官方榜单第 13 名，站点展示名「Claude Sonnet 4.6」。",
@@ -464,7 +476,8 @@
     },
     {
       "participant": {
-        "model": "openai/gpt-5.5"
+        "model": "openai/gpt-5.5",
+        "harness": "题目默认 harness"
       },
       "score": 33260,
       "detail": "官方榜单第 14 名，站点展示名「GPT-5.5」。",
@@ -501,7 +514,8 @@
     },
     {
       "participant": {
-        "model": "xai/grok-4.5"
+        "model": "xai/grok-4.5",
+        "harness": "题目默认 harness"
       },
       "score": 15909,
       "detail": "官方榜单第 15 名，站点展示名「Grok 4.5」。",
@@ -538,7 +552,8 @@
     },
     {
       "participant": {
-        "model": "zai/glm-5.1"
+        "model": "zai/glm-5.1",
+        "harness": "题目默认 harness"
       },
       "score": 0,
       "detail": "官方榜单第 16 名，站点展示名「GLM 5.1」。",
@@ -575,7 +590,8 @@
     },
     {
       "participant": {
-        "model": "deepseek/deepseek-v4-pro"
+        "model": "deepseek/deepseek-v4-pro",
+        "harness": "题目默认 harness"
       },
       "score": 0,
       "detail": "官方榜单第 17 名，站点展示名「DeepSeek V4 Pro」。",
@@ -612,7 +628,8 @@
     },
     {
       "participant": {
-        "model": "google/gemini-3-flash-preview"
+        "model": "google/gemini-3-flash-preview",
+        "harness": "题目默认 harness"
       },
       "score": 0,
       "detail": "官方榜单第 18 名，站点展示名「Gemini 3 Flash」，对应模型 API 标识 google/gemini-3-flash-preview。",
@@ -649,7 +666,8 @@
     },
     {
       "participant": {
-        "model": "xai/grok-4.20"
+        "model": "xai/grok-4.20",
+        "harness": "题目默认 harness"
       },
       "score": 0,
       "detail": "官方榜单第 19 名，站点展示名「Grok 4.20」。",
