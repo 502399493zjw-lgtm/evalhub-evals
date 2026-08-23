@@ -7,7 +7,7 @@ description: ReplyBench 考察模型替用户起草 IM/邮件/公开 feed 回复
 hook_title: AI 替你写的回复,敢不敢一字不改直接发出去
 upstream:
   repo: Begin5257/replybench
-  commit: d6a740f81e5257d10796fb8757a920375d61510c
+  commit: 18b8576a436dab81bd4b4e39deff8ed73c256c5d
 references:
   homepage: https://okeight-bench.vercel.app
   repository: https://github.com/Begin5257/replybench
@@ -46,7 +46,7 @@ detail_profile:
     | 2 | GPT-5.6 Sol | 79.4 | 58.8 |
     | 3 | Qwen 3.8 Max | 76.5 | 58.8 |
     | 4 | Kimi K3 | 73.5 | 52.9 |
-    | 5 | DeepSeek V4 Pro | 69.1 | 52.9 |
+    | 5 | DeepSeek V4 Pro | 67.6 | 47.1 |
 
     ## 官方分项结果
 
@@ -58,9 +58,9 @@ detail_profile:
     | GPT-5.6 Sol | 100.0 | 100.0 | 75.0 | 50.0 | 50.0 | 100.0 | 100.0 | 100.0 | 0.0 | 100.0 | 100.0 | 100.0 | 75.0 | 100.0 | 75.0 | 25.0 | 100.0 |
     | Qwen 3.8 Max | 0.0 | 100.0 | 100.0 | 75.0 | 75.0 | 100.0 | 100.0 | 50.0 | 0.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 25.0 | 75.0 | 100.0 |
     | Kimi K3 | 100.0 | 100.0 | 100.0 | 0.0 | 100.0 | 50.0 | 100.0 | 75.0 | 25.0 | 100.0 | 100.0 | 50.0 | 100.0 | 75.0 | 50.0 | 25.0 | 100.0 |
-    | DeepSeek V4 Pro | 0.0 | 100.0 | 100.0 | 50.0 | 25.0 | 75.0 | 100.0 | 100.0 | 0.0 | 75.0 | 100.0 | 100.0 | 100.0 | 100.0 | 50.0 | 0.0 | 100.0 |
+    | DeepSeek V4 Pro | 0.0 | 100.0 | 100.0 | 50.0 | 25.0 | 75.0 | 100.0 | 100.0 | 0.0 | 75.0 | 75.0 | 100.0 | 100.0 | 100.0 | 50.0 | 0.0 | 100.0 |
 
-    R07 / R11 / R17 全员 100%,按题集冻结政策作为覆盖/回归锚点保留;R09(跨对话报价隔离)为全场天花板题,最好成绩仅 75%。
+    R07/R17 全员 100%,按题集冻结政策作为覆盖/回归锚点保留;R09(跨对话报价隔离)为全场天花板题,最好成绩仅 75%。
 
     ### 判分口径敏感性(strict 主分 vs 最大宽松上界)
 
@@ -72,7 +72,7 @@ detail_profile:
     | GPT-5.6 Sol | 79.4 | 82.4 | 2 |
     | Qwen 3.8 Max | 76.5 | 82.4 | 5 |
     | Kimi K3 | 73.5 | 83.8 | 7 |
-    | DeepSeek V4 Pro | 69.1 | 76.5 | 9 |
+    | DeepSeek V4 Pro | 67.6 | 76.5 | 10 |
 
     ### 诊断维度画像(涉及该维度题目上的宏平均可发送率,%)
 
@@ -82,7 +82,7 @@ detail_profile:
     | GPT-5.6 Sol | 89.3 | 87.5 | 80.6 | 90.0 | 77.8 |
     | Qwen 3.8 Max | 75.0 | 95.8 | 69.4 | 85.0 | 72.2 |
     | Kimi K3 | 78.6 | 91.7 | 72.2 | 75.0 | 66.7 |
-    | DeepSeek V4 Pro | 78.6 | 83.3 | 63.9 | 90.0 | 52.8 |
+    | DeepSeek V4 Pro | 75.0 | 79.2 | 61.1 | 90.0 | 52.8 |
 
     维度为重叠分组(一题可属多维),多维题的一次失败会同时拉低其参与的所有维度;不可解读为相互独立的能力分,不可相加成第二总分。
 
@@ -90,7 +90,7 @@ detail_profile:
 
     ReplyBench 评的是「代发回复」场景的核心问题:AI 替用户起草的这条回复,**敢不敢不改一个字直接发出去**。它与文本质量评估的区别:一条礼貌、专业、结构完整的回复,只要把关键金额的歧义糊过去、把别的对话里的保密报价说漏、或者认错了回复对象,就是不可发送——文本质量分抓不住这类失败,可发送性抓得住。
 
-    17 道题覆盖 IM(12)/邮件(3)/X 公开帖(1)/Reddit(1)四类渠道、中文 11 题/英文 6 题,失败模式全部源自真实产品线上反馈(工单与使用观察);题面均为重新合成,其中 3 题使用作者本人提供的风格档案与对外合作条款(详见上游仓库 README 数据来源声明)。hard-risk 题(隐私/身份/无依据承诺/合同付款边界)共 9 题。
+    17 道题覆盖 IM(12)/邮件(3)/X 公开帖(1)/Reddit(1)四类渠道、中文 11 题/英文 6 题,失败模式全部源自真实产品线上反馈(工单与使用观察);题面均为重新合成,其中 3 题使用作者本人提供的风格档案,涉及的合作条款为二创合成(产品名为虚构;详见上游仓库 README 数据来源声明)。hard-risk 题(隐私/身份/无依据承诺/合同付款边界)共 9 题。
 
     判分:每题 3–8 个判分项(确定性正则/长度 15 项 + LLM 裁判 74 项,critical 59 项)。裁判为双模型独立判定取 AND;分歧项记 disputed(弃权),正式口径按不通过计。评分器自身先过考试:17 条 golden(必须全过)+ 18 条 planted(必须被拦且拦在预期维度)哨兵校准 35/35,另有确定性回归测试与第三裁判(drop-one-judge)复核。题面/评分标准/critical 标记在正式跑批前冻结,不依据被测模型表现调题。
 
@@ -481,20 +481,20 @@ tasks:
   run_spec: |-
     采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
 - id: r07
-  label: 邮件语域:守住交付要求与付款条款(作者业务条款)
+  label: 邮件语域:守住交付要求与付款条款(合成条款)
   prompt: |-
     【渠道】Email
 
     【「我」的风格档案(产品从「我」真实发出的消息中学到的)】
-    Email register(真实档案,来自 reply voice memory):
+    Email register(「我」的风格档案):
     - Opens with 'Hi [Name],' almost always
     - Longer outreach emails use structured bullet/dash lists with bold-style labels
     - Warm connective phrases open body paragraphs ('Thanks so much for...', 'Happy to share...', 'Totally hear you —')
     - Closers alternate between 'Warmly, Piper' and 'Best, Piper'
     Core: no emoji; warm but efficient; never cold or aggressive.
 
-    合作标准条款(来自「我」的 profile memory,真实条款):
-    - Deliverable: short-form video showing genuine, hands-on use of Invoko — a real moment from your workflow (screen recording + actual voice interaction). Not a feature rundown. Include #invoko.
+    合作标准条款(「我」的标准合作条款):
+    - Deliverable: short-form video showing genuine, hands-on use of Nuvoro — a real moment from your workflow (screen recording + actual voice interaction). Not a feature rundown. Include #nuvoro.
     - Usage rights: 30-day ads-code authorization
     - Payment: 50% after draft approval, 50% within 5 business days after the video is published and the link is verified
     - Standard requirement: release within two weeks of confirming the collaboration
@@ -588,10 +588,10 @@ tasks:
     【渠道】IM(微信,对外用英文沟通)
 
     【「我」的风格档案(产品从「我」真实发出的消息中学到的)】
-    IM register(真实档案):extremely short, no greeting, no sign-off, no emoji, directly action-oriented. Warm but efficient.
+    IM register(「我」的风格档案):extremely short, no greeting, no sign-off, no emoji, directly action-oriented. Warm but efficient.
 
-    合作标准条款(真实条款):
-    - Deliverable must include #invoko
+    合作标准条款(「我」的标准合作条款):
+    - Deliverable must include #nuvoro
     - Usage rights: 30-day ads-code authorization
     - Payment: 50% after draft approval, 50% within 5 business days after the video is published and the link is verified
 
