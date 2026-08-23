@@ -3,11 +3,11 @@
   "submission": {
     "kind": "upstream_author_publication",
     "importer_version": "replybench/formal-transcription@1.0.0",
-    "retrieved_on": "2026-08-22",
+    "retrieved_on": "2026-08-23",
     "source": {
       "title": "ReplyBench 正式榜(上游作者发布,340/340 正式 4-run)",
       "url": "https://okeight-bench.vercel.app/results",
-      "snapshot_sha256": "82c51ec3e77f1163afe1ca7d89c6cc0218611c62e60eee2dcbce77e3a29ce143",
+      "snapshot_sha256": "61cca3196ea9e3eaaf832e19d67733f7fb40bc0838e86fa84c8313a8755f8bbd",
       "official_result_count": 5
     }
   },
