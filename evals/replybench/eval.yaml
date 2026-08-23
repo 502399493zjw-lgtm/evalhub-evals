@@ -7,7 +7,7 @@ description: ReplyBench 考察模型替用户起草 IM/邮件/公开 feed 回复
 hook_title: AI 替你写的回复,敢不敢一字不改直接发出去
 upstream:
   repo: Begin5257/replybench
-  commit: 1949454617f67e15dc4119793a6fdb6646598d66
+  commit: d6a740f81e5257d10796fb8757a920375d61510c
 references:
   homepage: https://okeight-bench.vercel.app
   repository: https://github.com/Begin5257/replybench
