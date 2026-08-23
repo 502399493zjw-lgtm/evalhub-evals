@@ -1,0 +1,17 @@
+{
+  "eval_id": "replybench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "replybench/pack-to-result@1.0.0",
+    "run_date": "2026-08-22"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-drafting-model"
+      },
+      "score": 64.7,
+      "detail": "结构示例(合成 participant,非真实成绩):可发送 44/68(宏平均 64.7%)。真实提交由 pack-to-result.mjs 从上游 aggregate 产物确定性转换。"
+    }
+  ]
+}

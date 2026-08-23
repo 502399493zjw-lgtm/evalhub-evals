@@ -1,0 +1,28 @@
+{
+  "participant": {
+    "model": "example/synthetic-drafting-model"
+  },
+  "summary": {
+    "partial": false,
+    "cohort": {
+      "models": 1,
+      "cases": 17,
+      "runs_per_case": 4
+    },
+    "models": [
+      {
+        "name": "example",
+        "macro": 0.647,
+        "sendableK": 44,
+        "sendableN": 68,
+        "passK": 0.5294,
+        "hard": {
+          "failedCases": 2,
+          "caseTotal": 9,
+          "failedRuns": 5,
+          "runTotal": 36
+        }
+      }
+    ]
+  }
+}
