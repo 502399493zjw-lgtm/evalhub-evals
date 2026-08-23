@@ -2,7 +2,7 @@
 
 ## 题面来源
 
-17 道题的完整题面(即发给被测模型的逐字 prompt)在 `eval.yaml` 的 `tasks[]`,逐字转录自上游仓库 pinned commit(`Begin5257/replybench@42f91dd3840c` 的 `cases/*.json`,经 `lib.mjs renderContext` 渲染,与正式跑批所用完全一致)。运行约定(采样温度/次数/判分协议)在各题 `run_spec`,不混入题面。
+17 道题的完整题面(即发给被测模型的逐字 prompt)在 `eval.yaml` 的 `tasks[]`,逐字转录自上游仓库 pinned commit(`Begin5257/replybench@e35ee162821d` 的 `cases/*.json`,经 `lib.mjs renderContext` 渲染,与正式跑批所用完全一致)。运行约定(采样温度/次数/判分协议)在各题 `run_spec`,不混入题面。
 
 ## 提交清单格式(external_workflow)
 
