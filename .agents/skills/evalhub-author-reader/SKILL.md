@@ -1,6 +1,6 @@
 ---
 name: evalhub-author-reader
-description: Research, author, revise, and verify the readiness of one source-backed EvalHub evaluation submission with a Markdown-only detail page, complete official result tables, and fully translated selected task cases.
+description: Research, author, revise, and verify the readiness of one source-backed EvalHub evaluation submission with a declared cover, visible source-backed Harness identity, a Markdown-only detail page, complete official result tables, and fully translated selected task cases.
 ---
 
 # EvalHub Author Reader
@@ -40,11 +40,15 @@ Keep a lightweight working ledger:
 | Claim or artifact | Primary URL or repository path | Version or date | Target section |
 | --- | --- | --- | --- |
 
-Every published statement, result value, table, and figure must be traceable to this ledger. Omit unsupported optional content instead of guessing. Do not leave `TODO`, `待补`, literal `placeholder`, `example.com`, fabricated values, or credential-bearing URLs.
+Every published statement, result value, table, figure, Harness identity, and cover provenance must be traceable to this ledger. Omit unsupported optional content instead of guessing. Do not leave `TODO`, `待补`, literal `placeholder`, `example.com`, fabricated values, or credential-bearing URLs.
 
 Do not infer that two sources describe the same benchmark from a shared or similar title. Before linking a paper, project, dataset, or repository as the same work, compare its authors or owners, game or domain version, task definition, method, repository and dataset links, and explicit cross-references from first-party sources. Without affirmative identity evidence, treat the sources as distinct and do not imply a relationship.
 
-Consider useful charts, screenshots, diagrams, or other figures while inspecting the official repository, project page, publication, and result artifact. During research, optionally use a browser tool to capture a credential-free first-party public page when its visible UI or visualization would materially help readers and no suitable static asset exists; this is a judgment call, not a required step or completeness gate. For any visual used, record its URL or path, version or capture date, provenance or license, metric and filter boundary, data coverage, and whether it is static or dynamically rendered. Prefer a committed official asset whose scope matches the submitted results. Label a browser capture as a dated official-page screenshot and record its visible tab, filter, or state; do not treat live values as fixed result evidence unless their boundary matches the pinned submission. Recreate a chart only from pinned source data and label it as derived. Record a brief handoff reason only when a materially useful visual was considered but omitted.
+Separate the cover from evidence figures. For every new eval, create one reviewable local raster cover and declare it through top-level `cover`; do not leave the Hero without a cover merely because the upstream source lacks one. The displayed cover must fit 懂模帝's established pixel-art visual language: a 16:9 scene with intentional visible pixels, hard-edged silhouettes, readable thumbnail composition, and a cohesive high-contrast palette. Prefer a license-compatible official asset only when it already fits that language; otherwise generate an original pixel-art reinterpretation that communicates the benchmark domain without presenting itself as source evidence. Do not pass a mismatched image through a coarse pixelation filter and call it finished. Keep it free of unlicensed logos, provider marks, invented scores, fake UI, or data-looking claims. Record whether it is official or original, its source or generation date, license/provenance, and its non-evidentiary role in `assets/README.md`. Follow the repository cover contract for allowed formats, safe relative paths, file signatures, and size limits. Preserve an existing cover on ordinary updates unless the request calls for replacement.
+
+Consider useful charts, screenshots, diagrams, or other figures separately while inspecting the official repository, project page, publication, and result artifact. During research, optionally use a browser tool to capture a credential-free first-party public page when its visible UI or visualization would materially help readers and no suitable static asset exists; this is a judgment call, not a required step or completeness gate. For any figure used, record its URL or path, version or capture date, provenance or license, metric and filter boundary, data coverage, and whether it is static or dynamically rendered. Prefer a committed official asset whose scope matches the submitted results. Label a browser capture as a dated official-page screenshot and record its visible tab, filter, or state; do not treat live values as fixed result evidence unless their boundary matches the pinned submission. Recreate a chart only from pinned source data and label it as derived. Record a brief handoff reason only when a materially useful figure was considered but omitted.
+
+Identify Harness from first-party runner, task, agent, solver, client, or result metadata. Harness means the agent scaffolding or product wrapped around the base model; it is not the benchmark environment, scorer, deterministic packer, or EvalHub validation workflow. Record its published name, track or configuration boundary, and version when the source provides one. Do not infer a version from a later dependency lockfile or repository tag when the published result rows came from other revisions.
 
 ## Stage 2: author the Markdown-only detail page
 
@@ -73,11 +77,11 @@ Equivalent benchmark-specific headings are allowed. Do not repeat the Hero, add 
 
 ### 榜单
 
-Use one compact cross-model table. It normally contains rank, model, the official total or primary ranking metric, and Harness when it helps comparison. Do not add a “口径” column. Keep model names as plain text without Markdown links or anchors.
+Use one compact cross-model table. It contains rank, model, the official total or primary ranking metric, and Harness for agent evaluations. Do not omit Harness merely because every participant shares it. For non-agent interfaces, include it only when the source genuinely defines a comparable harness. Do not add a “口径” column. Keep model names as plain text without Markdown links or anchors.
 
 Render public score columns, including component scores, with no more than one decimal place. Integers may remain integers; counts, costs, times, and other non-score measurements retain the precision needed to stay meaningful. Compute ranks, ties, and aggregates from the unrounded source values, and preserve source precision in machine-readable result files; display rounding must not change the ranking. State the rounding convention once when it is not obvious.
 
-When every participant uses the same task-provided default and the source does not name variants, label it `题目默认 harness`. Render Harness as secondary metadata rather than a competing headline value.
+Use the source-published Harness name when one exists. When every participant uses the same task-provided default and the source does not name variants, label it `题目默认 harness`. Render Harness as secondary metadata rather than a competing headline value, and explain a shared fixed configuration once instead of repeating an implementation audit.
 
 Preserve every official participant. Tables with more than eight body rows are expected: the platform initially shows eight rows and provides expansion for all remaining rows, so do not delete lower-ranked models for brevity.
 
@@ -134,6 +138,7 @@ End with credential-free HTTPS links to the primary sources actually used. Prefe
 - Published results preserve every official participant and source-backed value.
 - `score` remains the primary ranking metric expected by the repository schema.
 - Use registered canonical model IDs in machine-readable results and the registry-resolved display names in reader tables. Verify that every published participant resolves through the repository model registry; do not expose an upstream label as a canonical ID when a registry mapping exists.
+- For agent results, preserve the source-backed agent scaffolding in `participant.harness`. Preserve `harness_version` only when the result source publishes it; an `upstream_author_publication` may omit an unavailable version, while ordinary result envelopes must follow the repository's paired Harness fields. Never substitute the benchmark runner, scorer, or packer as Harness.
 - Preserve source precision in machine-readable values even when the Markdown display is rounded to one decimal place.
 - Supplementary views may remain for machine-readable compatibility, with stable IDs and consistent shared metadata, but the Markdown page must contain the reader-facing cross-model table itself.
 - `sample-result.json` illustrates schema shape only and must not be presented as a published result.
@@ -143,11 +148,11 @@ End with credential-free HTTPS links to the primary sources actually used. Prefe
 
 Keep the final check short:
 
-1. Confirm Markdown-only structure, coherent H2/H3 order, and no repeated Hero.
+1. Confirm Markdown-only structure, coherent H2/H3 order, no repeated Hero, and a declared local cover for every new eval.
 2. Confirm all official models and rows remain, result tables compare models directly, and there are no per-model table fragments.
 3. Confirm at most five displayed cases, each with the complete original and complete Chinese translation.
 4. Confirm sources work and no placeholders or invented values remain.
-5. Confirm public score displays use at most one decimal while machine-readable values retain source precision and registry IDs resolve.
+5. Confirm public score displays use at most one decimal while machine-readable values retain source precision, registry IDs resolve, and agent Harness identity is visible and source-backed.
 6. Use the repository's required checks and official preview workflow as the execution source of truth. Do not duplicate their commands in this skill or invent an alternate validation path.
 7. For a pull request, report the exact candidate commit and wait for its required cloud checks and official preview. Do not install dependencies or run validation on the user's workstation unless the user explicitly requests local execution.
 
@@ -161,6 +166,8 @@ Report:
 
 - files changed;
 - primary sources used;
+- cover path, provenance, and whether it is official or an original non-evidentiary illustration;
+- Harness name, version availability, configuration boundary, and source;
 - official participant and table coverage;
 - displayed task-case IDs and translation coverage;
 - omitted visual candidates and reasons, when applicable;
