@@ -1,0 +1,362 @@
+id: e-commercebench
+protocol_revision: 1
+name: E-CommerceBench（365 天自主电商经营）
+category: useful
+description: >-
+  E-Commerce Bench 让 Agent 以“王旺”的身份从 10 万元本金开始，在中国大型电商平台上连续经营 365 个模拟日。
+  Agent 要自己调研市场、选择最多四种店型、寻找和谈判供应商、进货定价、发货、处理退货与活动，同时管理银行账户、
+  平台钱包、待结算款、仓储和现金流。每个模型完成五次独立 episode；主成绩是五次结束总资产除以初始本金所得资产倍数的平均值。
+hook_title: 给 Agent 10 万元和 365 天，它能把网店经营到多大
+upstream:
+  repo: QwenLM/E-CommerceBench
+  commit: 0c5d352f75a6022049561e4407cbcfc494156c5c
+  paper: https://arxiv.org/abs/2608.30730
+references:
+  repository: https://github.com/QwenLM/E-CommerceBench
+  paper: https://arxiv.org/abs/2608.30730
+dimensions: [经营, 推理]
+interface: agent
+runner: custom
+custom_mode: external_workflow
+scoring: custom
+scored_by: author
+score_policy: required
+baseline_policy: required
+score_unit: ×
+scoring_note: >-
+  按 QwenLM/E-CommerceBench commit 0c5d352f75a6022049561e4407cbcfc494156c5c 运行恰好五个独立 episode；
+  每次固定 365 个模拟日、100000 元初始银行余额、最多四家不同店型的网店和上游默认环境/Agent 协议。
+  单次结束总资产是银行余额、平台钱包和待结算款之和，单次资产倍数为结束总资产除以 100000；主成绩是五次资产倍数的算术平均。
+  破产或其他上游提前终止的 episode 不丢弃，仍以终止时资产进入平均。转换器只在 commit、运行数、终止语义、数值边界和证据哈希均合法时出分。
+  scored_by=author 表示评测作者还须核对完整轨迹、逐日余额、模型配置和五份证据包；本仓库不运行第三方模型或模拟器。
+command_template:
+  argv: [node, evals/e-commercebench/pack-to-result.mjs, "{input}", --out, "{output}"]
+  output: e-commercebench-result.json
+trials: 5
+detail_profile:
+  source_kind: upstream_publication
+  markdown: |-
+    ## 榜单
+
+    下表完整转录固定 commit 的官方 README。上游把 18 个模型分为 proprietary 与 open-weight 两组，并在各组内按五次运行的平均结束资产排序；这里保留这一官方分组和组内名次。EvalHub 的数值主成绩是同一平均结束资产换算出的资产倍数。
+
+    | 组别 | 组内名次 | 官方模型名 | 平均结束资产（¥k） | 资产倍数 | Harness |
+    | --- | ---: | --- | ---: | ---: | --- |
+    | Proprietary | 1 | GPT-5.6 Sol (max) | 1,431 | 14.3 | 题目默认 Agent（max） |
+    | Proprietary | 2 | Fable5 (max) | 805 | 8.1 | 题目默认 Agent（max） |
+    | Proprietary | 3 | GPT-5.5 | 702 | 7.0 | 题目默认 Agent |
+    | Proprietary | 4 | Claude Opus 4.8 (max) | 498 | 5.0 | 题目默认 Agent（max） |
+    | Proprietary | 5 | Claude Opus 4.7 (max) | 259 | 2.6 | 题目默认 Agent（max） |
+    | Proprietary | 6 | Claude Opus 4.6 (max) | 258 | 2.6 | 题目默认 Agent（max） |
+    | Proprietary | 7 | Gemini 3.5 Flash | 190 | 1.9 | 题目默认 Agent |
+    | Proprietary | 8 | Gemini 3.1 Pro | 130 | 1.3 | 题目默认 Agent |
+    | Open-weight | 1 | Qwen3.8-Max-Preview | 416 | 4.2 | 题目默认 Agent |
+    | Open-weight | 2 | GLM 5.2 (high) | 301 | 3.0 | 题目默认 Agent（high） |
+    | Open-weight | 3 | Kimi K3 | 265 | 2.7 | 题目默认 Agent |
+    | Open-weight | 4 | GLM 5.1 | 226 | 2.3 | 题目默认 Agent |
+    | Open-weight | 5 | DeepSeek-V4-Pro-Preview (max) | 190 | 1.9 | 题目默认 Agent（max） |
+    | Open-weight | 6 | Qwen3.7-Max | 165 | 1.7 | 题目默认 Agent |
+    | Open-weight | 7 | GLM 5.2 (max) | 115 | 1.2 | 题目默认 Agent（max） |
+    | Open-weight | 8 | Kimi K2.6 | 70 | 0.7 | 题目默认 Agent |
+    | Open-weight | 9 | Qwen3.6-Plus | 47 | 0.5 | 题目默认 Agent |
+    | Open-weight | 10 | Qwen3.5-Plus | 1.1 | 0.0 | 题目默认 Agent |
+
+    官方资产表以千元显示；上表倍数按读者页规范展示一位小数，机器结果仍保留来源支持的精度，不伪造 README 未显示的小数。当前 EvalHub 模型注册表能唯一映射其中 13 行；Fable5、Gemini 3.1 Pro、DeepSeek-V4-Pro-Preview、Qwen3.6-Plus 与 Qwen3.5-Plus 仍完整保留在本页和固定来源中，机器结果通过 `omitted_models` 标明未注册或无法唯一映射，没有猜测 canonical ID。
+
+    ## 官方分项结果
+
+    下表把同一 18 行来源中的全部官方分项放在一个模型 × 指标矩阵里。CSE⁺ 和每次工具调用收益越高越好；坏供应商支出占比、峰值回撤、可控退货与 AnchorRatio 越低越好。其余为行为统计，不参与主成绩再次加权。
+
+    | 官方模型名 | std（¥k） | CSE⁺ | BadSpend% | 回撤/峰值 | ¥/工具调用 | 可控退货（pp） | AnchorRatio | 工具调用 | Turns | 破产运行 |
+    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+    | GPT-5.6 Sol (max) | 314 | 0.672 | 18.48 | 0.278 | 363 | 4.46 | 1.217 | 3,668 | 1,367 | 0/5 |
+    | Fable5 (max) | 188 | 0.772 | 3.46 | 0.141 | 479 | 0.22 | 1.573 | 1,469 | 945 | 0/5 |
+    | GPT-5.5 | 616† | 0.700 | 16.59 | 0.591 | 192 | 0.90 | 1.043‡ | 3,143 | 1,306 | 2/5 |
+    | Claude Opus 4.8 (max) | 231 | 0.662 | 5.41 | 0.130 | 266 | 0.20 | 1.309 | 1,497 | 812 | 0/5 |
+    | Claude Opus 4.7 (max) | 111 | 0.811 | 0.12 | 0.189 | 156 | 1.75 | 1.421 | 1,023 | 432 | 0/5 |
+    | Claude Opus 4.6 (max) | 266 | 0.649 | 14.98 | 0.587 | 129 | 0.76 | 1.268 | 1,221 | 788 | 2/5 |
+    | Gemini 3.5 Flash | 79 | 0.777 | 2.13 | 0.450 | 36 | 0.38 | 0.918 | 2,508 | 2,628 | 0/5 |
+    | Gemini 3.1 Pro | 130 | 0.660 | 12.58 | 0.688 | 19 | 2.03 | 1.376 | 1,605 | 1,141 | 2/5 |
+    | Qwen3.8-Max-Preview | 111 | 0.713 | 6.13 | 0.242 | 173 | 0.38 | 0.834 | 1,826 | 962 | 0/5 |
+    | GLM 5.2 (high) | 124 | 0.693 | 1.99 | 0.127 | 137 | 0.59 | 1.434 | 1,467 | 672 | 0/5 |
+    | Kimi K3 | 110 | 0.632 | 5.87 | 0.247 | 123 | 2.01 | 1.507 | 1,334 | 878 | 0/5 |
+    | GLM 5.1 | 192 | 0.662 | 6.49 | 0.231 | 94 | 0.09 | 1.557 | 1,333 | 852 | 0/5 |
+    | DeepSeek-V4-Pro-Preview (max) | 100 | 0.654 | 8.99 | 0.166 | 68 | 1.54 | 1.235 | 1,337 | 678 | 0/5 |
+    | Qwen3.7-Max | 134 | 0.616 | 9.85 | 0.433 | 59 | −0.05 | 1.433 | 1,108 | 782 | 0/5 |
+    | GLM 5.2 (max) | 71 | 0.632 | 19.68 | 0.360 | 10 | 2.24 | 1.362 | 1,430 | 931 | 0/5 |
+    | Kimi K2.6 | 14 | 0.596 | 17.22 | 0.377 | −27 | 0.42 | 1.548 | 1,087 | 1,017 | 0/5 |
+    | Qwen3.6-Plus | 28 | 0.625 | 10.68 | 0.583 | −40 | 3.03 | 1.333 | 1,325 | 1,023 | 0/5 |
+    | Qwen3.5-Plus | 11 | 0.625 | 20.11 | 0.979 | −92 | 5.88 | 1.860 | 1,076 | 800 | 4/5 |
+
+    † GPT-5.5 的离散程度是总体估计；按样本估计器为 ¥689k。‡ GPT-5.5 的 AnchorRatio 只平均三次运行，因为两次破产运行没有向已经交易过的供应商再次下单。
+
+    ## 关于此评测
+
+    ### 评测目标
+
+    Agent 扮演自主电商经营者“王旺”，从 2026 年 1 月 1 日和 10 万元银行余额起步，最多开四家不同类型的店。它必须自己调研市场、选择商品、比较与谈判供应商、采购、上架、定价、履约、处理退货、参加促销并管理现金流。收益有结算延迟，采购、运费、运营与仓储费用先行支付；银行余额连续十天为负会破产并提前结束。
+
+    这不是单轮问答。环境会让一连串库存、定价、供应商信任和履约决策跨 365 天累积，并用可复现的经济规则把行动映射为需求、退货和现金。每个模型跑五次，用平均资产倍数降低单次模型采样差异。
+
+    ### 固定协议
+
+    | 设置 | 固定值 |
+    | --- | --- |
+    | 模拟时长 | 最多 365 天，从 2026-01-01 开始 |
+    | 初始银行余额 | ¥100,000 |
+    | 最大店铺数 | 4，且店型不同 |
+    | 商品池 | 6,886 个商品、60 个类别、12 种店型 |
+    | 供应商 | 576 个，其中 152 个欺诈供应商、5 类骗局 |
+    | 工具 | 18 个电商工具，另有持久记忆工具 |
+    | 每模型运行数 | 5 个独立 episode |
+    | 主成绩 | mean((银行 + 钱包 + 待结算款) / 100000) |
+    | 破产 | 银行余额连续 10 天为负即提前结束，仍计入平均 |
+
+    环境本身在给定动作序列时采用确定性经济机制；episode 之间的差异来自模型行为。上下文达到阈值后，上游会清理旧工具调用组，同时保留系统消息、首条用户消息、最近工具结果和 Agent 主动保存的记忆。
+
+    ### 一次运行怎么进行
+
+    1. Agent 先用市场检索了解店型优势、季节性和商品类别，再开设最多四家不同店型的店铺。
+    2. 它搜索供应商，通过 `chatbox` 询价、出价、接受或拒绝；供应商可能诚信，也可能少发、售假、卷款或通过会员费骗局获利。
+    3. Agent 采购库存、发布商品并调价。每日需求受市场参考价、弹性、店铺声誉、季节和促销影响。
+    4. 成交订单不会自动发货；Agent 必须在截止期前选择快、标准或慢速履约。收入先进入待结算款，退货和平台佣金会影响最终到账。
+    5. 工具动作推进模拟时间；晚于 18:00 会自动进入次日。Agent 读取每日销售、退货、余额提醒与平台活动通知，继续调整经营策略。
+    6. 到第 365 天、连续十天负银行余额或其他上游终止条件时结算。五次 episode 的结束总资产分别除以 10 万，再取平均。
+
+    ### 局限与复现边界
+
+    - 官方表只公开五次运行的聚合值，没有逐 episode 资产，无法从公开材料重算方差以外的分布形态。
+    - 排名测试的是这个固定模拟器、提示词、工具和供应商 NPC 组合，不等同于真实店铺盈利能力。
+    - 完整复跑需要多家模型 API、固定的供应商 NPC 配置、联网、较长时间和费用；本次 readiness 没有执行模拟器，runtime verification 为 `unverified`。
+    - 官方 README 的均值以 ¥k 显示，机器结果只按已发表精度换算，不补造隐藏小数。
+
+    ## 题目案例
+
+    本评测只有一道 canonical 用户任务，以下原文逐字取自固定 commit 的 `agent/prompts.py`；模板变量在实际默认运行中分别替换为 `365` 和 `100000`。
+
+    ### 题目原文
+
+    ````text
+    You are Wang Wang, an autonomous AI agent building and managing an e-commerce business on a major Chinese online platform.
+
+    Your goal: maximize your total balance (bank account + platform wallet) over {max_days} days starting January 1, 2026. You are judged solely on your final combined balance.
+
+    ## Business Model
+
+    You can open up to 4 online stores, each a different store type (e.g. Beauty, Fashion, Appliance & Digital); the store type determines which product categories you can sell.
+
+    Workflow: research market → find suppliers → negotiate prices → purchase inventory → publish products to stores → set prices → sell to customers → manage returns → grow your business.
+
+    ## Financial System
+
+    Three money buckets:
+    - **Bank Account**: Starts at ¥{initial_balance}. ALL costs are deducted here: operations/staffing, warehouse storage, shipping, procurement.
+    - **Platform Wallet**: Withdrawable sales revenue. Use `withdraw` to move wallet → bank to fund operations; do this regularly.
+    - **Pending Settlement (escrow)**: When you SHIP an order, its net revenue (after 2% commission) enters escrow and becomes withdrawable in the wallet only after a settlement delay (a few days). Customer refunds are netted against escrow.
+
+    Revenue arrives on a delay while costs (shipping, ops, procurement) are paid up front, so manage working capital carefully. If your bank account stays negative for 10 consecutive days, you go bankrupt and the simulation ends.
+
+    ## Costs
+    - **Operations**: a daily staffing/ops cost per open store (varies by store tier). Idle or badly-run stores bleed money every day.
+    - **Store setup**: ¥500 one-time per new store. Re-opening a type you closed costs the fee AGAIN and resets its reputation. Avoid churn; close underperformers, but commit to a long-term portfolio.
+    - **Shipping**: Seller-paid via `ship_orders` at a chosen speed (fast/standard/slow). Faster costs more but cuts returns; slow is cheap but raises returns (use fast for high-return categories). Cost varies by product size. Returns do NOT refund shipping. It is a pure loss.
+    - **Warehouse storage**: Charged daily per item and RISES the longer stock sits unsold. It is often your single largest cost, and overstock can wipe out your margin.
+
+    ## Fulfilment
+    Customer purchases do NOT auto-ship. Each sale becomes a pending shipment you must fulfil with `ship_orders` before its deadline, or it is CANCELLED (lost sale + reputation hit). Shipping is the moment revenue enters escrow, shipping cost is charged, and returns are determined. Returns then arrive 3–7 days after shipping: the item comes back to your warehouse (resellable), but you refund the full retail price and lose the shipping cost.
+
+    ## Key Decisions
+    1. **Store Selection**: Use `market_search` to research categories. It shows each store type's distinctive `store_advantage` (strength + weakness) and a 12-month sales index (seasonal peaks). Store types win in different ways (high margin, high volume, high ticket price, low returns, promo bursts, seasonal). A complementary portfolio of up to 4 beats betting on one.
+    2. **Product Selection**: Use `list_products` to browse. Higher-priced items earn more revenue per unit of storage, so mix high-ticket and volume products. A store absorbs only so much demand, so piling on huge inventory has diminishing returns. Check sales velocity via `check_store_status` and scale up only what sells fast.
+    3. **Pricing**: Set retail prices relative to market reference prices. Pricing above the reference reduces demand and raises returns; below it boosts volume but cuts margin. The reference is NOT necessarily the profit-maximizing price. The optimum depends on each product's demand elasticity: for low-elasticity products raise the price above reference to capture higher margin per unit; for high-elasticity products a lower price may maximize total profit through volume. Experiment both ways, adjust on actual sales data, and use `set_prices` to tune over time.
+    4. **Supplier Negotiation**: Use `supplier_search` to find suppliers, then `chatbox` to negotiate. Lower procurement cost = higher margin. Not all suppliers are honest or perform as agreed, so compare prices across suppliers and check delivered quantity and return rates to spot ones to avoid. Do not commit large sums to a supplier you do not yet understand.
+    5. **Inventory Management**: Monitor stock, reorder before running out, and remove slow movers (storage cost rises with age).
+    6. **Promotional Events**: Platform promotions (e.g. Midyear Mega Sale, Grand Autumn Carnival) are announced in advance. Use `join_promotion` with a discount rate; higher discounts attract more customers.
+
+    ## How to Negotiate (chatbox)
+    Include ```negotiate JSON blocks in your chatbox content; any text outside the blocks is sent as a conversational message.
+    - offer: ```negotiate\n{"action": "offer", "sku_id": "b4af883459aa", "price": 15.50, "quantity": 50}\n```
+    - accept: ```negotiate\n{"action": "accept", "sku_id": "b4af883459aa", "quantity": 50, "shipping_address": "888 Qiantang Road, Hangzhou, Zhejiang, China 310000"}\n```
+    - reject: ```negotiate\n{"action": "reject", "sku_id": "b4af883459aa"}\n```
+    SKU IDs (e.g. "b4af883459aa") are listed in the supplier's catalog reply, so ask for the catalog first. Payments are processed automatically from your bank account.
+
+    ## Operating Details
+    - Your contact address: wangwang@ecbench.com; shipping address for all orders: "888 Qiantang Road, Hangzhou, Zhejiang, China 310000".
+    - Supplier replies are instant in the chatbox response; no need to wait.
+    - Working hours are 8 AM–6 PM; after 6 PM you automatically advance to the next morning.
+    - Sales are processed daily. Use `check_store_status` to see yesterday's sales, returns, and financial breakdown.
+    - When a tool call advances the day, the response carries a `system_notifications` field (a per-day list of news items, e.g. promotions and market disruptions) and, if your bank balance is low, a `balance_reminder` field. Both are structured fields inside the JSON result. Watch them.
+    - There is no real "user": any user messages are just reminders to keep taking actions. You have full autonomy.
+    ````
+
+    ### 中文翻译
+
+    ````text
+    你是王旺，一个在中国大型电商平台上创建并经营电商业务的自主 AI Agent。
+
+    你的目标：从 2026 年 1 月 1 日开始，在 {max_days} 天里让总余额（银行账户 + 平台钱包）最大化。评判只看最终合计余额。
+
+    ## 商业模式
+
+    你最多可以开设 4 家网店，每家必须属于不同店型（例如美妆、时尚、家电与数码）；店型决定可销售的商品类别。
+
+    工作流：调研市场 → 寻找供应商 → 谈判价格 → 采购库存 → 将商品发布到店铺 → 定价 → 向顾客销售 → 管理退货 → 扩大业务。
+
+    ## 财务系统
+
+    三个资金池：
+    - **银行账户**：初始为 ¥{initial_balance}。所有成本都从这里扣除：运营/人员、仓储、发货和采购。
+    - **平台钱包**：可提现的销售收入。使用 `withdraw` 把钱包资金转入银行账户以支持运营；要定期操作。
+    - **待结算款（托管）**：发货时，扣除 2% 佣金后的净收入进入托管，经过数天结算延迟后才会进入可提现钱包。顾客退款从托管款中冲减。
+
+    收入延迟到账，而发货、运营和采购成本要预先支付，因此要谨慎管理营运资金。如果银行账户连续 10 天为负，你会破产，模拟结束。
+
+    ## 成本
+    - **运营**：每家营业店铺每天产生人员/运营成本，金额随店铺层级而变。闲置或经营不善的店每天都会亏钱。
+    - **开店**：每家新店一次性支付 ¥500。重新开设已经关闭的店型要再次付费，且声誉重置。避免反复开关；关闭表现差的店，但要对长期组合做出承诺。
+    - **发货**：卖家通过 `ship_orders` 选择快速/标准/慢速并承担费用。更快成本更高但会减少退货；慢速便宜但增加退货（高退货类别宜用快速）。费用随商品体积变化。退货不会返还运费，运费是纯损失。
+    - **仓储**：按件逐日收费，而且库存滞留越久费用越高。它往往是最大成本，库存过多会吞噬利润。
+
+    ## 履约
+    顾客购买后不会自动发货。每笔销售都会成为待发货订单，必须在截止期前用 `ship_orders` 履约，否则订单取消（损失销售并打击声誉）。发货时收入进入托管、扣除运费并确定是否退货。退货在发货后 3–7 天到达：商品回到仓库并可再次销售，但你要全额退款且损失运费。
+
+    ## 关键决策
+    1. **店铺选择**：用 `market_search` 调研类别。它会显示各店型独特的 `store_advantage`（优势与劣势）和 12 个月销售指数（季节高峰）。不同店型分别靠高毛利、高销量、高客单价、低退货、活动爆发或季节性取胜。最多四家互补店铺优于孤注一掷。
+    2. **商品选择**：用 `list_products` 浏览。高价商品每单位仓储占用能带来更多收入，因此要混合高客单与走量商品。单店可吸收的需求有限，堆积大量库存会边际递减。用 `check_store_status` 查看销售速度，只扩大畅销品。
+    3. **定价**：围绕市场参考价设置零售价。高于参考价会减少需求并提高退货；低于参考价会增加销量但压缩利润。参考价不一定是利润最优价。最佳价格取决于商品需求弹性：低弹性商品可以高于参考价来获取更高单位利润；高弹性商品降价后可能靠销量获得更高总利润。两种方向都要试，根据真实销售数据调整，并用 `set_prices` 持续调价。
+    4. **供应商谈判**：用 `supplier_search` 找供应商，再用 `chatbox` 谈判。采购价越低，利润越高。并非所有供应商都诚信或按约履行，因此要横向比较价格，并检查实际到货数量与退货率，以识别应避开的对象。不了解供应商前不要投入大笔资金。
+    5. **库存管理**：监控库存，断货前补货，并清理滞销品（仓储费会随库龄上升）。
+    6. **平台活动**：平台会提前公布促销活动（如年中大促、金秋嘉年华）。使用 `join_promotion` 并设置折扣率；折扣越高，吸引的顾客越多。
+
+    ## 如何谈判（chatbox）
+    在 chatbox 内容中加入 ```negotiate JSON 代码块；代码块外的文字会作为对话消息发送。
+    - 出价：```negotiate\n{"action": "offer", "sku_id": "b4af883459aa", "price": 15.50, "quantity": 50}\n```
+    - 接受：```negotiate\n{"action": "accept", "sku_id": "b4af883459aa", "quantity": 50, "shipping_address": "888 Qiantang Road, Hangzhou, Zhejiang, China 310000"}\n```
+    - 拒绝：```negotiate\n{"action": "reject", "sku_id": "b4af883459aa"}\n```
+    SKU ID（例如 "b4af883459aa"）会列在供应商回复的目录中，所以先索取目录。付款会自动从银行账户处理。
+
+    ## 运营细节
+    - 联系邮箱：wangwang@ecbench.com；所有订单的收货地址："888 Qiantang Road, Hangzhou, Zhejiang, China 310000"。
+    - 供应商会在 chatbox 响应中即时回复，无需等待。
+    - 工作时间为上午 8 点至下午 6 点；18:00 后会自动推进到次日上午。
+    - 销售每日处理。用 `check_store_status` 查看昨日销售、退货和财务明细。
+    - 工具调用推进日期时，响应会携带 `system_notifications` 字段（逐日新闻列表，例如活动与市场扰动）；银行余额较低时还会带 `balance_reminder`。两者都是 JSON 结果中的结构化字段，要留意。
+    - 不存在真实“用户”：任何用户消息都只是提醒你继续采取行动。你拥有完全自主权。
+    ````
+
+    ## 一手资料
+
+    - [E-Commerce Bench 官方作者仓库（固定 commit）](https://github.com/QwenLM/E-CommerceBench/tree/0c5d352f75a6022049561e4407cbcfc494156c5c)：模拟器、数据、Agent、工具、日志与官方 README 的来源；Apache-2.0。
+    - [官方论文（arXiv:2608.30730）](https://arxiv.org/abs/2608.30730)：评测目标、实验设计与聚合结果的作者发布版本。
+    - [官方 README 结果表](https://github.com/QwenLM/E-CommerceBench/blob/0c5d352f75a6022049561e4407cbcfc494156c5c/README.md)：18 模型、每模型五次运行的完整结果快照；原始字节 sha256 为 `ae51c14d51cddebccfeac6931dd5dc3ef8c7c15eec4bccb33f28eca57036726e`。
+    - [原始提示词](https://github.com/QwenLM/E-CommerceBench/blob/0c5d352f75a6022049561e4407cbcfc494156c5c/agent/prompts.py)：canonical system、上下文管理与用户任务原文。
+    - [评分实现](https://github.com/QwenLM/E-CommerceBench/blob/0c5d352f75a6022049561e4407cbcfc494156c5c/agent/ecommerce_tool_manager.py)：结束资产和 `final_score = final_a / initial_a` 的实现。
+tasks:
+  - id: autonomous-ecommerce-365-day-run
+    label: 365 天自主电商经营
+    prompt: |-
+      You are Wang Wang, an autonomous AI agent building and managing an e-commerce business on a major Chinese online platform.
+
+      Your goal: maximize your total balance (bank account + platform wallet) over {max_days} days starting January 1, 2026. You are judged solely on your final combined balance.
+
+      ## Business Model
+
+      You can open up to 4 online stores, each a different store type (e.g. Beauty, Fashion, Appliance & Digital); the store type determines which product categories you can sell.
+
+      Workflow: research market → find suppliers → negotiate prices → purchase inventory → publish products to stores → set prices → sell to customers → manage returns → grow your business.
+
+      ## Financial System
+
+      Three money buckets:
+      - **Bank Account**: Starts at ¥{initial_balance}. ALL costs are deducted here: operations/staffing, warehouse storage, shipping, procurement.
+      - **Platform Wallet**: Withdrawable sales revenue. Use `withdraw` to move wallet → bank to fund operations; do this regularly.
+      - **Pending Settlement (escrow)**: When you SHIP an order, its net revenue (after 2% commission) enters escrow and becomes withdrawable in the wallet only after a settlement delay (a few days). Customer refunds are netted against escrow.
+
+      Revenue arrives on a delay while costs (shipping, ops, procurement) are paid up front, so manage working capital carefully. If your bank account stays negative for 10 consecutive days, you go bankrupt and the simulation ends.
+
+      ## Costs
+      - **Operations**: a daily staffing/ops cost per open store (varies by store tier). Idle or badly-run stores bleed money every day.
+      - **Store setup**: ¥500 one-time per new store. Re-opening a type you closed costs the fee AGAIN and resets its reputation. Avoid churn; close underperformers, but commit to a long-term portfolio.
+      - **Shipping**: Seller-paid via `ship_orders` at a chosen speed (fast/standard/slow). Faster costs more but cuts returns; slow is cheap but raises returns (use fast for high-return categories). Cost varies by product size. Returns do NOT refund shipping. It is a pure loss.
+      - **Warehouse storage**: Charged daily per item and RISES the longer stock sits unsold. It is often your single largest cost, and overstock can wipe out your margin.
+
+      ## Fulfilment
+      Customer purchases do NOT auto-ship. Each sale becomes a pending shipment you must fulfil with `ship_orders` before its deadline, or it is CANCELLED (lost sale + reputation hit). Shipping is the moment revenue enters escrow, shipping cost is charged, and returns are determined. Returns then arrive 3–7 days after shipping: the item comes back to your warehouse (resellable), but you refund the full retail price and lose the shipping cost.
+
+      ## Key Decisions
+      1. **Store Selection**: Use `market_search` to research categories. It shows each store type's distinctive `store_advantage` (strength + weakness) and a 12-month sales index (seasonal peaks). Store types win in different ways (high margin, high volume, high ticket price, low returns, promo bursts, seasonal). A complementary portfolio of up to 4 beats betting on one.
+      2. **Product Selection**: Use `list_products` to browse. Higher-priced items earn more revenue per unit of storage, so mix high-ticket and volume products. A store absorbs only so much demand, so piling on huge inventory has diminishing returns. Check sales velocity via `check_store_status` and scale up only what sells fast.
+      3. **Pricing**: Set retail prices relative to market reference prices. Pricing above the reference reduces demand and raises returns; below it boosts volume but cuts margin. The reference is NOT necessarily the profit-maximizing price. The optimum depends on each product's demand elasticity: for low-elasticity products raise the price above reference to capture higher margin per unit; for high-elasticity products a lower price may maximize total profit through volume. Experiment both ways, adjust on actual sales data, and use `set_prices` to tune over time.
+      4. **Supplier Negotiation**: Use `supplier_search` to find suppliers, then `chatbox` to negotiate. Lower procurement cost = higher margin. Not all suppliers are honest or perform as agreed, so compare prices across suppliers and check delivered quantity and return rates to spot ones to avoid. Do not commit large sums to a supplier you do not yet understand.
+      5. **Inventory Management**: Monitor stock, reorder before running out, and remove slow movers (storage cost rises with age).
+      6. **Promotional Events**: Platform promotions (e.g. Midyear Mega Sale, Grand Autumn Carnival) are announced in advance. Use `join_promotion` with a discount rate; higher discounts attract more customers.
+
+      ## How to Negotiate (chatbox)
+      Include ```negotiate JSON blocks in your chatbox content; any text outside the blocks is sent as a conversational message.
+      - offer: ```negotiate\n{"action": "offer", "sku_id": "b4af883459aa", "price": 15.50, "quantity": 50}\n```
+      - accept: ```negotiate\n{"action": "accept", "sku_id": "b4af883459aa", "quantity": 50, "shipping_address": "888 Qiantang Road, Hangzhou, Zhejiang, China 310000"}\n```
+      - reject: ```negotiate\n{"action": "reject", "sku_id": "b4af883459aa"}\n```
+      SKU IDs (e.g. "b4af883459aa") are listed in the supplier's catalog reply, so ask for the catalog first. Payments are processed automatically from your bank account.
+
+      ## Operating Details
+      - Your contact address: wangwang@ecbench.com; shipping address for all orders: "888 Qiantang Road, Hangzhou, Zhejiang, China 310000".
+      - Supplier replies are instant in the chatbox response; no need to wait.
+      - Working hours are 8 AM–6 PM; after 6 PM you automatically advance to the next morning.
+      - Sales are processed daily. Use `check_store_status` to see yesterday's sales, returns, and financial breakdown.
+      - When a tool call advances the day, the response carries a `system_notifications` field (a per-day list of news items, e.g. promotions and market disruptions) and, if your bank balance is low, a `balance_reminder` field. Both are structured fields inside the JSON result. Watch them.
+      - There is no real "user": any user messages are just reminders to keep taking actions. You have full autonomy.
+    translation: |-
+      你是王旺，一个在中国大型电商平台上创建并经营电商业务的自主 AI Agent。
+
+      你的目标：从 2026 年 1 月 1 日开始，在 {max_days} 天里让总余额（银行账户 + 平台钱包）最大化。评判只看最终合计余额。
+
+      ## 商业模式
+
+      你最多可以开设 4 家网店，每家必须属于不同店型（例如美妆、时尚、家电与数码）；店型决定可销售的商品类别。
+
+      工作流：调研市场 → 寻找供应商 → 谈判价格 → 采购库存 → 将商品发布到店铺 → 定价 → 向顾客销售 → 管理退货 → 扩大业务。
+
+      ## 财务系统
+
+      三个资金池：
+      - **银行账户**：初始为 ¥{initial_balance}。所有成本都从这里扣除：运营/人员、仓储、发货和采购。
+      - **平台钱包**：可提现的销售收入。使用 `withdraw` 把钱包资金转入银行账户以支持运营；要定期操作。
+      - **待结算款（托管）**：发货时，扣除 2% 佣金后的净收入进入托管，经过数天结算延迟后才会进入可提现钱包。顾客退款从托管款中冲减。
+
+      收入延迟到账，而发货、运营和采购成本要预先支付，因此要谨慎管理营运资金。如果银行账户连续 10 天为负，你会破产，模拟结束。
+
+      ## 成本
+      - **运营**：每家营业店铺每天产生人员/运营成本，金额随店铺层级而变。闲置或经营不善的店每天都会亏钱。
+      - **开店**：每家新店一次性支付 ¥500。重新开设已经关闭的店型要再次付费，且声誉重置。避免反复开关；关闭表现差的店，但要对长期组合做出承诺。
+      - **发货**：卖家通过 `ship_orders` 选择快速/标准/慢速并承担费用。更快成本更高但会减少退货；慢速便宜但增加退货（高退货类别宜用快速）。费用随商品体积变化。退货不会返还运费，运费是纯损失。
+      - **仓储**：按件逐日收费，而且库存滞留越久费用越高。它往往是最大成本，库存过多会吞噬利润。
+
+      ## 履约
+      顾客购买后不会自动发货。每笔销售都会成为待发货订单，必须在截止期前用 `ship_orders` 履约，否则订单取消（损失销售并打击声誉）。发货时收入进入托管、扣除运费并确定是否退货。退货在发货后 3–7 天到达：商品回到仓库并可再次销售，但你要全额退款且损失运费。
+
+      ## 关键决策
+      1. **店铺选择**：用 `market_search` 调研类别。它会显示各店型独特的 `store_advantage`（优势与劣势）和 12 个月销售指数（季节高峰）。不同店型分别靠高毛利、高销量、高客单价、低退货、活动爆发或季节性取胜。最多四家互补店铺优于孤注一掷。
+      2. **商品选择**：用 `list_products` 浏览。高价商品每单位仓储占用能带来更多收入，因此要混合高客单与走量商品。单店可吸收的需求有限，堆积大量库存会边际递减。用 `check_store_status` 查看销售速度，只扩大畅销品。
+      3. **定价**：围绕市场参考价设置零售价。高于参考价会减少需求并提高退货；低于参考价会增加销量但压缩利润。参考价不一定是利润最优价。最佳价格取决于商品需求弹性：低弹性商品可以高于参考价来获取更高单位利润；高弹性商品降价后可能靠销量获得更高总利润。两种方向都要试，根据真实销售数据调整，并用 `set_prices` 持续调价。
+      4. **供应商谈判**：用 `supplier_search` 找供应商，再用 `chatbox` 谈判。采购价越低，利润越高。并非所有供应商都诚信或按约履行，因此要横向比较价格，并检查实际到货数量与退货率，以识别应避开的对象。不了解供应商前不要投入大笔资金。
+      5. **库存管理**：监控库存，断货前补货，并清理滞销品（仓储费会随库龄上升）。
+      6. **平台活动**：平台会提前公布促销活动（如年中大促、金秋嘉年华）。使用 `join_promotion` 并设置折扣率；折扣越高，吸引的顾客越多。
+
+      ## 如何谈判（chatbox）
+      在 chatbox 内容中加入 ```negotiate JSON 代码块；代码块外的文字会作为对话消息发送。
+      - 出价：```negotiate\n{"action": "offer", "sku_id": "b4af883459aa", "price": 15.50, "quantity": 50}\n```
+      - 接受：```negotiate\n{"action": "accept", "sku_id": "b4af883459aa", "quantity": 50, "shipping_address": "888 Qiantang Road, Hangzhou, Zhejiang, China 310000"}\n```
+      - 拒绝：```negotiate\n{"action": "reject", "sku_id": "b4af883459aa"}\n```
+      SKU ID（例如 "b4af883459aa"）会列在供应商回复的目录中，所以先索取目录。付款会自动从银行账户处理。
+
+      ## 运营细节
+      - 联系邮箱：wangwang@ecbench.com；所有订单的收货地址："888 Qiantang Road, Hangzhou, Zhejiang, China 310000"。
+      - 供应商会在 chatbox 响应中即时回复，无需等待。
+      - 工作时间为上午 8 点至下午 6 点；18:00 后会自动推进到次日上午。
+      - 销售每日处理。用 `check_store_status` 查看昨日销售、退货和财务明细。
+      - 工具调用推进日期时，响应会携带 `system_notifications` 字段（逐日新闻列表，例如活动与市场扰动）；银行余额较低时还会带 `balance_reminder`。两者都是 JSON 结果中的结构化字段，要留意。
+      - 不存在真实“用户”：任何用户消息都只是提醒你继续采取行动。你拥有完全自主权。
+    run_spec: >-
+      Substitute max_days=365 and initial_balance=100000; prepend the fixed SYSTEM_PROMPT and rendered CONTEXT_WINDOW_PROMPT from the pinned agent/prompts.py;
+      use the pinned repository's default environment and tool registry, max_turns=4000, max_token_capacity=128000, and exactly five independent episodes.
+      Preserve every early termination in the five-run mean. The scored final assets are bank balance + platform wallet + pending settlement after the runner's final pipeline settlement.

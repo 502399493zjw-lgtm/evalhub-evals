@@ -1,0 +1,69 @@
+{
+  "manifest_version": 1,
+  "eval_id": "e-commercebench",
+  "protocol_revision": 1,
+  "upstream_commit": "0c5d352f75a6022049561e4407cbcfc494156c5c",
+  "simulation": {
+    "days": 365,
+    "initial_balance_cny": 100000,
+    "max_stores": 4
+  },
+  "participant": {
+    "model": "example/synthetic-ecommerce-agent",
+    "harness": "example-harness",
+    "harness_version": "0.0.0-structural-example"
+  },
+  "run_date": "2026-09-02",
+  "runs": [
+    {
+      "run_id": "example-run-1",
+      "final_day": 365,
+      "termination_reason": "env_completed",
+      "bankrupt": false,
+      "final_assets_cny": 318420.55,
+      "tool_calls": 1460,
+      "turns": 812,
+      "evidence_sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    {
+      "run_id": "example-run-2",
+      "final_day": 365,
+      "termination_reason": "env_completed",
+      "bankrupt": false,
+      "final_assets_cny": 274100,
+      "tool_calls": 1328,
+      "turns": 740,
+      "evidence_sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    {
+      "run_id": "example-run-3",
+      "final_day": 365,
+      "termination_reason": "env_completed",
+      "bankrupt": false,
+      "final_assets_cny": 401780.25,
+      "tool_calls": 1604,
+      "turns": 899,
+      "evidence_sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+    },
+    {
+      "run_id": "example-run-4",
+      "final_day": 233,
+      "termination_reason": "env_terminated",
+      "bankrupt": true,
+      "final_assets_cny": -12450.75,
+      "tool_calls": 865,
+      "turns": 501,
+      "evidence_sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+    },
+    {
+      "run_id": "example-run-5",
+      "final_day": 365,
+      "termination_reason": "env_completed",
+      "bankrupt": false,
+      "final_assets_cny": 225900.4,
+      "tool_calls": 1211,
+      "turns": 693,
+      "evidence_sha256": "5555555555555555555555555555555555555555555555555555555555555555"
+    }
+  ]
+}

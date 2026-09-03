@@ -1,0 +1,131 @@
+{
+  "eval_id": "e-commercebench",
+  "submission": {
+    "kind": "run",
+    "runner_version": "e-commercebench/pack-to-result@1.0.0",
+    "run_date": "2026-09-02"
+  },
+  "results": [
+    {
+      "participant": {
+        "model": "example/synthetic-ecommerce-agent",
+        "harness": "example-harness",
+        "harness_version": "0.0.0-structural-example"
+      },
+      "score": 2.4155009,
+      "raw_metric": {
+        "label": "五次运行平均结束总资产",
+        "value": "¥241,550.09"
+      },
+      "detail": "五次 episode 的平均结束总资产为 ¥241,550.09，资产倍数 2.4155009×；破产 1/5。清单 sha256=6536144a84e07d0d5e8308c3d197b58809d105a50871958205d1c83387f3fade。",
+      "task_results": [
+        {
+          "task_id": "autonomous-ecommerce-365-day-run",
+          "score": 3.1842055,
+          "raw": "example-run-1：第 365 天结束，env_completed，总资产 ¥318,420.55，工具调用 1460 次，Agent turn 812；证据包 sha256=1111111111111111111111111111111111111111111111111111111111111111。"
+        },
+        {
+          "task_id": "autonomous-ecommerce-365-day-run",
+          "score": 2.741,
+          "raw": "example-run-2：第 365 天结束，env_completed，总资产 ¥274,100.00，工具调用 1328 次，Agent turn 740；证据包 sha256=2222222222222222222222222222222222222222222222222222222222222222。"
+        },
+        {
+          "task_id": "autonomous-ecommerce-365-day-run",
+          "score": 4.0178025,
+          "raw": "example-run-3：第 365 天结束，env_completed，总资产 ¥401,780.25，工具调用 1604 次，Agent turn 899；证据包 sha256=3333333333333333333333333333333333333333333333333333333333333333。"
+        },
+        {
+          "task_id": "autonomous-ecommerce-365-day-run",
+          "score": -0.1245075,
+          "raw": "example-run-4：第 233 天结束，env_terminated（破产），总资产 -¥12,450.75，工具调用 865 次，Agent turn 501；证据包 sha256=4444444444444444444444444444444444444444444444444444444444444444。"
+        },
+        {
+          "task_id": "autonomous-ecommerce-365-day-run",
+          "score": 2.259004,
+          "raw": "example-run-5：第 365 天结束，env_completed，总资产 ¥225,900.40，工具调用 1211 次，Agent turn 693；证据包 sha256=5555555555555555555555555555555555555555555555555555555555555555。"
+        }
+      ],
+      "supplementary_views": [
+        {
+          "type": "metric_table",
+          "id": "five-episode-outcomes",
+          "label": "五次运行",
+          "title": "五个独立 episode 的结束状态",
+          "columns": [
+            "运行",
+            "结束日",
+            "终止状态",
+            "是否破产",
+            "结束总资产（CNY）",
+            "资产倍数",
+            "工具调用",
+            "Turns"
+          ],
+          "rows": [
+            {
+              "cells": [
+                "example-run-1",
+                365,
+                "env_completed",
+                "否",
+                318420.55,
+                3.1842055,
+                1460,
+                812
+              ]
+            },
+            {
+              "cells": [
+                "example-run-2",
+                365,
+                "env_completed",
+                "否",
+                274100,
+                2.741,
+                1328,
+                740
+              ]
+            },
+            {
+              "cells": [
+                "example-run-3",
+                365,
+                "env_completed",
+                "否",
+                401780.25,
+                4.0178025,
+                1604,
+                899
+              ]
+            },
+            {
+              "cells": [
+                "example-run-4",
+                233,
+                "env_terminated",
+                "是",
+                -12450.75,
+                -0.1245075,
+                865,
+                501
+              ]
+            },
+            {
+              "cells": [
+                "example-run-5",
+                365,
+                "env_completed",
+                "否",
+                225900.4,
+                2.259004,
+                1211,
+                693
+              ]
+            }
+          ],
+          "note": "五次运行均使用 365 天、10 万元初始余额、最多四家店和固定上游 commit；所有 episode 都进入算术平均。辅助展示，不构成独立排名。"
+        }
+      ]
+    }
+  ]
+}
