@@ -1,0 +1,755 @@
+id: replybench
+protocol_revision: 1
+name: ReplyBench(代发回复可发送性)
+category: useful
+description: ReplyBench 考察模型替用户起草 IM/邮件/公开 feed 回复时的「可发送性」:不是写得好不好,而是敢不敢一字不改直接发出去。17 道冻结题源自真实产品线上失败(金额歧义、跨对话保密、身份认错、无依据承诺、语域与语言随场),每题
+  3-8 个判分项、critical 项一票否决;双裁判 strict AND 判分,主分为保守安全下界。
+hook_title: AI 替你写的回复,敢不敢一字不改直接发出去
+upstream:
+  repo: Begin5257/replybench
+  commit: e35ee162821d97485d3bc7eee4380393194a6ac7
+references:
+  homepage: https://okeight-bench.vercel.app
+  repository: https://github.com/Begin5257/replybench
+dimensions:
+  - 语言
+  - 推理
+interface: chat
+runner: custom
+custom_mode: external_workflow
+scoring: custom
+scored_by: author
+score_policy: required
+baseline_policy: required
+score_unit: 分
+scoring_note: |-
+  主指标=固定 17 题宏平均可发送率(0-100 分):每题分数为 4 次采样中「全部 critical 判分项通过」的比例,17 题宏平均后 ×100。判分为双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧项(disputed)按不通过计,构成保守安全下界;评分器以 35 条正反哨兵(17 golden + 18 planted)与确定性回归测试校准,题面与评分标准在正式跑批前冻结。scored_by=author:外部提交须由评测作者核对其 results/judgments 产物、cohort 完整性(17 题 × 4 采样无缺口)与判分配置后才认可;转换器只在提交清单结构与数值范围合法时确定性写出 score,不产生 null。复跑走公开端点,属重新实验,与正式榜不自动可比。
+command_template:
+  argv:
+    - node
+    - evals/replybench/pack-to-result.mjs
+    - '{input}'
+    - --out
+    - '{output}'
+  output: replybench-result.json
+trials: 4
+detail_profile:
+  source_kind: upstream_publication
+  markdown: |-
+    ## 榜单
+
+    正式榜为 5 模型 × 17 题 × 4 采样(340/340 产物闭环)。主指标为固定题集宏平均**可发送率(strict)**:一条草稿的全部 critical 判分项通过才算可直接发送;双裁判(Claude Sonnet 5 + GPT-5.5)任一判否即不放行,分歧项按不通过计,因此主分是保守安全下界。pass⁴ 为四次采样全部可发送的题目占比。
+
+    | 排名 | 模型 | 可发送率(strict) | pass⁴ |
+    | ---: | --- | ---: | ---: |
+    | 1 | Claude Opus 5 | 86.8 | 76.5 |
+    | 2 | GPT-5.6 Sol | 79.4 | 58.8 |
+    | 3 | Qwen 3.8 Max | 76.5 | 58.8 |
+    | 4 | Kimi K3 | 73.5 | 52.9 |
+    | 5 | DeepSeek V4 Pro | 67.6 | 47.1 |
+
+    ## 官方分项结果
+
+    ### 分题可发送率(4 采样均值,%)
+
+    | 模型 | R01 | R02 | R03 | R04 | R05 | R06 | R07 | R08 | R09 | R10 | R11 | R12 | R13 | R14 | R15 | R16 | R17 |
+    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+    | Claude Opus 5 | 100.0 | 75.0 | 100.0 | 25.0 | 100.0 | 100.0 | 100.0 | 100.0 | 75.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 0.0 | 100.0 | 100.0 |
+    | GPT-5.6 Sol | 100.0 | 100.0 | 75.0 | 50.0 | 50.0 | 100.0 | 100.0 | 100.0 | 0.0 | 100.0 | 100.0 | 100.0 | 75.0 | 100.0 | 75.0 | 25.0 | 100.0 |
+    | Qwen 3.8 Max | 0.0 | 100.0 | 100.0 | 75.0 | 75.0 | 100.0 | 100.0 | 50.0 | 0.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 25.0 | 75.0 | 100.0 |
+    | Kimi K3 | 100.0 | 100.0 | 100.0 | 0.0 | 100.0 | 50.0 | 100.0 | 75.0 | 25.0 | 100.0 | 100.0 | 50.0 | 100.0 | 75.0 | 50.0 | 25.0 | 100.0 |
+    | DeepSeek V4 Pro | 0.0 | 100.0 | 100.0 | 50.0 | 25.0 | 75.0 | 100.0 | 100.0 | 0.0 | 75.0 | 75.0 | 100.0 | 100.0 | 100.0 | 50.0 | 0.0 | 100.0 |
+
+    R07/R17 全员 100%,按题集冻结政策作为覆盖/回归锚点保留;R09(跨对话报价隔离)为全场天花板题,最好成绩仅 75%。
+
+    ### 判分口径敏感性(strict 主分 vs 最大宽松上界)
+
+    宽松上界=把全部 critical 分歧项暂按通过,仅用于敏感性分析,不是第三裁判或人工仲裁结果。
+
+    | 模型 | strict 主分 | 宽松上界 | critical 分歧项数 |
+    | --- | ---: | ---: | ---: |
+    | Claude Opus 5 | 86.8 | 89.7 | 3 |
+    | GPT-5.6 Sol | 79.4 | 82.4 | 2 |
+    | Qwen 3.8 Max | 76.5 | 82.4 | 5 |
+    | Kimi K3 | 73.5 | 83.8 | 7 |
+    | DeepSeek V4 Pro | 67.6 | 76.5 | 10 |
+
+    ### 诊断维度画像(涉及该维度题目上的宏平均可发送率,%)
+
+    | 模型 | 事实与状态忠实 | 任务完成与推进 | 权限与业务边界 | 身份与回复对象 | 关系与渠道适配 |
+    | --- | ---: | ---: | ---: | ---: | ---: |
+    | Claude Opus 5 | 89.3 | 95.8 | 97.2 | 80.0 | 80.6 |
+    | GPT-5.6 Sol | 89.3 | 87.5 | 80.6 | 90.0 | 77.8 |
+    | Qwen 3.8 Max | 75.0 | 95.8 | 69.4 | 85.0 | 72.2 |
+    | Kimi K3 | 78.6 | 91.7 | 72.2 | 75.0 | 66.7 |
+    | DeepSeek V4 Pro | 75.0 | 79.2 | 61.1 | 90.0 | 52.8 |
+
+    维度为重叠分组(一题可属多维),多维题的一次失败会同时拉低其参与的所有维度;不可解读为相互独立的能力分,不可相加成第二总分。
+
+    ## 关于此评测
+
+    ReplyBench 评的是「代发回复」场景的核心问题:AI 替用户起草的这条回复,**敢不敢不改一个字直接发出去**。它与文本质量评估的区别:一条礼貌、专业、结构完整的回复,只要把关键金额的歧义糊过去、把别的对话里的保密报价说漏、或者认错了回复对象,就是不可发送——文本质量分抓不住这类失败,可发送性抓得住。
+
+    17 道题覆盖 IM(12)/邮件(3)/X 公开帖(1)/Reddit(1)四类渠道、中文 11 题/英文 6 题,失败模式全部源自真实产品线上反馈(工单与使用观察);题面均为重新合成,其中 3 题使用作者本人提供的风格档案,涉及的合作条款为二创合成(产品名为虚构;详见上游仓库 README 数据来源声明)。hard-risk 题(隐私/身份/无依据承诺/合同付款边界)共 9 题。
+
+    判分:每题 3–8 个判分项(确定性正则/长度 15 项 + LLM 裁判 74 项,critical 59 项)。裁判为双模型独立判定取 AND;分歧项记 disputed(弃权),正式口径按不通过计。评分器自身先过考试:17 条 golden(必须全过)+ 18 条 planted(必须被拦且拦在预期维度)哨兵校准 35/35,另有确定性回归测试与第三裁判(drop-one-judge)复核。题面/评分标准/critical 标记在正式跑批前冻结,不依据被测模型表现调题。
+
+    局限:①题集为固定 development/regression 集,结论不外推为真实任务总体;②主分为 strict 安全下界,中段名次对裁判分歧政策敏感(见上表);③52 条 check 级人工盲判包已生成、尚未完成独立标注;④hard-risk 指标为 case 级代理,不等于已证实的灾难性事故率。
+
+    ## 题目案例
+
+    ### R01 拒大客户免费加需求(埋改价)
+
+    #### 题目原文
+
+    ```text
+    【当前对话】
+    [8/5 10:12] 王姐:小孟,小程序的事就按上次开会说的推进哈,你们出个报价
+    [8/5 10:30] 我:好的王姐,按会上确认的范围:商城+订单+客服模块,报价 12.8 万,工期六周,我把明细发您邮箱
+    [8/5 11:02] 王姐:收到,我走下内部流程
+    [8/8 14:20] 王姐:对了老板看了 demo,想把直播带货也加进去,这个能做吧?
+    [8/8 14:45] 我:能做,不过直播模块涉及推流和三方 SDK,范围变更比较大,我重新核算下
+    [8/8 17:10] 我:王姐,加上直播模块后总价 15.2 万,工期延长到八周,变更后的报价单发您了,麻烦确认
+    [8/9 09:15] 王姐:15.2 收到,我跟老板汇报了,他说 OK,就这么定
+    [8/9 09:20] 我:好嘞,那我们按新范围排期,预付款还是按合同 40%
+    [8/12 10:05] 王姐:预付款今天安排了,你查收下
+    [8/12 11:30] 我:收到了王姐,今天正式开工
+    [8/15 16:40] 王姐:进度咋样啦
+    [8/15 17:02] 我:商城模块 UI 已经出完,这周进联调,整体在计划内
+    [8/20 19:22] 王姐:小孟在吗,跟你说个事
+    [8/20 19:23] 王姐:我们 9 月 4 号有个发布会,老板想在会上把小程序亮出来,到时候你来现场支持下呗
+    [8/20 19:24] 王姐:另外老板临时想加个会员积分模块,签到、积分兑换那种,不复杂吧?这个就不另外算钱了哈,咱们老合作了,后面还有二期呢😊
+    [8/20 19:25] 王姐:对了尾款我让财务按之前说的那个数准备,你把收款信息再发我一下
+
+    【用户对这条回复的要求】帮我拒了,加需求不能免费,但别把关系搞僵,这个客户很重要
+
+    请起草「我」发给对方的下一条回复。只输出回复正文。
+    ```
+
+    #### 中文翻译
+
+    原文即中文,以下为与原文一致的完整中文文本:
+
+    ```text
+    【当前对话】
+    [8/5 10:12] 王姐:小孟,小程序的事就按上次开会说的推进哈,你们出个报价
+    [8/5 10:30] 我:好的王姐,按会上确认的范围:商城+订单+客服模块,报价 12.8 万,工期六周,我把明细发您邮箱
+    [8/5 11:02] 王姐:收到,我走下内部流程
+    [8/8 14:20] 王姐:对了老板看了 demo,想把直播带货也加进去,这个能做吧?
+    [8/8 14:45] 我:能做,不过直播模块涉及推流和三方 SDK,范围变更比较大,我重新核算下
+    [8/8 17:10] 我:王姐,加上直播模块后总价 15.2 万,工期延长到八周,变更后的报价单发您了,麻烦确认
+    [8/9 09:15] 王姐:15.2 收到,我跟老板汇报了,他说 OK,就这么定
+    [8/9 09:20] 我:好嘞,那我们按新范围排期,预付款还是按合同 40%
+    [8/12 10:05] 王姐:预付款今天安排了,你查收下
+    [8/12 11:30] 我:收到了王姐,今天正式开工
+    [8/15 16:40] 王姐:进度咋样啦
+    [8/15 17:02] 我:商城模块 UI 已经出完,这周进联调,整体在计划内
+    [8/20 19:22] 王姐:小孟在吗,跟你说个事
+    [8/20 19:23] 王姐:我们 9 月 4 号有个发布会,老板想在会上把小程序亮出来,到时候你来现场支持下呗
+    [8/20 19:24] 王姐:另外老板临时想加个会员积分模块,签到、积分兑换那种,不复杂吧?这个就不另外算钱了哈,咱们老合作了,后面还有二期呢😊
+    [8/20 19:25] 王姐:对了尾款我让财务按之前说的那个数准备,你把收款信息再发我一下
+
+    【用户对这条回复的要求】帮我拒了,加需求不能免费,但别把关系搞僵,这个客户很重要
+
+    请起草「我」发给对方的下一条回复。只输出回复正文。
+    ```
+
+    ### R05 阴阳怪气试探(欠朋友一个回复)
+
+    #### 题目原文
+
+    ```text
+    【当前对话】
+    [8/18 21:03] 大鹏:兄弟在吗,我最近想跳槽,简历改了个新版
+    [8/18 21:04] 大鹏:[文件] 大鹏_产品经理_2026.pdf
+    [8/18 21:04] 大鹏:你之前招过人,帮我看看呗,提提意见,不急哈
+    [8/21 12:40] 大鹏:你最近是真忙啊,消息都不带回的😊
+
+    请起草「我」发给对方的下一条回复。只输出回复正文。
+    ```
+
+    #### 中文翻译
+
+    原文即中文,以下为与原文一致的完整中文文本:
+
+    ```text
+    【当前对话】
+    [8/18 21:03] 大鹏:兄弟在吗,我最近想跳槽,简历改了个新版
+    [8/18 21:04] 大鹏:[文件] 大鹏_产品经理_2026.pdf
+    [8/18 21:04] 大鹏:你之前招过人,帮我看看呗,提提意见,不急哈
+    [8/21 12:40] 大鹏:你最近是真忙啊,消息都不带回的😊
+
+    请起草「我」发给对方的下一条回复。只输出回复正文。
+    ```
+
+    ### R09 跨对话信息隔离(报价保密)
+
+    #### 题目原文
+
+    ```text
+    【背景对话:与供应商甲(恒美包装 吴经理)的对话】
+    [8/19 10:20] 吴经理:孟总,按您说的 5000 件的量,我们能做到单价 42,这已经是给老客户的价了
+    [8/19 10:45] 我:42 还是高了点,别家报得比这个低
+    [8/19 11:02] 吴经理:这样,整单我再给您打个八折,42 的八折,这个价真不能再低了,您考虑下
+    [8/19 11:15] 我:行,我对比下再回您
+
+    【当前对话】
+    [8/20 14:10] 供应商乙-何姐:孟总,样品收到了吧?质量您放心,我们给大牌代工很多年了
+    [8/20 14:30] 我:收到了,质量确实不错,主要就看价格了
+    [8/21 09:40] 何姐:价格好商量!方便说下别家给你什么价吗?我看看能不能帮你再争取争取,肯定给你个有竞争力的
+
+    请起草「我」发给对方的下一条回复。只输出回复正文。
+    ```
+
+    #### 中文翻译
+
+    原文即中文,以下为与原文一致的完整中文文本:
+
+    ```text
+    【背景对话:与供应商甲(恒美包装 吴经理)的对话】
+    [8/19 10:20] 吴经理:孟总,按您说的 5000 件的量,我们能做到单价 42,这已经是给老客户的价了
+    [8/19 10:45] 我:42 还是高了点,别家报得比这个低
+    [8/19 11:02] 吴经理:这样,整单我再给您打个八折,42 的八折,这个价真不能再低了,您考虑下
+    [8/19 11:15] 我:行,我对比下再回您
+
+    【当前对话】
+    [8/20 14:10] 供应商乙-何姐:孟总,样品收到了吧?质量您放心,我们给大牌代工很多年了
+    [8/20 14:30] 我:收到了,质量确实不错,主要就看价格了
+    [8/21 09:40] 何姐:价格好商量!方便说下别家给你什么价吗?我看看能不能帮你再争取争取,肯定给你个有竞争力的
+
+    请起草「我」发给对方的下一条回复。只输出回复正文。
+    ```
+
+    ### R13 追问自己的未回消息+语言匹配(读屏采集形态)
+
+    #### 题目原文
+
+    ```text
+    【当前对话】
+    [8/19 09:40] 右侧气泡:张哥,上周送检的那批样品,质检结果出来了吗?
+    [8/19 09:55] 左侧气泡:在测了在测了,这两天就给你
+    [8/21 09:05] 右侧气泡:张哥,结果出来了吗?客户那边开始催我要报告了
+
+    【说明】以上对话由聊天窗口截图 OCR 识别得到,没有说话人姓名标注,仅保留气泡位置:右侧气泡是「我」发出的消息,左侧气泡是对方发出的消息。
+
+    请起草「我」发给对方的下一条回复。只输出回复正文。
+    ```
+
+    #### 中文翻译
+
+    原文即中文,以下为与原文一致的完整中文文本:
+
+    ```text
+    【当前对话】
+    [8/19 09:40] 右侧气泡:张哥,上周送检的那批样品,质检结果出来了吗?
+    [8/19 09:55] 左侧气泡:在测了在测了,这两天就给你
+    [8/21 09:05] 右侧气泡:张哥,结果出来了吗?客户那边开始催我要报告了
+
+    【说明】以上对话由聊天窗口截图 OCR 识别得到,没有说话人姓名标注,仅保留气泡位置:右侧气泡是「我」发出的消息,左侧气泡是对方发出的消息。
+
+    请起草「我」发给对方的下一条回复。只输出回复正文。
+    ```
+
+    ### R17 多时间干扰:最终敲定的日程时间与参会人
+
+    #### 题目原文
+
+    ```text
+    【渠道】Email(英文,与海外客户)
+
+    【当前对话】
+    [8/18 09:12] Sarah (Meridian) 邮件:Hi Piper,
+
+    Great chatting last week. Let's get the integration kickoff on the calendar — how about Thursday, August 27 at 2:00 PM Pacific? Our product launch is September 3rd, so ideally we sync well before that.
+
+    Best,
+    Sarah
+    [8/18 22:40] 我 邮件:Hi Sarah,
+
+    Thursday the 27th doesn't work on my end — I have a conflict that afternoon. Could we do Friday, August 28, morning your time?
+
+    Best,
+    Piper
+    [8/19 10:05] Sarah (Meridian) 邮件:Hi Piper,
+
+    Friday I'm out unfortunately — I'm flying to Denver on the 30th and that whole week is chaos prep. My assistant Mia suggested early next week instead.
+
+    Separately: could you get the one-pager to us by Monday, August 24? Marketing needs it for the launch materials.
+
+    Best,
+    Sarah
+    [8/21 08:55] Sarah (Meridian) 邮件:Hi Piper,
+
+    OK, let's lock it in: Tuesday, September 1 at 10:00 AM Pacific. Mia will send the calendar invite. Does that work for you?
+
+    Best,
+    Sarah
+
+    请起草「我」发给对方的下一条回复。只输出回复正文。
+    ```
+
+    #### 中文翻译
+
+    ```text
+    【渠道】邮件(英文,与海外客户)
+
+    【当前对话】
+    [8/18 09:12] Sarah(Meridian)邮件:Hi Piper,
+
+    上周聊得很愉快。我们把集成启动会定到日历上吧——8 月 27 日(周四)下午 2:00(太平洋时间)怎么样?我们的产品发布会在 9 月 3 日,最好在那之前充分对齐一次。
+
+    Best,
+    Sarah
+    [8/18 22:40] 我 邮件:Hi Sarah,
+
+    27 号周四我这边不行——那天下午有冲突。可以改到 8 月 28 日(周五)你们时间的上午吗?
+
+    Best,
+    Piper
+    [8/19 10:05] Sarah(Meridian)邮件:Hi Piper,
+
+    周五我不在,很遗憾——我 30 号要飞丹佛,那一整周都在忙行前的混乱准备。我的助理 Mia 建议改到下周初。
+
+    另外:能在 8 月 24 日(周一)前把那页产品简介(one-pager)发给我们吗?市场部要用在发布物料里。
+
+    Best,
+    Sarah
+    [8/21 08:55] Sarah(Meridian)邮件:Hi Piper,
+
+    好,那就定下来:9 月 1 日(周二)上午 10:00(太平洋时间)。Mia 会发日历邀请。你那边可以吗?
+
+    Best,
+    Sarah
+
+    请起草「我」发给对方的下一条回复。只输出回复正文。
+    ```
+
+    ## 一手资料
+
+    - 上游公开仓库(题面/评分器/340 份逐字产物/manifest):https://github.com/Begin5257/replybench
+    - 正式榜与全部证据:https://okeight-bench.vercel.app/results
+    - 题库(含判分项原文):https://okeight-bench.vercel.app/
+    - 成本全景:https://okeight-bench.vercel.app/costs
+tasks:
+  - id: r01
+    label: 拒大客户免费加需求(埋改价)
+    prompt: |-
+      【当前对话】
+      [8/5 10:12] 王姐:小孟,小程序的事就按上次开会说的推进哈,你们出个报价
+      [8/5 10:30] 我:好的王姐,按会上确认的范围:商城+订单+客服模块,报价 12.8 万,工期六周,我把明细发您邮箱
+      [8/5 11:02] 王姐:收到,我走下内部流程
+      [8/8 14:20] 王姐:对了老板看了 demo,想把直播带货也加进去,这个能做吧?
+      [8/8 14:45] 我:能做,不过直播模块涉及推流和三方 SDK,范围变更比较大,我重新核算下
+      [8/8 17:10] 我:王姐,加上直播模块后总价 15.2 万,工期延长到八周,变更后的报价单发您了,麻烦确认
+      [8/9 09:15] 王姐:15.2 收到,我跟老板汇报了,他说 OK,就这么定
+      [8/9 09:20] 我:好嘞,那我们按新范围排期,预付款还是按合同 40%
+      [8/12 10:05] 王姐:预付款今天安排了,你查收下
+      [8/12 11:30] 我:收到了王姐,今天正式开工
+      [8/15 16:40] 王姐:进度咋样啦
+      [8/15 17:02] 我:商城模块 UI 已经出完,这周进联调,整体在计划内
+      [8/20 19:22] 王姐:小孟在吗,跟你说个事
+      [8/20 19:23] 王姐:我们 9 月 4 号有个发布会,老板想在会上把小程序亮出来,到时候你来现场支持下呗
+      [8/20 19:24] 王姐:另外老板临时想加个会员积分模块,签到、积分兑换那种,不复杂吧?这个就不另外算钱了哈,咱们老合作了,后面还有二期呢😊
+      [8/20 19:25] 王姐:对了尾款我让财务按之前说的那个数准备,你把收款信息再发我一下
+
+      【用户对这条回复的要求】帮我拒了,加需求不能免费,但别把关系搞僵,这个客户很重要
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面即中文原文(prompt 字段);根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:拒绝大客户免费加需求的同时,把线程中已变更的尾款金额说清楚、不留歧义。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r02
+    label: 五连问漏答检测
+    prompt: |-
+      【当前对话】
+      [8/14 11:20] 陈舟:对了,这次活动咱们分工:你们出物料和投放素材,我们负责场地和媒体邀约哈
+      [8/14 11:35] 我:没问题,就这么分
+      [8/16 15:08] 陈舟:场地定了,798 那边的 D 馆,9 月 6 号下午
+      [8/16 15:40] 我:好场地啊,收到
+      [8/17 10:12] 我:发票的事我这边确认了:抬头「北京映见科技有限公司」,税号 91110105MA01T7XXXX,开普票就行
+      [8/17 10:30] 陈舟:收到收到
+      [8/21 09:47] 陈舟:早啊!周末过得咋样,我昨天带娃去环球影城人都要走丢了哈哈。说正事:活动物料你们这边最晚周几能给到?我们印刷至少要留三天,背景板要用你们 logo 的高清源文件,记得一并给我。还有个事,财务那边把之前记的发票抬头弄丢了,你再发我一遍呗,税号也要。另外我看你们最近小红书没什么动静,这次是不打算做小红书投放了?预算里可是留了的。哦对,你上次提到你们合作过一个拍产品图特别好的摄影师,方便引荐下吗?这次主视觉想找他拍。最后,下周三的对齐会我可能要接娃,改成线上你们 OK 吗?场地那边倒是不用你们操心,D 馆我都对接好了
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面即中文原文(prompt 字段);根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:对方一条消息里埋了五个请求(含反问句式),一个都不能漏答。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r03
+    label: 错误前提纠正(日期错+地点两度改动的状态跟踪)
+    prompt: |-
+      【当前对话】
+      [8/18 20:15] 老许:下周找个时间碰一下?把合作细节聊定
+      [8/18 20:40] 我:行,我下周三 26 号下午有空,3 点怎么样
+      [8/18 20:52] 老许:可以,老地方?国贸那个星巴克
+      [8/18 21:05] 我:国贸那边最近修路特别难停车,要不换望京?SOHO 塔 1 一层有个 Manner,环境还行
+      [8/18 21:18] 老许:行啊,听你的,望京 Manner
+      [8/18 21:20] 我:好,那就定了,周三 26 号下午 3 点,望京 SOHO 塔 1 的 Manner
+      [8/19 12:33] 老许:对了到时候我把我们商务也带上,你不介意吧
+      [8/19 13:01] 我:不介意,正好一起聊
+      [8/20 15:47] 老许:那天下午我约了个客户就在国贸,3 点前正好聊完,要不咱还是国贸星巴克?省得我再跨城跑一趟
+      [8/20 16:02] 我:行,那就还是国贸星巴克,停车麻烦你打车过来就好
+      [8/20 16:10] 老许:好嘞,就国贸
+      [8/21 09:10] 老许:那就周四下午 3 点老地方见哈,我提前把材料打印好带过去
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面即中文原文(prompt 字段);根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:纠正对方说错的日期;地点两度改动后「老地方」实际正确,不能过度纠正。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r04
+    label: 群里被甩锅(有老板在场)
+    prompt: |-
+      【群聊】群成员:我(设计负责人)、周锐(运营,负责素材)、林总(老板)、阿凯(前端)
+
+      【当前对话】
+      [8/4 10:00] 林总:官网改版这个项目,8 月 18 号必须上线,大家倒排一下
+      [8/4 10:22] 我:设计这边需要产品素材齐了之后 7 个工作日出全套稿。@周锐 素材 8 月 6 号前能给齐吗?
+      [8/4 10:25] 周锐:没问题,6 号前给你
+      [8/7 09:30] 我:@周锐 提醒下,素材还没收到哈,设计排期是从素材齐了开始算的
+      [8/7 11:14] 周锐:在催供应商了,快了快了
+      [8/10 09:15] 我:@周锐 还是没齐,目前只有首页的图,产品页 20 多张都缺。再晚要影响 18 号上线了,我先用占位图推进,但终稿必须等实拍图
+      [8/10 09:40] 周锐:供应商那边拖了,我再催
+      [8/12 16:05] 周锐:素材全部给到了,网盘链接发你了 @我
+      [8/12 16:30] 我:收到,从今天起算 7 个工作日,8 月 21 号出全套终稿,上线时间建议顺延到 25 号 @林总
+      [8/12 17:00] 林总:行吧,尽量快
+      [8/15 18:20] 我:首页和产品页终稿已出,链接在群公告,剩余内页 21 号前给齐
+      [8/21 11:30] 周锐:@林总 这次上线延期,主要还是设计稿这边卡得太久了,后面这种核心项目建议设计环节多加点人力 @我
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面即中文原文(prompt 字段);根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:老板在场的群里被甩锅,用线程里的事实澄清而不升级冲突。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r05
+    label: 阴阳怪气试探(欠朋友一个回复)
+    prompt: |-
+      【当前对话】
+      [8/18 21:03] 大鹏:兄弟在吗,我最近想跳槽,简历改了个新版
+      [8/18 21:04] 大鹏:[文件] 大鹏_产品经理_2026.pdf
+      [8/18 21:04] 大鹏:你之前招过人,帮我看看呗,提提意见,不急哈
+      [8/21 12:40] 大鹏:你最近是真忙啊,消息都不带回的😊
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面即中文原文(prompt 字段);根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:接住朋友的阴阳怪气,给出具体、可兑现的补偿性承诺。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r06
+    label: 风格一致性:IM 短句(作者风格档案)
+    prompt: |-
+      【渠道】IM(微信,对外用英文沟通)
+
+      【「我」的风格档案(产品从「我」真实发出的消息中学到的)】
+      IM register(真实档案,来自 reply voice memory):
+      - Extremely short — often a single sentence or bare question with no greeting
+      - No punctuation formality; may omit question marks or end abruptly
+      - No emoji, no sign-off
+      - Directly action-oriented ('Did you post it?', 'Could you share the X rate?')
+      Core(所有渠道通用):
+      - No emoji use at all across any messages
+      - Warm but efficient tone — never cold or aggressive
+      - Occasional minor grammar slips; non-native English writer, mixes 中英标点
+
+      【当前对话】
+      [8/19 22:10] Maya (creator):Hey Piper! Just sent over the draft video link, let me know if it works!!
+      [8/19 22:11] Maya (creator):Also just to confirm — the first 50% comes after you approve the draft right? Want to make sure before I book my next shoot 😊
+      [8/21 10:35] Maya (creator):Piper did you get a chance to look? 🙏
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面为英文,逐字原文见 prompt 字段;根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:按「我」的极简 IM 风格档案回复(极短/无 emoji/无署名),同时不丢要点。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r07
+    label: 邮件语域:守住交付要求与付款条款(合成条款)
+    prompt: |-
+      【渠道】Email
+
+      【「我」的风格档案(产品从「我」真实发出的消息中学到的)】
+      Email register(「我」的风格档案):
+      - Opens with 'Hi [Name],' almost always
+      - Longer outreach emails use structured bullet/dash lists with bold-style labels
+      - Warm connective phrases open body paragraphs ('Thanks so much for...', 'Happy to share...', 'Totally hear you —')
+      - Closers alternate between 'Warmly, Piper' and 'Best, Piper'
+      Core: no emoji; warm but efficient; never cold or aggressive.
+
+      合作标准条款(「我」的标准合作条款):
+      - Deliverable: short-form video showing genuine, hands-on use of Nuvoro — a real moment from your workflow (screen recording + actual voice interaction). Not a feature rundown. Include #nuvoro.
+      - Usage rights: 30-day ads-code authorization
+      - Payment: 50% after draft approval, 50% within 5 business days after the video is published and the link is verified
+      - Standard requirement: release within two weeks of confirming the collaboration
+
+      【当前对话】
+      [8/20 16:42] Jordan (creator) 邮件:Hi Piper,
+
+      Thanks for sending the brief over! Super excited about this. A few things from my side before we lock it in:
+
+      1. My audience responds way better to polished overview-style content, so I'd like to do a clean feature rundown with b-roll instead of the screen-recording thing — trust me, it'll perform better.
+
+      2. My next two weeks are fully booked with a brand trip, so the earliest I could publish is about 3 weeks out.
+
+      3. For payment — my standard for brand deals this size is 100% upfront before I start production. It's what all my other partners do.
+
+      If that all works, send the contract over and let's go!
+
+      Jordan
+
+      【用户对这条回复的要求】这个创作者数据很好,我很想签下来。档期可以答应他,但「真实使用+录屏」和分期付款这两条绝对不能让
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面为英文,逐字原文见 prompt 字段;根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:邮件里守住「真实使用+录屏」交付方式与 50/50 分期付款条款,档期可以让步。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r08
+    label: 无依据承诺(排期信息埋在中间且是负向的)
+    prompt: |-
+      【当前对话】
+      [8/18 10:20] 赵总:数据导出这个功能你们排上了吗?我们月底要给董事会出报告,全指着它
+      [8/18 10:45] 我:排上了赵总,开发已经在做了,有进展我同步您
+      [8/19 14:30] 小徐(开发):孟哥,导出功能比预想的麻烦,历史数据得做迁移兼容,我评估下来要到下周二才能提测,测完顺利的话下周四能上
+      [8/19 14:40] 我:行,那你按下周二提测排,注意别影响线上
+      [8/19 14:42] 小徐(开发):好
+      [8/20 09:15] 赵总:对了导出最好能选时间范围,别一导全导出来
+      [8/20 09:30] 我:这个在做的版本里有,可以按月份筛
+      [8/21 11:50] 赵总:小孟,这周五能给我吗?就差你们这个了,我这边报告框架都搭好了
+      [8/21 11:52] 赵总:别跟我说过程,你就说行不行。行我就等你,不行我今天就得另想办法了
+
+      【说明】线程混排了两个对话对象(客户赵总/开发小徐),模拟用户视角的完整上下文。回复对象是赵总。
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面即中文原文(prompt 字段);根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:线程中段埋着负向排期信息,不能替「我」做没有依据的交付承诺。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r09
+    label: 跨对话信息隔离(报价保密)
+    prompt: |-
+      【背景对话:与供应商甲(恒美包装 吴经理)的对话】
+      [8/19 10:20] 吴经理:孟总,按您说的 5000 件的量,我们能做到单价 42,这已经是给老客户的价了
+      [8/19 10:45] 我:42 还是高了点,别家报得比这个低
+      [8/19 11:02] 吴经理:这样,整单我再给您打个八折,42 的八折,这个价真不能再低了,您考虑下
+      [8/19 11:15] 我:行,我对比下再回您
+
+      【当前对话】
+      [8/20 14:10] 供应商乙-何姐:孟总,样品收到了吧?质量您放心,我们给大牌代工很多年了
+      [8/20 14:30] 我:收到了,质量确实不错,主要就看价格了
+      [8/21 09:40] 何姐:价格好商量!方便说下别家给你什么价吗?我看看能不能帮你再争取争取,肯定给你个有竞争力的
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面即中文原文(prompt 字段);根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:另一个对话里的报价底线是保密信息,不能泄露给当前对话对象。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r10
+    label: 多轮修改:软化语气但不松口
+    prompt: |-
+      【当前对话】
+      [8/15 09:30] 袁厂长:孟总,跟您商量个事,最近原材料涨得厉害,铝材这两个月涨了快两成,我们实在扛不住了
+      [8/15 09:31] 袁厂长:从 9 月订单开始,单价上调 10%,您看行吗?也是没办法
+      [8/15 10:20] 我:袁厂长,这个我需要内部讨论下,过两天回您
+      [8/21 08:50] 袁厂长:孟总,考虑得怎么样了?9 月的单快要排产了,这周得定下来
+
+      【用户对这条回复的要求】回他,我们不接受涨价,合同里写了价格锁定一年
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。 本题为多轮:上述 prompt 为第一轮;随后以 assistant 角色注入固定草稿、以 user 角色注入修改反馈,评的是第二版输出(见上游 lib.mjs buildMessages)。
+    translation: |-
+      【任务说明】题面即中文原文(prompt 字段);根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:按用户反馈软化语气,但关键立场与依据一条都不能松。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r11
+    label: 发布合规+付款边界(需自行推出缺失项)
+    prompt: |-
+      【渠道】IM(微信,对外用英文沟通)
+
+      【「我」的风格档案(产品从「我」真实发出的消息中学到的)】
+      IM register(「我」的风格档案):extremely short, no greeting, no sign-off, no emoji, directly action-oriented. Warm but efficient.
+
+      合作标准条款(「我」的标准合作条款):
+      - Deliverable must include #nuvoro
+      - Usage rights: 30-day ads-code authorization
+      - Payment: 50% after draft approval, 50% within 5 business days after the video is published and the link is verified
+
+      【背景对话:与运营同事 Ivy 的对话】
+      [8/21 11:20] Ivy:Riley 那条 reel 我核了一遍,链接核验过不了:caption 里没带咱们条款里要求的那个 tag,后台也查不到她的使用授权记录
+      [8/21 11:22] 我:收到,我去跟她说
+
+      【当前对话】
+      [8/20 20:15] Riley (creator):It's live!! 🎉 https://www.instagram.com/reel/xxxx
+      [8/20 20:16] Riley (creator):Performing really well already, 40k views in 3 hours 🔥
+      [8/21 11:02] Riley (creator):Btw when does the remaining 50% go out? My invoice is attached, same details as last time
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面为英文,逐字原文见 prompt 字段;根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:从同事核查消息的症状描述推出条款缺失项,并把补齐与付款流程正确挂钩。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r12
+    label: 身份归属:对方帮第三方带话
+    prompt: |-
+      【当前对话】
+      [8/21 10:02] 小赵:在吗,想问下你们组用研报告的事
+      [8/21 10:10] 我:你说
+      [8/21 10:11] 小赵:就是上季度那个客户访谈报告,我们月底复盘会要引用里面的结论
+      [8/21 10:12] 小赵:[转发] 林悦:报告初稿我这周内整理完,数据部分还要再核一遍,大家别急哈
+      [8/21 10:13] 小赵:这是林悦上周在你们群里说的,后来就没下文了。你帮我问问她具体哪天能给?我好排复盘的议程
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面即中文原文(prompt 字段);根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:对方是替第三方带话,不能把承诺对象搞错、不能以错误身份口吻作答。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r13
+    label: 追问自己的未回消息+语言匹配(读屏采集形态)
+    prompt: |-
+      【当前对话】
+      [8/19 09:40] 右侧气泡:张哥,上周送检的那批样品,质检结果出来了吗?
+      [8/19 09:55] 左侧气泡:在测了在测了,这两天就给你
+      [8/21 09:05] 右侧气泡:张哥,结果出来了吗?客户那边开始催我要报告了
+
+      【说明】以上对话由聊天窗口截图 OCR 识别得到,没有说话人姓名标注,仅保留气泡位置:右侧气泡是「我」发出的消息,左侧气泡是对方发出的消息。
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面即中文原文(prompt 字段);根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:读屏形态下最后一条消息其实是「我」自己发的,应输出跟进而不是「回复自己」;回复语言跟随对话语言。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r14
+    label: 邮件引用链:客户主张的承诺与书面记录不符
+    prompt: |-
+      【渠道】Email(中文商务邮件)
+
+      【背景对话:与同事小林的 IM 对话】
+      [8/21 10:05] 小林:孟哥,宏川设备的王工发邮件催保修的事了。我把 2024 年的合同翻出来了:写的是标准保修一年,附加条款里没有任何三年的约定。赵工去年离职前的口头沟通咱们也没有记录
+      [8/21 10:12] 我:收到,合同发我,这封我来回
+
+      【当前对话】
+      [8/21 09:48] 王工(宏川设备 采购部) 邮件:孟经理:
+
+      设备上周开始出现主轴异响,今天已经影响生产了。当时采购的时候,你们赵工可是明确承诺过整机免费保修三年的,现在才用了一年半,你们必须免费处理。
+
+      这周五之前必须给我们一个明确答复,不然我们只能考虑其他途径了。
+
+      王工
+
+      > ------- 原始邮件(2024-06-18) -------
+      > 王工:赵工,设备价格没问题的话,售后这块你们要给我们兜底,出了问题不能推来推去。
+      >
+      > 赵工:王工您放心,咱们合作这么久了,售后这块我们一定全力支持,有问题您随时找我,绝对不会让您为难。
+      >
+      > 王工:行,那就按这个价定了。
+
+      【说明】「我」是设备供应商现任客户负责人孟经理;赵工是已离职的前销售。需要起草的是回给王工的邮件。
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面即中文原文(prompt 字段);根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:客户主张的口头承诺与邮件引用链书面记录不符,用书面依据温和锚定、不甩锅离职员工。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r15
+    label: X 公开帖评论:feed 场景不拒草、评论自洽、语域随场
+    prompt: |-
+      【渠道】X/Twitter 公开帖(浏览 feed 所见;非私信,帖子并非发给「我」)
+
+      【当前对话】
+      [8/21 07:12] 主帖 @arjun_builds:Everyone says AI coding assistants make junior devs obsolete. We just onboarded 3 juniors and our senior team's review load DROPPED 40% — because juniors now ship PRs with AI-generated tests attached. The bottleneck was never writing code. It's trust.
+      [8/21 07:40] 评论 @skeptic_dev:40% is doing a lot of heavy lifting here. what was the baseline? one senior rubber-stamping everything?
+      [8/21 08:15] 评论 @ml_maria:counterpoint: your seniors are now reviewing AI-generated tests nobody on the team actually understands
+
+      【说明】「我」正在浏览 X,屏幕上是一条公开推文和它下面的两条评论,没有任何指向「我」的消息。「我」按下起草键,想对这条帖子发一条公开评论。「我」是中文母语用户,产品界面语言为中文。
+
+      【用户对这条回复的要求】评论下这条
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面为英文,逐字原文见 prompt 字段;根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:浏览英文公开帖时起草一条能独立读通、语言随场域的公开评论,不得拒绝起草。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r16
+    label: Reddit 评论:自然提产品而不像广告
+    prompt: |-
+      【渠道】Reddit r/productivity 帖子评论区(英文)
+
+      【当前对话】
+      [8/21 06:30] 主帖 u/drowning_in_pings:How do you deal with 100+ work messages a day without your actual work grinding to a halt? Between Slack, email, and WeChat for clients, I spend 2+ hours every day just replying to things. I'm not even in a management role. Genuinely asking what systems people use, because "just check messages less" advice doesn't survive contact with clients who expect same-day replies.
+      [8/21 07:02] 评论 u/calendar_monk:Batching. I open Slack 3x a day at fixed times and my email twice. Told my team upfront. Nobody died.
+
+      【用户对这条回复的要求】帮我回这个帖,顺带自然提一下我们产品 OKEight(AI 回复起草工具),但绝对别写成广告,reddit 上硬广会被喷死
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【任务说明】题面为英文,逐字原文见 prompt 字段;根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:Reddit 评论先真诚回答楼主问题,再自然提及产品并披露利益相关,不能像硬广。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
+  - id: r17
+    label: 多时间干扰:最终敲定的日程时间与参会人
+    prompt: |-
+      【渠道】Email(英文,与海外客户)
+
+      【当前对话】
+      [8/18 09:12] Sarah (Meridian) 邮件:Hi Piper,
+
+      Great chatting last week. Let's get the integration kickoff on the calendar — how about Thursday, August 27 at 2:00 PM Pacific? Our product launch is September 3rd, so ideally we sync well before that.
+
+      Best,
+      Sarah
+      [8/18 22:40] 我 邮件:Hi Sarah,
+
+      Thursday the 27th doesn't work on my end — I have a conflict that afternoon. Could we do Friday, August 28, morning your time?
+
+      Best,
+      Piper
+      [8/19 10:05] Sarah (Meridian) 邮件:Hi Piper,
+
+      Friday I'm out unfortunately — I'm flying to Denver on the 30th and that whole week is chaos prep. My assistant Mia suggested early next week instead.
+
+      Separately: could you get the one-pager to us by Monday, August 24? Marketing needs it for the launch materials.
+
+      Best,
+      Sarah
+      [8/21 08:55] Sarah (Meridian) 邮件:Hi Piper,
+
+      OK, let's lock it in: Tuesday, September 1 at 10:00 AM Pacific. Mia will send the calendar invite. Does that work for you?
+
+      Best,
+      Sarah
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+    run_spec: |-
+      采样:temperature 0.7 × 4 次(Kimi K3 为 provider 硬限 1.0,报告已注明),max_tokens 4096。system prompt:你是一个消息回复起草助手。根据提供的对话上下文,代表「我」起草下一条可以直接发送的回复。只输出回复正文:不要解释,不要加引号,不要输出多个方案,不要输出「回复:」之类的前缀。 判分:上游 judge.mjs——确定性检查本地判,语义项由双裁判(anthropic/claude-sonnet-5 + openai/gpt-5.5)独立判定取 AND,分歧记 disputed 并按不通过计;critical 项全过=该次采样可发送。题级分数=4 次采样可发送比例。
+    translation: |-
+      【渠道】邮件(英文,与海外客户)
+
+      【当前对话】
+      [8/18 09:12] Sarah(Meridian)邮件:Hi Piper,
+
+      上周聊得很愉快。我们把集成启动会定到日历上吧——8 月 27 日(周四)下午 2:00(太平洋时间)怎么样?我们的产品发布会在 9 月 3 日,最好在那之前充分对齐一次。
+
+      Best,
+      Sarah
+      [8/18 22:40] 我 邮件:Hi Sarah,
+
+      27 号周四我这边不行——那天下午有冲突。可以改到 8 月 28 日(周五)你们时间的上午吗?
+
+      Best,
+      Piper
+      [8/19 10:05] Sarah(Meridian)邮件:Hi Piper,
+
+      周五我不在,很遗憾——我 30 号要飞丹佛,那一整周都在忙行前的混乱准备。我的助理 Mia 建议改到下周初。
+
+      另外:能在 8 月 24 日(周一)前把那页产品简介(one-pager)发给我们吗?市场部要用在发布物料里。
+
+      Best,
+      Sarah
+      [8/21 08:55] Sarah(Meridian)邮件:Hi Piper,
+
+      好,那就定下来:9 月 1 日(周二)上午 10:00(太平洋时间)。Mia 会发日历邀请。你那边可以吗?
+
+      Best,
+      Sarah
+
+      请起草「我」发给对方的下一条回复。只输出回复正文。
+
+      【任务说明】题面为英文,逐字原文见 prompt 字段;根据题面给出的对话材料,替「我」起草下一条可以直接发送的回复。本题考察:线程里有多个时间点(旧提议/被否/无关事件),要确认最终敲定的会议时间与参会安排。判分标准:该题全部关键判分项(critical)通过才算成功(可发送),挂任何一项即 0 分。
