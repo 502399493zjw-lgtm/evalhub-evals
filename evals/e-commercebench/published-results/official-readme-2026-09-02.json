@@ -1,0 +1,114 @@
+{
+  "eval_id": "e-commercebench",
+  "submission": {
+    "kind": "upstream_author_publication",
+    "importer_version": "e-commercebench/official-readme-transcription@1.0.0",
+    "retrieved_on": "2026-09-03",
+    "source": {
+      "title": "E-Commerce Bench official README leaderboard at commit 0c5d352f",
+      "url": "https://github.com/QwenLM/E-CommerceBench/blob/0c5d352f75a6022049561e4407cbcfc494156c5c/README.md",
+      "snapshot_sha256": "ae51c14d51cddebccfeac6931dd5dc3ef8c7c15eec4bccb33f28eca57036726e",
+      "official_result_count": 18,
+      "omitted_models": [
+        { "model": "Fable5 (max)", "reason": "unregistered" },
+        { "model": "Gemini 3.1 Pro", "reason": "unregistered" },
+        { "model": "DeepSeek-V4-Pro-Preview (max)", "reason": "unregistered" },
+        { "model": "Qwen3.6-Plus", "reason": "unregistered" },
+        { "model": "Qwen3.5-Plus", "reason": "unregistered" }
+      ]
+    }
+  },
+  "results": [
+    {
+      "participant": { "model": "openai/gpt-5.6-sol", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/max" },
+      "score": 14.31,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥1,431k" },
+      "detail": "官方 proprietary 组第 1 名；来源显示名 GPT-5.6 Sol (max)。资产倍数由 README 已发表的平均结束资产 ¥1,431k 除以固定初始本金 ¥100k 得到，不代表 EvalHub 独立复跑。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [314, 0.672, 18.48, 0.278, 363, 4.46, 1.217, 3668, 1367, "0/5"] }], "note": "逐格转录自固定 commit 的官方 README；辅助指标不参与主成绩再次加权。" }]
+    },
+    {
+      "participant": { "model": "openai/gpt-5.5", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/default" },
+      "score": 7.02,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥702k" },
+      "detail": "官方 proprietary 组第 3 名；来源显示名 GPT-5.5。资产倍数由 README 已发表的平均结束资产换算；std=¥616k 是总体估计（样本估计器为 ¥689k），AnchorRatio 只平均三次非破产且满足条件的 episode。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [616, 0.7, 16.59, 0.591, 192, 0.9, 1.043, 3143, 1306, "2/5"] }], "note": "逐格转录自固定 commit 的官方 README；std 注释和 AnchorRatio 边界见 detail，辅助指标不参与主成绩再次加权。" }]
+    },
+    {
+      "participant": { "model": "anthropic/claude-opus-4-8", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/max" },
+      "score": 4.98,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥498k" },
+      "detail": "官方 proprietary 组第 4 名；来源显示名 Claude Opus 4.8 (max)。资产倍数按官方 README 已发表精度换算，不代表 EvalHub 独立复跑。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [231, 0.662, 5.41, 0.13, 266, 0.2, 1.309, 1497, 812, "0/5"] }], "note": "逐格转录自固定 commit 的官方 README；辅助指标不参与主成绩再次加权。" }]
+    },
+    {
+      "participant": { "model": "anthropic/claude-opus-4-7", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/max" },
+      "score": 2.59,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥259k" },
+      "detail": "官方 proprietary 组第 5 名；来源显示名 Claude Opus 4.7 (max)。资产倍数按官方 README 已发表精度换算，不代表 EvalHub 独立复跑。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [111, 0.811, 0.12, 0.189, 156, 1.75, 1.421, 1023, 432, "0/5"] }], "note": "逐格转录自固定 commit 的官方 README；辅助指标不参与主成绩再次加权。" }]
+    },
+    {
+      "participant": { "model": "anthropic/claude-opus-4-6", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/max" },
+      "score": 2.58,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥258k" },
+      "detail": "官方 proprietary 组第 6 名；来源显示名 Claude Opus 4.6 (max)。资产倍数按官方 README 已发表精度换算，不代表 EvalHub 独立复跑。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [266, 0.649, 14.98, 0.587, 129, 0.76, 1.268, 1221, 788, "2/5"] }], "note": "逐格转录自固定 commit 的官方 README；辅助指标不参与主成绩再次加权。" }]
+    },
+    {
+      "participant": { "model": "google/gemini-3.5-flash", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/default" },
+      "score": 1.9,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥190k" },
+      "detail": "官方 proprietary 组第 7 名；来源显示名 Gemini 3.5 Flash。资产倍数按官方 README 已发表精度换算，不代表 EvalHub 独立复跑。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [79, 0.777, 2.13, 0.45, 36, 0.38, 0.918, 2508, 2628, "0/5"] }], "note": "逐格转录自固定 commit 的官方 README；辅助指标不参与主成绩再次加权。" }]
+    },
+    {
+      "participant": { "model": "alibaba/qwen3.8-max-preview", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/default" },
+      "score": 4.16,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥416k" },
+      "detail": "官方 open-weight 组第 1 名；来源显示名 Qwen3.8-Max-Preview。资产倍数按官方 README 已发表精度换算，不代表 EvalHub 独立复跑。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [111, 0.713, 6.13, 0.242, 173, 0.38, 0.834, 1826, 962, "0/5"] }], "note": "逐格转录自固定 commit 的官方 README；辅助指标不参与主成绩再次加权。" }]
+    },
+    {
+      "participant": { "model": "zai/glm-5.2", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/high" },
+      "score": 3.01,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥301k" },
+      "detail": "官方 open-weight 组第 2 名；来源显示名 GLM 5.2 (high)。推理强度 high 是来源身份边界的一部分。资产倍数按官方 README 已发表精度换算。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [124, 0.693, 1.99, 0.127, 137, 0.59, 1.434, 1467, 672, "0/5"] }], "note": "逐格转录自固定 commit 的官方 README；辅助指标不参与主成绩再次加权。" }]
+    },
+    {
+      "participant": { "model": "moonshot/kimi-k3", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/default" },
+      "score": 2.65,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥265k" },
+      "detail": "官方 open-weight 组第 3 名；来源显示名 Kimi K3。资产倍数按官方 README 已发表精度换算，不代表 EvalHub 独立复跑。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [110, 0.632, 5.87, 0.247, 123, 2.01, 1.507, 1334, 878, "0/5"] }], "note": "逐格转录自固定 commit 的官方 README；辅助指标不参与主成绩再次加权。" }]
+    },
+    {
+      "participant": { "model": "zai/glm-5.1", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/default" },
+      "score": 2.26,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥226k" },
+      "detail": "官方 open-weight 组第 4 名；来源显示名 GLM 5.1。资产倍数按官方 README 已发表精度换算，不代表 EvalHub 独立复跑。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [192, 0.662, 6.49, 0.231, 94, 0.09, 1.557, 1333, 852, "0/5"] }], "note": "逐格转录自固定 commit 的官方 README；辅助指标不参与主成绩再次加权。" }]
+    },
+    {
+      "participant": { "model": "alibaba/qwen3.7-max", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/default" },
+      "score": 1.65,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥165k" },
+      "detail": "官方 open-weight 组第 6 名；来源显示名 Qwen3.7-Max。资产倍数按官方 README 已发表精度换算，不代表 EvalHub 独立复跑。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [134, 0.616, 9.85, 0.433, 59, -0.05, 1.433, 1108, 782, "0/5"] }], "note": "逐格转录自固定 commit 的官方 README；辅助指标不参与主成绩再次加权。" }]
+    },
+    {
+      "participant": { "model": "zai/glm-5.2", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/max" },
+      "score": 1.15,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥115k" },
+      "detail": "官方 open-weight 组第 7 名；来源显示名 GLM 5.2 (max)。推理强度 max 是来源身份边界的一部分。资产倍数按官方 README 已发表精度换算。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [71, 0.632, 19.68, 0.36, 10, 2.24, 1.362, 1430, 931, "0/5"] }], "note": "逐格转录自固定 commit 的官方 README；辅助指标不参与主成绩再次加权。" }]
+    },
+    {
+      "participant": { "model": "moonshot/kimi-k2.6", "harness": "E-Commerce Bench agent", "harness_version": "0c5d352f/default" },
+      "score": 0.7,
+      "raw_metric": { "label": "官方平均结束资产", "value": "¥70k" },
+      "detail": "官方 open-weight 组第 8 名；来源显示名 Kimi K2.6。资产倍数按官方 README 已发表精度换算，不代表 EvalHub 独立复跑。",
+      "supplementary_views": [{ "type": "metric_table", "id": "official-benchmark-breakdown", "label": "官方分项", "title": "E-Commerce Bench 官方五次运行聚合指标", "columns": ["std（¥k）", "CSE+", "BadSpend%", "回撤/峰值", "¥/工具调用", "可控退货（pp）", "AnchorRatio", "工具调用", "Turns", "破产运行"], "rows": [{ "cells": [14, 0.596, 17.22, 0.377, -27, 0.42, 1.548, 1087, 1017, "0/5"] }], "note": "逐格转录自固定 commit 的官方 README；辅助指标不参与主成绩再次加权。" }]
+    }
+  ]
+}
